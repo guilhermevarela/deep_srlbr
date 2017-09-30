@@ -1,5 +1,6 @@
-*PropBankBr_*
-*.o
-\svm\*
-!\svm\python\liblinear_test.py
-*.pyc
+propbankbr/*.txt
+propbankbr/*.conll
+
+svm/*
+!svm/python/*.py
+
