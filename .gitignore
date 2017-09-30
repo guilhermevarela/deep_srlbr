@@ -1,3 +1,4 @@
 *PropBankBr_*
 *.o
 \svm\*
+!\svm\python\liblinear_test.py
