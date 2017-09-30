@@ -2,3 +2,4 @@
 *.o
 \svm\*
 !\svm\python\liblinear_test.py
+*.pyc
