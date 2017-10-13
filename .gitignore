@@ -4,3 +4,7 @@ propbankbr/*.conll
 svm/*
 !svm/python/*.py
 
+tex/*
+!tex/proposal-pt/*.pdf
+!tex/proposal-pt/*.tex
+!tex/proposal-pt/*.bib
