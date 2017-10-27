@@ -8,8 +8,19 @@
 '''
 import sys 
 import random 
+import pandas as pd 
 # from string import maketrans
 #MAPS the filename and output fields to be harvested
+CONST_HEADER=[
+	'ID','FORM','LEMMA','GPOS','MORF', 'IGN1', 'IGN2', 
+	'CTREE','IGN3', 'PRED','ARG0','ARG1','ARG2','ARG3',
+	'ARG4','ARG5','ARG6'
+]
+DEP_HEADER=[
+	'ID','FORM','LEMMA','GPOS','MORF', 'DTREE', 'FUNC', 
+	'IGN1', 'PRED','ARG0','ARG1','ARG2','ARG3',
+	'ARG4','ARG5','ARG6'
+]
 MAPPER= {
 	'CONST': { 
 		'filename': 'PropBankBr_v1.1_Const.conll.txt',
@@ -52,6 +63,26 @@ MAPPER= {
 	}
 }
 
+def propbankbr_parser2():		
+	dfconst = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
+	del dfconst['IGN1'] 
+	del dfconst['IGN2'] 
+	del dfconst['IGN3'] 
+
+	'READ/CONVERT INTO A DICTIONARY MALFORMED'
+	dfdep = pd.read_csv('PropBankBr_v1.1_Dep.conll.txt', sep=' \t', header=None, index_col=False, names=DEP_HEADER, dtype=str, engine='python') 
+	# dfdep = pd.read_text('PropBankBr_v1.1_Dep.conll.txt', sep=' ') 
+	del dfdep['IGN1']
+	
+	import code; code.interact(local=dict(globals(), **locals()))
+	print(dfconst.head())	 
+	print(dfdep.head())	 
+	# print(df.head())
+	# usecols= [0,1,2,3,4,7,9,10,11,12,13, 14,15,16] 
+	# df = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, usecols=usecols, dtype=str) 
+	# import code; code.interact(local=dict(globals(), **locals()))
+	# print df.count
+	# return df
 
 def propbankbr_parser(tokens=[], verbs=[], verbose=True):		
 	filename= 	MAPPER['CONST']['filename']
@@ -230,12 +261,13 @@ def get_arguments_length(sentences):
 
 if __name__== '__main__':		
 	tokens=[] 
-	sentences, predicates, tags= propbankbr_parser(tokens)
-	print(len(tokens))
-	print_sentence(sentences,  0)
+	propbankbr_parser2()
+	# sentences, predicates, tags= propbankbr_parser(tokens)
+	# print(len(tokens))
+	# print_sentence(sentences,  0)
 
-	stats= get_arguments(tags)
-	stats_length= get_arguments_length(sentences)
+	# stats= get_arguments(tags)
+	# stats_length= get_arguments_length(sentences)
 	
 
 
