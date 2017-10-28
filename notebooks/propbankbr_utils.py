@@ -67,15 +67,23 @@ MAPPER= {
 	}
 }
 
-def propbankbr_split(df, testN=263, validationN=569):
+def propbankbr_split(df, testN=263, validN=569):
 	'''
 		Splits propositions into test & validation following convetions set by refs/1421593_2016_completo
 			|development data|= trainN + validationN 
 			|test data|= testN
 
-	'''
-	print('NotImplemented')
+	'''	
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	P = max(df['P']) # gets the preposition
+	Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence	
+	dftest= df[df['S']>=Stest]
 
+	Svalid = min(df.loc[df['P']> P-(testN+validN),'S']) # from proposition gets the sentence	
+	dfvalid= df[((df['S']>=Svalid) & (df['S']<Stest))]
+
+	dfdevel= df[df['S']<Svalid]
+	return dfdevel, dfvalid, dftest
 
 def propbankbr_argument_stats(df):
 	'''
@@ -153,13 +161,12 @@ def propbankbr_const_read():
 
 	
 	filename= PROPBANKBR_PATH + 'PropBankBr_v1.1_Const.conll.txt'
-	# import code; code.interact(local=dict(globals(), **locals()))		
+
 	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
 	del df['IGN1'] 
 	del df['IGN2'] 
 	del df['IGN3'] 
 
-	# import code; code.interact(local=dict(globals(), **locals()))		
 	return df 
 def propbankbr_dep_read():
 	'''
@@ -241,20 +248,16 @@ def get_signature(mappings):
 
 
 if __name__== '__main__':		
-	tokens=[] 
-	# propbankbr_const_read()
+		
 	df = propbankbr_parser()
-	stats = propbankbr_argument_stats(df)
-	print(stats)
+	dftrain, dfvalid, dftest=propbankbr_split(df)
+	print(dftrain.head())
+	print(dfvalid.head())
+	print(dftest.head())
+	# stats = propbankbr_argument_stats(df)
+	# print(stats)
 
-	# propbankbr_parser2()
-	# sentences, predicates, tags= propbankbr_parser(tokens)
-	# print(len(tokens))
-	# print_sentence(sentences,  0)
 
-	# stats= get_arguments(tags)
-	# stats_length= get_arguments_length(sentences)
-	
 
 
 
