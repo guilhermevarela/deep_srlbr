@@ -74,7 +74,7 @@ def propbankbr_parser2():
 	# dfdep = pd.read_text('PropBankBr_v1.1_Dep.conll.txt', sep=' ') 
 	del dfdep['IGN1']
 	
-	import code; code.interact(local=dict(globals(), **locals()))
+	# import code; code.interact(local=dict(globals(), **locals()))
 	print(dfconst.head())	 
 	print(dfdep.head())	 
 	# print(df.head())
@@ -82,7 +82,102 @@ def propbankbr_parser2():
 	# df = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, usecols=usecols, dtype=str) 
 	# import code; code.interact(local=dict(globals(), **locals()))
 	# print df.count
-	# return df
+	return dfdep
+
+def propbankbr_const_read():
+	'''
+		Reads the file 'PropBankBr_v1.1_Const.conll.txt' returning a pandas DataFrame
+		the format is as follows
+		'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
+		'FORM'  : Forma da palavra ou sinal de pontuação
+		'LEMMA' : Lema gold-standard da FORM 
+		'GPOS'  : Etiqueta part-of-speech gold-standard
+		'MORF'  : Atributos morfológicos  gold-standard
+		'CTREE' : Árvore Sintagmática \textit{gold-standard} completa
+		'PRED'  : Predicatos semânticos na proposição
+		'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'''
+	# usecols= [0,1,2,3,4,7,9,10,11,12,13,14,15,16]
+	df = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
+	del df['IGN1'] 
+	del df['IGN2'] 
+	del df['IGN3'] 
+
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	return df 
+def propbankbr_dep_read():
+	'''
+		Reads the file 'PropBankBr_v1.1_Dep.conll.txt' returning a pandas DataFrame
+		the format is as follows, 
+		'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
+		'FORM'  : Forma da palavra ou sinal de pontuação
+		'LEMMA' : Lema gold-standard da FORM 
+		'GPOS'  : Etiqueta part-of-speech gold-standard
+		'MORF'  : Atributos morfológicos  gold-standard
+		'CTREE' : Árvore Sintagmática \textit{gold-standard} completa
+		'PRED'  : Predicatos semânticos na proposição
+		'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+		'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'''
+	#malformed file prevents effective use of pd.read_csv
+	filename=MAPPER['DEP']['filename']
+	mappings=MAPPER['DEP']['mappings']
+	mappings_inv= {v:k for k,v in mappings.items()}
+	sentences=get_signature(mappings)
+	sentence_count=[]
+	s_count=1 # counter over the number of sentences
+	M=max(mappings_inv.keys())   # max number of fields
+	for line in open(filename):			
+		end_of_sentence= (len(line)==1)
+		if end_of_sentence: 
+			s_count+=1
+
+		if not(end_of_sentence):
+			data= line.split(' ')					
+			data= filter(lambda s: s != '' and s !='\n', data)			
+			values= list(data)
+
+			key_max=0
+			for keys_count, val in enumerate(values): 
+				if keys_count in mappings_inv.keys():
+					key=mappings_inv[keys_count]	
+					
+					if (key[:3]=='ARG'):
+						val= val.translate(str.maketrans('','','\n()*')) 
+						sentences[key].append(val)
+					else:
+						sentences[key].append(val)
+				key_max=keys_count
+
+			# import code; code.interact(local=dict(globals(), **locals()))	
+			#	fills remaning absent/optional ARG arrays with None
+			# garantees all arrays have the same number of elements
+			for keys_count in range(key_max+1, M+1, 1): 
+				key=mappings_inv[keys_count]	
+				sentences[key].append(None)
+
+			# import code; code.interact(local=dict(globals(), **locals()))		
+			sentence_count.append(s_count)
+	
+	sentences['K']= sentence_count # adds a new column with number of sentences
+	df = pd.DataFrame.from_dict(sentences)				
+	# garantee a friedlier ordering of the columns
+	cols=['ID', 'K'] + list(mappings.keys())[1:]
+	df = df[cols]
+	import code; code.interact(local=dict(globals(), **locals()))		
+	return df
+
 
 def propbankbr_parser(tokens=[], verbs=[], verbose=True):		
 	filename= 	MAPPER['CONST']['filename']
@@ -261,7 +356,9 @@ def get_arguments_length(sentences):
 
 if __name__== '__main__':		
 	tokens=[] 
-	propbankbr_parser2()
+	# propbankbr_const_read()
+	propbankbr_dep_read()
+	# propbankbr_parser2()
 	# sentences, predicates, tags= propbankbr_parser(tokens)
 	# print(len(tokens))
 	# print_sentence(sentences,  0)
