@@ -64,25 +64,36 @@ MAPPER= {
 }
 
 def propbankbr_parser2():		
-	dfconst = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
-	del dfconst['IGN1'] 
-	del dfconst['IGN2'] 
-	del dfconst['IGN3'] 
+	'''
+	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
+	'FORM'  : Forma da palavra ou sinal de pontuação
+	'LEMMA' : Lema gold-standard da FORM 
+	'GPOS'  : Etiqueta part-of-speech gold-standard
+	'MORF'  : Atributos morfológicos  gold-standard
+	'DTREE' : Árvore Sintagmática gold-standard completa	
+	'FUNC'  : Função Sintática do token gold-standard para com seu regente na árvore de dependência
+	'CTREE' : Árvore Sintagmática gold-standard completa
+	'PRED'  : Predicatos semânticos na proposição
+	'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'''
+	df_const= propbankbr_const_read()
+	df_dep= propbankbr_dep_read() 
+	# preprocess
+	df_dep2= df_dep[['FUNC', 'DTREE', 'K']]
+	usecols= ['ID', 'K', 'FORM', 'LEMMA', 'GPOS', 'MORF', 
+		'PRED', 'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+		'ARG5', 'ARG6'
+	]
 
-	'READ/CONVERT INTO A DICTIONARY MALFORMED'
-	dfdep = pd.read_csv('PropBankBr_v1.1_Dep.conll.txt', sep=' \t', header=None, index_col=False, names=DEP_HEADER, dtype=str, engine='python') 
-	# dfdep = pd.read_text('PropBankBr_v1.1_Dep.conll.txt', sep=' ') 
-	del dfdep['IGN1']
-	
-	# import code; code.interact(local=dict(globals(), **locals()))
-	print(dfconst.head())	 
-	print(dfdep.head())	 
-	# print(df.head())
-	# usecols= [0,1,2,3,4,7,9,10,11,12,13, 14,15,16] 
-	# df = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, usecols=usecols, dtype=str) 
-	# import code; code.interact(local=dict(globals(), **locals()))
-	# print df.count
-	return dfdep
+	df= pd.concat((df_const, df_dep2), axis=1)
+
+	return df[usecols] 
 
 def propbankbr_const_read():
 	'''
@@ -93,7 +104,7 @@ def propbankbr_const_read():
 		'LEMMA' : Lema gold-standard da FORM 
 		'GPOS'  : Etiqueta part-of-speech gold-standard
 		'MORF'  : Atributos morfológicos  gold-standard
-		'CTREE' : Árvore Sintagmática \textit{gold-standard} completa
+		'CTREE' : Árvore Sintagmática gold-standard completa
 		'PRED'  : Predicatos semânticos na proposição
 		'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 		'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
@@ -103,7 +114,7 @@ def propbankbr_const_read():
 		'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 		'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 	'''
-	# usecols= [0,1,2,3,4,7,9,10,11,12,13,14,15,16]
+
 	df = pd.read_csv('PropBankBr_v1.1_Const.conll.txt', sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
 	del df['IGN1'] 
 	del df['IGN2'] 
@@ -120,7 +131,8 @@ def propbankbr_dep_read():
 		'LEMMA' : Lema gold-standard da FORM 
 		'GPOS'  : Etiqueta part-of-speech gold-standard
 		'MORF'  : Atributos morfológicos  gold-standard
-		'CTREE' : Árvore Sintagmática \textit{gold-standard} completa
+		'DTREE' : Árvore Sintagmática gold-standard completa
+		'FUNC'  : Função Sintática do token gold-standard para com seu regente na árvore de dependência
 		'PRED'  : Predicatos semânticos na proposição
 		'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 		'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
@@ -160,14 +172,12 @@ def propbankbr_dep_read():
 						sentences[key].append(val)
 				key_max=keys_count
 
-			# import code; code.interact(local=dict(globals(), **locals()))	
 			#	fills remaning absent/optional ARG arrays with None
 			# garantees all arrays have the same number of elements
 			for keys_count in range(key_max+1, M+1, 1): 
 				key=mappings_inv[keys_count]	
 				sentences[key].append(None)
-
-			# import code; code.interact(local=dict(globals(), **locals()))		
+			
 			sentence_count.append(s_count)
 	
 	sentences['K']= sentence_count # adds a new column with number of sentences
@@ -175,7 +185,6 @@ def propbankbr_dep_read():
 	# garantee a friedlier ordering of the columns
 	cols=['ID', 'K'] + list(mappings.keys())[1:]
 	df = df[cols]
-	import code; code.interact(local=dict(globals(), **locals()))		
 	return df
 
 
@@ -357,7 +366,7 @@ def get_arguments_length(sentences):
 if __name__== '__main__':		
 	tokens=[] 
 	# propbankbr_const_read()
-	propbankbr_dep_read()
+	propbankbr_parser2()
 	# propbankbr_parser2()
 	# sentences, predicates, tags= propbankbr_parser(tokens)
 	# print(len(tokens))
