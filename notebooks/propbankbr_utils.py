@@ -67,6 +67,11 @@ MAPPER= {
 	}
 }
 
+def trim(val):
+	if isinstance(val, str):
+		return val.strip()
+	return val
+
 def propbankbr_split(df, testN=263, validN=569):
 	'''
 		Splits propositions into test & validation following convetions set by refs/1421593_2016_completo
@@ -74,7 +79,7 @@ def propbankbr_split(df, testN=263, validN=569):
 			|test data|= testN
 
 	'''	
-	# import code; code.interact(local=dict(globals(), **locals()))		
+	
 	P = max(df['P']) # gets the preposition
 	Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence	
 	dftest= df[df['S']>=Stest]
@@ -130,12 +135,14 @@ def propbankbr_parser():
 	df_dep= propbankbr_dep_read() 
 	# preprocess
 	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P' ]]
+	# import code; code.interact(local=dict(globals(), **locals()))		
 	usecols= ['ID', 'S', 'P',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
-		'PRED', 'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+		'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
 		'ARG5', 'ARG6'
 	]
 
 	df= pd.concat((df_const, df_dep2), axis=1)
+	df= df.applymap(trim)
 
 	return df[usecols] 
 
@@ -162,12 +169,14 @@ def propbankbr_const_read():
 	
 	filename= PROPBANKBR_PATH + 'PropBankBr_v1.1_Const.conll.txt'
 
-	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 
+	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 	
+	
 	del df['IGN1'] 
 	del df['IGN2'] 
 	del df['IGN3'] 
 
 	return df 
+
 def propbankbr_dep_read():
 	'''
 		Reads the file 'PropBankBr_v1.1_Dep.conll.txt' returning a pandas DataFrame
@@ -239,6 +248,7 @@ def propbankbr_dep_read():
 	# garantee a friedlier ordering of the columns
 	cols=['ID', 'S' , 'P'] + list(mappings.keys())[1:]
 	df = df[cols]
+	
 	return df
 
 
@@ -250,10 +260,23 @@ def get_signature(mappings):
 if __name__== '__main__':		
 		
 	df = propbankbr_parser()
-	dftrain, dfvalid, dftest=propbankbr_split(df)
-	print(dftrain.head())
+	dfdevel, dfvalid, dftest=propbankbr_split(df)
+	print(dfdevel.head())
 	print(dfvalid.head())
 	print(dftest.head())
+
+	#Splits saves according to artur beltrao's dissertation
+	# dfdevel.to_csv('../propbankbr/default_devel.csv')
+	# dfvalid.to_csv('../propbankbr/default_valid.csv')
+	# dftest.to_csv('../propbankbr/default_test.csv')
+
+	#Splits saves according to zhou's article
+	dfdevel.to_csv('../propbankbr/default_devel.csv')
+	dfvalid.to_csv('../propbankbr/default_valid.csv')
+	dftest.to_csv('../propbankbr/default_test.csv')
+
+
+
 	# stats = propbankbr_argument_stats(df)
 	# print(stats)
 
