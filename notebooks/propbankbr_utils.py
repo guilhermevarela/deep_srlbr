@@ -114,6 +114,8 @@ def propbankbr_argument_stats(df):
 
 def propbankbr_parser():		
 	'''
+	Uses refs/1421593_2016_completo.pdf
+
 	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
 	'FORM'  : Forma da palavra ou sinal de pontuação
 	'LEMMA' : Lema gold-standard da FORM 
@@ -145,6 +147,51 @@ def propbankbr_parser():
 	df= df.applymap(trim)
 
 	return df[usecols] 
+
+def propbankbr_parser2():		
+	'''
+	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
+	'S'  		: Contador de sentencas
+	'P'  		: Contador de predicatos
+	'FORM'  : Forma da palavra ou sinal de pontuação
+	'LEMMA' : Lema gold-standard da FORM 
+	'PRED'  : Predicatos semânticos na proposição
+	'CTXP'  : Contexto do predicato 
+						Ex:   
+						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
+						PRED: [		 '-',   'ser',      '-',   '-', '-']
+						CTXP: ['foram feitas','foram feitas','foram feitas','foram feitas','foram feitas']
+
+	'M_R'  : Marcacao do predicato
+						0 se o predicato não modifica
+						1 se o predicato modifica
+						Ex:   
+						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
+						PRED: [		 '-',   'ser',      '-',   '-', '-']
+						M_R:  [			 0,       1,        1,     1,   1]
+						
+	'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'''
+	df_const= propbankbr_const_read()
+	df_dep= propbankbr_dep_read() 
+	# preprocess
+	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P' ]]
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	usecols= ['ID', 'S', 'P',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
+		'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+		'ARG5', 'ARG6'
+	]
+
+	df= pd.concat((df_const, df_dep2), axis=1)
+	df= df.applymap(trim)
+
+	return df[usecols] 	
 
 def propbankbr_const_read():
 	'''
