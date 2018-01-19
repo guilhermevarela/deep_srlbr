@@ -25,6 +25,9 @@ DEP_HEADER=[
 	'IGN1', 'PRED','ARG0','ARG1','ARG2','ARG3',
 	'ARG4','ARG5','ARG6'
 ]
+ZHOU_HEADER=[
+	'ID', 'S', 'P', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
+]
 MAPPER= {
 	'CONST': { 
 		'filename': 'PropBankBr_v1.1_Const.conll.txt',
@@ -136,27 +139,31 @@ def propbankbr_parser():
 	df_const= propbankbr_const_read()
 	df_dep= propbankbr_dep_read() 
 	# preprocess
-	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P' ]]
-	# import code; code.interact(local=dict(globals(), **locals()))		
-	usecols= ['ID', 'S', 'P',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
+	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+	usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
 		'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
 		'ARG5', 'ARG6'
 	]
 
 	df= pd.concat((df_const, df_dep2), axis=1)
+	df= df[usecols] 
 	df= df.applymap(trim)
 
-	return df[usecols] 
+	return df
 
 def propbankbr_parser2():		
 	'''
+	Parsers according to 
+	End-to-end Learning of Semantic Role Labeling Using Recurrent Neural Networks
+	Zhou and Xu, 2016
+
 	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
 	'S'  		: Contador de sentencas
 	'P'  		: Contador de predicatos
 	'FORM'  : Forma da palavra ou sinal de pontuação
 	'LEMMA' : Lema gold-standard da FORM 
 	'PRED'  : Predicatos semânticos na proposição
-	'CTXP'  : Contexto do predicato 
+	'CTX_P'  : Contexto do predicato 
 						Ex:   
 						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
 						PRED: [		 '-',   'ser',      '-',   '-', '-']
@@ -169,29 +176,73 @@ def propbankbr_parser2():
 						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
 						PRED: [		 '-',   'ser',      '-',   '-', '-']
 						M_R:  [			 0,       1,        1,     1,   1]
-						
-	'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+
+	'ARG'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 	'''
+
 	df_const= propbankbr_const_read()
 	df_dep= propbankbr_dep_read() 
 	# preprocess
-	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P' ]]
-	# import code; code.interact(local=dict(globals(), **locals()))		
-	usecols= ['ID', 'S', 'P',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
-		'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+	usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
 		'ARG5', 'ARG6'
 	]
 
 	df= pd.concat((df_const, df_dep2), axis=1)
+	df= df[usecols] 	
 	df= df.applymap(trim)
 
-	return df[usecols] 	
+	#Iterate item by item adjusting PRED, CTX_P, M_R, ARG
+	#resulting df will have number of rows=|S_i|X|P_ij|
+	usecols= ZHOU_HEADER
+
+	
+	slen_dict =get_sentence_size(df)
+	pslen_dict=get_number_predicates_in_sentence(df)
+	pred_dict =get_nominal_predicates_in_sentence(df)
+	
+
+	N=0
+	for s,l in slen_dict.items():
+		N+= l*pslen_dict[s] # COMPUTES sum(|S_i|*|P_ij|)
+
+	
+	Xind=np.zeros((N,5),dtype=np.int32)
+	Yind=np.zeros((N,5),dtype=np.int32)	
+	
+	P=   np.zeros((N,1),dtype=np.int32)		
+	M_R= np.zeros((N,1),dtype=np.int32)	
+	PRED=[]
+	x_in =0
+	x_out=0
+	for s,l in slen_dict.items():
+		n_p = pslen_dict[s]
+		sdf=df[df['S']==s]
+		for p in range(n_p):
+			x_data=np.arange(x_in, x_in+l).reshape((l,1))
+			y_data=np.array([0,1,4,5,7+p]).reshape((1,5))			
+			
+			Xind[x_out:x_out+l,:]= np.tile(x_data, (1,5))
+			Yind[x_out:x_out+l,:]= np.tile(y_data, (l,1))
+			
+			PRED+=[pred_dict[s][p]]*l			
+
+			ind=(sdf['P_S']>=p+1).as_matrix()
+			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)
+			P[x_out:x_out+l,:]=p+1
+
+			x_out+=l 
+		x_in+=l 
+
+	#CONVERT INDEX into DF
+	data= df.as_matrix()[Xind,Yind]
+	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'LABEL'])
+	zhou_df['PRED']=PRED
+	zhou_df['M_R']=M_R
+	zhou_df['P']=P
+	zhou_df= zhou_df[usecols]
+
+	return zhou_df
 
 def propbankbr_const_read():
 	'''
@@ -251,13 +302,19 @@ def propbankbr_dep_read():
 	sentences=get_signature(mappings)
 	sentence_count=[]
 	s_count=1 									 # counter over the number of sentences
-	proposition_count=[]
-	p_count=0
+	p_count=1                    # counter over the number of predicates
+	ps_count=0									 # predicate per sentence
+	proposition_count=[]	
+	proposition_per_sentence_count=[]	
+
 	M=max(mappings_inv.keys())   # max number of fields
+
 	for line in open(filename):			
 		end_of_sentence= (len(line)==1)
 		if end_of_sentence: 
 			s_count+=1
+			ps_count=0
+
 
 		if not(end_of_sentence):
 			data= line.split(' ')					
@@ -272,6 +329,7 @@ def propbankbr_dep_read():
 					if (key=='PRED'):
 						if (val != '-'):
 							p_count+=1
+							ps_count+=1	
 
 					if (key[:3]=='ARG'):						
 						val= val.translate(str.maketrans('','','\n()*')) 
@@ -288,12 +346,15 @@ def propbankbr_dep_read():
 			
 			sentence_count.append(s_count)
 			proposition_count.append(p_count)
+			proposition_per_sentence_count.append(ps_count)
 	
 	sentences['S']= sentence_count # adds a new column with number of sentences
 	sentences['P']= proposition_count # adds a new column with number of propositions
+	sentences['P_S']=proposition_per_sentence_count # adds a new column with number of propositions per sentence
+
 	df = pd.DataFrame.from_dict(sentences)				
 	# garantee a friedlier ordering of the columns
-	cols=['ID', 'S' , 'P'] + list(mappings.keys())[1:]
+	cols=['ID', 'S' , 'P', 'P_S'] + list(mappings.keys())[1:]
 	df = df[cols]
 	
 	return df
@@ -303,29 +364,48 @@ def propbankbr_dep_read():
 def get_signature(mappings): 
 	return {k:[] for k in mappings}
 
+def get_sentence_size(df):
+	xdf= df[['S','P']].pivot_table(index=['S'], aggfunc=len)
+	x=dict(zip(xdf.index, xdf['P']))
+	return x
+
+def get_number_predicates_in_sentence(df):
+	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)
+	x_dict= xdf.set_index('S').T.to_dict('int')
+	x_dict=x_dict['P_S']
+	return x_dict
+
+def get_nominal_predicates_in_sentence(df):
+	xdf= df[['S', 'PRED']]
+	xdf= xdf[xdf['PRED'] != '-']	
+	d= {}
+	for seq, pred in zip(xdf['S'], xdf['PRED']):
+		if seq in d:
+			d[seq]+=[pred]
+		else:
+			d[seq]=[pred]
+
+	return d
 
 if __name__== '__main__':		
 		
-	df = propbankbr_parser()
-	dfdevel, dfvalid, dftest=propbankbr_split(df)
-	print(dfdevel.head())
-	print(dfvalid.head())
-	print(dftest.head())
+	df = propbankbr_parser2()
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	# # dfdevel, dfvalid, dftest=propbankbr_split(df)
+	# print(dfdevel.head())
+	# print(dfvalid.head())
+	# print(dftest.head())
 
 	#Splits saves according to artur beltrao's dissertation
 	# dfdevel.to_csv('../propbankbr/default_devel.csv')
 	# dfvalid.to_csv('../propbankbr/default_valid.csv')
 	# dftest.to_csv('../propbankbr/default_test.csv')
 
-	#Splits saves according to zhou's article
-	dfdevel.to_csv('../propbankbr/default_devel.csv')
-	dfvalid.to_csv('../propbankbr/default_valid.csv')
-	dftest.to_csv('../propbankbr/default_test.csv')
+	df.to_csv('../propbankbr/zhou.csv')
+	
 
 
 
-	# stats = propbankbr_argument_stats(df)
-	# print(stats)
 
 
 
