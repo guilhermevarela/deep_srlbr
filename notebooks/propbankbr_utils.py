@@ -83,11 +83,11 @@ def propbankbr_split(df, testN=263, validN=569):
 
 	'''	
 	# import code; code.interact(local=dict(globals(), **locals()))		
-	P = max(df['P']) # gets the preposition
-	Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence	
+	P = max(df['P_S']) # gets the preposition
+	Stest = min(df.loc[df['P_S']> P-testN,'S']) # from proposition gets the sentence	
 	dftest= df[df['S']>=Stest]
 
-	Svalid = min(df.loc[df['P']> P-(testN+validN),'S']) # from proposition gets the sentence	
+	Svalid = min(df.loc[df['P_S']> P-(testN+validN),'S']) # from proposition gets the sentence	
 	dfvalid= df[((df['S']>=Svalid) & (df['S']<Stest))]
 
 	dfdevel= df[df['S']<Svalid]
