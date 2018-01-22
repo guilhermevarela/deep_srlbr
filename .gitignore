@@ -1,8 +1,7 @@
+*glove_s50.txt
+
 propbankbr/*.txt
 propbankbr/*.conll
-
-svm/*
-!svm/python/*.py
 
 tex/*
 !tex/proposal-pt/*.pdf

@@ -82,7 +82,7 @@ def propbankbr_split(df, testN=263, validN=569):
 			|test data|= testN
 
 	'''	
-	
+	# import code; code.interact(local=dict(globals(), **locals()))		
 	P = max(df['P']) # gets the preposition
 	Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence	
 	dftest= df[df['S']>=Stest]
@@ -236,7 +236,7 @@ def propbankbr_parser2():
 
 	#CONVERT INDEX into DF
 	data= df.as_matrix()[Xind,Yind]
-	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'LABEL'])
+	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'P_S','FORM', 'LEMMA', 'LABEL'])
 	zhou_df['PRED']=PRED
 	zhou_df['M_R']=M_R
 	zhou_df['P']=P
@@ -391,15 +391,15 @@ if __name__== '__main__':
 		
 	df = propbankbr_parser2()
 	# import code; code.interact(local=dict(globals(), **locals()))		
-	# # dfdevel, dfvalid, dftest=propbankbr_split(df)
+	dfdevel, dfvalid, dftest=propbankbr_split(df)
 	# print(dfdevel.head())
 	# print(dfvalid.head())
 	# print(dftest.head())
 
 	#Splits saves according to artur beltrao's dissertation
-	# dfdevel.to_csv('../propbankbr/default_devel.csv')
-	# dfvalid.to_csv('../propbankbr/default_valid.csv')
-	# dftest.to_csv('../propbankbr/default_test.csv')
+	dfdevel.to_csv('../propbankbr/zhou_devel.csv')
+	dfvalid.to_csv('../propbankbr/zhou_valid.csv')
+	dftest.to_csv('../propbankbr/zhou_test.csv')
 
 	df.to_csv('../propbankbr/zhou.csv')
 	
