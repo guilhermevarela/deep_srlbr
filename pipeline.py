@@ -1,3 +1,9 @@
+'''
+Created on Jan 21, 2018
+	@author: Varela
+	
+	first approximation
+'''
 from gensim.models import KeyedVectors
 from gensim import corpora, models, similarities
 
