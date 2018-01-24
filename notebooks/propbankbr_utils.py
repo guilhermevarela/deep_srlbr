@@ -26,7 +26,7 @@ DEP_HEADER=[
 	'ARG4','ARG5','ARG6'
 ]
 ZHOU_HEADER=[
-	'ID', 'S', 'P', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
+	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
 ]
 MAPPER= {
 	'CONST': { 
@@ -184,7 +184,7 @@ def propbankbr_parser2():
 	df_dep= propbankbr_dep_read() 
 	# preprocess
 	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
-	usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+	usecols= ['ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
 		'ARG5', 'ARG6'
 	]
 
@@ -206,23 +206,25 @@ def propbankbr_parser2():
 	for s,l in slen_dict.items():
 		N+= l*pslen_dict[s] # COMPUTES sum(|S_i|*|P_ij|)
 
-	
-	Xind=np.zeros((N,5),dtype=np.int32)
-	Yind=np.zeros((N,5),dtype=np.int32)	
+	Nind= 5 
+	Xind=np.zeros((N, Nind),dtype=np.int32)
+	Yind=np.zeros((N, Nind),dtype=np.int32)	
 	
 	P=   np.zeros((N,1),dtype=np.int32)		
 	M_R= np.zeros((N,1),dtype=np.int32)	
+	P_S= np.zeros((N,1),dtype=np.int32)	
 	PRED=[]
 	x_in =0
 	x_out=0
+	p_s=1
 	for s,l in slen_dict.items():
 		n_p = pslen_dict[s]
 		sdf=df[df['S']==s]
-		for p in range(n_p):
+		for p in range(n_p):		
 			x_data=np.arange(x_in, x_in+l).reshape((l,1))
-			y_data=np.array([0,1,4,5,7+p]).reshape((1,5))			
+			y_data=np.array([0,1,4,5,7+p]).reshape((1,Nind))			
 			
-			Xind[x_out:x_out+l,:]= np.tile(x_data, (1,5))
+			Xind[x_out:x_out+l,:]= np.tile(x_data, (1,Nind))
 			Yind[x_out:x_out+l,:]= np.tile(y_data, (l,1))
 			
 			PRED+=[pred_dict[s][p]]*l			
@@ -230,16 +232,18 @@ def propbankbr_parser2():
 			ind=(sdf['P_S']>=p+1).as_matrix()
 			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)
 			P[x_out:x_out+l,:]=p+1
-
+			P_S[x_out:x_out+l,:]=p_s
 			x_out+=l 
+			p_s+=1
 		x_in+=l 
 
 	#CONVERT INDEX into DF
 	data= df.as_matrix()[Xind,Yind]
-	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'P_S','FORM', 'LEMMA', 'LABEL'])
+	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'LABEL'])
 	zhou_df['PRED']=PRED
 	zhou_df['M_R']=M_R
 	zhou_df['P']=P
+	zhou_df['P_S']=P_S
 	zhou_df= zhou_df[usecols]
 
 	return zhou_df
