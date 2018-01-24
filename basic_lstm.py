@@ -35,13 +35,16 @@ class BasicLSTM(object):
 		self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].as_dataframe().as_matrix())
 
 		#DEFINE DATA PARAMS
+		self.hidden_sz=hidden_sz
 		self.vocab_sz= Ytrain.shape[0]
 		self.input_sz= 2*50+1 # 2 times embedding size + one
-		self.n_examples_train= df_train['S_P']
-		self.n_examples_valid= df_train['S_P']
-		self.n_tokens= df_train['S_P']
+		self.n_examples_train= max(df_train['S_P'])
+		self.n_examples_valid= max(df_valid['S_P'])
+		self.n_tokens= np.unique(df_train['S_P'].as_dataframe().as_matrix())
+		self.n_tuples= df_train.shape[0]
 
-
+		#Initialize cell
+		self.rnn_cell= rnn.core_rnn_cell.BasicLSTMCell(hidden_sz)
 
 
 
@@ -49,24 +52,36 @@ class BasicLSTM(object):
 		raise NotImplementedError
 
 	def train(self, lr=1e-3, epochs=1000, batch_sz=500, display_step=100):
-		n_batch= int(self.n_examples / batch_sz)
+		#DEFINE EXECUTION VARIABLES
+		n_batch= int(self.n_examples_train / batch_sz)
 		
-		print('###########%s SETTINGS #############' % (self.name))
+		header='###########%s SETTINGS #############' % (self.name)
+		print(header)
 		print('learning rate\t%0.8f' % lr)
 		print('epochs\t%0.0f' % epochs)
-		print('n_examples\t%0.0f' % epochs)
+		print('n examples train\t%0.0f' % epochs)
+		print('n examples valid\t%0.0f' % epochs)
+		print('n examples train\t%0.0f' % epochs)
+		print('n examples valid\t%0.0f' % epochs)
+		print('batch size\t%0.0f' % epochs)
+		print('n batches\t%0.0f' % epochs)
+		print('#'*len(header))
 
 		#DEFINE TENSORFLOW VARIABLES
-		Wo= tf.Variable(tf.random_normal([n_hidden, vocab_size])) # Weights on the output layer
-		bo= tf.Variable(tf.random_normal([vocab_size]))    
+		Wo= tf.Variable(tf.random_normal([self.hidden_sz, self.vocab_sz])) # Weights on the output layer
+		bo= tf.Variable(tf.random_normal([self.vocab_sz]))    
 
 		#DEFINE TENSORFLOW PLACEHOLDER
-		x = tf.placeholder(tf.float32, shape=(None, n_input), name='x')	
-		y = tf.placeholder(tf.float32, shape=(None, vocab_size), name='y')
+		x = tf.placeholder(tf.float32, shape=(None, self.input_sz), name='x')	
+		y = tf.placeholder(tf.float32, shape=(None, self.vocab_sz), name='y')
 
-
-
-	
+		predict_op= self.forward_op(x, Wo, bo)
+		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=y))
+		train_op= tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(cost)
+		
+		# Model evaluation
+		eval_op=   tf.equal(tf.argmax(predict_op,1), tf.argmax(y,1))
+		accuracy_op= tf.reduce_mean(tf.cast(correct_pred, tf.float32))		
 
 		
 
@@ -75,6 +90,17 @@ class BasicLSTM(object):
 
 	def predict():		
 		raise NotImplementedError
+
+	def forward_op(x, Wo, bo):
+		x = tf.split(x, n_input, 1)
+		
+		#generate prediction 
+		lstm_cell= rnn.MultiRNNCell([self.rnn_cell])
+		outputs, states= rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
+
+		#there are n_input outputs but
+		#we only want the last output
+		return tf.matmul(outputs[-1], Wo) + bo
 			
 
 	
