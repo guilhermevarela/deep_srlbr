@@ -5,13 +5,16 @@ Created on Jan 24, 2018
 	streamlining experiments
 
 '''
-from utils import onehot_encode, shuffle_by_proposition, shuffle_rows
+from utils import onehot_encode, shuffle_by_proposition, shuffle_by_rows, token2vec
 from gensim.models import KeyedVectors
 from gensim import corpora, models, similarities
 
-import tensorflow as tf 
+
 import pandas as pd 
 import numpy as np 
+
+import tensorflow as tf 
+from tensorflow.contrib import rnn 
 
 ZHOU_HEADER=[
 	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
@@ -20,27 +23,28 @@ ZHOU_HEADER=[
 class BasicLSTM(object):
 	def __init__(self, hidden_sz=512, embedding='glove_s50'):
 		embedding_path=  'datasets/%s.txt' % (embedding)
+
 		#DEFINE EMBEDDINGS
 		self.w2v = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")
 		self.name= 'lstm_basic_%s' % (hidden_sz)
+		self.input_sz= 2*50+1 # 2 times embedding size + one
 
 		#DEFINE TRAINING DATA
 		df_train= pd.read_csv('propbankbr/zhou_devel.csv')		
 		self.df_train= df_train[ZHOU_HEADER[:-1]]
-		self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].as_dataframe().as_matrix())
+		self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].to_frame().as_matrix())
 
 		#DEFINE VALIDATION DATA
 		df_valid= pd.read_csv('propbankbr/zhou_valid.csv')
-		self.Xvalid= self._embedding_lookup(df_valid[ZHOU_HEADER[:-1]])
-		self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].as_dataframe().as_matrix())
+		self.Xvalid= self._embedding_lookup(df_valid[ZHOU_HEADER[:-1]].as_matrix())
+		self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].to_frame().as_matrix())
 
 		#DEFINE DATA PARAMS
 		self.hidden_sz=hidden_sz
-		self.vocab_sz= Ytrain.shape[0]
-		self.input_sz= 2*50+1 # 2 times embedding size + one
-		self.n_examples_train= max(df_train['S_P'])
-		self.n_examples_valid= max(df_valid['S_P'])
-		self.n_tokens= np.unique(df_train['S_P'].as_dataframe().as_matrix())
+		self.vocab_sz= self.Ytrain.shape[0]		
+		self.n_examples_train= max(df_train['P_S'])
+		self.n_examples_valid= max(df_valid['P_S'])
+		self.n_tokens= np.unique(df_train['P_S'].to_frame().as_matrix())
 		self.n_tuples= df_train.shape[0]
 
 		#Initialize cell
@@ -48,7 +52,7 @@ class BasicLSTM(object):
 
 
 
-	def load():
+	def load(self):
 		raise NotImplementedError
 
 	def train(self, lr=1e-3, epochs=100, batch_sz=500, display_step=100):
@@ -93,17 +97,17 @@ class BasicLSTM(object):
 				Xtrain=self.df_train.reindex(idx, copy=True).as_matrix()
 				Ytrain=shuffle_rows(Ytrain, idx)
 				for j in range(n_batch):
-					Xbatch=Xtrain[idxb[j]:idxb[j+1],:]
+					Xbatch=self._embedding_lookup(Xtrain[idxb[j]:idxb[j+1],:])
 					Ybatch=Ytrain[idxb[j]:idxb[j+1],:]
 					nb= Xbatch.shape[0]
-					xbatch= np.zeros((nb, self.input_sz), dtype=np.int32)
-					for b in range(nb):
-						xbatch[np,:] =np.concatenate(
-								( token2vec(Xbatch[nb, 6]),
-									token2vec(Xbatch[nb, 7]),
-									np.array([Xbatch[nb, 8]])
-								), axis=0
-						)
+					# xbatch= np.zeros((nb, self.input_sz), dtype=np.int32)
+					# for b in range(nb):
+					# 	xbatch[np,:] =np.concatenate(
+					# 			( token2vec(Xbatch[nb, 6]),
+					# 				token2vec(Xbatch[nb, 7]),
+					# 				np.array([Xbatch[nb, 8]])
+					# 			), axis=0
+					# 	)
 					_, acc, loss, one_hotpred= session.run(
 	    			[train_op, accuracy_op, cost_op, predict_op],
 	    			feed_dict={x: xbatch, y:Ybatch}            
@@ -134,7 +138,7 @@ class BasicLSTM(object):
 	def predict():		
 		raise NotImplementedError
 
-	def forward_op(x, Wo, bo):
+	def forward_op(self, x, Wo, bo):
 		x = tf.split(x, n_input, 1)
 		
 		#generate prediction 
@@ -145,14 +149,14 @@ class BasicLSTM(object):
 		#we only want the last output
 		return tf.matmul(outputs[-1], Wo) + bo
 			
-	def _embedding_lookup(X):	
-		N= X.shape 
-		Xout= np.zeros((N, self.input_sz), dtype=np.int32)
-		for n in range(n):
-			Xout[np,:] =np.concatenate(
-				( token2vec(X[nb, 6]),
-					token2vec(X[nb, 7]),
-					np.array([X[nb, 8]])
+	def _embedding_lookup(self, X):		
+		N= X.shape[0] 
+		Xout= np.zeros((N, self.input_sz), dtype=np.float32)
+		for n in range(N):
+			Xout[n,:] =np.concatenate(
+				( token2vec(X[n, 5], self.w2v),
+					token2vec(X[n, 6], self.w2v),
+					np.array([X[n, 7]])
 				), axis=0
 			)
 		return Xout
