@@ -1,5 +1,6 @@
 *glove_s50.txt
 *.pyc
+*__pycache__
 
 propbankbr/*.txt
 propbankbr/*.conll

@@ -74,6 +74,9 @@ def shuffle_by_rows(mtrx, row_index):
 	col_index= np.tile(np.arange(M).reshape(1,M), (N,1))
 	return mtrx[row_index, col_index]
 
+
+
+
 def token2vec(token, w2v):		
 	try: 
 		vec=w2v[token] 
