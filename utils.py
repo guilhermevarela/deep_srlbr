@@ -40,24 +40,23 @@ def shuffle_by_proposition(df, col_proposition='P_S', batch_sz=0):
 			index_batch
 	'''
 	n_proposition= max(df[col_proposition])
-	i_proposition= np.random.permutation(n_proposition)
+	i_proposition= np.random.permutation(n_proposition+1)
 
 	index=[]
 	index_batch=[]
 	if batch_sz>0:
 		index_batch.append(0)
 
-	for p in i_propositions:
-		index+=sorted(df[df[col_proposition] == p].index)
-		if batch_sz>0 & i % batch_sz==0:
-			index_batch.append(len(index))
+	for i, p in enumerate(i_proposition):
+		ind=df[col_proposition] == p
+		if np.any(ind):
+			index+=sorted(df[df[col_proposition] == p].index)
+			if batch_sz>0 & i % batch_sz==0:
+				index_batch.append(len(index))
 						
-	index=np.array(index, dtype=np.int32)				
-	if nargout==1:
-		return index
-	else:
-		index_batch=np.array(index, dtype=np.int32)				
-		return index, index_batch
+	index=np.array(index, dtype=np.int32)					
+	index_batch=np.array(index, dtype=np.int32)				
+	return index, index_batch
 
 
 

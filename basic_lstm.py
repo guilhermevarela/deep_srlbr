@@ -33,6 +33,7 @@ class BasicLSTM(object):
 		df_train= pd.read_csv('propbankbr/zhou_devel.csv')		
 		self.df_train= df_train[ZHOU_HEADER[:-1]]
 		self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].to_frame().as_matrix())
+		# import code; code.interact(local=dict(globals(), **locals()))			
 
 		#DEFINE VALIDATION DATA
 		df_valid= pd.read_csv('propbankbr/zhou_valid.csv')
@@ -41,10 +42,10 @@ class BasicLSTM(object):
 
 		#DEFINE DATA PARAMS
 		self.hidden_sz=hidden_sz
-		self.vocab_sz= self.Ytrain.shape[0]		
+		self.vocab_sz= self.Ytrain.shape[1]		
 		self.n_examples_train= max(df_train['P_S'])
 		self.n_examples_valid= max(df_valid['P_S']) - self.n_examples_train
-		self.n_tokens= len(np.unique(df_train['P_S'].to_frame().as_matrix()))
+		self.n_tokens= len(np.unique(df_train['LEMMA'].to_frame().as_matrix()))
 		self.n_tuples= df_train.shape[0]
 
 		#Initialize cell
@@ -81,7 +82,7 @@ class BasicLSTM(object):
 
 		predict_op= self.forward_op(x, Wo, bo)
 		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=y))
-		train_op= tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(cost)
+		train_op= tf.train.RMSPropOptimizer(learning_rate=lr).minimize(cost_op)
 		
 		# Model evaluation
 		eval_op=   tf.equal(tf.argmax(predict_op,1), tf.argmax(y,1))
@@ -93,9 +94,9 @@ class BasicLSTM(object):
 			acc_total=0
 			for e in range(epochs):
 				#shuffle
-				idx, idxb= shuffle_by_proposition(self.df_train, batch_sz=batch_sz)
+				idx, idxb= shuffle_by_proposition(self.df_train, batch_sz=batch_sz)				
 				Xtrain=self.df_train.reindex(idx, copy=True).as_matrix()
-				Ytrain=shuffle_rows(Ytrain, idx)
+				Ytrain=shuffle_by_rows(self.Ytrain, idx)
 				for j in range(n_batch):
 					Xbatch=self._embedding_lookup(Xtrain[idxb[j]:idxb[j+1],:])
 					Ybatch=Ytrain[idxb[j]:idxb[j+1],:]
@@ -110,7 +111,7 @@ class BasicLSTM(object):
 					# 	)
 					_, acc, loss, one_hotpred= session.run(
 	    			[train_op, accuracy_op, cost_op, predict_op],
-	    			feed_dict={x: xbatch, y:Ybatch}            
+	    			feed_dict={x: Xbatch, y:Ybatch}            
 					)    
 					
 				loss_total += loss 
