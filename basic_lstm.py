@@ -5,7 +5,7 @@ Created on Jan 24, 2018
 	streamlining experiments
 
 '''
-from utils import onehot_encode
+from utils import onehot_encode, shuffle_by_proposition, shuffle_rows
 from gensim.models import KeyedVectors
 from gensim import corpora, models, similarities
 
@@ -26,12 +26,12 @@ class BasicLSTM(object):
 
 		#DEFINE TRAINING DATA
 		df_train= pd.read_csv('propbankbr/zhou_devel.csv')		
-		self.Xtrain= df_train[ZHOU_HEADER[:-1]]
+		self.df_train= df_train[ZHOU_HEADER[:-1]]
 		self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].as_dataframe().as_matrix())
 
 		#DEFINE VALIDATION DATA
 		df_valid= pd.read_csv('propbankbr/zhou_valid.csv')
-		self.Xvalid= df_valid[ZHOU_HEADER[:-1]]
+		self.Xvalid= self._embedding_lookup(df_valid[ZHOU_HEADER[:-1]])
 		self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].as_dataframe().as_matrix())
 
 		#DEFINE DATA PARAMS
@@ -51,7 +51,7 @@ class BasicLSTM(object):
 	def load():
 		raise NotImplementedError
 
-	def train(self, lr=1e-3, epochs=1000, batch_sz=500, display_step=100):
+	def train(self, lr=1e-3, epochs=100, batch_sz=500, display_step=100):
 		#DEFINE EXECUTION VARIABLES
 		n_batch= int(self.n_examples_train / batch_sz)
 		
@@ -59,12 +59,12 @@ class BasicLSTM(object):
 		print(header)
 		print('learning rate\t%0.8f' % lr)
 		print('epochs\t%0.0f' % epochs)
-		print('n examples train\t%0.0f' % epochs)
-		print('n examples valid\t%0.0f' % epochs)
-		print('n examples train\t%0.0f' % epochs)
-		print('n examples valid\t%0.0f' % epochs)
-		print('batch size\t%0.0f' % epochs)
-		print('n batches\t%0.0f' % epochs)
+		print('n examples train\t%d' % self.n_examples_train)
+		print('n examples valid\t%d' % self.n_examples_valid)
+		print('n tokens\t%d' % self.n_tokens)
+		print('n tuples\t%d' % self.n_tuples)
+		print('batch size\t%0.0f' % batch_sz)
+		print('n batches\t%0.0f' % n_batch)
 		print('#'*len(header))
 
 		#DEFINE TENSORFLOW VARIABLES
@@ -81,8 +81,51 @@ class BasicLSTM(object):
 		
 		# Model evaluation
 		eval_op=   tf.equal(tf.argmax(predict_op,1), tf.argmax(y,1))
-		accuracy_op= tf.reduce_mean(tf.cast(correct_pred, tf.float32))		
+		accuracy_op= tf.reduce_mean(tf.cast(eval_op, tf.float32))		
 
+		with tf.Session() as session:
+			step=0
+			loss_total=0
+			acc_total=0
+			for e in range(epochs):
+				#shuffle
+				idx, idxb= shuffle_by_proposition(self.df_train, batch_sz=batch_sz)
+				Xtrain=self.df_train.reindex(idx, copy=True).as_matrix()
+				Ytrain=shuffle_rows(Ytrain, idx)
+				for j in range(n_batch):
+					Xbatch=Xtrain[idxb[j]:idxb[j+1],:]
+					Ybatch=Ytrain[idxb[j]:idxb[j+1],:]
+					nb= Xbatch.shape[0]
+					xbatch= np.zeros((nb, self.input_sz), dtype=np.int32)
+					for b in range(nb):
+						xbatch[np,:] =np.concatenate(
+								( token2vec(Xbatch[nb, 6]),
+									token2vec(Xbatch[nb, 7]),
+									np.array([Xbatch[nb, 8]])
+								), axis=0
+						)
+					_, acc, loss, one_hotpred= session.run(
+	    			[train_op, accuracy_op, cost_op, predict_op],
+	    			feed_dict={x: xbatch, y:Ybatch}            
+					)    
+					
+				loss_total += loss 
+				acc_total  += acc 
+				
+				if (step +1) % display_step==0:
+					validation_loss, validation_acc = session.run(
+						[accuracy_op, cost_op],
+	    			feed_dict={x: self.Xvalid, y: self.Yvalid}            
+					)
+					msg= 'Iter=' + str(step+1) 
+					msg+= ', Average Insample-Loss=' + "{:.6f}".format(loss_total/display_step) 
+					msg+= ', Average Insample-Accuracy=' + "{:.2f}".format(100*acc_total/display_step)
+					msg+= ',  Outsample-Loss=' + "{:.6f}".format(validation_loss) 
+					msg+= ',  Outsample-Accuracy=' + "{:.2f}".format(100*validation_acc)
+					print(msg)
+					acc_total=0
+					loss_total=0						
+				step+=1	
 		
 
 	def eval():
@@ -102,5 +145,17 @@ class BasicLSTM(object):
 		#we only want the last output
 		return tf.matmul(outputs[-1], Wo) + bo
 			
+	def _embedding_lookup(X):	
+		N= X.shape 
+		Xout= np.zeros((N, self.input_sz), dtype=np.int32)
+		for n in range(n):
+			Xout[np,:] =np.concatenate(
+				( token2vec(X[nb, 6]),
+					token2vec(X[nb, 7]),
+					np.array([X[nb, 8]])
+				), axis=0
+			)
+		return Xout
+
 
 	
