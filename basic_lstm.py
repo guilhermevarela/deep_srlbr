@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np 
 
 import tensorflow as tf 
-from tensorflow.contrib import rnn 
+
 
 ZHOU_HEADER=[
 	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
@@ -48,7 +48,7 @@ class BasicLSTM(object):
 		self.n_tuples= df_train.shape[0]
 
 		#Initialize cell
-		self.rnn_cell= rnn.core_rnn_cell.BasicLSTMCell(hidden_sz)
+		self.B_LSTM= tf.nn.rnn_cell.BasicLSTMCell(hidden_sz)
 
 
 
@@ -142,8 +142,8 @@ class BasicLSTM(object):
 		x = tf.split(x, n_input, 1)
 		
 		#generate prediction 
-		lstm_cell= rnn.MultiRNNCell([self.rnn_cell])
-		outputs, states= rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
+		lstm_cell= tf.nn.rnn_cell.MultiRNNCell([self.B_LSTM])
+		outputs, states= tf.nn.nn_cell.static_rnn(lstm_cell, x, dtype=tf.float32)
 
 		#there are n_input outputs but
 		#we only want the last output
