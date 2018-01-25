@@ -43,8 +43,8 @@ class BasicLSTM(object):
 		self.hidden_sz=hidden_sz
 		self.vocab_sz= self.Ytrain.shape[0]		
 		self.n_examples_train= max(df_train['P_S'])
-		self.n_examples_valid= max(df_valid['P_S'])
-		self.n_tokens= np.unique(df_train['P_S'].to_frame().as_matrix())
+		self.n_examples_valid= max(df_valid['P_S']) - self.n_examples_train
+		self.n_tokens= len(np.unique(df_train['P_S'].to_frame().as_matrix()))
 		self.n_tuples= df_train.shape[0]
 
 		#Initialize cell
@@ -139,11 +139,11 @@ class BasicLSTM(object):
 		raise NotImplementedError
 
 	def forward_op(self, x, Wo, bo):
-		x = tf.split(x, n_input, 1)
+		x = tf.split(x, self.input_sz, 1)
 		
 		#generate prediction 
 		lstm_cell= tf.nn.rnn_cell.MultiRNNCell([self.B_LSTM])
-		outputs, states= tf.nn.nn_cell.static_rnn(lstm_cell, x, dtype=tf.float32)
+		outputs, states= tf.nn.static_rnn(lstm_cell, x, dtype=tf.float32)
 
 		#there are n_input outputs but
 		#we only want the last output
