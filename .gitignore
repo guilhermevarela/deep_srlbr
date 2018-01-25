@@ -1,4 +1,5 @@
 *glove_s50.txt
+*.pyc
 
 propbankbr/*.txt
 propbankbr/*.conll

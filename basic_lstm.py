@@ -32,13 +32,14 @@ class BasicLSTM(object):
 		#DEFINE TRAINING DATA
 		df_train= pd.read_csv('propbankbr/zhou_devel.csv')		
 		self.df_train= df_train[ZHOU_HEADER[:-1]]
-		self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].to_frame().as_matrix())
+		# self.Ytrain= onehot_encode(df_train[ZHOU_HEADER[-1]].to_frame().as_matrix())
 		# import code; code.interact(local=dict(globals(), **locals()))			
 
 		#DEFINE VALIDATION DATA
 		df_valid= pd.read_csv('propbankbr/zhou_valid.csv')
 		self.Xvalid= self._embedding_lookup(df_valid[ZHOU_HEADER[:-1]].as_matrix())
-		self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].to_frame().as_matrix())
+		# self.Yvalid= onehot_encode(df_valid[ZHOU_HEADER[-1]].to_frame().as_matrix())
+		self.Ytrain, self.Yvalid= self._output_preprocess(df_train, df_valid)	
 
 		#DEFINE DATA PARAMS
 		self.hidden_sz=hidden_sz
@@ -56,7 +57,7 @@ class BasicLSTM(object):
 	def load(self):
 		raise NotImplementedError
 
-	def train(self, lr=1e-3, epochs=100, batch_sz=500, display_step=100):
+	def train(self, lr=1e-3, epochs=100, batch_sz=500, display_step=10):
 		#DEFINE EXECUTION VARIABLES
 		n_batch= int(self.n_examples_train / batch_sz)
 		
@@ -88,7 +89,10 @@ class BasicLSTM(object):
 		eval_op=   tf.equal(tf.argmax(predict_op,1), tf.argmax(y,1))
 		accuracy_op= tf.reduce_mean(tf.cast(eval_op, tf.float32))		
 
+		#Initialization
+		init= tf.global_variables_initializer()    	
 		with tf.Session() as session:
+			session.run(init)
 			step=0
 			loss_total=0
 			acc_total=0
@@ -101,14 +105,7 @@ class BasicLSTM(object):
 					Xbatch=self._embedding_lookup(Xtrain[idxb[j]:idxb[j+1],:])
 					Ybatch=Ytrain[idxb[j]:idxb[j+1],:]
 					nb= Xbatch.shape[0]
-					# xbatch= np.zeros((nb, self.input_sz), dtype=np.int32)
-					# for b in range(nb):
-					# 	xbatch[np,:] =np.concatenate(
-					# 			( token2vec(Xbatch[nb, 6]),
-					# 				token2vec(Xbatch[nb, 7]),
-					# 				np.array([Xbatch[nb, 8]])
-					# 			), axis=0
-					# 	)
+
 					_, acc, loss, one_hotpred= session.run(
 	    			[train_op, accuracy_op, cost_op, predict_op],
 	    			feed_dict={x: Xbatch, y:Ybatch}            
@@ -118,15 +115,15 @@ class BasicLSTM(object):
 				acc_total  += acc 
 				
 				if (step +1) % display_step==0:
-					validation_loss, validation_acc = session.run(
+					valid_acc, valid_loss = session.run(
 						[accuracy_op, cost_op],
 	    			feed_dict={x: self.Xvalid, y: self.Yvalid}            
 					)
 					msg= 'Iter=' + str(step+1) 
 					msg+= ', Average Insample-Loss=' + "{:.6f}".format(loss_total/display_step) 
 					msg+= ', Average Insample-Accuracy=' + "{:.2f}".format(100*acc_total/display_step)
-					msg+= ',  Outsample-Loss=' + "{:.6f}".format(validation_loss) 
-					msg+= ',  Outsample-Accuracy=' + "{:.2f}".format(100*validation_acc)
+					msg+= ',  Outsample-Loss=' + "{:.6f}".format(valid_loss) 
+					msg+= ',  Outsample-Accuracy=' + "{:.2f}".format(100*valid_acc)
 					print(msg)
 					acc_total=0
 					loss_total=0						
@@ -161,6 +158,13 @@ class BasicLSTM(object):
 				), axis=0
 			)
 		return Xout
+
+	def _output_preprocess(self, df_train, df_valid):	
+		df = pd.concat((df_train, df_valid), axis=0)
+		Y  = onehot_encode(df[ZHOU_HEADER[-1]].to_frame().as_matrix())
+		
+		Ytrain, Yvalid= Y[:df_train.shape[0],:],Y[-df_valid.shape[0]:,:]
+		return Ytrain, Yvalid
 
 
 	
