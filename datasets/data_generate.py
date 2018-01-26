@@ -10,7 +10,7 @@ from data_transform import *
 from gensim.models import KeyedVectors
 
 import tensorflow as tf 
-import pickle
+
 
 
 

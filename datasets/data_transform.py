@@ -10,26 +10,6 @@ import numpy as np
 import tensorflow as tf 
 
 
-def idx2embedding(word2idx, word2vec):
-	sz_embedding=len(word2vec['unk'])
-	sz_vocab=max(word2idx.values())+1
-	embedding= 	np.zeros((sz_vocab, sz_embedding), dtype=np.float32)
-	for word, idx in word2idx.items():
-		embedding[idx]=token2vec(word, word2vec)
-	return embedding
-
-def idx2onehot(word2idx, word2vec):	
-	sz_vocab=max(word2idx.values())+1
-	onehot= np.eye(sz_vocab, dtype=np.int32)	
-	return onehot
-
-def token2vec(token, w2v):
-	try:
-		vec = w2v[token]
-	except KeyError:
-		vec = w2v['unk']
-	return vec 
-
 # def proposition2sequence_examples(df, input_vocab=[], output_vocab=[], col_tokens=['LEMMA', 'M_R'], col_labels=['ARG']):
 # 	if not(vocab):
 # 		input_vocab= extract_vocab(df, column='LEMMA')
