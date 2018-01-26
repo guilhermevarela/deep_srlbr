@@ -13,7 +13,7 @@ import numpy as np
 from utils import onehot_encode
 
 import tensorflow as tf
-from tensorflow.contrib import rnn 
+# from tensorflow.contrib import rnn 
 
 if __name__ == '__main__':
 	w2v = KeyedVectors.load_word2vec_format('datasets/glove_s50.txt', unicode_errors="ignore")
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 	def cell():
 		#1-layer LSTM with n_hidden units.
-		return rnn.core_rnn_cell.BasicLSTMCell(n_hidden)
+		return tf.nn.rnn_cell.BasicLSTMCell(n_hidden)
 
 
 	def RNN(x, weights, biases):
@@ -75,8 +75,8 @@ if __name__ == '__main__':
 
 		rnn_cell=cell()
 		#generate prediction 
-		lstm_cell= rnn.MultiRNNCell([rnn_cell])
-		outputs, states= rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
+		lstm_cell= tf.nn.rnn_cell.MultiRNNCell([rnn_cell])
+		outputs, states= tf.nn.static_rnn(lstm_cell, x, dtype=tf.float32)
 
 		#there are n_input outputs but
 		#we only want the last output

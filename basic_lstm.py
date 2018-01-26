@@ -81,7 +81,7 @@ class BasicLSTM(object):
 		x = tf.placeholder(tf.float32, shape=(None, self.input_sz), name='x')	
 		y = tf.placeholder(tf.float32, shape=(None, self.vocab_sz), name='y')
 
-		predict_op= self.forward_op(x, Wo, bo)
+		predict_op= self.predict(x, Wo, bo)
 		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=y))
 		train_op= tf.train.RMSPropOptimizer(learning_rate=lr).minimize(cost_op)
 		
@@ -133,8 +133,10 @@ class BasicLSTM(object):
 	def eval():
 		raise NotImplementedError
 
-	def predict():		
+	@property
+	def predict(self):		
 		raise NotImplementedError
+	
 
 	def forward_op(self, x, Wo, bo):
 		x = tf.split(x, self.input_sz, 1)
