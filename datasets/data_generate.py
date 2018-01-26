@@ -12,7 +12,7 @@ from gensim.models import KeyedVectors
 import tensorflow as tf 
 import pickle
 
-from data_propbank import propbankbr_persist, propbankbr_parse2, propbankbr_split
+
 
 if __name__== '__main__':
 	#Load data

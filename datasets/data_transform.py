@@ -86,11 +86,7 @@ def data_dict2word2idx(data_dict, key='LEMMA'):
 	vocab_sz= len(vocab)
 	return dict(zip(sorted(vocab),range(vocab_sz)))
 
-def df2word2idx(df, column='LEMMA'):		
-	vocab= list(df.drop_duplicates(subset=column)[column])
-	vocab= list(map(str.lower, vocab))
-	vocab_sz= len(vocab)
-	return dict(zip(sorted(vocab),range(vocab_sz)))
+
 
 
 

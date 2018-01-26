@@ -12,6 +12,7 @@ import random
 import pandas as pd 
 import numpy as np 
 import re
+import os.path
 
 PROPBANKBR_PATH='conll/'
 TARGET_PATH='csvs/'
@@ -71,6 +72,15 @@ MAPPER= {
 	}
 }
 
+def propbankbr_lazyload(dataset_name='zhou'):
+	dataset_path= TARGET_PATH + '/{}.csv'.format(dataset_name)
+	if os.path.isfile(dataset_path):
+		df= pd.read_csv(dataset_path)		
+	else:
+		df= propbankbr_parser2()
+		propbankbr_persist(df, split=True, dataset_name=dataset_name)		  
+	return df 
+		
 def propbankbr_persist(df, split=True, dataset_name='zhou'):
 	df.to_csv(TARGET_PATH + '/{}.csv'.format(dataset_name))
 	if split: 
