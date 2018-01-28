@@ -23,7 +23,7 @@ def read_and_decode(filename_queue):
 			'PRED':tf.FixedLenFeature([], tf.int64)			
 		},
 		sequence_features={
-			'LEMMA':tf.VarLenFeature([], tf.int64)
+			'LEMMA': tf.VarLenFeature(tf.int64)
 			# 'M_R':tf.VarLenFeature([], tf.int64),
 			# 'target':tf.VarLenFeature([], tf.int64),		
 		}
@@ -35,31 +35,32 @@ def read_and_decode(filename_queue):
 
 
 
-	# length= 	 tf.cast(context_features['length'], tf.int32)	
+	lemma= 	 tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
 	# print(length)
 	# predicate= tf.constant(features['PRED'], tf.int32)	
-	return length, predicate 
+	return length, predicate, lemma 
 
 if __name__== '__main__':
 	filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
 	
-	length, predicate= read_and_decode(filename_queue)	
+	length, predicate, lemma= read_and_decode(filename_queue)	
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
 	)
 
-	
+
 	with tf.Session() as session: 
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
 
-		for i in range(3):
+		for i in range(5):
 			# length, predicate= session.run([length, predicate])
-			l, p = session.run([length, predicate])
-			print(l)
-			print(p)
+			l, p, lem = session.run([length, predicate, lemma])
+			print('length',l)
+			print('predicate',p)
+			print('lemma',lem)
 
 		coord.request_stop()
 		coord.join(threads)
