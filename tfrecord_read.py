@@ -47,15 +47,17 @@ def read_and_decode(filename_queue):
 	return length, predicate, lemma, mr, target 
 
 if __name__== '__main__':
-	filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
-	
-	length, predicate, idx_lemma, mr, target= read_and_decode(filename_queue)	
-	
-	word2idx, _embeddings= embed_input_lazyload()		
+		word2idx, _embeddings= embed_input_lazyload()		
 	embeddings= tf.constant(_embeddings.tolist(), shape=(len(_embeddings),50), dtype=tf.float32)
 	
+	filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
+	
+	length, idx_pred, idx_lemma, M_R, target= read_and_decode(filename_queue)	
+		
 
-	X1 = tf.nn.embedding_lookup(embeddings, idx_lemma)
+	LEMMA = tf.nn.embedding_lookup(embeddings, idx_lemma)
+	PRED  = tf.nn.embedding_lookup(embeddings, idx_pred)
+
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
@@ -67,13 +69,13 @@ if __name__== '__main__':
 
 		for i in range(1):
 			# length, predicate= session.run([length, predicate])
-			l, p, X1, m, t = session.run([length, predicate, X1, mr, target])
+			l, PRED, LEMMA, M_R, t = session.run([length, PRED, LEMMA, M_R, target])
 			
 
 			print('length',l)
-			print('predicate',p)
-			print('lemma',X1)
-			print('mr', m)
+			print('predicate',PRED.shape)
+			print('lemma',LEMMA.shape)
+			print('mr', M_R.shape)
 			print('target',t)
 
 
