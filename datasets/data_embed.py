@@ -7,10 +7,11 @@ Adds and embedding layer over the raw data generating
 	* input 	vocabulary word2idx 
 	* target  vocabulary word2idx 
 	* embedding over input
-	* onehot enconding over output
+	* klass_ind enconding over output
 
 '''
 from data_propbankbr import propbankbr_lazyload
+from gensim.models import KeyedVectors
 
 import pickle
 import numpy as np 
@@ -20,17 +21,9 @@ import os.path
 EMBEDDING_PATH='embeddings/'
 TARGET_PATH='training/pre/00/'
 
-# def propbankbr_lazyload(dataset_name='zhou'):
-# 	dataset_path= TARGET_PATH + '/{}.csv'.format(dataset_name)
-# 	if os.path.isfile(dataset_path):
-# 		df= pd.read_csv(dataset_path)		
-# 	else:
-# 		df= propbankbr_parser2()
-# 		propbankbr_persist(df, split=True, dataset_name=dataset_name)		  
-# 	return df 
 
-def embed_input_lazyload(w2i_dataset_name='input_word2idx', embedding_dataset_name='embedding'):
-	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'
+def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='embeddings'):
+	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'	
 	if os.path.isfile(dataset_path):
 		pickle_in = open(dataset_path,"rb")
 		word2idx = pickle.load(pickle_in)
@@ -50,30 +43,30 @@ def embed_input_lazyload(w2i_dataset_name='input_word2idx', embedding_dataset_na
 		
 	return word2idx, embeddings	
 
-def embed_output_lazyload(w2i_dataset_name='output_word2idx', onehot_dataset_name='onehot'):
-	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'
+def embed_output_lazyload(w2i_dataset_name='klass2idx', klass_ind_dataset_name='klass_ind'):
+	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'	
 	if os.path.isfile(dataset_path):
 		pickle_in = open(dataset_path,"rb")
 		word2idx = pickle.load(pickle_in)
 		pickle_in.close()
 	else:
 		deep_df= propbankbr_lazyload(dataset_name='zhou')
-		word2idx = df2word2idx(deep_df, col2tokenize='LABEL')				
+		word2idx = df2word2idx(deep_df, col2tokenize='LABEL')						
 		embed_word2idx_persist(word2idx, dataset_name=w2i_dataset_name)		
 
-	dataset_path= TARGET_PATH + onehot_dataset_name + '.npy'
+	dataset_path= TARGET_PATH + klass_ind_dataset_name + '.npy'
 	if os.path.isfile(dataset_path):
-		onehot=np.load(dataset_path)
+		klass_ind=np.load(dataset_path)
 	else:
 		word2vec= embed_word2vec(dataset_name='glove_s50')		
-		onehot= idx2onehot(word2idx, word2vec)
-		embed_embedding_persist(onehot, dataset_name=onehot_dataset_name)		
+		klass_ind= idx2klass_ind(word2idx, word2vec)
+		embed_embedding_persist(klass_ind, dataset_name=klass_ind_dataset_name)		
 		
-	return word2idx, onehot
+	return word2idx, klass_ind
 
 
 def embed_word2vec(dataset_name='glove_s50'):
-	embedding_path=EMBEDDING_PATH + dataset_name
+	embedding_path=EMBEDDING_PATH + dataset_name + '.txt'
 	word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")	
 	return word2vec	
 
@@ -102,10 +95,10 @@ def idx2embedding(word2idx, word2vec):
 		embedding[idx]=token2vec(word, word2vec)
 	return embedding	
 
-def idx2onehot(word2idx, word2vec):	
+def idx2klass_ind(word2idx, word2vec):	
 	sz_vocab=max(word2idx.values())+1
-	onehot= np.eye(sz_vocab, dtype=np.int32)	
-	return onehot
+	klass_ind= np.eye(sz_vocab, dtype=np.int32)	
+	return klass_ind
 
 def token2vec(token, w2v):
 	try:
@@ -116,19 +109,12 @@ def token2vec(token, w2v):
 
 
 if __name__== '__main__':
-	# deep_df= propbankbr_lazyload(dataset_name='zhou')
-	# word2vec = embed_word2vec(dataset_name='glove_s50')
 
-	#perform data
-	# word2idx = df2word2idx(deep_df, col2tokenize='LEMMA')
-	# embedding= idx2embedding(word2idx, word2vec)
-	# embed_word2idx_persist(word2idx)
-	# embed_embedding_persist(embedding)
-	input_word2idx, embeddings = embed_input_lazyload() 
-	print('# tokens', len(input_word2idx.keys()))
+	word2idx, embeddings = embed_input_lazyload() 
+	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape', embeddings.shape)
 
-	output_word2idx, onehot = embed_output_lazyload() 
-	print('# classes', len(output_word2idx.keys()))
-	print('onehot shape', onehot.shape)
+	klass2idx, klass_ind = embed_output_lazyload() 
+	print('# classes', len(klass2idx.keys()))
+	print('klass_ind shape', klass_ind.shape)
 	
