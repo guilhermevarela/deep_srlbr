@@ -67,7 +67,7 @@ if __name__== '__main__':
 
 		for i in range(1):
 			# length, predicate= session.run([length, predicate])
-			l, p, X1, m, idx_label, t = session.run([length, predicate, X1, mr, target])
+			l, p, X1, m, t = session.run([length, predicate, X1, mr, target])
 			
 
 			print('length',l)
