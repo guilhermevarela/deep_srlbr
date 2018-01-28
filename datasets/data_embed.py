@@ -3,6 +3,8 @@ Created on Jan 26, 2018
 
 @author: Varela
 
+This module should be called from project root
+
 Adds and embedding layer over the raw data generating
 	* input 	vocabulary word2idx 
 	* target  vocabulary word2idx 
@@ -10,7 +12,7 @@ Adds and embedding layer over the raw data generating
 	* klass_ind enconding over output
 
 '''
-from data_propbankbr import propbankbr_lazyload
+from datasets.data_propbankbr import propbankbr_lazyload
 from gensim.models import KeyedVectors
 
 import pickle
@@ -18,8 +20,8 @@ import numpy as np
 
 import os.path
 
-EMBEDDING_PATH='embeddings/'
-TARGET_PATH='training/pre/00/'
+EMBEDDING_PATH='datasets/embeddings/'
+TARGET_PATH='datasets/training/pre/00/'
 
 
 def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='embeddings'):

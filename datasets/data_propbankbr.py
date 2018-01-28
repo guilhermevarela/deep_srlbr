@@ -14,8 +14,8 @@ import numpy as np
 import re
 import os.path
 
-PROPBANKBR_PATH='conll/'
-TARGET_PATH='csvs/'
+PROPBANKBR_PATH='datasets/conll/'
+TARGET_PATH='datasets/csvs/'
 #MAPS the filename and output fields to be harvested
 CONST_HEADER=[
 	'ID','FORM','LEMMA','GPOS','MORF', 'IGN1', 'IGN2', 

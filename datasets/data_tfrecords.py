@@ -11,8 +11,8 @@ Created on Jan 25, 2018
 import pandas as pd 
 import numpy as np 
 
-from data_propbankbr import  propbankbr_lazyload
-from data_embed import embed_input_lazyload, embed_output_lazyload
+from datasets.data_propbankbr import  propbankbr_lazyload
+from datasets.data_embed import embed_input_lazyload, embed_output_lazyload
 
 import tensorflow as tf 
 
