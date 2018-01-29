@@ -54,13 +54,13 @@ def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klas
 	LEMMA  = tf.nn.embedding_lookup(embeddings, idx_lemma)
 	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
 	PRED   = tf.nn.embedding_lookup(embeddings, idx_pred)
-
-	Y= tf.nn.embedding_lookup(klass_ind, targets)
+	
+	Y= tf.squeeze(tf.nn.embedding_lookup(klass_ind, targets),1 )
 
 	M_R= tf.expand_dims(mr, 2)
 
-	X= tf.concat((LEMMA, PRED, M_R), 2)
-	return X, Y
+	X= tf.squeeze( tf.concat((LEMMA, PRED, M_R), 2),1) 
+	return X, Y, length
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
@@ -68,19 +68,19 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 
 	length,  idx_pred, idx_lemma,  mr, targets= read_and_decode(filename_queue)	
 
-	X, Y = process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind)
+	X, Y, l  = process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind)
 
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	example_batch, target_batch=tf.train.batch(
-		[X, Y], 
+	example_batch, target_batch, length_batch=tf.train.batch(
+		[X, Y, l], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True		
 	)
-	return example_batch, target_batch
+	return example_batch, target_batch, length_batch
 
 
 
@@ -91,7 +91,7 @@ if __name__== '__main__':
 	embeddings= tf.constant(_embeddings.tolist(), shape=(len(_embeddings),50), dtype=tf.float32)
 	klass_ind= tf.constant(_klass_ind.tolist(), shape=_klass_ind.shape, dtype=tf.float32)
 
-	X, Y = input_pipeline([tfrecords_filename], 100, 1, embeddings, klass_ind)
+	inputs, targets, length_batch = input_pipeline([tfrecords_filename], 200, 1, embeddings, klass_ind)
 	# filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
 	
 	# length,  idx_pred, idx_lemma,  M_R, targets= read_and_decode(filename_queue)	
@@ -117,9 +117,9 @@ if __name__== '__main__':
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
 
-		for i in range(1):
+		for i in range(2):
 		
-			X, Y =session.run([X, Y])
+			X, Y, length_batch =session.run([inputs, targets, length_batch])
 			
 
 			# print('length',T)
@@ -131,6 +131,7 @@ if __name__== '__main__':
 			# print('mr', M_R.shape)
 			print('X',X.shape)
 			print('Y',Y.shape)
+			print('S',length_batch.shape)
 			
 
 
