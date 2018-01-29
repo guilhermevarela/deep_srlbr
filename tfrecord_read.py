@@ -11,7 +11,7 @@ import tensorflow as tf
 from datasets.data_embed import embed_input_lazyload 
 
 TARGET_PATH='datasets/training/pre/00/'
-tfrecords_filename= TARGET_PATH + 'devel.tfrecords'
+tfrecords_filename= TARGET_PATH + 'devel2.tfrecords'
 
 def read_and_decode(filename_queue):
 	reader= tf.TFRecordReader()
@@ -21,31 +21,31 @@ def read_and_decode(filename_queue):
 	context_features, sequence_features= tf.parse_single_sequence_example(
 		serialized_example,
 		context_features={
-			'length': tf.FixedLenFeature([], tf.int64),
-			'PRED':tf.FixedLenFeature([], tf.int64)			
+			'T': tf.FixedLenFeature([], tf.int64)			
 		},
 		sequence_features={
+			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
 			'M_R':tf.VarLenFeature(tf.int64),
-			'target':tf.VarLenFeature(tf.int64)		
+			'targets':tf.VarLenFeature(tf.int64)		
 		}
 	)
 
 	# INT<1>
-	length= 	 	 tf.cast(context_features['length'], tf.int32)	
+	length= 	 	 tf.cast(context_features['T'], tf.int32)	
+	
+
 	# INT<1>
-	predicate= 	 tf.cast(context_features['PRED'], tf.int32)	
-
-
+	predicate= 	 tf.sparse_tensor_to_dense(sequence_features['PRED'])	
 	#lemma<TIME,>
 	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
 	#mr<TIME,> of zeros and ones
 	mr= 	 		tf.sparse_tensor_to_dense(sequence_features['M_R'])	
 	#target<TIME,> of integers
-	target= 	tf.sparse_tensor_to_dense(sequence_features['target'])	
+	targets= 	tf.sparse_tensor_to_dense(sequence_features['targets'])	
 
 
-	return length, predicate, lemma, mr, target 
+	return length, predicate, lemma, mr, targets 
 
 if __name__== '__main__':
 	word2idx, _embeddings= embed_input_lazyload()		
@@ -62,9 +62,9 @@ if __name__== '__main__':
 	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
 	PRED  = tf.nn.embedding_lookup(embeddings, idx_pred)
 
-	NORM_PRED=tf.reshape(PRED,[1,50])
+	# NORM_PRED=tf.reshape(PRED,[1,50])
 
-	NORM_M_R= tf.expand_dims(M_R,2)
+	# NORM_M_R= tf.expand_dims(M_R,2)
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
@@ -75,14 +75,14 @@ if __name__== '__main__':
 		threads= tf.train.start_queue_runners(coord=coord)
 
 		for i in range(1):
-			l, NORM_PRED, PRED, LEMMA, NORM_M_R, M_R, t = session.run([length, NORM_PRED, PRED, LEMMA, NORM_M_R, M_R, target])
+			l, PRED, LEMMA, M_R, t = session.run([length, PRED, LEMMA, M_R, target])
 			
 
 			print('length',l)
 			print('predicate',PRED.shape)
-			print('norm predicate',NORM_PRED.shape)
+			# print('norm predicate',NORM_PRED.shape)
 			print('lemma',LEMMA.shape)
-			print('norm m_r',NORM_M_R.shape)
+			# print('norm m_r',NORM_M_R.shape)
 			print('mr', M_R.shape)
 			print('target',t)
 

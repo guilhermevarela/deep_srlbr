@@ -16,6 +16,8 @@ import os.path
 
 PROPBANKBR_PATH='datasets/conll/'
 TARGET_PATH='datasets/csvs/'
+# PROPBANKBR_PATH='/conll/'
+# TARGET_PATH='/csvs/'
 #MAPS the filename and output fields to be harvested
 CONST_HEADER=[
 	'ID','FORM','LEMMA','GPOS','MORF', 'IGN1', 'IGN2', 
@@ -287,8 +289,8 @@ def propbankbr_const_read():
 
 	
 	filename= PROPBANKBR_PATH + 'PropBankBr_v1.1_Const.conll.txt'
-
-	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str) 	
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str)
 	
 	del df['IGN1'] 
 	del df['IGN2'] 
