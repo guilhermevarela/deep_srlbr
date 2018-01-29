@@ -70,7 +70,17 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 
 	X, Y = process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind)
 
-	return X, Y 	
+	min_after_dequeue = 10000
+	capacity = min_after_dequeue + 3 * batch_size
+
+	# https://www.tensorflow.org/api_docs/python/tf/train/batch
+	example_batch, target_batch=tf.train.batch(
+		[X, Y], 
+		batch_size=batch_size, 
+		capacity=capacity, 
+		dynamic_pad=True		
+	)
+	return example_batch, target_batch
 
 
 
