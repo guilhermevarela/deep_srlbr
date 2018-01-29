@@ -31,33 +31,40 @@ def read_and_decode(filename_queue):
 		}
 	)
 
-	# print(context_features['length'].shape())
+	# INT<1>
 	length= 	 	 tf.cast(context_features['length'], tf.int32)	
+	# INT<1>
 	predicate= 	 tf.cast(context_features['PRED'], tf.int32)	
 
 
-	#tf.VarLenFeatures are mapped to dense arrays
+	#lemma<TIME,>
 	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
+	#mr<TIME,> of zeros and ones
 	mr= 	 		tf.sparse_tensor_to_dense(sequence_features['M_R'])	
+	#target<TIME,> of integers
 	target= 	tf.sparse_tensor_to_dense(sequence_features['target'])	
 
 
-	# print(length)
-	# predicate= tf.constant(features['PRED'], tf.int32)	
 	return length, predicate, lemma, mr, target 
 
 if __name__== '__main__':
-		word2idx, _embeddings= embed_input_lazyload()		
+	word2idx, _embeddings= embed_input_lazyload()		
+
 	embeddings= tf.constant(_embeddings.tolist(), shape=(len(_embeddings),50), dtype=tf.float32)
-	
+
 	filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
 	
 	length, idx_pred, idx_lemma, M_R, target= read_and_decode(filename_queue)	
 		
 
+	#LEMMA<TIME,1,EMBEDDING_SIZE> --> <TIME,EMBEDDING_SIZE>
 	LEMMA = tf.nn.embedding_lookup(embeddings, idx_lemma)
+	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
 	PRED  = tf.nn.embedding_lookup(embeddings, idx_pred)
 
+	NORM_PRED=tf.reshape(PRED,[1,50])
+
+	NORM_M_R= tf.expand_dims(M_R,2)
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
@@ -68,13 +75,14 @@ if __name__== '__main__':
 		threads= tf.train.start_queue_runners(coord=coord)
 
 		for i in range(1):
-			# length, predicate= session.run([length, predicate])
-			l, PRED, LEMMA, M_R, t = session.run([length, PRED, LEMMA, M_R, target])
+			l, NORM_PRED, PRED, LEMMA, NORM_M_R, M_R, t = session.run([length, NORM_PRED, PRED, LEMMA, NORM_M_R, M_R, target])
 			
 
 			print('length',l)
 			print('predicate',PRED.shape)
+			print('norm predicate',NORM_PRED.shape)
 			print('lemma',LEMMA.shape)
+			print('norm m_r',NORM_M_R.shape)
 			print('mr', M_R.shape)
 			print('target',t)
 
