@@ -11,7 +11,7 @@ import tensorflow as tf
 from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
 
 TARGET_PATH='datasets/training/pre/00/'
-tfrecords_filename= TARGET_PATH + 'devel.tfrecords'
+tfrecords_filename= TARGET_PATH + 'devel2.tfrecords'
 
 def read_and_decode(filename_queue):
 	reader= tf.TFRecordReader()
@@ -41,7 +41,7 @@ def read_and_decode(filename_queue):
 
 	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
 	#mr<TIME,> of zeros and ones	
-	mr= 	 		tf.cast( tf.sparse_tensor_to_dense(sequence_features['M_R']), dtype=tf.float32)	
+	mr= 	 		tf.sparse_tensor_to_dense(sequence_features['M_R'])	
 	#target<TIME,> of integers
 	# targets_sparse= sequence_features['targets']
 	targets= 	tf.sparse_tensor_to_dense(sequence_features['targets'])	
@@ -68,10 +68,6 @@ if __name__== '__main__':
 
 	TARGET = tf.nn.embedding_lookup(klass_ind, targets)
 
-	M_R= tf.expand_dims(M_R, 2)
-
-	Xi= tf.concat((LEMMA, PRED, M_R), 2)
-
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
@@ -83,7 +79,7 @@ if __name__== '__main__':
 
 		for i in range(1):
 		
-			Xi, T, PRED, LEMMA,  M_R, TARGET =session.run([Xi, length, PRED, LEMMA,  M_R, TARGET])
+			T, PRED, LEMMA,  M_R, TARGET =session.run([length, PRED, LEMMA,  M_R, TARGET])
 			
 
 			print('length',T)
@@ -94,7 +90,6 @@ if __name__== '__main__':
 			
 			print('mr', M_R.shape)
 			print('target',TARGET.shape)
-			print('X',Xi.shape)
 
 
 		coord.request_stop()
