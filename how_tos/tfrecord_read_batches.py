@@ -11,7 +11,7 @@ import tensorflow as tf
 
 from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
 
-TARGET_PATH='datasets/training/pre/00/'
+TARGET_PATH='datasets/inputs/00/'
 tfrecords_filename= TARGET_PATH + 'devel.tfrecords'
 
 def read_and_decode(filename_queue):

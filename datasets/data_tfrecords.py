@@ -23,7 +23,7 @@ import tensorflow as tf
 # EMBEDDING_PATH='embeddings/'
 # TARGET_PATH='training/pre/00/'
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/training/pre/00/'
+TARGET_PATH='datasets/inputs/00/'
 
 
 def proposition2sequence_example(prop_dict, word2idx, klass2idx, sequence_keys=['PRED', 'LEMMA', 'M_R'], target_key=['LABEL']):

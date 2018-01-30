@@ -24,7 +24,7 @@ import numpy as np
 import os.path
 
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/training/pre/00/'
+TARGET_PATH='datasets/inputs/00/'
 
 
 def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='embeddings'):

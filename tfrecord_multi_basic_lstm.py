@@ -27,7 +27,8 @@ def read_and_decode(filename_queue):
 	_, serialized_example= reader.read(filename_queue)
 
 	# a serialized sequence example contains:
-	# *context_features.: which are hold constant along the whole sequence (ex: sequence length)
+	# *context_features.: which are hold constant along the whole sequence
+	#   	ex.: sequence_length
 	# *sequence_features.: features that change over sequence 
 	context_features, sequence_features= tf.parse_single_sequence_example(
 		serialized_example,
@@ -94,7 +95,7 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return example_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length, hidden_size, batch_size):		
+def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):		
 	'''
 		Computes forward propagation thru basic lstm cell
 
@@ -107,7 +108,7 @@ def forward(X, Wo, bo, sequence_length, hidden_size, batch_size):
 
 			sequence_length:[batch_size] tensor (int) carrying the size of each sequence 
 
-			hidden_size: [1] tensor (int) defining the hidden layer size
+			hidden_size: [n_hidden] tensor (int) defining the hidden layer size
 
 			batch_size: [1] tensor (int) the size of the batch
 
@@ -115,7 +116,9 @@ def forward(X, Wo, bo, sequence_length, hidden_size, batch_size):
 			Yo: [batch_size, max_time, klass_size] tensor
 
 	'''
-	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size, forget_bias=1.0)
+	basic_cell = tf.nn.rnn_cell.MultiRNNCell(
+		[tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0) 
+													for hsz in hidden_sizes ], state_is_tuple=True)
 
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.dynamic_rnn(
@@ -138,8 +141,8 @@ if __name__== '__main__':
 	FEATURE_SIZE=2*EMBEDDING_SIZE+1
 	lr=1e-4
 	BATCH_SIZE=200	
-	N_EPOCHS=100
-	HIDDEN_SIZE=512
+	N_EPOCHS=20
+	HIDDEN_SIZE=[256, 126]
 	DISPLAY_STEP=100
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -151,7 +154,7 @@ if __name__== '__main__':
 	inputs, targets, sequence_length = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
 	
 	#define variables / placeholders
-	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE, KLASS_SIZE], name='Wo')) 
+	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
 	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
 	
 
