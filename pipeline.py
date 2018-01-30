@@ -16,11 +16,11 @@ import tensorflow as tf
 # from tensorflow.contrib import rnn 
 
 if __name__ == '__main__':
-	w2v = KeyedVectors.load_word2vec_format('datasets/glove_s50.txt', unicode_errors="ignore")
+	w2v = KeyedVectors.load_word2vec_format('datasets/embeddings/glove_s50.txt', unicode_errors="ignore")
 	# import code; code.interact(local=dict(globals(), **locals()))			
 
-	df_train= pd.read_csv('propbankbr/zhou_devel.csv')
-	df_valid= pd.read_csv('propbankbr/zhou_valid.csv')
+	df_train= pd.read_csv('datasets/csvs/zhou_devel.csv')
+	df_valid= pd.read_csv('datasets/csvs/zhou_valid.csv')
 
 	Xtrain= df_train.as_matrix()
 	Ytrain= Xtrain[:,-1]

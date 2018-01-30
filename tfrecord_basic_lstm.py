@@ -84,8 +84,8 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return example_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo,  hidden_size):		
-	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size)
+def forward(X, Wo, bo):		
+	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(128, forget_bias=1.0)
 
 	outputs, states= tf.nn.dynamic_rnn(
 			cell=basic_cell, 
@@ -110,19 +110,14 @@ if __name__== '__main__':
 	inputs, targets, length_batch = input_pipeline([tfrecords_filename], batch_size, 1, embeddings, klass_ind)
 	
 	#define variables / placeholders
-	X = tf.placeholder(shape=(None,None,x_size), dtype=np.float32, name='X')
+	X = tf.placeholder(np.float32, shape=(None,None,x_size), name='X')
 	sequence_length = tf.placeholder(shape=(batch_size,), dtype=np.int32, name='sequence_length')
 
-	Wo = tf.Variable(tf.random_normal([hidden_size, klass_size]), name='Wo') 
-	bo = tf.Variable(tf.random_normal([klass_size]), name='bo') 
+	Wo = tf.Variable(tf.random_normal([hidden_size, klass_size], name='Wo')) 
+	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
 	
 
-	init_op = tf.group( 
-		tf.global_variables_initializer(),
-		tf.local_variables_initializer()
-	)
-
-	predict_op= forward(X, Wo, bo, hidden_size)
+	predict_op= forward(X, Wo, bo)
 	cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
 	optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
@@ -130,6 +125,12 @@ if __name__== '__main__':
 	success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
 	accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
 
+	#Initialization 
+	#must happen after every variable has been defined
+	init_op = tf.group( 
+		tf.global_variables_initializer(),
+		tf.local_variables_initializer()
+	)
 	with tf.Session() as session: 
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
