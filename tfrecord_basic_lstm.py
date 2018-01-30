@@ -112,26 +112,30 @@ def forward(X, Wo, bo, sequence_length):
 	return tf.matmul(outputs, tf.stack([Wo]*200)) + bo
 
 
-if __name__== '__main__':
-	hidden_size=128
-	klass_size=60
+if __name__== '__main__':	
+	KLASS_SIZE=60
+	
+	FEATURE_SIZE=2*EMBEDDING_SIZE+1
 	lr=1e-4
-	x_size=2*EMBEDDING_SIZE+1
-	batch_size=200
-	word2idx, _embeddings= embed_input_lazyload()		
-	klass2idx, _klass_ind= embed_output_lazyload()		
+	BATCH_SIZE=200	
+	N_EPOCHS=3
+	HIDDEN_SIZE=128
+	DISPLAY_STEP=20
 
-	embeddings= tf.constant(_embeddings.tolist(), shape=(len(_embeddings),50), dtype=tf.float32)
-	klass_ind= tf.constant(_klass_ind.tolist(), shape=_klass_ind.shape, dtype=tf.float32)
+	word2idx,  np_embeddings= embed_input_lazyload()		
+	klass2idx, np_klassind= embed_output_lazyload()		
 
-	inputs, targets, length_batch = input_pipeline([tfrecords_filename], batch_size, 1, embeddings, klass_ind)
+	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32)
+	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32)
+
+	inputs, targets, length_batch = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
 	
 	#define variables / placeholders
-	X = tf.placeholder(tf.float32, shape=(None,None,x_size), name='X')
-	sequence_length = tf.placeholder(shape=(batch_size,), dtype=np.int32, name='sequence_length')
+	X = tf.placeholder(tf.float32, shape=(None,None,FEATURE_SIZE), name='X')
+	sequence_length = tf.placeholder(shape=(BATCH_SIZE,), dtype=np.int32, name='sequence_length')
 
-	Wo = tf.Variable(tf.random_normal([hidden_size, klass_size], name='Wo')) 
-	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
+	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE, KLASS_SIZE], name='Wo')) 
+	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
 	
 
 	predict_op= forward(X, Wo, bo, sequence_length)
@@ -152,19 +156,23 @@ if __name__== '__main__':
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
+		step=0
 
 		try:
 			while not coord.should_stop():				
 				Xbatch, Ybatch, batch_lengths =session.run([inputs, targets, length_batch])
 
-				print('X',Xbatch.shape)
-				print('Y',Ybatch.shape)
-				print('S',batch_lengths.shape)
+				if step % DISPLAY_STEP ==0:					
+					print('X',Xbatch.shape)
+					print('Y',Ybatch.shape)
+					print('S',batch_lengths.shape)					
 
 				cost= session.run(
 					cost_op,
 					feed_dict={X: Xbatch, sequence_length: batch_lengths, targets: Ybatch}
 				)
+
+				step+=1
 				
 		except tf.errors.OutOfRangeError:
 			# import code; code.interact(local=dict(globals(), **locals()))			
