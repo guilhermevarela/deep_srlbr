@@ -84,7 +84,7 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return example_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo):		
+def forward(X, Wo, bo, sequence_length):		
 	'''
 		Computes forward propagation thru cell
 		IN
@@ -104,17 +104,12 @@ def forward(X, Wo, bo):
 	outputs, states= tf.nn.dynamic_rnn(
 			cell=basic_cell, 
 			inputs=X, 			
+			sequence_length=sequence_length,
 			dtype=tf.float32,
 			time_major=False
 		)
 
 	return tf.matmul(outputs, tf.stack([Wo]*200)) + bo
-
-# def batch_matmul(outputs,Wo,bo):
-# 	outputs2d =tf.reshape(outputs, [-1, 128])
-# 	ho= tf.matmul(outputs2d, Wo)+tf.tile(bo, )
-# 	ho= tf.reshape(ho, [200, 60])
-# 	return ho
 
 
 if __name__== '__main__':
@@ -139,7 +134,7 @@ if __name__== '__main__':
 	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
 	
 
-	predict_op= forward(X, Wo, bo)
+	predict_op= forward(X, Wo, bo, sequence_length)
 	cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
 	# optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
@@ -168,7 +163,7 @@ if __name__== '__main__':
 
 			cost= session.run(
 				cost_op,
-				feed_dict={X: Xbatch, targets: Ybatch}
+				feed_dict={X: Xbatch, sequence_length: length_batch,targets: Ybatch}
 			)
 			
 			import code; code.interact(local=dict(globals(), **locals()))			
