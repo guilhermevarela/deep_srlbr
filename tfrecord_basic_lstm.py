@@ -13,7 +13,7 @@ from datasets.data_embed import embed_input_lazyload, embed_output_lazyload
 
 TARGET_PATH='datasets/training/pre/00/'
 tfrecords_filename= TARGET_PATH + 'devel.tfrecords'
-EMBEDDING_SIZE=50 
+
 
 def read_and_decode(filename_queue):
 	reader= tf.TFRecordReader()
@@ -84,7 +84,7 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return example_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length):		
+def forward(X, Wo, bo, sequence_length, hidden_size):		
 	'''
 		Computes forward propagation thru cell
 		IN
@@ -98,7 +98,7 @@ def forward(X, Wo, bo, sequence_length):
 			Yhat tf.Tensor<batch_size, FEATURE_SIZE>: Batch output
 
 	'''
-	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(128, forget_bias=1.0)
+	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size, forget_bias=1.0)
 
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.dynamic_rnn(
@@ -113,14 +113,15 @@ def forward(X, Wo, bo, sequence_length):
 
 
 if __name__== '__main__':	
+	EMBEDDING_SIZE=50 
 	KLASS_SIZE=60
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-4
+	lr=1e-3
 	BATCH_SIZE=200	
-	N_EPOCHS=3
+	N_EPOCHS=100
 	HIDDEN_SIZE=128
-	DISPLAY_STEP=20
+	DISPLAY_STEP=100
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
 	klass2idx, np_klassind= embed_output_lazyload()		
@@ -128,23 +129,20 @@ if __name__== '__main__':
 	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32)
 	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32)
 
-	inputs, targets, length_batch = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+	inputs, targets, sequence_length = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
 	
 	#define variables / placeholders
-	X = tf.placeholder(tf.float32, shape=(None,None,FEATURE_SIZE), name='X')
-	sequence_length = tf.placeholder(shape=(BATCH_SIZE,), dtype=np.int32, name='sequence_length')
-
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE, KLASS_SIZE], name='Wo')) 
 	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
 	
 
-	predict_op= forward(X, Wo, bo, sequence_length)
+	predict_op= forward(inputs, Wo, bo, sequence_length, HIDDEN_SIZE)
 	cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
-	# optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
+	optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
 	#Evaluation
-	# success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
-	# accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
+	success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
+	accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
 
 	#Initialization 
 	#must happen after every variable has been defined
@@ -157,25 +155,23 @@ if __name__== '__main__':
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
 		step=0
-
+		total_loss=0
+		total_acc=0
 		try:
 			while not coord.should_stop():				
-				Xbatch, Ybatch, batch_lengths =session.run([inputs, targets, length_batch])
+				_,loss, acc = session.run(
+					[optimizer_op, cost_op, accuracy_op]
+				)
+				total_loss+=loss 
+				total_acc+= acc
 
 				if step % DISPLAY_STEP ==0:					
-					print('X',Xbatch.shape)
-					print('Y',Ybatch.shape)
-					print('S',batch_lengths.shape)					
-
-				cost= session.run(
-					cost_op,
-					feed_dict={X: Xbatch, sequence_length: batch_lengths, targets: Ybatch}
-				)
-
+					print('avg acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg cost {:.6f}'.format(total_loss/DISPLAY_STEP))
+					total_loss=0
+					total_acc=0
 				step+=1
 				
 		except tf.errors.OutOfRangeError:
-			# import code; code.interact(local=dict(globals(), **locals()))			
 			print('Done training -- epoch limit reached')
 
 		finally:
