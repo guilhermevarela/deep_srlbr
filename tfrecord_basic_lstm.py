@@ -85,15 +85,38 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 
 
 def forward(X, Wo, bo):		
+	'''
+		Computes forward propagation thru cell
+		IN
+			X  tf.Tensor(tf.float32) <batch_size,max_time, FEATURE_SIZE>: Batch input
+
+			Wo tf.Tensor(tf.float32) <hidden_size, klass_size>: Batch input
+
+			bo tf.Tensor(tf.float32) <klass_size>: Batch input
+
+		OUT
+			Yhat tf.Tensor<batch_size, FEATURE_SIZE>: Batch output
+
+	'''
 	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(128, forget_bias=1.0)
 
+	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.dynamic_rnn(
 			cell=basic_cell, 
 			inputs=X, 			
-			dtype=tf.float32
+			dtype=tf.float32,
+			time_major=False
 		)
 
-	return tf.matmul(outputs[-1], Wo) + bo
+	# return tf.matmul(outputs[-1], Wo) + bo
+	return outputs, states
+
+# def batch_matmul(outputs,Wo,bo):
+# 	outputs2d =tf.reshape(outputs, [-1, 128])
+# 	ho= tf.matmul(outputs2d, Wo)+tf.tile(bo, )
+# 	ho= tf.reshape(ho, [200, 60])
+# 	return ho
+
 
 if __name__== '__main__':
 	hidden_size=128
@@ -110,7 +133,7 @@ if __name__== '__main__':
 	inputs, targets, length_batch = input_pipeline([tfrecords_filename], batch_size, 1, embeddings, klass_ind)
 	
 	#define variables / placeholders
-	X = tf.placeholder(np.float32, shape=(None,None,x_size), name='X')
+	X = tf.placeholder(tf.float32, shape=(None,None,x_size), name='X')
 	sequence_length = tf.placeholder(shape=(batch_size,), dtype=np.int32, name='sequence_length')
 
 	Wo = tf.Variable(tf.random_normal([hidden_size, klass_size], name='Wo')) 
@@ -118,12 +141,12 @@ if __name__== '__main__':
 	
 
 	predict_op= forward(X, Wo, bo)
-	cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
-	optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
+	# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
+	# optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
 	#Evaluation
-	success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
-	accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
+	# success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
+	# accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
 
 	#Initialization 
 	#must happen after every variable has been defined
@@ -144,13 +167,14 @@ if __name__== '__main__':
 			print('Y',Ybatch.shape)
 			print('S',length_batch.shape)
 
-			Yhat, accuracy= session.run(
-				[predict_op, accuracy_op],
+			outputs, states= session.run(
+				predict_op,
 				feed_dict={X: Xbatch}
 			)
 			
-			print('Yhat',Yhat.shape)
-			print('accuracy',Yhat.accuracy)
+			import code; code.interact(local=dict(globals(), **locals()))			
+			# print('Yhat', len(Yhat)) # This is a list of klasses
+			# print('accuracy',Yhat.accuracy)
 			
 
 			
