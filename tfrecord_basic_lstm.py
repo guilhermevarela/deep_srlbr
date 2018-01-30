@@ -108,8 +108,7 @@ def forward(X, Wo, bo):
 			time_major=False
 		)
 
-	# return tf.matmul(outputs[-1], Wo) + bo
-	return outputs, states
+	return tf.matmul(outputs, tf.stack([Wo]*200)) + bo
 
 # def batch_matmul(outputs,Wo,bo):
 # 	outputs2d =tf.reshape(outputs, [-1, 128])
@@ -167,7 +166,7 @@ if __name__== '__main__':
 			print('Y',Ybatch.shape)
 			print('S',length_batch.shape)
 
-			outputs, states= session.run(
+			Yhat= session.run(
 				predict_op,
 				feed_dict={X: Xbatch}
 			)
