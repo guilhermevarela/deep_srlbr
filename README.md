@@ -17,11 +17,13 @@ Features
 | 10 | .             | -           | pu     | -         | 2     | PU   | *)        | -     | *     |
 
 ## DEEP SEMANTIC ROLE LABELING EN
-	References (EN)
+### References (EN)
 	
+	(ZHOU, 2016)
 	End-to-end Learning of Semantic Role Labeling Using Recurrent Neural Networks
 >http://www.aclweb.org/anthology/P15-1109
 
+	(COLLOBERT, 2011)
 	Natural Language Processing (Almost) from Scratch
 >www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf
 
