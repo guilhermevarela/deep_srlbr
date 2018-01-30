@@ -64,6 +64,7 @@ def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klas
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
+	# shuffle: Boolean. If true, the strings are randomly shuffled within each epoch.
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	length,  idx_pred, idx_lemma,  mr, targets= read_and_decode(filename_queue)	
@@ -91,7 +92,7 @@ if __name__== '__main__':
 	embeddings= tf.constant(_embeddings.tolist(), shape=(len(_embeddings),50), dtype=tf.float32)
 	klass_ind= tf.constant(_klass_ind.tolist(), shape=_klass_ind.shape, dtype=tf.float32)
 
-	inputs, targets, length_batch = input_pipeline([tfrecords_filename], 200, 1, embeddings, klass_ind)
+	inputs, targets, length_batch = input_pipeline([tfrecords_filename], 200, 2, embeddings, klass_ind)
 	# filename_queue= tf.train.string_input_producer([tfrecords_filename], num_epochs=1)
 	
 	# length,  idx_pred, idx_lemma,  M_R, targets= read_and_decode(filename_queue)	
@@ -112,16 +113,44 @@ if __name__== '__main__':
 		tf.global_variables_initializer(),
 		tf.local_variables_initializer()
 	)
+	n_epochs= 1
+	n_batches=1
+	epoch_1=[]
+	epoch_2=[]
 	with tf.Session() as session: 
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
-		threads= tf.train.start_queue_runners(coord=coord)
+		threads= tf.train.start_queue_runners(sess=session, coord=coord)
 
-		for i in range(2):
+		try:
+			while not coord.should_stop():				
+				X, Y, sequence_batch =session.run([inputs, targets, length_batch])
+				
+				#test dataset reshuffle
+				if n_batches % 25==0:
+					n_epochs+=1
+					n_batches=0
+
+				
+				print('longest sentence', np.max(sequence_batch))
+				print('total tokens', np.sum(sequence_batch))
+				print('n batches', n_batches, 'n epochs', n_epochs)
+				# if n_epochs==1:
+				# 	epoch_1+=list(sequence_batch)
+				# if n_epochs==2:
+				# 	epoch_2+=list(sequence_batch)
+				# n_batches+=1
 		
-			X, Y, length_batch =session.run([inputs, targets, length_batch])
-			
+		except tf.errors.OutOfRangeError:
+			# import code; code.interact(local=dict(globals(), **locals()))			
+			print('Done training -- epoch limit reached')
 
+		finally:
+			#When done, ask threads to stop
+			coord.request_stop()
+
+
+			
 			# print('length',T)
 			# print('predicate',PRED.shape)
 			# # print('norm predicate',NORM_PRED.shape)
@@ -129,9 +158,9 @@ if __name__== '__main__':
 			# # print('norm m_r',NORM_M_R.shape)
 			
 			# print('mr', M_R.shape)
-			print('X',X.shape)
-			print('Y',Y.shape)
-			print('S',length_batch.shape)
+			# print('X',X.shape)
+			# print('Y',Y.shape)
+			# print('S',sequence_batch.shape)
 			
 
 
