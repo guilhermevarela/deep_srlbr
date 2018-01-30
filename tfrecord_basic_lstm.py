@@ -71,7 +71,7 @@ def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klas
 	M_R= tf.expand_dims(mr, 2)
 
 	X= tf.squeeze( tf.concat((LEMMA, PRED, M_R), 2),1) 
-	return X, Y, length
+	return X, Y, lengthfe
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):

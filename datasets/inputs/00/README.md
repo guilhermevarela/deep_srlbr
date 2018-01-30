@@ -1,6 +1,6 @@
 # FEATURES
 
-> file devel.tfrecords
+## devel.tfrecords
 
 | feature name | feature type     |
 |--------------|------------------|
@@ -11,3 +11,11 @@
 | targets      | sequence_feature |
 
 Ref (ZHOU. 2016)
+
+## embeddings.npy 
+	
+glove_s50
+
+ref (REPO)
+
+
