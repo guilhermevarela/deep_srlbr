@@ -34,11 +34,11 @@ Features
 >http://www.teses.usp.br/teses/disponiveis/55/55134/tde-14032013-150816/publico/dissrevfernandoAlva.pdf
 
 ## EMBEDDINGS
-###References (PT)
+### References (PT)
 	REPO
 > http://www.nilc.icmc.usp.br/nilc/index.php/repositorio-de-word-embeddings-do-nilc
 
-###References (EN)
+### References (EN)
 	(HARTMANN, 2017) 
 	Portuguese Word Embeddings: Evaluating on Word Analogies and Natural Language Tasks
 >https://arxiv.org/abs/1708.06025
