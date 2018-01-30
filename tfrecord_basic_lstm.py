@@ -84,18 +84,20 @@ def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return example_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length, hidden_size):		
+def forward(X, Wo, bo, sequence_length, hidden_size, batch_size):		
 	'''
 		Computes forward propagation thru cell
-		IN
-			X  tf.Tensor(tf.float32) <batch_size,max_time, FEATURE_SIZE>: Batch input
+		args:
+			X: [batch_size, max_time, feature_size] tensor (sequences shorter than max_time are zero padded)
 
-			Wo tf.Tensor(tf.float32) <hidden_size, klass_size>: Batch input
+			Wo: [hidden_size[-1], klass_size] tensor prior to softmax layer, representing observable weights 
 
-			bo tf.Tensor(tf.float32) <klass_size>: Batch input
+			bo: [klass_size] tensor prior to softmax layer of size 
 
-		OUT
-			Yhat tf.Tensor<batch_size, FEATURE_SIZE>: Batch output
+			sequence_length:[batch_size] tensor (int) carrying the size of each sequence 
+
+		returns:
+			Yo: [batch_size, max_time, klass_size] tensor
 
 	'''
 	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size, forget_bias=1.0)
@@ -109,7 +111,9 @@ def forward(X, Wo, bo, sequence_length, hidden_size):
 			time_major=False
 		)
 
-	return tf.matmul(outputs, tf.stack([Wo]*200)) + bo
+	# Performs 3D tensor multiplication by stacking Wo batch_size times
+	# broadcasts bias factor
+	return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
 
 
 if __name__== '__main__':	
@@ -117,10 +121,10 @@ if __name__== '__main__':
 	KLASS_SIZE=60
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-3
+	lr=1e-4
 	BATCH_SIZE=200	
 	N_EPOCHS=100
-	HIDDEN_SIZE=128
+	HIDDEN_SIZE=256
 	DISPLAY_STEP=100
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -166,7 +170,7 @@ if __name__== '__main__':
 				total_acc+= acc
 
 				if step % DISPLAY_STEP ==0:					
-					print('avg acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg cost {:.6f}'.format(total_loss/DISPLAY_STEP))
+					print('Iter=' + str(step+1),'avg acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg cost {:.6f}'.format(total_loss/DISPLAY_STEP))
 					total_loss=0
 					total_acc=0
 				step+=1
