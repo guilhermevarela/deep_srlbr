@@ -140,7 +140,7 @@ if __name__== '__main__':
 	
 
 	predict_op= forward(X, Wo, bo)
-	# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
+	cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
 	# optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
 	#Evaluation
@@ -166,9 +166,9 @@ if __name__== '__main__':
 			print('Y',Ybatch.shape)
 			print('S',length_batch.shape)
 
-			Yhat= session.run(
-				predict_op,
-				feed_dict={X: Xbatch}
+			cost= session.run(
+				cost_op,
+				feed_dict={X: Xbatch, targets: Ybatch}
 			)
 			
 			import code; code.interact(local=dict(globals(), **locals()))			
