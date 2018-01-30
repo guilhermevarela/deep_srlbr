@@ -153,27 +153,27 @@ if __name__== '__main__':
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
 
-		for i in range(2):
-			Xbatch, Ybatch, length_batch =session.run([inputs, targets, length_batch])
+		try:
+			while not coord.should_stop():				
+				Xbatch, Ybatch, batch_lengths =session.run([inputs, targets, length_batch])
 
-	
-			print('X',Xbatch.shape)
-			print('Y',Ybatch.shape)
-			print('S',length_batch.shape)
+				print('X',Xbatch.shape)
+				print('Y',Ybatch.shape)
+				print('S',batch_lengths.shape)
 
-			cost= session.run(
-				cost_op,
-				feed_dict={X: Xbatch, sequence_length: length_batch,targets: Ybatch}
-			)
+				cost= session.run(
+					cost_op,
+					feed_dict={X: Xbatch, sequence_length: batch_lengths, targets: Ybatch}
+				)
+				
+		except tf.errors.OutOfRangeError:
+			# import code; code.interact(local=dict(globals(), **locals()))			
+			print('Done training -- epoch limit reached')
+
+		finally:
+			#When done, ask threads to stop
+			coord.request_stop()
 			
-			import code; code.interact(local=dict(globals(), **locals()))			
-			# print('Yhat', len(Yhat)) # This is a list of klasses
-			# print('accuracy',Yhat.accuracy)
-			
-
-			
-
-
 		coord.request_stop()
 		coord.join(threads)
 
