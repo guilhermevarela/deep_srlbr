@@ -153,10 +153,10 @@ if __name__== '__main__':
 	KLASS_SIZE=60
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-6
+	lr=1e-5
 	BATCH_SIZE=200	
 	N_EPOCHS=100
-	HIDDEN_SIZE=[256, 128, 64]
+	HIDDEN_SIZE=[256, 128]
 	DISPLAY_STEP=10
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
