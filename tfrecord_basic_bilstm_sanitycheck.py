@@ -119,14 +119,14 @@ def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):
 
 	'''
 
-	fwd_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_sizes[0], 
-		forget_bias=1.0,
-		state_is_tuple=True
-	) 
-	bck_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_sizes[0], 
-		forget_bias=1.0,
-		state_is_tuple=True
-	) 
+	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
+		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
+			for hsz in hidden_sizes]
+	)
+	bck_cell = tf.nn.rnn_cell.MultiRNNCell(
+		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
+			for hsz in hidden_sizes]
+	)
 
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.bidirectional_dynamic_rnn(
@@ -153,10 +153,10 @@ if __name__== '__main__':
 	KLASS_SIZE=60
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-5
+	lr=1e-6
 	BATCH_SIZE=200	
 	N_EPOCHS=100
-	HIDDEN_SIZE=[256]
+	HIDDEN_SIZE=[256, 128, 64]
 	DISPLAY_STEP=10
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
