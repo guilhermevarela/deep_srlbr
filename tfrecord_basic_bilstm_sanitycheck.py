@@ -46,62 +46,58 @@ def read_and_decode(filename_queue):
 		}
 	)
 
-	# Returning the features length
-	length= 	 	 tf.cast(context_features['T'], tf.int32)	
-	idx= 	 		   tf.cast( tf.sparse_tensor_to_dense(sequence_features['ID']), dtype=tf.float32)	
+	return context_features, sequence_features
 
-	# Predicates are constant for a sequence according to ZHOU but 
-	# in order to prevent over fitting 
-	predicate= 	 tf.sparse_tensor_to_dense(sequence_features['PRED'])	
+
+# def process_example(length,  idx, idx_pred, idx_lemma,  mr, secret ,targets, embeddings, klass_ind):
+def process(embeddings, klass_ind, context_features, sequence_features):
+	context_inputs=[]
+	sequence_inputs=[]
+	sequence_target=[]
+
+	context_keys=['T']
+	for key in context_keys:
+		val32= tf.cast(context_features[key], tf.int32)
+		context_inputs.append( val32	 )
+
+	#Read all inputs as tf.int64	
+	sequence_keys=['ID', 'M_R', 'PRED', 'LEMMA', 'targets']
+	for key in sequence_keys:
+		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
+		if key in ['PRED', 'LEMMA']:
+			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
+			sequence_inputs.append(dense_tensor1)
+
+		# Cast to tf.float32 in order to concatenate in a single array with embeddings
+		if key in ['ID', 'M_R']:
+			dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
+			sequence_inputs.append(dense_tensor1)
+
+		if key in ['targets']:			
+			Y= tf.squeeze(tf.nn.embedding_lookup(klass_ind, dense_tensor),1 )
 	
-	# lemma.: [T,]  tensor is the tokenized word expect to be different at every 	
-	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
-	# mr is an indicator variable which is zero is predicate has not been seen
-	mr= 	 		tf.cast( tf.sparse_tensor_to_dense(sequence_features['M_R']), dtype=tf.float32)	
-	secret= 	tf.cast( tf.sparse_tensor_to_dense(sequence_features['targets']), dtype=tf.float32)	 
-
-	# targets_sparse= sequence_features['targets']
-	targets= 	tf.sparse_tensor_to_dense(sequence_features['targets'])	
-
-
-	return length, idx, predicate, lemma, mr, secret, targets 
-
-
-def process_example(length,  idx, idx_pred, idx_lemma,  mr, secret ,targets, embeddings, klass_ind):
-	LEMMA  = tf.nn.embedding_lookup(embeddings, idx_lemma)
-	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
-	PRED   = tf.nn.embedding_lookup(embeddings, idx_pred)
-	
-	Y= tf.squeeze(tf.nn.embedding_lookup(klass_ind, targets),1 )
-
-	M_R= tf.expand_dims(mr, 2)
-
-	SECRET= tf.expand_dims(secret, 2)
-
-	IDX= tf.expand_dims(idx, 2)
-
-	X= tf.squeeze( tf.concat((IDX, LEMMA, PRED, SECRET ,M_R), 2),1) 
-	return X, Y, length
+	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
+	return X, Y, context_inputs[0]
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
+def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
-	length, idx,   idx_pred, idx_lemma,  secret, mr, targets= read_and_decode(filename_queue)	
+	context_features, sequence_features= read_and_decode(filename_queue)	
 
-	X, Y, l  = process_example(length,  idx, idx_pred, idx_lemma,   secret, mr, targets, embeddings, klass_ind)
-
+	inputs, targets, length= process(embeddings, klass_ind, context_features, sequence_features)	
+	
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	example_batch, target_batch, length_batch=tf.train.batch(
-		[X, Y, l], 
+	input_batch, target_batch, length_batch=tf.train.batch(
+		[inputs, targets, length], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True		
 	)
-	return example_batch, target_batch, length_batch
+	return input_batch, target_batch, length_batch
 
 
 def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):		
@@ -160,10 +156,10 @@ if __name__== '__main__':
 	KLASS_SIZE=22
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2
-	lr=1e-4
+	lr=1e-5
 	BATCH_SIZE=200	
 	N_EPOCHS=100
-	HIDDEN_SIZE=[512]
+	HIDDEN_SIZE=[128]
 	DISPLAY_STEP=10
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -173,7 +169,7 @@ if __name__== '__main__':
 	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+		inputs, targets, sequence_length = input_fn([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
 	
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
@@ -183,8 +179,9 @@ if __name__== '__main__':
 	Wfb = tf.Variable(tf.random_normal([2*HIDDEN_SIZE[-1], HIDDEN_SIZE[-1]], name='Wfb')) 
 	bfb = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1]], name='bfb')) 
 
-	xentropy= 		tf.Variable(0.0, name='loss')	
-	accuracy= tf.Variable(0.0, name='accuracy')	
+	#output metrics
+	xentropy= tf.placeholder(tf.float32, name='loss')	
+	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
 
 	with tf.name_scope('predict'):
@@ -225,9 +222,13 @@ if __name__== '__main__':
 		step=0		
 		total_loss=0.0
 		total_acc=0.0		
-		writer.add_graph(session.graph)
+		# writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
+				# X,Y,L = session.run([inputs, targets, sequence_length])
+				# print('X',X.shape)
+				# print('Y',Y.shape)
+				# print('L',np.max(L))
 				_,Yhat ,loss, acc = session.run(
 					[optimizer_op, predict_op, cost_op, accuracy_op]
 				)
