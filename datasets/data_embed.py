@@ -56,7 +56,7 @@ def embed_output_lazyload(w2i_dataset_name='klass2idx', klass_ind_dataset_name='
 		pickle_in.close()
 	else:
 		deep_df= propbankbr_lazyload(dataset_name='zhou')
-		word2idx = df2word2idx(deep_df, col2tokenize='LABEL')						
+		word2idx = df2word2idx(deep_df, col2tokenize='ARG_Y')						
 		embed_word2idx_persist(word2idx, dataset_name=w2i_dataset_name)		
 
 	dataset_path= TARGET_PATH + klass_ind_dataset_name + '.npy'

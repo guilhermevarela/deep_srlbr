@@ -30,7 +30,7 @@ DEP_HEADER=[
 	'ARG4','ARG5','ARG6'
 ]
 ZHOU_HEADER=[
-	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'LABEL'
+	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'ARG', 'ARG_Y'
 ]
 MAPPER= {
 	'CONST': { 
@@ -175,6 +175,9 @@ def propbankbr_parser2():
 						M_R:  [			 0,       1,        1,     1,   1]
 
 	'ARG'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARGY' : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+
+	updates: 2018-02-01
 	'''
 
 	df_const= propbankbr_const_read()
@@ -211,6 +214,7 @@ def propbankbr_parser2():
 	M_R= np.zeros((N,1),dtype=np.int32)	
 	P_S= np.zeros((N,1),dtype=np.int32)	
 	PRED=[]
+	Y=[] 
 	x_in =0
 	x_out=0
 	p_s=1
@@ -234,16 +238,24 @@ def propbankbr_parser2():
 			p_s+=1
 		x_in+=l 
 
+
+	
 	#CONVERT INDEX into DF
-	data= df.as_matrix()[Xind,Yind]
-	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'LABEL'])
+	data= df.as_matrix()[Xind,Yind]	
+	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'ARG'])
+
+	#NEW COLUMNS 
 	zhou_df['PRED']=PRED
 	zhou_df['M_R']=M_R
 	zhou_df['P']=P
 	zhou_df['P_S']=P_S
-	zhou_df= zhou_df[usecols]
+	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	arg_Y = datatransform_ARGY(zhou_df, args_columns=['ARG'])			
 
-	return zhou_df
+	zhou_df['ARG_Y']= list(map(lambda x: x[0], arg_Y))
+
+	return zhou_df[usecols]
 
 def propbankbr_argument_stats(df):
 	'''
@@ -413,6 +425,47 @@ def trim(val):
 	if isinstance(val, str):
 		return val.strip()
 	return val	
+
+def datatransform_ARGY(df, args_columns=['ARG']):
+	'''
+		args:
+			df .: dataframe in propbankbr format and a single arg
+		returns:
+			arg_y.: list of lists of size <N,M>, N is df.shape[0], M is len(args_column)
+						with the transformations over args_column
+	'''
+	def argument_transform(val):
+		if isinstance(val, str):
+			# val = re.sub(r'C\-|\(|\)|\*|\\n| +', '',val)			
+			val = re.sub(r'C\-|\*|\\n| +', '',val)			
+			val = re.sub(r' ', '',val)			
+			val = re.sub(r'^$', '*',val)
+		else: 
+			val=''
+		return val
+
+
+	args_mtrx= df[args_columns].applymap(argument_transform).values
+	I,J = args_mtrx.shape 
+	refresh=[True]*J  
+	update=[True]*J
+	val=['*']*J
+	for i in range(I):
+		for j in range(J):			
+			refresh[j]= ('(' in args_mtrx[i,j])
+			if refresh[j]:
+				update[j]=True
+				val[j]=re.sub(r'[\(|\)]', '', args_mtrx[i,j])  
+			
+			if update[j]:
+				update[j]= not(args_mtrx[i,j] == ')')
+				args_mtrx[i,j]=val[j]		
+
+
+	arg_y =[list(ary) for ary in args_mtrx]
+	return arg_y
+		
+
 
 
 if __name__== '__main__':		

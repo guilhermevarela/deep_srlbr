@@ -38,6 +38,7 @@ def read_and_decode(filename_queue):
 			'T': tf.FixedLenFeature([], tf.int64)			
 		},
 		sequence_features={
+			'ID':tf.VarLenFeature(tf.int64),			
 			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
 			'M_R':tf.VarLenFeature(tf.int64),
@@ -47,7 +48,8 @@ def read_and_decode(filename_queue):
 
 	# Returning the features length
 	length= 	 	 tf.cast(context_features['T'], tf.int32)	
-	
+	idx= 	 		   tf.cast( tf.sparse_tensor_to_dense(sequence_features['ID']), dtype=tf.float32)	
+
 	# Predicates are constant for a sequence according to ZHOU but 
 	# in order to prevent over fitting 
 	predicate= 	 tf.sparse_tensor_to_dense(sequence_features['PRED'])	
@@ -56,15 +58,16 @@ def read_and_decode(filename_queue):
 	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
 	# mr is an indicator variable which is zero is predicate has not been seen
 	mr= 	 		tf.cast( tf.sparse_tensor_to_dense(sequence_features['M_R']), dtype=tf.float32)	
+	secret= 	tf.cast( tf.sparse_tensor_to_dense(sequence_features['targets']), dtype=tf.float32)	 
 
 	# targets_sparse= sequence_features['targets']
 	targets= 	tf.sparse_tensor_to_dense(sequence_features['targets'])	
 
 
-	return length, predicate, lemma, mr, targets 
+	return length, idx, predicate, lemma, mr, secret, targets 
 
 
-def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind):
+def process_example(length,  idx, idx_pred, idx_lemma,  mr, secret ,targets, embeddings, klass_ind):
 	LEMMA  = tf.nn.embedding_lookup(embeddings, idx_lemma)
 	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
 	PRED   = tf.nn.embedding_lookup(embeddings, idx_pred)
@@ -73,16 +76,20 @@ def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klas
 
 	M_R= tf.expand_dims(mr, 2)
 
-	X= tf.squeeze( tf.concat((LEMMA, PRED, M_R), 2),1) 
+	SECRET= tf.expand_dims(secret, 2)
+
+	IDX= tf.expand_dims(idx, 2)
+
+	X= tf.squeeze( tf.concat((IDX, LEMMA, PRED, SECRET ,M_R), 2),1) 
 	return X, Y, length
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
-	length,  idx_pred, idx_lemma,  mr, targets= read_and_decode(filename_queue)	
+	length, idx,   idx_pred, idx_lemma,  secret, mr, targets= read_and_decode(filename_queue)	
 
-	X, Y, l  = process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind)
+	X, Y, l  = process_example(length,  idx, idx_pred, idx_lemma,   secret, mr, targets, embeddings, klass_ind)
 
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
@@ -150,13 +157,13 @@ def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):
 
 if __name__== '__main__':	
 	EMBEDDING_SIZE=50 
-	KLASS_SIZE=60
+	KLASS_SIZE=22
 	
-	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-5
+	FEATURE_SIZE=2*EMBEDDING_SIZE+2
+	lr=1e-4
 	BATCH_SIZE=200	
 	N_EPOCHS=100
-	HIDDEN_SIZE=[256, 128]
+	HIDDEN_SIZE=[512]
 	DISPLAY_STEP=10
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
