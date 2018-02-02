@@ -102,7 +102,7 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_ind):
 	return input_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):		
+def forward(X, Wo, bo, sequence_length):		
 	'''
 		Computes forward propagation thru basic lstm cell
 
@@ -126,32 +126,67 @@ def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):
 
 	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
-			for hsz in hidden_sizes]
+			for hsz in HIDDEN_SIZE]
 	)
-	bck_cell = tf.nn.rnn_cell.MultiRNNCell(
+	bwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
-			for hsz in hidden_sizes]
+			for hsz in HIDDEN_SIZE]
 	)
 
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.bidirectional_dynamic_rnn(
 			cell_fw=fwd_cell, 
-			cell_bw=bck_cell, 
+			cell_bw=bwd_cell, 
 			inputs=X, 			
-			sequence_length=sequence_length,
+			# sequence_length=sequence_length,
 			dtype=tf.float32,
 			time_major=False
 		)
 
 	
 	# return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
+	fwd_outputs, bwd_outputs = outputs
+	print('fwd_outputs', fwd_outputs.shape)
+	print('bwd_outputs', bwd_outputs.shape)
+	
+
+	# biYhat= tf.concat((fwd_outputs,bwd_outputs),2)
+	# biYhat2d= tf.reshape(biYhat,[-1,2*HIDDEN_SIZE[-1]])
+	# act = 		tf.matmul(biYhat2d, Wfb) + bfb
+	# Yhat2d=     tf.matmul(act, Wo) + bo
+	# Yhat =     tf.reshape(Yhat2d, [batch_size,-1,KLASS_SIZE])
+	# Performs 3D tensor multiplication by stacking Wo batch_size times
+	# broadcasts bias factor
+	# return Yhat
+		# return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
 	fwd_outputs, bck_outputs = outputs
-	act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
+	act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*BATCH_SIZE)) +bfb
 
 	# Performs 3D tensor multiplication by stacking Wo batch_size times
 	# broadcasts bias factor
-	return tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
+	return tf.matmul(act, tf.stack([Wo]*BATCH_SIZE)) + bo
 
+def cross_entropy(logits, targets, seqtimes):
+  # Compute cross entropy for each sentence
+  xentropy = tf.cast(targets, tf.int32) * tf.log(logits)
+  xentropy = -tf.reduce_sum(xentropy, 2)
+  mask = tf.sign(tf.reduce_max(tf.abs(target), 2))
+  xentropy *= mask
+  # Average over actual sequence lengths.
+  xentropy = tf.reduce_sum(xentropy, 1)
+  xentropy /= tf.reduce_sum(mask, 1)
+  return tf.reduce_mean(xentropy)
+
+def error_rate(output, target):
+  mistakes = tf.not_equal(
+      tf.argmax(target, 2), tf.argmax(output, 2))
+  mistakes = tf.cast(mistakes, tf.float32)
+  mask = tf.sign(tf.reduce_max(tf.abs(target), reduction_indices=2))
+  mistakes *= mask
+  # Average over actual sequence lengths.
+  mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
+  mistakes /= tf.cast(length, tf.float32)
+  return tf.reduce_mean(mistakes)
 
 if __name__== '__main__':	
 	EMBEDDING_SIZE=50 
@@ -159,9 +194,9 @@ if __name__== '__main__':
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2+KLASS_SIZE
 	lr=1e-5
-	BATCH_SIZE=250	
-	N_EPOCHS=500
-	HIDDEN_SIZE=[128, 64]
+	BATCH_SIZE=5
+	N_EPOCHS=1
+	HIDDEN_SIZE=[128]
 	DISPLAY_STEP=50
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -169,6 +204,8 @@ if __name__== '__main__':
 
 	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32, name= 'embeddings')
 	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
+	batch_size= tf.constant(BATCH_SIZE, dtype=tf.int32,  name='batch_size')
+	hidden_size= tf.constant(HIDDEN_SIZE[-1], dtype=tf.int32,  name='hidden_size')
 
 	with tf.name_scope('pipeline'):
 		inputs, targets, sequence_length = input_fn([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
@@ -185,20 +222,25 @@ if __name__== '__main__':
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
+	X=   			tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, FEATURE_SIZE), name='X')    
 
 	with tf.name_scope('predict'):
-		predict_op= forward(inputs, Wo, bo, sequence_length, HIDDEN_SIZE, BATCH_SIZE)
+		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
+		logits=tf.nn.softmax(predict_op)
 		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
+		# cost_op=cross_entropy(predict_op, targets)
 
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
 	#Evaluation
-	with tf.name_scope('accuracy'):
+	with tf.name_scope('evaluation'):
 		success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
 		accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
+		# accuracy_op = 1-error_rate(predict_op, targets)
+
 
 	#Logs 
 	writer = tf.summary.FileWriter('logs/basic_lstm/00')			
@@ -207,6 +249,7 @@ if __name__== '__main__':
 	tf.summary.histogram('Wfb', Wfb)
 	tf.summary.histogram('bfb', bfb)
 	tf.summary.histogram('logits', logits)
+	tf.summary.histogram('X', X)
 	tf.summary.scalar('cross_entropy', xentropy)
 	tf.summary.scalar('accuracy', accuracy)
 	merged_summary = tf.summary.merge_all()
@@ -227,16 +270,20 @@ if __name__== '__main__':
 		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
-				# X,Y,L = session.run([inputs, targets, sequence_length])
-				# print('X',X.shape)
-				# print('Y',Y.shape)
-				# print('L',np.max(L))
-				_,Yhat ,loss, acc = session.run(
-					[optimizer_op, predict_op, cost_op, accuracy_op]
+				features, Y, length = session.run([inputs, targets, sequence_length])
+
+				_, Yhat, count, loss, acc = session.run(
+					[optimizer_op,predict_op, success_count_op,cost_op, accuracy_op],
+					feed_dict={
+						X: features,
+						sequence_length: length,
+						targets: Y							
+					}
 				)
 				total_loss+=loss 
 				total_acc+= acc
 
+				import code; code.interact(local=dict(globals(), **locals()))		
 				
 				if step % DISPLAY_STEP ==0:					
 					print('Iter={:5d}'.format(step+1),'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
@@ -244,7 +291,7 @@ if __name__== '__main__':
 					total_acc=0.0
 
 					s= session.run(merged_summary,
-						feed_dict={accuracy: acc, xentropy: loss, logits:Yhat}
+						feed_dict={accuracy: acc, xentropy: loss, logits:Yhat, X:features}
 					)
 					writer.add_summary(s, step)
 				step+=1
