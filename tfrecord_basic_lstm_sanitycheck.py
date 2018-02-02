@@ -38,6 +38,7 @@ def read_and_decode(filename_queue):
 			'T': tf.FixedLenFeature([], tf.int64)			
 		},
 		sequence_features={
+			'ID':tf.VarLenFeature(tf.int64),			
 			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
 			'M_R':tf.VarLenFeature(tf.int64),
@@ -45,59 +46,63 @@ def read_and_decode(filename_queue):
 		}
 	)
 
-	# Returning the features length
-	length= 	 	 tf.cast(context_features['T'], tf.int32)	
+	return context_features, sequence_features
+
+
+# def process_example(length,  idx, idx_pred, idx_lemma,  mr, secret ,targets, embeddings, klass_ind):
+def process(embeddings, klass_ind, context_features, sequence_features):
+	context_inputs=[]
+	sequence_inputs=[]
+	sequence_target=[]
+
+	context_keys=['T']
+	for key in context_keys:
+		val32= tf.cast(context_features[key], tf.int32)
+		context_inputs.append( val32	 )
+
+	#Read all inputs as tf.int64	
+	sequence_keys=['ID', 'M_R', 'PRED', 'LEMMA', 'targets']
+	for key in sequence_keys:
+		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
+		if key in ['PRED', 'LEMMA']:
+			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
+			sequence_inputs.append(dense_tensor1)
+
+		# Cast to tf.float32 in order to concatenate in a single array with embeddings
+		if key in ['ID', 'M_R']:
+			dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
+			sequence_inputs.append(dense_tensor1)
+
+		if key in ['targets']:			
+			dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
+			Y= tf.squeeze(dense_tensor1,1 )
+			sequence_inputs.append(tf.cast(dense_tensor1,tf.float32)) # SANITY CHECK
 	
-	# Predicates are constant for a sequence according to ZHOU but 
-	# in order to prevent over fitting 
-	predicate= 	 tf.sparse_tensor_to_dense(sequence_features['PRED'])	
-	
-	# lemma.: [T,]  tensor is the tokenized word expect to be different at every 	
-	lemma= 	  tf.sparse_tensor_to_dense(sequence_features['LEMMA'])	
-	# mr is an indicator variable which is zero is predicate has not been seen
-	mr= 	 		tf.cast( tf.sparse_tensor_to_dense(sequence_features['M_R']), dtype=tf.float32)	
-
-	# targets_sparse= sequence_features['targets']
-	targets= 	tf.sparse_tensor_to_dense(sequence_features['targets'])	
-
-
-	return length, predicate, lemma, mr, targets 
-
-
-def process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind):
-	LEMMA  = tf.nn.embedding_lookup(embeddings, idx_lemma)
-	#PRED<EMBEDDING_SIZE,> --> <1,EMBEDDING_SIZE> 
-	PRED   = tf.nn.embedding_lookup(embeddings, idx_pred)
-	
-	Y= tf.squeeze(tf.nn.embedding_lookup(klass_ind, targets),1 )
-
-	M_R= tf.expand_dims(mr, 2)
-
-	X= tf.squeeze( tf.concat((LEMMA, PRED, M_R), 2),1) 
-	return X, Y, length
+	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
+	return X, Y, context_inputs[0]
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_pipeline(filenames, batch_size,  num_epochs, embeddings, klass_ind):
+def input_fn(filenames, num_epochs, embeddings, klass_ind):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
-	length,  idx_pred, idx_lemma,  mr, targets= read_and_decode(filename_queue)	
+	context_features, sequence_features= read_and_decode(filename_queue)	
 
-	X, Y, l  = process_example(length,  idx_pred, idx_lemma,  mr, targets, embeddings, klass_ind)
-
+	inputs, targets, length= process(embeddings, klass_ind, context_features, sequence_features)	
+	
 	min_after_dequeue = 10000
-	capacity = min_after_dequeue + 3 * batch_size
+	capacity = min_after_dequeue + 3 * BATCH_SIZE
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	example_batch, target_batch, length_batch=tf.train.batch(
-		[X, Y, l], 
+	input_batch, target_batch, length_batch=tf.train.batch(
+		[inputs, targets, length], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True		
 	)
-	return example_batch, target_batch, length_batch
+	return input_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):		
+def forward(X, Wo, bo, sequence_length):		
 	'''
 		Computes forward propagation thru basic lstm cell
 
@@ -119,71 +124,62 @@ def forward(X, Wo, bo, sequence_length, hidden_sizes, batch_size):
 
 	'''
 
-	basic_cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_sizes[0], 
-		forget_bias=1.0,
-		state_is_tuple=True
-	) 
+
+	basic_cell= tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE, forget_bias=1.0, state_is_tuple=True)
 
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.dynamic_rnn(
-			cell=basic_cell, 
+			cell=basic_cell,
 			inputs=X, 			
 			sequence_length=sequence_length,
 			dtype=tf.float32,
 			time_major=False
 		)
 
-	
-	W, b = basic_cell.weights  				
-	
-	tf.summary.histogram('LSTM/W', W)
-	tf.summary.histogram('LSTM/b', b)
-
-	# tf.summary.histogram('LSTM/W0', tf.slice(W,[0,0],[229,1]))
-	# tf.summary.histogram('LSTM/W1', tf.slice(W,[229,1],[229,1]))
-	# tf.summary.histogram('LSTM/W2', tf.slice(W,[458,2],[229,1]))
-	# tf.summary.histogram('LSTM/W3', tf.slice(W,[687,3],[229,1]))
-	# tf.summary.histogram('LSTM/b0', tf.slice(b,[0],[128]))
-	# tf.summary.histogram('LSTM/b1', tf.slice(b,[128],[128]))
-	# tf.summary.histogram('LSTM/b2', tf.slice(b,[256],[128]))
-	# tf.summary.histogram('LSTM/b3', tf.slice(b,[384],[128]))
-
 	# Performs 3D tensor multiplication by stacking Wo batch_size times
 	# broadcasts bias factor
-	return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
+	O_2d = tf.reshape(outputs,[-1,HIDDEN_SIZE])
+	Y_2d = tf.matmul(O_2d, Wo) + bo 
+	Y_hat= tf.reshape(Y_2d,[batch_size,-1,22])
+	return Y_hat
 
 
 if __name__== '__main__':	
 	EMBEDDING_SIZE=50 
-	KLASS_SIZE=60
+	KLASS_SIZE=22
 	
-	FEATURE_SIZE=2*EMBEDDING_SIZE+1
-	lr=1e-3
-	BATCH_SIZE=200	
+	FEATURE_SIZE=2*EMBEDDING_SIZE+2+KLASS_SIZE
+	lr=1e-6
+	BATCH_SIZE=250
 	N_EPOCHS=100
-	HIDDEN_SIZE=[128]
-	DISPLAY_STEP=5
+	HIDDEN_SIZE=128
+	DISPLAY_STEP=25
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
 	klass2idx, np_klassind= embed_output_lazyload()		
 
 	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32, name= 'embeddings')
 	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
-
-	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_pipeline([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+	batch_size= tf.constant(BATCH_SIZE, shape=(), dtype=tf.int32,  name='batch_size')
+	hidden_size= tf.constant(HIDDEN_SIZE, shape=(), dtype=tf.int32,  name='hidden_size')
 	
 	#define variables / placeholders
-	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
+	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE, KLASS_SIZE], name='Wo')) 
 	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
 
 
-	xentropy= 		tf.Variable(0.0, name='loss')	
-	accuracy= tf.Variable(0.0, name='accuracy')	
+	#output metrics
+	xentropy= tf.placeholder(tf.float32, name='loss')	
+	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
+	inputs=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, FEATURE_SIZE), name='inputs')    
+	X=   			tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, FEATURE_SIZE), name='X')    
+	#Defines piepeline 
+	with tf.name_scope('pipeline'):
+		inputs, targets, sequence_length = input_fn([tfrecords_filename], N_EPOCHS, embeddings, klass_ind)
 
 	with tf.name_scope('predict'):
-		predict_op= forward(inputs, Wo, bo, sequence_length, HIDDEN_SIZE, BATCH_SIZE)
+		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
 		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
@@ -201,6 +197,7 @@ if __name__== '__main__':
 	tf.summary.histogram('Wo', Wo)
 	tf.summary.histogram('bo', bo)
 	tf.summary.histogram('logits', logits)
+	tf.summary.histogram('inputs', inputs)
 	tf.summary.scalar('cross_entropy', xentropy)
 	tf.summary.scalar('accuracy', accuracy)
 	merged_summary = tf.summary.merge_all()
@@ -221,13 +218,21 @@ if __name__== '__main__':
 		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
-				_,Yhat ,loss, acc = session.run(
-					[optimizer_op, predict_op, cost_op, accuracy_op]
+
+				features, Y, length = session.run([inputs, targets, sequence_length])
+
+				_, Yhat, count, loss, acc = session.run(
+					[optimizer_op,predict_op, success_count_op,cost_op, accuracy_op],
+					feed_dict={
+						X: features,
+						sequence_length: length,
+						targets: Y							
+					}
 				)
+
 				total_loss+=loss 
 				total_acc+= acc
 
-				
 				if step % DISPLAY_STEP ==0:					
 					print('Iter={:5d}'.format(step+1),'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
