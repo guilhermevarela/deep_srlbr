@@ -74,7 +74,9 @@ def process(embeddings, klass_ind, context_features, sequence_features):
 			sequence_inputs.append(dense_tensor1)
 
 		if key in ['targets']:			
-			Y= tf.squeeze(tf.nn.embedding_lookup(klass_ind, dense_tensor),1 )
+			dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
+			Y= tf.squeeze(dense_tensor1,1 )
+			sequence_inputs.append(tf.cast(dense_tensor1,tf.float32)) # SANITY CHECK
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
 	return X, Y, context_inputs[0]
@@ -155,12 +157,12 @@ if __name__== '__main__':
 	EMBEDDING_SIZE=50 
 	KLASS_SIZE=22
 	
-	FEATURE_SIZE=2*EMBEDDING_SIZE+2
+	FEATURE_SIZE=2*EMBEDDING_SIZE+2+KLASS_SIZE
 	lr=1e-5
-	BATCH_SIZE=200	
-	N_EPOCHS=100
-	HIDDEN_SIZE=[128]
-	DISPLAY_STEP=10
+	BATCH_SIZE=250	
+	N_EPOCHS=500
+	HIDDEN_SIZE=[128, 64]
+	DISPLAY_STEP=50
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
 	klass2idx, np_klassind= embed_output_lazyload()		
@@ -222,7 +224,7 @@ if __name__== '__main__':
 		step=0		
 		total_loss=0.0
 		total_acc=0.0		
-		# writer.add_graph(session.graph)
+		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
 				# X,Y,L = session.run([inputs, targets, sequence_length])
