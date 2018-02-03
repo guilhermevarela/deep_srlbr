@@ -5,7 +5,7 @@
 *.DS_Store
 propbankbr/*.txt
 propbankbr/*.conll
-
+*events.out.tfevents.*
 tex/*
 !tex/*.pdf
 !tex/*.tex

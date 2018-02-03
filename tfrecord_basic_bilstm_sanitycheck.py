@@ -166,27 +166,36 @@ def forward(X, Wo, bo, sequence_length):
 	# broadcasts bias factor
 	return tf.matmul(act, tf.stack([Wo]*BATCH_SIZE)) + bo
 
-def cross_entropy(logits, targets, seqtimes):
+def cross_entropy(logits, targets):
   # Compute cross entropy for each sentence
-  xentropy = tf.cast(targets, tf.int32) * tf.log(logits)
+  xentropy = tf.cast(targets, tf.float32) * tf.log(logits)
   xentropy = -tf.reduce_sum(xentropy, 2)
-  mask = tf.sign(tf.reduce_max(tf.abs(target), 2))
+  mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
+  mask = tf.cast(mask, tf.float32)
   xentropy *= mask
   # Average over actual sequence lengths.
   xentropy = tf.reduce_sum(xentropy, 1)
   xentropy /= tf.reduce_sum(mask, 1)
   return tf.reduce_mean(xentropy)
 
-def error_rate(output, target):
+def error_rate(logits, target, sequence_length):
   mistakes = tf.not_equal(
-      tf.argmax(target, 2), tf.argmax(output, 2))
+      tf.argmax(target, 2), tf.argmax(logits, 2))
   mistakes = tf.cast(mistakes, tf.float32)
   mask = tf.sign(tf.reduce_max(tf.abs(target), reduction_indices=2))
+  mask = tf.cast(mask, tf.float32)
   mistakes *= mask
   # Average over actual sequence lengths.
   mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
-  mistakes /= tf.cast(length, tf.float32)
+  mistakes /= tf.cast(sequence_length, tf.float32)
   return tf.reduce_mean(mistakes)
+
+#computes sequence_length
+# def length_fn(inputs):
+# 	used= tf.sign(tf.reduce_max(tf.abs(inputs), 2))
+# 	length= tf.reduce_sum(used, 1)
+# 	length= tf.cast(length, tf.int32)
+# 	return length
 
 if __name__== '__main__':	
 	EMBEDDING_SIZE=50 
@@ -223,23 +232,25 @@ if __name__== '__main__':
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
 	X=   			tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, FEATURE_SIZE), name='X')    
+	# sequence_length= tf.placeholder(tf.int32, shape=(BATCH_SIZE,), name='sequence_length')
 
 	with tf.name_scope('predict'):
 		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
-		logits=tf.nn.softmax(predict_op)
-		cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
-		# cost_op=cross_entropy(predict_op, targets)
+		logits=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-15,clip_value_max=15))
+		# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
+		cost_op=cross_entropy(logits, targets)
 
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
 	#Evaluation
 	with tf.name_scope('evaluation'):
-		success_count_op= tf.equal(tf.argmax(predict_op,1), tf.argmax(targets,1))
-		accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
-		# accuracy_op = 1-error_rate(predict_op, targets)
+		# length_op = length_fn(X)
+		# success_count_op= tf.equal(tf.argmax(logits,1), tf.argmax(targets,1))
+		# accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
+		accuracy_op = 1.0-error_rate(logits, targets, sequence_length)
 
 
 	#Logs 
@@ -272,8 +283,8 @@ if __name__== '__main__':
 			while not coord.should_stop():				
 				features, Y, length = session.run([inputs, targets, sequence_length])
 
-				_, Yhat, count, loss, acc = session.run(
-					[optimizer_op,predict_op, success_count_op,cost_op, accuracy_op],
+				_, Yhat, loss, acc = session.run(
+					[optimizer_op,predict_op, cost_op,accuracy_op],
 					feed_dict={
 						X: features,
 						sequence_length: length,
@@ -283,7 +294,7 @@ if __name__== '__main__':
 				total_loss+=loss 
 				total_acc+= acc
 
-				import code; code.interact(local=dict(globals(), **locals()))		
+				# import code; code.interact(local=dict(globals(), **locals()))		
 				
 				if step % DISPLAY_STEP ==0:					
 					print('Iter={:5d}'.format(step+1),'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
