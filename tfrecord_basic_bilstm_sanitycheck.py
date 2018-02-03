@@ -5,7 +5,9 @@ Created on Jan 30, 2018
 	Using tensorflow's Coordinator/Queue
 	Using batching
 
-	Debugging
+	updates:
+		2018-02-03: patched cross entropy and accuracy according to
+		https://danijar.com/variable-sequence-lengths-in-tensorflow/
 
 '''
 import numpy as np 
@@ -138,27 +140,12 @@ def forward(X, Wo, bo, sequence_length):
 			cell_fw=fwd_cell, 
 			cell_bw=bwd_cell, 
 			inputs=X, 			
-			# sequence_length=sequence_length,
+			sequence_length=sequence_length,
 			dtype=tf.float32,
 			time_major=False
 		)
 
-	
-	# return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
-	fwd_outputs, bwd_outputs = outputs
-	print('fwd_outputs', fwd_outputs.shape)
-	print('bwd_outputs', bwd_outputs.shape)
-	
 
-	# biYhat= tf.concat((fwd_outputs,bwd_outputs),2)
-	# biYhat2d= tf.reshape(biYhat,[-1,2*HIDDEN_SIZE[-1]])
-	# act = 		tf.matmul(biYhat2d, Wfb) + bfb
-	# Yhat2d=     tf.matmul(act, Wo) + bo
-	# Yhat =     tf.reshape(Yhat2d, [batch_size,-1,KLASS_SIZE])
-	# Performs 3D tensor multiplication by stacking Wo batch_size times
-	# broadcasts bias factor
-	# return Yhat
-		# return tf.matmul(outputs, tf.stack([Wo]*batch_size)) + bo
 	fwd_outputs, bck_outputs = outputs
 	act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*BATCH_SIZE)) +bfb
 
@@ -166,9 +153,9 @@ def forward(X, Wo, bo, sequence_length):
 	# broadcasts bias factor
 	return tf.matmul(act, tf.stack([Wo]*BATCH_SIZE)) + bo
 
-def cross_entropy(logits, targets):
+def cross_entropy(probs, targets):
   # Compute cross entropy for each sentence
-  xentropy = tf.cast(targets, tf.float32) * tf.log(logits)
+  xentropy = tf.cast(targets, tf.float32) * tf.log(probs)
   xentropy = -tf.reduce_sum(xentropy, 2)
   mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
   mask = tf.cast(mask, tf.float32)
@@ -178,11 +165,11 @@ def cross_entropy(logits, targets):
   xentropy /= tf.reduce_sum(mask, 1)
   return tf.reduce_mean(xentropy)
 
-def error_rate(logits, target, sequence_length):
+def error_rate(probs, targets, sequence_length):
   mistakes = tf.not_equal(
-      tf.argmax(target, 2), tf.argmax(logits, 2))
+      tf.argmax(targets, 2), tf.argmax(probs, 2))
   mistakes = tf.cast(mistakes, tf.float32)
-  mask = tf.sign(tf.reduce_max(tf.abs(target), reduction_indices=2))
+  mask = tf.sign(tf.reduce_max(tf.abs(targets), reduction_indices=2))
   mask = tf.cast(mask, tf.float32)
   mistakes *= mask
   # Average over actual sequence lengths.
@@ -190,22 +177,15 @@ def error_rate(logits, target, sequence_length):
   mistakes /= tf.cast(sequence_length, tf.float32)
   return tf.reduce_mean(mistakes)
 
-#computes sequence_length
-# def length_fn(inputs):
-# 	used= tf.sign(tf.reduce_max(tf.abs(inputs), 2))
-# 	length= tf.reduce_sum(used, 1)
-# 	length= tf.cast(length, tf.int32)
-# 	return length
-
 if __name__== '__main__':	
 	EMBEDDING_SIZE=50 
 	KLASS_SIZE=22
 	
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2+KLASS_SIZE
 	lr=1e-5
-	BATCH_SIZE=5
-	N_EPOCHS=1
-	HIDDEN_SIZE=[128]
+	BATCH_SIZE=250
+	N_EPOCHS=250
+	HIDDEN_SIZE=[128, 64]
 	DISPLAY_STEP=50
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -238,9 +218,9 @@ if __name__== '__main__':
 		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
-		logits=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-15,clip_value_max=15))
+		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-15,clip_value_max=15))
 		# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
-		cost_op=cross_entropy(logits, targets)
+		cost_op=cross_entropy(probs, targets)
 
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
@@ -250,7 +230,7 @@ if __name__== '__main__':
 		# length_op = length_fn(X)
 		# success_count_op= tf.equal(tf.argmax(logits,1), tf.argmax(targets,1))
 		# accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
-		accuracy_op = 1.0-error_rate(logits, targets, sequence_length)
+		accuracy_op = 1.0-error_rate(probs, targets, sequence_length)
 
 
 	#Logs 
