@@ -15,9 +15,10 @@ import tensorflow as tf
 
 from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
 
-TARGET_PATH='datasets/inputs/00/'
-tfrecords_filename= TARGET_PATH + 'devel.tfrecords'
+INPUT_PATH='datasets/inputs/00/'
+tfrecords_filename= INPUT_PATH + 'devel.tfrecords'
 
+LOGS_PATH='logs/multi_bilstm/00/'
 
 def read_and_decode(filename_queue):
 	'''
@@ -78,8 +79,6 @@ def process(embeddings, klass_ind, context_features, sequence_features):
 		if key in ['targets']:			
 			dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
 			Y= tf.squeeze(dense_tensor1,1 )
-			#Taking away de clutch
-			# sequence_inputs.append(tf.cast(dense_tensor1,tf.float32)) # SANITY CHECK
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
 	return X, Y, context_inputs[0]
@@ -189,8 +188,6 @@ if __name__== '__main__':
 	EMBEDDING_SIZE=50 
 	KLASS_SIZE=22
 
-	# SANITY CHECK VERSION
-	# FEATURE_SIZE=2*EMBEDDING_SIZE+2 + KLASS_SIZE
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2
 
 	BATCH_SIZE=50
@@ -221,15 +218,12 @@ if __name__== '__main__':
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
-	X=   			tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, FEATURE_SIZE), name='X')    
-	# sequence_length= tf.placeholder(tf.int32, shape=(BATCH_SIZE,), name='sequence_length')
 
 	with tf.name_scope('predict'):
-		predict_op= forward(X, Wo, bo, sequence_length)
+		predict_op= forward(inputs, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
 		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-20,clip_value_max=20))
-		# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
 		cost_op=cross_entropy(probs, targets)
 
 	with tf.name_scope('train'):
@@ -237,9 +231,6 @@ if __name__== '__main__':
 
 	#Evaluation
 	with tf.name_scope('evaluation'):
-		# length_op = length_fn(X)
-		# success_count_op= tf.equal(tf.argmax(logits,1), tf.argmax(targets,1))
-		# accuracy_op = tf.reduce_mean(tf.cast(success_count_op, tf.float32))	
 		accuracy_op = 1.0-error_rate(probs, targets, sequence_length)
 
 
@@ -250,7 +241,6 @@ if __name__== '__main__':
 	tf.summary.histogram('Wfb', Wfb)
 	tf.summary.histogram('bfb', bfb)
 	tf.summary.histogram('logits', logits)
-	tf.summary.histogram('X', X)
 	tf.summary.scalar('cross_entropy', xentropy)
 	tf.summary.scalar('accuracy', accuracy)
 	merged_summary = tf.summary.merge_all()
@@ -271,20 +261,11 @@ if __name__== '__main__':
 		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
-				features, Y, length = session.run([inputs, targets, sequence_length])
-
 				_, Yhat, loss, acc = session.run(
-					[optimizer_op,predict_op, cost_op,accuracy_op],
-					feed_dict={
-						X: features,
-						sequence_length: length,
-						targets: Y							
-					}
+					[optimizer_op,predict_op, cost_op, accuracy_op],
 				)
 				total_loss+=loss 
 				total_acc+= acc
-
-				# import code; code.interact(local=dict(globals(), **locals()))		
 				
 				if step % DISPLAY_STEP ==0:					
 					print('Iter={:5d}'.format(step+1),'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
@@ -292,7 +273,7 @@ if __name__== '__main__':
 					total_acc=0.0
 
 					s= session.run(merged_summary,
-						feed_dict={accuracy: acc, xentropy: loss, logits:Yhat, X:features}
+						feed_dict={accuracy: acc, xentropy: loss, logits:Yhat}
 					)
 					writer.add_summary(s, step)
 				step+=1

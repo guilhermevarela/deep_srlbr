@@ -63,9 +63,9 @@ def data_dict2word2idx(data_dict, key='LEMMA'):
 
 
 if __name__== '__main__':
-	tfrecords_path= TARGET_PATH + 'devel.tfrecords'
+	tfrecords_path= TARGET_PATH + 'valid.tfrecords'
 
-	df=propbankbr_lazyload('zhou_devel')
+	df=propbankbr_lazyload('zhou_valid')
 	np = max(df['P_S'])	# number of propositions
 
 	word2idx, _ =embed_input_lazyload()
