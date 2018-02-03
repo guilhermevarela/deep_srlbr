@@ -146,7 +146,6 @@ def forward(X, Wo, bo, sequence_length):
 			time_major=False
 		)
 
-
 	fwd_outputs, bck_outputs = outputs
 	act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*BATCH_SIZE)) +bfb
 
@@ -179,14 +178,24 @@ def error_rate(probs, targets, sequence_length):
   return tf.reduce_mean(mistakes)
 
 if __name__== '__main__':	
+	#BEST RUNNING PARAMS 	
+	# Iter=25451 avg. acc 99.77% avg. cost 0.004194
+	# lr=5e-4	
+	# HIDDEN_SIZE=[128, 64]
+
+	lr=5e-4	
+	HIDDEN_SIZE=[128, 64]
+
 	EMBEDDING_SIZE=50 
 	KLASS_SIZE=22
-	
-	FEATURE_SIZE=2*EMBEDDING_SIZE+2 #KLASS_SIZE
-	lr=1e-5
-	BATCH_SIZE=250
+
+	# SANITY CHECK VERSION
+	# FEATURE_SIZE=2*EMBEDDING_SIZE+2 + KLASS_SIZE
+	FEATURE_SIZE=2*EMBEDDING_SIZE+2
+
+	BATCH_SIZE=50
 	N_EPOCHS=250
-	HIDDEN_SIZE=[128, 64]
+	
 	DISPLAY_STEP=50
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
@@ -219,7 +228,7 @@ if __name__== '__main__':
 		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
-		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-15,clip_value_max=15))
+		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-20,clip_value_max=20))
 		# cost_op= tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=targets))
 		cost_op=cross_entropy(probs, targets)
 
