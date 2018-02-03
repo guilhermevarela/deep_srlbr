@@ -78,7 +78,8 @@ def process(embeddings, klass_ind, context_features, sequence_features):
 		if key in ['targets']:			
 			dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
 			Y= tf.squeeze(dense_tensor1,1 )
-			sequence_inputs.append(tf.cast(dense_tensor1,tf.float32)) # SANITY CHECK
+			#Taking away de clutch
+			# sequence_inputs.append(tf.cast(dense_tensor1,tf.float32)) # SANITY CHECK
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
 	return X, Y, context_inputs[0]
@@ -181,7 +182,7 @@ if __name__== '__main__':
 	EMBEDDING_SIZE=50 
 	KLASS_SIZE=22
 	
-	FEATURE_SIZE=2*EMBEDDING_SIZE+2+KLASS_SIZE
+	FEATURE_SIZE=2*EMBEDDING_SIZE+2 #KLASS_SIZE
 	lr=1e-5
 	BATCH_SIZE=250
 	N_EPOCHS=250
