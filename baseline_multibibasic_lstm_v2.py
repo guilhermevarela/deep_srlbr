@@ -54,7 +54,7 @@ def read_and_decode(filename_queue):
 
 
 
-def process(embeddings, klass_ind, context_features, sequence_features):
+def process(context_features, sequence_features):
 	context_inputs=[]
 	sequence_inputs=[]
 	sequence_target=[]
@@ -85,12 +85,12 @@ def process(embeddings, klass_ind, context_features, sequence_features):
 	return X, Y, context_inputs[0]
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_ind):
+def input_fn(filenames, batch_size,  num_epochs):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	context_features, sequence_features= read_and_decode(filename_queue)	
 
-	inputs, targets, length= process(embeddings, klass_ind, context_features, sequence_features)	
+	inputs, targets, length= process(context_features, sequence_features)	
 	
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
@@ -217,12 +217,10 @@ if __name__== '__main__':
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
-	# dataset_queue= tf.placeholder(tf.string, shape=(1,), name='dataset_queue')
 	dataset_queue=tf.placeholder_with_default([dataset_devel], shape=(1,), name='dataset_queue')
 
 	with tf.name_scope('pipeline'):
-		# inputs, targets, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
-		inputs, targets, sequence_length = input_fn(dataset_queue, BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+		inputs, targets, sequence_length = input_fn(dataset_queue, BATCH_SIZE, N_EPOCHS)
 	
 	with tf.name_scope('predict'):
 		predict_op= forward(inputs, Wo, bo, sequence_length)
