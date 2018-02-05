@@ -223,7 +223,7 @@ if __name__== '__main__':
 		predict_op= forward(inputs, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
-		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-20,clip_value_max=20))
+		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
 		cost_op=cross_entropy(probs, targets)
 
 	with tf.name_scope('train'):

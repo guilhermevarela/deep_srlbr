@@ -16,7 +16,8 @@ import tensorflow as tf
 from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
 
 INPUT_PATH='datasets/inputs/00/'
-tfrecords_filename= INPUT_PATH + 'devel.tfrecords'
+dataset_devel= INPUT_PATH + 'devel.tfrecords'
+dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
 LOGS_PATH='logs/multi_bilstm/00/'
 
@@ -52,7 +53,7 @@ def read_and_decode(filename_queue):
 	return context_features, sequence_features
 
 
-# def process_example(length,  idx, idx_pred, idx_lemma,  mr, secret ,targets, embeddings, klass_ind):
+
 def process(embeddings, klass_ind, context_features, sequence_features):
 	context_inputs=[]
 	sequence_inputs=[]
@@ -202,10 +203,8 @@ if __name__== '__main__':
 	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
 	batch_size= tf.constant(BATCH_SIZE, dtype=tf.int32,  name='batch_size')
 	hidden_size= tf.constant(HIDDEN_SIZE[-1], dtype=tf.int32,  name='hidden_size')
-
-	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_fn([tfrecords_filename], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
 	
+
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
 	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
@@ -218,12 +217,18 @@ if __name__== '__main__':
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
+	# dataset_queue= tf.placeholder(tf.string, shape=(1,), name='dataset_queue')
+	dataset_queue=tf.placeholder_with_default([dataset_devel], shape=(1,), name='dataset_queue')
 
+	with tf.name_scope('pipeline'):
+		# inputs, targets, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+		inputs, targets, sequence_length = input_fn(dataset_queue, BATCH_SIZE, N_EPOCHS, embeddings, klass_ind)
+	
 	with tf.name_scope('predict'):
 		predict_op= forward(inputs, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
-		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-20,clip_value_max=20))
+		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
 		cost_op=cross_entropy(probs, targets)
 
 	with tf.name_scope('train'):
@@ -262,13 +267,22 @@ if __name__== '__main__':
 		try:
 			while not coord.should_stop():				
 				_, Yhat, loss, acc = session.run(
-					[optimizer_op,predict_op, cost_op, accuracy_op],
+					[optimizer_op,predict_op, cost_op, accuracy_op]
 				)
+
 				total_loss+=loss 
 				total_acc+= acc
 				
 				if step % DISPLAY_STEP ==0:					
-					print('Iter={:5d}'.format(step+1),'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP), 'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+					acc = session.run(
+						accuracy_op,
+						feed_dict= {dataset_queue: [dataset_valid]}
+					)
+
+					print('Iter={:5d}'.format(step+1),
+						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),
+							'valid acc {:.2f}%'.format(100*acc),
+					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
 					total_acc=0.0
 
