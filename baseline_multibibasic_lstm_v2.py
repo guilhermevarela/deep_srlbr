@@ -134,15 +134,6 @@ def forward(X, sequence_length):
 
 	'''
 
-	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
-		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
-	)
-	bwd_cell = tf.nn.rnn_cell.MultiRNNCell(
-		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
-	)
-
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.bidirectional_dynamic_rnn(
 			cell_fw=fwd_cell, 
@@ -216,6 +207,15 @@ if __name__== '__main__':
 	Wfb = tf.Variable(tf.random_normal([2*HIDDEN_SIZE[-1], HIDDEN_SIZE[-1]], name='Wfb')) 
 	bfb = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1]], name='bfb')) 
 
+	#Architecture
+	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
+		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
+			for hsz in HIDDEN_SIZE]
+	)
+	bwd_cell = tf.nn.rnn_cell.MultiRNNCell(
+		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
+			for hsz in HIDDEN_SIZE]
+	)
 	#output metrics
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
