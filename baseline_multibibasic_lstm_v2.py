@@ -112,7 +112,7 @@ def input_fn(filenames, batch_size,  num_epochs):
 	return input_batch, target_batch, length_batch
 
 
-def forward(X, Wo, bo, sequence_length):		
+def forward(X, sequence_length):		
 	'''
 		Computes forward propagation thru basic lstm cell
 
@@ -226,7 +226,7 @@ if __name__== '__main__':
 		inputs, targets, sequence_length = input_fn(dataset_queue, BATCH_SIZE, N_EPOCHS)
 	
 	with tf.name_scope('predict'):
-		predict_op= forward(inputs, Wo, bo, sequence_length)
+		predict_op= forward(inputs, sequence_length)
 
 	with tf.name_scope('xent'):
 		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
