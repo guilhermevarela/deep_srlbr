@@ -78,21 +78,14 @@ def process(context_features, sequence_features):
 			sequence_inputs.append(dense_tensor1)
 
 		if key in ['targets']:			
-			# dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
-			dense_tensor1= tf.one_hot(
-				dense_tensor, 
-				KLASS_SIZE,
-				on_value=1,
-				off_value=0,
-				dtype=tf.int32
-			)
+			dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
 			Y= tf.squeeze(dense_tensor1,1 )
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1) 
 	return X, Y, context_inputs[0]
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs):
+def input_train_fn(filenames, batch_size,  num_epochs):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	context_features, sequence_features= read_and_decode(filename_queue)	
@@ -111,6 +104,25 @@ def input_fn(filenames, batch_size,  num_epochs):
 	)
 	return input_batch, target_batch, length_batch
 
+def input_valid_fn():
+
+	filename_queue = tf.train.string_input_producer([dataset_valid], num_epochs=1, shuffle=False)
+
+	context_features, sequence_features= read_and_decode(filename_queue)	
+
+	inputs, targets, length= process(context_features, sequence_features)	
+	
+	min_after_dequeue = 10000
+	capacity = min_after_dequeue + 3 * 566
+
+	# https://www.tensorflow.org/api_docs/python/tf/train/batch
+	input_batch, target_batch, length_batch=tf.train.batch(
+		[inputs, targets, length], 
+		batch_size=566, 
+		capacity=capacity, 
+		dynamic_pad=True		
+	)
+	return input_batch, target_batch, length_batch
 
 def forward(X, Wo, bo, sequence_length):		
 	'''
@@ -198,16 +210,16 @@ if __name__== '__main__':
 
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2
 
-	BATCH_SIZE=568
-	N_EPOCHS=500
+	BATCH_SIZE=250
+	N_EPOCHS=250
 	
-	DISPLAY_STEP=10
+	DISPLAY_STEP=50
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
-	klass2idx, - = embed_output_lazyload()		
+	klass2idx, np_klassind= embed_output_lazyload()		
 
 	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32, name= 'embeddings')
-	# klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
+	klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
 	batch_size= tf.constant(BATCH_SIZE, dtype=tf.int32,  name='batch_size')
 	hidden_size= tf.constant(HIDDEN_SIZE[-1], dtype=tf.int32,  name='hidden_size')
 	
@@ -220,6 +232,11 @@ if __name__== '__main__':
 	Wfb = tf.Variable(tf.random_normal([2*HIDDEN_SIZE[-1], HIDDEN_SIZE[-1]], name='Wfb')) 
 	bfb = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1]], name='bfb')) 
 
+	#X, T, sequence_length
+	X= tf.placeholder(tf.float32, shape=(None,None, FEATURE_SIZE),name='X')
+	T= tf.placeholder(tf.float32, shape=(None, None, KLASS_SIZE),name='T')
+	sequence_length= tf.placeholder(tf.int32, shape=(None,),name='sequence_length')
+
 	#output metrics
 	xentropy= tf.placeholder(tf.float32, name='loss')	
 	accuracy= tf.placeholder(tf.float32, name='accuracy')	
@@ -227,14 +244,15 @@ if __name__== '__main__':
 	dataset_queue=tf.placeholder_with_default([dataset_devel], shape=(1,), name='dataset_queue')
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_fn(dataset_queue, BATCH_SIZE, N_EPOCHS)
-	
+		inputs, targets, lengths = input_train_fn(dataset_queue, BATCH_SIZE, N_EPOCHS)
+		inputs_valid, targets_valid, lengths_valid= input_valid_fn()
+
 	with tf.name_scope('predict'):
-		predict_op= forward(inputs, Wo, bo, sequence_length)
+		predict_op= forward(X, Wo, bo, sequence_length)
 
 	with tf.name_scope('xent'):
 		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
-		cost_op=cross_entropy(probs, targets)
+		cost_op=cross_entropy(probs, T)
 
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
@@ -245,7 +263,7 @@ if __name__== '__main__':
 
 
 	#Logs 
-	writer = tf.summary.FileWriter(LOGS_PATH)			
+	writer = tf.summary.FileWriter('logs/basic_lstm/00')			
 	tf.summary.histogram('Wo', Wo)
 	tf.summary.histogram('bo', bo)
 	tf.summary.histogram('Wfb', Wfb)
@@ -269,32 +287,49 @@ if __name__== '__main__':
 		total_loss=0.0
 		total_acc=0.0		
 		writer.add_graph(session.graph)
-		try:
-			while not coord.should_stop():				
-				_, Yhat, loss, acc = session.run(
-					[optimizer_op,predict_op, cost_op, accuracy_op]
-				)
+		# try:
+		# 	while not coord.should_stop():				
+			filename_queue = tf.train.string_input_producer([dataset_valid], num_epochs=1, shuffle=False)
+			# Creating a new queue
+			padding_q = tf.PaddingFIFOQueue(
+  			capacity=100,
+  			dtypes=[tf.float32,tf.float32, tf.int32],
+  			shapes=[[None, None, FEATURE_SIZE], [None, None, KLASS_SIZE], None]
+  		)
+    		
+ 
+				# X_valid, T_valid, sentence_valid= session.run(
+				# 	[inputs_valid, targets_valid, lengths_valid]
+				# )
+				# X_batch, T_batch, sentence_batch = session.run(
+				# 	[inputs, targets, lengths]
+				# )
 
-				total_loss+=loss 
-				total_acc+= acc
+				# _, Yhat, loss, acc = session.run(
+				# 	[optimizer_op,predict_op, cost_op, accuracy_op],
+				# 	feed_dict={X: X_batch, T:T_batch, sequence_length: sentence_batch}
+				# )
+
+				# total_loss+=loss 
+				# total_acc+= acc
 				
-				if step % DISPLAY_STEP ==0:					
-					acc = session.run(
-						accuracy_op,
-						feed_dict= {dataset_queue: [dataset_valid]}
-					)
+				# if step % DISPLAY_STEP ==0:					
+				# 	acc = session.run(
+				# 		accuracy_op,
+				# 		feed_dict= {X: X_valid, T: T_valid, sequence_length: sentence_valid}
+				# 	)
 
-					print('Iter={:5d}'.format(step+1),
-						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),
-							'valid acc {:.2f}%'.format(100*acc),
-					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
-					total_loss=0.0 
-					total_acc=0.0
+				# 	print('Iter={:5d}'.format(step+1),
+				# 		'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),
+				# 			'valid acc {:.2f}%'.format(100*acc),
+				# 	 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+				# 	total_loss=0.0 
+				# 	total_acc=0.0
 
-					s= session.run(merged_summary,
-						feed_dict={accuracy: acc, xentropy: loss, logits:Yhat}
-					)
-					writer.add_summary(s, step)
+				# 	s= session.run(merged_summary,
+				# 		feed_dict={accuracy: acc, xentropy: loss, logits:Yhat}
+				# 	)
+				# 	writer.add_summary(s, step)
 				step+=1
 				
 		except tf.errors.OutOfRangeError:
