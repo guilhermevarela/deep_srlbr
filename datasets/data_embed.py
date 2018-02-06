@@ -13,9 +13,11 @@ Adds and embedding layer over the raw data generating
 
 '''
 #Uncomment if launched from root
-from datasets.data_propbankbr import propbankbr_lazyload
+# from datasets.data_propbankbr import propbankbr_lazyload
+import sys
+sys.path.append('datasets/')
 #Uncomment if launched from /datasets
-# from data_propbankbr import propbankbr_lazyload
+from data_propbankbr import propbankbr_lazyload
 from gensim.models import KeyedVectors
 
 import pickle

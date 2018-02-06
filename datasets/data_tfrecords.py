@@ -26,7 +26,7 @@ EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/00/'
 
 
-def proposition2sequence_example(prop_dict, word2idx, klass2idx, sequence_keys=['ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
+def proposition2sequence_example(prop_dict, word2idx, klass2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
 	sequence_length=len(prop_dict[target_key[0]])

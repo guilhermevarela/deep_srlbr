@@ -1,4 +1,4 @@
-,ID,S,P,P_S,FORM,LEMMA,PRED,M_R,ARG,ARG_Y
+IDX,ID,S,P,P_S,FORM,LEMMA,PRED,M_R,ARG,ARG_Y
 136144,1,3205,1,5669,A,o,ser,0,(A1*,A1
 136145,2,3205,1,5669,hidroginástica,hidroginástica,ser,0,*),A1
 136146,3,3205,1,5669,é,ser,ser,1,(V*),V

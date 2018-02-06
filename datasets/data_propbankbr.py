@@ -254,7 +254,7 @@ def propbankbr_parser2():
 	arg_Y = datatransform_ARGY(zhou_df, args_columns=['ARG'])			
 
 	zhou_df['ARG_Y']= list(map(lambda x: x[0], arg_Y))
-
+	zhou_df.index.name= 'IDX'
 	return zhou_df[usecols]
 
 def propbankbr_argument_stats(df):

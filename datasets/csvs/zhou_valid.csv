@@ -1,4 +1,4 @@
-,ID,S,P,P_S,FORM,LEMMA,PRED,M_R,ARG,ARG_Y
+IDX,ID,S,P,P_S,FORM,LEMMA,PRED,M_R,ARG,ARG_Y
 123846,1,2879,1,5100,Entre,entre,estar,0,(A2*,A2
 123847,2,2879,1,5100,os,o,estar,0,*,A2
 123848,3,2879,1,5100,convidados,convidado,estar,0,*),A2
