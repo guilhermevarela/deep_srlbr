@@ -204,13 +204,9 @@ if __name__== '__main__':
 	DISPLAY_STEP=10
 
 	word2idx,  np_embeddings= embed_input_lazyload()		
-	klass2idx, - = embed_output_lazyload()		
+	klass2idx, _ = embed_output_lazyload()		
 
 	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32, name= 'embeddings')
-	# klass_ind= tf.constant(np_klassind.tolist(),   shape=np_klassind.shape, dtype=tf.int32, name= 'klass')
-	batch_size= tf.constant(BATCH_SIZE, dtype=tf.int32,  name='batch_size')
-	hidden_size= tf.constant(HIDDEN_SIZE[-1], dtype=tf.int32,  name='hidden_size')
-	
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
