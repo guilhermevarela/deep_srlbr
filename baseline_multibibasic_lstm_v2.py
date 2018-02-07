@@ -98,7 +98,7 @@ if __name__== '__main__':
 	
 	load_dir=''
 	#UNCOMMENT IN TO KEEP TRAINING
-	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/exp-899.meta'
+	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/00/exp-1449.meta'
 	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
 	experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
 	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
@@ -210,19 +210,13 @@ if __name__== '__main__':
 		
 		#Persists always saving on improvement
 		if load_dir:
-			saver = tf.train.import_meta_graph(load_dir)
-			saver.restore(session,tf.train.latest_checkpoint('./'))
+			raise NotImplementedError('load_dir')
+			# saver = tf.train.import_meta_graph(load_dir)
+			# saver.restore(session,tf.train.latest_checkpoint('./'))
 			# graph = tf.get_default_graph()
 
-			# fwd_cell = graph.get_tensor_by_name("fwd_cell:0")
-			# bwd_cell = graph.get_tensor_by_name("bwd_cell:0")
-
-			# Wo = graph.get_tensor_by_name("Wo:0")
-			# bo = graph.get_tensor_by_name("bo:0")
-
-			# Wfb = graph.get_tensor_by_name("Wfb:0")
-			# bfb = graph.get_tensor_by_name("bfb:0")
- 
+			# Exibits all variables
+			# session.graph.get_collection(tf.GraphKeys.VARIABLES) 
 		else:			
 			saver = tf.train.Saver(max_to_keep=1)
 		
@@ -241,6 +235,7 @@ if __name__== '__main__':
 						feed_dict= { X:X_batch, T:Y_batch, mb:mb_batch}
 				)
 
+				import code; code.interact(local=dict(globals(), **locals()))		
 				total_loss+=loss 
 				total_acc+= acc
 				
