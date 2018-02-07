@@ -145,11 +145,18 @@ def forward(X, sequence_length):
 		)
 
 	fwd_outputs, bck_outputs = outputs
-	act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
 
+	outputs=tf.concat((fwd_outputs,bck_outputs),2)
+	print(outputs.shape)
+	print(Wfb.shape)
+	# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
+	act =tf.scan(lambda a, x: tf.matmul(x, Wfb), outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
+
+	Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),act, initializer=tf.matmul(act[0],Wo)) + bo
 	# Performs 3D tensor multiplication by stacking Wo batch_size times
 	# broadcasts bias factor
-	return tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
+	# return tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
+	return Yhat
 
 def cross_entropy(probs, targets):
   # Compute cross entropy for each sentence
@@ -308,11 +315,15 @@ if __name__== '__main__':
 				X_batch, Y_batch, seq_batch = session.run(
 					[inputs, targets, sequence_length]
 				)
-
-				_, Yhat, loss, acc = session.run(
-					[optimizer_op,predict_op, cost_op, accuracy_op],
+				Yhat= session.run(
+					predict_op,
 						feed_dict= { X:X_batch, T:Y_batch, mb:seq_batch, batch_size: [BATCH_SIZE]}
 				)
+
+				# _, Yhat, loss, acc = session.run(
+				# 	[optimizer_op,predict_op, cost_op, accuracy_op],
+				# 		feed_dict= { X:X_batch, T:Y_batch, mb:seq_batch, batch_size: [BATCH_SIZE]}
+				# )
 
 				total_loss+=loss 
 				total_acc+= acc
