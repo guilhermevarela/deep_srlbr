@@ -95,8 +95,14 @@ if __name__== '__main__':
 	
 	DISPLAY_STEP=50
 
+	
+	load_dir=''
+	#UNCOMMENT IN TO KEEP TRAINING
+	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/exp-899.meta'
+	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
 	experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
-	logs_dir= dir_getlogs(lr, HIDDEN_SIZE,model_name=MODEL_NAME)
+	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
+	logs_dir= dir_getlogs(lr, HIDDEN_SIZE,model_name=MODEL_NAME)	
 
 	print('experiment_dir', experiment_dir)
 	print('logs_dir', logs_dir)
@@ -123,14 +129,13 @@ if __name__== '__main__':
 	#Architecture
 	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
+			for hsz in HIDDEN_SIZE],
 	)
 	bwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
+			for hsz in HIDDEN_SIZE],
 	)
 	
-
 	#output metrics
 	loss_avg= tf.placeholder(tf.float32, name='loss_avg')	
 	accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
@@ -202,11 +207,29 @@ if __name__== '__main__':
 		total_loss=0.0
 		total_acc=0.0		
 		
-		writer.add_graph(session.graph)
+		
 		#Persists always saving on improvement
-		saver = tf.train.Saver()
+		if load_dir:
+			saver = tf.train.import_meta_graph(load_dir)
+			saver.restore(session,tf.train.latest_checkpoint('./'))
+			# graph = tf.get_default_graph()
+
+			# fwd_cell = graph.get_tensor_by_name("fwd_cell:0")
+			# bwd_cell = graph.get_tensor_by_name("bwd_cell:0")
+
+			# Wo = graph.get_tensor_by_name("Wo:0")
+			# bo = graph.get_tensor_by_name("bo:0")
+
+			# Wfb = graph.get_tensor_by_name("Wfb:0")
+			# bfb = graph.get_tensor_by_name("bfb:0")
+ 
+		else:			
+			saver = tf.train.Saver(max_to_keep=1)
+		
+
 		first_save=True
 		best_validation_rate=-1
+		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
 				X_batch, Y_batch, mb_batch = session.run(
@@ -242,10 +265,10 @@ if __name__== '__main__':
 
 					if best_validation_rate < acc:
 						if first_save:
-							saver.save(session, experiment_dir + 'data', global_step=step)
+							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
 							first_save=False 
 						else:
-							saver.save(session, experiment_dir + 'data', global_step=step, write_meta_graph=False)
+							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
 				step+=1
