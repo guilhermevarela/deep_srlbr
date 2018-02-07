@@ -29,8 +29,8 @@ EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/00/'
 
 
-def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='embeddings'):
-	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'	
+def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='embeddings', input_dir=TARGET_PATH):
+	dataset_path= input_dir + w2i_dataset_name + '.pickle'	
 	if os.path.isfile(dataset_path):
 		pickle_in = open(dataset_path,"rb")
 		word2idx = pickle.load(pickle_in)
@@ -40,7 +40,7 @@ def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='em
 		word2idx = df2word2idx(deep_df, col2tokenize='LEMMA')				
 		embed_word2idx_persist(word2idx, dataset_name=w2i_dataset_name)		
 
-	dataset_path= TARGET_PATH + embedding_dataset_name + '.npy'
+	dataset_path= input_dir + embedding_dataset_name + '.npy'
 	if os.path.isfile(dataset_path):		
 		embeddings = np.load(dataset_path)		
 	else:
@@ -50,8 +50,8 @@ def embed_input_lazyload(w2i_dataset_name='word2idx', embedding_dataset_name='em
 		
 	return word2idx, embeddings	
 
-def embed_output_lazyload(w2i_dataset_name='klass2idx', klass_ind_dataset_name='klass_ind'):
-	dataset_path= TARGET_PATH + w2i_dataset_name + '.pickle'	
+def embed_output_lazyload(w2i_dataset_name='klass2idx', klass_ind_dataset_name='klass_ind', input_dir=TARGET_PATH):
+	dataset_path= input_dir + w2i_dataset_name + '.pickle'	
 	if os.path.isfile(dataset_path):
 		pickle_in = open(dataset_path,"rb")
 		word2idx = pickle.load(pickle_in)
@@ -61,7 +61,7 @@ def embed_output_lazyload(w2i_dataset_name='klass2idx', klass_ind_dataset_name='
 		word2idx = df2word2idx(deep_df, col2tokenize='ARG_Y')						
 		embed_word2idx_persist(word2idx, dataset_name=w2i_dataset_name)		
 
-	dataset_path= TARGET_PATH + klass_ind_dataset_name + '.npy'
+	dataset_path= input_dir + klass_ind_dataset_name + '.npy'
 	if os.path.isfile(dataset_path):
 		klass_ind=np.load(dataset_path)
 	else:

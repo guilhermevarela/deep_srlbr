@@ -1,0 +1,6 @@
+model_checkpoint_path: "data-599"
+all_model_checkpoint_paths: "data-399"
+all_model_checkpoint_paths: "data-449"
+all_model_checkpoint_paths: "data-499"
+all_model_checkpoint_paths: "data-549"
+all_model_checkpoint_paths: "data-599"
