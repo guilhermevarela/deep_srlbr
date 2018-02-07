@@ -29,7 +29,7 @@ INPUT_PATH='datasets/inputs/00/'
 dataset_devel= INPUT_PATH + 'devel.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
-LOGS_PATH='logs/multi_bibasiclstm/00/'
+LOGS_PATH='logs/multi_bibasic_lstm/00/'
 
 DATASET_VALID_SIZE= 568
 # DATASET_VALID_SIZE= 10000 # Garantees to take whole dataset

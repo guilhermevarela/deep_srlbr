@@ -28,7 +28,6 @@ dataset_valid= INPUT_PATH + 'valid.tfrecords'
 LOGS_PATH='logs/bibasic_lstm/00/'
 
 DATASET_VALID_SIZE= 568
-# DATASET_VALID_SIZE= 10000 # Garantees to take whole dataset
 
 def read_and_decode(filename_queue):
 	'''
