@@ -66,14 +66,15 @@ if __name__== '__main__':
 	tfrecords_path= TARGET_PATH + 'valid.tfrecords'
 
 	df=propbankbr_lazyload('zhou_valid')
-	np = max(df['P_S'])	# number of propositions
+	p0 = min(df['P_S'])
+	pn = max(df['P_S'])	# number of propositions
 
 	word2idx, _ =embed_input_lazyload()
 	klass2idx, _ =embed_output_lazyload()
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)
 
-		for p in range(1, np+1):
+		for p in range(p0, pn+1):
 			df_prop= df[df['P_S']==p]
 			ex= proposition2sequence_example(
 				df2data_dict( df_prop ), 
