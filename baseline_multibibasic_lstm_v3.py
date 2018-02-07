@@ -81,7 +81,6 @@ def process(context_features, sequence_features):
 			sequence_inputs.append(dense_tensor1)
 
 		if key in ['targets']:			
-			# dense_tensor1= tf.nn.embedding_lookup(klass_ind, dense_tensor)
 			dense_tensor1= tf.one_hot(
 				dense_tensor, 
 				KLASS_SIZE,
@@ -90,16 +89,15 @@ def process(context_features, sequence_features):
 				dtype=tf.int32
 			)
 
-			# Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y' )
-			Y= dense_tensor1
+			Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y' )
+			
 
 	
-	# X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
-	X= tf.concat(sequence_inputs, 2)
+	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
 	return X, Y, context_inputs[0]
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs, allow_smaller_final_batch=False, shuffle=True):
+def input_fn(filenames, bsize,  num_epochs):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	context_features, sequence_features= read_and_decode(filename_queue)	
@@ -107,15 +105,14 @@ def input_fn(filenames, batch_size,  num_epochs, allow_smaller_final_batch=False
 	inputs, targets, length= process(context_features, sequence_features)	
 	
 	min_after_dequeue = 10000
-	capacity = min_after_dequeue + 3 * batch_size
+	capacity = min_after_dequeue + 3 * bsize
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
 	input_batch, target_batch, length_batch=tf.train.batch(
 		[inputs, targets, length], 
-		batch_size=batch_size, 
+		batch_size=bsize, 
 		capacity=capacity, 
-		dynamic_pad=True,
-		allow_smaller_final_batch=allow_smaller_final_batch
+		dynamic_pad=True
 	)
 	return input_batch, target_batch, length_batch
 
@@ -129,10 +126,6 @@ def forward(X, sequence_length):
 		args:
 			X: [batch_size, max_time, feature_size] tensor (sequences shorter than max_time are zero padded)
 
-			Wo: [hidden_size[-1], klass_size] tensor prior to softmax layer, representing observable weights 
-
-			bo: [klass_size] tensor prior to softmax layer of size 
-
 			sequence_length:[batch_size] tensor (int) carrying the size of each sequence 
 
 		returns:
@@ -140,7 +133,7 @@ def forward(X, sequence_length):
 
 	'''
 
-	batch_size=sequence_length.shape[0]
+	# batch_size=tf.size(sequence_length)	
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
 	outputs, states= tf.nn.bidirectional_dynamic_rnn(
 			cell_fw=fwd_cell, 
@@ -196,7 +189,7 @@ if __name__== '__main__':
 
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2
 	
-	BATCH_SIZE=568
+	BATCH_SIZE=569
 	# BATCH_SIZE=250
 	N_EPOCHS=300
 	
@@ -219,7 +212,10 @@ if __name__== '__main__':
 	# This makes training slower - but code is reusable
 	X     =   tf.placeholder(tf.float32, shape=(None,None, FEATURE_SIZE), name='X') 
 	T     =   tf.placeholder(tf.float32, shape=(None,None, KLASS_SIZE), name='T')
-	lens  =   tf.placeholder(tf.int32, shape=(None,), name='lens')
+	mb    =   tf.placeholder(tf.int32, shape=(None,), name='mb')
+	batch_size = tf.placeholder(tf.int32,shape=(), name='batch_size')
+
+
 	#Architecture
 	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
@@ -236,32 +232,31 @@ if __name__== '__main__':
 	accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
 	accuracy_valid= tf.placeholder(tf.float32, name='accuracy_valid')	
 	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
-	dataset_queue=tf.placeholder_with_default([dataset_devel], shape=(1,), name='dataset_queue')
-
-
-	batch_size=BATCH_SIZE
-	n_epochs=N_EPOCHS
-	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_fn([dataset_valid], batch_size, 1, allow_smaller_final_batch=True)
-		# inputs, targets, sequence_length = input_fn(dataset_queue, batch_size, n_epochs)
-		# inputs_v, targets_v, sequence_length_v = input_fn([dataset_valid], batch_size, 1, allow_smaller_final_batch=True)
 	
-	# with tf.name_scope('predict'):
-	# 	# predict_op= forward(X, lens)
-	# 	# predict_valid_op= forward(inputs_valid, sequence_length_valid)
 
-	# with tf.name_scope('xent'):
-	# 	probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
-	# 	# probs_valid=tf.nn.softmax(tf.clip_by_value(predict_valid_op,clip_value_min=-22,clip_value_max=22))
-	# 	cost_op=cross_entropy(probs, T)
 
-	# with tf.name_scope('train'):
-	# 	optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
+	# batch_size=BATCH_SIZE
+	# n_epochs=N_EPOCHS
+	with tf.name_scope('pipeline'):
+		inputs, targets, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS)
+		inputs_v, targets_v, sequence_length_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1)
+	
+	with tf.name_scope('predict'):
+		predict_op= forward(X, mb)
+		# predict_valid_op= forward(inputs_valid, sequence_length_valid)
 
-	# #Evaluation
-	# with tf.name_scope('evaluation'):
-	# 	accuracy_op = 1.0-error_rate(probs, T, lens)
-	# 	# accuracy_valid_op = 1.0-error_rate(probs_valid, targets_valid, sequence_length_valid)
+	with tf.name_scope('xent'):
+		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
+		# probs_valid=tf.nn.softmax(tf.clip_by_value(predict_valid_op,clip_value_min=-22,clip_value_max=22))
+		cost_op=cross_entropy(probs, T)
+
+	with tf.name_scope('train'):
+		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
+
+	#Evaluation
+	with tf.name_scope('evaluation'):
+		accuracy_op = 1.0-error_rate(probs, T, mb)
+		# accuracy_valid_op = 1.0-error_rate(probs_valid, targets_valid, sequence_length_valid)
 
 	#Logs 
 	writer = tf.summary.FileWriter(LOGS_PATH)			
@@ -296,82 +291,57 @@ if __name__== '__main__':
 
 		try:
 			while not coord.should_stop():				
-				X_batch, Y_batch, seq_batch=session.run([inputs, targets, sequence_length])				
+				X_valid, Y_valid, seq_valid=session.run([inputs_v, targets_v, sequence_length_v])				
 	
-				new_shapeX= (X_batch.shape[1], X_batch.shape[2],X_batch.shape[0]) #[TIME_MAX, FEATURE_SIZE, BATCH_SIZE]
-				new_shapeY= (Y_batch.shape[1], Y_batch.shape[2],Y_batch.shape[0]) #[TIME_MAX, FEATURE_SIZE, BATCH_SIZE]
-
-				# ary_inputs.append(np.reshape(X_batch,new_shapeX))
-				# ary_targets.append(np.reshape(Y_batch,new_shapeY))
-				# ary_sequences.append(seq_batch)
-				ary_inputs.append(X_batch)
-				ary_targets.append(Y_batch)
-				ary_sequences.append(seq_batch)
 
 		except tf.errors.OutOfRangeError:
-			import code; code.interact(local=dict(globals(), **locals()))				
-			X_valid = np.concatenate(ary_inputs, axis=0)
-			Y_valid = np.concatenate(ary_targets, axis=0)
-			seq_valid = np.concatenate(ary_sequences, axis=0)			
+			print('Done initializing validation set')			
 
-			print('Done initializing validation set')
-			print('X_valid',X_valid.shape)
-			print('Y_valid',Y_valid.shape)
-			print('seq_valid',seq_valid.shape)
-			
+		finally:
+			#When done, ask threads to stop
+			coord.request_stop()			
+
+		coord= tf.train.Coordinator()
+		threads= tf.train.start_queue_runners(coord=coord)
+		try:
+			while not coord.should_stop():				
+				X_batch, Y_batch, seq_batch = session.run(
+					[inputs, targets, sequence_length]
+				)
+
+				_, Yhat, loss, acc = session.run(
+					[optimizer_op,predict_op, cost_op, accuracy_op],
+						feed_dict= { X:X_batch, T:Y_batch, mb:seq_batch, batch_size: [BATCH_SIZE]}
+				)
+
+				total_loss+=loss 
+				total_acc+= acc
+				
+				if step % DISPLAY_STEP ==0:					
+					#This will be caugth by input_fn				
+					acc = session.run(
+						accuracy_op,
+						feed_dict={X:X_valid, T:Y_valid, mb:seq_valid, batch_size: [DATASET_VALID_SIZE]}
+					)
+					# print(x.shape, sum(l))
+					print('Iter={:5d}'.format(step+1),
+						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
+							'valid. acc {:.2f}%'.format(100*acc),						
+					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+					total_loss=0.0 
+					total_acc=0.0
+
+					s= session.run(merged_summary,
+						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
+					)
+					writer.add_summary(s, step)
+				step+=1
+				
+		except tf.errors.OutOfRangeError:
+			print('Done training -- epoch limit reached')
 
 		finally:
 			#When done, ask threads to stop
 			coord.request_stop()
-			
-		coord.request_stop()
-		coord.join(threads)
-
-
-		# try:
-		# 	while not coord.should_stop():				
-		# 		X_batch, Y_batch, seq_batch = session.run(
-		# 			[inputs, targets, sequence_length]
-		# 		)
-
-		# 		_, Yhat, loss, acc = session.run(
-		# 			[optimizer_op,predict_op, cost_op, accuracy_op],
-		# 				feed_dict= { X:X_batch, T:Y_batch, lens:seq_batch					
-		# 			}
-		# 		)
-
-		# 		total_loss+=loss 
-		# 		total_acc+= acc
-				
-		# 		if step % DISPLAY_STEP ==0:					
-		# 			#This will be caugth by input_fn				
-		# 			# acc, x, l = session.run(
-		# 			# 	[accuracy_valid_op, inputs_valid, sequence_length_valid]
-		# 			# )
-		# 			# print(x.shape, sum(l))
-		# 			print('Iter={:5d}'.format(step+1),
-		# 				'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
-		# 			 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
-		# 			total_loss=0.0 
-		# 			total_acc=0.0
-
-		# 			s= session.run(merged_summary,
-		# 				feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
-		# 			)
-		# 			writer.add_summary(s, step)
-		# 			#Reset to defaults
-		# 			batch_size=BATCH_SIZE
-		# 			n_epochs=N_EPOCHS
-
-		# 		step+=1
-				
-		# except tf.errors.OutOfRangeError:
-		# 	print('Done training -- epoch limit reached')
-
-		# finally:
-		# 	#When done, ask threads to stop
-		# 	coord.request_stop()
-			
-		# coord.request_stop()
-		# coord.join(threads)
+			coord.join(threads)
 
