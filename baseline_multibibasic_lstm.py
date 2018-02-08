@@ -9,7 +9,7 @@ Created on Jan 30, 2018
 	# TRAINING
 	# Iter=25451 avg. acc 99.77% avg. cost 0.004194
 	# VALIDATION
-	# Iter= 5601 avg. acc 95.27% valid. acc 59.26% avg. cost 0.109274
+	# Iter= 3050 avg. acc 79.68% valid. acc 60.62% avg. cost 0.471232
 	# lr=5e-4	
 	# HIDDEN_SIZE=[128, 64]
 
@@ -17,114 +17,23 @@ Created on Jan 30, 2018
 	updates:
 		2018-02-03: patched cross entropy and accuracy according to
 		https://danijar.com/variable-sequence-lengths-in-tensorflow/
-		2018-02-07: validation set included
+		2018-02-07: validation set included, save and load 
+		2018-02-08: updates on data transformation
 
 '''
 import numpy as np 
 import tensorflow as tf 
 
-from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
+from pipeline_io import dir_getlogs, dir_getmodels, dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
+from utils import cross_entropy, error_rate 
 
 INPUT_PATH='datasets/inputs/00/'
 dataset_devel= INPUT_PATH + 'devel.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
-LOGS_PATH='logs/multi_bibasic_lstm/00/'
+MODEL_NAME='multi_bibasic_lstm'
+DATASET_VALID_SIZE= 569
 
-DATASET_VALID_SIZE= 568
-# DATASET_VALID_SIZE= 10000 # Garantees to take whole dataset
-
-def read_and_decode(filename_queue):
-	'''
-		Decodes a serialized .tfrecords containing sequences
-		args
-			filename_queue: [n_files] tensor containing file names which are added to queue
-
-
-	'''
-	reader= tf.TFRecordReader()
-	_, serialized_example= reader.read(filename_queue)
-
-	# a serialized sequence example contains:
-	# *context_features.: which are hold constant along the whole sequence
-	#   	ex.: sequence_length
-	# *sequence_features.: features that change over sequence 
-	context_features, sequence_features= tf.parse_single_sequence_example(
-		serialized_example,
-		context_features={
-			'T': tf.FixedLenFeature([], tf.int64)			
-		},
-		sequence_features={
-			'ID':tf.VarLenFeature(tf.int64),			
-			'PRED':tf.VarLenFeature(tf.int64),			
-			'LEMMA': tf.VarLenFeature(tf.int64),
-			'M_R':tf.VarLenFeature(tf.int64),
-			'targets':tf.VarLenFeature(tf.int64)		
-		}
-	)
-
-	return context_features, sequence_features
-
-
-
-def process(context_features, sequence_features):
-	context_inputs=[]
-	sequence_inputs=[]
-	sequence_target=[]
-
-	context_keys=['T']
-	for key in context_keys:
-		val32= tf.cast(context_features[key], tf.int32)
-		context_inputs.append( val32	 )
-
-	#Read all inputs as tf.int64	
-	sequence_keys=['ID', 'M_R', 'PRED', 'LEMMA', 'targets']
-	for key in sequence_keys:
-		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
-		if key in ['PRED', 'LEMMA']:
-			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
-			sequence_inputs.append(dense_tensor1)
-
-		# Cast to tf.float32 in order to concatenate in a single array with embeddings
-		if key in ['ID', 'M_R']:
-			dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
-			sequence_inputs.append(dense_tensor1)
-
-		if key in ['targets']:			
-			dense_tensor1= tf.one_hot(
-				dense_tensor, 
-				KLASS_SIZE,
-				on_value=1,
-				off_value=0,
-				dtype=tf.int32
-			)
-
-			Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y' )
-			
-
-	
-	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
-	return X, Y, context_inputs[0]
-
-# https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs):
-	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
-
-	context_features, sequence_features= read_and_decode(filename_queue)	
-
-	inputs, targets, length= process(context_features, sequence_features)	
-	
-	min_after_dequeue = 10000
-	capacity = min_after_dequeue + 3 * batch_size
-
-	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	input_batch, target_batch, length_batch=tf.train.batch(
-		[inputs, targets, length], 
-		batch_size=batch_size, 
-		capacity=capacity, 
-		dynamic_pad=True
-	)
-	return input_batch, target_batch, length_batch
 
 def forward(X, sequence_length):		
 	'''
@@ -165,30 +74,6 @@ def forward(X, sequence_length):
 
 	return Yhat
 
-def cross_entropy(probs, targets):
-  # Compute cross entropy for each sentence
-  xentropy = tf.cast(targets, tf.float32) * tf.log(probs)
-  xentropy = -tf.reduce_sum(xentropy, 2)
-  mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
-  mask = tf.cast(mask, tf.float32)
-  xentropy *= mask
-  # Average over actual sequence lengths.
-  xentropy = tf.reduce_sum(xentropy, 1)
-  xentropy /= tf.reduce_sum(mask, 1)
-  return tf.reduce_mean(xentropy)
-
-def error_rate(probs, targets, sequence_length):
-  mistakes = tf.not_equal(
-      tf.argmax(targets, 2), tf.argmax(probs, 2))
-  mistakes = tf.cast(mistakes, tf.float32)
-  mask = tf.sign(tf.reduce_max(tf.abs(targets), reduction_indices=2))
-  mask = tf.cast(mask, tf.float32)
-  mistakes *= mask
-  # Average over actual sequence lengths.
-  mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
-  mistakes /= tf.cast(sequence_length, tf.float32)
-  return tf.reduce_mean(mistakes)
-
 if __name__== '__main__':	
 	#BEST RUNNING PARAMS 	
 	# TRAINING
@@ -209,10 +94,24 @@ if __name__== '__main__':
 	
 	DISPLAY_STEP=50
 
-	word2idx,  np_embeddings= embed_input_lazyload()		
-	klass2idx, _ = embed_output_lazyload()		
+	
+	load_dir=''
+	#UNCOMMENT IN TO KEEP TRAINING
+	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/00/exp-1449.meta'
+	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
+	experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
+	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
+	logs_dir= dir_getlogs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
 
-	embeddings= tf.constant(np_embeddings.tolist(), shape=np_embeddings.shape, dtype=tf.float32, name= 'embeddings')
+	outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
+
+	print('experiment_dir', experiment_dir)
+	print('logs_dir', logs_dir)
+	print('outputs_dir', outputs_dir)
+	output_persist_settings(outputs_dir, dict(globals(), **locals()))
+
+	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_Y', INPUT_PATH)
+	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
@@ -232,14 +131,13 @@ if __name__== '__main__':
 	#Architecture
 	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
+			for hsz in HIDDEN_SIZE],
 	)
 	bwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz,  forget_bias=1.0, state_is_tuple=True) 
-			for hsz in HIDDEN_SIZE]
+			for hsz in HIDDEN_SIZE],
 	)
 	
-
 	#output metrics
 	loss_avg= tf.placeholder(tf.float32, name='loss_avg')	
 	accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
@@ -248,14 +146,15 @@ if __name__== '__main__':
 	
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS)
-		inputs_v, targets_v, sequence_length_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1)
+		inputs, targets, idx, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
+		inputs_v, targets_v, idx_v,sequence_length_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
 	
-	with tf.name_scope('predict'):
+	with tf.name_scope('predict'):		
 		predict_op= forward(X, mb)
 
 	with tf.name_scope('xent'):
 		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
+		argmax_op=  tf.argmax(probs, 2)
 		cost_op=cross_entropy(probs, T)
 
 	with tf.name_scope('train'):
@@ -264,9 +163,10 @@ if __name__== '__main__':
 	#Evaluation
 	with tf.name_scope('evaluation'):
 		accuracy_op = 1.0-error_rate(probs, T, mb)
+		
 
 	#Logs 
-	writer = tf.summary.FileWriter(LOGS_PATH)			
+	writer = tf.summary.FileWriter(logs_dir)			
 	tf.summary.histogram('Wo', Wo)
 	tf.summary.histogram('bo', bo)
 	tf.summary.histogram('Wfb', Wfb)
@@ -291,7 +191,7 @@ if __name__== '__main__':
 		# This first loop instanciates validation set
 		try:
 			while not coord.should_stop():				
-				X_valid, Y_valid, mb_valid=session.run([inputs_v, targets_v, sequence_length_v])				
+				X_valid, Y_valid, idx_valid, mb_valid=session.run([inputs_v, targets_v, idx_v, sequence_length_v])				
 	
 
 		except tf.errors.OutOfRangeError:
@@ -306,9 +206,27 @@ if __name__== '__main__':
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
 		threads= tf.train.start_queue_runners(coord=coord)
+		# Training control variables
 		step=0		
 		total_loss=0.0
 		total_acc=0.0		
+		
+		
+		#Persists always saving on improvement
+		if load_dir:
+			raise NotImplementedError('load_dir')
+			# saver = tf.train.import_meta_graph(load_dir)
+			# saver.restore(session,tf.train.latest_checkpoint('./'))
+			# graph = tf.get_default_graph()
+
+			# Exibits all variables
+			# session.graph.get_collection(tf.GraphKeys.VARIABLES) 
+		else:			
+			saver = tf.train.Saver(max_to_keep=1)
+		
+
+		first_save=True
+		best_validation_rate=-1
 		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
@@ -317,30 +235,41 @@ if __name__== '__main__':
 				)
 
 				_, Yhat, loss, acc = session.run(
-					[optimizer_op,predict_op, cost_op, accuracy_op],
+					[optimizer_op, predict_op, cost_op, accuracy_op],
 						feed_dict= { X:X_batch, T:Y_batch, mb:mb_batch}
 				)
-
+				
 				total_loss+=loss 
 				total_acc+= acc
 				
-				if step % DISPLAY_STEP ==0:					
+				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
-					acc = session.run(
-						accuracy_op,
+					acc, Yhat_valid = session.run(
+						[accuracy_op, argmax_op],
 						feed_dict={X:X_valid, T:Y_valid, mb:mb_valid}
 					)
+					#Broadcasts to user
 					print('Iter={:5d}'.format(step+1),
 						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
 							'valid. acc {:.2f}%'.format(100*acc),						
 					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
-					total_acc=0.0
-
+					total_acc=0.0					
+					#Logs the summary
 					s= session.run(merged_summary,
 						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
 					)
 					writer.add_summary(s, step)
+					if best_validation_rate < acc:
+						if first_save:
+							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
+							first_save=False 
+						else:
+							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
+						best_validation_rate = acc	
+						#Save tensorflow predictions
+						output_persist_Yhat(outputs_dir, idx_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+
 				step+=1
 				
 		except tf.errors.OutOfRangeError:

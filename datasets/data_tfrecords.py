@@ -46,7 +46,6 @@ def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=[
 	f1_targets= ex.feature_lists.feature_list['targets']
 	for key in target_key:
 		for token in prop_dict[key]:					
-			# import code; code.interact(local=dict(globals(), **locals()))		
 			f1_targets.feature.add().int64_list.value.append(arg_y2idx[str(token).lower()])
 	
 	return ex	

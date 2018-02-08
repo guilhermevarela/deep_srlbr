@@ -11,6 +11,7 @@ Created on Feb 07, 2018
 
 import tensorflow as tf 
 
+import pandas as pd 
 import re 
 import glob
 import os.path
@@ -20,25 +21,105 @@ from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_laz
 
 DEFAULT_KLASS_SIZE=22
 
+SETTINGS=[
+	'INPUT_PATH',
+	'MODEL_NAME',
+	'DATASET_TRAIN_SIZE',
+	'DATASET_VALID_SIZE',
+	'DATASET_TEST_SIZE',
+	'lr',
+	'reg',
+	'HIDDEN_SIZE',
+	'EMBEDDING_SIZE',
+	'FEATURE_SIZE',
+	'KLASS_SIZE',
+	'BATCH_SIZE',
+	'N_EPOCHS',
+	'DISPLAY_STEP',
+]
+
+def output_persist_Yhat(output_dir, idx, Yhat, mb_sizes, idx2vocab, filename):
+	'''
+		Decodes predictions Yhat using idx2vocab and writes as a pandas DataFrame
+		args
+			output_dir .: string containing a valid dir to export tha settings
+			
+			idx .: list of ints holding the original indexes
+
+			Yhat .: np.ndarray of ints 
+
+			mb_sizes .: list with mini batch sizes
+
+			idx2vocab:
+
+			filename .: string representing the filename to save			
+	'''
+	if not(isinstance(Yhat,list)):
+		l=Yhat.tolist()
+
+	vocab2idx= {value:key for key, value in idx2vocab.items()}		
+	#restore only the minibatch sizes and decode it
+	data_decoded =[vocab2idx[item] for i, sublist in enumerate(l) 
+		for j, item in enumerate(sublist) if j < mb_sizes[i]  ]
+
+	if not(isinstance(idx,list)):
+		l=idx.tolist()
+
+	# import code; code.interact(local=dict(globals(), **locals()))		
+	idx_l =[subsublist[0] for i, sublist in enumerate(l) 
+		for j, subsublist in enumerate(sublist) if j < mb_sizes[i]]
+
+	file_path= output_dir +  filename + '.csv'
+	
+	df= pd.DataFrame(data=data_decoded, columns=['Yhat'], index=idx_l)
+	df.index.column='IDX'	
+	df.to_csv(file_path)
+
+	
+
+def output_persist_settings(output_dir, vars_dict, to_persist=SETTINGS):
+	'''
+		Writes on output_dir a settings.txt file with the settings
+		args
+			output_dir .: string containing a valid dir to export tha settings
+			
+			vars_dict .: dict with local / global variables from main scope
+
+			to_persist .: list (optional) with the names of the variables to be persisted
+		
+		returns
+			persisted_dict	.: dict with the subset of variables that were persisted
+	'''
+	#captures only the relevant variables
+	settings_dict= {var_name: var_value
+		for var_name, var_value in vars_dict.items() if var_name in to_persist}
+
+	with open(output_dir + 'settings.txt','w+') as f:
+		for var_name, var_value in settings_dict.items():		
+			f.write('{}: {}\n'.format(var_name, var_value))
+		f.close()
+	return settings_dict
+
+
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size=DEFAULT_KLASS_SIZE):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	context_features, sequence_features= _read_and_decode(filename_queue)	
 
-	inputs, targets, length= _process(context_features, sequence_features, embeddings, klass_size)	
+	inputs, targets, idx, length= _process(context_features, sequence_features, embeddings, klass_size)	
 	
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	input_batch, target_batch, length_batch=tf.train.batch(
-		[inputs, targets, length], 
+	input_batch, target_batch, idx_batch, length_batch =tf.train.batch(
+		[inputs, targets, idx, length], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True
 	)
-	return input_batch, target_batch, length_batch
+	return input_batch, target_batch, idx_batch, length_batch
 
 def _read_and_decode(filename_queue):
 	'''
@@ -65,6 +146,7 @@ def _read_and_decode(filename_queue):
 			'T': tf.FixedLenFeature([], tf.int64)			
 		},
 		sequence_features={
+			'IDX':tf.VarLenFeature(tf.int64),			
 			'ID':tf.VarLenFeature(tf.int64),			
 			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
@@ -88,9 +170,12 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 		context_inputs.append( val32	 )
 
 	#Read all inputs as tf.int64	
-	sequence_keys=['ID', 'M_R', 'PRED', 'LEMMA', 'targets']
+	sequence_keys=['IDX','ID', 'M_R', 'PRED', 'LEMMA', 'targets']
 	for key in sequence_keys:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
+		if key in ['IDX']: # original index within dataset
+			I=dense_tensor
+
 		if key in ['PRED', 'LEMMA']:
 			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 			sequence_inputs.append(dense_tensor1)
@@ -114,7 +199,7 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
-	return X, Y, context_inputs[0]
+	return X, Y, I, context_inputs[0] 
 
 def mapper_get(column_in, column_out, input_dir):
 	'''
@@ -142,6 +227,25 @@ def mapper_get(column_in, column_out, input_dir):
 	klass2idx = vocab_lazyload(column_out, input_dir=input_dir)		
 
 	return klass2idx, word2idx, embeddings 
+
+def dir_getoutputs(lr, hidden_sizes, model_name='multi_bibasic_lstm'):	
+	'''
+		Makes a directory name for models from hyperparams
+		args:
+			lr  .: float learning rate
+			
+			hidden_sizes .:  list of ints
+
+			model_name .:  string represeting the model
+		
+		returns:
+			experiment_dir .:  string representing a valid relative path
+					format 'logs/model_name/hparams/dd'
+
+	'''
+	prefix= 'outputs/' + model_name
+	hparam_string= _make_hparam_string(lr, hidden_sizes)
+	return _make_dir(prefix, hparam_string)
 
 def dir_getmodels(lr, hidden_sizes, model_name='multi_bibasic_lstm'):	
 	'''
