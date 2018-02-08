@@ -29,7 +29,8 @@ def cross_entropy(probs, targets):
   # Compute cross entropy for each sentence
   xentropy = tf.cast(targets, tf.float32) * tf.log(probs)
   xentropy = -tf.reduce_sum(xentropy, 2)
-  mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
+  # mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
+  mask = identity(targets)
   mask = tf.cast(mask, tf.float32)
   xentropy *= mask
   # Average over actual sequence lengths.
@@ -38,7 +39,7 @@ def cross_entropy(probs, targets):
   return tf.reduce_mean(xentropy)
 
 def error_rate(probs, targets, sequence_length):
-    '''
+  '''
     Computes error rate
 
     args
@@ -53,10 +54,10 @@ def error_rate(probs, targets, sequence_length):
     returns
       error .: scalar tensor 0.0 ~ 1.0
   '''
-  mistakes = tf.not_equal(
-      tf.argmax(targets, 2), tf.argmax(probs, 2))
+  mistakes = tf.not_equal(tf.argmax(targets, 2), tf.argmax(probs, 2))
   mistakes = tf.cast(mistakes, tf.float32)
-  mask = tf.sign(tf.reduce_max(tf.abs(targets), reduction_indices=2))
+  # mask = tf.sign(tf.reduce_max(tf.abs(targets), reduction_indices=2))
+  mask = identity(targets)
   mask = tf.cast(mask, tf.float32)
   mistakes *= mask
   # Average over actual sequence lengths.
@@ -67,19 +68,45 @@ def error_rate(probs, targets, sequence_length):
 
 def length(sequence):
   '''
-    Computes true sequence length
+    Computes true sequence length for zero pedded tensor
 
     args
-      probs .: 3D tensor size [batch size x max length x klasses] 
-        representing the joint probability function
-
-      targets .: 3D tensor size [batch size x max length x klasses] 
-        representing the true targets
+      sequence .: 3D tensor size [batch size x max length x N] 
+        must be zero padded 
 
     returns
       sequence_length .: 1D tensor with the true length of each sequence 
   '''
-  used = tf.sign(tf.reduce_max(tf.abs(sequence), 2))
+  mask = identity(sequence)
   length = tf.reduce_sum(used, 1)
   length = tf.cast(length, tf.int32)
   return length
+
+
+
+def identity(sequence):  
+  '''
+    Returns a mask with ones on valid tensor entries
+
+    args
+      sequence .: 3D tensor size [batch size x max length x N] 
+        must be zero padded 
+
+    returns
+      mask .: 3D tensor size [batch size x max length x N] 
+        with zeros and ones 
+  '''
+  return tf.sign(tf.reduce_max(tf.abs(sequence), 2))
+
+
+def precision(probs, targets):    
+  mask= identity(targets)
+  mask= tf.cast(targets, tf.float32)
+  prec, _= tf.metrics.precision(tf.argmax(probs, 2), tf.argmax(targets,2), weights=tf.argmax(mask,2))
+  return prec
+def recall(probs, targets):    
+  mask= identity(targets)
+  mask= tf.cast(targets, tf.float32)
+  rec, _= tf.metrics.recall(tf.argmax(probs, 2), tf.argmax(targets,2) , weights=tf.argmax(mask,2))
+  return rec 
+

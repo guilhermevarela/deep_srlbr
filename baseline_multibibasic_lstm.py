@@ -25,7 +25,7 @@ import numpy as np
 import tensorflow as tf 
 
 from pipeline_io import dir_getlogs, dir_getmodels, dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
-from utils import cross_entropy, error_rate 
+from utils import cross_entropy, error_rate, precision, recall 
 
 INPUT_PATH='datasets/inputs/00/'
 dataset_devel= INPUT_PATH + 'devel.tfrecords'
@@ -163,7 +163,11 @@ if __name__== '__main__':
 	#Evaluation
 	with tf.name_scope('evaluation'):
 		accuracy_op = 1.0-error_rate(probs, T, mb)
-		
+		precision_op=precision(probs, T)
+		recall_op=recall(probs, T) 
+		f1_op= 2* precision_op * recall_op/(precision_op + recall_op)
+
+
 
 	#Logs 
 	writer = tf.summary.FileWriter(logs_dir)			
@@ -244,7 +248,7 @@ if __name__== '__main__':
 				
 				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
-					acc, Yhat_valid = session.run(
+					acc, Yhat_valid  = session.run(
 						[accuracy_op, argmax_op],
 						feed_dict={X:X_valid, T:Y_valid, mb:mb_valid}
 					)
