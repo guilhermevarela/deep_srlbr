@@ -16,7 +16,7 @@ import glob
 import os.path
 
 
-from datasets.data_embed import embed_input_lazyload, embed_output_lazyload  
+from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
 
 DEFAULT_KLASS_SIZE=22
 
@@ -116,11 +116,17 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
 	return X, Y, context_inputs[0]
 
-def mappers_get(input_dir):
+def mapper_get(column_in, column_out, input_dir):
 	'''
 		Returns idx2values mappings (dicts) and embeddings (np.ndarray)
 
 		args:
+			column_out.:string	representing the column with outputs
+				valid arguments are ARG, ARG_Y
+
+			column_in .: string representing the column with embeddings 
+				valid arguments are LEMMA, FORM, PRED
+
 			input_dir  .: string containing inputs to be read 
 				ex: datasets/inputs/00 
 
@@ -131,9 +137,9 @@ def mappers_get(input_dir):
 
 			embeddings .: embeddings
 	'''	
-	word2idx,  embeddings= embed_input_lazyload(input_dir=input_dir)		
+	word2idx,  embeddings= vocab_lazyload_with_embeddings(column_in, input_dir=input_dir)		
 	
-	klass2idx, _ = embed_output_lazyload(input_dir=input_dir)		
+	klass2idx = vocab_lazyload(column_out, input_dir=input_dir)		
 
 	return klass2idx, word2idx, embeddings 
 

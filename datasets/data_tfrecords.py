@@ -13,10 +13,10 @@ import numpy as np
 
 #Uncomment if launched from root
 # from datasets.data_propbankbr import  propbankbr_lazyload
-# from datasets.data_embed import embed_input_lazyload, embed_output_lazyload
+# from datasets.data_embed import vocab_lazyload_with_embeddings, vocab_lazyload
 #Uncomment if launched from /datasets
 from data_propbankbr import  propbankbr_lazyload
-from data_embed import embed_input_lazyload, embed_output_lazyload
+from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload
 
 import tensorflow as tf 
 
@@ -26,7 +26,7 @@ EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/00/'
 
 
-def proposition2sequence_example(prop_dict, word2idx, klass2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
+def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
 	sequence_length=len(prop_dict[target_key[0]])
@@ -47,7 +47,7 @@ def proposition2sequence_example(prop_dict, word2idx, klass2idx, sequence_keys=[
 	for key in target_key:
 		for token in prop_dict[key]:					
 			# import code; code.interact(local=dict(globals(), **locals()))		
-			f1_targets.feature.add().int64_list.value.append(klass2idx[str(token).lower()])
+			f1_targets.feature.add().int64_list.value.append(arg_y2idx[str(token).lower()])
 	
 	return ex	
 	
@@ -61,7 +61,6 @@ def data_dict2word2idx(data_dict, key='LEMMA'):
 	return dict(zip(sorted(vocab),range(vocab_sz)))
 
 
-
 if __name__== '__main__':
 	tfrecords_path= TARGET_PATH + 'valid.tfrecords'
 
@@ -69,8 +68,8 @@ if __name__== '__main__':
 	p0 = min(df['P_S'])
 	pn = max(df['P_S'])	# number of propositions
 
-	word2idx, _ =embed_input_lazyload()
-	klass2idx, _ =embed_output_lazyload()
+	word2idx =vocab_lazyload('LEMMA')
+	arg_y2idx =vocab_lazyload('ARG_Y')
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)
 
@@ -79,12 +78,12 @@ if __name__== '__main__':
 			ex= proposition2sequence_example(
 				df2data_dict( df_prop ), 
 				word2idx, 
-				klass2idx 
+				arg_y2idx 
 			)	
 			writer.write(ex.SerializeToString())        
     
 		writer.close()
-		print('Wrote to {}'.format(f.name))		
+		print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
 
 
 

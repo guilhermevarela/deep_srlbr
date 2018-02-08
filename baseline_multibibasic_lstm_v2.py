@@ -18,12 +18,13 @@ Created on Jan 30, 2018
 		2018-02-03: patched cross entropy and accuracy according to
 		https://danijar.com/variable-sequence-lengths-in-tensorflow/
 		2018-02-07: validation set included, save and load 
+		2018-02-08: updates on data transformation
 
 '''
 import numpy as np 
 import tensorflow as tf 
 
-from pipeline_io import dir_getlogs, dir_getmodels, mappers_get, input_fn
+from pipeline_io import dir_getlogs, dir_getmodels, mapper_get, input_fn
 from utils import cross_entropy, error_rate 
 
 INPUT_PATH='datasets/inputs/00/'
@@ -102,13 +103,14 @@ if __name__== '__main__':
 	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
 	experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
 	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
-	logs_dir= dir_getlogs(lr, HIDDEN_SIZE,model_name=MODEL_NAME)	
+	logs_dir= dir_getlogs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
+	# outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
 
 	print('experiment_dir', experiment_dir)
 	print('logs_dir', logs_dir)
 	
 
-	klass2idx, word2idx, embeddings= mappers_get(INPUT_PATH)
+	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_Y', INPUT_PATH)
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
 
 	#define variables / placeholders
@@ -234,8 +236,7 @@ if __name__== '__main__':
 					[optimizer_op,predict_op, cost_op, accuracy_op],
 						feed_dict= { X:X_batch, T:Y_batch, mb:mb_batch}
 				)
-
-				import code; code.interact(local=dict(globals(), **locals()))		
+				
 				total_loss+=loss 
 				total_acc+= acc
 				
