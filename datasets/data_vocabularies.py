@@ -26,7 +26,7 @@ import numpy as np
 import os.path
 
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/00/'
+TARGET_PATH='datasets/inputs/01/'
 
 
 def vocab_lazyload(column, input_dir=TARGET_PATH):
@@ -40,21 +40,23 @@ def vocab_lazyload(column, input_dir=TARGET_PATH):
 			word2idx = pickle.load(pickle_in)
 			pickle_in.close()
 		else:
+			dict_name='word2idx'
 			newfeature=True
 	else:
+		dict_name=column.lower() + '2idx'
 		newfeature=True
 
 	if newfeature:	
 		deep_df= propbankbr_lazyload(dataset_name='zhou')
 		word2idx = df2word2idx(deep_df, col2tokenize=column)				
-		vocab_word2idx_persist(word2idx, dataset_name=column.lower() + '2idx')		
+		vocab_word2idx_persist(word2idx, dict_name=dict_name)		
 
 	return word2idx
 
 
 
-def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_dir=TARGET_PATH):
-	newfeature=False
+def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_dir=TARGET_PATH, verbose=False):
+	not_found_count=0
 	word2idx= vocab_lazyload(column, input_dir=TARGET_PATH)
 	# Standardized embeddings
 	if column in ['FORM', 'LEMMA', 'PRED']: 
@@ -63,8 +65,9 @@ def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_di
 			embeddings = np.load(dataset_path)		
 		else: 
 			word2vec= vocab_word2vec(dataset_name='glove_s50')		
-			embeddings= idx2embedding(word2idx, word2vec)
-			vocab_embedding_persist(embeddings, embedding_name=embedding_name)		
+			embeddings= idx2embedding(word2idx, word2vec, verbose=verbose)
+			vocab_embedding_persist(embeddings, dataset_name=embedding_name)		
+			
 	else:
 		raise ValueError('{:s} doesnt support standardized embeddings'.format(column))
 			
@@ -80,8 +83,8 @@ def vocab_embedding_persist(embeddings, dataset_name='embeddings'):
 	persist_path=TARGET_PATH + dataset_name + '.npy'
 	return np.save(persist_path, embeddings)
 
-def vocab_word2idx_persist(word2idx, dataset_name='word2idx'):
-	persist_path=TARGET_PATH + dataset_name + '.pickle'
+def vocab_word2idx_persist(word2idx, dict_name='word2idx'):
+	persist_path=TARGET_PATH + dict_name + '.pickle'
 	pickle_out= open(persist_path,'wb') 
 	pickle.dump(word2idx, pickle_out)
 	pickle_out.close()
@@ -93,30 +96,33 @@ def df2word2idx(df, col2tokenize='LEMMA'):
 	vocab_sz= len(vocab)
 	return dict(zip(sorted(vocab),range(vocab_sz)))
 
-def idx2embedding(word2idx, word2vec):
+def idx2embedding(word2idx, word2vec, verbose=False):
+	not_found_count=0
 	sz_embedding=len(word2vec['unk'])
 	sz_vocab=max(word2idx.values())+1
 	embedding= 	np.zeros((sz_vocab, sz_embedding), dtype=np.float32)
 	for word, idx in word2idx.items():
-		embedding[idx]=token2vec(word, word2vec)
+		embedding[idx], found=token2vec(word, word2vec,verbose=verbose)
+		if not(found):
+			not_found_count+=1 
+	print('total not found', not_found_count)
 	return embedding	
 
-def idx2klass_ind(word2idx, word2vec):	
-	sz_vocab=max(word2idx.values())+1
-	klass_ind= np.eye(sz_vocab, dtype=np.int32)	
-	return klass_ind
-
-def token2vec(token, w2v):
+def token2vec(token, w2v, verbose=False):
+	found=True
 	try:
 		vec = w2v[token]
 	except KeyError:
+		found=False
+		if verbose:
+			print('token {} not found'.format(token))
 		vec = w2v['unk']
-	return vec 
+	return vec, found 
 
 
 if __name__== '__main__':
 
-	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA') 
+	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape', embeddings.shape)
 
