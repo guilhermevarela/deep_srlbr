@@ -23,7 +23,7 @@ import tensorflow as tf
 # EMBEDDING_PATH='embeddings/'
 # TARGET_PATH='training/pre/00/'
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/00/'
+TARGET_PATH='datasets/inputs/01/'
 
 
 def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
@@ -45,8 +45,8 @@ def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=[
 
 	f1_targets= ex.feature_lists.feature_list['targets']
 	for key in target_key:
-		for token in prop_dict[key]:					
-			f1_targets.feature.add().int64_list.value.append(arg_y2idx[str(token).lower()])
+		for token in prop_dict[key]:								
+			f1_targets.feature.add().int64_list.value.append(arg_y2idx[token])
 	
 	return ex	
 	
@@ -61,14 +61,14 @@ def data_dict2word2idx(data_dict, key='LEMMA'):
 
 
 if __name__== '__main__':
-	tfrecords_path= TARGET_PATH + 'valid.tfrecords'
+	tfrecords_path= TARGET_PATH + 'devel.tfrecords'
 
-	df=propbankbr_lazyload('zhou_valid')
+	df=propbankbr_lazyload('zhou_devel')
 	p0 = min(df['P_S'])
 	pn = max(df['P_S'])	# number of propositions
 
-	word2idx =vocab_lazyload('LEMMA')
 	arg_y2idx =vocab_lazyload('ARG_Y')
+	word2idx, _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)
 

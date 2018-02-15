@@ -27,7 +27,8 @@ import tensorflow as tf
 from pipeline_io import dir_getlogs, dir_getmodels, dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
 from utils import cross_entropy, error_rate, precision, recall 
 
-INPUT_PATH='datasets/inputs/00/'
+# INPUT_PATH='datasets/inputs/00/'
+INPUT_PATH='datasets/inputs/01/'
 dataset_devel= INPUT_PATH + 'devel.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
