@@ -75,7 +75,7 @@ MAPPER= {
 }
 
 def propbankbr_lazyload(dataset_name='zhou'):
-	dataset_path= TARGET_PATH + '/{}.csv'.format(dataset_name)
+	dataset_path= TARGET_PATH + '/{}.csv'.format(dataset_name)	
 	if os.path.isfile(dataset_path):
 		df= pd.read_csv(dataset_path)		
 	else:
@@ -84,7 +84,7 @@ def propbankbr_lazyload(dataset_name='zhou'):
 	return df 
 		
 def propbankbr_persist(df, split=True, dataset_name='zhou'):
-	df.to_csv(TARGET_PATH + '/{}.csv'.format(dataset_name))
+	df.to_csv('{}{}.csv'.format(TARGET_PATH ,dataset_name))
 	if split: 
 		dftrain, dfvalid, dftest=propbankbr_split(df)
 		dftrain.to_csv( TARGET_PATH + '/{}_train.csv'.format(dataset_name))

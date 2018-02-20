@@ -78,14 +78,14 @@ def make_dict_vocabs(df):
 	dict_vocabs ={} 
 	features= set(SEQUENCE_FEATURES + TARGET_FEATURE)
 
-	df_features= df.index.tolist()
+	df_features= df.dtypes.index.tolist()
 	dtypes_features=df.dtypes.values.tolist()
 
 
 	selection_features= [df_features[i]
 		for i, val in enumerate(dtypes_features) if str(val) =='object']
 
-	features = features.intersection(set(selection_features))		
+	features = features.intersection(set(selection_features))			
 	for feat in features:
 		if isembeddable(feat): # Embeddings features
 			if not('word2idx' in dict_vocabs):
@@ -130,33 +130,33 @@ def get_idx(token, key, dict_vocabs):
 		this_vocab= dict_vocabs['word2idx']
 		val = this_vocab[token.lower()]
 	else:
-		val = this_vocab[key][token]
+		val = dict_vocabs[key][token]
 	return val
 
 if __name__== '__main__':
-	tfrecords_path= TARGET_PATH + 'train.tfrecords'
-
-	df=propbankbr_lazyload('zhou_train')
+	df=propbankbr_lazyload('zhou')	
 	
-	p0 = min(df['P_S'])
-	pn = max(df['P_S'])	# number of propositions
+	dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
+	for dstype in ['train', 'valid', 'test']:
+		tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
-	dict_vocabs= make_dict_vocabs(df)
+		df=propbankbr_lazyload('zhou_{}'.format(dstype))	
+		p0 = min(df['P'])
+		pn = max(df['P'])	# number of propositions		
 
-	with open(tfrecords_path, 'w+') as f:
-		writer= tf.python_io.TFRecordWriter(f.name)
+		with open(tfrecords_path, 'w+') as f:
+			writer= tf.python_io.TFRecordWriter(f.name)
 
-		for p in range(p0, pn+1):
-			df_prop= df[df['P']==p]
-			import code; code.interact(local=dict(globals(), **locals()))		
-			ex= proposition2sequence_example(
-				df2data_dict( df_prop ), 
-				dict_vocabs
-			)	
-			writer.write(ex.SerializeToString())        
-    
-		writer.close()
-		print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
+			for p in range(p0, pn+1):
+				df_prop= df[df['P']==p]			
+				ex= proposition2sequence_example(
+					df2data_dict( df_prop ), 
+					dict_vocabs
+				)	
+				writer.write(ex.SerializeToString())        
+	    
+			writer.close()
+			print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
 
 
 
