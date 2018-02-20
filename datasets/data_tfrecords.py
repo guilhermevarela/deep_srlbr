@@ -22,11 +22,13 @@ import tensorflow as tf
 
 # EMBEDDING_PATH='embeddings/'
 # TARGET_PATH='training/pre/00/'
+# EMBEDDING_PATH='datasets/embeddings/'
+# TARGET_PATH='datasets/inputs/01/'
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/01/'
+TARGET_PATH='datasets/inputs/02/'
 
 
-def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'M_R'], target_key=['ARG_Y']):
+def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'P_S', 'M_R'], target_key=['ARG_Y']):
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
 	sequence_length=len(prop_dict[target_key[0]])
@@ -40,7 +42,7 @@ def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=[
 		for token in prop_dict[key]:					
 			if isinstance(token, str):
 				sequence_dict[key].feature.add().int64_list.value.append(word2idx[str(token).lower()])
-			else:
+			else:								
 				sequence_dict[key].feature.add().int64_list.value.append(token)
 
 	f1_targets= ex.feature_lists.feature_list['targets']

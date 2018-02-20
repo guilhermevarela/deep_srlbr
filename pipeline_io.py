@@ -38,7 +38,7 @@ SETTINGS=[
 	'DISPLAY_STEP',
 ]
 
-def output_persist_Yhat(output_dir, idx, Yhat, mb_sizes, idx2vocab, filename):
+def output_persist_Yhat(output_dir, idx, predicate_idx, Yhat, mb_sizes, idx2vocab, filename):
 	'''
 		Decodes predictions Yhat using idx2vocab and writes as a pandas DataFrame
 		args
@@ -59,19 +59,54 @@ def output_persist_Yhat(output_dir, idx, Yhat, mb_sizes, idx2vocab, filename):
 
 	vocab2idx= {value:key for key, value in idx2vocab.items()}		
 	#restore only the minibatch sizes and decode it
-	data_decoded =[vocab2idx[item] for i, sublist in enumerate(l) 
+	tag_decoded =[vocab2idx[item] for i, sublist in enumerate(l) 
 		for j, item in enumerate(sublist) if j < mb_sizes[i]  ]
 
-	if not(isinstance(idx,list)):
-		l=idx.tolist()
+	# idx_decoded =[idx[i,j,0] for i, sublist in enumerate(l) 
+	# 	for j, item in enumerate(sublist) if j < mb_sizes[i]  ]
 
-	# import code; code.interact(local=dict(globals(), **locals()))		
-	idx_l =[subsublist[0] for i, sublist in enumerate(l) 
+	idx_decoded =[subsublist[0] for i, sublist in enumerate(idx.tolist()) 
 		for j, subsublist in enumerate(sublist) if j < mb_sizes[i]]
 
-	file_path= output_dir +  filename + '.csv'
+	pred_decoded =[subsublist[0] for i, sublist in enumerate(predicate_idx.tolist()) 
+		for j, subsublist in enumerate(sublist) if j < mb_sizes[i]]		
 	
-	df= pd.DataFrame(data=data_decoded, columns=['Yhat'], index=idx_l)
+	prev_tag=''	
+	
+	this_tag=''
+	new_tags=[]
+
+	l= len(idx_decoded)	
+	i=0
+	for idx, pred, tag in zip(idx_decoded,pred_decoded,tag_decoded):
+		#define left 
+		if ((tag != prev_tag) and (tag != '*')): 
+			this_tag= '(' + tag + '*'
+		else:
+			this_tag+= '*'
+
+		#define right
+		if (i<l-1): 
+			if ((tag != tag_decoded[i+1]) and (tag != '*')):
+				this_tag+= ')'
+
+
+			if (pred == pred_decoded[i+1]):
+				prev_tag= tag 
+			else:
+				prev_tag= ''	
+		
+		new_tags.append(this_tag)					
+		this_tag= ''
+		i+=1
+	
+
+	file_path= output_dir +  filename + '.csv'
+		
+	df_1= pd.DataFrame(data=tag_decoded, columns=['Y_0'], index=idx_decoded)
+	df_2= pd.DataFrame(data=new_tags, columns=['Y_1'], index=idx_decoded)
+
+	df= pd.concat((df_1,df_2), axis=1)
 	df.index.column='IDX'	
 	df.to_csv(file_path)
 
@@ -107,19 +142,19 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size=DEFAULT_
 
 	context_features, sequence_features= _read_and_decode(filename_queue)	
 
-	inputs, targets, idx, length= _process(context_features, sequence_features, embeddings, klass_size)	
+	inputs, targets, idx, length, prop= _process(context_features, sequence_features, embeddings, klass_size)	
 	
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	input_batch, target_batch, idx_batch, length_batch =tf.train.batch(
-		[inputs, targets, idx, length], 
+	input_batch, target_batch, idx_batch, length_batch, prop_batch =tf.train.batch(
+		[inputs, targets, idx, length, prop], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True
 	)
-	return input_batch, target_batch, idx_batch, length_batch
+	return input_batch, target_batch, idx_batch, length_batch, prop_batch
 
 def _read_and_decode(filename_queue):
 	'''
@@ -150,7 +185,8 @@ def _read_and_decode(filename_queue):
 			'ID':tf.VarLenFeature(tf.int64),			
 			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
-			'M_R':tf.VarLenFeature(tf.int64),
+			'P_S':tf.VarLenFeature(tf.int64),			
+			'M_R':tf.VarLenFeature(tf.int64),			
 			'targets':tf.VarLenFeature(tf.int64)		
 		}
 	)
@@ -170,11 +206,14 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 		context_inputs.append( val32	 )
 
 	#Read all inputs as tf.int64	
-	sequence_keys=['IDX','ID', 'M_R', 'PRED', 'LEMMA', 'targets']
+	sequence_keys=['IDX','ID', 'M_R', 'P_S','PRED', 'LEMMA', 'targets']
 	for key in sequence_keys:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
 		if key in ['IDX']: # original index within dataset
 			I=dense_tensor
+
+		if key in ['P_S']: # original index within dataset	
+			P=dense_tensor
 
 		if key in ['PRED', 'LEMMA']:
 			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
@@ -199,7 +238,7 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
-	return X, Y, I, context_inputs[0] 
+	return X, Y, I, context_inputs[0], P 
 
 def mapper_get(column_in, column_out, input_dir):
 	'''

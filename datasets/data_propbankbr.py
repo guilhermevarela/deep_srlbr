@@ -384,8 +384,8 @@ def propbankbr_dep_read():
 			proposition_per_sentence_count.append(ps_count)
 	
 	sentences['S']= sentence_count # adds a new column with number of sentences
-	sentences['P']= proposition_count # adds a new column with number of propositions
-	sentences['P_S']=proposition_per_sentence_count # adds a new column with number of propositions per sentence
+	sentences['P']= proposition_per_sentence_count # adds a new column with number of propositions per sentence
+	sentences['P_S']=proposition_count # adds a new column with number of propositions
 
 	df = pd.DataFrame.from_dict(sentences)				
 	# garantee a friedlier ordering of the columns

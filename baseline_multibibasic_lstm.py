@@ -28,12 +28,14 @@ from pipeline_io import dir_getlogs, dir_getmodels, dir_getoutputs, mapper_get, 
 from utils import cross_entropy, error_rate, precision, recall 
 
 # INPUT_PATH='datasets/inputs/00/'
-INPUT_PATH='datasets/inputs/01/'
+# INPUT_PATH='datasets/inputs/01/'
+INPUT_PATH='datasets/inputs/02/'
 dataset_devel= INPUT_PATH + 'devel.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
 MODEL_NAME='multi_bibasic_lstm'
 DATASET_VALID_SIZE= 569
+DATASET_TRAIN_SIZE= 5099
 
 
 def forward(X, sequence_length):		
@@ -147,8 +149,8 @@ if __name__== '__main__':
 	
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, idx, sequence_length = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
-		inputs_v, targets_v, idx_v,sequence_length_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
+		inputs, targets, idx, sequence_length, predicate = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
+		inputs_v, targets_v, idx_v,sequence_length_v, predicate_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
 	
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, mb)
@@ -196,7 +198,7 @@ if __name__== '__main__':
 		# This first loop instanciates validation set
 		try:
 			while not coord.should_stop():				
-				X_valid, Y_valid, idx_valid, mb_valid=session.run([inputs_v, targets_v, idx_v, sequence_length_v])				
+				X_valid, Y_valid, idx_valid, mb_valid, predicate_valid=session.run([inputs_v, targets_v, idx_v, sequence_length_v, predicate_v])				
 	
 
 		except tf.errors.OutOfRangeError:
@@ -207,6 +209,8 @@ if __name__== '__main__':
 			coord.request_stop()			
 			coord.join(threads)
 
+	# import code; code.interact(local=dict(globals(), **locals()))			
+			
 	with tf.Session() as session: 			
 		session.run(init_op) 
 		coord= tf.train.Coordinator()
@@ -273,7 +277,7 @@ if __name__== '__main__':
 							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 						#Save tensorflow predictions
-						output_persist_Yhat(outputs_dir, idx_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+						output_persist_Yhat(outputs_dir, idx_valid, predicate_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 
 				step+=1
 				
