@@ -100,12 +100,11 @@ def propbankbr_split(df, testN=263, validN=569):
 			|test data|= testN
 
 	'''	
-	# import code; code.interact(local=dict(globals(), **locals()))		
-	P = max(df['P_S']) # gets the preposition
-	Stest = min(df.loc[df['P_S']> P-testN,'S']) # from proposition gets the sentence	
+	P = max(df['P']) # gets the preposition
+	Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence	
 	dftest= df[df['S']>=Stest]
 
-	Svalid = min(df.loc[df['P_S']> P-(testN+validN),'S']) # from proposition gets the sentence	
+	Svalid = min(df.loc[df['P']> P-(testN+validN),'S']) # from proposition gets the sentence	
 	dfvalid= df[((df['S']>=Svalid) & (df['S']<Stest))]
 
 	dftrain= df[df['S']<Svalid]
@@ -221,40 +220,34 @@ def propbankbr_parser2():
 	Y=[] 
 	x_in =0
 	x_out=0
-	p_s=1
+	p=1
 	for s,l in slen_dict.items():
-		n_p = pslen_dict[s]
+		n_ps = pslen_dict[s]
 		sdf=df[df['S']==s]
 		func=['-']*l
-		for p in range(n_p):		
+		for p_s in range(n_ps):		
 			x_data=np.arange(x_in, x_in+l).reshape((l,1))
-			y_data=np.array([0,1,4,5,7+p]).reshape((1,Nind))			
+			y_data=np.array([0,1,4,5,7+p_s]).reshape((1,Nind))			
 			
 			Xind[x_out:x_out+l,:]= np.tile(x_data, (1,Nind))
 			Yind[x_out:x_out+l,:]= np.tile(y_data, (l,1))
 			
-			PRED+=[pred_dict[s][p]]*l			
+			PRED+=[pred_dict[s][p_s]]*l			
 
 			#FUNC will be PRED if ARG_0 == (V*)			
-			idxfunc= (sdf['PRED'] == pred_dict[s][p]).values
+			idxfunc= (sdf['PRED'] == pred_dict[s][p_s]).values
 			ifunc=np.argmax(idxfunc)
-			try: 
-				func[ifunc]=pred_dict[s][p]
-			except IndexError:
-				import code; code.interact(local=dict(globals(), **locals()))			
-				print('Done training -- epoch limit reached')
-
-			
+			func[ifunc]=pred_dict[s][p_s]			
 			FUNC+=func 
 			
 
 
-			ind=(sdf['P_S']>=p+1).as_matrix()
+			ind=(sdf['P_S']>=p_s+1).as_matrix()
 			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)
 			P[x_out:x_out+l,:]=p+1
 			P_S[x_out:x_out+l,:]=p_s
 			x_out+=l 
-			p_s+=1
+			p+=1
 		x_in+=l 
 
 

@@ -62,7 +62,7 @@ def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_di
 	updated_word2idx= copy.deepcopy(word2idx)
 
 	# Standardized embeddings
-	if column in ['FORM', 'LEMMA', 'PRED']: 
+	if column in ['FORM', 'LEMMA', 'PRED', 'FUNC']: 
 		dataset_path= input_dir + embedding_name + '.npy'
 		lower_case=True
 		if os.path.isfile(dataset_path):		
@@ -142,14 +142,14 @@ def token2vec(token, w2v, verbose=False):
 
 
 if __name__== '__main__':
-
 	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
-	# print('embeddings shape', embeddings.shape)
-	# print('full capacity',sum(abs(embeddings[-1]))>0)
-	klass2idx = vocab_lazyload('ARG_0') 
-	print('# classes ARG_0', len(klass2idx.keys()))
-	klass2idx = vocab_lazyload('ARG_1') 
-	print('# classes ARG_1', len(klass2idx.keys()))
-	# print('klass_ind shape', klass_ind.shape)
+	print('embeddings shape ', embeddings.shape)
+	func2idx = vocab_lazyload('FUNC') 
+	print('# feature FUNC', len(func2idx.keys()))
+	arg02idx = vocab_lazyload('ARG_0') 
+	print('# classes ARG_0', len(arg02idx.keys()))
+	arg12idx = vocab_lazyload('ARG_1') 
+	print('# classes ARG_1', len(arg12idx.keys()))
+	
 	

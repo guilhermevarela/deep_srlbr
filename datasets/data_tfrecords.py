@@ -27,28 +27,36 @@ import tensorflow as tf
 EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/02/'
 
+#Must be both 1) inputs to the model 2) have a string representation
+EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
+SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+TARGET_FEATURE=['ARG_1']
+
+
 
 def proposition2sequence_example(
-	prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC'], target_key=['ARG_1']):
+	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
-	sequence_length=len(prop_dict[target_key[0]])
+	sequence_length=len(dict_propositions[target_feature[0]])
 	ex.context.feature['T'].int64_list.value.append(sequence_length)
 
 
 	#Make a dictionary of feature_lists
 	sequence_dict={}
-	for key in sequence_keys:
+	for key in sequence_features:
 		sequence_dict[key]= ex.feature_lists.feature_list[key]
-		for token in prop_dict[key]:					
-			if isinstance(token, str):
-				sequence_dict[key].feature.add().int64_list.value.append(word2idx[str(token).lower()])
+		for token in dict_propositions[key]:					
+			# if token is a string lookup in a dict
+			if isinstance(token, str):				
+				idx= get_idx(token, key, dict_vocabs)
+				sequence_dict[key].feature.add().int64_list.value.append(idx)
 			else:								
 				sequence_dict[key].feature.add().int64_list.value.append(token)
 
 	f1_targets= ex.feature_lists.feature_list['targets']
-	for key in target_key:
-		for token in prop_dict[key]:								
+	for key in target_feature:
+		for token in dict_propositions[key]:								
 			f1_targets.feature.add().int64_list.value.append(arg_y2idx[token])
 	
 	return ex	
@@ -56,33 +64,94 @@ def proposition2sequence_example(
 def df2data_dict(df):	
 	return df.to_dict(orient='list')
 
-def data_dict2word2idx(data_dict, key='LEMMA'):		
-	vocab= list(set(data_dict[key]))
-	vocab= map(str.lower, vocab)
-	vocab_sz= len(vocab)
-	return dict(zip(sorted(vocab),range(vocab_sz)))
+def make_dict_vocabs(df):
+	'''
+		Looks up dtypes from df which are strings, lazyloads then
+		args:
+			df .: pandas dataframe containing SEQUENCE_FEATURES and TARGET_FEATURE
 
+		returns: 
+			dict_vocabs .: a dictionary of vocabularies the 
+				keys in SEQUENCE_FEATURES or TARGET_FEATURE
+
+	'''
+	dict_vocabs ={} 
+	features= set(SEQUENCE_FEATURES + TARGET_FEATURE)
+
+	df_features= df.index.tolist()
+	dtypes_features=df.dtypes.values.tolist()
+
+
+	selection_features= [df_features[i]
+		for i, val in enumerate(dtypes_features) if str(val) =='object']
+
+	features = features.intersection(set(selection_features))		
+	for feat in features:
+		if isembeddable(feat): # Embeddings features
+			if not('word2idx' in dict_vocabs):
+				dict_vocabs['word2idx'], _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
+		else:
+			if not(feat in dict_vocabs):
+				try:
+					dict_vocabs[feat] =vocab_lazyload(feat)
+				except AttributeError:
+					import code; code.interact(local=dict(globals(), **locals()))		
+
+	return dict_vocabs			
+
+def isembeddable(key):
+	'''
+		True if key has a string representation and belongs to the input
+		args:
+			key .:	string representing a valid field		
+		
+		returns:
+			bool
+	'''
+	return key in EMBEDDABLE_FEATURES
+
+def get_idx(token, key, dict_vocabs):
+	'''
+		Looks up dict_vocabs for token
+		args:
+			token .: string representing a stringyfied token
+							ex .: (A0*, A0, 'estar'
+			key 	.: fstring representing eature in the dataset belonging to 
+				inputs, targers, descriptors, mini_batches
+
+			dict_vocabs .: dictionary of dicionaries 
+				outer most .: features
+				inner most .: value within the feature 	
+
+		returns:
+			idx .: int indexed token
+	'''
+	if isembeddable(key):
+		this_vocab= dict_vocabs['word2idx']
+		val = this_vocab[token.lower()]
+	else:
+		val = this_vocab[key][token]
+	return val
 
 if __name__== '__main__':
 	tfrecords_path= TARGET_PATH + 'train.tfrecords'
 
 	df=propbankbr_lazyload('zhou_train')
+	
 	p0 = min(df['P_S'])
 	pn = max(df['P_S'])	# number of propositions
 
-	arg_12idx =vocab_lazyload('ARG_1')
-	word2idx, _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
+	dict_vocabs= make_dict_vocabs(df)
 
-	dict_vocabs= dict(zip(['LEMMA', 'ARG_1'], [word2idx, arg_12idx]))
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)
 
 		for p in range(p0, pn+1):
-			df_prop= df[df['P_S']==p]
+			df_prop= df[df['P']==p]
+			import code; code.interact(local=dict(globals(), **locals()))		
 			ex= proposition2sequence_example(
 				df2data_dict( df_prop ), 
-				word2idx, 
-				arg_y2idx 
+				dict_vocabs
 			)	
 			writer.write(ex.SerializeToString())        
     
