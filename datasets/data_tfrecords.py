@@ -56,8 +56,9 @@ def proposition2sequence_example(
 
 	f1_targets= ex.feature_lists.feature_list['targets']
 	for key in target_feature:
-		for token in dict_propositions[key]:								
-			f1_targets.feature.add().int64_list.value.append(arg_y2idx[token])
+		for token in dict_propositions[key]:		
+			idx= get_idx(token, key, dict_vocabs)						
+			f1_targets.feature.add().int64_list.value.append(idx)
 	
 	return ex	
 	
