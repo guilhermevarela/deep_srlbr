@@ -30,7 +30,7 @@ DEP_HEADER=[
 	'ARG4','ARG5','ARG6'
 ]
 ZHOU_HEADER=[
-	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'M_R', 'ARG', 'ARG_Y'
+	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'FUNC', 'M_R', 'ARG_0', 'ARG_1'
 ]
 MAPPER= {
 	'CONST': { 
@@ -86,8 +86,8 @@ def propbankbr_lazyload(dataset_name='zhou'):
 def propbankbr_persist(df, split=True, dataset_name='zhou'):
 	df.to_csv(TARGET_PATH + '/{}.csv'.format(dataset_name))
 	if split: 
-		dfdevel, dfvalid, dftest=propbankbr_split(df)
-		dfdevel.to_csv( TARGET_PATH + '/{}_devel.csv'.format(dataset_name))
+		dftrain, dfvalid, dftest=propbankbr_split(df)
+		dftrain.to_csv( TARGET_PATH + '/{}_train.csv'.format(dataset_name))
 		dfvalid.to_csv( TARGET_PATH + '/{}_valid.csv'.format(dataset_name))
 		dftest.to_csv(  TARGET_PATH + '/{}_test.csv'.format(dataset_name))
 	
@@ -108,8 +108,8 @@ def propbankbr_split(df, testN=263, validN=569):
 	Svalid = min(df.loc[df['P_S']> P-(testN+validN),'S']) # from proposition gets the sentence	
 	dfvalid= df[((df['S']>=Svalid) & (df['S']<Stest))]
 
-	dfdevel= df[df['S']<Svalid]
-	return dfdevel, dfvalid, dftest
+	dftrain= df[df['S']<Svalid]
+	return dftrain, dfvalid, dftest
 
 
 def propbankbr_parser():		
@@ -157,9 +157,11 @@ def propbankbr_parser2():
 	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
 	'S'  		: Contador de sentencas
 	'P'  		: Contador de predicatos
+	'P_S'  	: Contador de predicatos por sentenças
 	'FORM'  : Forma da palavra ou sinal de pontuação
 	'LEMMA' : Lema gold-standard da FORM 
-	'PRED'  : Predicatos semânticos na proposição
+	'PRED'  : Predicatos semânticos na proposição repetido por todas as etiquetas
+	'FUNC'  : Predicatos semânticos na proposição conforme notação propbank
 	'CTX_P'  : Contexto do predicato 
 						Ex:   
 						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
@@ -174,10 +176,11 @@ def propbankbr_parser2():
 						PRED: [		 '-',   'ser',      '-',   '-', '-']
 						M_R:  [			 0,       1,        1,     1,   1]
 
-	'ARG'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARGY' : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG_0'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+	'ARG_1'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 
 	updates: 2018-02-01
+	updates: 2018-02-20: added FUNC, relabeled  ARG_Y to ARG_1
 	'''
 
 	df_const= propbankbr_const_read()
@@ -214,6 +217,7 @@ def propbankbr_parser2():
 	M_R= np.zeros((N,1),dtype=np.int32)	
 	P_S= np.zeros((N,1),dtype=np.int32)	
 	PRED=[]
+	FUNC=[]
 	Y=[] 
 	x_in =0
 	x_out=0
@@ -221,6 +225,7 @@ def propbankbr_parser2():
 	for s,l in slen_dict.items():
 		n_p = pslen_dict[s]
 		sdf=df[df['S']==s]
+		func=['-']*l
 		for p in range(n_p):		
 			x_data=np.arange(x_in, x_in+l).reshape((l,1))
 			y_data=np.array([0,1,4,5,7+p]).reshape((1,Nind))			
@@ -229,6 +234,20 @@ def propbankbr_parser2():
 			Yind[x_out:x_out+l,:]= np.tile(y_data, (l,1))
 			
 			PRED+=[pred_dict[s][p]]*l			
+
+			#FUNC will be PRED if ARG_0 == (V*)			
+			idxfunc= (sdf['PRED'] == pred_dict[s][p]).values
+			ifunc=np.argmax(idxfunc)
+			try: 
+				func[ifunc]=pred_dict[s][p]
+			except IndexError:
+				import code; code.interact(local=dict(globals(), **locals()))			
+				print('Done training -- epoch limit reached')
+
+			
+			FUNC+=func 
+			
+
 
 			ind=(sdf['P_S']>=p+1).as_matrix()
 			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)
@@ -242,18 +261,19 @@ def propbankbr_parser2():
 	
 	#CONVERT INDEX into DF
 	data= df.as_matrix()[Xind,Yind]	
-	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'ARG'])
+	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'ARG_0'])
 
 	#NEW COLUMNS 
+	zhou_df['FUNC']=FUNC
 	zhou_df['PRED']=PRED
 	zhou_df['M_R']=M_R
 	zhou_df['P']=P
 	zhou_df['P_S']=P_S
 	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
 	# import code; code.interact(local=dict(globals(), **locals()))		
-	arg_Y = datatransform_ARGY(zhou_df, args_columns=['ARG'])			
+	arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
 
-	zhou_df['ARG_Y']= list(map(lambda x: x[0], arg_Y))
+	zhou_df['ARG_1']= list(map(lambda x: x[0], arg_1))
 	zhou_df.index.name= 'IDX'
 	return zhou_df[usecols]
 
@@ -384,8 +404,8 @@ def propbankbr_dep_read():
 			proposition_per_sentence_count.append(ps_count)
 	
 	sentences['S']= sentence_count # adds a new column with number of sentences
-	sentences['P']= proposition_per_sentence_count # adds a new column with number of propositions per sentence
-	sentences['P_S']=proposition_count # adds a new column with number of propositions
+	sentences['P']= proposition_count # adds a new column with number of propositions
+	sentences['P_S']=proposition_per_sentence_count # adds a new column with number of propositions per sentence
 
 	df = pd.DataFrame.from_dict(sentences)				
 	# garantee a friedlier ordering of the columns
@@ -426,7 +446,7 @@ def trim(val):
 		return val.strip()
 	return val	
 
-def datatransform_ARGY(df, args_columns=['ARG']):
+def arg_02arg_1(df, args_columns=['ARG']):
 	'''
 		args:
 			df .: dataframe in propbankbr format and a single arg
@@ -473,8 +493,8 @@ if __name__== '__main__':
 	df =propbankbr_parser2()
 	print('Done. with shape=', df.shape)
 	print('Spliting dataset')
-	df_devel, df_valid, df_test =propbankbr_split(df)
-	print('Devel. with shape=', df_devel.shape)
+	df_train, df_valid, df_test =propbankbr_split(df)
+	print('Train. with shape=', df_train.shape)
 	print('Valid. with shape=', df_valid.shape)
 	print('Test.  with shape=', df_test.shape)
 	print('Persisting propbank')

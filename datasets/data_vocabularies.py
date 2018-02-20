@@ -147,7 +147,9 @@ if __name__== '__main__':
 	print('# tokens', len(word2idx.keys()))
 	# print('embeddings shape', embeddings.shape)
 	# print('full capacity',sum(abs(embeddings[-1]))>0)
-	klass2idx = vocab_lazyload('ARG_Y') 
-	print('# classes', len(klass2idx.keys()))
+	klass2idx = vocab_lazyload('ARG_0') 
+	print('# classes ARG_0', len(klass2idx.keys()))
+	klass2idx = vocab_lazyload('ARG_1') 
+	print('# classes ARG_1', len(klass2idx.keys()))
 	# print('klass_ind shape', klass_ind.shape)
 	

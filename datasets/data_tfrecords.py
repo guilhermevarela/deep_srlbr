@@ -28,7 +28,8 @@ EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/02/'
 
 
-def proposition2sequence_example(prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'ID', 'PRED', 'LEMMA', 'P_S', 'M_R'], target_key=['ARG_Y']):
+def proposition2sequence_example(
+	prop_dict, word2idx, arg_y2idx, sequence_keys=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC'], target_key=['ARG_1']):
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
 	sequence_length=len(prop_dict[target_key[0]])
@@ -63,14 +64,16 @@ def data_dict2word2idx(data_dict, key='LEMMA'):
 
 
 if __name__== '__main__':
-	tfrecords_path= TARGET_PATH + 'devel.tfrecords'
+	tfrecords_path= TARGET_PATH + 'train.tfrecords'
 
-	df=propbankbr_lazyload('zhou_devel')
+	df=propbankbr_lazyload('zhou_train')
 	p0 = min(df['P_S'])
 	pn = max(df['P_S'])	# number of propositions
 
-	arg_y2idx =vocab_lazyload('ARG_Y')
+	arg_12idx =vocab_lazyload('ARG_1')
 	word2idx, _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
+
+	dict_vocabs= dict(zip(['LEMMA', 'ARG_1'], [word2idx, arg_12idx]))
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)
 
