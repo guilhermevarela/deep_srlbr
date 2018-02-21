@@ -29,7 +29,7 @@ import numpy as np
 import tensorflow as tf 
 
 from data_tfrecords import input_fn
-from pipeline_io import  dir_getoutputs, mapper_get, output_persist_settings, output_persist_Yhat
+from data_outputs import  dir_getoutputs, mapper_get, output_persist_settings, output_predictions_persist
 from utils import cross_entropy, error_rate, precision, recall 
 
 # INPUT_PATH='datasets/inputs/00/'
@@ -154,7 +154,6 @@ if __name__== '__main__':
 	
 
 	with tf.name_scope('pipeline'):
-		# input_batch, target_batch, length_batch, desc_batch
 		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
 		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
 	
@@ -213,8 +212,6 @@ if __name__== '__main__':
 			#When done, ask threads to stop
 			coord.request_stop()			
 			coord.join(threads)
-
-	# import code; code.interact(local=dict(globals(), **locals()))			
 			
 	with tf.Session() as session: 			
 		session.run(init_op) 
@@ -244,13 +241,13 @@ if __name__== '__main__':
 		writer.add_graph(session.graph)
 		try:
 			while not coord.should_stop():				
-				X_batch, Y_batch, mb_batch = session.run(
+				X_batch, Y_batch, mb = session.run(
 					[inputs, targets, sequence_length]
 				)
 
 				_, Yhat, loss, acc = session.run(
 					[optimizer_op, predict_op, cost_op, accuracy_op],
-						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb_batch}
+						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
 				)
 				
 				total_loss+=loss 
@@ -281,8 +278,9 @@ if __name__== '__main__':
 						else:
 							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
-					# 	#Save tensorflow predictions
-					# 	output_persist_Yhat(outputs_dir, descriptors_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+
+						output_predictions_persist(
+							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 
 				step+=1
 				

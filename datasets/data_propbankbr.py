@@ -235,12 +235,13 @@ def propbankbr_parser2():
 			PRED+=[pred_dict[s][p_s]]*l			
 
 			#FUNC will be PRED if ARG_0 == (V*)			
+			if p_s==1:
+				import code; code.interact(local=dict(globals(), **locals()))
 			idxfunc= (sdf['PRED'] == pred_dict[s][p_s]).values
 			ifunc=np.argmax(idxfunc)
 			func[ifunc]=pred_dict[s][p_s]			
 			FUNC+=func 
 			
-
 
 			ind=(sdf['P_S']>=p_s+1).as_matrix()
 			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)

@@ -111,9 +111,6 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 		val32= tf.cast(context_features[key], tf.int32)
 		context_inputs.append( val32	 )
 
-	# EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
-	# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
-	# TARGET_FEATURE=['ARG_1']
 	#Read all inputs as tf.int64	
 	sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 'targets']
 	for key in sequence_keys:
