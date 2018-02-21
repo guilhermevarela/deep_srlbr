@@ -2,11 +2,13 @@
 Created on Jan 25, 2018
 	@author: Varela
 
-	Generates tfrecords
-		*devel
-		*valid
-		*test
+	Generates and reads tfrecords
+		* Generates train, valid, test datasets
+		* Provides input_fn that acts as a feeder
+
+
 	
+	2018-02-21: added input_fn
 '''
 import pandas as pd 
 import numpy as np 
@@ -32,7 +34,118 @@ EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
 SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 TARGET_FEATURE=['ARG_1']
 
+DEFAULT_KLASS_SIZE=22
 
+############################# tfrecords reader ############################# 
+# https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
+def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size=DEFAULT_KLASS_SIZE):
+	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
+
+	context_features, sequence_features= _read_and_decode(filename_queue)	
+
+	inputs, targets, length, descriptors= _process(context_features, sequence_features, embeddings, klass_size)	
+	
+	min_after_dequeue = 10000
+	capacity = min_after_dequeue + 3 * batch_size
+
+	# https://www.tensorflow.org/api_docs/python/tf/train/batch
+	input_batch, target_batch, length_batch, desc_batch =tf.train.batch(
+		[inputs, targets, length, descriptors], 
+		batch_size=batch_size, 
+		capacity=capacity, 
+		dynamic_pad=True
+	)
+	return input_batch, target_batch, length_batch, desc_batch
+
+def _read_and_decode(filename_queue):
+	'''
+		Decodes a serialized .tfrecords containing sequences
+		args
+			filename_queue.: list of strings containing file names which are added to queue
+
+		returns
+			context_features.: features that are held constant thru sequence ex: time, sequence id
+
+			sequence_features.: features that are held variable thru sequence ex: word_idx
+
+	'''
+	reader= tf.TFRecordReader()
+	_, serialized_example= reader.read(filename_queue)
+
+	# a serialized sequence example contains:
+	# *context_features.: which are hold constant along the whole sequence
+	#   	ex.: sequence_length
+	# *sequence_features.: features that change over sequence 
+	context_features, sequence_features= tf.parse_single_sequence_example(
+		serialized_example,
+		context_features={
+			'T': tf.FixedLenFeature([], tf.int64)			
+		},
+		sequence_features={
+			'IDX':tf.VarLenFeature(tf.int64),			
+			'P':tf.VarLenFeature(tf.int64),			
+			'ID':tf.VarLenFeature(tf.int64),			
+			'PRED':tf.VarLenFeature(tf.int64),			
+			'LEMMA': tf.VarLenFeature(tf.int64),
+			'M_R':tf.VarLenFeature(tf.int64),			
+			'FUNC':tf.VarLenFeature(tf.int64),			
+			'ARG_0':tf.VarLenFeature(tf.int64),			
+			'targets':tf.VarLenFeature(tf.int64)		
+		}
+	)
+
+	return context_features, sequence_features
+
+
+# SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+# TARGET_FEATURE=['ARG_1']
+def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT_KLASS_SIZE):
+	context_inputs=[]
+	sequence_inputs=[]
+	# those are not to be used as inputs but appear in the description of the data
+	sequence_descriptors=[] 	
+	sequence_target=[]
+
+	context_keys=['T']
+	for key in context_keys:
+		val32= tf.cast(context_features[key], tf.int32)
+		context_inputs.append( val32	 )
+
+	# EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
+	# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+	# TARGET_FEATURE=['ARG_1']
+	#Read all inputs as tf.int64	
+	sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 'targets']
+	for key in sequence_keys:
+		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
+
+		if key in ['IDX', 'P', 'FUNC','ARG_0']: # descriptors
+			sequence_descriptors.append(dense_tensor)
+
+		if key in ['PRED', 'LEMMA']: # embedded inputs
+			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
+			sequence_inputs.append(dense_tensor1)
+
+		# Cast to tf.float32 in order to concatenate in a single array with embeddings
+		if key in ['ID', 'M_R']: # numeric inputs
+			dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
+			sequence_inputs.append(dense_tensor1)
+
+		if key in ['targets']:			
+			dense_tensor1= tf.one_hot(
+				dense_tensor, 
+				klass_size,
+				on_value=1,
+				off_value=0,
+				dtype=tf.int32
+			)
+			Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y')
+			
+	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
+	D= tf.concat(sequence_descriptors, 1)
+	return X, Y, context_inputs[0], D 
+
+############################# tfrecords writer ############################# 
 
 def proposition2sequence_example(
 	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):

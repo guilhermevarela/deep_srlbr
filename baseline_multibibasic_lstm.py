@@ -22,10 +22,14 @@ Created on Jan 30, 2018
 		2018-02-20: updates on pipeline
 
 '''
+import sys
+sys.path.append('datasets/')
+
 import numpy as np 
 import tensorflow as tf 
 
-from pipeline_io import  dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
+from data_tfrecords import input_fn
+from pipeline_io import  dir_getoutputs, mapper_get, output_persist_settings, output_persist_Yhat
 from utils import cross_entropy, error_rate, precision, recall 
 
 # INPUT_PATH='datasets/inputs/00/'
