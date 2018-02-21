@@ -19,6 +19,7 @@ Created on Jan 30, 2018
 		https://danijar.com/variable-sequence-lengths-in-tensorflow/
 		2018-02-07: validation set included, save and load 
 		2018-02-08: updates on data transformation
+		2018-02-20: updates on pipeline
 
 '''
 import numpy as np 
@@ -30,7 +31,7 @@ from utils import cross_entropy, error_rate, precision, recall
 # INPUT_PATH='datasets/inputs/00/'
 # INPUT_PATH='datasets/inputs/01/'
 INPUT_PATH='datasets/inputs/02/'
-dataset_devel= INPUT_PATH + 'devel.tfrecords'
+dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
 MODEL_NAME='multi_bibasic_lstm'
@@ -113,7 +114,7 @@ if __name__== '__main__':
 	print('outputs_dir', outputs_dir)
 	output_persist_settings(outputs_dir, dict(globals(), **locals()))
 
-	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_Y', INPUT_PATH)
+	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_1', INPUT_PATH)
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
 
 	#define variables / placeholders
@@ -128,7 +129,7 @@ if __name__== '__main__':
 	# This makes training slower - but code is reusable
 	X     =   tf.placeholder(tf.float32, shape=(None,None, FEATURE_SIZE), name='X') 
 	T     =   tf.placeholder(tf.float32, shape=(None,None, KLASS_SIZE), name='T')
-	mb    =   tf.placeholder(tf.int32, shape=(None,), name='mb') # mini batches size
+	minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
 	#Architecture
@@ -149,11 +150,12 @@ if __name__== '__main__':
 	
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, idx, sequence_length, predicate = input_fn([dataset_devel], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
-		inputs_v, targets_v, idx_v,sequence_length_v, predicate_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
+		# input_batch, target_batch, length_batch, desc_batch
+		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
+		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
 	
 	with tf.name_scope('predict'):		
-		predict_op= forward(X, mb)
+		predict_op= forward(X, minibatch)
 
 	with tf.name_scope('xent'):
 		probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
@@ -165,7 +167,7 @@ if __name__== '__main__':
 
 	#Evaluation
 	with tf.name_scope('evaluation'):
-		accuracy_op = 1.0-error_rate(probs, T, mb)
+		accuracy_op = 1.0-error_rate(probs, T, minibatch)
 		precision_op=precision(probs, T)
 		recall_op=recall(probs, T) 
 		f1_op= 2* precision_op * recall_op/(precision_op + recall_op)
@@ -198,8 +200,7 @@ if __name__== '__main__':
 		# This first loop instanciates validation set
 		try:
 			while not coord.should_stop():				
-				X_valid, Y_valid, idx_valid, mb_valid, predicate_valid=session.run([inputs_v, targets_v, idx_v, sequence_length_v, predicate_v])				
-	
+				X_valid, Y_valid, mb_valid, D_valid=session.run([inputs_v, targets_v, sequence_length_v, descriptors_v])					
 
 		except tf.errors.OutOfRangeError:
 			print('Done initializing validation set')			
@@ -245,7 +246,7 @@ if __name__== '__main__':
 
 				_, Yhat, loss, acc = session.run(
 					[optimizer_op, predict_op, cost_op, accuracy_op],
-						feed_dict= { X:X_batch, T:Y_batch, mb:mb_batch}
+						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb_batch}
 				)
 				
 				total_loss+=loss 
@@ -255,7 +256,7 @@ if __name__== '__main__':
 					#This will be caugth by input_fn				
 					acc, Yhat_valid  = session.run(
 						[accuracy_op, argmax_op],
-						feed_dict={X:X_valid, T:Y_valid, mb:mb_valid}
+						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}
 					)
 					#Broadcasts to user
 					print('Iter={:5d}'.format(step+1),
@@ -269,15 +270,15 @@ if __name__== '__main__':
 						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
 					)
 					writer.add_summary(s, step)
-					if best_validation_rate < acc:
-						if first_save:
-							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
-							first_save=False 
-						else:
-							saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
-						best_validation_rate = acc	
-						#Save tensorflow predictions
-						output_persist_Yhat(outputs_dir, idx_valid, predicate_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+					# if best_validation_rate < acc:
+					# 	if first_save:
+					# 		saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
+					# 		first_save=False 
+					# 	else:
+					# 		saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
+					# 	best_validation_rate = acc	
+					# 	#Save tensorflow predictions
+					# 	output_persist_Yhat(outputs_dir, descriptors_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 
 				step+=1
 				

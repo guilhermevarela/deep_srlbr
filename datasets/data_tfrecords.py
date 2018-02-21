@@ -29,13 +29,16 @@ TARGET_PATH='datasets/inputs/02/'
 
 #Must be both 1) inputs to the model 2) have a string representation
 EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
-SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 TARGET_FEATURE=['ARG_1']
 
 
 
 def proposition2sequence_example(
 	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):
+	'''
+		Maps a propbank proposition into a sequence example - producing a minibatch
+	'''
 	ex= tf.train.SequenceExample()
 	# A non-sequential feature of our example
 	sequence_length=len(dict_propositions[target_feature[0]])
@@ -93,10 +96,7 @@ def make_dict_vocabs(df):
 				dict_vocabs['word2idx'], _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
 		else:
 			if not(feat in dict_vocabs):
-				try:
-					dict_vocabs[feat] =vocab_lazyload(feat)
-				except AttributeError:
-					import code; code.interact(local=dict(globals(), **locals()))		
+				dict_vocabs[feat] =vocab_lazyload(feat)
 
 	return dict_vocabs			
 

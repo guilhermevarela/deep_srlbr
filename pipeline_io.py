@@ -37,8 +37,11 @@ SETTINGS=[
 	'N_EPOCHS',
 	'DISPLAY_STEP',
 ]
-
-def output_persist_Yhat(output_dir, idx, predicate_idx, Yhat, mb_sizes, idx2vocab, filename):
+# EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
+# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+# TARGET_FEATURE=['ARG_1']
+# output_persist_Yhat(outputs_dir, descriptors_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+def output_persist_Yhat(output_dir, descriptors, Yhat, mb_sizes, idx2vocab, filename):
 	'''
 		Decodes predictions Yhat using idx2vocab and writes as a pandas DataFrame
 		args
@@ -61,9 +64,6 @@ def output_persist_Yhat(output_dir, idx, predicate_idx, Yhat, mb_sizes, idx2voca
 	#restore only the minibatch sizes and decode it
 	tag_decoded =[vocab2idx[item] for i, sublist in enumerate(l) 
 		for j, item in enumerate(sublist) if j < mb_sizes[i]  ]
-
-	# idx_decoded =[idx[i,j,0] for i, sublist in enumerate(l) 
-	# 	for j, item in enumerate(sublist) if j < mb_sizes[i]  ]
 
 	idx_decoded =[subsublist[0] for i, sublist in enumerate(idx.tolist()) 
 		for j, subsublist in enumerate(sublist) if j < mb_sizes[i]]
@@ -142,19 +142,19 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size=DEFAULT_
 
 	context_features, sequence_features= _read_and_decode(filename_queue)	
 
-	inputs, targets, idx, length, prop= _process(context_features, sequence_features, embeddings, klass_size)	
+	inputs, targets, length, descriptors= _process(context_features, sequence_features, embeddings, klass_size)	
 	
 	min_after_dequeue = 10000
 	capacity = min_after_dequeue + 3 * batch_size
 
 	# https://www.tensorflow.org/api_docs/python/tf/train/batch
-	input_batch, target_batch, idx_batch, length_batch, prop_batch =tf.train.batch(
-		[inputs, targets, idx, length, prop], 
+	input_batch, target_batch, length_batch, desc_batch =tf.train.batch(
+		[inputs, targets, length, descriptors], 
 		batch_size=batch_size, 
 		capacity=capacity, 
 		dynamic_pad=True
 	)
-	return input_batch, target_batch, idx_batch, length_batch, prop_batch
+	return input_batch, target_batch, length_batch, desc_batch
 
 def _read_and_decode(filename_queue):
 	'''
@@ -182,11 +182,13 @@ def _read_and_decode(filename_queue):
 		},
 		sequence_features={
 			'IDX':tf.VarLenFeature(tf.int64),			
+			'P':tf.VarLenFeature(tf.int64),			
 			'ID':tf.VarLenFeature(tf.int64),			
 			'PRED':tf.VarLenFeature(tf.int64),			
 			'LEMMA': tf.VarLenFeature(tf.int64),
-			'P_S':tf.VarLenFeature(tf.int64),			
 			'M_R':tf.VarLenFeature(tf.int64),			
+			'FUNC':tf.VarLenFeature(tf.int64),			
+			'ARG_0':tf.VarLenFeature(tf.int64),			
 			'targets':tf.VarLenFeature(tf.int64)		
 		}
 	)
@@ -194,10 +196,13 @@ def _read_and_decode(filename_queue):
 	return context_features, sequence_features
 
 
-
+# SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+# TARGET_FEATURE=['ARG_1']
 def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT_KLASS_SIZE):
 	context_inputs=[]
 	sequence_inputs=[]
+	# those are not to be used as inputs but appear in the description of the data
+	sequence_descriptors=[] 	
 	sequence_target=[]
 
 	context_keys=['T']
@@ -205,22 +210,23 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 		val32= tf.cast(context_features[key], tf.int32)
 		context_inputs.append( val32	 )
 
+	# EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
+	# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+	# TARGET_FEATURE=['ARG_1']
 	#Read all inputs as tf.int64	
-	sequence_keys=['IDX','ID', 'M_R', 'P_S','PRED', 'LEMMA', 'targets']
+	sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 'targets']
 	for key in sequence_keys:
-		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])
-		if key in ['IDX']: # original index within dataset
-			I=dense_tensor
+		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
 
-		if key in ['P_S']: # original index within dataset	
-			P=dense_tensor
+		if key in ['IDX', 'P', 'FUNC','ARG_0']: # descriptors
+			sequence_descriptors.append(dense_tensor)
 
-		if key in ['PRED', 'LEMMA']:
+		if key in ['PRED', 'LEMMA']: # embedded inputs
 			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 			sequence_inputs.append(dense_tensor1)
 
 		# Cast to tf.float32 in order to concatenate in a single array with embeddings
-		if key in ['ID', 'M_R']:
+		if key in ['ID', 'M_R']: # numeric inputs
 			dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
 			sequence_inputs.append(dense_tensor1)
 
@@ -232,13 +238,13 @@ def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT
 				off_value=0,
 				dtype=tf.int32
 			)
-
-			Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y' )
+			Y= tf.squeeze(dense_tensor1,1, name='squeeze_Y')
 			
 
 	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
-	return X, Y, I, context_inputs[0], P 
+	D= tf.concat(sequence_descriptors, 1)
+	return X, Y, context_inputs[0], D 
 
 def mapper_get(column_in, column_out, input_dir):
 	'''
