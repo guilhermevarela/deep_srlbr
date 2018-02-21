@@ -25,7 +25,7 @@ Created on Jan 30, 2018
 import numpy as np 
 import tensorflow as tf 
 
-from pipeline_io import dir_getlogs, dir_getmodels, dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
+from pipeline_io import  dir_getoutputs, mapper_get, input_fn, output_persist_settings, output_persist_Yhat
 from utils import cross_entropy, error_rate, precision, recall 
 
 # INPUT_PATH='datasets/inputs/00/'
@@ -103,14 +103,14 @@ if __name__== '__main__':
 	#UNCOMMENT IN TO KEEP TRAINING
 	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/00/exp-1449.meta'
 	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
-	experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
+	# experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
 	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
-	logs_dir= dir_getlogs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
+	# logs_dir= dir_getlogs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
 
 	outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
 
-	print('experiment_dir', experiment_dir)
-	print('logs_dir', logs_dir)
+	# print('experiment_dir', experiment_dir)
+	# print('logs_dir', logs_dir)
 	print('outputs_dir', outputs_dir)
 	output_persist_settings(outputs_dir, dict(globals(), **locals()))
 
@@ -175,7 +175,7 @@ if __name__== '__main__':
 
 
 	#Logs 
-	writer = tf.summary.FileWriter(logs_dir)			
+	writer = tf.summary.FileWriter(outputs_dir)			
 	tf.summary.histogram('Wo', Wo)
 	tf.summary.histogram('bo', bo)
 	tf.summary.histogram('Wfb', Wfb)
@@ -270,13 +270,13 @@ if __name__== '__main__':
 						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
 					)
 					writer.add_summary(s, step)
-					# if best_validation_rate < acc:
-					# 	if first_save:
-					# 		saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
-					# 		first_save=False 
-					# 	else:
-					# 		saver.save(session, experiment_dir + 'exp', global_step=step, write_meta_graph=True)
-					# 	best_validation_rate = acc	
+					if best_validation_rate < acc:
+						if first_save:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+							first_save=False 
+						else:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+						best_validation_rate = acc	
 					# 	#Save tensorflow predictions
 					# 	output_persist_Yhat(outputs_dir, descriptors_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 

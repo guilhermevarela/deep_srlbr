@@ -292,45 +292,45 @@ def dir_getoutputs(lr, hidden_sizes, model_name='multi_bibasic_lstm'):
 	hparam_string= _make_hparam_string(lr, hidden_sizes)
 	return _make_dir(prefix, hparam_string)
 
-def dir_getmodels(lr, hidden_sizes, model_name='multi_bibasic_lstm'):	
-	'''
-		Makes a directory name for models from hyperparams
+# def dir_getmodels(lr, hidden_sizes, model_name='multi_bibasic_lstm'):	
+# 	'''
+# 		Makes a directory name for models from hyperparams
 
-		args:
-			lr  .: float learning rate
+# 		args:
+# 			lr  .: float learning rate
 			
-			hidden_sizes .:  list of ints
+# 			hidden_sizes .:  list of ints
 
-			model_name .:  string represeting the model
+# 			model_name .:  string represeting the model
 		
-		returns:
-			experiment_dir .:  string representing a valid relative path
-					format 'logs/model_name/hparams/dd'
+# 		returns:
+# 			experiment_dir .:  string representing a valid relative path
+# 					format 'logs/model_name/hparams/dd'
 
-	'''
-	prefix= 'models/' + model_name
-	hparam_string= _make_hparam_string(lr, hidden_sizes)
-	return _make_dir(prefix, hparam_string)
+# 	'''
+# 	prefix= 'models/' + model_name
+# 	hparam_string= _make_hparam_string(lr, hidden_sizes)
+# 	return _make_dir(prefix, hparam_string)
 
-def dir_getlogs(lr, hidden_sizes ,model_name='multi_bibasic_lstm'):
-	'''
-		Makes a directory name for logs from hyperparams
+# def dir_getlogs(lr, hidden_sizes ,model_name='multi_bibasic_lstm'):
+# 	'''
+# 		Makes a directory name for logs from hyperparams
 
-		args:
-			lr  .: float learning rate
+# 		args:
+# 			lr  .: float learning rate
 			
-			hidden_sizes .:  list of ints
+# 			hidden_sizes .:  list of ints
 
-			model_name .:  string represeting the model
+# 			model_name .:  string represeting the model
 		
-		returns:
-			experiment_dir .:  string representing a valid relative path
-					format 'logs/model_name/hparams/dd'
+# 		returns:
+# 			experiment_dir .:  string representing a valid relative path
+# 					format 'logs/model_name/hparams/dd'
 
-	'''
-	prefix= 'logs/' + model_name
-	hparam_string= _make_hparam_string(lr, hidden_sizes)
-	return _make_dir(prefix, hparam_string)
+# 	'''
+# 	prefix= 'logs/' + model_name
+# 	hparam_string= _make_hparam_string(lr, hidden_sizes)
+# 	return _make_dir(prefix, hparam_string)
 
 def _make_hparam_string(lr, hidden_sizes):
 	'''
@@ -345,9 +345,9 @@ def _make_hparam_string(lr, hidden_sizes):
 			experiment_dir .:  string representing a valid relative path
 
 	'''
-	hparam_string= 'lr{:.2e}'.format(float(lr))
-
-	hparam_string+= ',hs%s' % re.sub(r', ','x', re.sub(r'\[|\]','',str(hidden_sizes)))
+	
+	hs=re.sub(r', ','x', re.sub(r'\[|\]','',str(hidden_sizes)))
+	hparam_string= 'lr{:.2e}_hs{:}'.format(float(lr),hs)	
 	return hparam_string
 
 def _make_dir(prefix, hparam_string):
