@@ -8,9 +8,6 @@ Created on Feb 07, 2018
 		* Save and restore model
 		* Download embeddings
 '''
-
-import tensorflow as tf 
-
 import pandas as pd 
 import re 
 import glob
@@ -41,8 +38,7 @@ SETTINGS=[
 # EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
 # SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 # TARGET_FEATURE=['ARG_1']
-# output_persist_Yhat(outputs_dir, descriptors_valid, Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
-def output_predictions_persist(
+def outputs_predictions_persist(
 	output_dir, indexes, predicates, predictions, batch_sizes, vocab2idx, filename):
 	'''
 		Decodes predictions using vocab2idx and writes as a pandas DataFrame
@@ -104,21 +100,13 @@ def output_predictions_persist(
 		i+=1
 	
 
-	file_path= output_dir +  filename + '.csv'	
-	# import code; code.interact(local=dict(globals(), **locals()))				
+	file_path= output_dir +  filename + '.csv'		
 	columns=['IDX','Y_0', 'Y_1']
 	data=[idx_decoded, tag_decoded, new_tags]
 	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('IDX', inplace=False)	
-	# df.from_dict(columns, )
-	# df_1= pd.DataFrame(data=tag_decoded, columns=['Y_0'], index=idx_decoded)
-	# df_2= pd.DataFrame(data=new_tags, columns=['Y_1'], index=idx_decoded)
-	# df= pd.concat((df_1,df_2), axis=1)
-	# df.index.column='IDX'	
 	df.to_csv(file_path)
 
-	
-
-def output_persist_settings(output_dir, vars_dict, to_persist=SETTINGS):
+def outputs_settings_persist(output_dir, vars_dict, to_persist=SETTINGS):
 	'''
 		Writes on output_dir a settings.txt file with the settings
 		args
@@ -141,8 +129,46 @@ def output_persist_settings(output_dir, vars_dict, to_persist=SETTINGS):
 		f.close()
 	return settings_dict
 
+def outputs_conll(df, target_column='Y_0'):
+	'''
+		Converts a dataset to conll format 
+	'''
+	df= df[['S', 'P', 'FUNC', target_column]]
+
+	#Replace '-' making it easier to concatenate
+	sub_fn= lambda x: re.sub('-', '', x)
+	df['FUNC'] = df['FUNC'].apply(sub_fn)
 
 
+	s0= min(df['S'])
+	sn= max(df['S'])
+	for i,si in enumerate(range(s0,sn+1)):
+	    dfsi=df[ df['S'] == si ]
+	    p0= min(dfsi['P'])
+	    pn= max(dfsi['P'])    
+	    for j,p in enumerate(range(p0,pn+1)): # concatenate by argument columns
+	        dfpj=dfsi[dfsi['P']==p].reset_index(drop=True)
+	        if j==0:
+	            dfp=dfpj[['FUNC','Y_0']]
+	            dfp=dfp.rename(columns={'Y_0': 'ARG0'})
+	        else:
+	            dfp['FUNC']=dfp['FUNC'].map(str).values + dfpj['FUNC'].map(str).values
+	            dfp= pd.concat((dfp, dfpj['Y_0']), axis=1)
+	            dfp=dfp.rename(columns={'Y_0': 'ARG{:d}'.format(p-p0)})            
+	    if i==0:        
+	        dfconll= dfp
+	    else:
+	        dfconll= dfconll.append(dfp).fillna('')
+	        
+	#Replace '-' making it easier to concatenate
+	sub_fn= lambda x: '-' if len(x) == 0 else x
+	dfconll['FUNC'] = dfconll['FUNC'].apply(sub_fn)
+
+	#Order columns to fit conll standard
+	num_columns=dfconll.columns
+	usecolumns=['FUNC'] + ['ARG{:d}'.format(i) for i in range(num_columns-1)]
+	return dfconll[usecolumns]
+	
 
 def mapper_get(column_in, column_out, input_dir):
 	'''

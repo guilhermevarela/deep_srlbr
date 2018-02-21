@@ -29,7 +29,7 @@ import numpy as np
 import tensorflow as tf 
 
 from data_tfrecords import input_fn
-from data_outputs import  dir_getoutputs, mapper_get, output_persist_settings, output_predictions_persist
+from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate, precision, recall 
 
 # INPUT_PATH='datasets/inputs/00/'
@@ -116,7 +116,7 @@ if __name__== '__main__':
 	# print('experiment_dir', experiment_dir)
 	# print('logs_dir', logs_dir)
 	print('outputs_dir', outputs_dir)
-	output_persist_settings(outputs_dir, dict(globals(), **locals()))
+	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
 	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_1', INPUT_PATH)
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
@@ -279,7 +279,7 @@ if __name__== '__main__':
 							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
-						output_predictions_persist(
+						outputs_predictions_persist(
 							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 
 				step+=1

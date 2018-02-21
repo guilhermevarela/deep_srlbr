@@ -223,9 +223,9 @@ def propbankbr_parser2():
 	p=1
 	for s,l in slen_dict.items():
 		n_ps = pslen_dict[s]
-		sdf=df[df['S']==s]
-		func=['-']*l
+		sdf=df[df['S']==s]		
 		for p_s in range(n_ps):		
+			func=['-']*l
 			x_data=np.arange(x_in, x_in+l).reshape((l,1))
 			y_data=np.array([0,1,4,5,7+p_s]).reshape((1,Nind))			
 			
@@ -235,10 +235,7 @@ def propbankbr_parser2():
 			PRED+=[pred_dict[s][p_s]]*l			
 
 			#FUNC will be PRED if ARG_0 == (V*)			
-			if p_s==1:
-				import code; code.interact(local=dict(globals(), **locals()))
-			idxfunc= (sdf['PRED'] == pred_dict[s][p_s]).values
-			ifunc=np.argmax(idxfunc)
+			ifunc=np.argmax((sdf['PRED'] == pred_dict[s][p_s]).values)			
 			func[ifunc]=pred_dict[s][p_s]			
 			FUNC+=func 
 			
