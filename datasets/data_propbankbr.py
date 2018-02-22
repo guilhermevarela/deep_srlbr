@@ -262,9 +262,12 @@ def propbankbr_parser2():
 	zhou_df['P_S']=P_S
 	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
 	# import code; code.interact(local=dict(globals(), **locals()))		
-	arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
+	# arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
+	# arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
 
-	zhou_df['ARG_1']= list(map(lambda x: x[0], arg_1))
+	# zhou_df['ARG_1']= list(map(lambda x: x[0], arg_1))
+	zhou_df['ARG_1']= propbankbr_transform_arg02arg1(P, zhou_df['ARG_0'].tolist())
+
 	zhou_df.index.name= 'IDX'
 	return zhou_df[usecols]
 
@@ -406,6 +409,75 @@ def propbankbr_dep_read():
 	return df
 
 
+def propbankbr_transform_arg12arg0(propositions, arguments):
+	isopen=False
+	prev_tag=''
+	prev_prop=-1
+	new_tags=[]
+	for prop, tag in zip(propositions, arguments):
+		if prop != prev_prop:
+			prev_tag=''
+			if isopen: # Close 
+				new_tags[-1]+= ')' 
+				isopen=False
+			
+		if tag != prev_tag:			
+			if prev_tag != '*' and prev_prop == prop:
+				new_tags[-1]+= ')' 
+				isopen=False
+
+			if tag != '*':	
+				new_tag= '({:}*'.format(tag)
+				isopen=True
+			else:
+				new_tag='*'
+		elif prev_prop == prop:
+			new_tag= '*'
+
+
+		prev_tag= tag 	
+		prev_prop= prop
+		new_tags.append(new_tag)
+
+	if isopen:
+		new_tags[-1]+=')'		
+		isopen=False
+
+	return new_tags	
+
+def propbankbr_transform_arg02arg1(propositions, arguments):
+	'''
+		Converts default argument 0 into argument 1  format for easier softmax
+		
+	'''
+	prev_tag=''
+	prev_prop=-1
+	new_tags=[]
+	for prop, tag in zip(propositions, arguments):
+		if prev_prop == prop: 
+			if (tag in ['*']): # Either repeat or nothing
+				if (')' in prev_tag): 
+					new_tag='*'
+				else:	
+					new_tag=new_tags[-1] # repeat last
+			else:
+				if  (')' in prev_tag): #last tag is closed, refresh					 
+					new_tag=re.sub(r'\(|\)|\*|','',tag)					
+				else:
+					if prev_tag != tag and tag != '*)':
+						new_tag=re.sub(r'\(|\)|\*|','',tag)					
+					else:
+						new_tag=new_tags[-1]			
+		else: 
+			if (tag in ['*']):
+				new_tag='*'
+			else:
+				new_tag=re.sub(r'\(|\)|\*|','',tag)
+
+		prev_tag= tag 	
+		prev_prop= prop		
+		new_tags.append(new_tag)
+	return new_tags
 
 def get_signature(mappings): 
 	return {k:[] for k in mappings}

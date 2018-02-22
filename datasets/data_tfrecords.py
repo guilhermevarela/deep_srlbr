@@ -34,7 +34,7 @@ EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
 SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 TARGET_FEATURE=['ARG_1']
 
-DEFAULT_KLASS_SIZE=22
+DEFAULT_KLASS_SIZE=36
 
 ############################# tfrecords reader ############################# 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data

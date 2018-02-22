@@ -15,8 +15,9 @@ import os.path
 
 
 from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
+from data_propbankbr import propbankbr_transform_arg12arg0
 
-DEFAULT_KLASS_SIZE=22
+DEFAULT_KLASS_SIZE=36
 
 SETTINGS=[
 	'INPUT_PATH',
@@ -78,37 +79,7 @@ def outputs_predictions_persist(
 
 	l= len(idx_decoded)	
 	i=0
-	for idx, pred, tag in zip(idx, pred_decoded,tag_decoded):
-		#define left 
-		if ((tag != prev_tag) and (tag != '*')): 
-			this_tag= '(' + tag + '*'
-		else:
-			this_tag+= '*'
-
-		#define right
-		import code; code.interact(local=dict(globals(), **locals()))		
-		if (i<l-1): 
-			if (pred == pred_decoded[i+1]):			
-				if ((tag != tag_decoded[i+1]) and (tag != '*')):
-					this_tag+= ')'	
-					prev_tag= tag 
-			else:
-				if (new_tags[-1] != '*)' and new_tags[-1] != '*'): # FIX CLOSING TAGS
-					new_tags[-1]= '*)'	
-				this_tag= '*'
-				prev_tag= tag 
-
-			# if ((tag != tag_decoded[i+1]) and (tag != '*')):
-			# 	this_tag+= ')'
-
-			# if (pred == pred_decoded[i+1]):
-			# 	prev_tag= tag 
-			# else:
-			# 	prev_tag= ''	
-		
-		new_tags.append(this_tag)					
-		this_tag= ''
-		i+=1
+	new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
 	
 
 	file_path= output_dir +  filename + '.csv'		

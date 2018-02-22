@@ -1,15 +1,6383 @@
--	(A2*)	(A1*)	(A2*)			
-serser	(V*)	(AM-DIS*	*			
--	(A2*	*)	*			
-pensar	*	(V*)	*			
--	*)	(A1*	*			
--	(A1*	*	(A1*			
+-	A2					
+-	A2					
+-	A2					
+estar	V					
+-	A2					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0	A0				
+-	A0	A0				
+-	A0	A0				
+-	A0	A0				
+-	A0	A0				
+reclamar	V	*				
+-	A1	*				
+-	A1	A0				
+-	A1	*				
+adiar	A1	V				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	AM-TMP				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	A0	*	*			
 -	*	*	*			
--	*	*	*)			
--	*	*	(V*)			
--	*	*	(A1*			
+agendar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+pedir	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	A0			
+ajudar	A1	A1	V			
+-	A1	AM-LOC	AM-LOC			
+-	A1	A1	AM-LOC			
+-	A1	A1	AM-PNC			
+-	*	*	*			
+-	A1					
+-	A1					
+-	A1					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+ocupar	V					
+-	A0					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	A0					
+-	A0					
+vender	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0					
+anunciar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-TMP					
+-	*					
 -	*	*	*			
 -	*	*	*			
--	*	*)	*			
--	*	(A2*	*			
--	*)	*)	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+retomar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+estar	*	V	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+realçar	*	*	V			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	*			
+-	*					
+-	A0					
+-	A0					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+ter	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+tocar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+levar	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	AM-TMP					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+fazer	V					
+-	C-V					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-MNR					
+-	*					
+-	AM-MNR					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	A1				
+-	*	A1				
+-	*	*				
+negligenciar	V	A1				
+-	*	*				
+-	*	*				
+dizer	*	V				
+-	*	A0				
+-	*	A1				
+-	*	A0				
+-	*	A0				
+-	*	AM-MNR				
+-	*	AM-MNR				
+-	*	*				
+-	A0	*				
+-	A0	*				
+alegar	V	*				
+-	A1	*				
+-	A1	A1				
+-	A1	A1				
+-	A1	AM-NEG				
+considerar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*	*			
+comprovar	V	*	*			
+-	A1	*	*			
+-	A0	A0	*			
+-	A1	A0	*			
+receber	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	*	A1	*			
+concordar	*	A1	V			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	*	*			
+-	*	*	AM-PNC			
+-	*	*	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	*	*			
+-	*	*	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	A1	AM-PNC			
+-	*	*	*			
+-	*	*	AM-PNC			
+-	*	*	AM-PNC			
+-	*	*	AM-PNC			
+-	*	*	AM-PNC			
+-	*	*	*			
+-	*	*	*			
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+dizer	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	A0	*	A1			
+-	A0	*	A1			
+-	A0	*	A1			
+-	A0	*	A1			
+-	AM-NEG	*	A1			
+-	*	*	A1			
+cumprir	V	*	A1			
+-	A1	*	A1			
+-	A1	*	A1			
+-	A1	*	A1			
+transferir	A1	V	A1			
+-	A1	A1	A1			
+-	A4	A2	A1			
+-	A4	A2	A1			
+-	A4	A2	A1			
+-	*	*	*			
+-	*	*	*			
+dizer	*	*	V			
+-	*	*	*			
+-	*	*	*	*		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+verificar	V	*	*	A1		
+-	*	*	*	A1		
+levar	*	V	*	A1		
+-	*	A2	*	A1		
+-	*	A2	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+enxergar	*	*	V	A1		
+-	*	*	A1	A1		
+-	*	*	*	*		
+-	*	*	*	*		
+dizer	*	*	*	V		
+-	*	*	AM-TMP	AM-TMP		
+-	*	*	A2	A0		
+-	*	*	*	*		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	A2	A0		
+-	*	*	*	*		
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+pilotar	V					
+-	A1					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-DIS					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+acabar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-TMP	*				
+sair	AM-TMP	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	AM-TMP	A1				
+-	AM-TMP	A1				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-NEG					
+-	*					
+revelar	V					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0	*	*			
+-	A0	*	*			
+afirmar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A1	*			
+-	A1	A1	*			
+prever	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A3	AM-CAU			
+acontecer	A1	A1	V			
+-	*	*	*			
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+revelar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	A1				
+-	A1	A1				
+estar	A1	V				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+dar	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-NEG	*	*			
+precisar	V	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	*	*	*			
+-	A1	*	*			
+-	*	*	*			
+saber	*	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	*	A1	*			
+-	*	AM-LOC	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+trazer	*	*	V			
+-	*	*	A1			
+-	*	*	*			
+-	A1					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1	*	*			
+serser	A2	*	*			
+-	A2	*	*			
+pensar	A2	V	*			
+-	A2	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	A1			
+-	*	A1	V			
+-	*	A1	A1			
+-	AM-ADV	A1	A1			
+-	*	A1	A1			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	A1					
+-	A2					
+-	A2					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A1					
+-	AM-TMP					
+-	A1					
+-	A1					
+-	*					
+destacar	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	C-A0					
+-	*					
+-	A1					
+morrer	V					
+-	AM-TMP					
+-	A1					
+-	A3					
+-	A3					
+-	A3					
+-	A3					
+-	*					
+-	*					
+-	*					
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+morrer	V	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-LOC	*	*			
+-	AM-LOC	*	*			
+-	AM-LOC	*	*			
+-	*	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+-	AM-MNR	*	*			
+estar	*	V	*			
+-	*	*	*			
+-	*	*	A1			
+cair	*	*	V			
+-	*	*	AM-TMP			
+-	*	*	A4			
+-	AM-LOC	*	A4			
+-	AM-LOC	*	AM-DIR			
+-	*	*	*			
+-	*	A0				
+-	*	A0				
+-	*	A0				
+-	*	A0				
+-	*	*				
+estar	V	*				
+-	A2	AM-TMP				
+-	A2	*				
+-	A2	AM-LOC				
+-	A2	*				
+-	*	*				
+salvar	*	V				
+-	*	*				
+-	A0					
+-	A0					
+-	A0					
+causar	V					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-TMP					
+provocar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	*	*			
+-	A0	*	*			
+causar	V	*	*			
+-	A0	*	*			
+-	A1	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+-	*	*	*			
+estar	*	V	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+bater	*	*	V			
+-	*	*	AM-LOC			
+-	A1	*	AM-LOC			
+-	A1	*	A1			
+-	*	*	*			
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+ter	V	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+explicar	*	V				
+-	C-A1	A1				
+-	C-A1	A1				
+-	*	*				
+-	*	*				
+-	A1	A1				
+-	A1	*				
+-	V	AM-ADV				
+ser	V	AM-TMP				
+-	A2	AM-TMP				
+-	A2	A0				
+-	A2	A0				
+-	A2	A0				
+-	A1	*				
+-	A1	*				
+-	AM-DIS	*				
+-	A1	AM-DIS				
+-	A1	*				
+-	AM-DIS	AM-NEG				
+-	AM-DIS	AM-NEG				
+dispor	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+alagar	*	V				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+dispor	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A0					
+dar	V					
+-	A1					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	*					
+-	A1	A1	A1	*		
+-	A1	A1	A1	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	A1	*	*		
+-	A1	A1	*	*		
+-	A1	A1	*	*		
+-	A1	A1	*	*		
+serser	V	A1	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	A1	*	*		
+-	*	A1	*	*		
+-	*	A1	*	*		
+-	*	V	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+coincidir	*	A2	V	*		
+-	*	A2	A2	*		
+-	*	A2	A2	*		
+-	*	A2	A2	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+fazer	*	A2	*	V		
+-	*	A2	*	A1		
+-	*	A2	*	A1		
+-	*	A2	*	A1		
+-	*	A2	*	AM-TMP		
+-	*	A2	*	AM-TMP		
+-	*	A2	*	AM-TMP		
+-	*	*	*	*		
+-	A1	A0				
+-	A1	A0				
+-	A2	*				
+ser	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A1	AM-ADV				
+-	*	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+fazer	AM-DIS	V				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+tratar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*	*	*	*		
+-	*	*	*	*		
+falarfalar	V	*	*	*		
+-	A3	*	*	*		
+-	A3	*	*	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+-	*	V	*	*		
+-	*	A0	*	*		
+-	*	A1	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+traduzir	*	*	V	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+ser	*	*	A1	*		
+-	*	*	A1	A2		
+-	*	*	A1	A2		
+-	*	*	A1	A2		
+-	*	*	A1	A2		
+-	*	*	*	*		
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0	*				
+-	*	*				
+-	*	*				
+-	*	*				
+passar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+ter	*	V				
+-	*	AM-LOC				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	A1	*				
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+armazenar	*	V				
+-	A2	A1				
+-	*	A1				
+-	*	AM-LOC				
+-	AM-DIS	A1				
+-	AM-DIS	AM-PNC				
+-	AM-DIS	AM-PNC				
+-	AM-DIS	AM-PNC				
+-	AM-DIS	AM-LOC				
+-	AM-DIS	AM-LOC				
+-	AM-DIS	AM-LOC				
+-	*	*				
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+responder	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	C-A1					
+-	C-A1					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+representar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+manter	V					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+multar	V	*				
+-	AM-MNR	*				
+negociar	AM-MNR	V				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	AM-MNR	A2				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-TMP					
+-	*					
+-	A0					
+encontrar	V					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	A0					
+-	*					
+-	A0					
+-	A0					
+deixar	V					
+-	A1					
+-	A1					
+-	A1	*				
+-	A1	*				
+-	*	*				
+morrer	V	*				
+-	*	*				
+-	A1	*				
+-	*	A0				
+ferir	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	AM-TMP	AM-TMP				
+-	*	A1				
+-	AM-TMP	A1				
+-	AM-TMP	A1				
+-	AM-LOC	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	*	*				
+-	AM-LOC	*				
+-	*	*				
+-	AM-PRD					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+enfrentar	V					
+-	AM-PRD					
+-	AM-PRD					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+ver	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A0					
+-	*					
+buscar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	*					
+conseguir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*	*				
+terter	V	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	V				
+-	*	A1				
+-	A1	A1				
+-	*	A1				
+-	*	*				
+-	*					
+-	AM-ADV					
+deixar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	C-A0				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	AM-DIS	V				
+inflamar	A2	V				
+-	*	*				
+-	AM-DIS					
+-	AM-DIS					
+-	*					
+-	*					
+existir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*	*	*			
+serser	V	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	AM-REC	*	*			
+-	*	*	*			
+-	*	A0	*			
+saber	*	V	*			
+-	*	*	A1			
+-	*	*	A2			
+-	*	*	A2			
+-	AM-REC	*	A1			
+-	AM-DIS	*	A2			
+-	*	*	*			
+-	*	*	*			
+-	*	A0	*			
+-	*	A0	*			
+-	*	*	*			
+-	*	*	*			
+-	A0	*	*			
+ter	V	*	*			
+-	*	*	*			
+-	A1	*	*			
+-	A1	*	*			
+ganhar	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	*	*			
+-	A1	*	*			
+definir	A1	*	V			
+-	A1	*	A1			
+-	A1	*	A1			
+-	A1	*	A1			
+-	A1	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	AM-TMP			
+-	*	*	A1			
+-	*	AM-TMP	A1			
+-	*	AM-TMP	A1			
+-	*	*	A1			
+-	*	AM-TMP	A1			
+-	*	AM-TMP	A1			
+-	*	AM-TMP	A1			
+-	A1	A1	*			
+-	A1	AM-TMP	*			
+-	A1	AM-TMP	*			
+-	A1	AM-TMP	*			
+-	A1	A1	A1			
+-	*	*	*			
+-	*	*				
+-	A0	*				
+-	*	*				
+-	A0	*				
+-	*	*				
+-	*	AM-TMP				
+fazer	V	*				
+-	*	*				
+-	A1	A1				
+-	A1	A0				
+-	A1	A1				
+constatar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	AM-LOC				
+-	A1	A1				
+-	A1	A1				
+-	A1	AM-LOC				
+-	A1	A1				
+-	*	*				
+-	A1	*				
+serser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	*	*				
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-TMP					
+-	*					
+encontrar	V					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	A0					
+-	A0					
+ter	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0	*				
+ter	V	*				
+-	V	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	A1				
+-	*	A1				
+ocorrer	*	V				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	*				
+destacar	V	A0				
+-	A1	A0				
+-	A1	A0				
+-	A1	A0				
+-	A1	A0				
+-	A1	A0				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	*				
+-	*	*				
+-	*	*				
+apresentar	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	A1				
+-	*	*				
+-	*	AM-TMP				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+publicar	V					
+-	AM-TMP					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	*	*			
+-	A0	*	*			
+indicar	V	*	*			
+-	A1	*	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	*	*			
+-	A1	A1	*			
+-	A1	A1	*			
+estar	A1	V	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+-	A1	A2	*			
+admitir	A1	A2	V			
+-	A1	A2	A1			
+-	A1	A2	A1			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+conquistar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+dividir	*	V	*			
+-	*	A1	A1			
+-	*	A1	A1			
+mudar	*	A1	V			
+-	*	*	*			
+-	A0					
+-	A0					
+-	A0					
+continuar	V					
+-	AM-DIS					
+-	A1					
+-	A1					
+-	*					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+conquistar	V	*				
+-	*	*				
+-	*	*				
+-	A0	*				
+-	*	*				
+-	A0	A0				
+-	AM-LOC	AM-TMP				
+-	AM-LOC	AM-TMP				
+-	AM-LOC	*				
+-	AM-LOC	*				
+ocupar	AM-LOC	V				
+-	AM-LOC	A1				
+-	AM-LOC	A1				
+-	AM-TMP	A1				
+-	AM-LOC	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	*				
+-	AM-TMP	AM-PNC				
+-	AM-TMP	*				
+-	AM-TMP	AM-PNC				
+-	AM-TMP	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	V	*				
+assinar	V	*				
+-	A0	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+incluir	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0					
+incentivar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	*	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+pertencer	V	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+dominar	A2	V				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	A1				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+prejudicar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+conquistar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	*	*				
+-	AM-TMP	A0				
+-	AM-TMP	A0				
+-	AM-TMP	A0				
+-	AM-TMP	A0				
+emplacar	AM-TMP	V				
+-	AM-TMP	A1				
+-	AM-TMP	A1				
+-	*	*				
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	*					
+-	A0	*				
+-	A0	*				
+narrar	V	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+banir	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	A1	AM-PNC				
+construir	V	AM-PNC				
+-	A1	AM-PNC				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+recorrer	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	*	*				
+transformar	V	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+montar	A1	V				
+-	A1	A2				
+-	A1	A2				
+-	A2	A2				
+-	A2	A2				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	AM-NEG					
+esconder	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+discutir	V					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+reabrir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+exigir	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	AM-NEG				
+ter	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	C-A1				
+-	*	*				
+-	A0	A0	*	*		
+-	A0	A0	*	*		
+-	A0	A0	*	*		
+-	AM-NEG	*	*	*		
+terter	V	*	*	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	A1	*	*		
+-	*	A1	*	*		
+-	*	*	*	*		
+-	*	*	A0	*		
+-	*	*	*	*		
+-	*	*	*	*		
+deixar	*	*	V	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+-	*	*	A1	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	AM-NEG		
+conseguir	*	*	*	V		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	AM-TMP		
+-	*	*	*	AM-TMP		
+-	*	*	*	*		
+-	A1	*				
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+envolver	A2	V				
+-	A2	*				
+-	AM-ADV	AM-TMP				
+-	*	*				
+-	AM-DIS	*				
+-	*	A1				
+-	*	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*	*	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+serser	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+discriminar	*	A2	V	*		
+-	*	A2	A1	*		
+-	*	A2	*	*		
+pagar	*	*	*	*		
+-	*	*	*	*		
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+-	A0					
+fumar	V					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0	A0				
+prender	V	*				
+-	A1	*				
+-	AM-MNR	AM-MNR				
+cobrar	AM-MNR	V				
+-	A2	A2				
+-	A0	A0				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	*	*				
+indiciar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+vender	AM-MNR	V				
+-	AM-MNR	A1				
+-	AM-MNR	A1				
+-	AM-MNR	A1				
+-	*	*				
+-	*					
+indiciar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*	*				
+-	*	A1				
+-	*	*				
+prender	V	*				
+-	AM-TMP	*				
+-	A0	A0				
+-	A1	A0				
+-	A1	AM-TMP				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+entregar	*	V				
+-	A1	A1				
+-	A1	A1				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	AM-CAU	A4				
+-	AM-CAU	A4				
+-	AM-CAU	*				
+-	AM-CAU	AM-MNR				
+-	AM-CAU	AM-MNR				
+-	AM-CAU	A2				
+-	AM-CAU	A2				
+-	*	*				
+-	A1					
+-	A1					
+-	A2					
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A0					
+ganhar	V					
+-	AM-EXT					
+-	AM-EXT					
+-	A0	A0				
+-	A0	AM-DIS				
+-	A0	AM-DIS				
+-	A0	AM-DIS				
+-	AM-DIS	AM-DIS				
+-	A0	A0				
+permitir	V	*				
+verificar	V	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+ficar	V					
+-	A2					
+-	A2					
+-	*					
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	AM-DIS	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+ser	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A0	*			
+comprar	A1	V	*			
+-	A2	A1	*			
+-	A2	A1	*			
+-	A2	A1	*			
+-	A2	A1	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+beneficiar	A2	*	A1			
+-	A2	*	A1			
+-	A2	*	A2			
+-	A2	*	A2			
+-	A2	*	A2			
+-	A2	*	A2			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	*	*	*			
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	*	*				
+executar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+-	AM-PRD	*				
+provocar	AM-PRD	V				
+-	A1	A1				
+-	C-AM-PNC	A1				
+-	C-AM-PNC	A2				
+-	*	*				
+-	A0	*	*			
+dizer	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+receber	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A1	A1			
+-	A1	AM-MNR	A1			
+estar	A1	AM-MNR	V			
+-	A1	AM-MNR	A2			
+-	A1	AM-MNR	A2			
+-	A1	AM-MNR	A2			
+-	*	*	*			
+-	A0	*				
+orientar	V	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+negociar	A2	V				
+-	A2	A2				
+-	A2	A2				
+-	A2	A2				
+-	*	*				
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+observar	V	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	AM-LOC	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+arrumar	A1	V	*	*	*	*
+-	A1	A2	*	*	*	*
+-	*	A2	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	A1	*	*	*
+estar	*	*	V	*	*	*
+-	*	*	A2	*	*	*
+-	*	*	*	*	*	*
+escutar	*	*	*	V	*	*
+-	*	*	*	*	*	*
+-	*	*	A1	A1	*	*
+-	*	*	A1	A1	*	*
+incentivar	*	*	*	A1	V	*
+-	*	*	*	*	A2	*
+começar	*	*	*	*	A2	V
+-	*	*	*	*	A2	A1
+-	*	*	*	*	A2	A1
+-	*	*	*	*	*	*
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	A0	*	*			
+aumentar	V	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+terminar	*	V	*			
+-	*	A1	A1			
+começar	*	A1	V			
+-	*	*	*			
+-	*	*	*			
+-	A1	*	*	*	*	
+-	A2	*	*	*	*	
+-	A1	*	*	*	*	
+serser	V	*	*	*	*	
+-	V	*	*	*	*	
+-	V	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+terter	*	V	*	*	*	
+-	*	A1	*	*	*	
+-	*	A1	*	*	*	
+-	*	A1	*	*	*	
+-	*	A1	A1	*	*	
+casar	*	A1	A1	*	*	
+-	*	*	*	*	*	
+-	*	*	*	V	*	
+-	*	*	*	A1	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	A0					
+-	A0					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+oferecer	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+beber	V	*				
+-	AM-TMP	*				
+-	A1	*				
+-	C-V	*				
+-	*	*				
+-	*	*				
+levar	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	AM-LOC	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	A0	*	*			
+dizer	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A1	*			
+ser	A1	V	*			
+-	A1	V	*			
+preocupar	A1	V	V			
+-	A1	A2	A2			
+-	A1	A2	A2			
+-	*	*	*			
+-	*	*				
+-	A1	*				
+-	A1	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+criar	A2	V				
+-	A2	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1					
+ser	V					
+-	A2					
+-	*					
+-	A0					
+-	AM-NEG					
+-	A0					
+associar	V					
+-	A1					
+-	A1					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+ser	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+precisar	V					
+-	AM-TMP					
+-	*					
+-	A1					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+marcar	V	*				
+-	A1	*				
+-	A1	*				
+consolidar	AM-PNC	V				
+-	AM-PNC	A1				
+-	*	*				
+-	AM-PNC	A1				
+-	AM-PNC	A1				
+-	*	*				
+-	*	*				
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A1					
+aproximar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A0	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+valorizar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	V				
+chegar	*	V				
+-	*	C-V				
+-	*	A1				
+-	*	A1				
+-	*	*				
+ser	V	*				
+-	A2	*				
+-	A2	A0				
+confirmar	A2	V				
+-	A2	A1				
+-	A1	A1				
+-	A1	A1				
+-	AM-DIS	A1				
+-	A2	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	A1					
+-	A2					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	A0					
+negociar	V					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	A1	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	A2	AM-ADV				
+inaugurar	A2	V				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A4				
+-	A2	A4				
+-	A2	A2				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	AM-DIS					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A0	A1	*			
+dar	V	A1	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A2	A1	*			
+-	A1	A1	*			
+-	*	*	*			
+-	*	*	*			
+substituir	*	V	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	AM-TMP	*			
+-	*	AM-TMP	*			
+-	*	AM-TMP	*			
+-	*	*	*			
+-	*	AM-TMP	*			
+-	*	AM-TMP	A1			
+-	*	A1	A1			
+-	*	AM-TMP	A1			
+sair	*	AM-TMP	V			
+-	*	*	A3			
+-	*	*	A3			
+-	*	*	A3			
+-	*	*	*			
+-	AM-LOC					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+estar	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0	*				
+defender	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	A0				
+prever	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+tratar	V					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+gostar	V	*				
+-	A1	*				
+ajudar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*	*	*		
+-	A2	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+serser	V	*	*	*		
+-	V	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	A0	*	*		
+-	A1	A0	*	*		
+buscar	A1	V	*	*		
+-	*	A1	*	*		
+-	*	A1	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+quebrar	*	*	*	V		
+-	*	*	*	A1		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	A0					
+-	A1					
+-	A1					
+-	A1					
+começar	V					
+-	AM-MNR					
+-	AM-MNR					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+começar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+promover	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-LOC	*				
+-	*	*				
+visar	V	*				
+orientar	V	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	A1				
+-	*	*				
+-	AM-PRD					
+estar	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	AM-DIS					
+-	A1					
+-	*					
+-	A1					
+acontecer	V					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+esfriar	V					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0	A0	*	*	A1	
+-	A0	A0	*	*	A1	
+-	A0	A0	*	*	A1	
+-	A0	A0	*	*	A1	
+-	A0	A0	*	*	A1	
+-	*	*	*	*	A1	
+-	*	*	*	*	A1	
+conversar	V	*	*	*	A1	
+-	A3	*	*	*	A1	
+-	A3	*	*	*	A1	
+-	C-V	*	*	*	A1	
+-	*	*	*	*	A1	
+-	*	*	*	*	A1	
+convencer	*	V	*	*	A1	
+-	*	A1	*	*	A1	
+-	*	A2	*	*	A1	
+fazer	*	A2	V	*	A1	
+-	*	A1	A1	*	A1	
+-	*	A2	A1	*	A1	
+-	*	A2	A1	*	A1	
+-	*	A2	A1	*	A1	
+-	*	*	*	*	A1	
+-	*	*	*	*	A1	
+-	*	*	*	*	A1	
+reprimir	*	*	*	V	A1	
+-	*	*	*	A1	A1	
+-	*	*	*	A1	A1	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+dizer	*	*	*	*	V	
+-	*	*	*	A2	A0	
+-	*	*	*	*	*	
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+atuar	V					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	AM-NEG					
+haver	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1	*				
+-	A1	*				
+ser	A2	*				
+negociar	A2	V				
+-	A2	A2				
+-	A2	A2				
+-	A2	A2				
+-	*	A2				
+-	*	*				
+-	A0					
+-	A0					
+aliciar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+ser	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	A0				
+-	A2	A0				
+imperar	A2	V				
+-	A2	V				
+-	A2	AM-LOC				
+-	A2	*				
+-	A2	AM-LOC				
+-	AM-DIS	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0	A0				
+-	A0	A0				
+-	*	*				
+desconhecer	V	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	C-A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	AM-TMP				
+-	*	*				
+apontar	*	V				
+-	A1	A2				
+-	AM-CAU	A2				
+-	AM-CAU	A2				
+-	AM-CAU	A2				
+-	AM-CAU	A2				
+-	*	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+sonhar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-PRD	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+chegar	*	V				
+-	*	A4				
+-	*	A4				
+-	*	A4				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+passar	V	*	*			
+-	C-V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+realizar	A1	V	*			
+-	A1	*	*			
+trazer	A2	A1	V			
+-	A2	A1	A1			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+vir	V					
+-	A4					
+-	A4					
+-	A4					
+-	A4					
+-	AM-PRD					
+-	*					
+-	AM-MNR					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0					
+haver	V					
+-	A1					
+-	A1					
+-	A1					
+-	C-A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A0	*				
+-	A0	*				
+suspeitar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+morrer	A1	V				
+-	A1	A1				
+-	*	*				
+-	A1	*				
+-	*	*				
+ficar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	A0				
+-	AM-CAU	*				
+-	AM-CAU	A1				
+-	A2	A1				
+subir	A2	V				
+-	*	A4				
+-	*	A1				
+-	*	A1				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	*				
+-	A0	*				
+-	A0	*				
+pedir	V	*				
+-	V	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+apurar	*	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0					
+-	A0					
+-	*					
+-	*					
+-	AM-NEG					
+-	*					
+retirar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*	*	A0			
+-	*	*	*			
+-	*	*	*			
+usar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+corrigir	A1	V	*			
+-	A1	A1	*			
+-	*	*	*			
+garantir	*	AM-PNC	V			
+-	*	A1	A1			
+-	*	*	*			
+-	*	*				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+produzir	V	A2				
+-	A1	A2				
+-	AM-ADV	A2				
+-	A1	A2				
+-	*	*				
+-	*	A2				
+-	*	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+ser	*	A2				
+-	*	A2				
+-	*	A2				
+-	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	*	*				
+-	*	*				
+ter	V	*				
+-	A1	A1				
+-	*	*				
+-	AM-TMP	A1				
+-	AM-TMP	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*				
+explicar	*	V				
+-	*	*				
+-	*	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+fixar	V	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+evitar	AM-PNC	V	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	*	*	*			
+-	AM-PNC	*	*			
+ter	AM-PNC	*	V			
+-	AM-PNC	A1	A1			
+-	AM-PNC	A1	A1			
+-	AM-PNC	*	A1			
+-	AM-PNC	*	A1			
+-	AM-PNC	*	A1			
+-	*	*	*			
+-	AM-DIS	*				
+-	AM-DIS	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	*	*				
+-	*	*				
+reajustar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-TMP	*				
+-	AM-TMP	A1				
+-	AM-TMP	A1				
+-	AM-TMP	A2				
+-	AM-TMP	A2				
+-	AM-TMP	A2				
+ser	*	A2				
+-	AM-TMP	A2				
+-	*	*				
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+dizer	V					
+-	*					
+-	*	*	*			
+beneficiar	V	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	C-AM-TMP	*			
+demorar	AM-TMP	V	*			
+-	AM-TMP	AM-TMP	*			
+-	AM-TMP	A1	*			
+-	AM-TMP	AM-TMP	*			
+-	*	A1	*			
+receber	AM-DIS	A1	V			
+-	*	A1	*			
+-	AM-DIS	A1	A1			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	*	*			
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+ganhar	V					
+-	A1					
+-	*					
+-	*	A1				
+-	*	*				
+ter	V	*				
+-	A1	A1				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	A0				
+dizer	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*					
+-	A0					
+-	*					
+ter	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A0					
+atribuir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*	*	*			
+-	A0	*	*			
+-	A0	*	*			
+pensar	V	*	*			
+-	A1	*	*			
+receber	A1	V	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+ser	*	*	*			
+-	*	*	A2			
+-	*	*	A2			
+-	*	*	*			
+-	*	*	*			
+-	AM-TMP	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+ver	V	*				
+-	A0	*				
+-	A1	A0				
+esperar	*	V				
+-	*	*				
+-	A0					
+-	A0					
+-	V					
+aproximar	V					
+-	*					
+-	A0					
+precisar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-PRD					
+-	AM-PRD					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+ir	V					
+-	A3					
+-	AM-TMP					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+fazer	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	AM-LOC					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	*	*			
+-	A0	A0	*			
+-	A0	A0	*			
+atacar	V	A0	*			
+-	A1	A0	*			
+-	A1	*	*			
+-	AM-MNR	AM-NEG	*			
+ter	*	V	*			
+-	*	A1	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+ficar	*	*	V			
+-	*	*	V			
+-	*	*	A2			
+-	*	*	AM-TMP			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	AM-TMP			
+-	*	*	AM-TMP			
+-	*	*	*			
+-	C-AM-TMP	*	*			
+-	*	*	*			
+-	*	A1	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	AM-TMP	*			
+-	*	AM-TMP	*			
+-	*	*	*			
+-	A0					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+prever	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+afetar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+fazer	A1	V				
+-	*	*				
+-	*	*				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	A0					
+-	A0					
+-	A0					
+-	AM-NEG					
+trazer	V					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+levantar	V					
+-	AM-EXT					
+-	A0					
+-	A0					
+-	AM-CAU					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	C-AM-ADV					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+confirmar	V					
+-	AM-LOC					
+-	AM-EXT					
+-	AM-EXT					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A0					
+-	A0					
+-	A0					
+-	C-A2					
+-	A1					
+-	A0					
+-	*					
+comprovar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+acusar	V					
+-	A1					
+-	A1					
+-	A2					
+-	*					
+-	*					
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+comparecer	V					
+-	AM-ADV					
+-	C-AM-PRD					
+-	C-AM-PRD					
+-	C-AM-PRD					
+-	C-AM-PRD					
+-	AM-TMP					
+-	AM-PNC					
+-	C-A2					
+-	A2					
+-	A2					
+-	*					
+-	A1					
+-	*					
+acusar	V					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*					
+condenar	V					
+-	A2					
+-	A2					
+-	AM-CAU					
+-	*					
+-	AM-PRD					
+-	AM-CAU					
+-	AM-CAU					
+-	AM-CAU					
+-	*					
+-	AM-CAU					
+-	*					
+-	*					
+-	AM-CAU					
+-	AM-CAU					
+-	*					
+-	*					
+-	*					
+-	*	*				
+-	*	*				
+punir	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+cumprir	*	V				
+-	*	V				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	A0					
+tomar	V					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+anunciar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+ficar	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	A1					
+-	A1					
+começar	V					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+atender	V					
+-	A1					
+-	*					
+-	A1	A1				
+-	*	A1				
+-	A2	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A2	A1				
+ser	V	A1				
+-	A1	A1				
+-	A1	*				
+-	A1	*				
+dizer	A1	V				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+ser	A2					
+-	A2					
+-	*					
+-	A0	A0				
+-	A0	*				
+dizer	V	*				
+-	A1	*				
+faltar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*					
+-	*					
+-	*					
+-	*					
+viver	V					
+-	A1					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-LOC					
+-	AM-TMP					
+-	AM-LOC					
+-	*					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A0	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+dizer	V	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+faltar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+ter	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	A0				
+-	A1	AM-ADV				
+-	A1	AM-ADV				
+renovar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	*				
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	A1	*	A1	A1		
+acontecer	V	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	A1	*	A1		
+ser	*	V	*	A1		
+-	A1	A2	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+adiantar	*	*	V	A1		
+-	*	*	A1	A1		
+-	*	*	A1	*		
+-	*	*	*	*		
+afirmar	*	*	AM-DIS	V		
+-	*	*	*	*		
+saber	V	*				
+-	A1	*				
+ser	A1	V				
+-	A1	A2				
+-	*	A1				
+-	AM-TMP	AM-ADV				
+-	AM-TMP	A1				
+-	*	A1				
+-	*	A1				
+-	AM-TMP	A1				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	A1				
+-	*	*				
+-	AM-LOC	A1				
+-	AM-LOC	A1				
+-	*	A1				
+-	A1	A1				
+começar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	AM-LOC	A2				
+-	AM-LOC	A2				
+-	AM-LOC	A2				
+-	*	*				
+-	AM-LOC	*				
+-	AM-LOC	A2				
+-	*	*				
+-	AM-TMP	A2				
+ser	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	A0	*	A1			
+-	A0	*	A1			
+-	*	*	*			
+-	V	*	*			
+ganhar	V	*	*			
+-	A1	*	A1			
+-	A1	*	A1			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	C-AM-TMP	*	*			
+-	C-AM-TMP	*	*			
+-	C-AM-TMP	*	*			
+-	*	*	*			
+-	C-AM-TMP	V	A1			
+disputar	A4	V	*			
+-	A0	A2	A1			
+-	A4	A1	A1			
+-	*	*	*			
+terminar	*	*	V			
+-	*	*	AM-LOC			
+-	*	AM-PNC	AM-LOC			
+-	*	AM-PNC	AM-LOC			
+-	*	*	*			
+-	A1					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A0					
+multar	V					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A0					
+-	A0					
+-	*					
+-	A1					
+-	*					
+autuar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-MNR					
+-	AM-MNR					
+-	A1					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	AM-NEG					
+-	AM-NEG					
+apresentar	V					
+-	A1					
+-	A1					
+-	A1					
+-	V					
+-	*					
+-	*					
+-	A1					
+-	*					
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	A0				
+descumprir	V	A0				
+-	A1	A1				
+-	A1	A0				
+-	AM-PNC	*				
+chegar	A4	V				
+-	A4	A1				
+-	A4	A1				
+-	A4	A1				
+-	A4	A1				
+-	*	*				
+-	AM-DIS					
+-	AM-DIS					
+-	*					
+-	AM-DIS					
+-	A1					
+-	AM-DIS					
+-	A1					
+-	*					
+-	AM-DIS					
+-	*					
+aplicar	V					
+-	A1					
+-	A1					
+-	A2					
+-	AM-TMP					
+-	A2					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0					
+produzir	V					
+-	A1					
+-	A1					
+-	A1					
+-	C-A0					
+-	A0					
+-	A0					
+-	*					
+instalar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	*					
+tomar	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+fazer	V					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	A0	*	*			
+aconselhar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A2	*	*			
+conversar	A2	V	*			
+-	A2	A2	*			
+-	A2	A2	*			
+-	A2	A2	*			
+-	*	*	*			
+-	A2	*	*			
+reverter	A2	*	V			
+-	A2	*	A1			
+-	A2	*	A1			
+-	*	*	*			
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	A1				
+-	*	A1				
+perder	*	V				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+fazer	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+criticar	*	V				
+-	*	*				
+-	*					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	AM-DIS					
+-	*					
+-	A0					
+-	A0					
+-	*					
+cumprir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	*	*				
+-	A0	*				
+preferir	V	*				
+manter	A2	V				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*	*			
+-	A0	*	*			
+ter	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+dizer	A1	V	*			
+-	A1	A1	*			
+querer	A1	A1	V			
+-	*	*	*			
+-	*	*	*			
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+-	AM-TMP	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+simpatizar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+ganhar	*	V				
+-	*	A1				
+-	*	*				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0					
+-	A0					
+narrar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+haver	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	A2				
+-	A1	*				
+-	A1	V				
+separar	A1	V				
+-	*	*				
+-	*	*	*			
+-	A1	A1	*			
+ocorrer	V	*	*			
+-	*	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+colocar	A1	V	*			
+-	AM-TMP	A2	*			
+-	AM-TMP	A2	*			
+-	AM-TMP	A1	A1			
+chegar	AM-TMP	V	V			
+-	AM-LOC	A1	AM-LOC			
+-	AM-TMP	A2	AM-LOC			
+-	AM-TMP	A2	AM-LOC			
+-	*	*	*			
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+expulsar	V					
+-	*					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+adotar	A2	V				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	*					
+-	*					
+dar	V					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A1					
+-	*					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*	*				
+-	*	*				
+forçar	V	*				
+-	*	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+reduzir	*	C-A3				
+-	*	AM-TMP				
+-	*	A1				
+-	*	A4				
+-	*	A4				
+-	*	A4				
+-	*	*				
+ser	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	*	*				
+dizer	*	V				
+-	A1	A0				
+-	*	A0				
+-	*	A0				
+-	*	*				
+-	*	A1	*	*		
+-	A1	A1	*	*		
+-	A1	A1	*	*		
+estar	V	*	*	*		
+-	A2	*	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+ser	*	V	*	*		
+-	*	A1	*	*		
+-	*	A1	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+ir	*	*	V	*		
+-	*	A2	A4	*		
+-	*	*	A4	*		
+-	*	*	A4	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	A0		
+vetar	*	*	*	V		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	A1		
+-	*	*	*	*		
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	AM-MNR	*				
+-	A2	*				
+-	A2	*				
+investir	A2	V				
+-	A2	A2				
+-	A2	A2				
+-	A2	A2				
+-	*	*				
+-	AM-DIS	*				
+-	*	*				
+-	A0	*				
+-	A0	*				
+firmar	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	A1				
+valer	*	V				
+-	AM-TMP	AM-TMP				
+-	*	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	*				
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A1					
+-	A1					
+crescer	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1	AM-PRD				
+-	A2	AM-PRD				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	A0				
+ser	V	*				
+-	A2	*				
+-	A2	A0				
+-	A1	*				
+-	A1	*				
+elevar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A4				
+-	A1	A1				
+-	A1	A4				
+-	A1	A4				
+-	A1	A4				
+-	A1	A4				
+-	A1	A4				
+-	A1	A1				
+-	A1	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	A0	*	*			
+-	A0	*	*			
+-	A0	*	*			
+-	A0	*	*			
+-	A0	*	*			
+-	A0	*	*			
+divulgar	V	*	*			
+-	AM-TMP	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A0	*			
+-	A1	A0	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+demonstrar	*	V	*			
+-	*	A1	*			
+-	*	A1	A0			
+-	*	A1	A0			
+conseguir	*	A1	V			
+-	*	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	*	*	*			
+-	AM-ADV	*	*	*		
+estarestar	V	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	*	*	*		
+-	A2	AM-TMP	*	*		
+-	*	*	*	*		
+-	*	A1	*	*		
+-	A1	A1	*	*		
+-	A1	*	*	*		
+escolher	*	V	*	*		
+-	*	*	*	*		
+-	*	*	V	*		
+-	*	*	A2	*		
+-	*	A1	A2	*		
+-	*	A1	*	*		
+-	*	*	*	*		
+-	*	*	*	AM-LOC		
+-	*	*	*	A0		
+-	*	*	*	A0		
+treinar	*	*	*	V		
+-	*	*	*	AM-TMP		
+-	*	*	*	AM-TMP		
+-	*	*	*	AM-TMP		
+-	*	*	*	*		
+-	A0					
+-	A0					
+-	A0					
+subir	V					
+-	AM-MNR					
+-	A4					
+-	A4					
+-	AM-MNR					
+-	*					
+-	A0					
+-	A0					
+-	*					
+-	A0					
+-	AM-NEG					
+falar	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	V	A1				
+estimular	V	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	*	AM-TMP				
+-	C-A3	AM-TMP				
+-	*	A1				
+-	A1	A1				
+ganhar	C-A3	V				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+trabalhar	V					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	A1					
+-	A1					
+-	AM-PRD					
+-	*					
+-	AM-CAU	*				
+-	AM-CAU	*				
+-	AM-CAU	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+vir	V	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	A3	*				
+-	*	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+compensar	AM-TMP	V				
+-	AM-TMP	A2				
+-	AM-TMP	A2				
+-	AM-TMP	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	A1	A1				
+-	A2	*				
+-	A2	*				
+serser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	AM-REC	*				
+-	AM-REC	*				
+-	AM-REC	*				
+-	AM-REC	*				
+-	AM-REC	A1				
+-	AM-REC	AM-REC				
+-	AM-REC	A1				
+-	AM-DIS	A2				
+-	AM-DIS	A2				
+-	AM-DIS	A2				
+-	AM-DIS	A2				
+-	AM-DIS	A2				
+-	AM-REC	A2				
+-	AM-DIS	A2				
+-	*	A2				
+-	*	*				
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+ser	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*	A1	*	*		
+-	*	*	*	*		
+haver	V	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+substituir	*	V	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+-	*	A2	*	*		
+ter	*	A2	V	*		
+-	*	A2	*	*		
+-	*	A2	A1	*		
+-	*	A2	A1	*		
+-	*	A2	A1	*		
+ser	*	*	A1	A2		
+-	*	A2	A1	A2		
+-	*	*	A1	A2		
+-	*	*	*	A2		
+-	*	*	*	A2		
+-	*	*	*	A2		
+-	*	*	*	*		
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-CAU					
+-	*					
+-	*					
+jogar	V					
+-	AM-CAU					
+-	C-A1					
+-	C-A1					
+-	C-A1					
+-	C-A1					
+-	*					
+-	*					
+-	AM-DIS	AM-DIS				
+-	AM-DIS	*				
+-	*	*				
+-	A0	*				
+-	AM-NEG	*				
+-	*	*				
+avaliar	V	*				
+-	A1	*				
+-	*	*				
+ampliar	A1	V				
+-	A1	A1				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	AM-PNC				
+-	*	C-AM-MNR				
+-	*	*				
+-	A0					
+-	A0					
+-	AM-NEG					
+proibir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-MNR	*				
+-	AM-TMP	*				
+-	*	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	AM-TMP	*				
+-	*	*				
+iniciar	AM-TMP	V				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	*					
+inspirar	V					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+ver	V	A1				
+-	A1	A1				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+ser	*	*				
+-	*	*				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	*	*				
+ficar	V	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	*	*				
+dizer	*	V				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	A0				
+-	*	A0				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A0	*				
+afirmar	V	*				
+-	*	*				
+-	AM-MNR	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+ser	A1	V				
+-	A1	A2				
+-	A1	A2				
+-	A1	A1				
+-	A1	A1				
+-	A1	*				
+-	*	*				
+-	*					
+-	*					
+achar	V					
+-	V					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A0					
+encontrar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*	AM-EXT	*			
+-	*	*	*			
+-	*	A1	*			
+dizer	V	*	*			
+-	A1	*	*			
+-	*	*	*			
+sequestrar	A1	V	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	V			
+confundir	*	*	V			
+-	*	A2	A1			
+-	*	A2	A1			
+-	*	*	*			
+-	A1					
+-	*					
+receber	V					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+receber	V					
+-	A1					
+-	A1					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+morrer	V					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	*					
+realizar	V					
+-	A0					
+-	A0					
+-	A0					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	AM-ADV					
+-	AM-ADV					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	A1					
+-	A1					
+ser	V					
+-	A2					
+-	A2					
+-	AM-DIS					
+-	AM-DIS					
+-	AM-DIS					
+-	AM-DIS					
+-	AM-DIS					
+-	*					
+-	A1					
+-	A1					
+-	A2					
+-	A1					
+-	A2					
+-	A2					
+-	*					
+-	A0	A1				
+bater	V	A1				
+-	A1	*				
+-	*	*				
+ficar	*	V				
+-	*	AM-MNR				
+-	*	AM-MNR				
+-	*	AM-MNR				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+ser	A2	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	C-A0	*				
+-	*	*				
+contar	AM-DIS	V				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	AM-DIS	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	*				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+ficar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	A1				
+derrotar	A2	V				
+-	AM-TMP	A1				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-TMP				
+-	AM-TMP	AM-LOC				
+-	AM-TMP	AM-LOC				
+-	AM-TMP	AM-LOC				
+-	*	AM-LOC				
+-	*	AM-LOC				
+-	A2	AM-LOC				
+-	A2	AM-LOC				
+-	A2	AM-LOC				
+-	AM-CAU	AM-LOC				
+-	A2	AM-LOC				
+-	AM-CAU	AM-LOC				
+-	A2	AM-LOC				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+-	A1	A0				
+-	A1	A0				
+-	A2	A1				
+-	A2	A0				
+-	A2	A1				
+ser	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+marcar	A2	V				
+-	A2	A1				
+-	A2	*				
+-	*	*				
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+participar	V					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A1					
+-	AM-LOC					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1	A1	*			
+-	A1	A1	*			
+-	A2	A1	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	*	*			
+serser	A2	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	A1	*			
+-	*	A1	*			
+-	A1	A1	*			
+-	*	A1	*			
+-	A1	A2	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	C-A0	A1	*			
+-	*	A1	*			
+-	A1	A1	*			
+vender	A1	A1	V			
+-	A1	A1	AM-TMP			
+-	A1	A1	AM-TMP			
+-	A1	A1	A1			
+-	A1	A1	A1			
+-	*	*	*			
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	A1	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	*	*				
+comercializar	*	V				
+-	*	AM-LOC				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*	*				
+-	A1	A0				
+-	A1	A0				
+ser	V	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	*				
+-	*	*				
+afirmar	*	V				
+-	AM-DIS	A0				
+-	*	A0				
+-	AM-DIS	A0				
+-	AM-DIS	A0				
+-	*	A0				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+representar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A1					
+-	*					
+gostar	V	*	AM-CAU	*		
+-	A1	*	AM-CAU	*		
+-	A1	*	AM-CAU	*		
+-	A1	*	*	*		
+-	*	*	*	*		
+resolver	*	V	*	*		
+pegar	*	A1	V	*		
+-	*	AM-PRD	A1	*		
+-	*	AM-PRD	A1	*		
+-	*	*	*	*		
+fazer	*	AM-PRD	*	V		
+-	*	AM-PRD	*	AM-LOC		
+-	*	AM-PRD	*	AM-LOC		
+-	*	AM-PRD	*	AM-LOC		
+-	*	*	*	*		
+-	A0					
+-	AM-CAU					
+-	*					
+encaixar	V					
+-	AM-MNR					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	A1					
+-	*					
+-	AM-TMP					
+ter	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1	*				
+-	A1	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	AM-ADV	*				
+denunciar	A1	V				
+-	AM-ADV	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	A1				
+-	A1	A1				
+-	A1	A2				
+-	A1	A2				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+mudar	V	*				
+-	A1	A1				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+depender	*	V				
+-	*	A2				
+-	*	A1				
+-	*	A2				
+-	*	A1				
+-	*	*				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+desestimular	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	A2				
+-	A1	A1				
+-	A1	A2				
+-	*	*				
+-	A1					
+-	*					
+oferecer	V					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	*					
+causar	V	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+tratar	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+chegar	V	A1	*			
+-	AM-TMP	A2	*			
+-	*	*	*			
+ser	*	V	*			
+-	*	A2	*			
+-	*	A2	*			
+-	*	A2	*			
+-	AM-CAU	A2	*			
+-	*	A2	*			
+sair	*	A2	V			
+-	*	A2	A2			
+-	*	A2	A2			
+-	AM-CAU	*	A2			
+-	AM-CAU	*	A2			
+-	*	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	*	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	*	*	*			
+-	A0	*	*			
+-	A0	*	*			
+-	*	*	*			
+-	A0	*	*			
+fazer	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+pagar	*	*	*			
+-	*	*	*			
+estar	*	*	V			
+-	*	*	C-A1			
+-	*	AM-PRD	C-A1			
+-	*	*	C-A1			
+-	*	*	*			
+ser	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	*	*	*			
+pôr	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+interpretar	A2	V	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	A1	*			
+fazer	*	A1	V			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	A1			
+-	*	A1	*			
+-	*	*	*			
+-	*					
+-	A2					
+-	*					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+-	AM-DIS					
+-	*					
+-	*					
+-	*					
+dirigir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1	*	*	*	*	
+-	AM-DIS	*	*	*	*	
+estar	V	*	*	*	*	
+-	A2	*	*	*	*	
+-	A2	*	*	*	*	
+-	A2	*	*	*	*	
+-	A2	*	*	*	*	
+-	A2	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+resistir	*	V	*	*	*	
+-	*	A1	*	*	*	
+-	*	A1	*	*	*	
+-	*	A1	*	*	*	
+-	*	AM-PNC	*	*	*	
+-	*	AM-PNC	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+pagar	*	*	V	*	*	
+-	*	*	*	*	*	
+-	*	*	A1	*	*	
+filmar	*	*	A1	V	*	
+-	*	*	*	*	*	
+-	*	*	*	A1	*	
+ser	*	*	*	*	*	
+-	*	*	*	A1	*	
+-	*	*	*	A1	A2	
+-	*	*	*	*	A2	
+-	*	*	*	A1	A2	
+-	*	*	*	*	A2	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*		
+-	A1	*	*	*		
+-	A1	*	*	*		
+serser	V	*	*	*		
+-	AM-ADV	*	*	*		
+-	AM-ADV	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+fazer	AM-ADV	V	*	*		
+-	A2	A1	*	*		
+-	A2	A1	*	*		
+-	*	A1	*	*		
+-	*	A1	*	*		
+-	*	AM-LOC	*	*		
+-	*	AM-LOC	*	*		
+-	*	AM-LOC	*	*		
+-	*	AM-TMP	*	*		
+-	*	AM-TMP	AM-MNR	*		
+-	*	AM-CAU	AM-MNR	*		
+-	*	AM-CAU	AM-MNR	*		
+-	*	AM-CAU	*	*		
+-	*	*	*	*		
+confirmar	*	AM-TMP	V	*		
+-	*	*	A1	*		
+-	*	AM-ADV	A1	A1		
+-	*	AM-ADV	A1	A1		
+-	*	AM-ADV	A1	A1		
+-	*	AM-ADV	A1	A2		
+-	*	AM-ADV	A1	A2		
+-	*	AM-ADV	A1	A2		
+-	*	*	*	*		
+ver	V	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+jogar	A1	V				
+-	A1	A1				
+-	*	AM-MNR				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+vencer	V					
+-	AM-EXT					
+-	AM-EXT					
+-	AM-EXT					
+-	AM-EXT					
+-	*					
+-	A0	*				
+bastar	V	*				
+-	*	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	A1				
+-	A2	*				
+-	A2	*				
+chegar	*	V				
+-	A2	AM-CAU				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	A1	*				
+-	A1	*				
+ancorar	V	*				
+-	A1	*				
+-	A1	*				
+-	AM-LOC	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	V				
+tornar	*	C-V				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+haver	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	A2					
+ser	A2					
+-	A2					
+-	*					
+-	A1	*				
+querer	V	*				
+-	*	*				
+ir	*	V				
+-	*	A4				
+-	A4	A4				
+-	AM-TMP	A4				
+-	AM-TMP	A4				
+-	AM-TMP	A4				
+-	AM-TMP	A4				
+-	AM-TMP	*				
+-	AM-TMP	A4				
+-	*	*				
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+dispensar	V					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	AM-TMP					
+-	C-AM-TMP					
+-	C-AM-TMP					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0	*				
+-	A0	*				
+-	A0	*				
+saber	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+defender	*	V				
+-	*	A1				
+-	*	A1				
+-	*	A1				
+-	*	*				
+-	*					
+chegar	V					
+-	AM-TMP					
+-	AM-TMP					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+-	A0					
+discordar	V					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	A2					
+-	A0					
+-	A0					
+-	*					
+-	*					
+-	*					
+-	*					
+jogar	V					
+-	AM-MNR					
+-	AM-MNR					
+-	AM-MNR					
+-	*					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+ser	A2					
+-	A2					
+-	*					
+-	A1					
+-	A1					
+estar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+apreciar	V					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0	A1	*			
+-	A0	A1	*			
+-	AM-NEG	AM-ADV	*			
+existir	V	*	*			
+-	A1	*	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	A1	AM-LOC	*			
+-	A1	A1	*			
+-	A1	A1	*			
+-	AM-ADV	AM-TMP	*			
+engatinhar	A1	V	*			
+-	AM-TMP	AM-TMP	AM-TMP			
+aparecer	AM-TMP	AM-TMP	V			
+-	AM-TMP	AM-TMP	A1			
+-	AM-TMP	AM-TMP	A1			
+-	AM-TMP	*	A1			
+-	AM-TMP	AM-TMP	A1			
+-	AM-TMP	AM-TMP	A1			
+-	*	AM-TMP	AM-MNR			
+-	*	*	AM-MNR			
+-	*	*	*			
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+querer	C-V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	AM-PRD					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	A0	*				
+dizer	V	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+formar	A1	V				
+-	A1	AM-PNC				
+-	A1	AM-PNC				
+-	A1	AM-PNC				
+-	A1	AM-PNC				
+-	*	*				
+-	*	*				
+-	A0	A1				
+ter	V	*				
+-	AM-DIS	*				
+-	*	*				
+-	*	A2				
+-	A1	A1				
+ser	*	A2				
+-	A1	A2				
+-	*	A2				
+-	*	*				
+-	*	*				
+-	A0	A1				
+ter	V	*				
+-	A1	*				
+-	*	*				
+-	A1	A2				
+-	A1	A1				
+ser	A1	A2				
+-	A1	A2				
+-	A1	A2				
+-	*	*				
+-	*	*	*	A1		
+-	A1	*	*	A1		
+-	A1	*	*	A1		
+ser	V	*	*	A1		
+-	A2	*	*	A1		
+-	A2	*	*	A1		
+-	A2	*	*	A1		
+pensar	A2	V	*	A1		
+-	A2	A1	*	A1		
+-	A1	A1	*	A1		
+-	*	A1	*	A1		
+abastecer	A1	A1	V	A1		
+-	A1	A1	A1	A1		
+-	A1	A1	A1	A1		
+-	A1	A1	A1	A1		
+-	A1	A1	*	A1		
+-	A1	*	*	A1		
+-	A1	A1	*	A1		
+-	A1	A1	*	A1		
+-	A1	*	*	*		
+-	A1	*	*	*		
+dizer	A1	*	*	V		
+-	A1	*	*	A0		
+-	A1	*	*	A0		
+-	A1	*	*	A0		
+-	A1	*	*	A0		
+-	A1	*	*	A0		
+-	*	*	*	*		
+haver	V	*				
+-	AM-LOC	A1				
+-	A1	A0				
+enfrentar	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	AM-PRD				
+-	A1	AM-PRD				
+-	*	*				
+-	A1					
+-	A2					
+ser	V					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A2					
+-	A1					
+-	*					
+-	AM-DIS	*				
+-	*	*				
+-	A0	*				
+-	A0	*				
+achar	V	*				
+-	A1	*				
+-	A1	A1				
+-	A1	A1				
+ser	A1	V				
+-	A1	V				
+-	A1	A1				
+-	A1	A1				
+-	A1	A1				
+-	A1	*				
+-	A1	A1				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	*	*				
+-	A1	A0				
+estar	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+estimular	A2	V				
+-	A2	A1				
+-	A2	A1				
+-	A2	A1				
+-	*	*				
+-	A1	*	*			
+-	A1	*	*			
+ser	V	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	A2	A0	*			
+estimular	A2	V	*			
+-	A2	A1	*			
+-	A2	A1	*			
+-	A2	A1	*			
+-	A2	A1	AM-MNR			
+-	A1	A1	AM-MNR			
+-	A1	A1	AM-MNR			
+-	A1	A2	AM-MNR			
+-	A1	A2	AM-MNR			
+promover	A1	A2	AM-MNR			
+-	A1	A2	AM-MNR			
+-	A1	A2	AM-MNR			
+-	A1	A2	AM-MNR			
+-	A1	A2	AM-MNR			
+-	AM-DIS	*	*			
+-	A0					
+-	A0					
+eliminar	V					
+-	A1					
+-	A2					
+-	A2					
+-	A0					
+causar	V					
+-	A0					
+-	A0					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	A0					
+reunir	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+-	*					
+-	A0					
+-	A0					
+-	A1					
+-	A0					
+-	A1					
+-	A1					
+-	*					
+perder	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A2					
+-	A1					
+-	A2					
+-	A2					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	*					
+empurrar	V					
+-	A2					
+-	A1					
+-	A1					
+-	A2					
+-	A2					
+-	AM-DIR					
+-	*					
+-	*	*	*			
+-	*	*	*			
+serser	V	*	*			
+-	A2	*	*			
+-	A1	*	*			
+-	A2	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+prejudicar	*	V	*			
+-	*	A1	*			
+-	*	A1	*			
+-	*	*	*			
+-	*	A2	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	AM-TMP	A1				
+-	*	A1				
+-	*	A1				
+afetar	V	A1				
+-	A1	A1				
+-	A1	A1				
+-	*	*				
+-	*	A1				
+-	*	*				
+-	*	A1				
+-	*	*				
+-	*	*				
+dizer	*	V				
+-	*	A0				
+-	*	*				
+-	A0	A0	*			
+-	*	A0	*			
+-	*	A0	*			
+-	*	*	*			
+-	*	*	*			
+dar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	AM-TMP	*	*			
+-	A2	*	*			
+-	A2	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+discursar	A2	V	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	AM-PNC	A1	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	A1	*			
+-	*	*	*			
+ler	*	*	V			
+-	*	*	A1			
+-	*	*	AM-LOC			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	*			
+-	*	*	*			
+-	A0					
+alterar	V					
+-	A1					
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A1	*				
+-	A2	*				
+-	A2	*				
+ser	V	*				
+-	A2	*				
+-	A2	*				
+-	A2	*				
+-	A2	A1				
+levar	A2	V				
+-	A2	A2				
+-	A2	A2				
+-	A1	A2				
+-	A1	A2				
+-	C-A3	A2				
+-	*	A2				
+-	*	A2				
+-	*	*				
+-	A1					
+-	AM-EXT					
+-	AM-EXT					
+-	A1					
+oscilar	V					
+-	A2					
+-	A2					
+-	A2					
+-	*					
+ter	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+passar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	*					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+-	A0					
+abrir	V					
+-	AM-TMP					
+-	A1					
+-	A1					
+-	A1					
+-	AM-LOC					
+-	AM-LOC					
+-	AM-LOC					
+-	*					
+-	A0	*				
+-	*	*				
+-	A0	*				
+-	*	*				
+-	A0	*				
+-	A0	*				
+-	A0	*				
+fazer	V	*				
+-	A1	*				
+-	A1	*				
+-	AM-LOC	*				
+-	A1	*				
+acompanhar	A1	V				
+-	A1	AM-TMP				
+-	AM-LOC	AM-LOC				
+-	AM-LOC	AM-LOC				
+-	AM-LOC	AM-LOC				
+-	AM-LOC	A2				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	AM-LOC	*				
+-	*	AM-TMP				
+-	AM-LOC	AM-TMP				
+-	*	*				
+-	A0					
+-	A0					
+marcar	V					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	A1					
+-	AM-PNC					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	AM-PNC					
+-	A1					
+-	*					
+-	A0	*	*			
+-	A0	*	*			
+entrar	V	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	A1	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	AM-TMP	*	*			
+-	*	*	*			
+-	*	*	*			
+obrigar	*	V	*			
+-	*	A1	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+assinar	*	*	V			
+-	*	*	A1			
+-	*	*	A1			
+-	*	*	A2			
+-	*	*	A2			
+-	*	*	*			
+-	A1					
+-	A1					
+-	*					
+-	*					
+-	A1					
+-	A1					
+-	*					
+-	A2					
+ser	A2					
+-	A2					
+-	*					
