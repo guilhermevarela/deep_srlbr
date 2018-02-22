@@ -78,7 +78,7 @@ def outputs_predictions_persist(
 
 	l= len(idx_decoded)	
 	i=0
-	for pred, tag in zip(pred_decoded,tag_decoded):
+	for idx, pred, tag in zip(idx, pred_decoded,tag_decoded):
 		#define left 
 		if ((tag != prev_tag) and (tag != '*')): 
 			this_tag= '(' + tag + '*'
@@ -86,14 +86,25 @@ def outputs_predictions_persist(
 			this_tag+= '*'
 
 		#define right
+		import code; code.interact(local=dict(globals(), **locals()))		
 		if (i<l-1): 
-			if ((tag != tag_decoded[i+1]) and (tag != '*')):
-				this_tag+= ')'
-
-			if (pred == pred_decoded[i+1]):
-				prev_tag= tag 
+			if (pred == pred_decoded[i+1]):			
+				if ((tag != tag_decoded[i+1]) and (tag != '*')):
+					this_tag+= ')'	
+					prev_tag= tag 
 			else:
-				prev_tag= ''	
+				if (new_tags[-1] != '*)' and new_tags[-1] != '*'): # FIX CLOSING TAGS
+					new_tags[-1]= '*)'	
+				this_tag= '*'
+				prev_tag= tag 
+
+			# if ((tag != tag_decoded[i+1]) and (tag != '*')):
+			# 	this_tag+= ')'
+
+			# if (pred == pred_decoded[i+1]):
+			# 	prev_tag= tag 
+			# else:
+			# 	prev_tag= ''	
 		
 		new_tags.append(this_tag)					
 		this_tag= ''
@@ -102,7 +113,7 @@ def outputs_predictions_persist(
 
 	file_path= output_dir +  filename + '.csv'		
 	columns=['IDX','Y_0', 'Y_1']
-	data=[idx_decoded, tag_decoded, new_tags]
+	data=[idx_decoded, new_tags, tag_decoded]
 	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('IDX', inplace=False)	
 	df.to_csv(file_path)
 
