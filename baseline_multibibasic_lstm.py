@@ -21,6 +21,7 @@ Created on Jan 30, 2018
 		2018-02-08: updates on data transformation
 		2018-02-20: updates on pipeline
 
+
 '''
 import sys
 sys.path.append('datasets/')
@@ -32,8 +33,6 @@ from data_tfrecords import input_fn
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate, precision, recall 
 
-# INPUT_PATH='datasets/inputs/00/'
-# INPUT_PATH='datasets/inputs/01/'
 INPUT_PATH='datasets/inputs/02/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
@@ -42,6 +41,9 @@ MODEL_NAME='multi_bibasic_lstm'
 DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
 
+LAYER_1_NAME='glove-50'
+LAYER_2_NAME='bi-lstm'
+LAYER_3_NAME='softmax'
 
 def forward(X, sequence_length):		
 	'''
@@ -104,17 +106,8 @@ if __name__== '__main__':
 
 	
 	load_dir=''
-	#UNCOMMENT IN TO KEEP TRAINING
-	# load_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/00/exp-1449.meta'
-	# experiment_dir= 'models/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
-	# experiment_dir= dir_getmodels(lr, HIDDEN_SIZE, model_name=MODEL_NAME)
-	# logs_dir= 'logs/multi_bibasic_lstm/lr5.00e-04,hs128x64/06/'
-	# logs_dir= dir_getlogs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
-
 	outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
 
-	# print('experiment_dir', experiment_dir)
-	# print('logs_dir', logs_dir)
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 

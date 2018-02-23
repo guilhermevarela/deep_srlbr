@@ -22,6 +22,9 @@ DEFAULT_KLASS_SIZE=36
 SETTINGS=[
 	'INPUT_PATH',
 	'MODEL_NAME',
+	'LAYER_1_NAME',
+	'LAYER_2_NAME',
+	'LAYER_3_NAME',
 	'DATASET_TRAIN_SIZE',
 	'DATASET_VALID_SIZE',
 	'DATASET_TEST_SIZE',
@@ -125,18 +128,19 @@ def outputs_conll(df, target_column='Y_0'):
 	s0= min(df['S'])
 	sn= max(df['S'])
 	for i,si in enumerate(range(s0,sn+1)):
-	    dfsi=df[ df['S'] == si ]
+	    import code; code.interact(local=dict(globals(), **locals()))        
+	    dfsi=df.loc[df['S'] == si,:]
 	    p0= min(dfsi['P'])
 	    pn= max(dfsi['P'])    
 	    for j,p in enumerate(range(p0,pn+1)): # concatenate by argument columns
-	        dfpj=dfsi[dfsi['P']==p].reset_index(drop=True)
+	        dfpj=dfsi.loc[df['P']==p,:].reset_index(drop=True)
 	        if j==0:
-	            dfp=dfpj[['FUNC','Y_0']]
-	            dfp=dfp.rename(columns={'Y_0': 'ARG0'})
+	            dfp=dfpj[['FUNC',target_column]]
+	            dfp=dfp.rename(columns={target_column: 'ARG0'})
 	        else:
 	            dfp['FUNC']=dfp['FUNC'].map(str).values + dfpj['FUNC'].map(str).values
-	            dfp= pd.concat((dfp, dfpj['Y_0']), axis=1)
-	            dfp=dfp.rename(columns={'Y_0': 'ARG{:d}'.format(p-p0)})            
+	            dfp= pd.concat((dfp, dfpj[target_column]), axis=1)
+	            dfp=dfp.rename(columns={target_column: 'ARG{:d}'.format(p-p0)})            
 	    if i==0:        
 	        dfconll= dfp
 	    else:
@@ -147,7 +151,7 @@ def outputs_conll(df, target_column='Y_0'):
 	dfconll['FUNC'] = dfconll['FUNC'].apply(sub_fn)
 
 	#Order columns to fit conll standard
-	num_columns=dfconll.columns
+	num_columns=len(dfconll.columns)
 	usecolumns=['FUNC'] + ['ARG{:d}'.format(i) for i in range(num_columns-1)]
 	return dfconll[usecolumns]
 	

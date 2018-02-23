@@ -13,21 +13,14 @@ Created on Jan 25, 2018
 import pandas as pd 
 import numpy as np 
 
-#Uncomment if launched from root
-# from datasets.data_propbankbr import  propbankbr_lazyload
-# from datasets.data_embed import vocab_lazyload_with_embeddings, vocab_lazyload
 #Uncomment if launched from /datasets
 from data_propbankbr import  propbankbr_lazyload
 from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload
 
 import tensorflow as tf 
 
-# EMBEDDING_PATH='embeddings/'
-# TARGET_PATH='training/pre/00/'
-# EMBEDDING_PATH='datasets/embeddings/'
-# TARGET_PATH='datasets/inputs/01/'
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/02/'
+TARGET_PATH='datasets/inputs/00/'
 
 #Must be both 1) inputs to the model 2) have a string representation
 EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']

@@ -16,8 +16,7 @@ import os.path
 
 PROPBANKBR_PATH='datasets/conll/'
 TARGET_PATH='datasets/csvs/'
-# PROPBANKBR_PATH='/conll/'
-# TARGET_PATH='/csvs/'
+
 #MAPS the filename and output fields to be harvested
 CONST_HEADER=[
 	'ID','FORM','LEMMA','GPOS','MORF', 'IGN1', 'IGN2', 
@@ -260,12 +259,8 @@ def propbankbr_parser2():
 	zhou_df['M_R']=M_R
 	zhou_df['P']=P
 	zhou_df['P_S']=P_S
+	
 	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
-	# import code; code.interact(local=dict(globals(), **locals()))		
-	# arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
-	# arg_1 = arg_02arg_1(zhou_df, args_columns=['ARG_0'])			
-
-	# zhou_df['ARG_1']= list(map(lambda x: x[0], arg_1))
 	zhou_df['ARG_1']= propbankbr_transform_arg02arg1(P, zhou_df['ARG_0'].tolist())
 
 	zhou_df.index.name= 'IDX'
@@ -448,7 +443,7 @@ def propbankbr_transform_arg12arg0(propositions, arguments):
 def propbankbr_transform_arg02arg1(propositions, arguments):
 	'''
 		Converts default argument 0 into argument 1  format for easier softmax
-		
+
 	'''
 	prev_tag=''
 	prev_prop=-1
@@ -508,47 +503,6 @@ def trim(val):
 	if isinstance(val, str):
 		return val.strip()
 	return val	
-
-def arg_02arg_1(df, args_columns=['ARG']):
-	'''
-		args:
-			df .: dataframe in propbankbr format and a single arg
-		returns:
-			arg_y.: list of lists of size <N,M>, N is df.shape[0], M is len(args_column)
-						with the transformations over args_column
-	'''
-	def argument_transform(val):
-		if isinstance(val, str):
-			# val = re.sub(r'C\-|\(|\)|\*|\\n| +', '',val)			
-			val = re.sub(r'C\-|\*|\\n| +', '',val)			
-			val = re.sub(r' ', '',val)			
-			val = re.sub(r'^$', '*',val)
-		else: 
-			val=''
-		return val
-
-
-	args_mtrx= df[args_columns].applymap(argument_transform).values
-	I,J = args_mtrx.shape 
-	refresh=[True]*J  
-	update=[True]*J
-	val=['*']*J
-	for i in range(I):
-		for j in range(J):			
-			refresh[j]= ('(' in args_mtrx[i,j])
-			if refresh[j]:
-				update[j]=True
-				val[j]=re.sub(r'[\(|\)]', '', args_mtrx[i,j])  
-			
-			if update[j]:
-				update[j]= not(args_mtrx[i,j] == ')')
-				args_mtrx[i,j]=val[j]		
-
-
-	arg_y =[list(ary) for ary in args_mtrx]
-	return arg_y
-		
-
 
 
 if __name__== '__main__':		

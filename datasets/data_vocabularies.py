@@ -25,10 +25,8 @@ import numpy as np
 import copy
 import os.path
 
-# EMBEDDING_PATH='datasets/embeddings/'
-# TARGET_PATH='datasets/inputs/01/'
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/02/'
+TARGET_PATH='datasets/inputs/00/'
 
 
 def vocab_lazyload(column, input_dir=TARGET_PATH):
