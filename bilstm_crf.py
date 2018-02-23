@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from data_tfrecords import input_fn
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
-from utils import cross_entropy, error_rate, precision, recall, unary 
+from utils import cross_entropy, error_rate2D, precision, recall
 
 INPUT_PATH='datasets/inputs/00/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
@@ -133,6 +133,7 @@ if __name__== '__main__':
 	
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, minibatch)
+		clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
 
 	with tf.name_scope('xent'):
 		# probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
@@ -142,11 +143,11 @@ if __name__== '__main__':
 		# Compute the log-likelihood of the gold sequences and keep the transition
     # params for inference at test time.
 		log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
-			argmax_op, targets, minibatch)
+			clip_prediction, tf.argmax(T, 2, output_type=tf.int32), minibatch)
 
     # Compute the viterbi sequence and score.
 		viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
-			argmax_opå, transition_params, minibatch)
+			clip_prediction, transition_params, minibatch)
 
 
 		cost_op= tf.reduce_mean(-log_likelihood)
@@ -157,10 +158,10 @@ if __name__== '__main__':
 
 	#Evaluation
 	with tf.name_scope('evaluation'):
-		accuracy_op = 1.0-error_rate(viterbi_sequence, T, minibatch)
-		precision_op=precision(viterbi_sequence, T)
-		recall_op=recall(viterbi_sequence, T) 
-		f1_op= 2* precision_op * recall_op/(precision_op + recall_op)
+		accuracy_op = 1.0-error_rate2D(viterbi_sequence, tf.argmax(T, 2, output_type=tf.int32), minibatch)
+	# 	precision_op=precision(viterbi_sequence, T)
+	# 	recall_op=recall(viterbi_sequence, T) 
+	# 	f1_op= 2* precision_op * recall_op/(precision_op + recall_op)
 
 
 

@@ -65,6 +65,33 @@ def error_rate(probs, targets, sequence_length):
   mistakes /= tf.cast(sequence_length, tf.float32)
   return tf.reduce_mean(mistakes)
 
+def error_rate2D(outputs, targets, sequence_length):
+  '''
+    Computes error rate
+
+    args
+      outputs .: 2D tensor size [batch size x max length] 
+        representing the joint probability function
+
+      targets .: 2D tensor size [batch size x max lengths] 
+        representing the true targets
+
+      sequence_length  .: 1D tensor size [batch size] 
+
+    returns
+      error .: scalar tensor 0.0 ~ 1.0
+  '''
+  mistakes = tf.not_equal(outputs, targets)
+  mistakes = tf.cast(mistakes, tf.float32)
+  
+  mask = tf.sign(targets)
+  mask = tf.cast(mask, tf.float32)
+  mistakes *= mask
+  # Average over actual sequence lengths.
+  mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
+  mistakes /= tf.cast(sequence_length, tf.float32)
+  return tf.reduce_mean(mistakes)
+
 
 def length(sequence):
   '''
@@ -78,7 +105,7 @@ def length(sequence):
       sequence_length .: 1D tensor with the true length of each sequence 
   '''
   mask = identity(sequence)
-  length = tf.reduce_sum(used, 1)
+  length = tf.reduce_sum(mask, 1)
   length = tf.cast(length, tf.int32)
   return length
 
@@ -104,6 +131,7 @@ def precision(probs, targets):
   mask= tf.cast(targets, tf.float32)
   prec, _= tf.metrics.precision(tf.argmax(probs, 2), tf.argmax(targets,2), weights=tf.argmax(mask,2))
   return prec
+
 def recall(probs, targets):    
   mask= identity(targets)
   mask= tf.cast(targets, tf.float32)
