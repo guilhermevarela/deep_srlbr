@@ -3,6 +3,36 @@ Created on Feb 23, 2018
 	@author: Varela
 	
 	compute a 1-layered (depth 2) bi-lstm with non linguist task
+
+Iter= 6050 avg. acc 96.01% valid. acc 74.29% avg. cost 1.990351
+
+Number of Sentences    :         326
+Number of Propositions :         553
+Percentage of perfect props :   4.70
+
+              corr.  excess  missed    prec.    rec.      F1
+------------------------------------------------------------
+   Overall      398    2068     866    16.14   31.49   21.34
+----------
+        A0      124     285     130    30.32   48.82   37.41
+        A1      202    1312     288    13.34   41.22   20.16
+        A2       18     179     169     9.14    9.63    9.37
+        A3        1      14      15     6.67    6.25    6.45
+        A4        2      14       9    12.50   18.18   14.81
+    AM-ADV        4      19      19    17.39   17.39   17.39
+    AM-CAU        0      16      17     0.00    0.00    0.00
+    AM-DIR        0       0       1     0.00    0.00    0.00
+    AM-DIS        6      17      20    26.09   23.08   24.49
+    AM-EXT        0       3       5     0.00    0.00    0.00
+    AM-LOC        9      65      46    12.16   16.36   13.95
+    AM-MNR        0      24      28     0.00    0.00    0.00
+    AM-NEG       10       5      24    66.67   29.41   40.82
+    AM-PNC        0       9       9     0.00    0.00    0.00
+    AM-PRD        0      15      18     0.00    0.00    0.00
+    AM-TMP       22      91      68    19.47   24.44   21.67
+------------------------------------------------------------
+         V      457      32      96    93.46   82.64   87.72
+------------------------------------------------------------
 '''
 import sys
 sys.path.append('datasets/')
@@ -68,7 +98,7 @@ def forward(X, sequence_length):
 if __name__== '__main__':	
 	#BEST RUNNING PARAMS 	
 	# TRAINING
-	# Iter=25451 avg. acc 99.77% avg. cost 0.004194
+	# Iter= 6050 avg. acc 96.01% valid. acc 74.29% avg. cost 1.990351
 	# lr=5e-4	
 	# HIDDEN_SIZE=[128, 64]
 
@@ -76,12 +106,12 @@ if __name__== '__main__':
 	HIDDEN_SIZE=[128, 64]
 
 	EMBEDDING_SIZE=50 
-	KLASS_SIZE=36
+	# klass_size=36
 
 	FEATURE_SIZE=2*EMBEDDING_SIZE+2
 	
 	BATCH_SIZE=250
-	N_EPOCHS=300
+	N_EPOCHS=400
 	
 	DISPLAY_STEP=50
 
@@ -92,12 +122,13 @@ if __name__== '__main__':
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_1', INPUT_PATH)
+	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_0', INPUT_PATH)
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
+	klass_size=len(klass2idx)
 
 	#define variables / placeholders
-	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], KLASS_SIZE], name='Wo')) 
-	bo = tf.Variable(tf.random_normal([KLASS_SIZE], name='bo')) 
+	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], klass_size], name='Wo')) 
+	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
 
 	#Forward backward weights for bi-lstm act
 	Wfb = tf.Variable(tf.random_normal([2*HIDDEN_SIZE[-1], HIDDEN_SIZE[-1]], name='Wfb')) 
@@ -106,7 +137,7 @@ if __name__== '__main__':
 	#pipeline control place holders
 	# This makes training slower - but code is reusable
 	X     =   tf.placeholder(tf.float32, shape=(None,None, FEATURE_SIZE), name='X') 
-	T     =   tf.placeholder(tf.float32, shape=(None,None, KLASS_SIZE), name='T')
+	T     =   tf.placeholder(tf.float32, shape=(None,None, klass_size), name='T')
 	minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
@@ -124,12 +155,12 @@ if __name__== '__main__':
 	loss_avg= tf.placeholder(tf.float32, name='loss_avg')	
 	accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
 	accuracy_valid= tf.placeholder(tf.float32, name='accuracy_valid')	
-	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, KLASS_SIZE), name='logits')
+	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, klass_size), name='logits')
 	
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
-		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
+		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=klass_size)
+		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=klass_size)
 	
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, minibatch)

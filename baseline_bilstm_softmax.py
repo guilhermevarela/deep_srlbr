@@ -33,7 +33,7 @@ from data_tfrecords import input_fn
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate, precision, recall 
 
-INPUT_PATH='datasets/inputs/02/'
+INPUT_PATH='datasets/inputs/00/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 

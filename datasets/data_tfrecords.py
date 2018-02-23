@@ -27,11 +27,10 @@ EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
 SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 TARGET_FEATURE=['ARG_1']
 
-DEFAULT_KLASS_SIZE=36
 
 ############################# tfrecords reader ############################# 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size=DEFAULT_KLASS_SIZE):
+def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size):
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
 
 	context_features, sequence_features= _read_and_decode(filename_queue)	
@@ -92,7 +91,7 @@ def _read_and_decode(filename_queue):
 
 # SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 # TARGET_FEATURE=['ARG_1']
-def _process(context_features, sequence_features, embeddings, klass_size=DEFAULT_KLASS_SIZE):
+def _process(context_features, sequence_features, embeddings, klass_size):
 	context_inputs=[]
 	sequence_inputs=[]
 	# those are not to be used as inputs but appear in the description of the data

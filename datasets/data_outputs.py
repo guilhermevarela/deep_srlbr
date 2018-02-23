@@ -15,9 +15,8 @@ import os.path
 
 
 from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
-from data_propbankbr import propbankbr_transform_arg12arg0
+from data_propbankbr import propbankbr_transform_arg12arg0, propbankbr_transform_arg02arg1
 
-DEFAULT_KLASS_SIZE=36
 
 SETTINGS=[
 	'INPUT_PATH',
@@ -33,7 +32,7 @@ SETTINGS=[
 	'HIDDEN_SIZE',
 	'EMBEDDING_SIZE',
 	'FEATURE_SIZE',
-	'KLASS_SIZE',
+	'klass_size',
 	'BATCH_SIZE',
 	'N_EPOCHS',
 	'DISPLAY_STEP',
@@ -75,19 +74,19 @@ def outputs_predictions_persist(
 	pred_decoded =[pred for i, sublist in enumerate(predicates.tolist())
 		for pred in sublist[:batch_sizes[i]]] 
 	
-	prev_tag=''	
-	
-	this_tag=''
-	new_tags=[]
-
-	l= len(idx_decoded)	
-	i=0
-	new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
+	if len(vocab2idx)==36: #alternative T=ARG_1 Y=Y_1
+		new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
+		y_0= new_tags
+		y_1= tag_decoded
+	else:  #alternative T=ARG_0 Y=Y_0
+		new_tags=propbankbr_transform_arg02arg1(pred_decoded, tag_decoded)
+		y_0= tag_decoded
+		y_1= new_tags
 	
 
 	file_path= output_dir +  filename + '.csv'		
 	columns=['IDX','Y_0', 'Y_1']
-	data=[idx_decoded, new_tags, tag_decoded]
+	data=[idx_decoded, y_0, y_1]
 	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('IDX', inplace=False)	
 	df.to_csv(file_path)
 
@@ -123,12 +122,10 @@ def outputs_conll(df, target_column='Y_0'):
 	#Replace '-' making it easier to concatenate
 	sub_fn= lambda x: re.sub('-', '', x)
 	df['FUNC'] = df['FUNC'].apply(sub_fn)
-
-
+    
 	s0= min(df['S'])
 	sn= max(df['S'])
 	for i,si in enumerate(range(s0,sn+1)):
-	    import code; code.interact(local=dict(globals(), **locals()))        
 	    dfsi=df.loc[df['S'] == si,:]
 	    p0= min(dfsi['P'])
 	    pn= max(dfsi['P'])    
@@ -144,12 +141,17 @@ def outputs_conll(df, target_column='Y_0'):
 	    if i==0:        
 	        dfconll= dfp
 	    else:
-	        dfconll= dfconll.append(dfp).fillna('')
+	        dfconll= dfconll.append(dfp)
+	    blank_series= pd.Series([None]*dfconll.shape[1], index=dfconll.columns)    
+	    dfconll= dfconll.append(blank_series, ignore_index=True)
 	        
 	#Replace '-' making it easier to concatenate
-	sub_fn= lambda x: '-' if len(x) == 0 else x
+	sub_fn= lambda x: '-' if isinstance(x,str) and len(x) == 0 else x
 	dfconll['FUNC'] = dfconll['FUNC'].apply(sub_fn)
-
+    
+	#Replace Nans ( from skipping lines to empty)
+	dfconll= dfconll.fillna('')
+    
 	#Order columns to fit conll standard
 	num_columns=len(dfconll.columns)
 	usecolumns=['FUNC'] + ['ARG{:d}'.format(i) for i in range(num_columns-1)]
