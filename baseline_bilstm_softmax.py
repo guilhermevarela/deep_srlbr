@@ -37,7 +37,7 @@ INPUT_PATH='datasets/inputs/02/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
-MODEL_NAME='multi_bibasic_lstm'
+MODEL_NAME='bilstm_softmax'
 DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
 
