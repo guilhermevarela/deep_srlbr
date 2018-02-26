@@ -146,7 +146,7 @@ def propbankbr_parser():
 
 	return df
 
-def propbankbr_parser2():		
+def propbankbr_parser2(ctx_p_size=1):		
 	'''
 	Parsers according to 
 	End-to-end Learning of Semantic Role Labeling Using Recurrent Neural Networks
@@ -195,19 +195,15 @@ def propbankbr_parser2():
 	df= df[usecols] 	
 	df= df.applymap(trim)
 
-	#Iterate item by item adjusting PRED, CTX_P, M_R, ARG
-	#resulting df will have number of rows=|S_i|X|P_ij|
-	usecols= ZHOU_HEADER
-
 	
-	slen_dict =_get_dict_sentence_size(df)
-	pslen_dict=_get_dict_sentence_numpredicates(df)
-	pred_dict =_get_dict_sentence_predicates(df)
-	
+	d_sentence_size =_get_dict_sentence_size(df)
+	d_sentence_numpredicates=_get_dict_sentence_numpredicates(df)
+	d_sentence_predicates =_get_dict_sentence_predicates(df)
+	# d_1= _get_dict_proposition_predicateindex(df)
 
 	N=0
-	for s,l in slen_dict.items():
-		N+= l*pslen_dict[s] # COMPUTES sum(|S_i|*|P_ij|)
+	for s,sentence_sz in d_sentence_size.items():
+		N+= sentence_sz*d_sentence_numpredicates[s] # COMPUTES sum(|S_i|*|P_ij|)
 
 	Nind= 5 
 	Xind=np.zeros((N, Nind),dtype=np.int32)
@@ -218,36 +214,53 @@ def propbankbr_parser2():
 	P_S= np.zeros((N,1),dtype=np.int32)	
 	PRED=[]
 	FUNC=[]
+	
+	ctx_p_keys=[k for k in range(-ctx_p_size, ctx_p_size+1)
+						if k != 0 ] # exclude 0	which is already offered					
+	ctx_p_values=[[] for _ in ctx_p_keys]
+	d_ctx_p=dict(zip(ctx_p_keys,ctx_p_values))
+
+	#Iterate item by item adjusting PRED, CTX_P, M_R, ARG
+	#resulting df will have number of rows=|S_i|X|P_ij|
+	usecols= ZHOU_HEADER[:-2] + ['CTX_P{:+d}'.format(key) for key in ctx_p_keys] + ZHOU_HEADER[-2:]
+
 	Y=[] 
 	x_in =0
 	x_out=0
-	p=1
-	for s,l in slen_dict.items():
-		n_ps = pslen_dict[s]
-		sdf=df[df['S']==s]		
-		for p_s in range(n_ps):		
-			func=['-']*l
-			x_data=np.arange(x_in, x_in+l).reshape((l,1))
+	p=0
+	for sentence_id,sentence_sz in d_sentence_size.items():
+		sentence_numpredicates = d_sentence_numpredicates[sentence_id]
+		sentence_df=df[df['S']==sentence_id]		
+		for p_s in range(sentence_numpredicates):		
+			func=['-']*sentence_sz
+			x_data=np.arange(x_in, x_in+sentence_sz).reshape((sentence_sz,1))
 			y_data=np.array([0,1,4,5,7+p_s]).reshape((1,Nind))			
 			
-			Xind[x_out:x_out+l,:]= np.tile(x_data, (1,Nind))
-			Yind[x_out:x_out+l,:]= np.tile(y_data, (l,1))
+			Xind[x_out:x_out+sentence_sz,:]= np.tile(x_data, (1,Nind))
+			Yind[x_out:x_out+sentence_sz,:]= np.tile(y_data, (sentence_sz,1))
 			
-			PRED+=[pred_dict[s][p_s]]*l			
+			PRED+=[d_sentence_predicates[sentence_id][p_s]]*sentence_sz			
 
 			#FUNC will be PRED if ARG_0 == (V*)			
-			ifunc=np.argmax((sdf['PRED'] == pred_dict[s][p_s]).values)			
-			func[ifunc]=pred_dict[s][p_s]			
+			ifunc=np.argmax((sentence_df['PRED'] == d_sentence_predicates[sentence_id][p_s]).values)			
+			func[ifunc]=d_sentence_predicates[sentence_id][p_s]			
 			FUNC+=func 
-			
 
-			ind=(sdf['P_S']>=p_s+1).as_matrix()
-			M_R[x_out:x_out+l,:]= (ind.reshape(l,1)).astype(np.int32)
-			P[x_out:x_out+l,:]=p+1
-			P_S[x_out:x_out+l,:]=p_s
-			x_out+=l 
+			#D_CTX_P
+			for ctx_p in d_ctx_p:
+				this_lemma=['unk']
+				if ifunc + ctx_p >= 0  and ifunc + ctx_p < sentence_sz: 
+					this_lemma= [sentence_df.loc[:, ('LEMMA')].values[ifunc + ctx_p]]			
+				d_ctx_p[ctx_p]+= this_lemma*sentence_sz
+			
+			
+			ind=(sentence_df['P_S']>=p_s+1).as_matrix()
+			M_R[x_out:x_out+sentence_sz,:]= (ind.reshape(sentence_sz,1)).astype(np.int32)
+			P[x_out:x_out+sentence_sz,:]=p+1
+			P_S[x_out:x_out+sentence_sz,:]=p_s
+			x_out+=sentence_sz 
 			p+=1
-		x_in+=l 
+		x_in+=sentence_sz
 
 
 	
@@ -262,10 +275,13 @@ def propbankbr_parser2():
 	zhou_df['P']=P
 	zhou_df['P_S']=P_S
 	
+	for key, values in d_ctx_p.items():		
+		zhou_df['CTX_P{:+d}'.format(key)]=values		
 	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
 	zhou_df['ARG_1']= propbankbr_transform_arg02arg1(P, zhou_df['ARG_0'].tolist())
-
 	zhou_df.index.name= 'IDX'
+
+	# d_ctx_p= propbankbr_transform_ctx_p(zhou_df, size=1)
 	return zhou_df[usecols]
 
 def propbankbr_argument_stats(df):
@@ -348,7 +364,7 @@ def _dep_read():
 	sentences=get_signature(mappings)
 	sentence_count=[]
 	s_count=1 									 # counter over the number of sentences
-	p_count=1                    # counter over the number of predicates
+	p_count=0                    # counter over the number of predicates
 	ps_count=0									 # predicate per sentence
 	proposition_count=[]	
 	proposition_per_sentence_count=[]	
@@ -474,33 +490,7 @@ def propbankbr_transform_arg02arg1(propositions, arguments):
 		prev_tag= tag 	
 		prev_prop= prop		
 		new_tags.append(new_tag)
-	return new_tags
-
-def propbankbr_transform_ctx_p(df, size=1):
-	'''
-		Computes context predicate (ctx_p) window
-
-	args:
-		propositions_indices .: list of ints
-		lemma  							 .: normalized version of form
-		predicate_indices    .:
-		size 								 .: size of the window 
-
-	returns:
-		dict .: keys integer containing index of columns around predicate
-						values 
-
-	'''
-	d_0= _get_dict_sentence_size(df) # sentence size <=> proposition size
-	d_1= _get_dict_proposition_predicateindex(df)
-	
-	keys=range(-size, size+1)
-	for key in keys:
-		this_ctx_p=[]
-		t=0
-		for propid, lemma, predid in 
-			zip(propositions_indices, lemma, predicate_indices):
-
+	return new_tags				
 
 
 
@@ -513,6 +503,7 @@ def _get_dict_sentence_size(df):
 	return d
 
 def _get_dict_sentence_numpredicates(df):
+
 	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)	
 	d= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
 	d=d['P_S']
@@ -529,14 +520,6 @@ def _get_dict_sentence_predicates(df):
 			d[seq]=[pred]
 	return d
 
-def _get_dict_proposition_predicateindex(df):	
-	proposition_indices= np.unique(df['P'].values.as_matrix())
-	predicate_indicator= df['FUNC'] != '-'
-	d= {}
-	for propid in predicate_indices:
-		d[propid] = np.where(predicate_indicator & df['P' == propid]).tolist()
-	return d	
-
 def trim(val):
 	if isinstance(val, str):
 		return val.strip()
@@ -545,7 +528,8 @@ def trim(val):
 
 if __name__== '__main__':		
 	print('Parsing propbank')
-	df =propbankbr_parser2()
+	df =propbankbr_parser2(ctx_p_size=3)
+	
 	print('Done. with shape=', df.shape)
 	print('Spliting dataset')
 	df_train, df_valid, df_test =propbankbr_split(df)
