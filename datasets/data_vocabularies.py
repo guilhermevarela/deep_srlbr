@@ -60,7 +60,7 @@ def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_di
 	updated_word2idx= copy.deepcopy(word2idx)
 
 	# Standardized embeddings
-	if column in ['FORM', 'LEMMA', 'PRED', 'FUNC']: 
+	if column in ['FORM', 'LEMMA', 'PRED', 'FUNC', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']: 
 		dataset_path= input_dir + embedding_name + '.npy'
 		lower_case=True
 		if os.path.isfile(dataset_path):		

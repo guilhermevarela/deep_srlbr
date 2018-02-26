@@ -199,7 +199,6 @@ def propbankbr_parser2(ctx_p_size=1):
 	d_sentence_size =_get_dict_sentence_size(df)
 	d_sentence_numpredicates=_get_dict_sentence_numpredicates(df)
 	d_sentence_predicates =_get_dict_sentence_predicates(df)
-	# d_1= _get_dict_proposition_predicateindex(df)
 
 	N=0
 	for s,sentence_sz in d_sentence_size.items():
@@ -248,7 +247,7 @@ def propbankbr_parser2(ctx_p_size=1):
 
 			#D_CTX_P
 			for ctx_p in d_ctx_p:
-				this_lemma=['unk']
+				this_lemma=['-']
 				if ifunc + ctx_p >= 0  and ifunc + ctx_p < sentence_sz: 
 					this_lemma= [sentence_df.loc[:, ('LEMMA')].values[ifunc + ctx_p]]			
 				d_ctx_p[ctx_p]+= this_lemma*sentence_sz

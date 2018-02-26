@@ -23,8 +23,8 @@ EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/00/'
 
 #Must be both 1) inputs to the model 2) have a string representation
-EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
-SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED', 'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']
+SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3', 'ARG_0']
 TARGET_FEATURE=['ARG_1']
 
 
@@ -82,6 +82,12 @@ def _read_and_decode(filename_queue):
 			'M_R':tf.VarLenFeature(tf.int64),			
 			'FUNC':tf.VarLenFeature(tf.int64),			
 			'ARG_0':tf.VarLenFeature(tf.int64),			
+			'CTX_P-3':tf.VarLenFeature(tf.int64),			
+			'CTX_P-2':tf.VarLenFeature(tf.int64),			
+			'CTX_P-1':tf.VarLenFeature(tf.int64),			
+			'CTX_P+1':tf.VarLenFeature(tf.int64),
+			'CTX_P+2':tf.VarLenFeature(tf.int64),
+			'CTX_P+3':tf.VarLenFeature(tf.int64),
 			'targets':tf.VarLenFeature(tf.int64)		
 		}
 	)
@@ -104,14 +110,16 @@ def _process(context_features, sequence_features, embeddings, klass_size):
 		context_inputs.append( val32	 )
 
 	#Read all inputs as tf.int64	
-	sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 'targets']
+	sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 
+		'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3','targets']
+
 	for key in sequence_keys:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
 
 		if key in ['IDX', 'P', 'FUNC','ARG_0']: # descriptors
 			sequence_descriptors.append(dense_tensor)
 
-		if key in ['PRED', 'LEMMA']: # embedded inputs
+		if key in ['PRED', 'LEMMA', 'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']: # embedded inputs
 			dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 			sequence_inputs.append(dense_tensor1)
 
@@ -230,6 +238,8 @@ def get_idx(token, key, dict_vocabs):
 			idx .: int indexed token
 	'''
 	if isembeddable(key):
+		if token == '.':
+			import code; code.interact(local=dict(globals(), **locals()))		
 		this_vocab= dict_vocabs['word2idx']
 		val = this_vocab[token.lower()]
 	else:
@@ -243,6 +253,7 @@ if __name__== '__main__':
 	for dstype in ['train', 'valid', 'test']:
 		tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
+		
 		df=propbankbr_lazyload('zhou_{}'.format(dstype))	
 		p0 = min(df['P'])
 		pn = max(df['P'])	# number of propositions		
