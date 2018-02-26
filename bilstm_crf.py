@@ -56,6 +56,8 @@ LAYER_1_NAME='glove-50'
 LAYER_2_NAME='bi-lstm'
 LAYER_3_NAME='crf'
 
+input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']
+
 def forward(X, sequence_length):		
 	'''
 		Computes forward propagation thru basic lstm cell
@@ -103,7 +105,7 @@ if __name__== '__main__':
 	# HIDDEN_SIZE=[128, 64]
 
 	lr=5e-4	
-	HIDDEN_SIZE=[128, 64]
+	HIDDEN_SIZE=[512, 64]
 
 	EMBEDDING_SIZE=50 
 	# klass_size=36
@@ -122,7 +124,7 @@ if __name__== '__main__':
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_0', INPUT_PATH)
+	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_1', INPUT_PATH)
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
 	klass_size=len(klass2idx)
 
@@ -233,82 +235,82 @@ if __name__== '__main__':
 			coord.request_stop()			
 			coord.join(threads)
 			
-	# with tf.Session() as session: 			
-	# 	session.run(init_op) 
-	# 	coord= tf.train.Coordinator()
-	# 	threads= tf.train.start_queue_runners(coord=coord)
-	# 	# Training control variables
-	# 	step=0		
-	# 	total_loss=0.0
-	# 	total_acc=0.0		
+	with tf.Session() as session: 			
+		session.run(init_op) 
+		coord= tf.train.Coordinator()
+		threads= tf.train.start_queue_runners(coord=coord)
+		# Training control variables
+		step=0		
+		total_loss=0.0
+		total_acc=0.0		
 		
 		
-	# 	#Persists always saving on improvement
-	# 	if load_dir:
-	# 		raise NotImplementedError('load_dir')
-	# 		# saver = tf.train.import_meta_graph(load_dir)
-	# 		# saver.restore(session,tf.train.latest_checkpoint('./'))
-	# 		# graph = tf.get_default_graph()
+		#Persists always saving on improvement
+		if load_dir:
+			raise NotImplementedError('load_dir')
+			# saver = tf.train.import_meta_graph(load_dir)
+			# saver.restore(session,tf.train.latest_checkpoint('./'))
+			# graph = tf.get_default_graph()
 
-	# 		# Exibits all variables
-	# 		# session.graph.get_collection(tf.GraphKeys.VARIABLES) 
-	# 	else:			
-	# 		saver = tf.train.Saver(max_to_keep=1)
+			# Exibits all variables
+			# session.graph.get_collection(tf.GraphKeys.VARIABLES) 
+		else:			
+			saver = tf.train.Saver(max_to_keep=1)
 		
 
-	# 	first_save=True
-	# 	best_validation_rate=-1
-	# 	writer.add_graph(session.graph)
-	# 	try:
-	# 		while not coord.should_stop():				
-	# 			X_batch, Y_batch, mb = session.run(
-	# 				[inputs, targets, sequence_length]
-	# 			)
+		first_save=True
+		best_validation_rate=-1
+		writer.add_graph(session.graph)
+		try:
+			while not coord.should_stop():				
+				X_batch, Y_batch, mb = session.run(
+					[inputs, targets, sequence_length]
+				)
 
-	# 			_, Yhat, loss, acc = session.run(
-	# 				[optimizer_op, predict_op, cost_op, accuracy_op],
-	# 					feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
-	# 			)
+				_, Yhat, loss, acc = session.run(
+					[optimizer_op, predict_op, cost_op, accuracy_op],
+						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
+				)
 				
-	# 			total_loss+=loss 
-	# 			total_acc+= acc
+				total_loss+=loss 
+				total_acc+= acc
 				
-	# 			if (step+1) % DISPLAY_STEP ==0:					
-	# 				#This will be caugth by input_fn				
-	# 				acc, Yhat_valid  = session.run(
-	# 					[accuracy_op, argmax_op],
-	# 					feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}
-	# 				)
-	# 				#Broadcasts to user
-	# 				print('Iter={:5d}'.format(step+1),
-	# 					'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
-	# 						'valid. acc {:.2f}%'.format(100*acc),						
-	# 				 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
-	# 				total_loss=0.0 
-	# 				total_acc=0.0					
-	# 				#Logs the summary
-	# 				s= session.run(merged_summary,
-	# 					feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
-	# 				)
-	# 				writer.add_summary(s, step)
-	# 				if best_validation_rate < acc:
-	# 					if first_save:
-	# 						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
-	# 						first_save=False 
-	# 					else:
-	# 						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
-	# 					best_validation_rate = acc	
+				if (step+1) % DISPLAY_STEP ==0:					
+					#This will be caugth by input_fn				
+					acc, Yhat_valid  = session.run(
+						[accuracy_op, argmax_op],
+						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}
+					)
+					#Broadcasts to user
+					print('Iter={:5d}'.format(step+1),
+						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
+							'valid. acc {:.2f}%'.format(100*acc),						
+					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+					total_loss=0.0 
+					total_acc=0.0					
+					#Logs the summary
+					s= session.run(merged_summary,
+						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
+					)
+					writer.add_summary(s, step)
+					if best_validation_rate < acc:
+						if first_save:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+							first_save=False 
+						else:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+						best_validation_rate = acc	
 
-	# 					outputs_predictions_persist(
-	# 						outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+						outputs_predictions_persist(
+							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
 
-	# 			step+=1
+				step+=1
 				
-	# 	except tf.errors.OutOfRangeError:
-	# 		print('Done training -- epoch limit reached')
+		except tf.errors.OutOfRangeError:
+			print('Done training -- epoch limit reached')
 
-	# 	finally:
-	# 		#When done, ask threads to stop
-	# 		coord.request_stop()
-	# 		coord.join(threads)
+		finally:
+			#When done, ask threads to stop
+			coord.request_stop()
+			coord.join(threads)
 
