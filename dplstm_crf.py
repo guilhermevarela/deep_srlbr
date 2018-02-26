@@ -103,7 +103,7 @@ if __name__== '__main__':
 	# HIDDEN_SIZE=[128, 64]
 
 	lr=5e-4	
-	HIDDEN_SIZE=[128, 64]
+	HIDDEN_SIZE=[128]
 
 	EMBEDDING_SIZE=50 
 	# klass_size=36

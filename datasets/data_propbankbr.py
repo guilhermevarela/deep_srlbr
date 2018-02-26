@@ -476,20 +476,32 @@ def propbankbr_transform_arg02arg1(propositions, arguments):
 		new_tags.append(new_tag)
 	return new_tags
 
-def propbankbr_transform_ctx_p(propositions_indices, lemma, predicate_indices, size=1):
+def propbankbr_transform_ctx_p(df, size=1):
 	'''
 		Computes context predicate (ctx_p) window
 
 	args:
-		propositions_indices .: 
-		lemma  .: normalized version of form
-		predicate_indices  .:
-		size .: size of the window 
+		propositions_indices .: list of ints
+		lemma  							 .: normalized version of form
+		predicate_indices    .:
+		size 								 .: size of the window 
+
 	returns:
 		dict .: keys integer containing index of columns around predicate
 						values 
 
 	'''
+	d_0= _get_dict_sentence_size(df) # sentence size <=> proposition size
+	d_1= _get_dict_proposition_predicateindex(df)
+	
+	keys=range(-size, size+1)
+	for key in keys:
+		this_ctx_p=[]
+		t=0
+		for propid, lemma, predid in 
+			zip(propositions_indices, lemma, predicate_indices):
+
+
 
 
 def get_signature(mappings): 
@@ -517,15 +529,12 @@ def _get_dict_sentence_predicates(df):
 			d[seq]=[pred]
 	return d
 
-def _get_dict_sentence_predicates(df):
-	xdf= df[['S', 'PRED']]
-	xdf= xdf[xdf['PRED'] != '-']	
+def _get_dict_proposition_predicateindex(df):	
+	proposition_indices= np.unique(df['P'].values.as_matrix())
+	predicate_indicator= df['FUNC'] != '-'
 	d= {}
-	for seq, pred in zip(xdf['S'], xdf['PRED']):
-		if seq in d:
-			d[seq]+=[pred]
-		else:
-			d[seq]=[pred]
+	for propid in predicate_indices:
+		d[propid] = np.where(predicate_indicator & df['P' == propid]).tolist()
 	return d	
 
 def trim(val):
