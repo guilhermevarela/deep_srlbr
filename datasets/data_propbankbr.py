@@ -131,8 +131,8 @@ def propbankbr_parser():
 	'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 	'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
 	'''
-	df_const= propbankbr_const_read()
-	df_dep= propbankbr_dep_read() 
+	df_const= _const_read()
+	df_dep= _dep_read() 
 	# preprocess
 	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
 	usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
@@ -160,11 +160,12 @@ def propbankbr_parser2():
 	'LEMMA' : Lema gold-standard da FORM 
 	'PRED'  : Predicatos semânticos na proposição repetido por todas as etiquetas
 	'FUNC'  : Predicatos semânticos na proposição conforme notação propbank
-	'CTX_P'  : Contexto do predicato 
+	'CTX_P'  : Contexto do predicato ( tamanho de palavras ao redor do predicado)
 						Ex:   
 						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
 						PRED: [		 '-',   'ser',      '-',   '-', '-']
-						CTXP: ['foram feitas','foram feitas','foram feitas','foram feitas','foram feitas']
+						CTXP (TAM: 1): ['Obras foram feitas','Obras foram feitas','Obras foram feitas','Obras foram feitas','Obras foram feitas']
+						CTXP (TAM: 2): ['. Obras foram feitas por','. Obras foram feitas por','. Obras foram feitas por','. Obras foram feitas Por','. Obras foram feitas por']
 
 	'M_R'  : Marcacao do predicato
 						0 se o predicato não modifica
@@ -179,10 +180,11 @@ def propbankbr_parser2():
 
 	updates: 2018-02-01
 	updates: 2018-02-20: added FUNC, relabeled  ARG_Y to ARG_1
+	updates: 2018-02-24: added CTX_P
 	'''
 
-	df_const= propbankbr_const_read()
-	df_dep= propbankbr_dep_read() 
+	df_const= _const_read()
+	df_dep= _dep_read() 
 	# preprocess
 	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
 	usecols= ['ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
@@ -198,9 +200,9 @@ def propbankbr_parser2():
 	usecols= ZHOU_HEADER
 
 	
-	slen_dict =get_sentence_size(df)
-	pslen_dict=get_number_predicates_in_sentence(df)
-	pred_dict =get_nominal_predicates_in_sentence(df)
+	slen_dict =_get_dict_sentence_size(df)
+	pslen_dict=_get_dict_sentence_numpredicates(df)
+	pred_dict =_get_dict_sentence_predicates(df)
 	
 
 	N=0
@@ -288,7 +290,7 @@ def propbankbr_argument_stats(df):
 		stats[val]+=1
 	return stats
 
-def propbankbr_const_read():
+def _const_read():
 	'''
 		Reads the file 'PropBankBr_v1.1_Const.conll.txt' returning a pandas DataFrame
 		the format is as follows
@@ -319,7 +321,7 @@ def propbankbr_const_read():
 
 	return df 
 
-def propbankbr_dep_read():
+def _dep_read():
 	'''
 		Reads the file 'PropBankBr_v1.1_Dep.conll.txt' returning a pandas DataFrame
 		the format is as follows, 
@@ -474,21 +476,37 @@ def propbankbr_transform_arg02arg1(propositions, arguments):
 		new_tags.append(new_tag)
 	return new_tags
 
+def propbankbr_transform_ctx_p(propositions_indices, lemma, predicate_indices, size=1):
+	'''
+		Computes context predicate (ctx_p) window
+
+	args:
+		propositions_indices .: 
+		lemma  .: normalized version of form
+		predicate_indices  .:
+		size .: size of the window 
+	returns:
+		dict .: keys integer containing index of columns around predicate
+						values 
+
+	'''
+
+
 def get_signature(mappings): 
 	return {k:[] for k in mappings}
 
-def get_sentence_size(df):
+def _get_dict_sentence_size(df):
 	xdf= df[['S','P']].pivot_table(index=['S'], aggfunc=len)
-	x=dict(zip(xdf.index, xdf['P']))
-	return x
+	d=dict(zip(xdf.index, xdf['P']))
+	return d
 
-def get_number_predicates_in_sentence(df):
+def _get_dict_sentence_numpredicates(df):
 	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)	
-	x_dict= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
-	x_dict=x_dict['P_S']
-	return x_dict
+	d= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
+	d=d['P_S']
+	return d
 
-def get_nominal_predicates_in_sentence(df):
+def _get_dict_sentence_predicates(df):
 	xdf= df[['S', 'PRED']]
 	xdf= xdf[xdf['PRED'] != '-']	
 	d= {}
@@ -498,6 +516,17 @@ def get_nominal_predicates_in_sentence(df):
 		else:
 			d[seq]=[pred]
 	return d
+
+def _get_dict_sentence_predicates(df):
+	xdf= df[['S', 'PRED']]
+	xdf= xdf[xdf['PRED'] != '-']	
+	d= {}
+	for seq, pred in zip(xdf['S'], xdf['PRED']):
+		if seq in d:
+			d[seq]+=[pred]
+		else:
+			d[seq]=[pred]
+	return d	
 
 def trim(val):
 	if isinstance(val, str):

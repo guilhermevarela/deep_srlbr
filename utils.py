@@ -29,7 +29,7 @@ def cross_entropy(probs, targets):
   # Compute cross entropy for each sentence
   xentropy = tf.cast(targets, tf.float32) * tf.log(probs)
   xentropy = -tf.reduce_sum(xentropy, 2)
-  # mask = tf.sign(tf.reduce_max(tf.abs(targets), 2)) 
+  
   mask = identity(targets)
   mask = tf.cast(mask, tf.float32)
   xentropy *= mask
