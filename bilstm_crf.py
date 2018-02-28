@@ -291,13 +291,12 @@ if __name__== '__main__':
 						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
 					)
 					writer.add_summary(s, step)
-					if first_save:
-						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
-						first_save=False 
-					else:
-						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
-
 					if best_validation_rate < acc:
+						if first_save:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+							first_save=False 
+						else:
+							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
 						outputs_predictions_persist(
