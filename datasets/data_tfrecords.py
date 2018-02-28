@@ -26,10 +26,11 @@ TARGET_PATH='datasets/inputs/00/'
 #Must be both 1) inputs to the model 2) have a string representation
 DEFAULT_SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC']
 CTX_P_SEQUENCE_FEATURES=['CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']
-EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']+ CTX_P_SEQUENCE_FEATURES
-SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0'] + CTX_P_SEQUENCE_FEATURES
-
 TARGET_FEATURE=['ARG_1']
+EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']+ CTX_P_SEQUENCE_FEATURES
+
+
+SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0'] + CTX_P_SEQUENCE_FEATURES + ['targets']
 
 TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
 	for key in SEQUENCE_FEATURES
@@ -60,7 +61,8 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size,
 			input_batch 						.:
 			target_batch 						.:
 			length_batch						.: 
-			descriptor_batch				.: [] features that serve as descriptors but are not used for training
+			descriptor_batch				.: [M] features that serve as descriptors but are not used for training
+					M= len(input_sequence_features)
 	'''
 	
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
@@ -95,7 +97,7 @@ def input_sz(input_sequence_features, embedding_sz):
 	embeddable_set= set(EMBEDDABLE_FEATURES)
 	feature_sz= len(feature_set-embeddable_set)
 	feature_sz+=len(embeddable_set.intersection(feature_set))*embedding_sz
-	return sz
+	return feature_sz
 		
 
 def _read_and_decode(filename_queue):
@@ -161,18 +163,15 @@ def _process(context_features, sequence_features, embeddings,
 		val32= tf.cast(context_features[key], tf.int32)
 		context_inputs.append( val32	 )
 
-	#Read all inputs as tf.int64	
-	# sequence_keys=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0', 
-	# 	'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3','targets']
-
-	for key in TF_SEQUENCE_FEATURES:
+	#Read all inputs as tf.int64		
+	for key in SEQUENCE_FEATURES:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
-
+		# import code; code.interact(local=dict(globals(), **locals()))		
 		if key in input_sequence_features:
 			if key in EMBEDDABLE_FEATURES: # ['PRED', 'LEMMA', 'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']
 				dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 				sequence_inputs.append(dense_tensor1)
-			else key in ['ID', 'M_R']: # numeric inputs
+			else: #key in ['ID', 'M_R']: # numeric inputs
 				# Cast to tf.float32 in order to concatenate in a single array with embeddings
 				dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
 				sequence_inputs.append(dense_tensor1)

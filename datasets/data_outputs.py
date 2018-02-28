@@ -33,6 +33,7 @@ SETTINGS=[
 	'EMBEDDING_SIZE',
 	'FEATURE_SIZE',
 	'klass_size',
+	'input_sequence_features',
 	'BATCH_SIZE',
 	'N_EPOCHS',
 	'DISPLAY_STEP',
@@ -58,12 +59,12 @@ def outputs_predictions_persist(
 	'''
 
 	if not(isinstance(predictions,list)):
-		l=predictions.tolist()
+		predictions=predictions.tolist()
 
 	
 	idx2vocab= {value:key for key, value in vocab2idx.items()}		
 	#restore only the minibatch sizes and decode it
-	tag_decoded =[idx2vocab[item] for i, sublist in enumerate(l) 
+	tag_decoded =[idx2vocab[item] for i, sublist in enumerate(predictions) 
 		for j, item in enumerate(sublist) if j < batch_sizes[i]  ]
 
 
@@ -185,7 +186,7 @@ def mapper_get(column_in, column_out, input_dir):
 
 	return klass2idx, word2idx, embeddings 
 
-def dir_getoutputs(lr, hidden_sizes, model_name='multi_bibasic_lstm'):	
+def dir_getoutputs(lr, hidden_sizes, ctx_p=0 , model_name='multi_bibasic_lstm'):	
 	'''
 		Makes a directory name for models from hyperparams
 		args:
@@ -201,11 +202,11 @@ def dir_getoutputs(lr, hidden_sizes, model_name='multi_bibasic_lstm'):
 
 	'''
 	prefix= 'outputs/' + model_name
-	hparam_string= _make_hparam_string(lr, hidden_sizes)
+	hparam_string= _make_hparam_string(lr, hidden_sizes, ctx_p)
 	return _make_dir(prefix, hparam_string)
 
 
-def _make_hparam_string(lr, hidden_sizes):
+def _make_hparam_string(lr, hidden_sizes, ctx_p=0):
 	'''
 		Makes a directory name from hyper params
 
@@ -220,7 +221,7 @@ def _make_hparam_string(lr, hidden_sizes):
 	'''
 	
 	hs=re.sub(r', ','x', re.sub(r'\[|\]','',str(hidden_sizes)))
-	hparam_string= 'lr{:.2e}_hs{:}'.format(float(lr),hs)	
+	hparam_string= 'lr{:.2e}_hs{:}_ctx-p{:d}'.format(float(lr),hs,int(ctx_p))	
 	return hparam_string
 
 def _make_dir(prefix, hparam_string):

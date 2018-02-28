@@ -17,10 +17,10 @@ def cross_entropy(probs, targets):
     Computes cross entropy considering 
 
     args
-      probs .: 3D tensor size [batch size x max length x klasses] 
+      probs .: 3D tensor size [batch size x MAX_TIME x klasses] 
         representing the joint probability function
 
-      targets .: 3D tensor size [batch size x max length x klasses] 
+      targets .: 3D tensor size [batch size x MAX_TIME x klasses] 
         representing the true targets
 
     returns
@@ -43,13 +43,13 @@ def error_rate(probs, targets, sequence_length):
     Computes error rate
 
     args
-      probs .: 3D tensor size [batch size x max length x klasses] 
+      probs .: 3D tensor size [batch size x MAX_TIME x klasses] 
         representing the joint probability function
 
-      targets .: 3D tensor size [batch size x max length x klasses] 
+      targets .: 3D tensor size [batch size x MAX_TIME x klasses] 
         representing the true targets
 
-      sequence_length  .: 3D tensor size [batch size x max length x klasses] 
+      sequence_length  .: 3D tensor size [batch size x MAX_TIME x klasses] 
 
     returns
       error .: scalar tensor 0.0 ~ 1.0
@@ -65,15 +65,15 @@ def error_rate(probs, targets, sequence_length):
   mistakes /= tf.cast(sequence_length, tf.float32)
   return tf.reduce_mean(mistakes)
 
-def error_rate2D(outputs, targets, sequence_length):
+def error_rate2(outputs2D, targets, sequence_length):
   '''
     Computes error rate
 
     args
-      outputs .: 2D tensor size [batch size x max length] 
+      outputs .: 2D tensor size [batch size x MAX_TIME] 
         representing the joint probability function
 
-      targets .: 2D tensor size [batch size x max lengths] 
+      targets .: 3D tensor size [batch size x MAX_TIME x KLASS_SZ] 
         representing the true targets
 
       sequence_length  .: 1D tensor size [batch size] 
@@ -81,12 +81,15 @@ def error_rate2D(outputs, targets, sequence_length):
     returns
       error .: scalar tensor 0.0 ~ 1.0
   '''
-  mistakes = tf.not_equal(outputs, targets)
+  # mask = identity(targets)
+  # mask = tf.cast(mask, tf.float32)
+  # maxmax= tf.reduce_max(targets, 2) * mask
+
+  mistakes = tf.not_equal(outputs2D, targets)
   mistakes = tf.cast(mistakes, tf.float32)
   
-  mask = tf.sign(targets)
-  mask = tf.cast(mask, tf.float32)
-  mistakes *= mask
+  
+  # mistakes *= mask
   # Average over actual sequence lengths.
   mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
   mistakes /= tf.cast(sequence_length, tf.float32)
@@ -98,7 +101,7 @@ def length(sequence):
     Computes true sequence length for zero pedded tensor
 
     args
-      sequence .: 3D tensor size [batch size x max length x N] 
+      sequence .: 3D tensor size [batch size x MAX_TIME x N] 
         must be zero padded 
 
     returns
@@ -116,11 +119,11 @@ def identity(sequence):
     Returns a mask with ones on valid tensor entries
 
     args
-      sequence .: 3D tensor size [batch size x max length x N] 
+      sequence .: 3D tensor size [batch size x MAX_TIME x N] 
         must be zero padded 
 
     returns
-      mask .: 3D tensor size [batch size x max length x N] 
+      mask .: 2D tensor size [batch size x MAX_TIME] 
         with zeros and ones 
   '''
   return tf.sign(tf.reduce_max(tf.abs(sequence), 2))

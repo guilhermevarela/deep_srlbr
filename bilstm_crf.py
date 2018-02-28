@@ -40,9 +40,9 @@ sys.path.append('datasets/')
 import numpy as np 
 import tensorflow as tf 
 
-from data_tfrecords import input_fn
+from data_tfrecords import input_fn, input_sz
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
-from utils import cross_entropy, error_rate2D, precision, recall
+from utils import cross_entropy, error_rate2, precision, recall
 
 INPUT_PATH='datasets/inputs/00/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
@@ -55,8 +55,6 @@ DATASET_TRAIN_SIZE= 5099
 LAYER_1_NAME='glove-50'
 LAYER_2_NAME='bi-lstm'
 LAYER_3_NAME='crf'
-
-input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']
 
 def forward(X, sequence_length):		
 	'''
@@ -108,10 +106,11 @@ if __name__== '__main__':
 	HIDDEN_SIZE=[512, 64]
 
 	EMBEDDING_SIZE=50 
-	# klass_size=36
 
-	FEATURE_SIZE=2*EMBEDDING_SIZE+2+6*EMBEDDING_SIZE
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']
+	FEATURE_SIZE=input_sz(input_sequence_features, EMBEDDING_SIZE)	
 	
+
 	BATCH_SIZE=250
 	N_EPOCHS=400
 	
@@ -119,14 +118,16 @@ if __name__== '__main__':
 
 	
 	load_dir=''
-	outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, model_name=MODEL_NAME)	
+	outputs_dir= dir_getoutputs(lr, HIDDEN_SIZE, ctx_p=(len(input_sequence_features)-4)/2, model_name=MODEL_NAME)	
 
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
 	klass2idx, word2idx, embeddings= mapper_get('LEMMA', 'ARG_1', INPUT_PATH)
+
 	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
 	klass_size=len(klass2idx)
+	print('klass_size:', klass_size)
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([HIDDEN_SIZE[-1], klass_size], name='Wo')) 
@@ -157,26 +158,25 @@ if __name__== '__main__':
 	loss_avg= tf.placeholder(tf.float32, name='loss_avg')	
 	accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
 	accuracy_valid= tf.placeholder(tf.float32, name='accuracy_valid')	
-	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, klass_size), name='logits')
+	# logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None, klass_size), name='logits')
+	logits=   tf.placeholder(tf.float32, shape=(BATCH_SIZE,None), name='logits')
 	
-
+	print('feature_size: ',FEATURE_SIZE)
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=klass_size)
-		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=klass_size)
+		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=klass_size, input_sequence_features=input_sequence_features)
+		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=klass_size, input_sequence_features=input_sequence_features)
+
 	
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, minibatch)
 		clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
+		T_2d= tf.cast(tf.argmax( T,2 ), tf.int32)
 
 	with tf.name_scope('xent'):
-		# probs=tf.nn.softmax(tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22))
-		argmax_op=  tf.argmax(predict_op, 2)
-		# cost_op=cross_entropy(probs, T)
-		
 		# Compute the log-likelihood of the gold sequences and keep the transition
     # params for inference at test time.
 		log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
-			clip_prediction, tf.argmax(T, 2, output_type=tf.int32), minibatch)
+			clip_prediction,T_2d, minibatch)
 
     # Compute the viterbi sequence and score.
 		viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
@@ -191,10 +191,7 @@ if __name__== '__main__':
 
 	#Evaluation
 	with tf.name_scope('evaluation'):
-		accuracy_op = 1.0-error_rate2D(viterbi_sequence, tf.argmax(T, 2, output_type=tf.int32), minibatch)
-	# 	precision_op=precision(viterbi_sequence, T)
-	# 	recall_op=recall(viterbi_sequence, T) 
-	# 	f1_op= 2* precision_op * recall_op/(precision_op + recall_op)
+		accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
 
 
 
@@ -268,19 +265,19 @@ if __name__== '__main__':
 				)
 
 				_, Yhat, loss, acc = session.run(
-					[optimizer_op, predict_op, cost_op, accuracy_op],
+					[optimizer_op, viterbi_sequence, cost_op, accuracy_op],
 						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
 				)
 				
 				total_loss+=loss 
-				total_acc+= acc
-				
+				total_acc+= acc				
 				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
-					acc, Yhat_valid  = session.run(
-						[accuracy_op, argmax_op],
+					acc, Yhat_valid= session.run(
+						[accuracy_op, viterbi_sequence],
 						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}
 					)
+					
 					#Broadcasts to user
 					print('Iter={:5d}'.format(step+1),
 						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
@@ -288,17 +285,19 @@ if __name__== '__main__':
 					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
 					total_acc=0.0					
+
 					#Logs the summary
 					s= session.run(merged_summary,
 						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
 					)
 					writer.add_summary(s, step)
+					if first_save:
+						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+						first_save=False 
+					else:
+						saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+
 					if best_validation_rate < acc:
-						if first_save:
-							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
-							first_save=False 
-						else:
-							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
 						outputs_predictions_persist(
