@@ -78,6 +78,7 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size,
 	input_batch, target_batch, length_batch, desc_batch =tf.train.batch(
 		[inputs, targets, length, descriptors], 
 		batch_size=batch_size, 
+		
 		capacity=capacity, 
 		dynamic_pad=True
 	)

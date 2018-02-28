@@ -25,7 +25,7 @@ import numpy as np
 import copy
 import os.path
 
-EMBEDDING_PATH='datasets/embeddings/'
+EMBEDDING_PATH='../datasets/embeddings/' # relative path
 TARGET_PATH='datasets/inputs/00/'
 
 
@@ -119,7 +119,7 @@ def idx2embedding(word2idx, word2vec, verbose=False):
 			embedding[i]=word2vec['unk']
 		elif word in not_found_words:
 			word2idx[word]=0
-			j+=1
+			j+=1 
 		else:			
 			embedding[i-j], _ =token2vec(word, word2vec)
 			word2idx[word]=i-j
@@ -140,6 +140,9 @@ def token2vec(token, w2v, verbose=False):
 
 
 if __name__== '__main__':
+	# embedding_path=EMBEDDING_PATH  'glove_s50.txt'
+	# word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")	
+	# import code; code.interact(local=dict(globals(), **locals()));
 	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape ', embeddings.shape)
