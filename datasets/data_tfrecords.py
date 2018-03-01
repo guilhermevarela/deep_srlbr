@@ -16,12 +16,12 @@ import numpy as np
 
 #Uncomment if launched from /datasets
 from data_propbankbr import  propbankbr_lazyload
-from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload
+from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
 
 import tensorflow as tf 
 
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/00/'
+TARGET_PATH='datasets/inputs/01/'
 
 #Must be both 1) inputs to the model 2) have a string representation
 DEFAULT_SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC']
@@ -78,7 +78,7 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size,
 	input_batch, target_batch, length_batch, desc_batch =tf.train.batch(
 		[inputs, targets, length, descriptors], 
 		batch_size=batch_size, 
-		
+
 		capacity=capacity, 
 		dynamic_pad=True
 	)
@@ -205,21 +205,22 @@ def proposition2sequence_example(
 	sequence_length=len(dict_propositions[target_feature[0]])
 	ex.context.feature['T'].int64_list.value.append(sequence_length)
 
-
+	
 	#Make a dictionary of feature_lists
 	sequence_dict={}
 	for key in sequence_features:
 		sequence_dict[key]= ex.feature_lists.feature_list[key]
-		for token in dict_propositions[key]:					
-			# if token is a string lookup in a dict
-			if isinstance(token, str):				
-				idx= get_idx(token, key, dict_vocabs)
-				sequence_dict[key].feature.add().int64_list.value.append(idx)
-			else:								
-				sequence_dict[key].feature.add().int64_list.value.append(token)
+		if key in dict_propositions:
+			for token in dict_propositions[key]:					
+				# if token is a string lookup in a dict
+				if isinstance(token, str):				
+					idx= get_idx(token, key, dict_vocabs)
+					sequence_dict[key].feature.add().int64_list.value.append(idx)
+				else:								
+					sequence_dict[key].feature.add().int64_list.value.append(token)
 
 	f1_targets= ex.feature_lists.feature_list['targets']
-	for key in target_feature:
+	for key in target_feature:		
 		for token in dict_propositions[key]:		
 			idx= get_idx(token, key, dict_vocabs)						
 			f1_targets.feature.add().int64_list.value.append(idx)
@@ -289,13 +290,14 @@ def get_idx(token, key, dict_vocabs):
 			idx .: int indexed token
 	'''
 	if isembeddable(key):
-		if token == '.':
-			import code; code.interact(local=dict(globals(), **locals()))		
 		this_vocab= dict_vocabs['word2idx']
-		val = this_vocab[token.lower()]
+		try:
+			idx = this_vocab[vocab_preprocess(token)]
+		except KeyError:
+			idx= 0 
 	else:
-		val = dict_vocabs[key][token]
-	return val
+		idx = dict_vocabs[key][token]
+	return idx
 
 if __name__== '__main__':
 	df=propbankbr_lazyload('zhou')	

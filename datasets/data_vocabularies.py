@@ -24,9 +24,12 @@ import pickle
 import numpy as np 
 import copy
 import os.path
+import re
+import string
 
-EMBEDDING_PATH='../datasets/embeddings/' # relative path
-TARGET_PATH='datasets/inputs/00/'
+EMBEDDING_PATH='datasets/embeddings/' # relative path
+# EMBEDDING_PATH='../datasets/embeddings/' # relative path
+TARGET_PATH='datasets/inputs/01/'
 
 
 def vocab_lazyload(column, input_dir=TARGET_PATH):
@@ -106,7 +109,8 @@ def idx2embedding(word2idx, word2vec, verbose=False):
 	word2idx = copy.deepcopy(word2idx)
 
 	for word in word2idx:
-		_, found=token2vec(word, word2vec,verbose=verbose)
+		token=vocab_preprocess(word)
+		_, found=token2vec(token, word2vec,verbose=verbose)
 		if not(found):
 			not_found_words.append(word)
 	
@@ -121,6 +125,7 @@ def idx2embedding(word2idx, word2vec, verbose=False):
 			word2idx[word]=0
 			j+=1 
 		else:			
+			token=vocab_preprocess(word)
 			embedding[i-j], _ =token2vec(word, word2vec)
 			word2idx[word]=i-j
 
@@ -138,6 +143,23 @@ def token2vec(token, w2v, verbose=False):
 		vec = w2v['unk']
 	return vec, found 
 
+def vocab_preprocess(text):
+	'''
+		vocab_preprocess text according to embedding
+		args:
+
+		returns:
+			token .: process string before looking up
+		ref https://github.com/nathanshartmann/portuguese_word_embeddings/blob/master/preprocessing.py
+			/notebooks/corpus-word-preprocessing
+	'''
+	token=text.lower()
+	re_punctuation= re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE)
+	re_number= re.compile(r'^\d+$')
+	token=re_punctuation.sub('', token)
+	token=re_number.sub('0', token)
+
+	return token 
 
 if __name__== '__main__':
 	# embedding_path=EMBEDDING_PATH  'glove_s50.txt'

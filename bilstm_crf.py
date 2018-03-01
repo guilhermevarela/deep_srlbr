@@ -4,6 +4,7 @@ Created on Feb 23, 2018
 	
 	compute a 1-layered (depth 2) bi-lstm with non linguist task
 
+CTX-P=0
 Iter= 6050 avg. acc 96.01% valid. acc 74.29% avg. cost 1.990351
 
 Number of Sentences    :         326
@@ -33,6 +34,39 @@ Percentage of perfect props :   4.70
 ------------------------------------------------------------
          V      457      32      96    93.46   82.64   87.72
 ------------------------------------------------------------
+
+lr5.00e-04_hs512x64_ctx-p1 .:
+Iter= 7200 avg. acc 99.85% valid. acc 65.60% avg. cost 0.084763
+
+Number of Sentences    :         326
+Number of Propositions :         553
+Percentage of perfect props :  15.37
+
+              corr.  excess  missed    prec.    rec.      F1
+------------------------------------------------------------
+   Overall      464     894     800    34.17   36.71   35.39
+----------
+        A0      152     150     102    50.33   59.84   54.68
+        A1      208     378     282    35.49   42.45   38.66
+        A2       35     117     152    23.03   18.72   20.65
+        A3        1      11      15     8.33    6.25    7.14
+        A4        3      10       8    23.08   27.27   25.00
+    AM-ADV        3       7      20    30.00   13.04   18.18
+    AM-CAU        1      25      16     3.85    5.88    4.65
+    AM-DIR        0       1       1     0.00    0.00    0.00
+    AM-DIS        5      14      21    26.32   19.23   22.22
+    AM-EXT        1       2       4    33.33   20.00   25.00
+    AM-LOC        8      58      47    12.12   14.55   13.22
+    AM-MED        0       1       0     0.00    0.00    0.00
+    AM-MNR        1      45      27     2.17    3.57    2.70
+    AM-NEG       26       6       8    81.25   76.47   78.79
+    AM-PNC        1       9       8    10.00   11.11   10.53
+    AM-PRD        1       9      17    10.00    5.56    7.14
+    AM-REC        0       1       0     0.00    0.00    0.00
+    AM-TMP       18      50      72    26.47   20.00   22.78
+------------------------------------------------------------
+         V      520      19      33    96.47   94.03   95.24
+------------------------------------------------------------
 '''
 import sys
 sys.path.append('datasets/')
@@ -44,7 +78,8 @@ from data_tfrecords import input_fn, input_sz
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate2, precision, recall
 
-INPUT_PATH='datasets/inputs/00/'
+INPUT_PATH='datasets/inputs/01/'
+# INPUT_PATH='datasets/inputs/00/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
@@ -103,16 +138,16 @@ if __name__== '__main__':
 	# HIDDEN_SIZE=[128, 64]
 
 	lr=5e-4	
-	HIDDEN_SIZE=[512, 64]
+	HIDDEN_SIZE=[512, 128, 64]
 
 	EMBEDDING_SIZE=50 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']
 	FEATURE_SIZE=input_sz(input_sequence_features, EMBEDDING_SIZE)	
 	
 
 	BATCH_SIZE=250
-	N_EPOCHS=400
+	N_EPOCHS=500
 	
 	DISPLAY_STEP=50
 
