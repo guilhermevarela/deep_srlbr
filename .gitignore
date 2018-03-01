@@ -1,5 +1,5 @@
 *srlconll-1.1
-*glove_s50.txt
+datasets/embeddings/*
 *.pyc
 *__pycache__
 *.DS_Store

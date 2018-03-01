@@ -159,7 +159,7 @@ def outputs_conll(df, target_column='Y_0'):
 	return dfconll[usecolumns]
 	
 
-def mapper_get(column_in, column_out, input_dir):
+def mapper_getiodicts(column_in, column_out, input_dir, embeddings_id='embeddings'):
 	'''
 		Returns idx2values mappings (dicts) and embeddings (np.ndarray)
 
@@ -171,7 +171,14 @@ def mapper_get(column_in, column_out, input_dir):
 				valid arguments are ARG, ARG_Y
 
 			input_dir  .: string containing inputs to be read 
-				ex: datasets/inputs/00 
+				ex; datasets/inputs/00 
+
+			embedding_id .: string which is either:
+				* embeddings for historical reasons <--> glove_s50
+				* <embedding_model>_s<embedding_sz> where 
+						* embedding_model .: string ex; glove, word2vec wang2vec
+						* embedding_sz    .: int dimensions ex; 50, 10,
+
 
 		returns:
 			klass2idx .: dict mapping classes (str) to indexes 
@@ -179,14 +186,17 @@ def mapper_get(column_in, column_out, input_dir):
 			word2idx .:  dict mapping words (str) to indexes 
 
 			embeddings .: embeddings
+
+			updates: 
+				2018-03-01 .: added embedding_id
 	'''	
-	word2idx,  embeddings= vocab_lazyload_with_embeddings(column_in, input_dir=input_dir)		
+	word2idx,  embeddings= vocab_lazyload_with_embeddings(column_in, embeddings_id=embeddings_id,input_dir=input_dir)		
 	
 	klass2idx = vocab_lazyload(column_out, input_dir=input_dir)		
 
 	return klass2idx, word2idx, embeddings 
 
-def dir_getoutputs(lr, hidden_sizes, ctx_p=0 , model_name='multi_bibasic_lstm'):	
+def dir_getoutputs(lr, hidden_sizes, ctx_p=0 , embeddings_id='', model_name='multi_bibasic_lstm'):	
 	'''
 		Makes a directory name for models from hyperparams
 		args:
@@ -202,11 +212,11 @@ def dir_getoutputs(lr, hidden_sizes, ctx_p=0 , model_name='multi_bibasic_lstm'):
 
 	'''
 	prefix= 'outputs/' + model_name
-	hparam_string= _make_hparam_string(lr, hidden_sizes, ctx_p)
+	hparam_string= _make_hparam_string(lr, hidden_sizes, ctx_p, embeddings_id)
 	return _make_dir(prefix, hparam_string)
 
 
-def _make_hparam_string(lr, hidden_sizes, ctx_p=0):
+def _make_hparam_string(lr, hidden_sizes, ctx_p=0,embeddings_id=''):
 	'''
 		Makes a directory name from hyper params
 
@@ -222,6 +232,9 @@ def _make_hparam_string(lr, hidden_sizes, ctx_p=0):
 	
 	hs=re.sub(r', ','x', re.sub(r'\[|\]','',str(hidden_sizes)))
 	hparam_string= 'lr{:.2e}_hs{:}_ctx-p{:d}'.format(float(lr),hs,int(ctx_p))	
+	if embeddings_id:
+		hparam_string+='_{:}'.format(embeddings_id)
+		
 	return hparam_string
 
 def _make_dir(prefix, hparam_string):

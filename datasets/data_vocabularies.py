@@ -27,8 +27,8 @@ import os.path
 import re
 import string
 
-# EMBEDDING_PATH='datasets/embeddings/' # use scripts
-EMBEDDING_PATH='../datasets/embeddings/' # use notebooks
+EMBEDDING_PATH='datasets/embeddings/' # use scripts
+# EMBEDDING_PATH='../datasets/embeddings/' # use notebooks
 TARGET_PATH='datasets/inputs/01/'
 
 
@@ -57,26 +57,29 @@ def vocab_lazyload(column, input_dir=TARGET_PATH):
 
 
 
-def vocab_lazyload_with_embeddings(column, embedding_name='embeddings', input_dir=TARGET_PATH, verbose=False):
+def vocab_lazyload_with_embeddings(column, embeddings_id='embeddings', input_dir=TARGET_PATH, verbose=False):
 	not_found_count=0
 	word2idx= vocab_lazyload(column, input_dir=input_dir)
 	updated_word2idx= copy.deepcopy(word2idx)
 
+	#Raw embeddings model and post processed npy matrix
+	embeddings_txtfile= 'glove_s50' if embeddings_id == 'embeddings' else embeddings_id
+	embeddings_npyfile= embeddings_id
 	# Standardized embeddings
 	if column in ['FORM', 'LEMMA', 'PRED', 'FUNC', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']: 
-		dataset_path= input_dir + embedding_name + '.npy'
+		dataset_path= input_dir + embeddings_npyfile + '.npy'
 		lower_case=True
 		if os.path.isfile(dataset_path):		
 			embeddings = np.load(dataset_path)		
 		else: 
-			word2vec= vocab_word2vec(dataset_name='glove_s50')		
+			word2vec= vocab_word2vec(dataset_name=embeddings_txtfile)		
 			embeddings, updated_word2idx= idx2embedding(word2idx, word2vec, verbose=verbose)			
-			vocab_embedding_persist(embeddings, dataset_name=embedding_name)		
+			vocab_embedding_persist(embeddings, dataset_name=embeddings_npyfile)		
 			if not(max(updated_word2idx.values())==max(word2idx.values())):
 				vocab_word2idx_persist(updated_word2idx, dict_name='word2idx')					
 	else:		
 		lower_case=False
-		raise ValueError('{:s} doesnt support standardized embeddings'.format(column))
+		raise ValueError('{:} doesnt support standardized embeddings'.format(column))
 			
 	return updated_word2idx, embeddings	
 
@@ -165,7 +168,7 @@ if __name__== '__main__':
 	# embedding_path=EMBEDDING_PATH  'glove_s50.txt'
 	# word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")	
 	# import code; code.interact(local=dict(globals(), **locals()));
-	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', verbose=True) 
+	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', embeddings_id='wang2vec_s100', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape ', embeddings.shape)
 	func2idx = vocab_lazyload('FUNC') 
