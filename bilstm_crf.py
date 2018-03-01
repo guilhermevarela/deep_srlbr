@@ -77,10 +77,12 @@ sys.path.append('datasets/')
 
 import numpy as np 
 import tensorflow as tf 
+import argparse
 
 from data_tfrecords import input_fn, input_sz
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate2, precision, recall
+
 
 INPUT_PATH='datasets/inputs/01/'
 # INPUT_PATH='datasets/inputs/00/'
@@ -94,6 +96,11 @@ DATASET_TRAIN_SIZE= 5099
 LAYER_1_NAME='glove_s50'
 LAYER_2_NAME='bi-lstm'
 LAYER_3_NAME='crf'
+
+#Command line defaults 
+LEARNING_RATE=5e-4	
+HIDDEN_SIZE=[512, 64]
+EMBEDDING_SIZE=50 
 
 def forward(X, sequence_length):		
 	'''
@@ -135,6 +142,27 @@ def forward(X, sequence_length):
 	return Yhat
 
 if __name__== '__main__':	
+	#Parse descriptors 
+	parser = argparse.ArgumentParser(
+    description='''Script used for customizing inputs for the bi-LSTM model and using CRF.''')
+
+	parser.add_argument('depth', metavar='N', type=int, nargs='+',
+                    help='''Set of integers corresponding the layer sizes on MultiRNNCell.
+                    defaults to "M 64" where M is the lowest power of 2 which is also greater than features_size''')
+
+	parser.add_argument('--embeddings', dest='embeddings', type=str, nargs=1, default='glove_s50',
+                    help='''embedding model name and size in format 
+                    <embedding_name>_s<embedding_size>. Examples: glove_s50, wang2vec_s100''')
+
+	parser.add_argument('--ctx_p', dest='ctx_p', type=int, nargs=1, default=LEARNING_RATE,
+                    help='''Size of sliding window around predicate''')
+
+	parser.add_argument('--lr', dest='lr', type=str, nargs=1, default=5e-4,
+                    help='''Learning rate of the model''')
+
+	parser.add_argument('--batch_size', dest='batch_size', type=int, nargs=1, default=5e-4,
+                    help='''Learning rate of the model''')
+  
 	#BEST RUNNING PARAMS 	
 	# TRAINING
 	# Iter= 6050 avg. acc 96.01% valid. acc 74.29% avg. cost 1.990351
@@ -143,7 +171,6 @@ if __name__== '__main__':
 
 	lr=5e-4	
 	HIDDEN_SIZE=[512, 64]
-
 	EMBEDDING_SIZE=50 
 
 	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']

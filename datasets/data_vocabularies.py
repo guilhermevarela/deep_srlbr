@@ -27,8 +27,8 @@ import os.path
 import re
 import string
 
-EMBEDDING_PATH='datasets/embeddings/' # relative path
-# EMBEDDING_PATH='../datasets/embeddings/' # relative path
+# EMBEDDING_PATH='datasets/embeddings/' # use scripts
+EMBEDDING_PATH='../datasets/embeddings/' # use notebooks
 TARGET_PATH='datasets/inputs/01/'
 
 
