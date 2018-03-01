@@ -292,9 +292,9 @@ def get_idx(token, key, dict_vocabs):
 	if isembeddable(key):
 		this_vocab= dict_vocabs['word2idx']
 		try:
-			idx = this_vocab[vocab_preprocess(token)]
+			idx= this_vocab[vocab_preprocess(token)]
 		except KeyError:
-			idx= 0 
+			idx=  this_vocab[token.lower()] 
 	else:
 		idx = dict_vocabs[key][token]
 	return idx

@@ -10,4 +10,6 @@ tex/*
 !tex/*.pdf
 !tex/*.tex
 !tex/*.bib
-#Remove tf.graph saved variables 
+
+# Remove saved parameters
+*graph_params-*

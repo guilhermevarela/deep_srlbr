@@ -67,6 +67,10 @@ Percentage of perfect props :  15.37
 ------------------------------------------------------------
          V      520      19      33    96.47   94.03   95.24
 ------------------------------------------------------------
+
+lr5.00e-04_hs512x64_ctx-p1 .: after embedding upgrades
+
+
 '''
 import sys
 sys.path.append('datasets/')
@@ -138,11 +142,11 @@ if __name__== '__main__':
 	# HIDDEN_SIZE=[128, 64]
 
 	lr=5e-4	
-	HIDDEN_SIZE=[512, 128, 64]
+	HIDDEN_SIZE=[512, 64]
 
 	EMBEDDING_SIZE=50 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED']  + ['CTX_P-1', 'CTX_P+1']
 	FEATURE_SIZE=input_sz(input_sequence_features, EMBEDDING_SIZE)	
 	
 
@@ -328,10 +332,10 @@ if __name__== '__main__':
 					writer.add_summary(s, step)
 					if best_validation_rate < acc:
 						if first_save:
-							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
 							first_save=False 
 						else:
-							saver.save(session, outputs_dir + 'exp', global_step=step, write_meta_graph=True)
+							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
 						outputs_predictions_persist(
