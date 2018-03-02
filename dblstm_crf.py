@@ -95,14 +95,14 @@ DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
 
 LAYER_1_NAME='glove_s50'
-LAYER_2_NAME='bi-lstm'
+LAYER_2_NAME='dblstm'
 LAYER_3_NAME='crf'
 
 #Command line defaults 
 LEARNING_RATE=5e-4	
 HIDDEN_SIZE=[512, 64]
 EMBEDDING_SIZE=50 
-EMBEDDING_MODEL=[('glove','50')]
+EMBEDDING_MODEL=[('glove',50)]
 BATCH_SIZE=250
 N_EPOCHS=500
 
@@ -156,10 +156,6 @@ def forward(X, sequence_length):
 	return Yhat
 
 
-# def main(hidden_size, 
-# 	embedding_name, embedding_size, ctx_p, lr, batch_size, num_epochs):
-
-
 if __name__== '__main__':	
 
 	def check_embeddings(value):		
@@ -208,7 +204,6 @@ if __name__== '__main__':
 
 
 	# evaluate embedding model
-
 	ctx_p= args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
 	lr= args.lr[0] if isinstance(args.lr, list) else args.lr
 	batch_size= args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
@@ -229,7 +224,7 @@ if __name__== '__main__':
 	if ctx_p > 0:
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
-
+	
 	feature_size=input_sz(input_sequence_features, embeddings_size)		
 	
 	
