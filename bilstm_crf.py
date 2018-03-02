@@ -173,13 +173,13 @@ if __name__== '__main__':
 	parser.add_argument('--ctx_p', dest='ctx_p', type=int, nargs=1, default=1, choices=[0,1,2,3],
                     help='''Size of sliding window around predicate\n''')
 
-	parser.add_argument('--lr', dest='lr', type=str, nargs=1, default=LEARNING_RATE,
+	parser.add_argument('--lr', dest='lr', type=float, nargs=1, default=LEARNING_RATE,
                     help='''Learning rate of the model\n''')
 
 	parser.add_argument('--batch_size', dest='batch_size', type=int, nargs=1, default=BATCH_SIZE,
                     help='''Group up to batch size propositions during training.\n''')
 
-	parser.add_argument('--num_epochs', dest='num_epochs', type=int, nargs=1, default=N_EPOCHS,
+	parser.add_argument('--epochs', dest='epochs', type=int, nargs=1, default=N_EPOCHS,
                     help='''Number of times to repeat training set during training.\n''')
   
 	#BEST RUNNING PARAMS 	
@@ -199,10 +199,10 @@ if __name__== '__main__':
 
 	# evaluate embedding model
 
-	ctx_p= args.ctx_p[0]
-	lr= args.lr 
-	batch_size= args.batch_size
-	num_epochs= args.num_epochs
+	ctx_p= args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
+	lr= args.lr[0] if isinstance(args.lr, list) else args.lr
+	batch_size= args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
+	num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
 	DISPLAY_STEP=50
 	LAYER_1_NAME=embeddings_id
@@ -329,7 +329,7 @@ if __name__== '__main__':
 		try:
 			while not coord.should_stop():				
 				X_valid, Y_valid, mb_valid, D_valid=session.run([inputs_v, targets_v, sequence_length_v, descriptors_v])					
-				
+
 		except tf.errors.OutOfRangeError:
 			print('Done initializing validation set')			
 

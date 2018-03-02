@@ -666,6 +666,7 @@ Reuters_Holdings
 Eufrasio_Veículos
 Campos_do_Jordão
 Câmara_Americana
+
 Sonia_Braga
 Andy_Garcia
 Arantxa_Sanchez
