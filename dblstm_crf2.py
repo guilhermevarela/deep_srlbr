@@ -142,7 +142,7 @@ def dblstm_layer(X, sequence_length, sz):
 
 	return tf.squeeze(outputs_bw,0)
 
-def forward(X, sequence_length, sz):		
+def forward(X, sequence_length, hidden_size):		
 	'''
 		Computes forward propagation thru basic lstm cell
 
@@ -155,11 +155,15 @@ def forward(X, sequence_length, sz):
 			Y_hat: [batch_size, max_time, klass_size] 
 
 	'''
-	with tf.variable_scope('db_lstm_1'):
-		outputs= dblstm_layer(X, sequence_length, sz)
+	outputs=X
+	for i, sz in enumerate(hidden_size):
+		with tf.variable_scope('db_lstm_{:}}'.format(i+1)):
+			outputs= dblstm_layer(X, sequence_length, sz)
+	# with tf.variable_scope('db_lstm_1'):
+	# 	outputs= dblstm_layer(X, sequence_length, sz)
 	
-	with tf.variable_scope('db_lstm_2'):
-		outputs= dblstm_layer(outputs, sequence_length, sz)		
+	# with tf.variable_scope('db_lstm_2'):
+	# 	outputs= dblstm_layer(outputs, sequence_length, sz)		
 
 	with tf.variable_scope('activation'):	
 		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
