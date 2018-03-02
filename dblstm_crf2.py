@@ -157,7 +157,7 @@ def forward(X, sequence_length, hidden_size):
 	'''
 	outputs=X
 	for i, sz in enumerate(hidden_size):
-		with tf.variable_scope('db_lstm_{:}}'.format(i+1)):
+		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
 			outputs= dblstm_layer(X, sequence_length, sz)
 	# with tf.variable_scope('db_lstm_1'):
 	# 	outputs= dblstm_layer(X, sequence_length, sz)
@@ -178,6 +178,7 @@ def forward(X, sequence_length, hidden_size):
 
 
 	return Yhat
+
 
 
 if __name__== '__main__':	
@@ -310,7 +311,7 @@ if __name__== '__main__':
 				klass_size=klass_size, input_sequence_features=input_sequence_features)
 
 	with tf.name_scope('predict'):		
-		predict_op= forward(X, minibatch, hidden_size[0])
+		predict_op= forward(X, minibatch, hidden_size)
 		clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
 		T_2d= tf.cast(tf.argmax( T,2 ), tf.int32)
 

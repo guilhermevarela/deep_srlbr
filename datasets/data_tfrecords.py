@@ -42,6 +42,19 @@ TF_CONTEXT_FEATURES=	{
 
 
 ############################# tfrecords reader ############################# 
+def input_validation(filter_columns=[], target_column=['ARG_1']):	
+	'''
+		Fetches validation set 
+
+		args:
+			filter_columns 	.: list of columns to return
+
+		
+			
+	'''	
+
+
+	return features, targets, lengths, others
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size, 
 	input_sequence_features=DEFAULT_SEQUENCE_FEATURES):
