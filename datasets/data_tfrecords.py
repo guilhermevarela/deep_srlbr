@@ -10,6 +10,7 @@ Created on Jan 25, 2018
 	
 	2018-02-21: added input_fn
 	2018-02-26: added input_sequence_features to input_fn
+	2018-03-02: added input_validation and input_train
 '''
 import pandas as pd 
 import numpy as np 
@@ -22,6 +23,8 @@ import tensorflow as tf
 
 EMBEDDING_PATH='datasets/embeddings/'
 TARGET_PATH='datasets/inputs/01/'
+dataset_train= TARGET_PATH + 'train.tfrecords'
+dataset_valid= TARGET_PATH + 'valid.tfrecords'
 
 #Must be both 1) inputs to the model 2) have a string representation
 DEFAULT_SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC']
@@ -40,21 +43,97 @@ TF_CONTEXT_FEATURES=	{
 	'T': tf.FixedLenFeature([], tf.int64)			
 }
 
+DATASET_VALID_SIZE= 569
+DATASET_TRAIN_SIZE= 5099
+
 
 ############################# tfrecords reader ############################# 
-def input_validation(filter_columns=[], target_column=['ARG_1']):	
+def input_validation(embeddings, klass_size, filter_features=SEQUENCE_FEATURES):	
 	'''
-		Fetches validation set 
-
+		Fetches validation set and retuns as a numpy array
 		args:
-			filter_columns 	.: list of columns to return
 
-		
-			
+		returns: 
+			features 	.:
+			targets 	.: 
+			lengths		.: 
+			others		.: 
+	'''		
+	inputs, targets, lengths, others= input_tfr2npy(
+		dataset_valid, 
+		DATASET_VALID_SIZE,
+		embeddings, 
+		klass_size,
+		filter_features=filter_features, 
+		msg='input_validation: done converting validation set to numpy'
+	)	
+
+	return inputs, targets, lengths, others
+
+def input_train(embeddings, klass_size, filter_features=SEQUENCE_FEATURES):	
+	
+	inputs, targets, lengths, others= input_tfr2npy(
+		dataset_train, 
+		DATASET_TRAIN_SIZE,
+		embeddings, 
+		klass_size,		
+		filter_features=filter_features, 
+		msg='input_train: done converting train set to numpy'
+	)	
+	
+	return inputs, targets, lengths, others
+
+def input_tfr2npy(dataset_path, dataset_size, embeddings, klass_size, 
+	filter_features=SEQUENCE_FEATURES,  msg='input_tfr2npy: done'):	
+	'''
+		Converts a .tfrecord into a numpy representation of a tensor
+		args:
+
+		returns: 
+			features 	.:
+			targets 	.: 
+			lengths		.: 
+			others		.: 
 	'''	
+	other_features=['ARG_0', 'P', 'IDX', 'FUNC']
+	input_sequence_features=list(set(SEQUENCE_FEATURES).intersection(set(filter_features)) - set(other_features)- set(['targets']))
 
 
-	return features, targets, lengths, others
+	with tf.name_scope('pipeline'):
+		X, T, l, opt= input_fn(
+			[dataset_path], 
+			dataset_size, 
+			1, 
+			embeddings, 
+			klass_size=klass_size, 
+			input_sequence_features=input_sequence_features
+		)
+
+	init_op = tf.group( 
+		tf.global_variables_initializer(),
+		tf.local_variables_initializer()
+	)
+
+	with tf.Session() as session: 
+		session.run(init_op) 
+		coord= tf.train.Coordinator()
+		threads= tf.train.start_queue_runners(coord=coord)
+		
+		# This first loop instanciates validation set
+		try:
+			while not coord.should_stop():				
+				inputs, targets, lengths, others=session.run([X, T, l, opt])					
+
+		except tf.errors.OutOfRangeError:
+			print(msg)			
+
+		finally:
+			#When done, ask threads to stop
+			coord.request_stop()			
+			coord.join(threads)
+	return inputs, targets, lengths, others		
+
+
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size,  num_epochs, embeddings, klass_size, 
 	input_sequence_features=DEFAULT_SEQUENCE_FEATURES):
