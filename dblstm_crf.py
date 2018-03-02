@@ -90,7 +90,7 @@ INPUT_PATH='datasets/inputs/01/'
 dataset_train= INPUT_PATH + 'train.tfrecords'
 dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
-MODEL_NAME='bilstm_crf'
+MODEL_NAME='dblstm_crf'
 DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
 
@@ -120,28 +120,38 @@ def forward(X, sequence_length):
 
 	'''
 
-	# batch_size=tf.size(sequence_length)	
+	
 	# 'outputs' is a tensor of shape [batch_size, max_time, cell_state_size]
+	outputs_1, states= tf.nn.dynamic_rnn(
+		cell=cell, 
+		inputs=X, 			
+		sequence_length=sequence_length,
+		dtype=tf.float32,
+		time_major=False
+	)
+
 	outputs, states= tf.nn.bidirectional_dynamic_rnn(
-			cell_fw=fwd_cell, 
-			cell_bw=bwd_cell, 
-			inputs=X, 			
-			sequence_length=sequence_length,
-			dtype=tf.float32,
-			time_major=False
-		)
+		cell_fw=fwd_cell, 
+		cell_bw=bwd_cell, 
+		inputs=outputs_1, 			
+		sequence_length=sequence_length,
+		dtype=tf.float32,
+		time_major=False
+	)
 
-	fwd_outputs, bck_outputs = outputs
+	_, bck_outputs = outputs
 
-	outputs=tf.concat((fwd_outputs,bck_outputs),2)
+	# outputs=tf.concat((fwd_outputs,bck_outputs),2)
 
 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
 	# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
-	act =tf.scan(lambda a, x: tf.matmul(x, Wfb), outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
+	act =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
+			bck_outputs, initializer=tf.matmul(bck_outputs[0],Wfb))+bfb
 
 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
 	#Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
-	Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),act, initializer=tf.matmul(act[0],Wo)) + bo
+	Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),
+			act, initializer=tf.matmul(act[0],Wo)) + bo
 
 	return Yhat
 
@@ -241,7 +251,8 @@ if __name__== '__main__':
 	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
 
 	#Forward backward weights for bi-lstm act
-	Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
+	Wfb = tf.Variable(tf.random_normal([hidden_size[-1], hidden_size[-1]], name='Wfb')) 
+	# Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
 	bfb = tf.Variable(tf.random_normal([hidden_size[-1]], name='bfb')) 
 
 	#pipeline control place holders
@@ -252,6 +263,10 @@ if __name__== '__main__':
 
 
 	#Architecture
+	cell = tf.nn.rnn_cell.MultiRNNCell(
+		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
+			for hsz in hidden_size],
+	)
 	fwd_cell = tf.nn.rnn_cell.MultiRNNCell(
 		[ tf.nn.rnn_cell.BasicLSTMCell(hsz, forget_bias=1.0, state_is_tuple=True) 
 			for hsz in hidden_size],
