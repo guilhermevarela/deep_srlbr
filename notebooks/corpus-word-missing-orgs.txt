@@ -7,6 +7,7 @@
 29	British_Medical_Journal	ORG
 31	Centro_de_Coordenação_de_Operações_de_Combate_ao_Crime_Organizado	ORG
 33	Exxon_Váldez	ORG
+40	Organização_de_Defesa_de_Mísseis_Balísticos	ORG
 42	Brasileiro_de_Fórmula_Ford	ORG
 43	Polícia_Civil_de_Ourinhos	ORG
 47	Assembléia_de_Deus	ORG
@@ -50,7 +51,6 @@
 263	Ministério_dos_Transportes	ORG
 269	Divisão_de_Vigilância_Sanitária	ORG
 271	Secretaria_Estadual_de_Saúde	ORG
-272	Fausto_Cardoso	ORG
 286	Supremo_Tribunal_Federal	ORG
 299	Copa_Africana_de_Nações	ORG
 305	People_for_Ethical_Treatment_of_Animals	ORG
@@ -69,6 +69,7 @@
 379	Bolsa_de_Valores_de_São_Paulo	ORG
 380	Conselho_Monetário_Nacional	ORG
 387	União_Européia	ORG
+388	Fittipaldi_Promoções	ORG
 391	Instituto_Médico_Legal	ORG
 399	Polícia_Federal	ORG
 401	Superior_Tribunal_de_Justiça	ORG
@@ -81,8 +82,9 @@
 456	China_Northwest_Airlines	ORG
 458	Ráscal_Pizza_&_Cozinha	ORG
 459	Grupo_Viena	ORG
-460	Grupo_de_Juiz_de_Fora	ORG
 462	Laerte_Cordeiro_&_Associados	ORG
+476	The_Independent	ORG
+482	Torneio_de_Doha	ORG
 489	Secretaria_das_Finanças	ORG
 490	Prefeitura_de_São_Paulo	ORG
 491	Unidade_Fiscal_do_Município	ORG
@@ -92,6 +94,7 @@
 503	Delegacia_Regional_do_Trabalho	ORG
 504	Instituro_Pedro_Melo	ORG
 509	Hirano_Design_International_Inc.	ORG
+510	Teatro_Nacional	ORG
 512	Companhia_das_Letras	ORG
 522	American_Express	ORG
 523	Jockey_Club	ORG
@@ -122,7 +125,6 @@
 588	Net_Brasil	ORG
 596	Assembléia_Nacional	ORG
 597	Josip_Weber	ORG
-598	Carmelita_Aralse_Tebele	ORG
 602	Administração_Regional	ORG
 606	Banco_Mercantil	ORG
 622	Secretaria_da_Saúde	ORG
@@ -136,8 +138,10 @@
 650	Câmara_dos_Deputados	ORG
 665	Eufrasio_Veículos	ORG
 667	Câmara_Americana	ORG
+671	Us_Open	ORG
 674	Empresa_Metropolitana_de_Transportes_Urbanos	ORG
 677	Vasco_da_Gama	ORG
+691	Folha/«The_New_York_Times»	ORG
 692	Sesc_Pompéia	ORG
 699	Instituto_de_Pesquisas_Econômicas_e_Administrativas/MG	ORG
 709	Nacional_Iguatemi_Empreendimentos	ORG
@@ -160,7 +164,6 @@
 799	Barnes_and_Nobles	ORG
 800	Viação_Boa_Vista	ORG
 801	Polícia_Rodoviária	ORG
-802	Hospital_Mário_Gatti	ORG
 803	Centros_Populares_de_Cultura	ORG
 804	União_Nacional_dos_Estudantes	ORG
 806	Mancha_Verde	ORG
@@ -179,6 +182,8 @@
 847	Empresa_de_Correios_e_Telégrafos	ORG
 848	Caixa_Econômica_Federal	ORG
 850	Hubert_Imóveis_e_Administração	ORG
+854	Secretaria_Municipal_da_Administração	ORG
+855	Diário_Oficial	ORG
 858	McDonald\'s	ORG
 859	William_Rhodes	ORG
 861	Antônio_Correia_Meyer	ORG
@@ -188,8 +193,10 @@
 872	Mário_Luna	ORG
 873	Departamento_de_Crédito_e_Financiamento	ORG
 877	Financial_Times	ORG
+881	Tribunal_Superior_Eleitoral	ORG
 889	Exército_Republicano_Irlandês	ORG
 895	Ueta_Indústria_e_Comércio_de_Aparelhos_Eletrônicos	ORG
+903	Biblioteca_Nacional	ORG
 916	Comissão_de_Processos_Administrativos_Especiais	ORG
 925	Instituto_Ulysses_Guimarães_de_Estudos_Políticos_e_Sociais	ORG
 926	Forças_Armadas	ORG

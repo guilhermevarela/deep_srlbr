@@ -39,7 +39,7 @@ Projeto_Acqua	O
 Carlos_EDUARDO_LINS_da_Silva	PER
 Titã_2	O
 Clementine_1	O
-Organização_de_Defesa_de_Mísseis_Balísticos	PER
+Organização_de_Defesa_de_Mísseis_Balísticos	ORG
 Luís_Eduardo_de_Assis	PER
 Brasileiro_de_Fórmula_Ford	ORG
 Polícia_Civil_de_Ourinhos	ORG
@@ -265,7 +265,7 @@ Ministério_do_Planejamento	ORG
 Ministério_dos_Transportes	ORG
 Santa_Catarina	LOC
 Belo_Horizonte	LOC
-O_Estado_de_Minas	O
+O_Estado_de_Minas	LOC
 Hélio_Costa	PER
 Fogo_Cruzado	O
 Divisão_de_Vigilância_Sanitária	ORG
@@ -387,7 +387,7 @@ Fórmula_1	O
 Fórmula_Indy	O
 Dan_Gurney	PER
 União_Européia	ORG
-Fittipaldi_Promoções	O
+Fittipaldi_Promoções	ORG
 Special_Girolando	O
 Salute_Milk	O
 Instituto_Médico_Legal	ORG
@@ -475,13 +475,13 @@ Dawn_Upshaw	PER
 Galina_Gorchakova	PER
 Classical_Music_Award	O
 BBC_Music_Magazine	O
-The_Independent	O
+The_Independent	ORG
 Márcio_Santos	PER
 Kennet_Andersson	PER
 Antonio_Jorge	PER
 Pete_Sampras	PER
 Michael_Stich	PER
-Torneio_de_Doha	O
+Torneio_de_Doha	ORG
 Karim_Alami	PER
 Ronald_Agenor	PER
 Stefan_Edberg	PER
@@ -509,7 +509,7 @@ Takeo_Hirata	PER
 Takuo_Hirano	PER
 Tetsuyuki_Hirano	PER
 Hirano_Design_International_Inc.	ORG
-Teatro_Nacional	O
+Teatro_Nacional	ORG
 June_Drummond	PER
 Companhia_das_Letras	ORG
 Caça_aos_Turistas	O
@@ -670,7 +670,7 @@ Câmara_Americana	ORG
 Sonia_Braga	PER
 Andy_Garcia	PER
 Arantxa_Sanchez	PER
-Us_Open	O
+Us_Open	ORG
 Monica_Seles	PER
 Um_Paraíso_Perdido	O
 Empresa_Metropolitana_de_Transportes_Urbanos	ORG
@@ -690,7 +690,7 @@ Champs_Elysèes	LOC
 Sérgio_Amaral	PER
 Ibsen_Pinheiro	PER
 Carlos_Alberto_Parreira	PER
-Folha/«The_New_York_Times»	O
+Folha/«The_New_York_Times»	ORG
 Sesc_Pompéia	ORG
 Nuno_Ramos	PER
 Exercícios_Visuais	O
@@ -853,8 +853,8 @@ Hubert_Imóveis_e_Administração	ORG
 Vila_Nova_Cachoeirinha	LOC
 Tide_Setubal	PER
 Revolução_dos_Cravos	O
-Secretaria_Municipal_da_Administração	PER
-Diário_Oficial	O
+Secretaria_Municipal_da_Administração	ORG
+Diário_Oficial	ORG
 Rodney_King	PER
 Osires_Lopes_Filho	PER
 McDonald\'s	ORG
@@ -880,7 +880,7 @@ Financial_Times	ORG
 O_Olho_da_Revolução	O
 Antigo_Testamento	O
 Presidência_da_República	O
-Tribunal_Superior_Eleitoral	PER
+Tribunal_Superior_Eleitoral	ORG
 Segunda_Guerra	O
 Bruto_Rosé	O
 João_Pato	PER
@@ -902,7 +902,7 @@ Adylson_Motta	PER
 Ambito_Financiero	O
 Donna_Karan	PER
 Bryant_Park	PER
-Biblioteca_Nacional	O
+Biblioteca_Nacional	ORG
 Benito_Gama	PER
 John_Paul_Getty	PER
 John_Paul_Getty_2º	PER
