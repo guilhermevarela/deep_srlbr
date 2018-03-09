@@ -106,6 +106,7 @@ debaixo_de
 atrás_de
 11h30
 fim-de_semana
+rua_Enseada_de_Itapacoróia
 5h25
 23h
 20h30
@@ -113,6 +114,8 @@ fim-de_semana
 24h00
 por_meio_de
 a_exemplo
+rua_Visconde_da_Luz
+avenida_Santo_Amaro
 19h30
 1ª
 1h50
@@ -182,6 +185,7 @@ na_frente_de
 todos_os_dias
 mais_ou_menos
 uma_vez_que
+av._Nove_de_Julho
 10h30
 5h30
 quer_dizer
@@ -198,6 +202,7 @@ de_quebra
 tudo_o_que
 a_custo
 ternurar
+o_Globo
 sennista
 frente_a
 Água_de_Cheiro
