@@ -1,4 +1,16 @@
 '''
+Created on Mar 02, 2018
+	@author: Varela
+	
+	implementation of (Zhou,et Xu, 2015)
+	
+	ref:
+	http://www.aclweb.org/anthology/P15-1109
+
+'''
+
+class LanguageModel(object):
+	'''
 	The language model 
 
 
@@ -10,20 +22,38 @@
 	New Word embedding size = embedding size + one-hot enconding of 2	
 
 
-'''
-class LanguageModel(object):
+	'''	
 	def __init__(self):
 	# load corpus
 	# apply
 	# load exception files on /corpus_exceptions
-
-	def get(feature):
+	raise NotImplementedError
+	
+	def encode(word, feature):
 		'''
+			Returns feature numeric representation
+			args:
 
+			returns:
+				list containing 
 		'''
+		raise NotImplementedError
+	def decode(word, feature):
+		'''
+			Returns feature numeric representation
+			args:
+
+			returns:
+				list containing 
+		'''		
+		raise NotImplementedError
+
 	def size(features):	
 		'''
-		
+			Returns the dimension of the features 
+			args:
+				features : list<str>  with the features names
 		'''
+		raise NotImplementedError
 
 
