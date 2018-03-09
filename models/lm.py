@@ -64,88 +64,64 @@ def _fetch_corpus_exceptions(corpus_exception_file):
 	return set(df['TOKEN'].values)
 
 
+
 def _preprocess(lexicon, word2vec):	
-	#prepare output
-	lexicon2token = dict(zip(natural_language_lexicon, ['unk']*total_words))
+	# define outputs
+	total_words= len(lexicon)
+	lexicon2token = dict(zip(lexicon, ['unk']*total_words))
+
+	# fetch exceptions list
+	pers= _fetch_corpus_exceptions('corpus-word-missing-pers.txt')
+	locs= _fetch_corpus_exceptions('corpus-word-missing-locs.txt')
+	orgs= _fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
 	
-	for word in lexicon:		
-		if word.lower() in word2vec:
-			lexicon2token[word]= word.lower()
-		else:
-			not_found.append(word)
 
-	print('Found {:} of {:} --> missing (\%):{:2f}\%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-
-	print('Processing removing punctuations')
+	#define regex
 	re_punctuation= re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE)	
-	aux=[] # doesnt deal with delete while iterates
-	for i, word in enumerate(not_found):		
-		token=  re_punctuation.sub('', word.lower())
-		if token in word2vec:
-			lexicon2token[word]= token
-		else:
-			aux.append(word)	
-
-	not_found= aux
-	aux=[]
-	print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-
-	# Maps numbers plain numbers, telefone numbers to zero		
 	re_number= re.compile(r'^\d+$')
 	re_tel   = re.compile(r'^tel\._')
 	re_time  = re.compile(r'^\d{1,2}h\d{0,2}$')	
-	re_ordinals= re.compile(r'º|ª')
+	re_ordinals= re.compile(r'º|ª')	
 
-	print('Processing dealing with numbers')
-	
-	
-	for i, word in enumerate(not_found):		
-		token=  re_tel.sub('', word.lower())			
-		token=  re_punctuation.sub('', token)
-		token=  re_ordinals.sub('', token)			
-		token=  re_time.sub('0', token)			
-		token= re_number.sub('0', token)
-
-		if token in word2vec:
+	for word in list(lexicon):
+		# some hiffenized words belong to embeddings
+		# ex: super-homem, fim-de-semana, pré-qualificar, caça-níqueis
+		token = word.lower() 
+		if token in word2vec:					
 			lexicon2token[word]= token
 		else:
-			aux.append(word)
-	not_found= aux
-	aux=[]
-	print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
+			# if word in ['Rede_Globo', 'Hong_Kong', 'Banco_Central']:
+			# 	import code; code.interact(local=dict(globals(), **locals()))			
+			token = re_tel.sub('', token)
+			token = re_ordinals.sub('', token)
+			token = re_punctuation.sub('', token)
 
-	
-	print('Handling locales')
-	locs= _fetch_corpus_exceptions('corpus-word-missing-locs.txt')
-	for word in list(locs):
-		lexicon2token[word]= 'local'
-		not_found.remove(word)
-	print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-	
-	print('Handling organizations')
-	orgs= _fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
-	for word in list(orgs):
-		lexicon2token[word]= 'organização'
-		not_found.remove(word)
+			token = re_time.sub('0', token)
+			token = re_number.sub('0', token)
 
-	# not_found= [word for word in not_found if not(word in aux)]	
-	# aux=[]
-	print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));		
+			if token in word2vec:
+				lexicon2token[word]= token.lower()
+			else:	
+				if word in pers:
+					lexicon2token[word] = 'pessoa'
+				else:	
+					if word in orgs:
+						lexicon2token[word] = 'organização'	
+					else:
+						if word in locs:
+							lexicon2token[word] = 'local'				
+
+
+	total_tokens=	len([value for value in  lexicon2token.values() if not(value == 'unk')])
 	
-	print('Handling people')
-	pers= _fetch_corpus_exceptions('corpus-word-missing-pers.txt')
-	for word in list(pers):
-		lexicon2token[word]= 'pessoa'
-		not_found.remove(word)
-	
-	# not_found= [word for word in not_found if not(word in aux)]	
-	# aux=[]
-	print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
+	print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_words,
+	 total_tokens, 100*float(total_words-total_tokens)/ total_words))				
 
 	return lexicon2token
 
 
-class LanguageModelPt(object):
+
+class LanguageModelPt:
 	'''
 	The language model 
 
@@ -184,91 +160,22 @@ class LanguageModelPt(object):
 
 	
 	# Preprocess
-	total_words= len(set(natural_language_lexicon))
-	# lexicon2token = dict(zip(natural_language_lexicon, ['unk']*total_words))
+	total_words= len(set(natural_language_lexicon))	
 	print('Processing total lexicon is {:}'.format(total_words));
 	lexicon = list(natural_language_lexicon)
-	not_found=[]
-	lexicon2token = _preprocess(lexicon, word2vec)
-	# for word in lexicon:		
-	# 	if word.lower() in word2vec:
-	# 		lexicon2token[word]= word.lower()
-	# 	else:
-	# 		not_found.append(word)
-
-	# print('Found {:} of {:} --> missing (\%):{:2f}\%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-
-	# print('Processing removing punctuations')
-	# re_punctuation= re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE)	
-	# aux=[] # doesnt deal with delete while iterates
-	# for i, word in enumerate(not_found):		
-	# 	token=  re_punctuation.sub('', word.lower())
-	# 	if token in word2vec:
-	# 		lexicon2token[word]= token
-	# 	else:
-	# 		aux.append(word)	
-
-	# not_found= aux
-	# aux=[]
-	# print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-
-	# # Maps numbers plain numbers, telefone numbers to zero		
-	# re_number= re.compile(r'^\d+$')
-	# re_tel   = re.compile(r'^tel\._')
-	# re_time  = re.compile(r'^\d{1,2}h\d{0,2}$')	
-	# re_ordinals= re.compile(r'º|ª')
-
-	# print('Processing dealing with numbers')
 	
 	
-	# for i, word in enumerate(not_found):		
-	# 	token=  re_tel.sub('', word.lower())			
-	# 	token=  re_punctuation.sub('', token)
-	# 	token=  re_ordinals.sub('', token)			
-	# 	token=  re_time.sub('0', token)			
-	# 	token= re_number.sub('0', token)
 
-	# 	if token in word2vec:
-	# 		lexicon2token[word]= token
-	# 	else:
-	# 		aux.append(word)
-	# not_found= aux
-	# aux=[]
-	# print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-
-
-
+	self.lexicon2token = _preprocess(lexicon, word2vec)
+	self.token2idx= {'unk':0}
 	
-	# print('Handling locales')
-	# locs= _fetch_corpus_exceptions('corpus-word-missing-locs.txt')
-	# for word in list(locs):
-	# 	lexicon2token[word]= 'local'
-	# 	not_found.remove(word)
-	# print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-	
-	# print('Handling locales')
-	# orgs= _fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
-	# for word in list(orgs):
-	# 	lexicon2token[word]= 'organização'
-	# 	not_found.remove(word)
+	tokens= set(self.lexicon2token.values())
+	idx=1
+	for token in list(tokens):
+		if not(token in self.token2idx):
+			self.token2idx[token]=idx
+			idx+=1
 
-	# # not_found= [word for word in not_found if not(word in aux)]	
-	# # aux=[]
-	# print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));		
-	
-	# pers= _fetch_corpus_exceptions('corpus-word-missing-pers.txt')
-	# for word in list(pers):
-	# 	lexicon2token[word]= 'pessoa'
-	# 	not_found.remove(word)
-	
-	# # not_found= [word for word in not_found if not(word in aux)]	
-	# # aux=[]
-	# print('Found {:} of {:} --> missing (%):{:0.2f}%'.format(total_words - len(not_found), total_words, 100*float(len(not_found))/ total_words));	
-	import code; code.interact(local=dict(globals(), **locals()))			
-
-			
-
-	
 
 	def encode(self, word, feature):
 		'''
@@ -325,8 +232,5 @@ class LanguageModelPt(object):
 
 
 if __name__ == '__main__':
-	# path=  '{:}zhou.csv'.format(CSVS_DIR)
-	# df= pd.read_csv(path)
-
-	# lexicon= set(df['LEMMA'].values)
-	lmpt = LanguageModelPt();
+	lmpt = LanguageModelPt()
+	import code; code.interact(local=dict(globals(), **locals()))		
