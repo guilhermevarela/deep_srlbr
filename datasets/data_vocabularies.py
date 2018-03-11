@@ -34,11 +34,11 @@ import string
 
 EMBEDDING_PATH='datasets/embeddings/' # use scripts
 # EMBEDDING_PATH='../datasets/embeddings/' # use notebooks
-TARGET_PATH='datasets/inputs/02/'
+TARGET_PATH='datasets/inputs/03/'
 CORPUS_EXCEPTIONS_DIR= './datasets/corpus_exceptions/'
 CSVS_DIR= './datasets/csvs/'
 
-def vocab_lazyload(column, input_dir=TARGET_PATH):
+def vocab_lazyload(column, dataset_name='zhou',input_dir=TARGET_PATH):
 	# all columns that have been trained with an embedding model
 	if column in ['FORM', 'LEMMA', 'PRED']: 
 		dict_name='word2idx'
@@ -54,7 +54,7 @@ def vocab_lazyload(column, input_dir=TARGET_PATH):
 		word2idx = pickle.load(pickle_in)
 		pickle_in.close()
 	else:
-		deep_df= propbankbr_lazyload(dataset_name='zhou')		
+		deep_df= propbankbr_lazyload(dataset_name=dataset_name)		
 		word2idx = df2word2idx(deep_df, col2tokenize=column,lower_case=lower_case)				
 
 		vocab_word2idx_persist(word2idx, dict_name=dict_name)		
@@ -291,11 +291,13 @@ if __name__== '__main__':
 	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', embeddings_id='glove_s50', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape ', embeddings.shape)
-	func2idx = vocab_lazyload('FUNC') 
+	gpos2idx = vocab_lazyload('GPOS', dataset_name='zhou_1') 
+	print('# feature GPOS', len(gpos2idx.keys()))
+	func2idx = vocab_lazyload('FUNC', dataset_name='zhou_1') 
 	print('# feature FUNC', len(func2idx.keys()))
-	arg02idx = vocab_lazyload('ARG_0') 
+	arg02idx = vocab_lazyload('ARG_0', dataset_name='zhou_1') 
 	print('# classes ARG_0', len(arg02idx.keys()))
-	arg12idx = vocab_lazyload('ARG_1') 
+	arg12idx = vocab_lazyload('ARG_1', dataset_name='zhou_1') 
 	print('# classes ARG_1', len(arg12idx.keys()))
 	
 	

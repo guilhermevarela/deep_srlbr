@@ -237,7 +237,7 @@ def propbankbr_parser2(ctx_p_size=1):
 		for p_s in range(sentence_numpredicates):		
 			func=['-']*sentence_sz
 			x_data=np.arange(x_in, x_in+sentence_sz).reshape((sentence_sz,1))
-			y_data=np.array([0,1,4,5,6,7+p_s]).reshape((1,Nind))			
+			y_data=np.array([0,1,4,5,6,8+p_s]).reshape((1,Nind))			
 			
 			Xind[x_out:x_out+sentence_sz,:]= np.tile(x_data, (1,Nind))
 			Yind[x_out:x_out+sentence_sz,:]= np.tile(y_data, (sentence_sz,1))
@@ -535,6 +535,7 @@ if __name__== '__main__':
 	
 	print('Done. with shape=', df.shape)
 	print('Spliting dataset')
+	# df = pd.read_csv(TARGET_PATH + 'zhou_1.csv', sep=',')
 	df_train, df_valid, df_test =propbankbr_split(df)
 	print('Train. with shape=', df_train.shape)
 	print('Valid. with shape=', df_valid.shape)

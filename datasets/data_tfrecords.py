@@ -23,18 +23,21 @@ import tensorflow as tf
 
 EMBEDDING_PATH='datasets/embeddings/'
 # TARGET_PATH='datasets/inputs/01/'
-TARGET_PATH='datasets/inputs/02/'
+# TARGET_PATH='datasets/inputs/02/'
+TARGET_PATH='datasets/inputs/03/'
 dataset_train= TARGET_PATH + 'train.tfrecords'
 dataset_valid= TARGET_PATH + 'valid.tfrecords'
 
 #Must be both 1) inputs to the model 2) have a string representation
-DEFAULT_SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC']
+DEFAULT_SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'GPOS', 'M_R', 'PRED', 'FUNC']
 CTX_P_SEQUENCE_FEATURES=['CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']
 TARGET_FEATURE=['ARG_1']
 EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']+ CTX_P_SEQUENCE_FEATURES
 
 
-SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0'] + CTX_P_SEQUENCE_FEATURES + ['targets']
+# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0'] + CTX_P_SEQUENCE_FEATURES + ['targets']
+# Language model
+SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'GPOS', 'M_R', 'PRED', 'FUNC', 'ARG_0'] + CTX_P_SEQUENCE_FEATURES + ['targets']
 
 TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
 	for key in SEQUENCE_FEATURES
@@ -190,7 +193,9 @@ def input_sz(input_sequence_features, embedding_sz):
 	feature_set=set(input_sequence_features)
 	embeddable_set= set(EMBEDDABLE_FEATURES)
 	feature_sz= len(feature_set-embeddable_set)
-	feature_sz+=len(embeddable_set.intersection(feature_set))*embedding_sz
+	# feature_sz+=len(embeddable_set.intersection(feature_set))*embedding_sz+25
+	# GPOS
+	feature_sz+=len(embeddable_set.intersection(feature_set))*embedding_sz+25-1
 	return feature_sz
 		
 
@@ -260,11 +265,21 @@ def _process(context_features, sequence_features, embeddings,
 	#Read all inputs as tf.int64		
 	for key in SEQUENCE_FEATURES:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
-		# import code; code.interact(local=dict(globals(), **locals()))		
+
 		if key in input_sequence_features:
 			if key in EMBEDDABLE_FEATURES: # ['PRED', 'LEMMA', 'CTX_P-3','CTX_P-2','CTX_P-1', 'CTX_P+1','CTX_P+2','CTX_P+3']
 				dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 				sequence_inputs.append(dense_tensor1)
+			elif key in ['GPOS']:							
+				dense_tensor1= tf.one_hot(
+					dense_tensor, 
+					25,
+					on_value=1,
+					off_value=0,
+					dtype=tf.int32
+				)				
+				sequence_inputs.append(tf.cast(dense_tensor1, tf.float32))
+
 			else: #key in ['ID', 'M_R']: # numeric inputs
 				# Cast to tf.float32 in order to concatenate in a single array with embeddings
 				dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
@@ -281,7 +296,7 @@ def _process(context_features, sequence_features, embeddings,
 		else: # descriptors
 			sequence_descriptors.append(dense_tensor)
 
-			
+	
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
 	D= tf.concat(sequence_descriptors, 1)
 	return X, Y, context_inputs[0], D 
@@ -306,6 +321,7 @@ def proposition2sequence_example(
 		if key in dict_propositions:
 			for token in dict_propositions[key]:					
 				# if token is a string lookup in a dict
+
 				if isinstance(token, str):				
 					idx= get_idx(token, key, dict_vocabs)
 					sequence_dict[key].feature.add().int64_list.value.append(idx)
@@ -393,14 +409,14 @@ def get_idx(token, key, dict_vocabs):
 	return idx
 
 if __name__== '__main__':
-	df=propbankbr_lazyload('zhou')	
+	df=propbankbr_lazyload('zhou_1')	
 	
 	dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
 	for dstype in ['train', 'valid', 'test']:
 		tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
 		
-		df=propbankbr_lazyload('zhou_{}'.format(dstype))	
+		df=propbankbr_lazyload('zhou_1_{}'.format(dstype))	
 		p0 = min(df['P'])
 		pn = max(df['P'])	# number of propositions		
 
