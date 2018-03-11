@@ -78,11 +78,10 @@ def vocab_lazyload_with_embeddings(column, embeddings_id='embeddings', input_dir
 		if os.path.isfile(dataset_path):		
 			embeddings = np.load(dataset_path)		
 		else: 
-			word2vec= vocab_word2vec(dataset_name=embeddings_txtfile)		
-			# embeddings, updated_word2idx= idx2embedding(word2idx, word2vec, verbose=verbose)			
+			word2vec= vocab_word2vec(dataset_name=embeddings_txtfile)					
 			word2idx, token2idx, embeddings= idx2embedding_2(word2idx, word2vec)			
+			
 			vocab_embedding_persist(embeddings, dataset_name=embeddings_npyfile)		
-			# if not(max(token2idx.values())==max(word2idx.values())):
 			vocab_word2idx_persist(word2idx, dict_name='word2idx')
 			vocab_word2idx_persist(token2idx, dict_name='tok2idx')					
 	else:		
