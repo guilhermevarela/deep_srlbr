@@ -22,7 +22,8 @@ from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vo
 import tensorflow as tf 
 
 EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/01/'
+# TARGET_PATH='datasets/inputs/01/'
+TARGET_PATH='datasets/inputs/02/'
 dataset_train= TARGET_PATH + 'train.tfrecords'
 dataset_valid= TARGET_PATH + 'valid.tfrecords'
 
