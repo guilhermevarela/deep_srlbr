@@ -4,6 +4,7 @@ Created on Mar 08, 2018
 	
 	ref:
 		https://github.com/nathanshartmann/portuguese_word_embeddings/blob/master/preprocessing.py
+		
 	preprocessing rules:	
 		Script used for cleaning corpus in order to train word embeddings.
 		All emails are mapped to a EMAIL token.
@@ -66,6 +67,16 @@ def _fetch_corpus_exceptions(corpus_exception_file):
 
 
 def _preprocess(lexicon, word2vec):	
+	'''
+		1. for NER entities within exception file
+			 replace by the tag organization, person, location
+		2. for smaller than 5 tokens replace by one hot encoding 
+		3. include time i.e 20h30, 9h in number embeddings '0'
+		4. include ordinals 2º 2ª in number embeddings '0'
+		5. include tel._38-4048 in numeber embeddings '0'
+	
+	New Word embedding size = embedding size + one-hot enconding of 2	
+	'''
 	# define outputs
 	total_words= len(lexicon)
 	lexicon2token = dict(zip(lexicon, ['unk']*total_words))
@@ -119,68 +130,65 @@ def _preprocess(lexicon, word2vec):
 
 	return lexicon2token
 
-
-class Test(object):
-	def __init__(self):
-		self.foo = 'foo'
-
-	def foo(self):
-		print(self.foo)
-
-class LanguageModelPt:
+class Propbank(object):
 	'''
-	The language model 
-
-
-
-	1. for NER entities within exception file
-		 replace by the tag organization, person, location
-	2. for smaller than 5 tokens replace by one hot encoding 
-	3. include time i.e 20h30, 9h in number embeddings '0'
-	4. include ordinals 2º 2ª in number embeddings '0'
-	5. include tel._38-4048 in numeber embeddings '0'
-	New Word embedding size = embedding size + one-hot enconding of 2	
-
+	Translates propositions to features providing both the 
+		data itself as meta data to machine learning experiments
 
 	'''	
-	# def __init__(self, natural_language_lexicon, natural_language_feature= ''):
+	
 	def __init__(self):
 		'''
-			Returns new instance with a loaded language model
-			args:
-				natural_language_lexicon 			 .:  set containing all natural language tokens
-
-				natural_language_embedding_file .: str representing the path to the n.l. file model
-
+			Returns new instance of propbank class - instantiates the data structures
+			
 			returns:
-				lmpt														.: object an instance of the LanguageModelPt class
+				propbank		.: object an instance of the Propbank class
 		'''
-	
-	path=  '{:}zhou.csv'.format(CSVS_DIR)
-	df= pd.read_csv(path)
+		self.lexicon=set([])
+		self.lex2tok={}
+		self.tok2idx={}
+		self.embeddings=np.array([])
 
-	natural_language_feature= 'LEMMA'
-	natural_language_lexicon= set(df[natural_language_feature].values)
-	natural_language_embedding_file='glove_s50'	
-	word2vec= _fetch_word2vec(natural_language_embedding_file)
 
-	
-	# Preprocess
-	total_words= len(set(natural_language_lexicon))	
-	print('Processing total lexicon is {:}'.format(total_words));
-	lexicon = list(natural_language_lexicon)
-	
-	
+	def total_words(self):
+		return len(self.lexicon)	
 
-	self.lexicon2token = _preprocess(lexicon, word2vec)
-	self.token2idx= {'unk':0}
-	
-	tokens= set(self.lexicon2token.values())
-	idx=1
-	for token in list(tokens):
-		if not(token in self.token2idx):
-			self.token2idx[token]=idx
-			idx+=1
+	def _defined(self):
+		return True if (self.lexicon)	
+		return False
+
+	def define(self, 
+		db_name='zhou_1', lexicon_columns=['LEMMA'], language_model='glove_s50', verbose=True):
+
+		if not(self._defined)
+			path=  '{:}{:}.csv'.format(CSVS_DIR, db_name)
+			df= pd.read_csv(path)
+
+			self.lexicon_columns= lexicon_columns
+			self.language_model= language_model
+
+
+			for col in lexicon_columns:
+				self.lexicon= self.lexicon.union(set(df[col].values))
+
+			word2vec= _fetch_word2vec(self.language_model)
+
+			
+			# Preprocess
+			print('Processing total lexicon is {:}'.format(self.total_words));			
+					
+			self.lex2tok= _preprocess(list(self.lexicon), word2vec)
+			self.tok2idx= {'unk':0}			
+			tokens= set(self.lex2tok.values())
+			idx=1
+			for token in list(tokens):
+				if not(token in self.tok2idx):
+					self.token2idx[token]=idx
+					idx+=1
+
+
+		else:
+			raise	Exception('Lexicon and embeddings already defined')		
 
 
 	def encode(self, word, feature):
@@ -228,7 +236,7 @@ class LanguageModelPt:
 	def add(self, feature_lexicon, feature,  encoding_strategy=''):
 		raise NotImplementedError
 
-	def example(self, values):
+	def sequence_example(self, values):
 		raise NotImplementedError
 
 
@@ -238,6 +246,6 @@ class LanguageModelPt:
 
 
 if __name__ == '__main__':
-	# lmpt = LanguageModelPt()
-	Test()
+	lmpt = LanguageModelPt()
+	# Test()
 	# import code; code.interact(local=dict(globals(), **locals()))		
