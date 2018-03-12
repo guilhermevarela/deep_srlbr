@@ -133,6 +133,12 @@ class Propbank(object):
 			raise	Exception('Lexicon and embeddings already defined')		
 
 	def persist(self, file_dir, filename=''):
+		'''
+  		Serializes this object in pickle format @ file_dir+filename
+  		args:
+  			file_dir	.: string representing the directory
+  		 	filename  .: string (optional) filename
+  	'''
 		if not(filename):
 			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, self.lexicon_columns, self.language_model)
 		else:
@@ -190,20 +196,45 @@ class Propbank(object):
 			Returns the dimension of the features 
 			args:
 				features : list<str>  with the features names
+
+			returns:
+				sz 			.: int indicating the total feature size
 		'''
 		meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
-		result=0
+		sz=0
 		for feat in features:
 			if meta[feat] in ['txt']:
-				result+=len(self.embeddings['unk'])
+				sz+=len(self.embeddings['unk'])
 			elif meta[feat] in ['hot']:
-				result+=len(self.onehot[feat])
+				sz+=len(self.onehot[feat])
 			else:
-				result+=1
-		return result
+				sz+=1
+		return sz
 
 	def sequence_example(self, values, features):
-		raise NotImplementedError
+		'''
+			Produces a sequence from values 
+			
+			args:
+				features : list<str>  with the features names
+
+			returns:
+				sz 			.: int indicating the total feature size
+		'''
+		feat2sz= { feat: self.size(feat)
+			for feat in features}		
+
+		sz=sum(feat2sz.values())  	
+		sequence= np.zeros((1,sz),dtype=np.float32)
+
+		i=0
+		j=0
+		for feat, sz in feat2sz.items():
+			seq[j:j+sz]= self.encode(values[i], feat)
+			i+=1
+			j=sz 
+
+		return sequence	
 
 
 
