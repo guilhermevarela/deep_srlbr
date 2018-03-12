@@ -120,6 +120,12 @@ def _preprocess(lexicon, word2vec):
 	return lexicon2token
 
 
+class Test(object):
+	def __init__(self):
+		self.foo = 'foo'
+
+	def foo(self):
+		print(self.foo)
 
 class LanguageModelPt:
 	'''
@@ -232,5 +238,6 @@ class LanguageModelPt:
 
 
 if __name__ == '__main__':
-	lmpt = LanguageModelPt()
-	import code; code.interact(local=dict(globals(), **locals()))		
+	# lmpt = LanguageModelPt()
+	Test()
+	# import code; code.interact(local=dict(globals(), **locals()))		

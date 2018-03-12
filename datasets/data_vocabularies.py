@@ -288,7 +288,7 @@ if __name__== '__main__':
 	# embedding_path=EMBEDDING_PATH  'glove_s50.txt'
 	# word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")	
 	# import code; code.interact(local=dict(globals(), **locals()));
-	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', embeddings_id='glove_s50', verbose=True) 
+	word2idx, embeddings = vocab_lazyload_with_embeddings(column='LEMMA', embeddings_id='wang2vec_s100', verbose=True) 
 	print('# tokens', len(word2idx.keys()))
 	print('embeddings shape ', embeddings.shape)
 	gpos2idx = vocab_lazyload('GPOS', dataset_name='zhou_1') 
