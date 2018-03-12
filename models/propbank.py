@@ -4,7 +4,7 @@ Created on Mar 08, 2018
 	
 	ref:
 		https://github.com/nathanshartmann/portuguese_word_embeddings/blob/master/preprocessing.py
-		
+
 	preprocessing rules:	
 		Script used for cleaning corpus in order to train word embeddings.
 		All emails are mapped to a EMAIL token.
@@ -22,113 +22,21 @@ sys.path.append('datasets/')
 
 import numpy as np 
 import pandas as pd
-import re
-import string
-from gensim.models import KeyedVectors
+import pickle
 
-EMBEDDINGS_DIR= './datasets/embeddings/'
-CORPUS_EXCEPTIONS_DIR= './datasets/corpus_exceptions/'
+
+from utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
+from collections import OrderedDict
+
 CSVS_DIR= './datasets/csvs/'
 
-def _fetch_word2vec(natural_language_embedding_file):
-	print('Fetching word2vec...')
-	try:		
-		embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)		
-		word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")			
-	except FileNotFoundError:
-		print('natural_language_feature: {:} not found .. reverting to \'glove_s50\' instead'.format(natural_language_embedding_file))
-		natural_language_embedding_file='glove_s50'
-		embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)		
-		word2vec  = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")			
-	finally:
-			print('Fetching word2vec... done')	
 
-	return word2vec
 
-def _fetch_corpus_exceptions(corpus_exception_file):
-	'''
-		Returns a list of supported feature names
-
-		args:
-			corpus_exception_file
-
-			ner_tag
-
-		returns:
-			features : list<str>  with the features names
-	'''
-	print('Fetching {:}...'.format(corpus_exception_file))
-	corpus_exceptions_path = '{:}{:}'.format(CORPUS_EXCEPTIONS_DIR, corpus_exception_file)
-	df = pd.read_csv(corpus_exceptions_path, sep='\t')
-	print('Fetching {:}...done'.format(corpus_exception_file))	
-
-	return set(df['TOKEN'].values)
+SEQUENCE_FEATURES=['IDX','ID','S','P','P_S','FORM','LEMMA','GPOS','PRED','FUNC','M_R','CTX_P-3','CTX_P-2','CTX_P-1','CTX_P+1','CTX_P+2','CTX_P+3','ARG_0','ARG_1']
+SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int', 'txt', 'txt', 'hot', 'txt', 'txt', 'boo','txt', 'txt','txt', 'txt','txt', 'txt', 'hot', 'hot']
 
 
 
-def _preprocess(lexicon, word2vec):	
-	'''
-		1. for NER entities within exception file
-			 replace by the tag organization, person, location
-		2. for smaller than 5 tokens replace by one hot encoding 
-		3. include time i.e 20h30, 9h in number embeddings '0'
-		4. include ordinals 2º 2ª in number embeddings '0'
-		5. include tel._38-4048 in numeber embeddings '0'
-	
-	New Word embedding size = embedding size + one-hot enconding of 2	
-	'''
-	# define outputs
-	total_words= len(lexicon)
-	lexicon2token = dict(zip(lexicon, ['unk']*total_words))
-
-	# fetch exceptions list
-	pers= _fetch_corpus_exceptions('corpus-word-missing-pers.txt')
-	locs= _fetch_corpus_exceptions('corpus-word-missing-locs.txt')
-	orgs= _fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
-	
-
-	#define regex
-	re_punctuation= re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE)	
-	re_number= re.compile(r'^\d+$')
-	re_tel   = re.compile(r'^tel\._')
-	re_time  = re.compile(r'^\d{1,2}h\d{0,2}$')	
-	re_ordinals= re.compile(r'º|ª')	
-
-	for word in list(lexicon):
-		# some hiffenized words belong to embeddings
-		# ex: super-homem, fim-de-semana, pré-qualificar, caça-níqueis
-		token = word.lower() 
-		if token in word2vec:					
-			lexicon2token[word]= token
-		else:
-			# if word in ['Rede_Globo', 'Hong_Kong', 'Banco_Central']:
-			# 	import code; code.interact(local=dict(globals(), **locals()))			
-			token = re_tel.sub('', token)
-			token = re_ordinals.sub('', token)
-			token = re_punctuation.sub('', token)
-
-			token = re_time.sub('0', token)
-			token = re_number.sub('0', token)
-
-			if token in word2vec:
-				lexicon2token[word]= token.lower()
-			else:	
-				if word in pers:
-					lexicon2token[word] = 'pessoa'
-				else:	
-					if word in orgs:
-						lexicon2token[word] = 'organização'	
-					else:
-						if word in locs:
-							lexicon2token[word] = 'local'				
-
-
-	total_tokens=	len([value for value in  lexicon2token.values() if not(value == 'unk')])
-	
-	print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_words,
-	 total_tokens, 100*float(total_words-total_tokens)/ total_words))				
-
-	return lexicon2token
 
 class Propbank(object):
 	'''
@@ -147,23 +55,25 @@ class Propbank(object):
 		self.lexicon=set([])
 		self.lex2tok={}
 		self.tok2idx={}
+		self.idx2tok={}
 		self.embeddings=np.array([])
 
+		self.onehot={}
+		self.onehot_inverse={}
+		self.data={}
 
+	
 	def total_words(self):
 		return len(self.lexicon)	
-
-	def _defined(self):
-		return True if (self.lexicon)	
-		return False
 
 	def define(self, 
 		db_name='zhou_1', lexicon_columns=['LEMMA'], language_model='glove_s50', verbose=True):
 
-		if not(self._defined)
+		if (self.total_words() == 0):
 			path=  '{:}{:}.csv'.format(CSVS_DIR, db_name)
 			df= pd.read_csv(path)
 
+			self.db_name= db_name
 			self.lexicon_columns= lexicon_columns
 			self.language_model= language_model
 
@@ -171,38 +81,97 @@ class Propbank(object):
 			for col in lexicon_columns:
 				self.lexicon= self.lexicon.union(set(df[col].values))
 
-			word2vec= _fetch_word2vec(self.language_model)
+			word2vec= fetch_word2vec(self.language_model)
+			embeddings_sz = len(word2vec['unk'])
+			vocab_sz= self.total_words()
 
 			
 			# Preprocess
-			print('Processing total lexicon is {:}'.format(self.total_words));			
+			if verbose:			
+				print('Processing total lexicon is {:}'.format(self.total_words())) 
 					
-			self.lex2tok= _preprocess(list(self.lexicon), word2vec)
+			self.lex2tok= preprocess(list(self.lexicon), word2vec)
 			self.tok2idx= {'unk':0}			
+			self.idx2tok= {0:'unk'}			
+			self.embeddings= np.zeros((vocab_sz, embeddings_sz),dtype=np.float32)
+			self.embeddings[0]= word2vec['unk']
+
 			tokens= set(self.lex2tok.values())
 			idx=1
 			for token in list(tokens):
 				if not(token in self.tok2idx):
-					self.token2idx[token]=idx
+					self.tok2idx[token]=idx
+					self.idx2tok[idx]=token
+					self.embeddings[idx]= word2vec[token]
 					idx+=1
-
-
+			
+					
+			self.features= list(df.columns)
+			meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))			
+			for feat in self.features:
+				if meta[feat]  == 'hot':
+					keys= set(df[feat].values)
+					idxs= list(range(len(keys)))
+					self.onehot[feat]= OrderedDict(zip(keys, idxs))
+					self.onehot_inverse= OrderedDict(zip(idxs, keys))
+				# for categorical variables	
+				if meta[feat] in ['hot']:
+					self.data[feat] = OrderedDict(zip(
+						df[feat].index, 
+						[self.onehot[feat][val] 
+							for val in df[feat].values]
+					))
+				elif meta[feat] in ['txt']:
+					self.data[feat] = OrderedDict(zip(
+						df[feat].index, 
+						[self.tok2idx[self.lex2tok[val]] 
+							for val in df[feat].values]
+					))
+				else:
+					self.data[feat] = OrderedDict(df[feat].to_dict())
 		else:
 			raise	Exception('Lexicon and embeddings already defined')		
 
+	def persist(self, file_dir, filename=''):
+		if not(filename):
+			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, self.lexicon_columns, self.language_model)
+		else:
+			filename= '{:}{:}.pickle'.format(file_dir, filename)		
 
-	def encode(self, word, feature):
+		with open(filename, 'wb') as f:
+    	pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+  def recover(self, file_path):		
+  	'''
+  		Returns a copy from the instanced saved @file_path
+  		args:
+  			file_path .: string a full path to a serialized dump of propbank object
+
+  		returns:
+  			 object   .: propbank object instanced saved at file_path
+  	'''
+		with open(file_path, 'rb') as f:
+    	dump= pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+    return dump 
+  	
+	def encode(self, value, feature):
 		'''
 			Returns feature representation
 			args:
-				word   		.: string token before embeddings or encoding strategies
+				value   		.: string token before embeddings or encoding strategies
 
 				feature 	.: string feature name
 
 			returns:				
 				result    .: list<> with the numeric representation of word under feature
 		'''
-		raise NotImplementedError
+		result= value 
+		meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
+		if meta[feature] == ['hot']:
+			result= self.onehot[feature][value]
+		elif meta[feature] == ['txt']:
+			result= self.tok2idx[self.lex2tok[value]]
+		return result
 
 	def decode(self, idx, feature):
 		'''
@@ -222,21 +191,18 @@ class Propbank(object):
 			args:
 				features : list<str>  with the features names
 		'''
-		raise NotImplementedError
+		meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
+		result=0
+		for feat in features:
+			if meta[feat] in ['txt']:
+				result+=len(self.embeddings['unk'])
+			elif meta[feat] in ['hot']:
+				result+=len(self.onehot[feat])
+			else:
+				result+=1
+		return result
 
-	def features(self):		
-		'''
-			Returns a list of supported feature names
-
-			returns:
-				features : list<str>  with the features names
-		'''
-		raise NotImplementedError
-	
-	def add(self, feature_lexicon, feature,  encoding_strategy=''):
-		raise NotImplementedError
-
-	def sequence_example(self, values):
+	def sequence_example(self, values, features):
 		raise NotImplementedError
 
 
@@ -246,6 +212,7 @@ class Propbank(object):
 
 
 if __name__ == '__main__':
-	lmpt = LanguageModelPt()
+	propbank = Propbank()
+	propbank.define()
 	# Test()
-	# import code; code.interact(local=dict(globals(), **locals()))		
+	import code; code.interact(local=dict(globals(), **locals()))		
