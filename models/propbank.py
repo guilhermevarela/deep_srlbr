@@ -32,9 +32,36 @@ CSVS_DIR= './datasets/csvs/'
 
 
 
-SEQUENCE_FEATURES=['IDX','ID','S','P','P_S','FORM','LEMMA','GPOS','PRED','FUNC','M_R','CTX_P-3','CTX_P-2','CTX_P-1','CTX_P+1','CTX_P+2','CTX_P+3','ARG_0','ARG_1']
-SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int', 'txt', 'txt', 'hot', 'txt', 'txt', 'boo','txt', 'txt','txt', 'txt','txt', 'txt', 'hot', 'hot']
+SEQUENCE_FEATURES=      ['IDX',  'ID',   'S',   'P', 'P_S', 'LEMMA','GPOS','PRED','FUNC', 'M_R','CTX_P-3','CTX_P-2','CTX_P-1','CTX_P+1','CTX_P+2','CTX_P+3','ARG_0','ARG_1']
+SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',   'txt', 'hot', 'txt', 'txt', 'int',    'txt',    'txt',    'txt',    'txt',    'txt',    'txt',  'hot',  'hot']
+META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
 
+DATASET_SIZE= 5931
+DATASET_TRAIN_SIZE= 5099
+DATASET_VALID_SIZE= 569
+DATASET_TEST_SIZE=  263
+
+
+
+class _PropIter(object):
+	'''
+	Translates propositions 
+
+	'''	
+	def __init__(self, low, high, fnc):
+		self.current= low 
+		self.high= high
+		self.fnc= fnc
+
+	def __iter__(self):
+		return self
+
+	def __next__(self): 
+		if self.current > self.high:
+			raise StopIteration
+		else:
+			self.current += 1
+			return self.current - 1, self.fnc(self.current-1)
 
 
 
@@ -107,28 +134,29 @@ class Propbank(object):
 			
 					
 			self.features= list(df.columns)
-			meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))			
+
 			for feat in self.features:
-				if meta[feat]  == 'hot':
-					keys= set(df[feat].values)
-					idxs= list(range(len(keys)))
-					self.onehot[feat]= OrderedDict(zip(keys, idxs))
-					self.onehot_inverse= OrderedDict(zip(idxs, keys))
-				# for categorical variables	
-				if meta[feat] in ['hot']:
-					self.data[feat] = OrderedDict(zip(
-						df[feat].index, 
-						[self.onehot[feat][val] 
-							for val in df[feat].values]
-					))
-				elif meta[feat] in ['txt']:
-					self.data[feat] = OrderedDict(zip(
-						df[feat].index, 
-						[self.tok2idx[self.lex2tok[val]] 
-							for val in df[feat].values]
-					))
-				else:
-					self.data[feat] = OrderedDict(df[feat].to_dict())
+				if feat in META:
+					if META[feat]  == 'hot':
+						keys= set(df[feat].values)
+						idxs= list(range(len(keys)))
+						self.onehot[feat]= OrderedDict(zip(keys, idxs))
+						self.onehot_inverse= OrderedDict(zip(idxs, keys))
+					# for categorical variables	
+					if META[feat] in ['hot']:
+						self.data[feat] = OrderedDict(zip(
+							df[feat].index, 
+							[self.onehot[feat][val] 
+								for val in df[feat].values]
+						))
+					elif META[feat] in ['txt']:
+						self.data[feat] = OrderedDict(zip(
+							df[feat].index, 
+							[self.tok2idx[self.lex2tok[val]] 
+								for val in df[feat].values]
+						))
+					else:
+						self.data[feat] = OrderedDict(df[feat].to_dict())
 		else:
 			raise	Exception('Lexicon and embeddings already defined')		
 
@@ -140,25 +168,26 @@ class Propbank(object):
   		 	filename  .: string (optional) filename
   	'''
 		if not(filename):
-			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, self.lexicon_columns, self.language_model)
+			strcols= '_'.join( [col for col in self.lexicon_columns])
+			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, strcols, self.language_model)
 		else:
 			filename= '{:}{:}.pickle'.format(file_dir, filename)		
 
 		with open(filename, 'wb') as f:
-    	pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+			pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-  def recover(self, file_path):		
-  	'''
-  		Returns a copy from the instanced saved @file_path
-  		args:
-  			file_path .: string a full path to a serialized dump of propbank object
+	def recover(self, file_path):		
+		'''
+		Returns a copy from the instanced saved @file_path
+		args:
+			file_path .: string a full path to a serialized dump of propbank object
 
-  		returns:
-  			 object   .: propbank object instanced saved at file_path
-  	'''
+		returns:
+			 object   .: propbank object instanced saved at file_path
+		'''
 		with open(file_path, 'rb') as f:
-    	dump= pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
-    return dump 
+			copy= pickle.load(f)		
+		return copy
   	
 	def encode(self, value, feature):
 		'''
@@ -172,10 +201,10 @@ class Propbank(object):
 				result    .: list<> with the numeric representation of word under feature
 		'''
 		result= value 
-		meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
-		if meta[feature] == ['hot']:
+		
+		if META[feature] == ['hot']:
 			result= self.onehot[feature][value]
-		elif meta[feature] == ['txt']:
+		elif META[feature] == ['txt']:
 			result= self.tok2idx[self.lex2tok[value]]
 		return result
 
@@ -200,26 +229,42 @@ class Propbank(object):
 			returns:
 				sz 			.: int indicating the total feature size
 		'''
-		meta= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
+		
 		sz=0
 		for feat in features:
-			if meta[feat] in ['txt']:
+			if META[feat] in ['txt']:
 				sz+=len(self.embeddings['unk'])
-			elif meta[feat] in ['hot']:
+			elif META[feat] in ['hot']:
 				sz+=len(self.onehot[feat])
 			else:
 				sz+=1
 		return sz
 
-	def sequence_example(self, values, features):
+
+	def sequence_example_int32(self, idx, features):
 		'''
 			Produces a sequence from values 
-			
+
 			args:
+				idx   	 .: 
+				features .: list<str>  with the features names
+
+			returns:
+				 				 .: int32<features> indicating int value of features
+		'''		
+		return [self.data[feat][idx] for feat in features]
+		
+
+	def sequence_example_raw(self, rawvalues, features):
+		'''
+			Produces a sequence from values 
+
+			args:
+				values   : list<str>  rawtext from csv
 				features : list<str>  with the features names
 
 			returns:
-				sz 			.: int indicating the total feature size
+				sz 			.: float32<size> indicating values converted to example
 		'''
 		feat2sz= { feat: self.size(feat)
 			for feat in features}		
@@ -230,11 +275,59 @@ class Propbank(object):
 		i=0
 		j=0
 		for feat, sz in feat2sz.items():
-			seq[j:j+sz]= self.encode(values[i], feat)
+			sequence[j:j+sz]= float(self.encode( rawvalues[i], feat))
 			i+=1
 			j=sz 
 
-		return sequence	
+		return sequence		
+
+	def feature(self, feature):
+		'''
+			Returns a feature from data
+
+			args:
+				feature : string representing a feature from data
+
+			returns:
+				index  .: int<T> indicating values converted to example
+				values .: int<T> as index
+		
+		'''
+		#unzips features
+		index, values=  zip(*self.data[feature].items())
+		return index, values
+
+
+
+	def itertrain(self, features):
+		fn = lambda x : self.sequence_example_int32(x, features)
+
+		high=-1
+		low=-1		
+		for idx, val in list(zip(*self.feature('P'))):
+			if val > low and low==-1:
+				low= idx 
+			
+			if val > DATASET_TRAIN_SIZE and high==-1:				
+				high= idx-1  
+				break
+		
+		return _PropIter(low, high, fn)
+
+	def itervalid(self, features):
+		fn = lambda x : self.sequence_example_int32(x, features)
+
+		high=-1
+		low=-1
+		for idx, val in list(zip(*self.feature('P'))):
+			if val > DATASET_TRAIN_SIZE and low==-1:
+				low= idx 
+			
+			if val > DATASET_TRAIN_SIZE + DATASET_VALID_SIZE and high==-1:				
+				high= idx-1  			
+				break
+		
+		return _PropIter(low, high, fn)		
 
 
 
@@ -243,7 +336,22 @@ class Propbank(object):
 
 
 if __name__ == '__main__':
-	propbank = Propbank()
-	propbank.define()
+	propbank = Propbank().recover('zhou_1_LEMMA_glove_s50.pickle')
+	# propbank.define()
+	# propbank.persist('')
+	
+	min_idx=99999999999
+	min_p=99999999999
+	min_s=99999999999
+	for idx, values in propbank.itervalid(['S','P','GPOS']):
+		if min_idx> idx:
+			min_idx=idx
+		if min_p > values[0]:
+			min_p=values[0] 
+
+		if min_s > values[1]:
+			min_s=values[1]
+
+	print(min_idx,min_p, min_s)
 	# Test()
 	import code; code.interact(local=dict(globals(), **locals()))		
