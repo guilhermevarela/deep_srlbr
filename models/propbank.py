@@ -189,23 +189,32 @@ class Propbank(object):
 			copy= pickle.load(f)		
 		return copy
   	
-	def encode(self, value, feature):
+	def encode(self, value, feature, apply_embeddings=False):
 		'''
 			Returns feature representation
 			args:
-				value   		.: string token before embeddings or encoding strategies
-
-				feature 	.: string feature name
+				value   				 .: string token before embeddings or encoding strategies
+				feature 	  		 .: string feature name
+				apply_embeddings .:
 
 			returns:				
 				result    .: list<> with the numeric representation of word under feature
 		'''
-		result= value 
-		
+		result= value 		
 		if META[feature] == ['hot']:
 			result= self.onehot[feature][value]
+
+			if apply_embeddings:
+				sz= self.size(feature)
+				tmp= np.zeros((sz,),dtype=np.int32)
+				tmp[result]=1
+				result=tmp 
+
 		elif META[feature] == ['txt']:
 			result= self.tok2idx[self.lex2tok[value]]
+
+			if apply_embeddings:
+				result= self.embeddings[result]
 		return result
 
 	def decode(self, idx, feature):
@@ -241,45 +250,60 @@ class Propbank(object):
 		return sz
 
 
-	def sequence_example_int32(self, idx, features):
+	def sequence_example(self, idx, features, as_dict=False):
 		'''
-			Produces a sequence from values 
+			Produces a sequence from a dataset index
 
 			args:
 				idx   	 .: 
 				features .: list<str>  with the features names
 
 			returns:
-				 				 .: int32<features> indicating int value of features
+				 				 .: int<features> indicating int value of features
 		'''		
-		return [self.data[feat][idx] for feat in features]
+		if as_dict:
+			return {feat: self.data[feat][idx] for feat in features}
+		else:
+			return [self.data[feat][idx] for feat in features]
 		
 
-	def sequence_example_raw(self, rawvalues, features):
+	def sequence_example2(self, categories, features, embeddify=False):
 		'''
-			Produces a sequence from values 
+			Produces a sequence from categorical values 
+				(an entry) from the dataset
 
 			args:
-				values   : list<str>  rawtext from csv
-				features : list<str>  with the features names
+				values   .: list<str>  rawtext from csv
+				features .: list<str>  with the features names
+				embeddify   .: bool if false will return categorical indexes
+												 if  true   will apply embeddings or onehot
 
 			returns:
-				sz 			.: float32<size> indicating values converted to example
-		'''
+				example 	.: numerical<N> if embeddify=True then N = self.size(features) 
+																	else N=len(categories)	
+		'''		
+		
 		feat2sz= { feat: self.size(feat)
 			for feat in features}		
 
 		sz=sum(feat2sz.values())  	
-		sequence= np.zeros((1,sz),dtype=np.float32)
+		if embeddify:
+			result= np.zeros((1,sz),dtype=np.float32)
+		else:
+			result=[]
 
 		i=0
 		j=0
 		for feat, sz in feat2sz.items():
-			sequence[j:j+sz]= float(self.encode( rawvalues[i], feat))
+			if embeddify:
+				result[j:j+sz]= float(self.encode( categories[i], feat, apply_embeddings=embeddify))
+			else:
+				result += self.encode( categories[i], feat, false)
+
 			i+=1
 			j=sz 
-
-		return sequence		
+		
+		return result
 
 	def feature(self, feature):
 		'''
@@ -300,7 +324,7 @@ class Propbank(object):
 
 
 	def itertrain(self, features):
-		fn = lambda x : self.sequence_example_int32(x, features)
+		fn = lambda x : self.sequence_example(x, features, as_dict=True)
 
 		high=-1
 		low=-1		
@@ -315,7 +339,7 @@ class Propbank(object):
 		return _PropIter(low, high, fn)
 
 	def itervalid(self, features):
-		fn = lambda x : self.sequence_example_int32(x, features)
+		fn = lambda x : self.sequence_example(x, features, as_dict=True)
 
 		high=-1
 		low=-1
