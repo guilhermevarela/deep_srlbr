@@ -32,8 +32,15 @@ CSVS_DIR= './datasets/csvs/'
 
 
 
-SEQUENCE_FEATURES=      ['IDX',  'ID',   'S',   'P', 'P_S', 'LEMMA','GPOS','PRED','FUNC', 'M_R','CTX_P-3','CTX_P-2','CTX_P-1','CTX_P+1','CTX_P+2','CTX_P+3','ARG_0','ARG_1']
-SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',   'txt', 'hot', 'txt', 'txt', 'int',    'txt',    'txt',    'txt',    'txt',    'txt',    'txt',  'hot',  'hot']
+SEQUENCE_FEATURES=      [
+	'ID', 'S', 'P', 'P_S', 'LEMMA', 'GPOS', 'MORF', 'DTREE', 'FUNC',
+	'CTREE', 		 'PRED', 			'ARG', 'CTX_P+1', 'CTX_P-3', 'CTX_P-2', 
+	'CTX_P-1', 'CTX_P+2', 'CTX_P+3',  		'M_R', 'PRED_1', '			T']
+
+SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int',   'txt', 'hot', 'hot', 'hot', 'hot',
+	'hot', 	'txt', 'hot',    'txt',    'txt',    'txt',    'txt',    
+	'txt', 'txt',  'int',  'txt', 'hot']
+
 META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
 
 DATASET_SIZE= 5931
@@ -43,7 +50,7 @@ DATASET_TEST_SIZE=  263
 
 
 
-class _PropIter(object):
+class _PropbankIterator(object):
 	'''
 	Translates propositions 
 
@@ -90,14 +97,28 @@ class Propbank(object):
 		self.data={}
 
 	
+	@classmethod		
+	def recover(cls, file_path):		
+		'''
+		Returns a copy from the instanced saved @file_path
+		args:
+			file_path .: string a full path to a serialized dump of propbank object
+
+		returns:
+			 object   .: propbank object instanced saved at file_path
+		'''
+		with open(file_path, 'rb') as f:
+			propbank_instance= pickle.load(f)		
+		return propbank_instance
+
 	def total_words(self):
 		return len(self.lexicon)	
 
 	def define(self, 
-		db_name='zhou_1', lexicon_columns=['LEMMA'], language_model='glove_s50', verbose=True):
+		db_name='db_pt', lexicon_columns=['LEMMA'], language_model='glove_s50', verbose=True):
 
 		if (self.total_words() == 0):
-			path=  '{:}{:}.csv'.format(CSVS_DIR, db_name)
+			path=  '{:}{:}.csv'.format(CSVS_DIR, db_name, index_col=1)
 			df= pd.read_csv(path)
 
 			self.db_name= db_name
@@ -133,7 +154,7 @@ class Propbank(object):
 					idx+=1
 			
 					
-			self.features= list(df.columns)
+			self.features= set(df.columns).intersection(set(SEQUENCE_FEATURES))
 
 			for feat in self.features:
 				if feat in META:
@@ -176,18 +197,6 @@ class Propbank(object):
 		with open(filename, 'wb') as f:
 			pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-	def recover(self, file_path):		
-		'''
-		Returns a copy from the instanced saved @file_path
-		args:
-			file_path .: string a full path to a serialized dump of propbank object
-
-		returns:
-			 object   .: propbank object instanced saved at file_path
-		'''
-		with open(file_path, 'rb') as f:
-			copy= pickle.load(f)		
-		return copy
   	
 	def encode(self, value, feature, apply_embeddings=False):
 		'''
@@ -323,20 +332,39 @@ class Propbank(object):
 
 
 
-	def itertrain(self, features):
-		fn = lambda x : self.sequence_example(x, features, as_dict=True)
+	def iterator(self, ds_type):
+		if not(ds_type in ['train', 'valid', 'test']):
+			buff= 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+			raise KeyError(buff)
+		else:
+			fn = lambda x : self.sequence_example(x, self.features, as_dict=True)
+			if ds_type in ['train']:
+				lb=0
+				ub=DATASET_TRAIN_SIZE 
+			elif ds_type in ['valid']:
+				lb=DATASET_TRAIN_SIZE 
+				ub=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE
+			else:
+				lb=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE 
+				ub=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE
 
-		high=-1
-		low=-1		
-		for idx, val in list(zip(*self.feature('P'))):
-			if val > low and low==-1:
+
+		low=-1
+		high=-1		
+		prev_idx=-1
+		for idx, prop in list(zip(*self.feature('P'))):
+			if prop > lb and low==-1:
 				low= idx 
 			
-			if val > DATASET_TRAIN_SIZE and high==-1:				
-				high= idx-1  
+			if prop > ub and high==-1:				
+				high= prev_idx
 				break
-		
-		return _PropIter(low, high, fn)
+			prev_idx=idx
+
+		if high==-1:
+			high=prev_idx
+
+		return _PropbankIterator(low, high, fn)
 
 	def itervalid(self, features):
 		fn = lambda x : self.sequence_example(x, features, as_dict=True)
@@ -351,7 +379,7 @@ class Propbank(object):
 				high= idx-1  			
 				break
 		
-		return _PropIter(low, high, fn)		
+		return _PropbankIterator(low, high, fn)		
 
 
 
@@ -360,22 +388,40 @@ class Propbank(object):
 
 
 if __name__ == '__main__':
-	propbank = Propbank().recover('zhou_1_LEMMA_glove_s50.pickle')
+	propbank = Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
+	# propbank = Propbank()
 	# propbank.define()
 	# propbank.persist('')
 	
 	min_idx=99999999999
 	min_p=99999999999
 	min_s=99999999999
-	for idx, values in propbank.itervalid(['S','P','GPOS']):
+
+	max_idx=0
+	max_p=0
+	max_s=0
+
+	# for idx, d in propbank.itervalid(['S','P','GPOS']):
+	for idx, d in propbank.iterator('test'):
 		if min_idx> idx:
 			min_idx=idx
-		if min_p > values[0]:
-			min_p=values[0] 
 
-		if min_s > values[1]:
-			min_s=values[1]
+		if min_p > d['P']:
+			min_p=d['P']
 
-	print(min_idx,min_p, min_s)
+		if min_s > d['S']:
+			min_s=d['S']
+
+		if max_idx < idx:
+			max_idx=idx 
+
+		if max_p < d['P']: 
+			max_p=d['P']
+
+		if max_s < d['S']:
+		 max_s= d['S'] 
+			
+	print('mins:',min_idx,min_p, min_s)
+	print('maxs:',max_idx,max_p, max_s)
 	# Test()
 	import code; code.interact(local=dict(globals(), **locals()))		

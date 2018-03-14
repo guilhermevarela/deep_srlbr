@@ -14,12 +14,16 @@ Created on Jan 25, 2018
 '''
 import pandas as pd 
 import numpy as np 
+import sys
+sys.path.append('../models/')
 
 #Uncomment if launched from /datasets
-from data_propbankbr import  propbankbr_lazyload
-from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
+from propbank import Propbank
+# from data_propbankbr import  propbankbr_lazyload
+# from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
 
 import tensorflow as tf 
+
 
 EMBEDDING_PATH='datasets/embeddings/'
 # TARGET_PATH='datasets/inputs/01/'
@@ -49,6 +53,8 @@ TF_CONTEXT_FEATURES=	{
 
 DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
+DATASET_TEST_SIZE=  263
+
 
 
 ############################# tfrecords reader ############################# 
@@ -302,183 +308,199 @@ def _process(context_features, sequence_features, embeddings,
 	return X, Y, context_inputs[0], D 
 
 ############################# tfrecords writer ############################# 
-def tfrecords_builder(propbank_iter, dataset_type, target= 'T', lang='pt'):
+def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 	'''
 		Iterates within propbank and saves records
 	'''
 	if not(dataset_type in ['train', 'valid', 'test']):
 		buff= 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
 		raise KeyError(buff)
+	else:
+		total_propositions= DATASET_TRAIN_SIZE if dataset_type in ['train']		
+		total_propositions= DATASET_VALID_SIZE if dataset_type in ['valid']		
+		total_propositions= DATASET_TEST_SIZE  if dataset_type in ['test']		
 
-	tfrecords_path= TARGET_PATH + 'db{:}_{:}_{:}.tfrecords'.format(dataset_type,lang,target)	
+	tfrecords_path= TARGET_PATH + 'db{:}_{:}.tfrecords'.format(dataset_type,lang)	
 	with open(tfrecords_path, 'w+') as f:
-			writer= tf.python_io.TFRecordWriter(f.name)	
-		
-			l=1
-			ex = None 
-			prev_p = -1 
-			helper_d= {} # that's a helper dict in order to abbreviate
-			num_records=0
-			num_prepositions=0
-			for index, d in propbank_iter:
-				if d['P'] != prev_p:					
-					if ex: 
-						# compute the context feature 'L'
-						ex.context.feature['L'].int64_list.value.append(l)			
-						writer.write(ex.SerializeToString())        
-					ex= tf.train.SequenceExample()
-					l=1
-					helper_d= {}
-					num_prepositions+=1
-				else:
-					l+=1
+		writer= tf.python_io.TFRecordWriter(f.name)	
+	
+		l=1
+		ex = None 
+		prev_p = -1 
+		helper_d= {} # that's a helper dict in order to abbreviate
+		num_records=0
+		num_prepositions=0
+		for index, d in propbank_iter:
+			if d['P'] != prev_p:					
+				if ex: 
+					# compute the context feature 'L'
+					ex.context.feature['L'].int64_list.value.append(l)			
+					writer.write(ex.SerializeToString())        
+				ex= tf.train.SequenceExample()
+				l=1
+				helper_d= {}
+				num_prepositions+=1
+			else:
+				l+=1
 
-				for feat, value in d.items():
-					if not(feat in helper_d):
-						helper_d[feat]=ex.feature_lists.feature_list[feat] 
-					
-					helper_d[feat].feature.add().int64_list.value.append(value)
+			for feat, value in d.items():
+				if not(feat in helper_d):
+					helper_d[feat]=ex.feature_lists.feature_list[feat] 
+				
+				helper_d[feat].feature.add().int64_list.value.append(value)
 
-				num_records+=1	
+			num_records+=1	
+			if num_prepositions % 25: 
+				msg= 'processed propositions:{:5d}\trecords:{:5d}\tcomplete:{:0.2f}%\r'.format(num_records, 100*float(num_prepositions)/total_propositions)        
+      	sys.stdout.write(msg)
+      	sys.stdout.flush() 	
+			
 
-
+			msg= 'processed propositions:{:5d}\trecords:{:5d}\tcomplete:{:0.2f}%\r'.format(num_records, 100*float(num_prepositions)/total_propositions)        
+    	sys.stdout.write(msg)
+    	sys.stdout.flush() 	
+			
 			# write the one last example		
 			ex.context.feature['L'].int64_list.value.append(l)			
 			writer.write(ex.SerializeToString())        			
 		
 		writer.close()
-		print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))			
+		print('Wrote to {} found {} propositions'.format(f.name, num_prepositions))			
 
-def proposition2sequence_example(
-	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):
-	'''
-		Maps a propbank proposition into a sequence example - producing a minibatch
-	'''
-	ex= tf.train.SequenceExample()
-	# A non-sequential feature of our example
-	sequence_length=len(dict_propositions[target_feature[0]])
-	ex.context.feature['T'].int64_list.value.append(sequence_length)
+# def proposition2sequence_example(
+# 	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):
+# 	'''
+# 		Maps a propbank proposition into a sequence example - producing a minibatch
+# 	'''
+# 	ex= tf.train.SequenceExample()
+# 	# A non-sequential feature of our example
+# 	sequence_length=len(dict_propositions[target_feature[0]])
+# 	ex.context.feature['T'].int64_list.value.append(sequence_length)
 
 	
-	#Make a dictionary of feature_lists
-	sequence_dict={}
-	for key in sequence_features:
-		sequence_dict[key]= ex.feature_lists.feature_list[key]
-		if key in dict_propositions:
-			for token in dict_propositions[key]:					
-				# if token is a string lookup in a dict
+# 	#Make a dictionary of feature_lists
+# 	sequence_dict={}
+# 	for key in sequence_features:
+# 		sequence_dict[key]= ex.feature_lists.feature_list[key]
+# 		if key in dict_propositions:
+# 			for token in dict_propositions[key]:					
+# 				# if token is a string lookup in a dict
 
-				if isinstance(token, str):				
-					idx= get_idx(token, key, dict_vocabs)
-					sequence_dict[key].feature.add().int64_list.value.append(idx)
-				else:								
-					sequence_dict[key].feature.add().int64_list.value.append(token)
+# 				if isinstance(token, str):				
+# 					idx= get_idx(token, key, dict_vocabs)
+# 					sequence_dict[key].feature.add().int64_list.value.append(idx)
+# 				else:								
+# 					sequence_dict[key].feature.add().int64_list.value.append(token)
 
-	f1_targets= ex.feature_lists.feature_list['targets']
-	for key in target_feature:		
-		for token in dict_propositions[key]:		
-			idx= get_idx(token, key, dict_vocabs)						
-			f1_targets.feature.add().int64_list.value.append(idx)
+# 	f1_targets= ex.feature_lists.feature_list['targets']
+# 	for key in target_feature:		
+# 		for token in dict_propositions[key]:		
+# 			idx= get_idx(token, key, dict_vocabs)						
+# 			f1_targets.feature.add().int64_list.value.append(idx)
 	
-	return ex	
+# 	return ex	
 	
-def df2data_dict(df):	
-	return df.to_dict(orient='list')
+# def df2data_dict(df):	
+# 	return df.to_dict(orient='list')
 
-def make_dict_vocabs(df):
-	'''
-		Looks up dtypes from df which are strings, lazyloads then
-		args:
-			df .: pandas dataframe containing SEQUENCE_FEATURES and TARGET_FEATURE
+# def make_dict_vocabs(df):
+# 	'''
+# 		Looks up dtypes from df which are strings, lazyloads then
+# 		args:
+# 			df .: pandas dataframe containing SEQUENCE_FEATURES and TARGET_FEATURE
 
-		returns: 
-			dict_vocabs .: a dictionary of vocabularies the 
-				keys in SEQUENCE_FEATURES or TARGET_FEATURE
+# 		returns: 
+# 			dict_vocabs .: a dictionary of vocabularies the 
+# 				keys in SEQUENCE_FEATURES or TARGET_FEATURE
 
-	'''
-	dict_vocabs ={} 
-	features= set(SEQUENCE_FEATURES + TARGET_FEATURE)
+# 	'''
+# 	dict_vocabs ={} 
+# 	features= set(SEQUENCE_FEATURES + TARGET_FEATURE)
 
-	df_features= df.dtypes.index.tolist()
-	dtypes_features=df.dtypes.values.tolist()
+# 	df_features= df.dtypes.index.tolist()
+# 	dtypes_features=df.dtypes.values.tolist()
 
 
-	selection_features= [df_features[i]
-		for i, val in enumerate(dtypes_features) if str(val) =='object']
+# 	selection_features= [df_features[i]
+# 		for i, val in enumerate(dtypes_features) if str(val) =='object']
 
-	features = features.intersection(set(selection_features))			
-	for feat in features:
-		if isembeddable(feat): # Embeddings features
-			if not('word2idx' in dict_vocabs):
-				dict_vocabs['word2idx'], _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
-		else:
-			if not(feat in dict_vocabs):
-				dict_vocabs[feat] =vocab_lazyload(feat)
+# 	features = features.intersection(set(selection_features))			
+# 	for feat in features:
+# 		if isembeddable(feat): # Embeddings features
+# 			if not('word2idx' in dict_vocabs):
+# 				dict_vocabs['word2idx'], _ =vocab_lazyload_with_embeddings('LEMMA', input_dir=TARGET_PATH) 
+# 		else:
+# 			if not(feat in dict_vocabs):
+# 				dict_vocabs[feat] =vocab_lazyload(feat)
 
-	return dict_vocabs			
+# 	return dict_vocabs			
 
-def isembeddable(key):
-	'''
-		True if key has a string representation and belongs to the input
-		args:
-			key .:	string representing a valid field		
+# def isembeddable(key):
+# 	'''
+# 		True if key has a string representation and belongs to the input
+# 		args:
+# 			key .:	string representing a valid field		
 		
-		returns:
-			bool
-	'''
-	return key in EMBEDDABLE_FEATURES
+# 		returns:
+# 			bool
+# 	'''
+# 	return key in EMBEDDABLE_FEATURES
 
-def get_idx(token, key, dict_vocabs):
-	'''
-		Looks up dict_vocabs for token
-		args:
-			token .: string representing a stringyfied token
-							ex .: (A0*, A0, 'estar'
-			key 	.: fstring representing eature in the dataset belonging to 
-				inputs, targers, descriptors, mini_batches
+# def get_idx(token, key, dict_vocabs):
+# 	'''
+# 		Looks up dict_vocabs for token
+# 		args:
+# 			token .: string representing a stringyfied token
+# 							ex .: (A0*, A0, 'estar'
+# 			key 	.: fstring representing eature in the dataset belonging to 
+# 				inputs, targers, descriptors, mini_batches
 
-			dict_vocabs .: dictionary of dicionaries 
-				outer most .: features
-				inner most .: value within the feature 	
+# 			dict_vocabs .: dictionary of dicionaries 
+# 				outer most .: features
+# 				inner most .: value within the feature 	
 
-		returns:
-			idx .: int indexed token
-	'''
-	if isembeddable(key):
-		this_vocab= dict_vocabs['word2idx']
-		try:
-			idx= this_vocab[vocab_preprocess(token)]
-		except KeyError:
-			idx=  this_vocab[token.lower()] 
-	else:
-		idx = dict_vocabs[key][token]
-	return idx
+# 		returns:
+# 			idx .: int indexed token
+# 	'''
+# 	if isembeddable(key):
+# 		this_vocab= dict_vocabs['word2idx']
+# 		try:
+# 			idx= this_vocab[vocab_preprocess(token)]
+# 		except KeyError:
+# 			idx=  this_vocab[token.lower()] 
+# 	else:
+# 		idx = dict_vocabs[key][token]
+# 	return idx
 
 if __name__== '__main__':
-	df=propbankbr_lazyload('zhou_1')	
+	# df=propbankbr_lazyload('zhou_1')	
 	
-	dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
+	# dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
+	propbank= Propbank()
+	propbank.define()
+	if propbank_iter
 	for dstype in ['train', 'valid', 'test']:
-		tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
+		tfrecords_builder(propbank_iter, dstype)
+		# tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
 		
-		df=propbankbr_lazyload('zhou_1_{}'.format(dstype))	
-		p0 = min(df['P'])
-		pn = max(df['P'])	# number of propositions		
+		# df=propbankbr_lazyload('zhou_1_{}'.format(dstype))	
+		# p0 = min(df['P'])
+		# pn = max(df['P'])	# number of propositions		
 
-		with open(tfrecords_path, 'w+') as f:
-			writer= tf.python_io.TFRecordWriter(f.name)
+		# with open(tfrecords_path, 'w+') as f:
+		# 	writer= tf.python_io.TFRecordWriter(f.name)
 
-			for p in range(p0, pn+1):
-				df_prop= df[df['P']==p]			
-				ex= proposition2sequence_example(
-					df2data_dict( df_prop ), 
-					dict_vocabs
-				)	
-				writer.write(ex.SerializeToString())        
+		# 	for p in range(p0, pn+1):
+		# 		df_prop= df[df['P']==p]			
+		# 		ex= proposition2sequence_example(
+		# 			df2data_dict( df_prop ), 
+		# 			dict_vocabs
+		# 		)	
+		# 		writer.write(ex.SerializeToString())        
 	    
-			writer.close()
-			print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
+		# 	writer.close()
+			# print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
 
 
 
