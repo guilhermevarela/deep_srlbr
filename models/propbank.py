@@ -366,21 +366,6 @@ class Propbank(object):
 
 		return _PropbankIterator(low, high, fn)
 
-	def itervalid(self, features):
-		fn = lambda x : self.sequence_example(x, features, as_dict=True)
-
-		high=-1
-		low=-1
-		for idx, val in list(zip(*self.feature('P'))):
-			if val > DATASET_TRAIN_SIZE and low==-1:
-				low= idx 
-			
-			if val > DATASET_TRAIN_SIZE + DATASET_VALID_SIZE and high==-1:				
-				high= idx-1  			
-				break
-		
-		return _PropbankIterator(low, high, fn)		
-
 
 
 
