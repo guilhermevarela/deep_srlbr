@@ -14,8 +14,11 @@ import numpy as np
 import re
 import os.path
 
-PROPBANKBR_PATH='datasets/conll/'
-TARGET_PATH='datasets/csvs/'
+PROPBANKBR_PATH='../datasets/conll/'
+# PROPBANKBR_PATH='../datasets/conll/'
+TARGET_PATH='../datasets/csvs/'
+# PROPBANKBR_PATH='datasets/conll/'
+# TARGET_PATH='datasets/csvs/'
 
 #MAPS the filename and output fields to be harvested
 CONST_HEADER=[
