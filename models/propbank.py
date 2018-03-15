@@ -20,6 +20,7 @@ Created on Mar 08, 2018
 import sys
 sys.path.append('datasets/')
 
+import config as conf 
 import numpy as np 
 import pandas as pd
 import pickle
@@ -29,25 +30,6 @@ from utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 from collections import OrderedDict
 
 CSVS_DIR= './datasets/csvs/'
-
-
-
-SEQUENCE_FEATURES=      [
-	'ID', 'S', 'P', 'P_S', 'LEMMA', 'GPOS', 'MORF', 'DTREE', 'FUNC',
-	'CTREE', 		 'PRED', 			'ARG', 'CTX_P+1', 'CTX_P-3', 'CTX_P-2', 
-	'CTX_P-1', 'CTX_P+2', 'CTX_P+3',  		'M_R', 'PRED_1', '			T']
-
-SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int',   'txt', 'hot', 'hot', 'hot', 'hot',
-	'hot', 	'txt', 'hot',    'txt',    'txt',    'txt',    'txt',    
-	'txt', 'txt',  'int',  'txt', 'hot']
-
-META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
-
-DATASET_SIZE= 5931
-DATASET_TRAIN_SIZE= 5099
-DATASET_VALID_SIZE= 569
-DATASET_TEST_SIZE=  263
-
 
 
 class _PropbankIterator(object):
@@ -75,7 +57,7 @@ class _PropbankIterator(object):
 class Propbank(object):
 	'''
 	Translates propositions to features providing both the 
-		data itself as meta data to machine learning experiments
+		data itself as conf.META data to machine learning experiments
 
 	'''	
 	
@@ -157,20 +139,20 @@ class Propbank(object):
 			self.features= set(df.columns).intersection(set(SEQUENCE_FEATURES))
 
 			for feat in self.features:
-				if feat in META:
-					if META[feat]  == 'hot':
+				if feat in conf.META:
+					if conf.META[feat]  == 'hot':
 						keys= set(df[feat].values)
 						idxs= list(range(len(keys)))
 						self.onehot[feat]= OrderedDict(zip(keys, idxs))
 						self.onehot_inverse= OrderedDict(zip(idxs, keys))
 					# for categorical variables	
-					if META[feat] in ['hot']:
+					if conf.META[feat] in ['hot']:
 						self.data[feat] = OrderedDict(zip(
 							df[feat].index, 
 							[self.onehot[feat][val] 
 								for val in df[feat].values]
 						))
-					elif META[feat] in ['txt']:
+					elif conf.META[feat] in ['txt']:
 						self.data[feat] = OrderedDict(zip(
 							df[feat].index, 
 							[self.tok2idx[self.lex2tok[val]] 
@@ -210,7 +192,7 @@ class Propbank(object):
 				result    .: list<> with the numeric representation of word under feature
 		'''
 		result= value 		
-		if META[feature] == ['hot']:
+		if conf.META[feature] == ['hot']:
 			result= self.onehot[feature][value]
 
 			if apply_embeddings:
@@ -219,7 +201,7 @@ class Propbank(object):
 				tmp[result]=1
 				result=tmp 
 
-		elif META[feature] == ['txt']:
+		elif conf.META[feature] == ['txt']:
 			result= self.tok2idx[self.lex2tok[value]]
 
 			if apply_embeddings:
@@ -250,9 +232,9 @@ class Propbank(object):
 		
 		sz=0
 		for feat in features:
-			if META[feat] in ['txt']:
+			if conf.META[feat] in ['txt']:
 				sz+=len(self.embeddings['unk'])
-			elif META[feat] in ['hot']:
+			elif conf.META[feat] in ['hot']:
 				sz+=len(self.onehot[feat])
 			else:
 				sz+=1
@@ -335,7 +317,7 @@ class Propbank(object):
 	def iterator(self, ds_type):
 		if not(ds_type in ['train', 'valid', 'test']):
 			buff= 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-			raise KeyError(buff)
+			raise ValueError(buff)
 		else:
 			fn = lambda x : self.sequence_example(x, self.features, as_dict=True)
 			if ds_type in ['train']:
@@ -409,4 +391,4 @@ if __name__ == '__main__':
 	print('mins:',min_idx,min_p, min_s)
 	print('maxs:',max_idx,max_p, max_s)
 	# Test()
-	import code; code.interact(local=dict(globals(), **locals()))		
+	# import code; code.interact(local=dict(globals(), **locals()))		
