@@ -355,7 +355,7 @@ class Propbank(object):
 		'''
 		sz=0
 		if conf.META[feat] in ['txt']:
-			sz+=len(self.embeddings['unk'])
+			sz+=len(self.embeddings[0])
 		elif conf.META[feat] in ['hot']:
 			sz+=len(self.onehot[feat])
 		else:

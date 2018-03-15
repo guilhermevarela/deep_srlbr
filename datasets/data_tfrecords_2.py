@@ -166,7 +166,6 @@ def tensor2numpy(dataset_path, dataset_size,
 		# This first loop instanciates validation set
 		try:
 			while not coord.should_stop():				
-				import code; code.interact(local=dict(globals(), **locals()))			
 				inputs, targets, times, descriptors=session.run([X, T, L, D])					
 
 		except tf.errors.OutOfRangeError:
@@ -337,14 +336,11 @@ def _process(context_features, sequence_features,
 				if key in input_sequence_features:
 					# Cast to tf.float32 in order to concatenate in a single array with embeddings
 					dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
-					print('integer inputs:', key)
 				else:
 					dense_tensor1= dense_tensor
-					print('integer outputs:', key)
 		else:
 			#keep their numerical values 
 			dense_tensor1= dense_tensor
-			print('integer descriptors:', key)
 
 
 
@@ -580,7 +576,7 @@ if __name__== '__main__':
 	# print(T_train.shape)
 	# print(L_train.shape)
 	# print(D_train.shape)
-	import code; code.interact(local=dict(globals(), **locals()))			
+	# import code; code.interact(local=dict(globals(), **locals()))			
 	
 
 
