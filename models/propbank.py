@@ -26,7 +26,7 @@ import pandas as pd
 import pickle
 
 
-from utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
+from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 from collections import OrderedDict
 
 CSVS_DIR= './datasets/csvs/'
@@ -136,7 +136,7 @@ class Propbank(object):
 					idx+=1
 			
 					
-			self.features= set(df.columns).intersection(set(SEQUENCE_FEATURES))
+			self.features= set(df.columns).intersection(set(conf.SEQUENCE_FEATURES))
 
 			for feat in self.features:
 				if feat in conf.META:
@@ -224,22 +224,18 @@ class Propbank(object):
 		'''
 			Returns the dimension of the features 
 			args:
-				features : list<str>  with the features names
+				features : str or list<str>  feature name or list of feature names
 
 			returns:
 				sz 			.: int indicating the total feature size
 		'''
-		
-		sz=0
-		for feat in features:
-			if conf.META[feat] in ['txt']:
-				sz+=len(self.embeddings['unk'])
-			elif conf.META[feat] in ['hot']:
-				sz+=len(self.onehot[feat])
-			else:
-				sz+=1
+		if isinstance(features,str):
+			sz= self._feature_size(features)
+		else:
+			sz=0
+			for feat in features:
+				sz+=self._feature_size(feat)
 		return sz
-
 
 	def sequence_example(self, idx, features, as_dict=False):
 		'''
@@ -322,13 +318,13 @@ class Propbank(object):
 			fn = lambda x : self.sequence_example(x, self.features, as_dict=True)
 			if ds_type in ['train']:
 				lb=0
-				ub=DATASET_TRAIN_SIZE 
+				ub=conf.DATASET_TRAIN_SIZE 
 			elif ds_type in ['valid']:
-				lb=DATASET_TRAIN_SIZE 
-				ub=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE
+				lb=conf.DATASET_TRAIN_SIZE 
+				ub=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE
 			else:
-				lb=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE 
-				ub=DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE
+				lb=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE 
+				ub=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE + conf.DATASET_TEST_SIZE
 
 
 		low=-1
@@ -348,7 +344,24 @@ class Propbank(object):
 
 		return _PropbankIterator(low, high, fn)
 
+	def _feature_size(self, feat):	
+		'''
+			Returns the dimension of the feature with feature name feat
+			args:
+				features : str  feature name
 
+			returns:
+				sz 			.: int indicating the total feature size
+		'''
+		sz=0
+		if conf.META[feat] in ['txt']:
+			sz+=len(self.embeddings['unk'])
+		elif conf.META[feat] in ['hot']:
+			sz+=len(self.onehot[feat])
+		else:
+			sz+=1
+
+		return sz
 
 
 	

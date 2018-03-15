@@ -13,8 +13,10 @@ Created on Jan 25, 2018
 	2018-03-02: added input_validation and input_train
 '''
 import sys
+ROOT_DIR = '/'.join(sys.path[0].split('/')[:-1]) #UGLY PROBLEM FIXES TO LOCAL ROOT --> import config
+sys.path.append(ROOT_DIR)
 sys.path.append('./models/')
-sys.path.append('..')
+
 import config as conf
 import pandas as pd 
 import numpy as np 
@@ -26,6 +28,14 @@ from propbank import Propbank
 # from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
 
 import tensorflow as tf 
+
+TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
+	for key in conf.SEQUENCE_FEATURES
+}
+
+TF_CONTEXT_FEATURES=	{
+	'L': tf.FixedLenFeature([], tf.int64)			
+}
 
 
 EMBEDDING_PATH='datasets/embeddings/'
@@ -57,14 +67,15 @@ dataset_tesgt= TARGET_PATH + 'dbtest_pt.tfrecords'
 # }
 
 # conf.DATASET_VALID_SIZE= 569
-# conf.conf.DATASET_TEST_SIZE= 5099
+# conf.DATASET_TEST_SIZE= 5099
 # DATASET_TEST_SIZE=  263
 
 
 
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
-	input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, output_target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET):	
+										 	input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
+											output_target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET):	
 	'''
 		Fetches validation set and retuns as a numpy array
 		args:
@@ -90,31 +101,33 @@ def tfrecords_extract(ds_type, embeddings, feat2size,
 			dataset_size=conf.DATASET_VALID_SIZE
 
 	inputs, targets, lengths, others= tensor2numpy(
-		dataset_valid, 
+		dataset_path, 
 		dataset_size,
 		embeddings, 
 		feat2size,
-		filter_features=filter_features, 
-		msg='input_validation: done converting validation set to numpy'
+		input_sequence_features=input_features, 
+		output_sequence_target=output_target, 
+		msg='input_{:}: done converting {:} set to numpy'.format(ds_type, ds_type)
 	)	
 
 	return inputs, targets, lengths, others
 
-def input_train(embeddings, feat2size, filter_features=input_sequence_features):	
+# def input_train(embeddings, feat2size, filter_features=input_sequence_features):	
 	
-	inputs, targets, lengths, others= tensor2numpy(
-		dataset_train, 
-		conf.DATASET_TEST_SIZE,
-		embeddings, 
-		feat2size,		
-		filter_features=filter_features, 
-		msg='input_train: done converting train set to numpy'
-	)	
+# 	inputs, targets, lengths, others= tensor2numpy(
+# 		dataset_train, 
+# 		conf.DATASET_TEST_SIZE,
+# 		embeddings, 
+# 		feat2size,		
+# 		filter_features=filter_features, 
+# 		msg='input_train: done converting train set to numpy'
+# 	)	
 	
-	return inputs, targets, lengths, others
+# 	return inputs, targets, lengths, others
 
-def tensor2numpy(dataset_path, dataset_size, embeddings, feat2size, 
-	input_sequence_features=DEFAULT_SEQUENCE_FEATURES, output_sequence_targets= DEFAULT_OUTPUT_SEQUENCE_TARGET, msg='tensor2numpy: done'):	
+def tensor2numpy(dataset_path, dataset_size, 
+								embeddings, feat2size, input_sequence_features, 
+								output_sequence_target,msg='tensor2numpy: done'):	
 	'''
 		Converts a .tfrecord into a numpy representation of a tensor
 		args:
@@ -135,9 +148,9 @@ def tensor2numpy(dataset_path, dataset_size, embeddings, feat2size,
 			dataset_size, 
 			1, 
 			embeddings, 
-			klass_size=feat2size, 
+			feat2size, 
 			input_sequence_features=input_sequence_features,
-			output_sequence_targets=output_sequence_targets
+			output_sequence_target=output_sequence_target
 		)
 
 	init_op = tf.group( 
@@ -153,7 +166,8 @@ def tensor2numpy(dataset_path, dataset_size, embeddings, feat2size,
 		# This first loop instanciates validation set
 		try:
 			while not coord.should_stop():				
-				inputs, targets, lengths, others=session.run([X, T, L, D])					
+				import code; code.interact(local=dict(globals(), **locals()))			
+				inputs, targets, times, descriptors=session.run([X, T, L, D])					
 
 		except tf.errors.OutOfRangeError:
 			print(msg)			
@@ -162,12 +176,14 @@ def tensor2numpy(dataset_path, dataset_size, embeddings, feat2size,
 			#When done, ask threads to stop
 			coord.request_stop()			
 			coord.join(threads)
-	return inputs, targets, lengths, others		
+	return inputs, targets, times, descriptors		
 
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
-def input_fn(filenames, batch_size,  num_epochs, embeddings, feat2size, 
-	input_sequence_features=DEFAULT_SEQUENCE_FEATURES, output_sequence_targets= 'T'):
+def input_fn(filenames, batch_size,  num_epochs, 
+						embeddings, feat2size, 
+						input_sequence_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
+						output_sequence_target= conf.DEFAULT_OUTPUT_SEQUENCE_TARGET):
 	'''
 		Produces sequence_examples shuffling at every epoch while batching every batch_size
 			number of examples
@@ -195,7 +211,7 @@ def input_fn(filenames, batch_size,  num_epochs, embeddings, feat2size,
 	X, T, L, D= _process(context_features, 
 		sequence_features, 
 		input_sequence_features, 
-		output_sequence_targets, 
+		output_sequence_target, 
 		feat2size, 
 		embeddings
 	)	
@@ -252,8 +268,8 @@ def _read_and_decode(filename_queue):
 	# *sequence_features.: features that change over sequence 
 	context_features, sequence_features= tf.parse_single_sequence_example(
 		serialized_example,
-		context_features=conf.TF_CONTEXT_FEATURES,
-		sequence_features=conf.TF_SEQUENCE_FEATURES
+		context_features=TF_CONTEXT_FEATURES,
+		sequence_features=TF_SEQUENCE_FEATURES
 	)
 
 	return context_features, sequence_features
@@ -261,7 +277,9 @@ def _read_and_decode(filename_queue):
 
 # conf.SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
 # TARGET_FEATURE=['ARG_1']
-def _process(context_features, sequence_features, input_sequence_features, output_sequence_targets, feat2size, embeddings):
+def _process(context_features, sequence_features, 
+							input_sequence_features, output_sequence_targets, 
+							feat2size, embeddings):
 
 	'''
 		Maps context_features and sequence_features making embedding replacement as necessary
@@ -297,7 +315,7 @@ def _process(context_features, sequence_features, input_sequence_features, outpu
 	#paginates over all available columnx	
 	for key in conf.SEQUENCE_FEATURES:
 		dense_tensor= tf.sparse_tensor_to_dense(sequence_features[key])		
-
+		
 		#Selects how to handle column from conf.META
 		if key in sel: 
 			if conf.META[key] in ['txt']: 
@@ -311,27 +329,35 @@ def _process(context_features, sequence_features, input_sequence_features, outpu
 					off_value=0,
 					dtype=tf.int32
 				)								
-				dense_tensor1= tf.cast(dense_tensor1, tf.float32)
+				if key in input_sequence_features:
+					dense_tensor1= tf.cast(dense_tensor1, tf.float32)
 				
 
 			else: 
 				if key in input_sequence_features:
 					# Cast to tf.float32 in order to concatenate in a single array with embeddings
 					dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
+					print('integer inputs:', key)
 				else:
 					dense_tensor1= dense_tensor
+					print('integer outputs:', key)
+		else:
+			#keep their numerical values 
+			dense_tensor1= dense_tensor
+			print('integer descriptors:', key)
 
 
-			if key in input_sequence_features:
-				sequence_inputs.append(dense_tensor1)
-			elif key in [output_sequence_targets]:		
-				T= tf.squeeze(dense_tensor1, 1, name='squeeze_T')
-			else:
-				sequence_descriptors.append(dense_tensor1)
+
+		if key in input_sequence_features:
+			sequence_inputs.append(dense_tensor1)
+		elif key in [output_sequence_targets]:		
+			T= tf.squeeze(dense_tensor1, 1, name='squeeze_T')
+		else:
+			sequence_descriptors.append(dense_tensor1)
 		
 			
 
-	
+	# import code; code.interact(local=dict(globals(), **locals()))			
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
 	D= tf.concat(sequence_descriptors, 1)
 	return X, T, L, D 
@@ -346,11 +372,11 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 		raise ValueError(buff)
 	else:
 		if dataset_type in ['train']:		
-			total_propositions= conf.conf.DATASET_TEST_SIZE 
+			total_propositions= conf.DATASET_TRAIN_SIZE 
 		if dataset_type in ['valid']:		
 			total_propositions= conf.DATASET_VALID_SIZE 
 		if dataset_type in ['test']:
-			total_propositions= DATASET_TEST_SIZE  		
+			total_propositions= conf.DATASET_TEST_SIZE  		
 
 	tfrecords_path= TARGET_PATH + 'db{:}_{:}.tfrecords'.format(dataset_type,lang)	
 	with open(tfrecords_path, 'w+') as f:
@@ -514,11 +540,14 @@ if __name__== '__main__':
 	# dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
 	#test tfrecords_builder
 	propbank= Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
-	#propbank.define()
+	# propbank= Propbank()
+	# propbank.define()
+	# propbank.persist('')
 	
 	
 	# for dstype in ['train', 'valid', 'test']:
-	# 	tfrecords_builder(propbank.iterator(dstype), dstype)
+		# tfrecords_builder(propbank.iterator(dstype), dstype)
+	# tfrecords_builder(propbank.iterator('test'), 'test')	
 
 	# tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
@@ -540,11 +569,19 @@ if __name__== '__main__':
     
 	# 	writer.close()
 		# print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
+	# import code; code.interact(local=dict(globals(), **locals()))					
 	hotencode2sz= {feat: propbank.size(feat)
 			for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
-	X_train, T_train, L_train, D_train= tfrecords_extract('train', propbank.embeddings, hotencode2sz)
+	
 
+
+	X_train, T_train, L_train, D_train= tfrecords_extract('train', propbank.embeddings, hotencode2sz)
+	# print(X_train.shape)
+	# print(T_train.shape)
+	# print(L_train.shape)
+	# print(D_train.shape)
 	import code; code.interact(local=dict(globals(), **locals()))			
+	
 
 
 
