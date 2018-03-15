@@ -15,7 +15,7 @@ Created on Jan 25, 2018
 import pandas as pd 
 import numpy as np 
 import sys
-sys.path.append('../models/')
+sys.path.append('./models/')
 
 #Uncomment if launched from /datasets
 from propbank import Propbank
@@ -316,9 +316,12 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 		buff= 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
 		raise KeyError(buff)
 	else:
-		total_propositions= DATASET_TRAIN_SIZE if dataset_type in ['train']		
-		total_propositions= DATASET_VALID_SIZE if dataset_type in ['valid']		
-		total_propositions= DATASET_TEST_SIZE  if dataset_type in ['test']		
+		if dataset_type in ['train']:		
+			total_propositions= DATASET_TRAIN_SIZE 
+		if dataset_type in ['valid']:		
+			total_propositions= DATASET_VALID_SIZE 
+		if dataset_type in ['test']:
+			total_propositions= DATASET_TEST_SIZE  		
 
 	tfrecords_path= TARGET_PATH + 'db{:}_{:}.tfrecords'.format(dataset_type,lang)	
 	with open(tfrecords_path, 'w+') as f:
@@ -329,7 +332,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 		prev_p = -1 
 		helper_d= {} # that's a helper dict in order to abbreviate
 		num_records=0
-		num_prepositions=0
+		num_propositions=0
 		for index, d in propbank_iter:
 			if d['P'] != prev_p:					
 				if ex: 
@@ -339,7 +342,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 				ex= tf.train.SequenceExample()
 				l=1
 				helper_d= {}
-				num_prepositions+=1
+				num_propositions+=1
 			else:
 				l+=1
 
@@ -350,22 +353,26 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 				helper_d[feat].feature.add().int64_list.value.append(value)
 
 			num_records+=1	
-			if num_prepositions % 25: 
-				msg= 'processed propositions:{:5d}\trecords:{:5d}\tcomplete:{:0.2f}%\r'.format(num_records, 100*float(num_prepositions)/total_propositions)        
-      	sys.stdout.write(msg)
-      	sys.stdout.flush() 	
+			prev_p=d['P']
+			if num_propositions % 25: 
+				msg= 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
+						dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
+				sys.stdout.write(msg)
+				sys.stdout.flush() 	
 			
 
-			msg= 'processed propositions:{:5d}\trecords:{:5d}\tcomplete:{:0.2f}%\r'.format(num_records, 100*float(num_prepositions)/total_propositions)        
-    	sys.stdout.write(msg)
-    	sys.stdout.flush() 	
-			
-			# write the one last example		
-			ex.context.feature['L'].int64_list.value.append(l)			
-			writer.write(ex.SerializeToString())        			
+		msg= 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
+					dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
+		sys.stdout.write(msg)
+		sys.stdout.flush() 	
 		
-		writer.close()
-		print('Wrote to {} found {} propositions'.format(f.name, num_prepositions))			
+
+		# write the one last example		
+		ex.context.feature['L'].int64_list.value.append(l)			
+		writer.write(ex.SerializeToString())        			
+		
+	writer.close()
+	print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))			
 
 # def proposition2sequence_example(
 # 	dict_propositions, dict_vocabs, sequence_features=SEQUENCE_FEATURES, target_feature=TARGET_FEATURE):
@@ -476,11 +483,11 @@ if __name__== '__main__':
 	# df=propbankbr_lazyload('zhou_1')	
 	
 	# dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
-	propbank= Propbank()
-	propbank.define()
-	if propbank_iter
+	propbank= Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
+	# propbank.define()
+	
 	for dstype in ['train', 'valid', 'test']:
-		tfrecords_builder(propbank_iter, dstype)
+		tfrecords_builder(propbank.iterator(dstype), dstype)
 		# tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
 
 		
