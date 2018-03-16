@@ -541,8 +541,8 @@ if __name__== '__main__':
 	# propbank.persist('')
 	
 	
-	# for dstype in ['train', 'valid', 'test']:
-		# tfrecords_builder(propbank.iterator(dstype), dstype)
+	for dstype in ['train', 'valid', 'test']:
+		tfrecords_builder(propbank.iterator(dstype), dstype)
 	# tfrecords_builder(propbank.iterator('test'), 'test')	
 
 	# tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)

@@ -12,6 +12,8 @@ Created on Mar 02, 2018
 '''
 # outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
 # Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543
+# outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs32_ctx-p1_glove_s50/00/
+# Iter= 5650 avg. acc 82.50% valid. acc 68.17% avg. cost 5.824657
 import sys
 sys.path.append('datasets/')
 sys.path.append('models/')
@@ -24,7 +26,7 @@ import config as conf
 
 from data_tfrecords_2 import input_fn, tfrecords_extract
 from models.propbank import Propbank
-from data_outputs import  dir_getoutputs, mapper_getiodicts, outputs_settings_persist, outputs_predictions_persist
+from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist_2
 from utils import cross_entropy, error_rate2, precision, recall
 
 INPUT_PATH='datasets/inputs/03/'
@@ -167,7 +169,7 @@ if __name__== '__main__':
 	num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
 	DISPLAY_STEP=50	
-	target= 'T'
+	target= 'ARG'
 	propbank = Propbank.recover(
 		'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
 
@@ -359,7 +361,7 @@ if __name__== '__main__':
 							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
-						outputs_predictions_persist(
+						outputs_predictions_persist_2(
 							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, target2idx, 'Yhat_valid')
 
 				step+=1

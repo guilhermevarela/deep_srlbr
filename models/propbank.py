@@ -18,6 +18,8 @@ Created on Mar 08, 2018
 
 '''
 import sys
+ROOT_DIR = '/'.join(sys.path[0].split('/')[:-1]) #UGLY PROBLEM FIXES TO LOCAL ROOT --> import config
+sys.path.append(ROOT_DIR)
 sys.path.append('datasets/')
 
 import config as conf 
@@ -137,29 +139,37 @@ class Propbank(object):
 			
 					
 			self.features= set(df.columns).intersection(set(conf.SEQUENCE_FEATURES))
-
+			self.features= self.features.union(set(['INDEX']))
+			
+			#ORDER of features will be alphabetic this is important when 
+			#features become tensors
 			for feat in self.features:
-				if feat in conf.META:
-					if conf.META[feat]  == 'hot':
-						keys= set(df[feat].values)
-						idxs= list(range(len(keys)))
-						self.onehot[feat]= OrderedDict(zip(keys, idxs))
-						self.onehot_inverse= OrderedDict(zip(idxs, keys))
-					# for categorical variables	
-					if conf.META[feat] in ['hot']:
-						self.data[feat] = OrderedDict(zip(
-							df[feat].index, 
-							[self.onehot[feat][val] 
-								for val in df[feat].values]
-						))
-					elif conf.META[feat] in ['txt']:
-						self.data[feat] = OrderedDict(zip(
-							df[feat].index, 
-							[self.tok2idx[self.lex2tok[val]] 
-								for val in df[feat].values]
-						))
-					else:
-						self.data[feat] = OrderedDict(df[feat].to_dict())
+				#ALWAYS ADD INDEX in order to make merge possible after training
+				if feat in ['INDEX']: 
+					self.data[feat]  = OrderedDict(zip(df.index, df.index))
+				else: 
+					if feat in conf.META:
+						if conf.META[feat]  == 'hot':
+							keys= set(df[feat].values)
+							idxs= list(range(len(keys)))
+							self.onehot[feat]= OrderedDict(zip(keys, idxs))
+							self.onehot_inverse= OrderedDict(zip(idxs, keys))
+						# for categorical variables	
+						if conf.META[feat] in ['hot']:
+							self.data[feat] = OrderedDict(zip(
+								df[feat].index, 
+								[self.onehot[feat][val] 
+									for val in df[feat].values]
+							))
+						elif conf.META[feat] in ['txt']:
+							self.data[feat] = OrderedDict(zip(
+								df[feat].index, 
+								[self.tok2idx[self.lex2tok[val]] 
+									for val in df[feat].values]
+							))
+						else:
+							self.data[feat] = OrderedDict(df[feat].to_dict())				
+						
 		else:
 			raise	Exception('Lexicon and embeddings already defined')		
 
@@ -368,10 +378,10 @@ class Propbank(object):
 
 
 if __name__ == '__main__':
-	propbank = Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
-	# propbank = Propbank()
-	# propbank.define()
-	# propbank.persist('')
+	# propbank = Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
+	propbank = Propbank()
+	propbank.define()
+	propbank.persist('')
 	
 	min_idx=99999999999
 	min_p=99999999999

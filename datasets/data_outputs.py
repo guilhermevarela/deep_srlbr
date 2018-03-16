@@ -91,6 +91,55 @@ def outputs_predictions_persist(
 	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('IDX', inplace=False)	
 	df.to_csv(file_path)
 
+def outputs_predictions_persist_2(
+	output_dir, indexes, predicates, predictions, batch_sizes, vocab2idx, filename):
+	'''
+		Decodes predictions using vocab2idx and writes as a pandas DataFrame
+
+		args
+			output_dir 	.: string containing a valid dir to export tha settings
+			indexes 		.: int matrix   [BATCH_SIZE, MAX_TIME] holding original indexes
+			predicates 	.: int matrix   [BATCH_SIZE, MAX_TIME] holding original predicate index
+			predictions .: int matrix   [BATCH_SIZE, MAX_TIME] 
+			batch_sizes .: list with mini batch sizes [BATCH_SIZE] 
+			vocab2idx		.:
+
+			filename .: string representing the filename to save			
+	'''
+
+	if not(isinstance(predictions,list)):
+		predictions=predictions.tolist()
+
+	
+	idx2vocab= {value:key for key, value in vocab2idx.items()}		
+	#restore only the minibatch sizes and decode it
+	tag_decoded =[idx2vocab[item] for i, sublist in enumerate(predictions) 
+		for j, item in enumerate(sublist) if j < batch_sizes[i]  ]
+
+
+	idx_decoded =[idx for i, sublist in enumerate(indexes.tolist())
+		for idx in sublist[:batch_sizes[i]]] 
+		
+
+	pred_decoded =[pred for i, sublist in enumerate(predicates.tolist())
+		for pred in sublist[:batch_sizes[i]]] 
+	
+	if len(vocab2idx)==36: #alternative T=ARG_1 Y=Y_1
+		new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
+		yarg= new_tags
+		yt= tag_decoded
+	else:  #alternative T=ARG_0 Y=Y_0
+		new_tags=propbankbr_transform_arg02arg1(pred_decoded, tag_decoded)
+		yarg= tag_decoded
+		yt= new_tags
+	
+
+	file_path= output_dir +  filename + '.csv'		
+	columns=['INDEX','Y_ARG', 'Y_T']
+	data=[idx_decoded, yarg, yt]
+	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('INDEX', inplace=False)	
+	df.to_csv(file_path)	
+
 def outputs_settings_persist(output_dir, vars_dict, to_persist=SETTINGS):
 	'''
 		Writes on output_dir a settings.txt file with the settings
