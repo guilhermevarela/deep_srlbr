@@ -71,13 +71,13 @@ class Propbank(object):
 				propbank		.: object an instance of the Propbank class
 		'''
 		self.lexicon=set([])
-		self.lex2tok={}
+		self.lex2tok={}		
 		self.tok2idx={}
 		self.idx2tok={}
 		self.embeddings=np.array([])
 
 		self.onehot={}
-		self.onehot_inverse={}
+		self.hotone={}
 		self.data={}
 
 	
@@ -153,7 +153,7 @@ class Propbank(object):
 							keys= set(df[feat].values)
 							idxs= list(range(len(keys)))
 							self.onehot[feat]= OrderedDict(zip(keys, idxs))
-							self.onehot_inverse= OrderedDict(zip(idxs, keys))
+							self.hotone[feat]= OrderedDict(zip(idxs, keys))
 						# for categorical variables	
 						if conf.META[feat] in ['hot']:
 							self.data[feat] = OrderedDict(zip(
@@ -190,20 +190,23 @@ class Propbank(object):
 			pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
   	
-	def encode(self, value, feature, apply_embeddings=False):
+	def decode(self, value, feature, apply_embeddings=False):
 		'''
-			Returns feature representation
-			args:
-				value   				 .: string token before embeddings or encoding strategies
-				feature 	  		 .: string feature name
-				apply_embeddings .:
+			Returns feature word from indexed representation
+				this process may have losses since some on the lexicon are mapped to the same lemma
+				(That applies to column LEMMA)
 
-			returns:				
-				result    .: list<> with the numeric representation of word under feature
+			
+			args:
+				value 			.: int   representing a db record index
+				feature	    .: sring representing db column name
+				
+			returns:
+				raw       .: string or int representing the value within original database
 		'''
 		result= value 		
-		if conf.META[feature] == ['hot']:
-			result= self.onehot[feature][value]
+		if conf.META[feature] in ['hot']:
+			result= self.hotone[feature][value]
 
 			if apply_embeddings:
 				sz= self.size(feature)
@@ -211,24 +214,13 @@ class Propbank(object):
 				tmp[result]=1
 				result=tmp 
 
-		elif conf.META[feature] == ['txt']:
-			result= self.tok2idx[self.lex2tok[value]]
+		elif conf.META[feature] in ['txt']:
+			result= self.idx2tok[value]
 
 			if apply_embeddings:
 				result= self.embeddings[result]
 		return result
 
-	def decode(self, idx, feature):
-		'''
-			Returns feature word / int representation
-			args:
-				idx 			.: int   representing a token
-				feature	  .: sring representing the feature name
-				
-			returns:
-				result    .: string or int representing word/ value of feature
-		'''				
-		raise NotImplementedError
 
 	def size(self, features):	
 		'''
@@ -247,24 +239,34 @@ class Propbank(object):
 				sz+=self._feature_size(feat)
 		return sz
 
-	def sequence_example(self, idx, features, as_dict=False):
+	def sequence_obsexample(self, idx, features, as_dict=False, decode=False):
 		'''
-			Produces a sequence from a dataset index
+			Produces a record or observation from a sequence
 
 			args:
-				idx   	 .: 
-				features .: list<str>  with the features names
+				idx 				.: int   representing a db record index
+				features	  .: list<sring> representing db column name
+				as_dict	    .: bool  if 1 then return as dictionary, else list
+				decode	    .: bool  if 1 then turn to lemma of string, else leave as index
 
 			returns:
-				 				 .: int<features> indicating int value of features
+				raw 				.: list<features> or dict<features> indicating int value of features
 		'''		
 		if as_dict:
-			return {feat: self.data[feat][idx] for feat in features}
+			if decode:
+				return {feat: self.decode(self.data[feat][idx], feat)
+					for feat in features}
+			else:
+				return {feat: self.data[feat][idx] for feat in features}
 		else:
-			return [self.data[feat][idx] for feat in features]
+			if decode:
+				return [self.decode(self.data[feat][idx], feat)
+					for feat in features]
+			else:
+				return [self.data[feat][idx] for feat in features]
 		
 
-	def sequence_example2(self, categories, features, embeddify=False):
+	def sequence_obsexample2(self, categories, features, embeddify=False):
 		'''
 			Produces a sequence from categorical values 
 				(an entry) from the dataset
@@ -293,39 +295,64 @@ class Propbank(object):
 		j=0
 		for feat, sz in feat2sz.items():
 			if embeddify:
-				result[j:j+sz]= float(self.encode( categories[i], feat, apply_embeddings=embeddify))
+				result[j:j+sz]= float(self.decode( categories[i], feat, apply_embeddings=embeddify))
 			else:
-				result += self.encode( categories[i], feat, false)
+				result += self.decode( categories[i], feat, false)
 
 			i+=1
 			j=sz 
 		
 		return result
 
-	def feature(self, feature):
+	def feature(self, ds_type, feature, decode=False):
 		'''
 			Returns a feature from data
+				this process may have losses since some on the lexicon are mapped to the same lemma
+				(That applies to column LEMMA)
 
 			args:
-				feature : string representing a feature from data
+				ds_type 		.: string dataset name in (['train', 'valid', 'test'])
+				feature	    .: string representing db column name
+				decode      .: bool representing the better encoding
 
 			returns:
-				index  .: int<T> indicating values converted to example
-				values .: int<T> as index
+				index  .: int<T> index column on the db
+				values .: int<T> values 
 		
 		'''
-		#unzips features
-		index, values=  zip(*self.data[feature].items())
-		return index, values
+		if not(ds_type in ['train', 'valid', 'test']):
+			buff= 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+			raise ValueError(buff)
+		else:		
+			if ds_type in ['train']:
+				lb=0
+				ub=conf.DATASET_TRAIN_SIZE 
+			elif ds_type in ['valid']:
+				lb=conf.DATASET_TRAIN_SIZE 
+				ub=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE
+			else:
+				lb=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE 
+				ub=conf.DATASET_TRAIN_SIZE + conf.DATASET_VALID_SIZE + conf.DATASET_TEST_SIZE
+			if decode:
+				d={idx: self.decode(self.data[feature][idx],feature)					
+					for idx, p in self.data['P'].items()
+						if p>=lb and p< ub+1}
+			else:
+				#unzips features
+				d=  { idx: self.data[feature][idx]
+					for idx, p in self.data['P'].items()
+						if p>=lb and p< ub+1}
+		return d
 
 
 
-	def iterator(self, ds_type):
+	def iterator(self, ds_type, decode=False):
 		if not(ds_type in ['train', 'valid', 'test']):
 			buff= 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
 			raise ValueError(buff)
 		else:
-			fn = lambda x : self.sequence_example(x, self.features, as_dict=True)
+			as_dict=True
+			fn = lambda x : self.sequence_obsexample(x, self.features, as_dict, decode)
 			if ds_type in ['train']:
 				lb=0
 				ub=conf.DATASET_TRAIN_SIZE 
@@ -372,46 +399,17 @@ class Propbank(object):
 			sz+=1
 
 		return sz
-
-
-	
-
-
 if __name__ == '__main__':
-	# propbank = Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
-	propbank = Propbank()
-	propbank.define()
-	propbank.persist('')
+	PROP_DIR = '{:}/datasets/binaries/'.format(ROOT_DIR)
+	PROP_PATH = '{:}/{:}'.format(PROP_DIR, 'db_pt_LEMMA_glove_s50.pickle')
 	
-	min_idx=99999999999
-	min_p=99999999999
-	min_s=99999999999
+	# propbank = Propbank()	
+	# propbank.define()
+	# propbank.persist(PROP_DIR)
+	propbank = Propbank.recover(PROP_PATH)		
+	# import code; code.interact(local=dict(globals(), **locals()))		
 
-	max_idx=0
-	max_p=0
-	max_s=0
-
-	# for idx, d in propbank.itervalid(['S','P','GPOS']):
-	for idx, d in propbank.iterator('test'):
-		if min_idx> idx:
-			min_idx=idx
-
-		if min_p > d['P']:
-			min_p=d['P']
-
-		if min_s > d['S']:
-			min_s=d['S']
-
-		if max_idx < idx:
-			max_idx=idx 
-
-		if max_p < d['P']: 
-			max_p=d['P']
-
-		if max_s < d['S']:
-		 max_s= d['S'] 
-			
-	print('mins:',min_idx,min_p, min_s)
-	print('maxs:',max_idx,max_p, max_s)
-	# Test()
+	# PRED_d = propbank.feature('valid', 'PRED', True) # text
+	# M_R_d = propbank.feature('valid', 'M_R', True) # numerical
+	ARG_d = propbank.feature('valid', 'ARG', True) # categorical
 	# import code; code.interact(local=dict(globals(), **locals()))		

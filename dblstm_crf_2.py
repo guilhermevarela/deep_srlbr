@@ -169,7 +169,7 @@ if __name__== '__main__':
 	num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
 	DISPLAY_STEP=50	
-	target= 'ARG'
+	target= 'T'
 	propbank = Propbank.recover(
 		'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
 
