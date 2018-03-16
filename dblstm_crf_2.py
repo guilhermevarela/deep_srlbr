@@ -170,8 +170,10 @@ if __name__== '__main__':
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
 	DISPLAY_STEP=50	
 	target= 'T'
-	propbank = Propbank.recover(
-		'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
+	
+	PROP_DIR = './datasets/binaries/'
+	PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
+	propbank = Propbank.recover(PROP_PATH)
 
 	# Updata settings
 	LAYER_1_NAME=embeddings_id

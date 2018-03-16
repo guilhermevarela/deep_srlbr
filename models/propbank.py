@@ -336,7 +336,7 @@ class Propbank(object):
 			if decode:
 				d={idx: self.decode(self.data[feature][idx],feature)					
 					for idx, p in self.data['P'].items()
-						if p>=lb and p< ub+1}
+						if p>lb and p< ub+1}
 			else:
 				#unzips features
 				d=  { idx: self.data[feature][idx]
@@ -399,6 +399,7 @@ class Propbank(object):
 			sz+=1
 
 		return sz
+
 if __name__ == '__main__':
 	PROP_DIR = '{:}/datasets/binaries/'.format(ROOT_DIR)
 	PROP_PATH = '{:}/{:}'.format(PROP_DIR, 'db_pt_LEMMA_glove_s50.pickle')
