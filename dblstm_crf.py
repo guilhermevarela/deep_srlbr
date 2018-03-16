@@ -7,25 +7,37 @@ Created on Mar 02, 2018
 	ref:
 	http://www.aclweb.org/anthology/P15-1109
 
+	updates
+	2018-03-15 Refactor major updates
 '''
+# outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
+# Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543
+# outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs32_ctx-p1_glove_s50/00/
+# Iter= 5650 avg. acc 82.50% valid. acc 68.17% avg. cost 5.824657
 import sys
 sys.path.append('datasets/')
+sys.path.append('models/')
 
 import numpy as np 
 import tensorflow as tf 
 import argparse
 import re
+import config as conf
 
-from data_tfrecords import input_fn, input_sz, input_validation
-from data_outputs import  dir_getoutputs, mapper_getiodicts, outputs_settings_persist, outputs_predictions_persist
+from data_tfrecords_2 import input_fn, tfrecords_extract
+from models.propbank import Propbank
+from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist_2
 from utils import cross_entropy, error_rate2, precision, recall
 
 INPUT_PATH='datasets/inputs/03/'
 # INPUT_PATH='datasets/inputs/01/'
-dataset_train= INPUT_PATH + 'train.tfrecords'
-dataset_valid= INPUT_PATH + 'valid.tfrecords'
+# dataset_train= INPUT_PATH + 'train.tfrecords'
+# dataset_valid= INPUT_PATH + 'valid.tfrecords'
 
-MODEL_NAME='dblstm_crf'
+dataset_train= INPUT_PATH + 'dbtrain_pt.tfrecords'
+dataset_valid= INPUT_PATH + 'dbvalid_pt.tfrecords'
+
+MODEL_NAME='dblstm_crf_2'
 DATASET_VALID_SIZE= 569
 DATASET_TRAIN_SIZE= 5099
 
@@ -86,7 +98,7 @@ def forward(X, sequence_length, hidden_size):
 			sequence_length:[batch_size] tensor (int) carrying the size of each sequence 
 
 		returns:
-			Y_hat: [batch_size, max_time, klass_size] 
+			Y_hat: [batch_size, max_time, target_size] 
 
 	'''
 	outputs=X
@@ -145,6 +157,9 @@ if __name__== '__main__':
 	args = parser.parse_args()
 	hidden_size= args.depth 
 	embeddings_name, embeddings_size= args.embeddings_model[0]
+	
+
+
 
 
 	# evaluate embedding model
@@ -154,6 +169,11 @@ if __name__== '__main__':
 	num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
 	DISPLAY_STEP=50	
+	target= 'T'
+	
+	PROP_DIR = './datasets/binaries/'
+	PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
+	propbank = Propbank.recover(PROP_PATH)
 
 	# Updata settings
 	LAYER_1_NAME=embeddings_id
@@ -169,8 +189,13 @@ if __name__== '__main__':
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
 	
-	feature_size=input_sz(input_sequence_features, embeddings_size)		
+	# feature_size=input_sz(input_sequence_features, embeddings_size)		
+	feature_size=propbank.size(input_sequence_features)
+	hotencode2sz= {feat: propbank.size(feat)
+			for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
 	
+	target_size=hotencode2sz[target]		
+	target2idx= propbank.onehot[target]
 	
 	load_dir=''
 	outputs_dir= dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)	
@@ -179,15 +204,15 @@ if __name__== '__main__':
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-	klass2idx, word2idx, embeddings= mapper_getiodicts('LEMMA', 'ARG_1', INPUT_PATH, embeddings_id=embeddings_id) # fetch embeddings here
+	# target2idx, word2idx, embeddings= mapper_getiodicts('LEMMA', 'ARG_1', INPUT_PATH, embeddings_id=embeddings_id) # fetch embeddings here
 
-	embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
-	klass_size=len(klass2idx)
-	print('klass_size:', klass_size)
+	# embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
+	# target_size=len(target2idx)
+	print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
 	#define variables / placeholders
-	Wo = tf.Variable(tf.random_normal([hidden_size[-1], klass_size], name='Wo')) 
-	bo = tf.Variable(tf.random_normal([klass_size], name='bo')) 
+	Wo = tf.Variable(tf.random_normal([hidden_size[-1], target_size], name='Wo')) 
+	bo = tf.Variable(tf.random_normal([target_size], name='bo')) 
 
 	#Forward backward weights for bi-lstm act
 	Wfb = tf.Variable(tf.random_normal([hidden_size[-1], hidden_size[-1]], name='Wfb')) 
@@ -197,7 +222,7 @@ if __name__== '__main__':
 	#pipeline control place holders
 	# This makes training slower - but code is reusable
 	X     =   tf.placeholder(tf.float32, shape=(None,None, feature_size), name='X') 
-	T     =   tf.placeholder(tf.float32, shape=(None,None, klass_size), name='T')
+	T     =   tf.placeholder(tf.float32, shape=(None,None, target_size), name='T')
 	minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
@@ -209,12 +234,13 @@ if __name__== '__main__':
 		accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
 		accuracy_valid= tf.placeholder(tf.float32, name='accuracy_valid')	
 		logits=   tf.placeholder(tf.float32, shape=(batch_size,None), name='logits')
-	
+
 	print('feature_size: ',feature_size)
 	with tf.name_scope('pipeline'):
 		inputs, targets, sequence_length, descriptors= input_fn(
-			[dataset_train], batch_size, num_epochs, embeddings,
-				 klass_size=klass_size, input_sequence_features=input_sequence_features)
+			[dataset_train], batch_size, num_epochs, 
+			propbank.embeddings, hotencode2sz, 
+			input_sequence_features, target)
 
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, minibatch, hidden_size)
@@ -256,7 +282,12 @@ if __name__== '__main__':
 	merged_summary = tf.summary.merge_all()
 
 	
-	X_valid, Y_valid, mb_valid, D_valid=input_validation(embeddings, klass_size, filter_features=input_sequence_features)
+	X_valid, Y_valid, mb_valid, D_valid=tfrecords_extract(
+		'valid', 
+		propbank.embeddings, 
+		hotencode2sz, 
+		input_sequence_features, 
+		target)
 
 
 	init_op = tf.group( 
@@ -332,8 +363,8 @@ if __name__== '__main__':
 							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
-						outputs_predictions_persist(
-							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, klass2idx, 'Yhat_valid')
+						outputs_predictions_persist_2(
+							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, target2idx, 'Yhat_valid')
 
 				step+=1
 				
