@@ -22,25 +22,17 @@ import numpy as np
 import tensorflow as tf 
 import argparse
 import re
-import config as conf
 
-from data_tfrecords_2 import input_fn, tfrecords_extract
+# this is not recommended but where just importing a bunch of constants
+from config import *
+
+from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
-from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist_2
+from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate2, precision, recall
 
-INPUT_PATH='datasets/inputs/03/'
-# INPUT_PATH='datasets/inputs/01/'
-# dataset_train= INPUT_PATH + 'train.tfrecords'
-# dataset_valid= INPUT_PATH + 'valid.tfrecords'
-
-dataset_train= INPUT_PATH + 'dbtrain_pt.tfrecords'
-dataset_valid= INPUT_PATH + 'dbvalid_pt.tfrecords'
 
 MODEL_NAME='dblstm_crf_2'
-DATASET_VALID_SIZE= 569
-DATASET_TRAIN_SIZE= 5099
-
 LAYER_1_NAME='glove_s50'
 LAYER_2_NAME='dblstm'
 LAYER_3_NAME='crf'
@@ -189,10 +181,10 @@ if __name__== '__main__':
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
 	
-	# feature_size=input_sz(input_sequence_features, embeddings_size)		
+	
 	feature_size=propbank.size(input_sequence_features)
 	hotencode2sz= {feat: propbank.size(feat)
-			for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
+			for feat, feat_type in META.items() if feat_type == 'hot'}		
 	
 	target_size=hotencode2sz[target]		
 	target2idx= propbank.onehot[target]
@@ -204,10 +196,6 @@ if __name__== '__main__':
 	print('outputs_dir', outputs_dir)
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-	# target2idx, word2idx, embeddings= mapper_getiodicts('LEMMA', 'ARG_1', INPUT_PATH, embeddings_id=embeddings_id) # fetch embeddings here
-
-	# embeddings= tf.constant(embeddings.tolist(), shape=embeddings.shape, dtype=tf.float32, name= 'embeddings')
-	# target_size=len(target2idx)
 	print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
 	#define variables / placeholders
@@ -226,19 +214,10 @@ if __name__== '__main__':
 	minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
-
-	
-	with tf.name_scope('tensorboard'):	
-		#output metrics
-		loss_avg= tf.placeholder(tf.float32, name='loss_avg')	
-		accuracy_avg= tf.placeholder(tf.float32, name='accuracy_avg')	
-		accuracy_valid= tf.placeholder(tf.float32, name='accuracy_valid')	
-		logits=   tf.placeholder(tf.float32, shape=(batch_size,None), name='logits')
-
 	print('feature_size: ',feature_size)
 	with tf.name_scope('pipeline'):
 		inputs, targets, sequence_length, descriptors= input_fn(
-			[dataset_train], batch_size, num_epochs, 
+			[DATASET_TRAIN_PATH], batch_size, num_epochs, 
 			propbank.embeddings, hotencode2sz, 
 			input_sequence_features, target)
 
@@ -266,21 +245,6 @@ if __name__== '__main__':
 	#Evaluation
 	with tf.name_scope('evaluation'):
 		accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
-
-
-
-	#Logs 
-	writer = tf.summary.FileWriter(outputs_dir)			
-	tf.summary.histogram('Wo', Wo)
-	tf.summary.histogram('bo', bo)
-	tf.summary.histogram('Wfb', Wfb)
-	tf.summary.histogram('bfb', bfb)
-	tf.summary.histogram('logits', logits)
-	tf.summary.scalar('loss_avg', loss_avg)
-	tf.summary.scalar('accuracy_avg', accuracy_avg)
-	tf.summary.scalar('accuracy_valid', accuracy_valid)
-	merged_summary = tf.summary.merge_all()
-
 	
 	X_valid, Y_valid, mb_valid, D_valid=tfrecords_extract(
 		'valid', 
@@ -302,25 +266,11 @@ if __name__== '__main__':
 		# Training control variables
 		step=0		
 		total_loss=0.0
-		total_acc=0.0		
-		
-		
-		#Persists always saving on improvement
-		if load_dir:
-			raise NotImplementedError('load_dir')
-			# saver = tf.train.import_meta_graph(load_dir)
-			# saver.restore(session,tf.train.latest_checkpoint('./'))
-			# graph = tf.get_default_graph()
-
-			# Exibits all variables
-			# session.graph.get_collection(tf.GraphKeys.VARIABLES) 
-		else:			
-			saver = tf.train.Saver(max_to_keep=1)
-		
+		total_acc=0.0				
 
 		first_save=True
 		best_validation_rate=-1
-		writer.add_graph(session.graph)
+
 		try:
 			while not coord.should_stop():				
 				X_batch, Y_batch, mb = session.run(
@@ -350,20 +300,10 @@ if __name__== '__main__':
 					total_loss=0.0 
 					total_acc=0.0					
 
-					#Logs the summary
-					s= session.run(merged_summary,
-						feed_dict={accuracy_avg: float(total_acc)/DISPLAY_STEP , accuracy_valid: acc, loss_avg: float(total_loss)/DISPLAY_STEP, logits:Yhat}
-					)
-					writer.add_summary(s, step)
 					if best_validation_rate < acc:
-						if first_save:
-							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
-							first_save=False 
-						else:
-							saver.save(session, outputs_dir + 'graph_params', global_step=step, write_meta_graph=True)
 						best_validation_rate = acc	
 
-						outputs_predictions_persist_2(
+						outputs_predictions_persist(
 							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, target2idx, 'Yhat_valid')
 
 				step+=1

@@ -14,7 +14,7 @@ import glob
 import os.path
 
 
-from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
+# from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
 from data_propbankbr import propbankbr_transform_arg12arg0, propbankbr_transform_arg02arg1
 
 
@@ -39,59 +39,9 @@ SETTINGS=[
 	'DISPLAY_STEP',
 ]
 
-# EMBEDDABLE_FEATURES=['FORM','LEMMA', 'PRED']
-# SEQUENCE_FEATURES=['IDX', 'P', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
-# TARGET_FEATURE=['ARG_1']
+
+
 def outputs_predictions_persist(
-	output_dir, indexes, predicates, predictions, batch_sizes, vocab2idx, filename):
-	'''
-		Decodes predictions using vocab2idx and writes as a pandas DataFrame
-
-		args
-			output_dir 	.: string containing a valid dir to export tha settings
-			indexes 		.: int matrix   [BATCH_SIZE, MAX_TIME] holding original indexes
-			predicates 	.: int matrix   [BATCH_SIZE, MAX_TIME] holding original predicate index
-			predictions .: int matrix   [BATCH_SIZE, MAX_TIME] 
-			batch_sizes .: list with mini batch sizes [BATCH_SIZE] 
-			vocab2idx		.:
-
-			filename .: string representing the filename to save			
-	'''
-
-	if not(isinstance(predictions,list)):
-		predictions=predictions.tolist()
-
-	
-	idx2vocab= {value:key for key, value in vocab2idx.items()}		
-	#restore only the minibatch sizes and decode it
-	tag_decoded =[idx2vocab[item] for i, sublist in enumerate(predictions) 
-		for j, item in enumerate(sublist) if j < batch_sizes[i]  ]
-
-
-	idx_decoded =[idx for i, sublist in enumerate(indexes.tolist())
-		for idx in sublist[:batch_sizes[i]]] 
-		
-
-	pred_decoded =[pred for i, sublist in enumerate(predicates.tolist())
-		for pred in sublist[:batch_sizes[i]]] 
-	
-	if len(vocab2idx)==36: #alternative T=ARG_1 Y=Y_1
-		new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
-		y_0= new_tags
-		y_1= tag_decoded
-	else:  #alternative T=ARG_0 Y=Y_0
-		new_tags=propbankbr_transform_arg02arg1(pred_decoded, tag_decoded)
-		y_0= tag_decoded
-		y_1= new_tags
-	
-
-	file_path= output_dir +  filename + '.csv'		
-	columns=['IDX','Y_0', 'Y_1']
-	data=[idx_decoded, y_0, y_1]
-	df=pd.DataFrame.from_dict(dict(zip(columns,data))).set_index('IDX', inplace=False)	
-	df.to_csv(file_path)
-
-def outputs_predictions_persist_2(
 	output_dir, indexes, predicates, predictions, batch_sizes, vocab2idx, filename):
 	'''
 		Decodes predictions using vocab2idx and writes as a pandas DataFrame

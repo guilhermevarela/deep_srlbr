@@ -38,11 +38,10 @@ TF_CONTEXT_FEATURES=	{
 }
 
 
-EMBEDDING_PATH='datasets/embeddings/'
-TARGET_PATH='datasets/inputs/03/'
-dataset_train= TARGET_PATH + 'dbtrain_pt.tfrecords'
-dataset_valid= TARGET_PATH + 'dbvalid_pt.tfrecords'
-dataset_tesgt= TARGET_PATH + 'dbtest_pt.tfrecords'
+# TARGET_PATH='datasets/inputs/03/'
+# dataset_train= TARGET_PATH + 'dbtrain_pt.tfrecords'
+# dataset_valid= TARGET_PATH + 'dbvalid_pt.tfrecords'
+# dataset_tesgt= TARGET_PATH + 'dbtest_pt.tfrecords'
 
 
 
@@ -65,13 +64,13 @@ def tfrecords_extract(ds_type, embeddings, feat2size,
 		raise ValueError(buff)
 	else:
 		if ds_type in ['train']:
-			dataset_path= 	dataset_train
+			dataset_path= 	conf.DATASET_TRAIN_PATH 
 			dataset_size=conf.DATASET_TRAIN_SIZE
 		if ds_type in ['test']:
-			dataset_path= 	dataset_test
+			dataset_path= 	conf.DATASET_TEST_PATH
 			dataset_size=conf.DATASET_TEST_SIZE
 		if ds_type in ['valid']:	
-			dataset_path= 	dataset_valid
+			dataset_path= 	conf.DATASET_VALID_PATH
 			dataset_size=conf.DATASET_VALID_SIZE
 
 	inputs, targets, lengths, others= tensor2numpy(

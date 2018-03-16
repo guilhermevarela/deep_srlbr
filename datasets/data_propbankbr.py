@@ -14,7 +14,7 @@ import numpy as np
 import re
 import os.path
 
-PROPBANKBR_PATH='../datasets/conll/'
+PROPBANKBR_PATH='../datasets/txts/conll/'
 # PROPBANKBR_PATH='../datasets/conll/'
 TARGET_PATH='../datasets/csvs/'
 # PROPBANKBR_PATH='datasets/conll/'
@@ -32,12 +32,6 @@ DEP_HEADER=[
 	'ARG4','ARG5','ARG6'
 ]
 
-# ZHOU_HEADER=[
-# 	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'PRED', 'FUNC', 'M_R', 'ARG_0', 'ARG_1'
-# ]
-ZHOU_HEADER=[
-	'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'GPOS', 'PRED', 'FUNC', 'M_R', 'ARG_0', 'ARG_1'
-]
 MAPPER= {
 	'CONST': { 
 		'filename': 'PropBankBr_v1.1_Const.conll.txt',
@@ -153,142 +147,7 @@ def propbankbr_parser():
 
 	return df
 
-def propbankbr_parser2(ctx_p_size=1):		
-	'''
-	Parsers according to 
-	End-to-end Learning of Semantic Role Labeling Using Recurrent Neural Networks
-	Zhou and Xu, 2016
 
-	'ID'  	: Contador de tokens que inicia em 1 para cada nova proposição
-	'S'  		: Contador de sentencas
-	'P'  		: Contador de predicatos
-	'P_S'  	: Contador de predicatos por sentenças
-	'FORM'  : Forma da palavra ou sinal de pontuação
-	'LEMMA' : Lema gold-standard da FORM 
-	'PRED'  : Predicatos semânticos na proposição repetido por todas as etiquetas
-	'FUNC'  : Predicatos semânticos na proposição conforme notação propbank
-	'CTX_P'  : Contexto do predicato ( tamanho de palavras ao redor do predicado)
-						Ex:   
-						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
-						PRED: [		 '-',   'ser',      '-',   '-', '-']
-						CTXP (TAM: 1): ['Obras foram feitas','Obras foram feitas','Obras foram feitas','Obras foram feitas','Obras foram feitas']
-						CTXP (TAM: 2): ['. Obras foram feitas por','. Obras foram feitas por','. Obras foram feitas por','. Obras foram feitas Por','. Obras foram feitas por']
-
-	'M_R'  : Marcacao do predicato
-						0 se o predicato não modifica
-						1 se o predicato modifica
-						Ex:   
-						FORM: ['Obras', 'foram', 'feitas', 'por', 'empreeiteiras'] 
-						PRED: [		 '-',   'ser',      '-',   '-', '-']
-						M_R:  [			 0,       1,        1,     1,   1]
-
-	'ARG_0'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-	'ARG_1'  : Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
-
-	updates: 2018-02-01
-	updates: 2018-02-20: added FUNC, relabeled  ARG_Y to ARG_1
-	updates: 2018-02-24: added CTX_P
-	'''
-
-	df_const= _const_read()
-	df_dep= _dep_read() 
-	# preprocess
-	df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
-	usecols= ['ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'GPOS','PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
-		'ARG5', 'ARG6'
-	]
-
-	df= pd.concat((df_const, df_dep2), axis=1)
-	df= df[usecols] 	
-	df= df.applymap(trim)
-
-	
-	d_sentence_size =_get_dict_sentence_size(df)
-	d_sentence_numpredicates=_get_dict_sentence_numpredicates(df)
-	d_sentence_predicates =_get_dict_sentence_predicates(df)
-
-	N=0
-	for s,sentence_sz in d_sentence_size.items():
-		N+= sentence_sz*d_sentence_numpredicates[s] # COMPUTES sum(|S_i|*|P_ij|)
-
-	Nind= 6 
-	Xind=np.zeros((N, Nind),dtype=np.int32)
-	Yind=np.zeros((N, Nind),dtype=np.int32)	
-	
-	P=   np.zeros((N,1),dtype=np.int32)		
-	M_R= np.zeros((N,1),dtype=np.int32)	
-	P_S= np.zeros((N,1),dtype=np.int32)	
-	PRED=[]
-	FUNC=[]
-	
-	ctx_p_keys=[k for k in range(-ctx_p_size, ctx_p_size+1)
-						if k != 0 ] # exclude 0	which is already offered					
-	ctx_p_values=[[] for _ in ctx_p_keys]
-	d_ctx_p=dict(zip(ctx_p_keys,ctx_p_values))
-
-	#Iterate item by item adjusting PRED, CTX_P, M_R, ARG
-	#resulting df will have number of rows=|S_i|X|P_ij|
-	usecols= ZHOU_HEADER[:-2] + ['CTX_P{:+d}'.format(key) for key in ctx_p_keys] + ZHOU_HEADER[-2:]
-
-	Y=[] 
-	x_in =0
-	x_out=0
-	p=0
-	for sentence_id,sentence_sz in d_sentence_size.items():
-		sentence_numpredicates = d_sentence_numpredicates[sentence_id]
-		sentence_df=df[df['S']==sentence_id]		
-		for p_s in range(sentence_numpredicates):		
-			func=['-']*sentence_sz
-			x_data=np.arange(x_in, x_in+sentence_sz).reshape((sentence_sz,1))
-			y_data=np.array([0,1,4,5,6,8+p_s]).reshape((1,Nind))			
-			
-			Xind[x_out:x_out+sentence_sz,:]= np.tile(x_data, (1,Nind))
-			Yind[x_out:x_out+sentence_sz,:]= np.tile(y_data, (sentence_sz,1))
-			
-			PRED+=[d_sentence_predicates[sentence_id][p_s]]*sentence_sz			
-
-			#FUNC will be PRED if ARG_0 == (V*)			
-			ifunc=np.argmax((sentence_df['PRED'] == d_sentence_predicates[sentence_id][p_s]).values)			
-			func[ifunc]=d_sentence_predicates[sentence_id][p_s]			
-			FUNC+=func 
-
-			#D_CTX_P
-			for ctx_p in d_ctx_p:
-				this_lemma=['-']
-				if ifunc + ctx_p >= 0  and ifunc + ctx_p < sentence_sz: 
-					this_lemma= [sentence_df.loc[:, ('LEMMA')].values[ifunc + ctx_p]]			
-				d_ctx_p[ctx_p]+= this_lemma*sentence_sz
-			
-			
-			ind=(sentence_df['P_S']>=p_s+1).as_matrix()
-			M_R[x_out:x_out+sentence_sz,:]= (ind.reshape(sentence_sz,1)).astype(np.int32)
-			P[x_out:x_out+sentence_sz,:]=p+1
-			P_S[x_out:x_out+sentence_sz,:]=p_s
-			x_out+=sentence_sz 
-			p+=1
-		x_in+=sentence_sz
-
-
-	
-	#CONVERT INDEX into DF
-	data= df.as_matrix()[Xind,Yind]	
-	zhou_df= 	pd.DataFrame(data=data, columns=['ID', 'S', 'FORM', 'LEMMA', 'GPOS', 'ARG_0'])
-
-	#NEW COLUMNS 
-	zhou_df['FUNC']=FUNC
-	zhou_df['PRED']=PRED
-	zhou_df['M_R']=M_R
-	zhou_df['P']=P
-	zhou_df['P_S']=P_S
-	
-	for key, values in d_ctx_p.items():		
-		zhou_df['CTX_P{:+d}'.format(key)]=values		
-	#DATA TRANSORMATIONS: BY ITERATING ITEM BY ITEM
-	zhou_df['ARG_1']= propbankbr_transform_arg02arg1(P, zhou_df['ARG_0'].tolist())
-	zhou_df.index.name= 'IDX'
-
-	# d_ctx_p= propbankbr_transform_ctx_p(zhou_df, size=1)
-	return zhou_df[usecols]
 
 def propbankbr_argument_stats(df):
 	'''
@@ -500,36 +359,36 @@ def propbankbr_transform_arg02arg1(propositions, arguments):
 
 
 
-def get_signature(mappings): 
-	return {k:[] for k in mappings}
+# def get_signature(mappings): 
+# 	return {k:[] for k in mappings}
 
-def _get_dict_sentence_size(df):
-	xdf= df[['S','P']].pivot_table(index=['S'], aggfunc=len)
-	d=dict(zip(xdf.index, xdf['P']))
-	return d
+# def _get_dict_sentence_size(df):
+# 	xdf= df[['S','P']].pivot_table(index=['S'], aggfunc=len)
+# 	d=dict(zip(xdf.index, xdf['P']))
+# 	return d
 
-def _get_dict_sentence_numpredicates(df):
+# def _get_dict_sentence_numpredicates(df):
 
-	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)	
-	d= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
-	d=d['P_S']
-	return d
+# 	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)	
+# 	d= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
+# 	d=d['P_S']
+# 	return d
 
-def _get_dict_sentence_predicates(df):
-	xdf= df[['S', 'PRED']]
-	xdf= xdf[xdf['PRED'] != '-']	
-	d= {}
-	for seq, pred in zip(xdf['S'], xdf['PRED']):
-		if seq in d:
-			d[seq]+=[pred]
-		else:
-			d[seq]=[pred]
-	return d
+# def _get_dict_sentence_predicates(df):
+# 	xdf= df[['S', 'PRED']]
+# 	xdf= xdf[xdf['PRED'] != '-']	
+# 	d= {}
+# 	for seq, pred in zip(xdf['S'], xdf['PRED']):
+# 		if seq in d:
+# 			d[seq]+=[pred]
+# 		else:
+# 			d[seq]=[pred]
+# 	return d
 
-def trim(val):
-	if isinstance(val, str):
-		return val.strip()
-	return val	
+# def trim(val):
+# 	if isinstance(val, str):
+# 		return val.strip()
+# 	return val	
 
 
 if __name__== '__main__':		

@@ -2,7 +2,7 @@
 *.old.* # matches previous refactored files
 /.old   # matches root directory
 /srlconll-1.1
-datasets/embeddings/*
+datasets/txts/embeddings/*
 *.pyc
 *__pycache__
 propbankbr/*.txt
