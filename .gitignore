@@ -3,7 +3,6 @@
 datasets/embeddings/*
 *.pyc
 *__pycache__
-*.DS_Store
 propbankbr/*.txt
 propbankbr/*.conll
 *events.out.tfevents.*
