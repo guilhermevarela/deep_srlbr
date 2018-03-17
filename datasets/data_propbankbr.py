@@ -287,7 +287,7 @@ def _dep_read():
 	return df
 
 
-def propbankbr_transform_arg12arg0(propositions, arguments):
+def propbankbr_t2arg(propositions, arguments):
 	isopen=False
 	prev_tag=''
 	prev_prop=-1
@@ -323,7 +323,7 @@ def propbankbr_transform_arg12arg0(propositions, arguments):
 
 	return new_tags	
 
-def propbankbr_transform_arg02arg1(propositions, arguments):
+def propbankbr_arg2t(propositions, arguments):
 	'''
 		Converts default argument 0 into argument 1  format for easier softmax
 

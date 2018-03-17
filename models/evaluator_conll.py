@@ -14,22 +14,36 @@
 
 '''
 import sys
+import os 
 import subprocess
+import string
+
 import pandas as pd 
+
 PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
+
 class EvaluatorConll(object):
 
-	def __init__(self, target_dir):
-		#save temporary files in root_path
-		self.root_dir= '/'.join(sys.path[0].split('/')[:-1])
-		if (target_dir):
-			self.target_dir= target_dir
-
+	def __init__(self, ds_type, S, P, PRED, T, target_dir='./'):
+		'''
+			args:
+				ds_type
+	  		S 			.:	dict<int,int> keys are the index, values are sentences
+	  		P       .:	dict<int,int> keys are the index, values are propositions
+	  		PRED    .:	dict<int,str> keys are the index, values are verbs/ predicates
+	  		Y       .:	dict<int,str> keys are the index, values are ARG
+		'''				
+		self.ds_type=ds_type
+		self.S=S 
+		self.P=P 
+		self.PRED=PRED
+		self.T=T
+		self.target_dir=target_dir
 		self.f1= -1
-		self.prec=-1
-		self.rec=-1
+		self.precision=-1
+		self.recall=-1
 		
-	def evaluate(self, S, P, FUNC, T, Y):
+	def evaluate(self, Y):
 		'''
 			Evaluates the conll scripts returning total precision, recall and F1
 				if self.target_dir is set will also save conll.txt@self.target_dir
@@ -42,74 +56,191 @@ class EvaluatorConll(object):
 				rec       .: float<> recall 
 				f1        .: float<> F1 score
 		'''
-		raise NotImplementedError('evaluate is not implemented')
+		self._exec(Y)
 
 			
-	def _exec(self, S, P, FUNC, T, Y):	
+	def _exec(self, Y):	
 		'''
 			Performs a 6-step procedure in order to use the script evaluation
 			1) Formats 		.: inputs in order to obtain proper conll format ()
 			2) Saves      .:  two tmp files tmpgold.txt and tmpy.txt on self.root_dir.
 			3) Run 			  .:  the perl script using subprocess module.
 			4) Parses     .:  parses results from 3 in variables self.f1, self.prec, self.rec. 
-			5) Stores     .:  stores results from 3 in self.target_dir (optional).
+			5) Stores     .:  stores results from 3 in self.target_dir 
 			6) Cleans     .:  files left from step 2.
 		'''
 
-		#Step 1 - 
-		#Step 3 - Popen runs the pearl script storing in the variable PIPE
-		pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH,ft.filename, fy.filename], stdout=subprocess.PIPE)
+		#Step 1 - Transforms columns into with args and predictions into a dictionary
+		# ready with conll format
+		df_eval, df_gold = self._conll_format(Y)		
 
+		#Step 2 - Uses target dir to save files		
+		eval_path, gold_path= self._store(df_eval, df_gold)
+		
+		#Step 3 - Popen runs the pearl script storing in the variable PIPE
+		pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE)
+		#out is a byte with each line separated by \n
+		#ers is stderr
 		out, err = pipe.communicate()
 		if (err):
 			raise Exception('pearl script failed with message:\n{:}'.format(err))
+		
+		#Step 4 - Parse		
+		self._parse(out.decode('UTF-8'))
+
+		#Step 5 - Stores		
+		target_path= '{:}eval{:}.txt'.format(self.target_dir, self.ds_type)
+		with open(target_path , 'w+') as f:
+			f.write(out.decode('UTF-8'))
+
+		#Step 6 - Removes tmp
+		try:
+			os.remove(eval_path)
+		except OSError:
+			pass	
+
+		try:
+			os.remove(gold_path)
+		except OSError:
+			pass	
 
 
-def outputs_conll(S, P, FUNC, T):
-	'''
-		Performs convertions from normalized format (1 PREDICATE at TIME) vs
-	'''
-	df= pd.DataFrame(data=[S,P,FUNC,T,Y], columns=['S','P','FUNC','T'])
+
+	def _conll_format(self, Y):		
+		df_eval= conll_with_dicts(self.S, self.P, self.PRED, Y, True)		
+		df_gold= conll_with_dicts(self.S, self.P, self.PRED, self.T, True)
+		return df_eval, df_gold
+
+	def _store(self, df_eval, df_gold):
+		eval_path=self.target_dir + 'tmpeval.txt'
+		df_eval.to_csv(eval_path, sep= '\t', index=False, header=False) 
+
+
+		gold_path=self.target_dir + 'tmpgold.txt'
+		df_gold.to_csv(gold_path, sep= '\t', index=False, header=False) 
+		return eval_path, gold_path
 	
-	#Replace '-' making it easier to concatenate
-	sub_fn= lambda x: re.sub('-', '', x)
-	df['FUNC'] = df['FUNC'].apply(sub_fn)
-    
-	s0= min(df['S'])
-	sn= max(df['S'])
-	for i,si in enumerate(range(s0,sn+1)):
-	    dfsi=df.loc[df['S'] == si,:]
-	    p0= min(dfsi['P'])
-	    pn= max(dfsi['P'])    
-	    for j,p in enumerate(range(p0,pn+1)): # concatenate by argument columns
-	        dfpj=dfsi.loc[df['P']==p,:].reset_index(drop=True)
-	        if j==0:
-	            dfp=dfpj[['FUNC',target_column]]
-	            dfp=dfp.rename(columns={target_column: 'ARG0'})
-	        else:
-	            dfp['FUNC']=dfp['FUNC'].map(str).values + dfpj['FUNC'].map(str).values
-	            dfp= pd.concat((dfp, dfpj[target_column]), axis=1)
-	            dfp=dfp.rename(columns={target_column: 'ARG{:d}'.format(p-p0)})            
-	    if i==0:        
-	        dfconll= dfp
-	    else:
-	        dfconll= dfconll.append(dfp)
-	    blank_series= pd.Series([None]*dfconll.shape[1], index=dfconll.columns)    
-	    dfconll= dfconll.append(blank_series, ignore_index=True)
-	        
-	#Replace '-' making it easier to concatenate
-	sub_fn= lambda x: '-' if isinstance(x,str) and len(x) == 0 else x
-	dfconll['FUNC'] = dfconll['FUNC'].apply(sub_fn)
-    
-	#Replace Nans ( from skipping lines to empty)
-	dfconll= dfconll.fillna('')
-    
-	#Order columns to fit conll standard
-	num_columns=len(dfconll.columns)
-	usecolumns=['FUNC'] + ['ARG{:d}'.format(i) for i in range(num_columns-1)]
-	return dfconll[usecolumns]
+	def _parse(self, txt):
+		'''
+		Parses srlconll-1.1/bin/srl-eval.pl script output text 
 
 
 
+		args:
+			txt .: string with lines separated by \n and fields separated by tabs
 
+		returns:
+
+		example:
+		Number of Sentences    :         326
+		Number of Propositions :         553
+		Percentage of perfect props :   4.70
+				          corr.  excess  missed    prec.    rec.      F1
+		------------------------------------------------------------
+				 Overall      398    2068     866    16.14   31.49   21.34
+		----------
+				    A0      124     285     130    30.32   48.82   37.41
+		    		A1      202    1312     288    13.34   41.22   20.16
+		    		A2       18     179     169     9.14    9.63    9.37
+		    		A3        1      14      15     6.67    6.25    6.45
+		    		A4        2      14       9    12.50   18.18   14.81
+				AM-ADV        4      19      19    17.39   17.39   17.39
+				AM-CAU        0      16      17     0.00    0.00    0.00
+				AM-DIR        0       0       1     0.00    0.00    0.00
+				AM-DIS        6      17      20    26.09   23.08   24.49
+				AM-EXT        0       3       5     0.00    0.00    0.00
+				AM-LOC        9      65      46    12.16   16.36   13.95
+				AM-MNR        0      24      28     0.00    0.00    0.00
+				AM-NEG       10       5      24    66.67   29.41   40.82
+				AM-PNC        0       9       9     0.00    0.00    0.00
+				AM-PRD        0      15      18     0.00    0.00    0.00
+				AM-TMP       22      91      68    19.47   24.44   21.67
+		------------------------------------------------------------
+		     		 V      457      32      96    93.46   82.64   87.72
+		------------------------------------------------------------
+
+		'''  
+		lines= txt.split('\n')
+		for i, line in enumerate(lines):
+			if i ==0:
+				self.num_sentences= int(line.split(':')[-1])
+			if i ==1:
+				self.num_propositions= int(line.split(':')[-1])			
+			if i ==2:	
+				self.perc_propositions= float(line.split(':')[-1])			
+			if i==6:	
+				self.precision, self.recall, self.f1 	= map(float, line.split()[-3:])
+				break
+	
+	
+
+def conll_with_dicts(S, P, PRED, Y, to_frame=True):
+  '''
+  	Converts a dataset to conll format - promotes kind of an horizontal stack,
+  		in which we add each proposition within the sentence, as a new column or key
+  	
+  	args:
+  		S 			.:	dict<int,int> keys are the index, values are sentences
+  		P       .:	dict<int,int> keys are the index, values are propositions
+  		PRED    .:	dict<int,str> keys are the index, values are verbs/ predicates
+  		Y       .:	dict<int,str> keys are the index, values are Y is 'ARG', 'T', 'ARG'
+			to_frame .: bool if true converts to the output to dataframe
+		returns:
+
+			d_conll .: dict<str,dict<int,str>> outer keys are columns 'PRED', 'ARG0', 'ARG1', ..., 'ARGN'
+						inner keys are new indexes ( over the sentences)
+						values are 'PRED', 'ARG0', 'ARG1', ..., 'ARGN'
+						or dataframe where columns are db columns and rows are tokens with sequence
+
+
+		refs: 
+			http://localhost:8888/notebooks/05-evaluations_conll.ipynb				
+  '''
+  d_conll={}
+  index1=0  
+  index0=0 # marks the beginning of a new SENTENCE
+  prev_p=-1
+  prev_s=-1
+  pps=-1 #propostion per sentence  
+  first=True  
+  for index, s in S.items():
+    p = P[index]
+    pred = PRED[index]
+    y = Y[index]
+    if p != prev_p and s != prev_s: #New Sentence and new proposition
+        pps=0  # fills ARG0  
+        # conll format .: skip a row for each new sentence after the first
+        if not(first): 
+            for colname in d_conll:
+                d_conll[colname][index1]=''
+            index1+=1
+        index0=index1 #Stores the beginning of the sentence                
+    elif p != prev_p:#New proposition
+        pps+=1  #  updates column to write
+        index1=index0 # back to the first key
+        
+    argkey = 'ARG{:}'.format(pps)    
+    if not(argkey in d_conll):
+        if first:        
+            d_conll['PRED']={}
+            first=False
+        d_conll[argkey]={}
+
+
+    #updates predicate if index1 is unseen 
+    if not(index1 in d_conll['PRED']) or not(pred =='-'):
+        d_conll['PRED'][index1]=pred
+        
+    d_conll[argkey][index1]=y #            
+    prev_p=p
+    prev_s=s    
+    index1+=1
+  
+  result= d_conll
+  if (to_frame):
+  	result = pd.DataFrame.from_dict(d_conll , orient='columns') 
+  	l= len(d_conll)
+  	usecols= ['PRED']  + ['ARG{:}'.format(i) for i in range(l-1)]# reorder columns to match format
+  	result= result[usecols]
+  return result 
 

@@ -408,7 +408,7 @@ if __name__ == '__main__':
 	# propbank.define()
 	# propbank.persist(PROP_DIR)
 	propbank = Propbank.recover(PROP_PATH)		
-	# import code; code.interact(local=dict(globals(), **locals()))		
+	
 
 	# PRED_d = propbank.feature('valid', 'PRED', True) # text
 	# M_R_d = propbank.feature('valid', 'M_R', True) # numerical

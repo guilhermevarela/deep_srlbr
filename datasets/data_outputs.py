@@ -13,9 +13,7 @@ import re
 import glob
 import os.path
 
-
-# from datasets.data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload  
-from data_propbankbr import propbankbr_transform_arg12arg0, propbankbr_transform_arg02arg1
+from data_propbankbr import propbankbr_t2arg, propbankbr_arg2t
 
 
 SETTINGS=[
@@ -75,11 +73,11 @@ def outputs_predictions_persist(
 		for pred in sublist[:batch_sizes[i]]] 
 	
 	if len(vocab2idx)==36: #alternative T=ARG_1 Y=Y_1
-		new_tags=propbankbr_transform_arg12arg0(pred_decoded, tag_decoded)
+		new_tags=propbankbr_t2arg(pred_decoded, tag_decoded)
 		yarg= new_tags
 		yt= tag_decoded
 	else:  #alternative T=ARG_0 Y=Y_0
-		new_tags=propbankbr_transform_arg02arg1(pred_decoded, tag_decoded)
+		new_tags=propbankbr_arg2t(pred_decoded, tag_decoded)
 		yarg= tag_decoded
 		yt= new_tags
 	
