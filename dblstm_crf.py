@@ -319,44 +319,96 @@ if __name__== '__main__':
 						[accuracy_op, viterbi_sequence],
 						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
 					)					
+					index= D_train[:,:,0]
+					propositions= D_train[:,:,2]
+					predictions= Yhat 
 					
-					predictions=[propbank.decode( item, 'T')  for i, sublist in enumerate(Yhat.tolist()) 
-								for j, item in enumerate(sublist) if j < mb_train[i]]
-					
-					propositions=[item  for i, sublist in enumerate(D_train[:,:,1].tolist()) 
-								for j, item in enumerate(sublist) if j < mb_train[i]]								
-
-					Ytrain= propbankbr_t2arg(propositions, predictions)
-					
+					evaluator_train.evaluate_tensor(
+						index,
+						propositions,
+						predictions,
+						mb_train,
+						lambda x : propbank.decode(x , target),
+						target,						
+						False
+					)			
 					acc, Yhat= session.run(
 						[accuracy_op, viterbi_sequence],
 						feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
 					)
-					predictions=[propbank.decode( item, 'T')  for i, sublist in enumerate(Yhat.tolist()) 
-								for j, item in enumerate(sublist) if j < mb_valid[i]]
-					
-					propositions=[item  for i, sublist in enumerate(D_valid[:,:,1].tolist()) 
-								for j, item in enumerate(sublist) if j < mb_valid[i]]								
+					# def evaluate_tensor(self, zeropadded_I, zeropadded_P, zeropadded_Y, column_Y, times, decoder, store=False):
 
-					Yvalid= propbankbr_t2arg(propositions, predictions)
+					# predictions=[propbank.decode( item, 'T')  for i, sublist in enumerate(Yhat.tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_valid[i]]
 					
-					evaluator_train.evaluate(Ytrain)
-					evaluator_valid.evaluate(Yvalid)
+					# propositions=[item  for i, sublist in enumerate(D_valid[:,:,1].tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_valid[i]]								
+
+					# index=[item  for i, sublist in enumerate(D_valid[:,:,0].tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_valid[i]]																
+					# import code; code.interact(local=dict(globals(), **locals()))
+					index= D_valid[:,:,0]
+					propositions= D_valid[:,:,2]
+					predictions= Yhat 
+					evaluator_valid.evaluate_tensor(
+						index,
+						propositions,
+						predictions,
+						mb_valid,
+						lambda x : propbank.decode(x , target),
+						target,						
+						False
+					)			
+					
+					# Yvalid= propbankbr_t2arg(propositions, predictions)
+					# import code; code.interact(local=dict(globals(), **locals()))
+					# outputs_predictions_persist(
+					# 		outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat, mb_valid, target2idx, 'Yvalid')
+					# evaluator_train.evaluate(Ytrain)
+					# evaluator_valid.evaluate(dict(zip(index, Yvalid)))
 					#Broadcasts to user
 					# print('Iter={:5d}'.format(step+1),
 					# 	'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
 					# 		'valid. acc {:.2f}%'.format(100*acc),						
 					#  			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+					
+
+
+					# predictions=[propbank.decode( item, 'T')  for i, sublist in enumerate(Yhat.tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_train[i]]
+					
+					# propositions=[item  for i, sublist in enumerate(D_train[:,:,1].tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_train[i]]								
+
+					# index=[item  for i, sublist in enumerate(D_train[:,:,0].tolist()) 
+					# 			for j, item in enumerate(sublist) if j < mb_train[i]]																
+
+					# Ytrain= propbankbr_t2arg(propositions, predictions)
+					# evaluator_train.evaluate(dict(zip(index,Ytrain)))
+
 					print('Iter={:5d}'.format(step+1),
 						'train-f1 {:.2f}%'.format(evaluator_train.f1),						
-							'valid-f1 {:.2f}%'.format(evaluator_valid.f1),						
-					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+							'avg acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
+								'valid-f1 {:.2f}%'.format(evaluator_valid.f1),														
+									'valid acc {:.2f}%'.format(acc),						
+					 					'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
 					total_acc=0.0					
 
 					if best_validation_rate < evaluator_valid.f1:
 						best_validation_rate = evaluator_valid.f1	
-						evaluator_valid.evaluate(Yvalid, True)
+						evaluator_valid.evaluate_tensor(
+							index,
+							propositions,
+							predictions,
+							mb_valid,
+							lambda x : propbank.decode(x , target),
+							target,						
+							True
+						)			
+						# evaluator_valid.evaluate(Yvalid, True)
+						# outputs_predictions_persist(
+						# 	outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat, mb_valid, target2idx, 'Yvalid')
 						# outputs_predictions_persist(
 						# 	outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, target2idx, 'Yhat_valid')
 

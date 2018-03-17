@@ -14,11 +14,18 @@
 
 '''
 import sys
+sys.path.append('../datasets/')
 import os 
 import subprocess
 import string
-
 import pandas as pd 
+
+from data_propbankbr import propbankbr_t2arg
+
+
+
+
+
 
 PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
 
@@ -39,9 +46,16 @@ class EvaluatorConll(object):
 		self.PRED=PRED
 		self.T=T
 		self.target_dir=target_dir
-		self.f1= -1
-		self.precision=-1
-		self.recall=-1
+
+		self._refresh()
+		# self.num_propositions= -1
+		# self.num_sentences=-1
+		# self.perc_propositions=-1
+		# self.txt=''
+		# self.err=''
+		# self.f1= -1
+		# self.precision=-1
+		# self.recall=-1
 		
 	def evaluate(self, Y, store=False):
 		'''
@@ -66,6 +80,8 @@ class EvaluatorConll(object):
 				f1        .: float<> F1 score
 		'''
 
+		#Resets state
+		self._refresh()
 		#Step 1 - Transforms columns into with args and predictions into a dictionary
 		# ready with conll format
 		df_eval, df_gold = self._conll_format(Y)		
@@ -77,23 +93,25 @@ class EvaluatorConll(object):
 		pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		#out is a byte with each line separated by \n
 		#ers is stderr		
-		try:
-			out, err = pipe.communicate()
-			if (err):
-				err= err.decode('UTF-8')
-				raise Exception('srl-eval.pl\n{:}'.format(err))
-		except Exception:
-			pass
+		txt, err = pipe.communicate()
+		self.txt= txt.decode('UTF-8')
+		self.err= err.decode('UTF-8')
 
-		if not(err):
-			#Step 4 - Parse		
-			self._parse(out.decode('UTF-8'))
+		if (self.err):
+			# self.err= err.decode('UTF-8')
+			# raise Exception('srl-eval.pl\n{:}'.format(err))
+			print('srl-eval.pl says:\t{:}'.format(self.err))
+		
+		#Step 4 - Parse		
+		self._parse(self.txt)
 
+
+		if store:
 			#Step 5 - Stores		
-			target_path= '{:}eval{:}.txt'.format(self.target_dir, self.ds_type)
+			target_path= '{:}conllscore_{:}.txt'.format(self.target_dir, self.ds_type)
 			with open(target_path , 'w+') as f:
-				f.write(out.decode('UTF-8'))
-
+				f.write(self.txt)	
+		else:
 			#Step 6 - Removes tmp
 			try:
 				os.remove(eval_path)
@@ -105,7 +123,67 @@ class EvaluatorConll(object):
 			except OSError:
 				pass	
 
+	def evaluate_tensor(self, zeropadded_I, zeropadded_P, zeropadded_Y, times, decoder, column_Y , store=False):
+		'''
+		Evaluates the conll scripts returning total precision, recall and F1
+			if self.target_dir is set will also save conll.txt@self.target_dir
 
+		converts zeroppadded_Y into dict_Y
+
+		zeropadded_* are arrays [DATABASE_SIZE, MAX_TIME] with 
+				zeros if for t=0,....,MAX_TIME t>times[i] for i=0...DATABASE_SIZE 
+				
+
+		args:
+			zeropadded_I		 	.: zeropadded array
+			zeropadded_P 			.: zeropadded array
+			zeropadded_Y 			.: zeropadded array
+			times 						.:
+			decoder 					.:
+
+		returns:
+			prec			.: float<> precision
+			rec       .: float<> recall 
+			f1        .: float<> F1 score
+
+		more info:
+			Performs a 6-step procedure in order to use the script evaluation
+			1) Formats 		.: inputs in order to obtain proper conll format ()
+			2) Saves      .:  two tmp files tmpgold.txt and tmpy.txt on self.root_dir.
+			3) Run 			  .:  the perl script using subprocess module.
+			4) Parses     .:  parses results from 3 in variables self.f1, self.prec, self.rec. 
+			5) Stores     .:  stores results from 3 in self.target_dir 
+			6) Cleans     .:  files left from step 2.
+			
+		'''
+		propositions=[item  for i, sublist in enumerate(zeropadded_P.tolist()) 
+			for j, item in enumerate(sublist) if j < times[i]]
+
+		index=[item  for i, sublist in enumerate(zeropadded_I.tolist()) 
+			for j, item in enumerate(sublist) if j < times[i]]
+
+		
+		predictions=[decoder( item )  for i, sublist in enumerate(zeropadded_Y.tolist()) 
+			for j, item in enumerate(sublist) if j < times[i]]
+
+		if column_Y in ['T']:	
+			Y= propbankbr_t2arg(propositions, predictions)	
+		else:
+			Y= predictions	
+		
+
+		self.evaluate(dict(zip(index, Y)), store)
+													
+		
+	def _refresh(self):
+		self.num_propositions= -1
+		self.num_sentences=-1
+		self.perc_propositions=-1
+		self.txt=''
+		self.err=''
+		self.f1= -1
+		self.precision=-1
+		self.recall=-1	
 
 	def _conll_format(self, Y):		
 		df_eval= conll_with_dicts(self.S, self.P, self.PRED, Y, True)		
@@ -113,11 +191,11 @@ class EvaluatorConll(object):
 		return df_eval, df_gold
 
 	def _store(self, df_eval, df_gold):
-		eval_path=self.target_dir + 'tmpeval.txt'
+		eval_path=self.target_dir + '{:}eval.txt'.format(self.ds_type)
 		df_eval.to_csv(eval_path, sep= '\t', index=False, header=False) 
 
 
-		gold_path=self.target_dir + 'tmpgold.txt'
+		gold_path=self.target_dir + '{:}gold.txt'.format(self.ds_type)
 		df_gold.to_csv(gold_path, sep= '\t', index=False, header=False) 
 		return eval_path, gold_path
 	

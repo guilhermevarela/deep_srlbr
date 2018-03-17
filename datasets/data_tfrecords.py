@@ -38,11 +38,6 @@ TF_CONTEXT_FEATURES=	{
 }
 
 
-# TARGET_PATH='datasets/inputs/03/'
-# dataset_train= TARGET_PATH + 'dbtrain_pt.tfrecords'
-# dataset_valid= TARGET_PATH + 'dbvalid_pt.tfrecords'
-# dataset_tesgt= TARGET_PATH + 'dbtest_pt.tfrecords'
-
 
 
 ############################# tfrecords reader ############################# 
@@ -164,6 +159,8 @@ def input_fn(filenames, batch_size,  num_epochs,
 	'''
 	
 	filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
+	
+	
 
 	context_features, sequence_features= _read_and_decode(filename_queue)	
 

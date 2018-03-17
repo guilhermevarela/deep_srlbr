@@ -193,7 +193,6 @@ def _const_read():
 
 	
 	filename= PROPBANKBR_PATH + 'PropBankBr_v1.1_Const.conll.txt'
-	# import code; code.interact(local=dict(globals(), **locals()))		
 	df = pd.read_csv(filename, sep='\t', header=None, index_col=False, names=CONST_HEADER, dtype=str)
 	
 	del df['IGN1'] 
@@ -292,6 +291,7 @@ def propbankbr_t2arg(propositions, arguments):
 	prev_tag=''
 	prev_prop=-1
 	new_tags=[]
+	
 	for prop, tag in zip(propositions, arguments):
 		if prop != prev_prop:
 			prev_tag=''
@@ -356,39 +356,6 @@ def propbankbr_arg2t(propositions, arguments):
 		prev_prop= prop		
 		new_tags.append(new_tag)
 	return new_tags				
-
-
-
-# def get_signature(mappings): 
-# 	return {k:[] for k in mappings}
-
-# def _get_dict_sentence_size(df):
-# 	xdf= df[['S','P']].pivot_table(index=['S'], aggfunc=len)
-# 	d=dict(zip(xdf.index, xdf['P']))
-# 	return d
-
-# def _get_dict_sentence_numpredicates(df):
-
-# 	xdf= df[['S', 'P_S']].drop_duplicates(subset=['S', 'P_S'],keep='last',inplace=False)	
-# 	d= xdf.pivot_table(index='S', values='P_S', aggfunc=max).T.to_dict('int')
-# 	d=d['P_S']
-# 	return d
-
-# def _get_dict_sentence_predicates(df):
-# 	xdf= df[['S', 'PRED']]
-# 	xdf= xdf[xdf['PRED'] != '-']	
-# 	d= {}
-# 	for seq, pred in zip(xdf['S'], xdf['PRED']):
-# 		if seq in d:
-# 			d[seq]+=[pred]
-# 		else:
-# 			d[seq]=[pred]
-# 	return d
-
-# def trim(val):
-# 	if isinstance(val, str):
-# 		return val.strip()
-# 	return val	
 
 
 if __name__== '__main__':		
