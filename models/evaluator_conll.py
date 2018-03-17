@@ -31,7 +31,7 @@ class EvaluatorConll(object):
 	  		S 			.:	dict<int,int> keys are the index, values are sentences
 	  		P       .:	dict<int,int> keys are the index, values are propositions
 	  		PRED    .:	dict<int,str> keys are the index, values are verbs/ predicates
-	  		Y       .:	dict<int,str> keys are the index, values are ARG
+	  		T       .:	dict<int,str> keys are the index, values are ARG
 		'''				
 		self.ds_type=ds_type
 		self.S=S 
@@ -43,10 +43,19 @@ class EvaluatorConll(object):
 		self.precision=-1
 		self.recall=-1
 		
-	def evaluate(self, Y):
+	def evaluate(self, Y, store=False):
 		'''
 			Evaluates the conll scripts returning total precision, recall and F1
 				if self.target_dir is set will also save conll.txt@self.target_dir
+
+			Performs a 6-step procedure in order to use the script evaluation
+			1) Formats 		.: inputs in order to obtain proper conll format ()
+			2) Saves      .:  two tmp files tmpgold.txt and tmpy.txt on self.root_dir.
+			3) Run 			  .:  the perl script using subprocess module.
+			4) Parses     .:  parses results from 3 in variables self.f1, self.prec, self.rec. 
+			5) Stores     .:  stores results from 3 in self.target_dir 
+			6) Cleans     .:  files left from step 2.
+				
 			args:
 				PRED		 	.: list<string> predicates according to PRED column
 				T 				.: list<string> target according to ARG column
@@ -55,19 +64,6 @@ class EvaluatorConll(object):
 				prec			.: float<> precision
 				rec       .: float<> recall 
 				f1        .: float<> F1 score
-		'''
-		self._exec(Y)
-
-			
-	def _exec(self, Y):	
-		'''
-			Performs a 6-step procedure in order to use the script evaluation
-			1) Formats 		.: inputs in order to obtain proper conll format ()
-			2) Saves      .:  two tmp files tmpgold.txt and tmpy.txt on self.root_dir.
-			3) Run 			  .:  the perl script using subprocess module.
-			4) Parses     .:  parses results from 3 in variables self.f1, self.prec, self.rec. 
-			5) Stores     .:  stores results from 3 in self.target_dir 
-			6) Cleans     .:  files left from step 2.
 		'''
 
 		#Step 1 - Transforms columns into with args and predictions into a dictionary
@@ -78,31 +74,36 @@ class EvaluatorConll(object):
 		eval_path, gold_path= self._store(df_eval, df_gold)
 		
 		#Step 3 - Popen runs the pearl script storing in the variable PIPE
-		pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE)
+		pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		#out is a byte with each line separated by \n
-		#ers is stderr
-		out, err = pipe.communicate()
-		if (err):
-			raise Exception('pearl script failed with message:\n{:}'.format(err))
-		
-		#Step 4 - Parse		
-		self._parse(out.decode('UTF-8'))
-
-		#Step 5 - Stores		
-		target_path= '{:}eval{:}.txt'.format(self.target_dir, self.ds_type)
-		with open(target_path , 'w+') as f:
-			f.write(out.decode('UTF-8'))
-
-		#Step 6 - Removes tmp
+		#ers is stderr		
 		try:
-			os.remove(eval_path)
-		except OSError:
-			pass	
+			out, err = pipe.communicate()
+			if (err):
+				err= err.decode('UTF-8')
+				raise Exception('srl-eval.pl\n{:}'.format(err))
+		except Exception:
+			pass
 
-		try:
-			os.remove(gold_path)
-		except OSError:
-			pass	
+		if not(err):
+			#Step 4 - Parse		
+			self._parse(out.decode('UTF-8'))
+
+			#Step 5 - Stores		
+			target_path= '{:}eval{:}.txt'.format(self.target_dir, self.ds_type)
+			with open(target_path , 'w+') as f:
+				f.write(out.decode('UTF-8'))
+
+			#Step 6 - Removes tmp
+			try:
+				os.remove(eval_path)
+			except OSError:
+				pass	
+
+			try:
+				os.remove(gold_path)
+			except OSError:
+				pass	
 
 
 
