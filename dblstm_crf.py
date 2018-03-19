@@ -98,7 +98,7 @@ def forward(X, sequence_length, hidden_size):
 	outputs=X
 	for i, sz in enumerate(hidden_size):
 		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
-			outputs= dblstm_layer(X, sequence_length, sz)
+			outputs= dblstm_layer(outputs, sequence_length, sz)
 
 	with tf.variable_scope('activation'):	
 		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
@@ -178,7 +178,7 @@ if __name__== '__main__':
 	print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED', 'GPOS']  
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS']  
 	if ctx_p > 0:
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
@@ -320,35 +320,43 @@ if __name__== '__main__':
 						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
 					)					
 					index= D_train[:,:,0]
-					propositions= D_train[:,:,2]
-					predictions= Yhat 
-					
-					evaluator_train.evaluate_tensor(
-						index,
-						propositions,
-						predictions,
-						mb_train,
-						lambda x : propbank.decode(x , target),
-						target,						
-						True
-					)			
+					# propositions= D_train[:,:,2]
+					# predictions= Yhat 
+
+					predictions_d= propbank.convert_tensor2column( index, Yhat, mb_train, 'T')					
+					predictions_d= propbank.convert_t2arg(predictions_d)
+					evaluator_train.evaluate( predictions_d )
+
+					# evaluator_train.evaluate_tensor(
+					# 	index,
+					# 	propositions,
+					# 	predictions,
+					# 	mb_train,
+					# 	lambda x : propbank.decode(x , target),
+					# 	target,						
+					# 	True
+					# )			
 					acc, Yhat= session.run(
 						[accuracy_op, viterbi_sequence],
 						feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
 					)
 
 					index= D_valid[:,:,0]
-					propositions= D_valid[:,:,2]
-					predictions= Yhat 
-					evaluator_valid.evaluate_tensor(
-						index,
-						propositions,
-						predictions,
-						mb_valid,
-						lambda x : propbank.decode(x , target),
-						target,						
-						False
-					)			
+					# propositions= D_valid[:,:,2]
+					# predictions= Yhat 					
+					predictions_d= propbank.convert_tensor2column( index, predictions, mb_valid, 'T')					
+					predictions_d= propbank.convert_t2arg(predictions_d)
+					evaluator_train.evaluate( predictions_d )
+
+					# evaluator_valid.evaluate_tensor(
+					# 	index,
+					# 	propositions,
+					# 	predictions,
+					# 	mb_valid,
+					# 	lambda x : propbank.decode(x , target),
+					# 	target,						
+					# 	False
+					# )			
 
 					print('Iter={:5d}'.format(step+1),
 						'train-f1 {:.2f}%'.format(evaluator_train.f1),						
@@ -361,15 +369,15 @@ if __name__== '__main__':
 
 					if best_validation_rate < evaluator_valid.f1:
 						best_validation_rate = evaluator_valid.f1	
-						evaluator_valid.evaluate_tensor(
-							index,
-							propositions,
-							predictions,
-							mb_valid,
-							lambda x : propbank.decode(x , target),
-							target,						
-							True
-						)			
+						# evaluator_valid.evaluate_tensor(
+						# 	index,
+						# 	propositions,
+						# 	predictions,
+						# 	mb_valid,
+						# 	lambda x : propbank.decode(x , target),
+						# 	target,						
+						# 	True
+						# )			
 
 				step+=1
 				

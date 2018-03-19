@@ -27,7 +27,7 @@ import numpy as np
 import pandas as pd
 import pickle
 
-
+import data_propbankbr as br
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 from collections import OrderedDict
 
@@ -36,7 +36,7 @@ CSVS_DIR= './datasets/csvs/'
 
 class _PropbankIterator(object):
 	'''
-	Translates propositions 
+	Iterates propositions
 
 	'''	
 	def __init__(self, low, high, fnc):
@@ -58,8 +58,16 @@ class _PropbankIterator(object):
 
 class Propbank(object):
 	'''
+	Stores an indexed representation of the db and of the embeddings
+	id= (propbank, embeddings_model)
+
+	
 	Translates propositions to features providing both the 
-		data itself as conf.META data to machine learning experiments
+		data itself and information about the data to machine learning experiments
+
+	Provides iteration and features in the formats ( index, text, embedded )
+
+
 
 	'''	
 	
@@ -79,7 +87,6 @@ class Propbank(object):
 		self.onehot={}
 		self.hotone={}
 		self.data={}
-
 	
 	@classmethod		
 	def recover(cls, file_path):		
@@ -95,8 +102,21 @@ class Propbank(object):
 			propbank_instance= pickle.load(f)		
 		return propbank_instance
 
-	def total_words(self):
-		return len(self.lexicon)	
+	def persist(self, file_dir, filename=''):
+		'''
+  		Serializes this object in pickle format @ file_dir+filename
+  		args:
+  			file_dir	.: string representing the directory
+  		 	filename  .: string (optional) filename
+  	'''
+		if not(filename):
+			strcols= '_'.join( [col for col in self.lexicon_columns])
+			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, strcols, self.language_model)
+		else:
+			filename= '{:}{:}.pickle'.format(file_dir, filename)		
+
+		with open(filename, 'wb') as f:
+			pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
 	def define(self, 
 		db_name='db_pt', lexicon_columns=['LEMMA'], language_model='glove_s50', verbose=True):
@@ -172,23 +192,7 @@ class Propbank(object):
 						
 		else:
 			raise	Exception('Lexicon and embeddings already defined')		
-
-	def persist(self, file_dir, filename=''):
-		'''
-  		Serializes this object in pickle format @ file_dir+filename
-  		args:
-  			file_dir	.: string representing the directory
-  		 	filename  .: string (optional) filename
-  	'''
-		if not(filename):
-			strcols= '_'.join( [col for col in self.lexicon_columns])
-			filename= '{:}{:}_{:}_{:}.pickle'.format(file_dir, self.db_name, strcols, self.language_model)
-		else:
-			filename= '{:}{:}.pickle'.format(file_dir, filename)		
-
-		with open(filename, 'wb') as f:
-			pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
-
+	
   	
 	def decode(self, value, feature, apply_embeddings=False):
 		'''
@@ -221,6 +225,59 @@ class Propbank(object):
 				result= self.embeddings[result]
 		return result
 
+	def convert_tensor2column(self, tensor_index, tensor_values, times, column):
+		'''
+			Converts a zero padded tensor to a dict
+		
+			Tensors must have the following shape [DATABASE_SIZE, MAX_TIME] with
+				zeros if for t=0,....,MAX_TIME t>times[i] for i=0...DATABASE_SIZE 
+
+		args:
+			tensor_index  .: with db index
+
+			tensor_values .: with db int values representations
+
+			times  .: list<int> [DATABASE_SIZE] holding the times for each proposition
+
+			column .: str 			db column name
+
+		returns:
+			column .: dict<int, str> keys in db_index, values in features or values in targets
+		'''
+		if not(column) in self.data:
+			buff= '{:} must be in {:}'.format(column, self.data)
+			raise KeyError(buff)
+
+		index=[item  for i, sublist in enumerate(tensor_index.tolist()) 
+			for j, item in enumerate(sublist) if j < times[i]]
+
+		values=[self.decode(item, column, False)  for i, sublist in enumerate(tensor_values.tolist()) 
+			for j, item in enumerate(sublist) if j < times[i]]	
+
+		if column in ['T']:	
+			Y= propbankbr_t2arg(propositions, predictions)	
+		else:
+			Y= predictions	
+				
+		return dict(zip(index, values))
+	
+	def convert_t2arg(self, T):
+		'''
+			Converts column T into ARG
+
+			args:
+				T .: dict<int, str> keys in db_index, values: prediction label
+
+			args:
+				ARG .: dict<int, str> keys in db_index, values in target label
+		'''
+
+		propositions= {idx: self.data['P'][idx] for idx in T}
+
+		return br.propbankbr_t2arg(propositions, T)	
+
+	def total_words(self):
+		return len(self.lexicon)	
 
 	def size(self, features):	
 		'''
@@ -265,7 +322,6 @@ class Propbank(object):
 			else:
 				return [self.data[feat][idx] for feat in features]
 		
-
 	def sequence_obsexample2(self, categories, features, embeddify=False):
 		'''
 			Produces a sequence from categorical values 
@@ -343,8 +399,6 @@ class Propbank(object):
 					for idx, p in self.data['P'].items()
 						if p>=lb and p< ub+1}
 		return d
-
-
 
 	def iterator(self, ds_type, decode=False):
 		if not(ds_type in ['train', 'valid', 'test']):
