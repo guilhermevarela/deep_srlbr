@@ -32,7 +32,7 @@ from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
 from data_propbankbr import propbankbr_t2arg
-from utils import cross_entropy, error_rate2, precision, recall
+from utils import cross_entropy, error_rate, precision, recall
 
 
 MODEL_NAME='blstm_softmax'
@@ -171,7 +171,7 @@ if __name__== '__main__':
 	print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS']  
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1']  
 	if ctx_p > 0:
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
@@ -286,26 +286,27 @@ if __name__== '__main__':
 		# Training control variables
 		step=0		
 		total_loss=0.0
+		total_acc=0.0
 
 		first_save=True
 		best_validation_rate=-1
 
 		try:
 			while not coord.should_stop():				
-				X_batch, Y_batch, mb, D_batch = session.run(
-					[inputs, targets, sequence_length, descriptors]
+				X_batch, Y_batch, mb = session.run(
+					[inputs, targets, sequence_length]
 				)
 				
-				_, Yhat, loss = session.run(
-					[optimizer_op, viterbi_sequence, cost_op],
+				_, Yhat, loss, acc = session.run(
+					[optimizer_op, argmax_op, cost_op, accuracy_op],
 						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
 				)
-				
+				total_acc+=acc 
 				total_loss+=loss 
 				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
 					Yhat= session.run(
-						viterbi_sequence,
+						argmax_op,
 						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
 					)					
 					
@@ -316,7 +317,7 @@ if __name__== '__main__':
 					evaluator_train.evaluate( predictions_d, True )
 
 					Yhat= session.run(
-						viterbi_sequence,
+						argmax_op,
 						feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
 					)
 
@@ -328,7 +329,7 @@ if __name__== '__main__':
 
 					print('Iter={:5d}'.format(step+1),
 						'train-f1 {:.2f}%'.format(evaluator_train.f1),						
-							'avg acc {:.2f}%'.format(100*acc_train),						
+							'avg acc {:.2f}%/{:.2f}%'.format(100*total_acc/DISPLAY_STEP,100*acc_train),						
 								'valid-f1 {:.2f}%'.format(evaluator_valid.f1),														
 									'valid acc {:.2f}%'.format(100*acc_valid),						
 					 					'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
