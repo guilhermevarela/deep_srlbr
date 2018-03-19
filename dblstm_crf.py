@@ -236,7 +236,7 @@ if __name__== '__main__':
 		input_sequence_features, 
 		target
 	)
-	import code; code.interact(local=dict(globals(), **locals()))
+
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([hidden_size[-1], target_size], name='Wo')) 
@@ -304,11 +304,12 @@ if __name__== '__main__':
 
 		try:
 			while not coord.should_stop():				
-				X_batch, Y_batch, mb = session.run(
-					[inputs, targets, sequence_length]
+				X_batch, Y_batch, mb, D_batch = session.run(
+					[inputs, targets, sequence_length, descriptors]
 				)
 				
-				
+				import code; code.interact(local=dict(globals(), **locals()))
+
 				_, Yhat, loss = session.run(
 					[optimizer_op, viterbi_sequence, cost_op],
 						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}

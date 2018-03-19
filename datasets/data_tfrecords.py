@@ -259,6 +259,7 @@ def _process(context_features, sequence_features,
 			if conf.META[key] in ['txt']: 
 				dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
 				
+				
 			elif conf.META[key] in ['hot']:
 				dense_tensor1= tf.one_hot(
 					dense_tensor, 
@@ -273,8 +274,9 @@ def _process(context_features, sequence_features,
 
 			else: 
 				if key in input_sequence_features:
-					# Cast to tf.float32 in order to concatenate in a single array with embeddings
+					# Cast to tf.float32 in order to concatenate in a single array with embeddings					
 					dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
+					
 				else:
 					dense_tensor1= dense_tensor
 		else:
@@ -289,10 +291,8 @@ def _process(context_features, sequence_features,
 			T= tf.squeeze(dense_tensor1, 1, name='squeeze_T')
 		else:
 			sequence_descriptors.append(dense_tensor1)
-		
-			
 
-	# import code; code.interact(local=dict(globals(), **locals()))			
+	#UNCOMMENT
 	X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
 	D= tf.concat(sequence_descriptors, 1)
 	return X, T, L, D 
@@ -364,8 +364,8 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 	writer.close()
 	print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))			
 
-if __name__== '__main__':
-	propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
+# if __name__== '__main__':
+	# propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
 	# UNCOMMENT this to save an updated version
 	# propbank= Propbank()
 	# propbank.define()
@@ -374,26 +374,26 @@ if __name__== '__main__':
 	# for ds_type in ['train', 'test', 'valid']:
 	# 	tfrecords_builder(propbank.iterator(ds_type), ds_type)
 	
-	hotencode2sz= {feat: propbank.size(feat)
-			for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
+	# hotencode2sz= {feat: propbank.size(feat)
+	# 		for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
 	
 
 	# TEST			
-	test_sequence_features= ['ID', 'M_R']
-	X_valid, T_valid, L_valid, D_valid= tfrecords_extract(
-		'valid', 
-		propbank.embeddings, 
-		hotencode2sz, 
-		input_features=test_sequence_features,
-		output_target='T'
-	)
+	# test_sequence_features= ['ID', 'LEMMA']
+	# X_valid, T_valid, L_valid, D_valid= tfrecords_extract(
+	# 	'valid', 
+	# 	propbank.embeddings, 
+	# 	hotencode2sz, 
+	# 	input_features=test_sequence_features,
+	# 	output_target='T'
+	# )
 	
-	l1 = L_valid[0]
-	X1 = X_valid[0,:l1,:]
-	index = D_valid[0,:l1,0]
-	i0=0
+	# l1 = L_valid[0]
+	# X1 = X_valid[0,:l1,:]
+	# index = D_valid[0,:l1,0]
+	# i0=0
 	# import code; code.interact(local=dict(globals(), **locals()))			
-	# print('index:{:}'.format(index))
+	# # print('index:{:}'.format(index))
 	# for j, feature in enumerate(test_sequence_features):				
 	# 	for i, idx in  enumerate(index):
 	# 		x1 = X1[i,:]
@@ -425,8 +425,7 @@ if __name__== '__main__':
 	# 			i0+=1
 	# 		elif conf.META[feature] in ['hot']:
 	# 				i0+= hotencode2sz[feature]			
-
-	# import code; code.interact(local=dict(globals(), **locals()))			
+	
 	
 
 
