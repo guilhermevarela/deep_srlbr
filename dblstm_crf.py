@@ -325,7 +325,7 @@ if __name__== '__main__':
 
 					predictions_d= propbank.convert_tensor2column( index, Yhat, mb_train, 'T')					
 					predictions_d= propbank.convert_t2arg(predictions_d)
-					evaluator_train.evaluate( predictions_d )
+					evaluator_train.evaluate( predictions_d, True )
 
 					# evaluator_train.evaluate_tensor(
 					# 	index,
@@ -346,7 +346,7 @@ if __name__== '__main__':
 					# predictions= Yhat 					
 					predictions_d= propbank.convert_tensor2column( index, predictions, mb_valid, 'T')					
 					predictions_d= propbank.convert_t2arg(predictions_d)
-					evaluator_train.evaluate( predictions_d )
+					evaluator_valid.evaluate( predictions_d, False )
 
 					# evaluator_valid.evaluate_tensor(
 					# 	index,
@@ -369,6 +369,7 @@ if __name__== '__main__':
 
 					if best_validation_rate < evaluator_valid.f1:
 						best_validation_rate = evaluator_valid.f1	
+						evaluator_valid.evaluate( predictions_d, True )
 						# evaluator_valid.evaluate_tensor(
 						# 	index,
 						# 	propositions,

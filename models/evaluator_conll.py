@@ -31,20 +31,20 @@ PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
 
 class EvaluatorConll(object):
 
-	def __init__(self, ds_type, S, P, PRED, T, target_dir='./'):
+	def __init__(self, ds_type, S, P, PRED, ARG, target_dir='./'):
 		'''
 			args:
 				ds_type
 	  		S 			.:	dict<int,int> keys are the index, values are sentences
 	  		P       .:	dict<int,int> keys are the index, values are propositions
 	  		PRED    .:	dict<int,str> keys are the index, values are verbs/ predicates
-	  		T       .:	dict<int,str> keys are the index, values are ARG
+	  		ARG     .:	dict<int,str> keys are the index, values are ARG
 		'''				
 		self.ds_type=ds_type
 		self.S=S 
 		self.P=P 
 		self.PRED=PRED
-		self.T=T
+		self.ARG=ARG
 		self.target_dir=target_dir
 
 		self._refresh()
@@ -120,6 +120,10 @@ class EvaluatorConll(object):
 				os.remove(gold_path)
 			except OSError:
 				pass	
+	
+	# def accuracy(self, Y):		
+	# 	success= [Y[idx]==self.ARG[idx] for idx in Y]
+	# 	return float(sum(success)) / len(success)
 
 	# def evaluate_tensor(self, zeropadded_I, zeropadded_P, zeropadded_Y, times, decoder, column_Y , store=False):
 	# 	'''
@@ -185,7 +189,7 @@ class EvaluatorConll(object):
 
 	def _conll_format(self, Y):		
 		df_eval= conll_with_dicts(self.S, self.P, self.PRED, Y, True)		
-		df_gold= conll_with_dicts(self.S, self.P, self.PRED, self.T, True)
+		df_gold= conll_with_dicts(self.S, self.P, self.PRED, self.ARG, True)
 		return df_eval, df_gold
 
 	def _store(self, df_eval, df_gold):
