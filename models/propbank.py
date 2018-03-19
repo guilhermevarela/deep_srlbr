@@ -225,7 +225,7 @@ class Propbank(object):
 				result= self.embeddings[result]
 		return result
 
-	def convert_tensor2column(self, tensor_index, tensor_values, times, column):
+	def tensor2column(self, tensor_index, tensor_values, times, column):
 		'''
 			Converts a zero padded tensor to a dict
 		
@@ -253,15 +253,10 @@ class Propbank(object):
 
 		values=[self.decode(item, column, False)  for i, sublist in enumerate(tensor_values.tolist()) 
 			for j, item in enumerate(sublist) if j < times[i]]	
-
-		if column in ['T']:	
-			Y= propbankbr_t2arg(propositions, predictions)	
-		else:
-			Y= predictions	
 				
 		return dict(zip(index, values))
 	
-	def convert_t2arg(self, T):
+	def t2arg(self, T):
 		'''
 			Converts column T into ARG
 
@@ -274,7 +269,9 @@ class Propbank(object):
 
 		propositions= {idx: self.data['P'][idx] for idx in T}
 
-		return br.propbankbr_t2arg(propositions, T)	
+		ARG= br.propbankbr_t2arg(propositions.values(), T.values())	
+
+		return dict(zip(T.keys(), ARG))
 
 	def total_words(self):
 		return len(self.lexicon)	
@@ -372,8 +369,8 @@ class Propbank(object):
 				decode      .: bool representing the better encoding
 
 			returns:
-				index  .: int<T> index column on the db
-				values .: int<T> values 
+				feature  .: dict<int, value>
+				
 		
 		'''
 		if not(ds_type in ['train', 'valid', 'test']):
@@ -421,7 +418,8 @@ class Propbank(object):
 		low=-1
 		high=-1		
 		prev_idx=-1
-		for idx, prop in list(zip(*self.feature('P'))):
+		
+		for idx, prop in self.feature(ds_type,'P').items():
 			if prop > lb and low==-1:
 				low= idx 
 			

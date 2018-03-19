@@ -20,7 +20,7 @@ import subprocess
 import string
 import pandas as pd 
 
-from data_propbankbr import propbankbr_t2arg
+# from data_propbankbr import propbankbr_t2arg
 
 
 

@@ -313,7 +313,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 		if dataset_type in ['test']:
 			total_propositions= conf.DATASET_TEST_SIZE  		
 
-	tfrecords_path= TARGET_PATH + 'db{:}_{:}.tfrecords'.format(dataset_type,lang)	
+	tfrecords_path= conf.INPUT_DIR + 'db{:}_{:}_v2.tfrecords'.format(dataset_type,lang)	
 	with open(tfrecords_path, 'w+') as f:
 		writer= tf.python_io.TFRecordWriter(f.name)	
 	
@@ -336,7 +336,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 			else:
 				l+=1
 
-			for feat, value in d.items():
+			for feat, value in d.items():				
 				if not(feat in helper_d):
 					helper_d[feat]=ex.feature_lists.feature_list[feat] 
 				
@@ -365,51 +365,67 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 	print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))			
 
 if __name__== '__main__':
-	# df=propbankbr_lazyload('zhou_1')	
-	
-	# dict_vocabs= make_dict_vocabs(df) # makes dictionary using tokens from whole dataset
-	#test tfrecords_builder
-	propbank= Propbank.recover('db_pt_LEMMA_glove_s50.pickle')
+	propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
+	# UNCOMMENT this to save an updated version
 	# propbank= Propbank()
 	# propbank.define()
 	# propbank.persist('')
 	
+	# for ds_type in ['train', 'test', 'valid']:
+	# 	tfrecords_builder(propbank.iterator(ds_type), ds_type)
 	
-	for dstype in ['train', 'valid', 'test']:
-		tfrecords_builder(propbank.iterator(dstype), dstype)
-	# tfrecords_builder(propbank.iterator('test'), 'test')	
-
-	# tfrecords_path= '{}{}.tfrecords'.format(TARGET_PATH, dstype)
-
-	
-	# df=propbankbr_lazyload('zhou_1_{}'.format(dstype))	
-	# p0 = min(df['P'])
-	# pn = max(df['P'])	# number of propositions		
-
-	# with open(tfrecords_path, 'w+') as f:
-	# 	writer= tf.python_io.TFRecordWriter(f.name)
-
-	# 	for p in range(p0, pn+1):
-	# 		df_prop= df[df['P']==p]			
-	# 		ex= proposition2sequence_example(
-	# 			df2data_dict( df_prop ), 
-	# 			dict_vocabs
-	# 		)	
-	# 		writer.write(ex.SerializeToString())        
-    
-	# 	writer.close()
-		# print('Wrote to {} found {} propositions'.format(f.name, pn-p0+1))		
-	# import code; code.interact(local=dict(globals(), **locals()))					
 	hotencode2sz= {feat: propbank.size(feat)
 			for feat, feat_type in conf.META.items() if feat_type == 'hot'}		
 	
 
+	# TEST			
+	test_sequence_features= ['ID', 'M_R']
+	X_valid, T_valid, L_valid, D_valid= tfrecords_extract(
+		'valid', 
+		propbank.embeddings, 
+		hotencode2sz, 
+		input_features=test_sequence_features,
+		output_target='T'
+	)
+	
+	l1 = L_valid[0]
+	X1 = X_valid[0,:l1,:]
+	index = D_valid[0,:l1,0]
+	i0=0
+	# import code; code.interact(local=dict(globals(), **locals()))			
+	# print('index:{:}'.format(index))
+	# for j, feature in enumerate(test_sequence_features):				
+	# 	for i, idx in  enumerate(index):
+	# 		x1 = X1[i,:]
+	# 		db_value= propbank.decode(propbank.data[feature][idx], feature)			
+	# 		if conf.META[feature] in ['txt']:
+	# 			# search for the index
+	# 			min_dist=99999999
+	# 			min_idx=-1				
+	# 			for k in range(propbank.embeddings.shape[0]): 
+	# 				check= propbank.embeddings[k]
+	# 				norm= np.linalg.norm(check - x1[i0:i0+50])
+	# 				if norm < min_dist:
+	# 					min_dist=norm
+	# 					min_idx= k
+	# 			tf_value= propbank.idx2tok[min_idx]
+	# 			print('min distance:', min_dist)
+	# 		if conf.META[feature] in ['int']:
+	# 			tf_value= int(x1[i0])
 
-	X_train, T_train, L_train, D_train= tfrecords_extract('train', propbank.embeddings, hotencode2sz)
-	# print(X_train.shape)
-	# print(T_train.shape)
-	# print(L_train.shape)
-	# print(D_train.shape)
+	# 		if conf.META[feature] in ['hot']:	
+	# 			tf_value= np.argmax(x1[i0:i0+hotencode2sz[feature]])				
+
+	# 		print('INDEX:{:}\tFEATURE:{:}\tDB:{:}\tTF{:}\t'.format(idx, feature, db_value, tf_value))				
+
+	# 	if conf.META[feature] in ['txt']:
+	# 		i0+= 50
+	# 	else:
+	# 		if conf.META[feature] in ['int']:
+	# 			i0+=1
+	# 		elif conf.META[feature] in ['hot']:
+	# 				i0+= hotencode2sz[feature]			
+
 	# import code; code.interact(local=dict(globals(), **locals()))			
 	
 

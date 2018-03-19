@@ -29,6 +29,7 @@ from config import *
 from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
 from models.evaluator_conll import EvaluatorConll
+from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
@@ -200,6 +201,7 @@ if __name__== '__main__':
 
 	print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
+	calculator_train=Evaluator(propbank.feature('train', 'T', True))
 	evaluator_train= EvaluatorConll(
 		'train', 
 		propbank.feature('train', 'S', True),
@@ -217,6 +219,7 @@ if __name__== '__main__':
 		target
 	)
 
+	calculator_valid=Evaluator(propbank.feature('valid', 'T', True))	
 	evaluator_valid= EvaluatorConll(
 		'valid', 
 		propbank.feature('valid', 'S', True),
@@ -233,6 +236,7 @@ if __name__== '__main__':
 		input_sequence_features, 
 		target
 	)
+	import code; code.interact(local=dict(globals(), **locals()))
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([hidden_size[-1], target_size], name='Wo')) 
@@ -278,9 +282,9 @@ if __name__== '__main__':
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
-	#Evaluation
-	with tf.name_scope('evaluation'):
-		accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
+	# Evaluation THIS ISN'T WORKING
+	# with tf.name_scope('evaluation'):
+	# 	accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
 
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
@@ -294,7 +298,6 @@ if __name__== '__main__':
 		# Training control variables
 		step=0		
 		total_loss=0.0
-		total_acc=0.0				
 
 		first_save=True
 		best_validation_rate=-1
@@ -306,63 +309,41 @@ if __name__== '__main__':
 				)
 				
 				
-				_, Yhat, loss, acc = session.run(
-					[optimizer_op, viterbi_sequence, cost_op, accuracy_op],
+				_, Yhat, loss = session.run(
+					[optimizer_op, viterbi_sequence, cost_op],
 						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
 				)
 				
 				total_loss+=loss 
-				total_acc+= acc				
 				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
-					acc, Yhat= session.run(
-						[accuracy_op, viterbi_sequence],
+					Yhat= session.run(
+						viterbi_sequence,
 						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
 					)					
+					
 					index= D_train[:,:,0]
-					# propositions= D_train[:,:,2]
-					# predictions= Yhat 
-
-					predictions_d= propbank.convert_tensor2column( index, Yhat, mb_train, 'T')					
-					predictions_d= propbank.convert_t2arg(predictions_d)
+					predictions_d= propbank.tensor2column( index, Yhat, mb_train, 'T')					
+					acc_train= calculator_train.accuracy(predictions_d)
+					predictions_d= propbank.t2arg(predictions_d)
 					evaluator_train.evaluate( predictions_d, True )
 
-					# evaluator_train.evaluate_tensor(
-					# 	index,
-					# 	propositions,
-					# 	predictions,
-					# 	mb_train,
-					# 	lambda x : propbank.decode(x , target),
-					# 	target,						
-					# 	True
-					# )			
-					acc, Yhat= session.run(
-						[accuracy_op, viterbi_sequence],
+					Yhat= session.run(
+						viterbi_sequence,
 						feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
 					)
 
 					index= D_valid[:,:,0]
-					# propositions= D_valid[:,:,2]
-					# predictions= Yhat 					
-					predictions_d= propbank.convert_tensor2column( index, predictions, mb_valid, 'T')					
-					predictions_d= propbank.convert_t2arg(predictions_d)
+					predictions_d= propbank.tensor2column( index, Yhat, mb_valid, 'T')					
+					acc_valid= calculator_valid.accuracy(predictions_d)
+					predictions_d= propbank.t2arg(predictions_d)
 					evaluator_valid.evaluate( predictions_d, False )
-
-					# evaluator_valid.evaluate_tensor(
-					# 	index,
-					# 	propositions,
-					# 	predictions,
-					# 	mb_valid,
-					# 	lambda x : propbank.decode(x , target),
-					# 	target,						
-					# 	False
-					# )			
 
 					print('Iter={:5d}'.format(step+1),
 						'train-f1 {:.2f}%'.format(evaluator_train.f1),						
-							'avg acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
+							'avg acc {:.2f}%'.format(100*acc_train),						
 								'valid-f1 {:.2f}%'.format(evaluator_valid.f1),														
-									'valid acc {:.2f}%'.format(100*acc),						
+									'valid acc {:.2f}%'.format(100*acc_valid),						
 					 					'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
 					total_acc=0.0					
@@ -370,15 +351,6 @@ if __name__== '__main__':
 					if best_validation_rate < evaluator_valid.f1:
 						best_validation_rate = evaluator_valid.f1	
 						evaluator_valid.evaluate( predictions_d, True )
-						# evaluator_valid.evaluate_tensor(
-						# 	index,
-						# 	propositions,
-						# 	predictions,
-						# 	mb_valid,
-						# 	lambda x : propbank.decode(x , target),
-						# 	target,						
-						# 	True
-						# )			
 
 				step+=1
 				
