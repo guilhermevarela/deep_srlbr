@@ -52,36 +52,41 @@ N_EPOCHS=500
 def get_cell(sz):
 	return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
 
-def dblstm_layer(X, sequence_length, sz):
+def dblstm_layer(X, seqlens, sz):
 	'''
 		refs:
 			https://www.tensorflow.org/programmers_guide/variables
 	'''
-	# CREATE / REUSE LSTM CELL
-	cell = get_cell(sz)
 
 	# CREATE / REUSE FWD/BWD CELL
 	cell_fw= 	get_cell(sz)
 	cell_bw= 	get_cell(sz)
 
-	_outputs, states= tf.nn.dynamic_rnn(
-		cell=cell, 
+	outputs, states= tf.nn.dynamic_rnn(
+		cell=cell_fw, 
 		inputs=X, 			
-		sequence_length=sequence_length,
+		sequence_length=seqlens,
 		dtype=tf.float32,
 		time_major=False
 	)
-	_outputs, states= tf.nn.bidirectional_dynamic_rnn(
-		cell_fw=cell_fw, 
-		cell_bw=cell_bw, 
-		inputs=_outputs, 			
-		sequence_length=sequence_length,
-		dtype=tf.float32,
-		time_major=False
-	)
-	_, outputs_bw= tf.split(_outputs,2)
 
-	return tf.squeeze(outputs_bw,0)
+	outputs_bw = tf.reverse_sequence(outputs, seqlens, batch_axis=0, seq_axis=1)
+
+	c , h= states
+	h = tf.expand_dims(h, (0,1))
+
+	outputs_interlaced= tf.concat((h, outputs_bw), axis=2)
+
+	outputs, states= tf.nn.dynamic_rnn(
+		cell=cell_bw, 
+		inputs=outputs_interlaced, 			
+		sequence_length=seqlens,
+		dtype=tf.float32,
+		time_major=False
+	)
+	c , h= states
+	h = tf.expand_dims(h, (0,1))
+	return tf.concat(outputs, axis=2), h
 
 def forward(X, sequence_length, hidden_size):		
 	'''
@@ -99,7 +104,8 @@ def forward(X, sequence_length, hidden_size):
 	outputs=X
 	for i, sz in enumerate(hidden_size):
 		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
-			outputs= dblstm_layer(outputs, sequence_length, sz)
+			outputs, h= dblstm_layer(outputs, sequence_length, sz)
+			outputs= tf.concat((h, outputs), axis=2)
 
 	with tf.variable_scope('activation'):	
 		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
@@ -113,7 +119,7 @@ def forward(X, sequence_length, hidden_size):
 				act, initializer=tf.matmul(act[0],Wo)) + bo
 
 
-	return Yhat
+	return Yhat 
 
 
 

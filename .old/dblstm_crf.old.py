@@ -10,9 +10,9 @@ Created on Mar 02, 2018
 	updates
 	2018-03-15 Refactor major updates
 '''
-# outputs_dir outputs/blstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
+# outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
 # Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543
-# outputs_dir outputs/blstm_crf_2/lr5.00e-04_hs32_ctx-p1_glove_s50/00/
+# outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs32_ctx-p1_glove_s50/00/
 # Iter= 5650 avg. acc 82.50% valid. acc 68.17% avg. cost 5.824657
 import sys
 sys.path.append('datasets/')
@@ -30,15 +30,14 @@ from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
-# from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
-from data_outputs import  dir_getoutputs, outputs_settings_persist
+from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
 
-MODEL_NAME='blstm_crf_2'
+MODEL_NAME='dblstm_crf_2'
 LAYER_1_NAME='glove_s50'
-LAYER_2_NAME='blstm'
+LAYER_2_NAME='dblstm'
 LAYER_3_NAME='crf'
 
 #Command line defaults 
@@ -53,7 +52,7 @@ N_EPOCHS=500
 def get_cell(sz):
 	return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
 
-def blstm_layer(X, sequence_length, sz):
+def dblstm_layer(X, sequence_length, sz):
 	'''
 		refs:
 			https://www.tensorflow.org/programmers_guide/variables
@@ -65,16 +64,24 @@ def blstm_layer(X, sequence_length, sz):
 	cell_fw= 	get_cell(sz)
 	cell_bw= 	get_cell(sz)
 
-	outputs, states= tf.nn.bidirectional_dynamic_rnn(
-		cell_fw=cell_fw, 
-		cell_bw=cell_bw, 
+	_outputs, states= tf.nn.dynamic_rnn(
+		cell=cell, 
 		inputs=X, 			
 		sequence_length=sequence_length,
 		dtype=tf.float32,
 		time_major=False
 	)
-	
-	return tf.concat(outputs,2)
+	_outputs, states= tf.nn.bidirectional_dynamic_rnn(
+		cell_fw=cell_fw, 
+		cell_bw=cell_bw, 
+		inputs=_outputs, 			
+		sequence_length=sequence_length,
+		dtype=tf.float32,
+		time_major=False
+	)
+	_, outputs_bw= tf.split(_outputs,2)
+
+	return tf.squeeze(outputs_bw,0)
 
 def forward(X, sequence_length, hidden_size):		
 	'''
@@ -91,13 +98,12 @@ def forward(X, sequence_length, hidden_size):
 	'''
 	outputs=X
 	for i, sz in enumerate(hidden_size):
-		with tf.variable_scope('blstm_{:}'.format(i+1)):
-			outputs= blstm_layer(outputs, sequence_length, sz)
+		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
+			outputs= dblstm_layer(outputs, sequence_length, sz)
 
 	with tf.variable_scope('activation'):	
 		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
 		# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
-		# import code; code.interact(local=dict(globals(), **locals()))
 		act =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
 				outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
 
@@ -237,7 +243,7 @@ if __name__== '__main__':
 	bo = tf.Variable(tf.random_normal([target_size], name='bo')) 
 
 	#Forward backward weights for bi-lstm act
-	Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
+	Wfb = tf.Variable(tf.random_normal([hidden_size[-1], hidden_size[-1]], name='Wfb')) 
 	# Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
 	bfb = tf.Variable(tf.random_normal([hidden_size[-1]], name='bfb')) 
 
@@ -302,7 +308,7 @@ if __name__== '__main__':
 					[inputs, targets, sequence_length, descriptors]
 				)
 				
-				# import code; code.interact(local=dict(globals(), **locals()))
+				import code; code.interact(local=dict(globals(), **locals()))
 
 				_, Yhat, loss = session.run(
 					[optimizer_op, viterbi_sequence, cost_op],
