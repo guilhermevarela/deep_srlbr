@@ -5,10 +5,10 @@ Created on Mar 02, 2018
 	implementation of (Zhou,et Xu, 2015)
 	
 	ref:
-	http://www.aclweb.org/anthology/P15-1109
+		http://www.aclweb.org/anthology/P15-1109
 
 	updates
-	2018-03-15 Refactor major updates
+		2018-03-15 Refactor major updates
 '''
 # outputs_dir outputs/blstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
 # Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543
