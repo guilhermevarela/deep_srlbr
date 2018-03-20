@@ -1,14 +1,26 @@
 '''
-Created on Mar 02, 2018
+Created on Jan 30, 2018
 	@author: Varela
 	
-	implementation of (Zhou,et Xu, 2015)
+	compute a 2-layered bi-lstm with (almost) non linguist task
 	
-	ref:
-	http://www.aclweb.org/anthology/P15-1109
+	# lr=5e-4	
+	# HIDDEN_SIZE=[128, 64]
+	# TRAINING
+	# Iter=25451 avg. acc 99.77% avg. cost 0.004194
+	# VALIDATION
+	# Iter= 3050 avg. acc 79.68% valid. acc 60.62% avg. cost 0.471232
+	# lr=5e-4	
+	# HIDDEN_SIZE=[128, 64]
 
-	updates
-	2018-03-15 Refactor major updates
+
+	updates:
+		2018-02-03: patched cross entropy and accuracy according to
+		https://danijar.com/variable-sequence-lengths-in-tensorflow/
+		2018-02-07: validation set included, save and load 
+		2018-02-08: updates on data transformation
+		2018-02-20: updates on pipeline
+		2018-03-19: major overhaul
 '''
 # outputs_dir outputs/blstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
 # Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543

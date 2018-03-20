@@ -454,15 +454,16 @@ class Propbank(object):
 
 if __name__ == '__main__':
 	PROP_DIR = '{:}/datasets/binaries/'.format(ROOT_DIR)
-	PROP_PATH = '{:}/{:}'.format(PROP_DIR, 'db_pt_LEMMA_glove_s50.pickle')
+	# PROP_PATH = '{:}/{:}'.format(PROP_DIR, 'db_pt_LEMMA_glove_s50.pickle')
 	
 	# propbank = Propbank()	
-	# propbank.define()
+	# propbank.define(language_model='wang2vec_s100')
 	# propbank.persist(PROP_DIR)
-	propbank = Propbank.recover(PROP_PATH)		
+	# propbank = Propbank.recover(PROP_PATH)		
 	
 
 	# PRED_d = propbank.feature('valid', 'PRED', True) # text
 	# M_R_d = propbank.feature('valid', 'M_R', True) # numerical
 	ARG_d = propbank.feature('valid', 'ARG', True) # categorical
+	print('found ARGs>\n',set(ARG_d.values()))
 	# import code; code.interact(local=dict(globals(), **locals()))		
