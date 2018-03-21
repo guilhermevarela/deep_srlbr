@@ -1,0 +1,15 @@
+.old
+.git
+csvs
+*/*/embeddings
+*/*/conll
+*/*/blstm
+*/*/dblstm_crf_2
+*/*/.pyc
+*/*/__pycache__
+*/*/.DS_Store
+refs
+notebooks
+
+
+
