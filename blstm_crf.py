@@ -149,7 +149,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--ctx_p', dest='ctx_p', type=int, nargs=1,
         default=1, choices=[0,1,2,3],
-        help='''Size of sliding window around predicate\n''')
+            help='''Size of sliding window around predicate\n''')
 
     parser.add_argument('--lr', dest='lr', 
         type=float, nargs=1, default=LEARNING_RATE,

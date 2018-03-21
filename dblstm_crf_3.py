@@ -50,13 +50,30 @@ N_EPOCHS=500
 
 
 def get_cell(sz):
-    return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
+    '''
+        Produces a new lstm cell
+        sz      .: integer layer size
+    '''
+    return tf.nn.rnn_cell.BasicLSTMCell(
+        sz, forget_bias=1.0,
+        state_is_tuple=True
+    )
 
 
 def dblstm(X, seqlens, sz):
     '''
+        Implements a serial bi directional RNN layer
+        X       .: tensor3D<float> [BATCH_SIZE, MAX_TIME, FEATURES]
+                    zero padded inputs to this layer
+        seqlens .: tensor1D<int>   [BATCH_SIZE]
+                    the contents are the times for each example
+        size    .: int hidden layer size
         refs:
+            http://www.aclweb.org/anthology/P15-1109
+            https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/rnn.py
             https://www.tensorflow.org/programmers_guide/variables
+
+
     '''
 
     with tf.variable_scope('fw'):
@@ -92,22 +109,22 @@ def dblstm(X, seqlens, sz):
 
 def forward(X, sequence_length, hidden_size):
     '''
-        Computes forward propagation thru basic lstm cell
+        Computes forward propagation
 
-        args:
-            X: [batch_size, max_time, feature_size] tensor (
-                sequences shorter than max_time are zero padded)
-
-            sequence_length:[batch_size] tensor (int) carrying the size of each sequence 
+        X               .: array<float> [BATCH_SIZE, MAX_TIME, FEATURES]
+                    zero padded inputs to this layer
+        seqlens         .: list<int>    [BATCH_SIZE]
+                    the contents are the times for each example
+        hidden_size     .: list<int> with sizes of each layer
 
         returns:
-            Y_hat: [batch_size, max_time, target_size] 
+            outputs: [batch_size, max_time, target_size] 
 
     '''
     outputs = X
     for i, sz in enumerate(hidden_size):
         with tf.variable_scope('dblstm_{:}'.format(i+1)):
-            outputs= dblstm(outputs, sequence_length, sz)
+            outputs = dblstm(outputs, sequence_length, sz)
 
     return outputs
 
