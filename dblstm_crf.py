@@ -30,7 +30,7 @@ from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
-from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
+from data_outputs import  dir_getoutputs, outputs_settings_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
@@ -52,7 +52,7 @@ N_EPOCHS=500
 def get_cell(sz):
 	return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
 
-def dblstm_layer(X, seqlens, sz):
+def lstm_fw(X, seqlens, sz):
 	'''
 		refs:
 			https://www.tensorflow.org/programmers_guide/variables
@@ -60,9 +60,8 @@ def dblstm_layer(X, seqlens, sz):
 
 	# CREATE / REUSE FWD/BWD CELL
 	cell_fw= 	get_cell(sz)
-	cell_bw= 	get_cell(sz)
 
-	outputs, states= tf.nn.dynamic_rnn(
+	outputs_fw, states= tf.nn.dynamic_rnn(
 		cell=cell_fw, 
 		inputs=X, 			
 		sequence_length=seqlens,
@@ -70,23 +69,67 @@ def dblstm_layer(X, seqlens, sz):
 		time_major=False
 	)
 
-	outputs_bw = tf.reverse_sequence(outputs, seqlens, batch_axis=0, seq_axis=1)
+	
+	return outputs_fw
 
-	c , h= states
-	h = tf.expand_dims(h, (0,1))
+def lstm_bw(X, seqlens, sz):
+	'''
+		refs:
+			https://www.tensorflow.org/programmers_guide/variables
+	'''
 
-	outputs_interlaced= tf.concat((h, outputs_bw), axis=2)
+	# CREATE / REUSE FWD/BWD CELL	
+	cell_bw= 	get_cell(sz)
 
-	outputs, states= tf.nn.dynamic_rnn(
+	inputs_bw = tf.reverse_sequence(X, seqlens, batch_axis=0, seq_axis=1)
+
+	# outputs_fw, states= tf.nn.dynamic_rnn(
+	# 	cell=cell_fw, 
+	# 	inputs=X, 			
+	# 	sequence_length=seqlens,
+	# 	dtype=tf.float32,
+	# 	time_major=False
+	# )
+
+	# inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
+		
+	outputs_bw, states= tf.nn.dynamic_rnn(
 		cell=cell_bw, 
-		inputs=outputs_interlaced, 			
+		inputs=inputs_bw, 			
 		sequence_length=seqlens,
 		dtype=tf.float32,
 		time_major=False
 	)
-	c , h= states
-	h = tf.expand_dims(h, (0,1))
-	return tf.concat(outputs, axis=2), h
+	
+	return tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
+
+def dblstm(X, seqlens, sz):
+	with tf.variable_scope('fw'):
+		# CREATE / REUSE FWD/BWD CELL
+		cell_fw= 	get_cell(sz)
+
+		outputs_fw, states= tf.nn.dynamic_rnn(
+			cell=cell_fw, 
+			inputs=X, 			
+			sequence_length=seqlens,
+			dtype=tf.float32,
+			time_major=False
+		)
+	
+	with tf.variable_scope('bw'):			
+		cell_bw= 	get_cell(sz)
+		inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
+		
+		outputs_bw, states= tf.nn.dynamic_rnn(
+			cell=cell_bw, 
+			inputs=inputs_bw, 			
+			sequence_length=seqlens,
+			dtype=tf.float32,
+			time_major=False
+		)
+		outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
+		
+	return outputs_bw, outputs_fw
 
 def forward(X, sequence_length, hidden_size):		
 	'''
@@ -103,23 +146,28 @@ def forward(X, sequence_length, hidden_size):
 	'''
 	outputs=X
 	for i, sz in enumerate(hidden_size):
-		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
-			outputs, h= dblstm_layer(outputs, sequence_length, sz)
-			outputs= tf.concat((h, outputs), axis=2)
+		with tf.variable_scope('dblstm_{:}'.format(i+1), reuse=tf.AUTO_REUSE):
+			outputs, _ = dblstm(outputs, sequence_length, sz)
+		
+		# with tf.variable_scope('lstm_fw{:}'.format(i+1), reuse=tf.AUTO_REUSE):
+		# 	outputs = lstm_fw(outputs, sequence_length, sz)
+		
+		# with tf.variable_scope('lstm_bw{:}'.format(i+1), reuse=tf.AUTO_REUSE):
+		# 	outputs = lstm_bw(outputs, sequence_length, sz)	
 
-	with tf.variable_scope('activation'):	
-		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-		# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
-		act =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
-				outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
+	# with tf.variable_scope('activation'):	
+	# 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
+	# 	# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
+	# 	act =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
+	# 			outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
 
-		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-		#Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
-		Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),
-				act, initializer=tf.matmul(act[0],Wo)) + bo
+	# 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
+	# 	#Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
+	# 	Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),
+	# 			act, initializer=tf.matmul(act[0],Wo)) + bo
 
 
-	return Yhat 
+	return outputs
 
 
 
@@ -312,9 +360,7 @@ if __name__== '__main__':
 			while not coord.should_stop():				
 				X_batch, Y_batch, mb, D_batch = session.run(
 					[inputs, targets, sequence_length, descriptors]
-				)
-				
-				import code; code.interact(local=dict(globals(), **locals()))
+				)				
 
 				_, Yhat, loss = session.run(
 					[optimizer_op, viterbi_sequence, cost_op],
