@@ -52,57 +52,6 @@ N_EPOCHS=500
 def get_cell(sz):
 	return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
 
-def lstm_fw(X, seqlens, sz):
-	'''
-		refs:
-			https://www.tensorflow.org/programmers_guide/variables
-	'''
-
-	# CREATE / REUSE FWD/BWD CELL
-	cell_fw= 	get_cell(sz)
-
-	outputs_fw, states= tf.nn.dynamic_rnn(
-		cell=cell_fw, 
-		inputs=X, 			
-		sequence_length=seqlens,
-		dtype=tf.float32,
-		time_major=False
-	)
-
-	
-	return outputs_fw
-
-def lstm_bw(X, seqlens, sz):
-	'''
-		refs:
-			https://www.tensorflow.org/programmers_guide/variables
-	'''
-
-	# CREATE / REUSE FWD/BWD CELL	
-	cell_bw= 	get_cell(sz)
-
-	inputs_bw = tf.reverse_sequence(X, seqlens, batch_axis=0, seq_axis=1)
-
-	# outputs_fw, states= tf.nn.dynamic_rnn(
-	# 	cell=cell_fw, 
-	# 	inputs=X, 			
-	# 	sequence_length=seqlens,
-	# 	dtype=tf.float32,
-	# 	time_major=False
-	# )
-
-	# inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
-		
-	outputs_bw, states= tf.nn.dynamic_rnn(
-		cell=cell_bw, 
-		inputs=inputs_bw, 			
-		sequence_length=seqlens,
-		dtype=tf.float32,
-		time_major=False
-	)
-	
-	return tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-
 def dblstm(X, seqlens, sz):
 	with tf.variable_scope('fw'):
 		# CREATE / REUSE FWD/BWD CELL
@@ -147,25 +96,7 @@ def forward(X, sequence_length, hidden_size):
 	outputs=X
 	for i, sz in enumerate(hidden_size):
 		with tf.variable_scope('dblstm_{:}'.format(i+1), reuse=tf.AUTO_REUSE):
-			outputs, _ = dblstm(outputs, sequence_length, sz)
-		
-		# with tf.variable_scope('lstm_fw{:}'.format(i+1), reuse=tf.AUTO_REUSE):
-		# 	outputs = lstm_fw(outputs, sequence_length, sz)
-		
-		# with tf.variable_scope('lstm_bw{:}'.format(i+1), reuse=tf.AUTO_REUSE):
-		# 	outputs = lstm_bw(outputs, sequence_length, sz)	
-
-	# with tf.variable_scope('activation'):	
-	# 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-	# 	# act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
-	# 	act =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
-	# 			outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
-
-	# 	# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-	# 	#Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
-	# 	Yhat=tf.scan(lambda a, x: tf.matmul(x, Wo),
-	# 			act, initializer=tf.matmul(act[0],Wo)) + bo
-
+			outputs_bw, outputs_fw = dblstm(outputs, sequence_length, sz)		
 
 	return outputs
 
