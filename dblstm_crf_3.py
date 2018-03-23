@@ -277,110 +277,114 @@ if __name__== '__main__':
 
     #pipeline control place holders
     # This makes training slower - but code is reusable
-    X     =   tf.placeholder(tf.float32, shape=(None,None, feature_size), name='X') 
-    T     =   tf.placeholder(tf.float32, shape=(None,None, target_size), name='T')
+    X = tf.placeholder(tf.float32, shape=(None,None, feature_size), name='X') 
+    T = tf.placeholder(tf.float32, shape=(None,None, target_size), name='T')
     minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors= input_fn(
-            [DATASET_TRAIN_PATH], batch_size, num_epochs, 
-            propbank.embeddings, hotencode2sz, 
+            [DATASET_TRAIN_PATH], batch_size, num_epochs,
+            propbank.embeddings, hotencode2sz,
             input_sequence_features, target)
 
-    with tf.name_scope('predict'):      
-        predict_op= forward(X, minibatch, hidden_size)
+    with tf.name_scope('predict'):
+        predict_op = forward(X, minibatch, hidden_size)
         # clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
-        Tflat= tf.cast(tf.argmax( T,2 ), tf.int32)
+        Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
 
     with tf.name_scope('xent'):
         # Compute the log-likelihood of the gold sequences and keep the transition
-    # params for inference at test time.
+        # params for inference at test time.
         log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
-            predict_op,Tflat, minibatch)
+            predict_op, Tflat, minibatch)
 
-    # Compute the viterbi sequence and score.
+        # Compute the viterbi sequence and score.
         viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
             predict_op, transition_params, minibatch)
 
-        cost_op= tf.reduce_mean(-log_likelihood)
-    
+        cost_op = tf.reduce_mean(-log_likelihood)
 
     with tf.name_scope('train'):
         optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
-    init_op = tf.group( 
+    init_op = tf.group(
         tf.global_variables_initializer(),
         tf.local_variables_initializer()
     )
-            
-    with tf.Session() as session:           
-        session.run(init_op) 
-        coord= tf.train.Coordinator()
-        threads= tf.train.start_queue_runners(coord=coord)
-        # Training control variables
-        step=0      
-        total_loss=0.0
 
-        first_save=True
-        best_validation_rate=-1
+    with tf.Session() as session:
+        session.run(init_op)
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(coord=coord)
+        # Training control variables
+        step = 0
+        total_loss = 0.0
+
+        first_save = True
+        best_validation_rate = -1
 
         try:
-            while not coord.should_stop():              
+            while not coord.should_stop():
                 X_batch, Y_batch, mb, D_batch = session.run(
                     [inputs, targets, sequence_length, descriptors]
-                )                     
-                
-                _, Yhat, loss = session.run(
-                    [optimizer_op, viterbi_sequence, cost_op],
-                        feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
                 )
 
-                total_loss+=loss 
-                if (step+1) % DISPLAY_STEP ==0:                 
-                    #This will be caugth by input_fn                
-                    Yhat= session.run(
-                        viterbi_sequence,
-                        feed_dict={X:X_train, T:T_train, minibatch:mb_train}
-                    )                   
-                    
-                    index= D_train[:,:,0]
-                    predictions_d= propbank.tensor2column( index, Yhat, mb_train, 'T')                  
-                    acc_train= calculator_train.accuracy(predictions_d)
-                    predictions_d= propbank.t2arg(predictions_d)
-                    evaluator_train.evaluate( predictions_d, True )
+                _, Yhat, loss = session.run(
+                    [optimizer_op, viterbi_sequence, cost_op],
+                    feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
+                )
 
-                    Yhat= session.run(
+                total_loss += loss
+                if (step + 1) % DISPLAY_STEP == 0:
+                    # This will be caugth by input_fn
+                    Yhat = session.run(
                         viterbi_sequence,
-                        feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
+                        feed_dict={ X: X_train,
+                                    T: T_train,
+                                    minibatch: mb_train
+                                   }
                     )
 
-                    index= D_valid[:,:,0]
-                    predictions_d= propbank.tensor2column( index, Yhat, mb_valid, 'T')                  
-                    acc_valid= calculator_valid.accuracy(predictions_d)
-                    predictions_d= propbank.t2arg(predictions_d)
-                    evaluator_valid.evaluate( predictions_d, False )
+                    index = D_train[:, :, 0]
+                    predictions_d = propbank.tensor2column(
+                        index, Yhat, mb_train, 'T')
+                    acc_train = calculator_train.accuracy(predictions_d)
+                    predictions_d = propbank.t2arg(predictions_d)
+                    evaluator_train.evaluate( predictions_d, True )
 
-                    print('Iter={:5d}'.format(step+1),
-                        'train-f1 {:.2f}%'.format(evaluator_train.f1),                      
-                            'avg acc {:.2f}%'.format(100*acc_train),                        
-                                'valid-f1 {:.2f}%'.format(evaluator_valid.f1),                                                      
-                                    'valid acc {:.2f}%'.format(100*acc_valid),                      
-                                        'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))                                     
-                    total_loss=0.0 
-                    total_acc=0.0                   
+                    Yhat = session.run(
+                        viterbi_sequence,
+                        feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
+                    )
+
+                    index = D_valid[:, :, 0]
+                    predictions_d = propbank.tensor2column(
+                        index, Yhat, mb_valid, 'T')
+                    acc_valid = calculator_valid.accuracy(predictions_d)
+                    predictions_d = propbank.t2arg(predictions_d)
+                    evaluator_valid.evaluate(predictions_d, False)
+
+                    print('Iter={:5d}'.format(step + 1),
+                          'train-f1 {:.2f}%'.format(evaluator_train.f1),
+                          'avg acc {:.2f}%'.format(100 * acc_train),
+                          'valid-f1 {:.2f}%'.format(evaluator_valid.f1),
+                          'valid acc {:.2f}%'.format(100 * acc_valid),
+                          'avg. cost {:.6f}'.format(total_loss / DISPLAY_STEP))
+                    total_loss = 0.0
+                    total_acc = 0.0
 
                     if best_validation_rate < evaluator_valid.f1:
-                        best_validation_rate = evaluator_valid.f1   
-                        evaluator_valid.evaluate( predictions_d, True )
+                        best_validation_rate = evaluator_valid.f1
+                        evaluator_valid.evaluate(predictions_d, True)
 
-                step+=1
-                
+                step += 1
+
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')
 
         finally:
-            #When done, ask threads to stop
+            # When done, ask threads to stop
             coord.request_stop()
             coord.join(threads)
