@@ -139,13 +139,13 @@ def forward(X, sequence_length, hidden_size):
         # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
         # act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
         # import code; code.interact(local=dict(globals(), **locals()))
-        score =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
-                outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
+        # score =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
+        #         outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
 
         # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
         #Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
         score=tf.scan(lambda a, x: tf.matmul(x, Wo),
-                score, initializer=tf.matmul(score[0],Wo)) + bo
+                outputs, initializer=tf.matmul(outputs[0],Wo)) + bo
     return score
 
 
@@ -272,13 +272,8 @@ if __name__== '__main__':
 
 
     #define variables / placeholders
-    Wo = tf.Variable(tf.random_normal([hidden_size[-1], target_size], name='Wo')) 
+    Wo = tf.Variable(tf.random_normal([2*hidden_size[-1], target_size], name='Wo')) 
     bo = tf.Variable(tf.random_normal([target_size], name='bo')) 
-
-    #Forward backward weights for bi-lstm act
-    Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
-    # Wfb = tf.Variable(tf.random_normal([2*hidden_size[-1], hidden_size[-1]], name='Wfb')) 
-    bfb = tf.Variable(tf.random_normal([hidden_size[-1]], name='bfb')) 
 
     #pipeline control place holders
     # This makes training slower - but code is reusable
@@ -296,18 +291,18 @@ if __name__== '__main__':
 
     with tf.name_scope('predict'):      
         predict_op= forward(X, minibatch, hidden_size)
-        clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
-        T_2d= tf.cast(tf.argmax( T,2 ), tf.int32)
+        # clip_prediction=tf.clip_by_value(predict_op,clip_value_min=-22,clip_value_max=22)
+        Tflat= tf.cast(tf.argmax( T,2 ), tf.int32)
 
     with tf.name_scope('xent'):
         # Compute the log-likelihood of the gold sequences and keep the transition
     # params for inference at test time.
         log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
-            clip_prediction,T_2d, minibatch)
+            predict_op,Tflat, minibatch)
 
     # Compute the viterbi sequence and score.
         viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
-            clip_prediction, transition_params, minibatch)
+            predict_op, transition_params, minibatch)
 
         cost_op= tf.reduce_mean(-log_likelihood)
     
