@@ -8,10 +8,10 @@
 propbankbr/*.txt
 propbankbr/*.conll
 *events.out.tfevents.*
-tex/*
-!tex/*.pdf
-!tex/*.tex
-!tex/*.bib
+# large binary files
+*db_pt_LEMMA_fasttext_s50.pickle
+*db_pt_LEMMA_wang2vec_s50.pickle
+*db_pt_LEMMA_word2vec_s50.pickle
 
 # Remove saved parameters
 *graph_params-*
