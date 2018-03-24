@@ -35,7 +35,7 @@ from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
 
-MODEL_NAME ='dblstm_crf_3'
+MODEL_NAME ='dblstm_crf_3_sanity_check'
 LAYER_1_NAME ='glove_s50'
 LAYER_2_NAME ='dblstm'
 LAYER_3_NAME ='crf'
@@ -211,8 +211,8 @@ if __name__== '__main__':
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
-
-    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS']  
+    # 'MORF',  'DTREE',     'FUNC', 'CTREE',
+    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
     if ctx_p > 0:
         input_sequence_features+=['CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]

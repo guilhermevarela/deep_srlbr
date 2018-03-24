@@ -364,7 +364,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 	writer.close()
 	print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))			
 
-if __name__== '__main__':
+# if __name__== '__main__':
 	# propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
 	# UNCOMMENT this to save an updated version
 	# language_models = ['fasttext_s50', 'word2vec_s50', 'wang2vec_s50']
