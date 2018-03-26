@@ -35,7 +35,7 @@ from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
 
-MODEL_NAME ='dblstm_crf_3_sanity_check_2'
+MODEL_NAME ='dblstm_crf_3'
 LAYER_1_NAME ='glove_s50'
 LAYER_2_NAME ='dblstm'
 LAYER_3_NAME ='crf'
@@ -136,11 +136,6 @@ def forward(X, sequence_length, hidden_size):
 
     with tf.variable_scope('score'):   
         outputs = tf.concat((outputs, h), axis=2)        
-        # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-        # act = tf.matmul(tf.concat((fwd_outputs,bck_outputs),2), tf.stack([Wfb]*batch_size)) +bfb
-        # import code; code.interact(local=dict(globals(), **locals()))
-        # score =tf.scan(lambda a, x: tf.matmul(x, Wfb), 
-        #         outputs, initializer=tf.matmul(outputs[0],Wfb))+bfb
 
         # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
         #Yhat=tf.matmul(act, tf.stack([Wo]*batch_size)) + bo
@@ -214,7 +209,7 @@ if __name__== '__main__':
     # SANITY CHECK 1: ALL LINGUISTIC FEATURES
     # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
     # SANITY CHECK 2: ARG
-    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'ARG'] 
+    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1']
     if ctx_p > 0:
         input_sequence_features+=['CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]
@@ -273,11 +268,11 @@ if __name__== '__main__':
     )
 
 
-    #define variables / placeholders
+    # define variables / placeholders
     Wo = tf.Variable(tf.random_normal([2*hidden_size[-1], target_size], name='Wo')) 
     bo = tf.Variable(tf.random_normal([target_size], name='bo')) 
 
-    #pipeline control place holders
+    # pipeline control place holders
     # This makes training slower - but code is reusable
     X = tf.placeholder(tf.float32, shape=(None,None, feature_size), name='X') 
     T = tf.placeholder(tf.float32, shape=(None,None, target_size), name='T')
