@@ -257,7 +257,13 @@ def _process(context_features, sequence_features,
 		#Selects how to handle column from conf.META
 		if key in sel: 
 			if conf.META[key] in ['txt']: 
-				dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
+				'''
+					UserWarning: Converting sparse IndexedSlices to a dense Tensor of 
+					unknown shape. This may consume a large amount of memory.
+  					"Converting sparse IndexedSlices to a dense Tensor of unknown shape. ""
+				'''
+				# https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
+				dense_tensor1 = tf.nn.embedding_lookup(embeddings, dense_tensor)
 				
 				
 			elif conf.META[key] in ['hot']:
