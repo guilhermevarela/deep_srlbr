@@ -99,7 +99,7 @@ def dblstm_n(outputs, h, seqlens, sz):
     
     with tf.variable_scope('bw'):           
         cell_bw=    get_cell(sz)
-        inputs_bw = tf.concat((outputs_fw, h), axis=2)
+        inputs_bw = tf.concat((outputs_fw, outputs), axis=2)
         inputs_bw = tf.reverse_sequence(inputs_bw, seqlens, batch_axis=0, seq_axis=1)
         
         outputs_bw, states= tf.nn.dynamic_rnn(
