@@ -28,11 +28,14 @@ from config import *
 
 from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
+from models.evaluator_conll import EvaluatorConll
+from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
+from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
 
-MODEL_NAME='dblstm_crf_2'
+MODEL_NAME='dblstm_crf_3'
 LAYER_1_NAME='glove_s50'
 LAYER_2_NAME='dblstm'
 LAYER_3_NAME='crf'
@@ -96,7 +99,7 @@ def forward(X, sequence_length, hidden_size):
 	outputs=X
 	for i, sz in enumerate(hidden_size):
 		with tf.variable_scope('db_lstm_{:}'.format(i+1)):
-			outputs= dblstm_layer(X, sequence_length, sz)
+			outputs= dblstm_layer(outputs, sequence_length, sz)
 
 	with tf.variable_scope('activation'):	
 		# Stacking is cleaner and faster - but it's hard to use for multiple pipelines
@@ -160,7 +163,7 @@ if __name__== '__main__':
 	batch_size= args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
 	num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 	embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
-	DISPLAY_STEP=50	
+	DISPLAY_STEP=50
 	target= 'T'
 	
 	PROP_DIR = './datasets/binaries/'
@@ -176,7 +179,7 @@ if __name__== '__main__':
 	print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED', 'GPOS']  
+	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS']  
 	if ctx_p > 0:
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]
@@ -197,6 +200,43 @@ if __name__== '__main__':
 	outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
 	print('{:}_size:{:}'.format(target, hotencode2sz[target]))
+
+	calculator_train=Evaluator(propbank.feature('train', 'T', True))
+	evaluator_train= EvaluatorConll(
+		'train', 
+		propbank.feature('train', 'S', True),
+		propbank.feature('train', 'P', True),
+		propbank.feature('train', 'PRED', True),
+		propbank.feature('train', 'ARG',  True),
+		outputs_dir
+	)
+	
+	X_train, T_train, mb_train, D_train=tfrecords_extract(
+		'train', 
+		propbank.embeddings, 
+		hotencode2sz, 
+		input_sequence_features, 
+		target
+	)
+
+	calculator_valid=Evaluator(propbank.feature('valid', 'T', True))	
+	evaluator_valid= EvaluatorConll(
+		'valid', 
+		propbank.feature('valid', 'S', True),
+		propbank.feature('valid', 'P', True),
+		propbank.feature('valid', 'PRED', True),
+		propbank.feature('valid', 'ARG', True),
+		outputs_dir		
+	)
+
+	X_valid, T_valid, mb_valid, D_valid=tfrecords_extract(
+		'valid', 
+		propbank.embeddings, 
+		hotencode2sz, 
+		input_sequence_features, 
+		target
+	)
+
 
 	#define variables / placeholders
 	Wo = tf.Variable(tf.random_normal([hidden_size[-1], target_size], name='Wo')) 
@@ -242,17 +282,9 @@ if __name__== '__main__':
 	with tf.name_scope('train'):
 		optimizer_op = tf.train.AdamOptimizer(learning_rate=lr).minimize(cost_op)
 
-	#Evaluation
-	with tf.name_scope('evaluation'):
-		accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
-	
-	X_valid, Y_valid, mb_valid, D_valid=tfrecords_extract(
-		'valid', 
-		propbank.embeddings, 
-		hotencode2sz, 
-		input_sequence_features, 
-		target)
-
+	# Evaluation THIS ISN'T WORKING
+	# with tf.name_scope('evaluation'):
+	# 	accuracy_op = 1.0-error_rate2(viterbi_sequence,T_2d, minibatch)
 
 	init_op = tf.group( 
 		tf.global_variables_initializer(),
@@ -266,45 +298,60 @@ if __name__== '__main__':
 		# Training control variables
 		step=0		
 		total_loss=0.0
-		total_acc=0.0				
 
 		first_save=True
 		best_validation_rate=-1
 
 		try:
 			while not coord.should_stop():				
-				X_batch, Y_batch, mb = session.run(
-					[inputs, targets, sequence_length]
+				X_batch, Y_batch, mb, D_batch = session.run(
+					[inputs, targets, sequence_length, descriptors]
 				)
 				
-				
-				_, Yhat, loss, acc = session.run(
-					[optimizer_op, viterbi_sequence, cost_op, accuracy_op],
+				import code; code.interact(local=dict(globals(), **locals()))
+
+				_, Yhat, loss = session.run(
+					[optimizer_op, viterbi_sequence, cost_op],
 						feed_dict= { X:X_batch, T:Y_batch, minibatch:mb}
 				)
 				
 				total_loss+=loss 
-				total_acc+= acc				
 				if (step+1) % DISPLAY_STEP ==0:					
 					#This will be caugth by input_fn				
-					acc, Yhat_valid= session.run(
-						[accuracy_op, viterbi_sequence],
-						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}
-					)
+					Yhat= session.run(
+						viterbi_sequence,
+						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
+					)					
 					
-					#Broadcasts to user
+					index= D_train[:,:,0]
+					predictions_d= propbank.tensor2column( index, Yhat, mb_train, 'T')					
+					acc_train= calculator_train.accuracy(predictions_d)
+					predictions_d= propbank.t2arg(predictions_d)
+					evaluator_train.evaluate( predictions_d, True )
+
+					Yhat= session.run(
+						viterbi_sequence,
+						feed_dict={X:X_valid, T:T_valid, minibatch:mb_valid}
+					)
+
+					index= D_valid[:,:,0]
+					predictions_d= propbank.tensor2column( index, Yhat, mb_valid, 'T')					
+					acc_valid= calculator_valid.accuracy(predictions_d)
+					predictions_d= propbank.t2arg(predictions_d)
+					evaluator_valid.evaluate( predictions_d, False )
+
 					print('Iter={:5d}'.format(step+1),
-						'avg. acc {:.2f}%'.format(100*total_acc/DISPLAY_STEP),						
-							'valid. acc {:.2f}%'.format(100*acc),						
-					 			'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
+						'train-f1 {:.2f}%'.format(evaluator_train.f1),						
+							'avg acc {:.2f}%'.format(100*acc_train),						
+								'valid-f1 {:.2f}%'.format(evaluator_valid.f1),														
+									'valid acc {:.2f}%'.format(100*acc_valid),						
+					 					'avg. cost {:.6f}'.format(total_loss/DISPLAY_STEP))										
 					total_loss=0.0 
 					total_acc=0.0					
 
-					if best_validation_rate < acc:
-						best_validation_rate = acc	
-
-						outputs_predictions_persist(
-							outputs_dir, D_valid[:,:,0], D_valid[:,:,1], Yhat_valid, mb_valid, target2idx, 'Yhat_valid')
+					if best_validation_rate < evaluator_valid.f1:
+						best_validation_rate = evaluator_valid.f1	
+						evaluator_valid.evaluate( predictions_d, True )
 
 				step+=1
 				

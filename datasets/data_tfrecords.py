@@ -257,7 +257,13 @@ def _process(context_features, sequence_features,
 		#Selects how to handle column from conf.META
 		if key in sel: 
 			if conf.META[key] in ['txt']: 
-				dense_tensor1= tf.nn.embedding_lookup(embeddings, dense_tensor)
+				'''
+					UserWarning: Converting sparse IndexedSlices to a dense Tensor of 
+					unknown shape. This may consume a large amount of memory.
+  					"Converting sparse IndexedSlices to a dense Tensor of unknown shape. ""
+				'''
+				# https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
+				dense_tensor1 = tf.nn.embedding_lookup(embeddings, dense_tensor)
 				
 				
 			elif conf.META[key] in ['hot']:
@@ -364,12 +370,14 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 	writer.close()
 	print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))			
 
-# if __name__== '__main__':
+if __name__== '__main__':
 	# propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
 	# UNCOMMENT this to save an updated version
-	# propbank= Propbank()
-	# propbank.define()
-	# propbank.persist('')
+	language_models = ['fasttext_s50', 'word2vec_s50', 'wang2vec_s50']
+	for lm in language_models:
+		propbank= Propbank()
+		propbank.define(language_model=lm)
+		propbank.persist('')
 	
 	# for ds_type in ['train', 'test', 'valid']:
 	# 	tfrecords_builder(propbank.iterator(ds_type), ds_type)
