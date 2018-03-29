@@ -110,10 +110,17 @@ class EvaluatorConll(object):
                 os.remove(gold_path)
             except OSError:
                 pass
-    def evaluate_fromconllfile(self, lookup_path):
+    
+    def evaluate_fromconllfile(self, target_path):
+        '''
+            Opens up a conll file and parses it
+
+            args:
+                target_path .: string filename + dir 
+        '''
         self._refresh()
 
-        with open(lookup_path, 'r') as f: 
+        with open(target_path, 'r') as f: 
             self.txt = f.read()
         f.close()
 

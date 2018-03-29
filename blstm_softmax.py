@@ -1,8 +1,6 @@
 '''
 Created on Mar 02, 2018
-	@author: Varela
-	
-	implementation of (Zhou,et Xu, 2015)
+	@author: Varela	
 	
 	ref:
 		http://www.aclweb.org/anthology/P15-1109
@@ -30,7 +28,7 @@ from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
-from data_outputs import  dir_getoutputs, outputs_settings_persist, outputs_predictions_persist
+from data_outputs import  dir_getoutputs, outputs_settings_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate, precision, recall
 
