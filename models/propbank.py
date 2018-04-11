@@ -398,67 +398,97 @@ class Propbank(object):
                         if p>=lb and p< ub+1}
         return d
 
-    def to_svm(self, dumppath='datasets/dumps/', dump_type='embeddings', exclude_cols=['ARG'], target='T'):
+    def to_svm(
+               self, output_path='datasets/svms/',
+               output_type='EMB', excludecols=['ARG'], target='T'):
         '''
             Dumps data into csv
         '''
-        if dump_type not in ('embeddings', 'categorical', 'onehot'):
-            raise ValueError('dump_type must be in '.format(('embeddings', 'categorical', 'onehot')))
+        if output_type.upper() not in ('CAT', 'IDX', 'HOT', 'EMB'):
+            raise ValueError('dump_type must be in {:}'.format(('CAT', 'IDX', 'HOT', 'EMB')))
 
-        if dump_type not in ('embeddings'):
-            raise NotImplementedError('You must implement dump_type=={:}'.format(dump_type))
+        if output_type.upper() not in ('EMB'):
+            raise NotImplementedError('You must implement dump_type=={:}'.format(output_type.lower()))
 
         columns = [feat
-                   for feat in self.features if feat not in exclude_cols]
-        
-        depth = len(self.data['ARG'])
-        width = sum([self._feature_size(col)
-                     for col in columns])
-        YX = np.zeros((depth, width), dtype=np.float32)
+                   for feat in self.features
+                   if feat not in excludecols and not feat == target]
 
-        jx = 1
-        for feat in columns:
+        # for ds_type in ['train', 'valid', 'test']:
+        for ds_type in ['test', 'valid', 'train']:
+            name = '{:}_{:}_{:}.dump'.format(ds_type,'_'.join(self.lexicon_columns), self.language_model)
+            svmspath = '{:}{:}'.format(output_path, name)
+            with open(svmspath, mode='w') as f:
+                for idx, d in self.iterator(ds_type):
+                    i = 1
+                    line = '{:} '.format(d[target])
+                    for feat in columns:
+                        sz = self._feature_size(feat)
+                        if conf.META[feat] in ['txt']:
+                            line += ' '.join(
+                                ['{:}:{:.6f}'.format(i + j, x)
+                                 for j, x in enumerate(self.embeddings[d[feat]])]
+                            ) + ' '
+                        elif conf.META[feat] in ['hot']:
+                            onehot = [0] * sz
+                            onehot[d[feat]] = 1
+                            line += ' '.join(
+                                ['{:}:{:}'.format(i + j, onehot[j]) for j in range(sz)]
+                            ) + ' '
+                        elif conf.META[feat] in ['int']:
+                            line += '{:}:{:}'.format(i, d[feat]) + ' '
+                        i += sz + 1
 
-            sz = self._feature_size(feat)
-            if not feat == target:
-                if conf.META[feat] in ['txt']:
+                    line = line[:-1] + '\n'
+                    f.write(line)
 
-                    result = np.concatenate(
-                        [self.embeddings[value]
-                         for idx, value in self.data[feat].items()],
-                        axis=0
-                    ).reshape((depth, sz))
 
-                elif conf.META[feat] in ['hot']:
-                    result = np.zeros((depth, sz), np.float32)
-                    for row, col in self.data[feat].items():
-                        result[row, col] = 1
-                else:
-                    result = np.array(
-                        [value for _, value in self.data[feat].items()]
-                    ).reshape((depth,1))
 
-                YX[:, jx:jx + sz] = result
-                jx = jx + sz
-            else:
-                result = np.array([value
-                                   for _, value in self.data[feat].items()])
-                YX[:, 0] = result
-        print(YX.shape)        
-        for ds in ['train', 'valid', 'test']:
-            lb, ub = self._ds_bounds(ds)                        
-            name = '{:}_{:}_{:}.dump'.format(ds,'_'.join(self.lexicon_columns), self.language_model)
-            csv_path = '{:}{:}'.format(dumppath, name)
+                # ' '.join(['{:}:{:}'.format(i, d[key]) )
+                
+        # jx = 1
+        # for feat in columns:
+
+        #     sz = self._feature_size(feat)
+        #     if not feat == target:
+        #         if conf.META[feat] in ['txt']:
+
+        #             result = np.concatenate(
+        #                 [self.embeddings[value]
+        #                  for idx, value in self.data[feat].items()],
+        #                 axis=0
+        #             ).reshape((depth, sz))
+
+        #         elif conf.META[feat] in ['hot']:
+        #             result = np.zeros((depth, sz), np.float32)
+        #             for row, col in self.data[feat].items():
+        #                 result[row, col] = 1
+        #         else:
+        #             result = np.array(
+        #                 [value for _, value in self.data[feat].items()]
+        #             ).reshape((depth,1))
+
+        #         YX[:, jx:jx + sz] = result
+        #         jx = jx + sz
+        #     else:
+        #         result = np.array([value
+        #                            for _, value in self.data[feat].items()])
+        #         YX[:, 0] = result
+        # print(YX.shape)        
+        # for ds in ['train', 'valid', 'test']:
+        #     lb, ub = self._ds_bounds(ds)                        
+        #     name = '{:}_{:}_{:}.dump'.format(ds,'_'.join(self.lexicon_columns), self.language_model)
+        #     csv_path = '{:}{:}'.format(dumppath, name)
 
             
-            with open(csv_path, mode='w') as f:
-                for t, p in self.data['P'].items():
-                    if p >= lb and p <= ub:
-                        result = [str(YX[t,0])]
-                        result+= ['{:}:{:}'.format(j, yx) 
-                                  for j, yx in enumerate(YX[t,:])]
-                        # import code; code.interact(local=dict(globals(), **locals()))     
-                        f.write(' '.join(result) + '\n')
+        #     with open(csv_path, mode='w') as f:
+        #         for t, p in self.data['P'].items():
+        #             if p >= lb and p <= ub:
+        #                 result = [str(YX[t,0])]
+        #                 result+= ['{:}:{:}'.format(j, yx) 
+        #                           for j, yx in enumerate(YX[t,:])]
+        #                 # import code; code.interact(local=dict(globals(), **locals()))     
+        #                 f.write(' '.join(result) + '\n')
 
     def iterator(self, ds_type, decode=False):
         if not(ds_type in ['train', 'valid', 'test']):
