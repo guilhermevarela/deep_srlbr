@@ -3,7 +3,7 @@
 /.old   # matches root directory
 /srlconll-1.1
 **/embeddings
-**/dumps
+**/svms
 *.pyc
 *__pycache__
 propbankbr/*.txt
