@@ -4,6 +4,7 @@
 /srlconll-1.1
 **/embeddings
 **/svms
+**/models/liblinear
 *.pyc
 *__pycache__
 propbankbr/*.txt
