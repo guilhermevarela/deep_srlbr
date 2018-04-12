@@ -1,27 +1,26 @@
+# macos nonsensical
 .DS_Store
+
+# Python pipeline
+*__pycache__
 *.old.* # matches previous refactored files
 /.old   # matches root directory
-/srlconll-1.1
 **/embeddings
 **/svms
-<<<<<<< HEAD
-*.pyc
-=======
->>>>>>> 0bf44da
-*__pycache__
-propbankbr/*.txt
-propbankbr/*.conll
-*events.out.tfevents.*
-# large binary files
-*db_pt_LEMMA_fasttext_s50.pickle
-*db_pt_LEMMA_wang2vec_s50.pickle
-*db_pt_LEMMA_word2vec_s50.pickle
 
-# Remove saved parameters
+# PEARL 
+/srlconll-1.1
+# Ignore pickles
+*.pickle
+
+# Tensorflow
 *graph_params-*
+*events.out.tfevents.*
 
 # Compiled files
 *.pyc
 *.so.3
 *.o
 
+# Jupyter notebook
+*.ipynb_checkpoints
