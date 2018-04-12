@@ -4,7 +4,6 @@
 /srlconll-1.1
 **/embeddings
 **/svms
-**/svmlib
 *.pyc
 *__pycache__
 propbankbr/*.txt
@@ -17,3 +16,7 @@ propbankbr/*.conll
 
 # Remove saved parameters
 *graph_params-*
+
+#Remove compiled files
+*.o
+*.so3
