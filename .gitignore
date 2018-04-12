@@ -7,12 +7,12 @@
 /.old   # matches root directory
 **/embeddings
 **/svms
+**/binaries
 
 # PEARL 
 /srlconll-1.1
 
-# Ignore pickles
-*.pickle
+
 
 # Tensorflow
 *graph_params-*
