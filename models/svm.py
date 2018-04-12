@@ -26,8 +26,17 @@ class SVM(object):
         self._svm = lin.train(Y, X, argstr)
 
     def predict(self, X, Y):
-        Yhat, acc, metrics = lin.predict(Y, X, self._svm)
-        return Yhat, acc, metrics
+        # return pred_labels, (ACC, MSE, SCC), pred_values
+        labels, metrics, values = lin.predict(Y, X, self._svm)
+
+        d = {
+            'yhat': labels,
+            'acc': metrics[0],
+            'mse': metrics[1],
+            'scc': metrics[2],
+            'val': values
+        }
+        return d
 
 
 class _SVMIO(object):
@@ -38,14 +47,15 @@ class _SVMIO(object):
         return Y, X
 
     @classmethod
-    def dump(cls, cmd, **kwargs):
+    def dump(cls, encoding, optargs, **kwargs):
         '''
             Writes output in pickle format
         '''
         # print(kwargs)
-        hparam = '_'.join(sorted(cmd.split('-')))
+        hparam = '_'.join(sorted(optargs.split('-')))
         hparam = hparam.replace(' ', '-')
-        hparam = hparam[1:]
+        hparam =  encoding + hparam
+
         target_dir = 'outputs/svm/{:}/'.format(hparam)
         if not os.path.exists(target_dir):
             os.mkdir(target_dir)
@@ -63,29 +73,31 @@ class _SVMIO(object):
 
 if __name__ == '__main__':
     svm = SVM()
-    cmdstr = '-c 4'
+    optargs = '-c 4'
+    encoding = 'emb'
     print('Loading train set ...')
-    Ytrain, Xtrain = _SVMIO.read('datasets/svms/emb/train_LEMMA_glove_s50.svm')
+    input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
+    Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
-    Yvalid, Xvalid = _SVMIO.read('datasets/svms/emb/valid_LEMMA_glove_s50.svm')
+    input_path = 'datasets/svms/{:}/valid_LEMMA_glove_s50.svm'.format(encoding)
+    Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
     print('Training ...')
-    svm.fit(Xtrain, Ytrain, cmdstr)
+    svm.fit(Xtrain, Ytrain, optargs)
     print('Training ... done')
 
-    keys = ('y_hat', 'accuracy', 'metrics')
+    keys = ('y_hat', 'acc', 'mse', 'scc')
     print('Insample prediction ...')
-    insample = svm.predict(Xtrain, Ytrain)
+    train_d = svm.predict(Xtrain, Ytrain)
     print('Insample prediction ... done')
-    insample = dict(zip(keys, insample))
+
 
     print('Outsample prediction ...')
-    outsample = svm.predict(Xvalid, Yvalid)
+    valid_d = svm.predict(Xvalid, Yvalid)
     print('Outsample prediction ... done')
-    outsample = dict(zip(keys, outsample))
 
 
-    _SVMIO.dump(cmdstr, insample=insample, outsample=outsample)
+    _SVMIO.dump(encoding, optargs, train=train_d, valid=valid_d)
