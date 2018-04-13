@@ -4881,4 +4881,5 @@ PRED:
     vir: null, virar: null, visar: null, visitar: null, vislumbrar: null, visualizar: null,
     viver: null, voar: null, voltar: null, votar: null, zerar: null, zonear: null}
   type: str
+P_S: {category: meta, type: int}
 S: {category: meta, type: int}
