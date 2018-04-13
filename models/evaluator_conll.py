@@ -148,7 +148,6 @@ class EvaluatorConll(object):
         if len(Y) != len(self.ARG):
             raise ValueError('number of predictions must match targets')
         else:
-            
             self.target_dir = '/'.join(target_path.split('/')[:-1])
             self.target_dir += '/'
 
