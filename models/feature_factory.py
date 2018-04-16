@@ -33,7 +33,7 @@ class ColumnShifter(object):
         self.dict_db = dict_db
 
     # Columns over which we want to perform the shifting        
-    def define(self, columns, shifts, new_columns=None):
+    def define(self, columns, shifts):
         '''
             Defines with columns will be effectively shifted and by what amount
 
@@ -67,14 +67,10 @@ class ColumnShifter(object):
         else:
             self.shifts = sorted(shifts)
 
-        if (new_columns) and (len(new_columns) != len(columns) * len(shifts)):
-            raise ValueError('New columns must be TypeNone or len(columns)*len(shifts)')
-        else:
-            if new_columns:
-                self.new_columns = columns
-            else:
-                self.new_columns = ['{:}_{:+d}'.format(col, i)
-                                    for col in columns for i in sorted(shifts)]
+        self.mapper = OrderedDict(
+                {(i, col): '{:}{:+d}'.format(col, i)
+                 for col in columns for i in sorted(shifts)})
+
         return self
 
     def exec(self):
@@ -84,20 +80,20 @@ class ColumnShifter(object):
             returns:
                 shifted .: dict<new_columns, dict<int, column<type>>>
         '''
-        if not ( self.columns or self.shifts or self.new_columns):
+        if not ( self.columns or self.shifts or self.mapper):
             raise Exception('Columns to be shifted are undefined run column_shifter.define')
 
         # defines output data structure
-        self.dict_shifted = {col: OrderedDict({}) for col in self.new_columns}
+        self.dict_shifted = {col: OrderedDict({}) for _, col in self.mapper.items()}
 
         # defines output data structure
-        # current_proposition = 1
-        for time, proposition in self.dict_db['P'].items():            
-            for i, col in enumerate(self.columns):
-                new_col = self.new_columns[i]
+
+        for time, proposition in self.dict_db['P'].items():
+            for col in self.columns:                
                 for s in self.shifts:
+                    new_col = self.mapper[(s, col)]
                     if (time + s in self.dict_db['P']) and\
-                         (self.dict_db['P'][time + s] == proposition):                                                
+                         (self.dict_db['P'][time + s] == proposition):
                         self.dict_shifted[new_col][time] = self.dict_db[col][time + s]
                     else:
                         self.dict_shifted[new_col][time] = None
@@ -113,5 +109,15 @@ if __name__ == '__main__':
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    shifted = shifter.define(['FORM'], [-1, 1]).exec()
-    import code; code.interact(local=dict(globals(), **locals()))
+
+    delta = 3
+    columns = ['FORM', 'LEMMA', 'GPOS']
+    shifts = [d for d in range(-delta, delta+1, 1) if d != 0]
+    shifted = shifter.define(columns, shifts).exec()
+    target_dir = '../datasets/csvs/gs_column_shifts/'
+    for col in columns:
+        d = {new_col: shifted[new_col]
+             for new_col in shifted if col in new_col}        
+        df = pd.DataFrame.from_dict(d)
+        filename = '{:}{:}.csv'.format(target_dir, col.lower())
+        df.to_csv(filename, sep=',', encoding='utf-8')
