@@ -74,14 +74,16 @@ class _SVMIO(object):
 if __name__ == '__main__':
     svm = SVM()
     optargs = '-c 4'
-    encoding = 'emb'
+    # encoding = 'emb'
+    encoding = 'hot'
     print('Loading train set ...')
-    input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
+    # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
-    input_path = 'datasets/svms/{:}/valid_LEMMA_glove_s50.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
