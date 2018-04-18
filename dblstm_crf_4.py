@@ -9,6 +9,7 @@ Created on Mar 02, 2018
 
     updates
     2018-03-15 Refactor major updates
+    2018-04-18 version 4  input_with_embeddings_fn without processing
 '''
 # outputs_dir outputs/dblstm_crf_2/lr5.00e-04_hs64_ctx-p1_glove_s50/08/
 # Iter= 8200 avg. acc 94.98% valid. acc 67.95% avg. cost 2.276543
@@ -35,22 +36,21 @@ from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
 
 
-MODEL_NAME ='dblstm_crf_3'
-LAYER_1_NAME ='glove_s50'
-LAYER_2_NAME ='dblstm'
-LAYER_3_NAME ='crf'
+MODEL_NAME = 'dblstm_crf_4'
+LAYER_1_NAME = 'glove_s50'
+LAYER_2_NAME = 'dblstm'
+LAYER_3_NAME = 'crf'
 
-# Command line defaults 
-LEARNING_RATE = 5e-4  
+# Command line defaults
+LEARNING_RATE = 5e-4
 HIDDEN_SIZE = [512, 64]
-EMBEDDING_SIZE = 50 
-EMBEDDING_MODEL = [('glove',50)]
+EMBEDDING_SIZE = 50
+EMBEDDING_MODEL = [('glove', 50)]
 BATCH_SIZE = 250
 N_EPOCHS = 500
 
-
 def get_cell(sz):
-    return tf.nn.rnn_cell.BasicLSTMCell(sz,  forget_bias=1.0, state_is_tuple=True)
+    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 def dblstm_1(X, seqlens, sz):
     with tf.variable_scope('fw'):
@@ -64,11 +64,11 @@ def dblstm_1(X, seqlens, sz):
             dtype=tf.float32,
             time_major=False
         )
-    
-    with tf.variable_scope('bw'):           
-        cell_bw=    get_cell(sz)
+
+    with tf.variable_scope('bw'):
+        cell_bw = get_cell(sz)
         inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
-        
+
         outputs_bw, states= tf.nn.dynamic_rnn(
             cell=cell_bw, 
             inputs=inputs_bw,           
@@ -96,7 +96,7 @@ def dblstm_n(outputs, h, seqlens, sz):
             dtype=tf.float32,
             time_major=False
         )
-    
+
     with tf.variable_scope('bw'):           
         cell_bw=    get_cell(sz)
         inputs_bw = tf.concat((outputs_fw, outputs), axis=2)
@@ -110,10 +110,10 @@ def dblstm_n(outputs, h, seqlens, sz):
             time_major=False
         )
         outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-        
+
     return outputs_bw, outputs_fw
 
-def forward(X, sequence_length, hidden_size):       
+def forward(X, sequence_length, hidden_size):
     '''
         Computes forward propagation thru basic lstm cell
 
@@ -178,70 +178,72 @@ if __name__== '__main__':
                     help='''Number of times to repeat training set during training.\n''')
 
     args = parser.parse_args()
-    hidden_size= args.depth 
-    embeddings_name, embeddings_size= args.embeddings_model[0]
-    
+    hidden_size = args.depth
+    embeddings_name, embeddings_size = args.embeddings_model[0]
+
 
 
 
 
     # evaluate embedding model
-    ctx_p= args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
-    lr= args.lr[0] if isinstance(args.lr, list) else args.lr
-    batch_size= args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
-    num_epochs= args.epochs[0] if isinstance(args.epochs, list) else args.epochs
-    embeddings_id='{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
-    DISPLAY_STEP=50
-    target= 'T'
-    
+    ctx_p = args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
+    lr = args.lr[0] if isinstance(args.lr, list) else args.lr
+    batch_size = args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
+    num_epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
+    embeddings_id = '{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
+    DISPLAY_STEP = 50
+    target = 'T'
+
     PROP_DIR = './datasets/binaries/'
     PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
     propbank = Propbank.recover(PROP_PATH)
 
     # Updata settings
-    LAYER_1_NAME=embeddings_id
-    HIDDEN_SIZE=hidden_size
-    BATCH_SIZE=batch_size
-    EMBEDDING_SIZE=embeddings_size
+    LAYER_1_NAME = embeddings_id
+    HIDDEN_SIZE = hidden_size
+    BATCH_SIZE = batch_size
+    EMBEDDING_SIZE = embeddings_size
+    INPUT_TRAIN_PATH = '{:}{:}/dbtrain_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
+    INPUT_VALID_PATH = '{:}{:}/dbvalid_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
     # SANITY CHECK 1: ALL LINGUISTIC FEATURES
     # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
     # SANITY CHECK 2: ARG
-    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1']
+    input_sequence_features = ['ID', 'LEMMA', 'M_R', 'PRED_1']
     if ctx_p > 0:
         input_sequence_features+=['CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]
-    
-    
-    feature_size=propbank.size(input_sequence_features)
-    hotencode2sz= {feat: propbank.size(feat)
-            for feat, feat_type in META.items() if feat_type == 'hot'}      
-    
-    target_size=hotencode2sz[target]        
-    target2idx= propbank.onehot[target]
-    
-    load_dir=''
-    outputs_dir= dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)   
-    
+
+
+    feature_size = propbank.size(input_sequence_features)
+    hotencode2sz = {
+            feat: propbank.size(feat)
+            for feat, feat_type in META.items() if feat_type == 'hot'}
+
+    target_size = hotencode2sz[target]
+    target2idx = propbank.onehot[target]
+
+    load_dir = ''
+    outputs_dir = dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)
 
     print('outputs_dir', outputs_dir)
     outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
     print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
-    calculator_train=Evaluator(propbank.feature('train', 'T', True))
-    evaluator_train= EvaluatorConll(
+    calculator_train = Evaluator(propbank.column('train', 'T', True))
+    evaluator_train = EvaluatorConll(
         'train', 
-        propbank.feature('train', 'S', True),
-        propbank.feature('train', 'P', True),
-        propbank.feature('train', 'PRED', True),
-        propbank.feature('train', 'ARG', True),
+        propbank.column('train', 'S', True),
+        propbank.column('train', 'P', True),
+        propbank.column('train', 'PRED', True),
+        propbank.column('train', 'ARG', True),
         outputs_dir
     )
-    
-    X_train, T_train, mb_train, D_train=tfrecords_extract(
+
+    X_train, T_train, mb_train, D_train = tfrecords_extract(
         'train', 
         propbank.embeddings, 
         hotencode2sz, 
@@ -249,13 +251,13 @@ if __name__== '__main__':
         target
     )
 
-    calculator_valid=Evaluator(propbank.feature('valid', 'T', True))    
+    calculator_valid=Evaluator(propbank.column('valid', 'T', True))    
     evaluator_valid= EvaluatorConll(
         'valid', 
-        propbank.feature('valid', 'S', True),
-        propbank.feature('valid', 'P', True),
-        propbank.feature('valid', 'PRED', True),
-        propbank.feature('valid', 'ARG', True),
+        propbank.column('valid', 'S', True),
+        propbank.column('valid', 'P', True),
+        propbank.column('valid', 'PRED', True),
+        propbank.column('valid', 'ARG', True),
         outputs_dir     
     )
 
@@ -276,15 +278,21 @@ if __name__== '__main__':
     # This makes training slower - but code is reusable
     X = tf.placeholder(tf.float32, shape=(None,None, feature_size), name='X') 
     T = tf.placeholder(tf.float32, shape=(None,None, target_size), name='T')
-    minibatch    =   tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
+    minibatch = tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
 
 
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
-        inputs, targets, sequence_length, descriptors= input_with_embeddings_fn(
+        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
             [DATASET_TRAIN_PATH], batch_size, num_epochs,
             propbank.embeddings, hotencode2sz,
             input_sequence_features, target)
+
+        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
+            [DATASET_TRAIN_PATH], batch_size, num_epochs,
+            propbank.embeddings, hotencode2sz,
+            input_sequence_features, target)
+
 
     with tf.name_scope('predict'):
         predict_op = forward(X, minibatch, hidden_size)

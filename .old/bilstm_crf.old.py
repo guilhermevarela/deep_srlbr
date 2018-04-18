@@ -80,7 +80,7 @@ import tensorflow as tf
 import argparse
 import re
 
-from data_tfrecords import input_fn, input_sz
+from data_tfrecords import input_with_embeddings_fn, input_sz
 from data_outputs import  dir_getoutputs, mapper_getiodicts, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate2, precision, recall
 
@@ -270,11 +270,11 @@ if __name__== '__main__':
 	
 	print('feature_size: ',feature_size)
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length, descriptors= input_fn(
+		inputs, targets, sequence_length, descriptors= input_with_embeddings_fn(
 			[dataset_train], batch_size, num_epochs, embeddings,
 				 klass_size=klass_size, input_sequence_features=input_sequence_features)
 
-		inputs_v, targets_v, sequence_length_v, descriptors_v= input_fn(
+		inputs_v, targets_v, sequence_length_v, descriptors_v= input_with_embeddings_fn(
 			[dataset_valid], DATASET_VALID_SIZE, 1, embeddings, 
 				klass_size=klass_size, input_sequence_features=input_sequence_features)
 
@@ -383,7 +383,7 @@ if __name__== '__main__':
 				total_loss+=loss 
 				total_acc+= acc				
 				if (step+1) % DISPLAY_STEP ==0:					
-					#This will be caugth by input_fn				
+					#This will be caugth by input_with_embeddings_fn				
 					acc, Yhat_valid= session.run(
 						[accuracy_op, viterbi_sequence],
 						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}

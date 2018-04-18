@@ -29,7 +29,7 @@ sys.path.append('datasets/')
 import numpy as np 
 import tensorflow as tf 
 
-from data_tfrecords import input_fn
+from data_tfrecords import input_with_embeddings_fn
 from data_outputs import  dir_getoutputs, mapper_get, outputs_settings_persist, outputs_predictions_persist
 from utils import cross_entropy, error_rate, precision, recall 
 
@@ -147,8 +147,8 @@ if __name__== '__main__':
 	
 
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length, descriptors = input_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
-		inputs_v, targets_v, sequence_length_v, descriptors_v = input_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
+		inputs, targets, sequence_length, descriptors = input_with_embeddings_fn([dataset_train], BATCH_SIZE, N_EPOCHS, embeddings, klass_size=KLASS_SIZE)
+		inputs_v, targets_v, sequence_length_v, descriptors_v = input_with_embeddings_fn([dataset_valid], DATASET_VALID_SIZE, 1, embeddings, klass_size=KLASS_SIZE)
 	
 	with tf.name_scope('predict'):		
 		predict_op= forward(X, minibatch)
@@ -247,7 +247,7 @@ if __name__== '__main__':
 				total_acc+= acc
 				
 				if (step+1) % DISPLAY_STEP ==0:					
-					#This will be caugth by input_fn				
+					#This will be caugth by input_with_embeddings_fn				
 					acc, Yhat_valid  = session.run(
 						[accuracy_op, argmax_op],
 						feed_dict={X:X_valid, T:Y_valid, minibatch:mb_valid}

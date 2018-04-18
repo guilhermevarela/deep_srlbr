@@ -283,11 +283,11 @@ class Propbank(object):
                 sz          .: int indicating the total feature size
         '''
         if isinstance(columns,str):
-            sz= self.column_dimension(columns)
+            sz= self.column_dimensions(columns)
         else:
             sz=0
             for col in columns:
-                sz+=self.column_dimension(col)
+                sz+=self.column_dimensions(col)
         return sz
 
     def sequence_obsexample(self, idx, columns, as_dict=False, decode=False):
@@ -420,7 +420,7 @@ class Propbank(object):
                     i = 1
                     line = '{:} '.format(d[target])
                     for col in columns:
-                        sz = self.column_dimension(col, encoding)
+                        sz = self.column_dimensions(col, encoding)
                         if config.META[col] in ['txt']:
                             if encoding.upper() in ['EMB']:
                                 line += ' '.join(
@@ -501,7 +501,7 @@ class Propbank(object):
 
         return _PropbankIterator(low, high, fn)
 
-    def column_dimension(self, col, encoding='EMB'):
+    def column_dimensions(self, col, encoding='EMB'):
         '''
             Returns the dimension of the column 
             args:
@@ -511,28 +511,30 @@ class Propbank(object):
         if encoding.upper() in ['CAT', 'IDX']:
             return 1
 
-        sz = 0
+        sz = 1
         if config.META[col] in ['txt']:
             if encoding in ['EMB']:
                 sz = len(self.embeddings[0])
             elif encoding in ['HOT']:
                 sz = len(self.lexicon)
             else:
-                raise ValueError('column_dimension: encoding=={:} not supported'.format(encoding))
+                raise ValueError('column_dimensions: encoding=={:} not supported'.format(encoding))
 
         if config.META[col] in ['hot']:
             sz = len(self.onehot[col])
 
         return sz
 
-    def column_dimensions(self, encoding='EMB'):
+    def columns_dimensions(self, encoding='EMB'):
         '''
             Returns the dimension of the column 
             args:
             returns:
         '''
-        return {col: self.column_dimension(col, encoding=encoding)
-                for col in self.columns}
+        return {
+            col: self.column_dimensions(col, encoding=encoding)
+            for col in self.columns
+        }
 
 
 if __name__ == '__main__':

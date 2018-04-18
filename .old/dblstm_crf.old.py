@@ -26,7 +26,7 @@ import re
 # this is not recommended but where just importing a bunch of constants
 from config import *
 
-from data_tfrecords import input_fn, tfrecords_extract
+from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
 from models.propbank import Propbank
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
@@ -256,7 +256,7 @@ if __name__== '__main__':
 
 	print('feature_size: ',feature_size)
 	with tf.name_scope('pipeline'):
-		inputs, targets, sequence_length, descriptors= input_fn(
+		inputs, targets, sequence_length, descriptors= input_with_embeddings_fn(
 			[DATASET_TRAIN_PATH], batch_size, num_epochs, 
 			propbank.embeddings, hotencode2sz, 
 			input_sequence_features, target)
@@ -317,7 +317,7 @@ if __name__== '__main__':
 				
 				total_loss+=loss 
 				if (step+1) % DISPLAY_STEP ==0:					
-					#This will be caugth by input_fn				
+					#This will be caugth by input_with_embeddings_fn				
 					Yhat= session.run(
 						viterbi_sequence,
 						feed_dict={X:X_train, T:T_train, minibatch:mb_train}
