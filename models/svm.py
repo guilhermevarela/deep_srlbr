@@ -73,9 +73,11 @@ class _SVMIO(object):
 
 if __name__ == '__main__':
     svm = SVM()
-    optargs = '-c 4'
+
+    # optargs = '-c 4'
+    # optargs = ('-s ')
     # encoding = 'emb'
-    encoding = 'hot'
+    encoding = 'glo'
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
@@ -83,23 +85,26 @@ if __name__ == '__main__':
     print('Loading train set ... done')
 
     print('Loading validation set ...')
-    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
-    print('Training ...')
-    svm.fit(Xtrain, Ytrain, optargs)
-    print('Training ... done')
+    for s in range(8):
+        # optargs = '-s {:} -v 10'.format(s)
+        optargs = '-s {:}'.format(s)
+        print('Training ... with_optargs({:})'.format(optargs))
+        svm.fit(Xtrain, Ytrain, optargs)
+        print('Training ... done')
 
-    keys = ('y_hat', 'acc', 'mse', 'scc')
-    print('Insample prediction ...')
-    train_d = svm.predict(Xtrain, Ytrain)
-    print('Insample prediction ... done')
+        keys = ('y_hat', 'acc', 'mse', 'scc')
+        print('Insample prediction ...')
+        train_d = svm.predict(Xtrain, Ytrain)
+        print('Insample prediction ... done')
 
 
-    print('Outsample prediction ...')
-    valid_d = svm.predict(Xvalid, Yvalid)
-    print('Outsample prediction ... done')
+        print('Outsample prediction ...')
+        valid_d = svm.predict(Xvalid, Yvalid)
+        print('Outsample prediction ... done')
 
 
     _SVMIO.dump(encoding, optargs, train=train_d, valid=valid_d)
