@@ -85,11 +85,12 @@ if __name__ == '__main__':
     print('Loading train set ... done')
 
     print('Loading validation set ...')
-    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
-    for s in range(8):
+    #(1, 3, 4, 5, 6, 7)
+    for s in [7]:
         # optargs = '-s {:} -v 10'.format(s)
         optargs = '-s {:}'.format(s)
         print('Training ... with_optargs({:})'.format(optargs))
@@ -107,4 +108,4 @@ if __name__ == '__main__':
         print('Outsample prediction ... done')
 
 
-    _SVMIO.dump(encoding, optargs, train=train_d, valid=valid_d)
+        _SVMIO.dump(encoding, optargs, train=train_d, valid=valid_d)
