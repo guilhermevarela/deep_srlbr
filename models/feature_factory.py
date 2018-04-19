@@ -111,13 +111,14 @@ if __name__ == '__main__':
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
 
     delta = 3
-    columns = ['FORM', 'LEMMA', 'GPOS']
+    # columns = ['FORM', 'LEMMA', 'GPOS']
+    columns = ['FUNC']
     shifts = [d for d in range(-delta, delta+1, 1) if d != 0]
     shifted = shifter.define(columns, shifts).exec()
     target_dir = '../datasets/csvs/gs_column_shifts/'
     for col in columns:
         d = {new_col: shifted[new_col]
-             for new_col in shifted if col in new_col}        
+             for new_col in shifted if col in new_col}
         df = pd.DataFrame.from_dict(d)
         filename = '{:}{:}.csv'.format(target_dir, col.lower())
         df.to_csv(filename, sep=',', encoding='utf-8')
