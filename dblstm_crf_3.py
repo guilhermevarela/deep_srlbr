@@ -231,13 +231,13 @@ if __name__== '__main__':
 
     print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
-    calculator_train=Evaluator(propbank.feature('train', 'T', True))
+    calculator_train=Evaluator(propbank.column('train', 'T', True))
     evaluator_train= EvaluatorConll(
         'train', 
-        propbank.feature('train', 'S', True),
-        propbank.feature('train', 'P', True),
-        propbank.feature('train', 'PRED', True),
-        propbank.feature('train', 'ARG', True),
+        propbank.column('train', 'S', True),
+        propbank.column('train', 'P', True),
+        propbank.column('train', 'PRED', True),
+        propbank.column('train', 'ARG', True),
         outputs_dir
     )
     
@@ -249,13 +249,13 @@ if __name__== '__main__':
         target
     )
 
-    calculator_valid=Evaluator(propbank.feature('valid', 'T', True))    
+    calculator_valid=Evaluator(propbank.column('valid', 'T', True))    
     evaluator_valid= EvaluatorConll(
         'valid', 
-        propbank.feature('valid', 'S', True),
-        propbank.feature('valid', 'P', True),
-        propbank.feature('valid', 'PRED', True),
-        propbank.feature('valid', 'ARG', True),
+        propbank.column('valid', 'S', True),
+        propbank.column('valid', 'P', True),
+        propbank.column('valid', 'PRED', True),
+        propbank.column('valid', 'ARG', True),
         outputs_dir     
     )
 
