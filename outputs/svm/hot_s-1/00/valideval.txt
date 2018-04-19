@@ -1,0 +1,6708 @@
+-	(AM-PNC*					
+-	*					
+-	*)					
+estar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+reclamar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+adiar	(C-A3*)	(C-AM-PNC*)				
+-	(C-AM-PRD*	(C-AM-PRD*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)	(V*)	(V*)			
+-	(C-A3*)	(C-A3*	(C-A3*			
+agendar	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+pedir	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*)			
+ajudar	*	*	(C-AM-PNC*)			
+-	*	*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+ocupar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*)					
+vender	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-AM-PRD*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(V*)					
+anunciar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+retomar	(C-AM-PNC*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+estar	(C-A3*)	(C-AM-PNC*)	(C-A3*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+realçar	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ter	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+tocar	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A2*)	(C-A2*)				
+levar	(C-A3*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+fazer	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+negligenciar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*)				
+dizer	*)	(C-AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+alegar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A2*)	(C-A2*)				
+considerar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*	(C-A3*			
+comprovar	(C-AM-PNC*)	*	*			
+-	(C-A3*)	*)	*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+receber	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*			
+-	*	(AM-DIS*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+concordar	(AM-DIS*	(AM-DIS*	(C-AM-PNC*)			
+-	*	*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dizer	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+cumprir	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*)	(C-A3*			
+transferir	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*)			
+dizer	*	*	(C-AM-PNC*)			
+-	*)	*)	(C-A3*)			
+						
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*	(C-A3*	(C-A3*		
+verificar	(C-AM-PNC*)	*	*	*		
+-	(C-A3*	*)	*	*		
+levar	*	(C-AM-PNC*)	*	*		
+-	*	(C-A3*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+enxergar	*)	*)	(C-AM-PNC*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*)		
+dizer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(V*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+pilotar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+acabar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*)				
+sair	*	(C-AM-PNC*)				
+-	*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(A1*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+revelar	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*	*			
+afirmar	(C-AM-PNC*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+prever	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*)			
+acontecer	*)	*)	(C-AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*				
+revelar	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+estar	*)	(C-AM-PNC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+						
+-	(A1*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*)					
+dar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-A2*)	(C-A2*)	(C-A2*)			
+precisar	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+saber	(AM-CAU*)	(C-AM-PNC*)	(AM-CAU*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A2*)	(C-A2*)	(C-A2*)			
+trazer	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(C-A3*)	(C-A3*	(C-A3*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A3*	*)	*			
+pensar	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ser	*	*	(C-AM-PNC*)			
+-	*	*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+ser	(C-AM-PNC*)					
+-	(V*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+destacar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*)					
+morrer	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(C-AM-LOC*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+morrer	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+estar	(C-A3*	(C-AM-PNC*)	(C-A3*			
+-	*)	(C-A3*)	*)			
+-	(V*)	(V*)	(V*)			
+cair	(AM-PNC*	(AM-PNC*	(C-AM-PNC*)			
+-	*)	*)	(AM-PNC*)			
+-	(AM-MED*	(AM-MED*	(AM-MED*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*				
+estar	(C-AM-PNC*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+salvar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+						
+-	(V*)					
+-	(C-A3*					
+-	*)					
+causar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+						
+-	(C-A3*)					
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*)					
+provocar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+causar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*)	*			
+estar	*)	(C-AM-PNC*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+bater	(AM-PNC*	(AM-PNC*	(C-AM-PNC*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+ter	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+explicar	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-PRD*)	(C-AM-PRD*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-PRD*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-A2*	(C-A2*				
+-	*)	*)				
+dispor	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(C-AM-MNR*)	(C-AM-MNR*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*)				
+alagar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(V*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*					
+-	*)					
+dispor	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+						
+-	(V*)					
+dar	(C-AM-PNC*)					
+-	(C-A1*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*	(C-A3*	(C-A3*		
+ser	(C-AM-PNC*)	*	*	*		
+-	(C-A3*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(C-AM-PNC*)	*	*		
+-	*	(C-A3*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*)	(C-A3*		
+coincidir	*)	*)	(C-AM-PNC*)	*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+fazer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+ser	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-MNR*)	(AM-MNR*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*)				
+fazer	*)	(C-AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+tratar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(V*)	(V*)	(V*)	(V*)		
+falar	(C-AM-PNC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*)	(C-A3*	(C-A3*		
+falar	*	(C-AM-PNC*)	*	*		
+-	*	(C-A3*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+traduzir	*)	*)	(C-AM-PNC*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*)		
+ser	*)	*)	*)	(C-AM-PNC*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+passar	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+ter	*)	(C-AM-PNC*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+armazenar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+responder	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*					
+-	*					
+-	*)					
+representar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)					
+-	(C-A3*)					
+-	(AM-REC*)					
+manter	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*				
+multar	(C-AM-PNC*)	*				
+-	(C-A3*)	*)				
+negociar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(C-AM-PNC*)					
+encontrar	(C-A1*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+deixar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+						
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+morrer	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+ferir	(C-A3*)	(C-A1*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+enfrentar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(A1*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+ver	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+						
+-	(V*)					
+-	(AM-DIS*)					
+buscar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-MNR*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+conseguir	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*				
+ter	(C-AM-PNC*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ter	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(C-AM-PRD*)					
+deixar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-PNC*)	(C-AM-PNC*				
+inflamar	(C-A3*	*)				
+-	*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(AM-REC*)					
+-	(C-A3*					
+-	*)					
+existir	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-REC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*	(C-A3*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A3*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+saber	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*)			
+ser	*)	*)	(C-AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*)	(C-A3*	(C-A3*			
+ter	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*)	(AM-DIS*			
+ganhar	*	(C-AM-PNC*)	*			
+-	*	(AM-DIS*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+definir	(AM-PNC*)	(AM-PNC*)	(C-AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+fazer	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+constatar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+encontrar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*)					
+ter	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+ter	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+ocorrer	(C-A3*)	(C-AM-PNC*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+destacar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+apresentar	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(A1*	(A1*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+publicar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+indicar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*)	(C-A3*			
+estar	*)	(C-AM-PNC*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*)			
+admitir	*	*	(C-AM-PNC*)			
+-	*)	*)	(C-A3*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+conquistar	(C-AM-PNC*)	(AM-PNC*	(AM-PNC*			
+-	(AM-PNC*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+dividir	(C-A3*)	(C-AM-PNC*)	(C-A3*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+mudar	(C-A3*	(C-A3*	(C-AM-PNC*)			
+-	*)	*)	(C-A3*)			
+						
+-	(V*					
+-	*)					
+-	(AM-DIS*)					
+continuar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-MNR*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*				
+conquistar	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*)				
+ocupar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+assinar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+incluir	(C-AM-TMP*	(C-AM-PNC*)				
+-	*)	(C-AM-TMP*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)					
+incentivar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*				
+pertencer	(C-AM-PNC*)	*				
+-	(C-A3*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+dominar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-LOC*)					
+-	(V*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+prejudicar	(C-AM-PNC*)					
+-	(AM-CAU*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+conquistar	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+emplacar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*	(V*				
+-	*)	*)				
+narrar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-MNR*)	(C-AM-MNR*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+banir	(C-A3*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*				
+construir	(C-AM-PNC*)	*				
+-	(C-A3*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+recorrer	(C-A3*)	(C-AM-PNC*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+transformar	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*)				
+montar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(V*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*					
+-	*)					
+-	(C-A2*)					
+esconder	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(V*					
+-	*)					
+discutir	(C-AM-PNC*)					
+-	(AM-DIS*)					
+						
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+reabrir	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+exigir	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-A2*)	(C-A2*)				
+ter	(AM-DIS*	(C-AM-PNC*)				
+-	*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(C-AM-PRD*)	(C-AM-PRD*)	(C-AM-PRD*)	(C-AM-PRD*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(C-A2*)	(C-A2*)	(C-A2*)	(C-A2*)		
+ter	(C-AM-PNC*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ter	*)	(C-AM-PNC*)	*)	*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+deixar	*	*	(C-AM-PNC*)	*		
+-	*	*	(C-A3*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*)		
+conseguir	*	*	*	(C-AM-PNC*)		
+-	*)	*)	*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*)				
+envolver	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-MNR*	(AM-MNR*	(AM-MNR*	(AM-MNR*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+ser	(C-AM-PNC*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(C-AM-PNC*)	*	*		
+-	*)	(C-A3*)	*)	*)		
+discriminar	(V*	(V*	(C-AM-PNC*)	(V*		
+-	*)	*)	(V*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*)		
+pagar	*	*	*	(C-AM-PNC*)		
+-	*)	*)	*)	(C-A3*)		
+						
+-	(C-A3*					
+-	*)					
+-	(AM-REC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+						
+-	(V*)					
+-	(AM-DIS*)					
+fumar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+prender	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+cobrar	*	(C-AM-PNC*)				
+-	*)	(AM-DIS*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*)	*)				
+indiciar	(C-AM-PNC*)	(C-A3*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+vender	(AM-CAU*)	(C-AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+indiciar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+prender	(C-AM-PNC*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+entregar	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*)					
+-	(V*)					
+ser	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*)					
+ganhar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*				
+permitir	(C-AM-PNC*)	*)				
+verificar	(AM-PNC*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-MNR*)	(AM-MNR*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-PRD*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+ficar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*	(C-A3*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+comprar	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*			
+-	*)	(AM-DIS*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+beneficiar	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*				
+executar	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+provocar	(AM-PNC*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)	(V*)	(V*)			
+dizer	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+receber	(C-A3*)	(C-AM-PNC*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*)			
+estar	*)	*)	(C-AM-PNC*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(V*)	(V*)				
+orientar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+negociar	(AM-PNC*	(C-AM-PNC*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*
+-	*)	*)	*)	*)	*)	*)
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*
+-	*)	*	*	*	*	*
+observar	(C-AM-PNC*)	*)	*)	*)	*)	*)
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*
+-	*)	*)	*)	*)	*)	*)
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*)	*	*	*	*
+arrumar	*)	(C-AM-PNC*)	*)	*)	*)	*)
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*
+-	*	*	*	*	*	*
+-	*	*	*)	*	*	*
+estar	*	*	(C-AM-PNC*)	*	*	*
+-	*	*	(C-A3*	*	*	*
+-	*	*	*	*)	*	*
+escutar	*)	*)	*)	(C-AM-PNC*)	*)	*)
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*
+-	*	*	*	*	*	*
+-	*	*	*	*	*)	*
+incentivar	*	*	*	*	(C-AM-PNC*)	*
+-	*)	*)	*)	*)	(AM-DIS*)	*)
+começar	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-AM-PNC*)
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*
+-	*)	*)	*)	*)	*)	*)
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)
+						
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+aumentar	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+terminar	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*)			
+começar	*)	*)	(C-AM-PNC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+ser	(C-AM-PNC*)	*	*	*	*	
+-	(C-A3*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*)	*	*	*	
+ter	*	(C-AM-PNC*)	*	*	*	
+-	*)	(C-A3*)	*)	*)	*)	
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*	(C-A3*	(C-A3*)	(C-A3*	(C-A3*	
+casar	*)	*)	(C-AM-PNC*)	*)	*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+ter	(C-A3*)	(C-A3*)	(C-A3*)	(C-AM-PNC*)	(C-A3*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*)	
+ser	*	*	*	*	(C-AM-PNC*)	
+-	*	*	*	*	(C-A3*	
+-	*)	*)	*)	*)	*)	
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+						
+-	(V*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*)					
+oferecer	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(AM-MNR*					
+-	*)					
+-	(C-A3*)					
+-	(AM-CAU*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+beber	(C-AM-PNC*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+levar	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-MNR*)	(AM-MNR*)	(AM-MNR*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+dizer	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*)	*			
+ser	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*)			
+preocupar	*)	*)	(C-A1*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+estar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(V*)	(V*)				
+criar	(AM-DIS*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*)					
+-	(C-A2*)					
+-	(C-A3*)					
+associar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*)					
+precisar	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+marcar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+consolidar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*					
+-	*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+aproximar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*				
+valorizar	(C-AM-PNC*)	*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+chegar	(AM-DIS*)	(C-AM-PNC*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+ser	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+confirmar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(V*					
+-	*					
+-	*)					
+negociar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(AM-CAU*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*)	(AM-DIS*)				
+estar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+inaugurar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)	(V*)			
+dar	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*)	*			
+substituir	*)	(C-AM-PNC*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*)			
+sair	*)	*)	(C-AM-PNC*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+estar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+defender	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+prever	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+						
+tratar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-REC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+						
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+gostar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+ajudar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ser	(C-AM-PNC*)	*	*	*		
+-	(C-A3*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(V*)	(V*)	(V*)	(V*)		
+buscar	(C-A3*	(C-AM-PNC*)	(C-A3*	(C-A3*		
+-	*	(C-A3*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+ser	(AM-DIS*)	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+quebrar	(C-A3*)	(C-A3*)	(C-A3*)	(C-AM-PNC*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+começar	(C-AM-PNC*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*					
+-	*)					
+-	(C-AM-PRD*)					
+começar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+promover	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+visar	(C-AM-PNC*)	*)				
+orientar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*)					
+estar	(C-AM-PNC*)					
+-	(A1*)					
+-	(C-A3*)					
+-	(A1*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(AM-REC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+acontecer	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+esfriar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(V*	(V*	(V*	(V*	(V*	
+-	*)	*)	*)	*)	*)	
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+conversar	(C-AM-PNC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*)	*)	*)	*)	*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*)	*	*	*	
+convencer	*)	(C-AM-PNC*)	*)	*)	*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+fazer	(AM-DIS*	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*	(AM-DIS*	
+-	*	*	(AM-DIS*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*	*	*	*	
+-	*	*	*	*)	*	
+reprimir	*)	*)	*)	(C-AM-PNC*)	*)	
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*	*	*	*)	
+dizer	*)	*)	*)	*)	(C-AM-PNC*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(V*					
+-	*)					
+atuar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-CAU*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A2*)					
+haver	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ser	(C-AM-PNC*)	*)				
+negociar	(AM-DIS*	(C-AM-PNC*)				
+-	*)	(AM-DIS*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*					
+-	*)					
+aliciar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+-	(V*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+ser	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+imperar	(AM-DIS*)	(C-AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+desconhecer	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+apontar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+sonhar	(C-AM-PNC*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+chegar	(AM-DIS*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+passar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+realizar	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*)			
+trazer	*	*	(C-AM-PNC*)			
+-	*	*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-REC*)	(AM-REC*)	(AM-REC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+vir	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-PRD*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+haver	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+suspeitar	(C-AM-PNC*)	*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*)				
+morrer	*	(C-AM-PNC*)				
+-	*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*				
+ficar	(C-AM-PNC*)	*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*)				
+subir	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+pedir	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*)				
+apurar	*	(C-AM-PNC*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-CAU*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-A2*)					
+-	(C-A3*)					
+retirar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*	*			
+usar	(C-AM-PNC*)	*	*			
+-	(C-A3*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*)	*			
+corrigir	*	(C-AM-PNC*)	*			
+-	*	(AM-DIS*	*			
+-	*)	*)	*)			
+garantir	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*				
+produzir	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*				
+ter	(C-AM-PNC*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*)				
+explicar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+						
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*	(C-A3*			
+fixar	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+evitar	(C-AM-ADV*)	(C-AM-PNC*)	(C-AM-ADV*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ter	*)	*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*				
+reajustar	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+ser	(C-AM-PRD*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*)					
+-	(AM-CAU*)					
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-DIS*)					
+-	(AM-CAU*)					
+-	(AM-DIS*)					
+-	(AM-CAU*					
+-	*)					
+-	(C-A3*					
+-	*)					
+dizer	(C-AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*	(C-A3*			
+beneficiar	(C-AM-PNC*)	*	*			
+-	(C-A3*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+demorar	(AM-DIR*	(C-AM-PNC*)	(AM-DIR*			
+-	*)	(AM-DIR*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+receber	(AM-PNC*)	(AM-PNC*)	(C-AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+ganhar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ter	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+dizer	*)	(C-AM-PNC*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*					
+-	*)					
+ter	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-A3*)					
+atribuir	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+pensar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*)	(AM-DIS*			
+receber	*	(C-AM-PNC*)	*			
+-	*	(AM-DIS*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+ser	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(C-V*)	(C-V*)	(C-V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ver	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*)				
+esperar	*)	(C-AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*)					
+aproximar	(C-A1*)					
+-	(C-A3*)					
+						
+-	(V*)					
+precisar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*)					
+-	(A1*)					
+-	(V*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*)					
+ir	(C-AM-PNC*)					
+-	(AM-MED*)					
+-	(AM-DIS*)					
+						
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+fazer	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+atacar	(C-AM-PNC*)	(AM-DIS*	(AM-DIS*			
+-	(AM-DIS*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*	(C-A3*)	(C-A3*			
+ter	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ficar	*	*	(C-AM-PNC*)			
+-	*)	*)	(AM-DIS*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(V*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+prever	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(AM-REC*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+-	(C-A2*)					
+-	(C-A3*)					
+afetar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-A3*)	(C-A3*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+fazer	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*					
+-	*					
+-	*)					
+-	(C-A2*)					
+trazer	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+levantar	(C-AM-PNC*)					
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+confirmar	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*)					
+comprovar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+acusar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+						
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PNC*					
+-	*)					
+comparecer	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+acusar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+condenar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+punir	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+cumprir	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)					
+tomar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+anunciar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(AM-DIS*					
+-	*)					
+ficar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(AM-DIS*)					
+começar	(C-AM-PNC*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(C-A2*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+atender	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*)				
+dizer	*)	(C-AM-PNC*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*	(V*				
+-	*)	*)				
+dizer	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+faltar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*					
+-	*)					
+-	(C-A3*					
+-	*)					
+viver	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(A1*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-AM-ADV*)					
+-	(C-A3*					
+-	*)					
+-	(AM-MNR*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIR*	(AM-DIR*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*				
+dizer	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+faltar	*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ter	(C-AM-PNC*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+renovar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(A1*)	(A1*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*)	*	*	*		
+acontecer	(C-AM-PNC*)	*	*	*		
+-	(C-A3*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*)	(C-AM-PNC*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A2*)	(C-A2*)	(C-A2*)	(C-A2*)		
+adiantar	(AM-DIS*	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*		
+-	*	*	(AM-DIS*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*)		
+afirmar	*	*	*	(C-AM-PNC*)		
+-	*)	*)	*)	(C-A3*)		
+						
+saber	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*)				
+ser	*)	(C-AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+começar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+ser	(C-A3*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+ganhar	(C-AM-PNC*)	(AM-DIS*	(AM-DIS*			
+-	(AM-DIS*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+disputar	(C-A3*	(C-AM-PNC*)	(C-A3*			
+-	*	(C-A3*	*			
+-	*	*	*			
+-	*)	*)	*)			
+terminar	(AM-CAU*)	(AM-CAU*)	(C-AM-PNC*)			
+-	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+						
+-	(V*)					
+multar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*)					
+autuar	(C-AM-PNC*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)					
+-	(C-A2*)					
+apresentar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-AM-MNR*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+descumprir	(C-AM-PNC*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+chegar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-REC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-PRD*)					
+-	(C-A3*)					
+aplicar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+						
+-	(V*)					
+produzir	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(AM-CAU*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*)					
+-	(C-A3*)					
+instalar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+tomar	(C-AM-PNC*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*)					
+						
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+fazer	(C-AM-PNC*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)	(V*)			
+aconselhar	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+conversar	(C-AM-LOC*)	(C-AM-PNC*)	(C-AM-LOC*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*)			
+reverter	*	*	(C-AM-PNC*)			
+-	*	*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*)				
+perder	*)	(C-AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*				
+fazer	(C-AM-PNC*)	*				
+-	(AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(C-A3*	(C-A3*)				
+criticar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+						
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+cumprir	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+preferir	(C-AM-PNC*)	*)				
+manter	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*	*			
+ter	(C-AM-PNC*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*)	*			
+dizer	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*)			
+querer	*	*	(C-AM-PNC*)			
+-	*	*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+simpatizar	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+ganhar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(V*					
+-	*)					
+narrar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(C-AM-TMP*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+haver	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+separar	(AM-DIS*)	(C-AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+ocorrer	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+colocar	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*			
+-	*	(AM-DIS*	*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+chegar	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(A1*	(A1*	(A1*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(V*					
+-	*)					
+-	(C-A3*)					
+-	(A1*)					
+-	(AM-DIS*)					
+-	(A1*					
+-	*)					
+-	(AM-REC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(A1*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+expulsar	(C-AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+adotar	(C-A3*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*					
+-	*)					
+dar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*)					
+						
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A1*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+forçar	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+reduzir	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+ser	(C-AM-PNC*)	(AM-DIS*				
+-	(AM-DIS*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+dizer	*)	(C-AM-PNC*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+estar	(C-AM-PNC*)	(V*)	(V*)	(V*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+ser	(C-A3*	(C-AM-PNC*)	(C-A3*	(C-A3*		
+-	*	(C-A3*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+ir	(AM-DIS*)	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*	(V*	(V*	(V*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+vetar	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-PNC*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(C-AM-LOC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*				
+estar	(C-AM-PNC*)	*)				
+-	(V*)	(V*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+investir	*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+firmar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*)				
+valer	*)	(C-AM-PNC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-MNR*	(AM-MNR*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+crescer	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(AM-MNR*)					
+-	(AM-MED*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+elevar	(AM-CAU*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-MED*)	(AM-MED*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+divulgar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+demonstrar	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+conseguir	(AM-DIS*	(AM-DIS*	(C-AM-PNC*)			
+-	*	*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(C-A3*)	(C-A3*	(C-A3*	(C-A3*		
+estar	(C-AM-PNC*)	*	*	*		
+-	(C-A3*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*)	*	*		
+escolher	*)	(C-AM-PNC*)	*)	*)		
+-	(AM-DIR*	(AM-DIR*	(AM-DIR*)	(AM-DIR*		
+estar	*	*	(C-AM-PNC*)	*		
+-	*)	*)	(AM-DIR*)	*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+treinar	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(C-AM-PNC*)		
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(C-A3*					
+-	*					
+-	*)					
+subir	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A2*)					
+falar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(AM-CAU*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*				
+estimular	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+ganhar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(V*					
+-	*					
+-	*					
+-	*)					
+trabalhar	(C-AM-PNC*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(V*)	(V*)				
+vir	(C-AM-PNC*)	(C-A3*)				
+-	(AM-MNR*	(AM-MNR*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+compensar	*	(C-AM-PNC*)				
+-	*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-AM-MNR*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A2*)	(C-A2*)	(C-A2*)	(C-A2*)		
+-	(C-A3*)	(C-A3*	(C-A3*	(C-A3*		
+haver	(C-AM-PNC*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+substituir	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)	(AM-DIS*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+ter	(C-A3*	(C-A3*	(C-AM-PNC*)	(C-A3*		
+-	*)	*)	(C-A3*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+ser	(C-A3*)	(C-A3*)	(C-A3*)	(C-AM-PNC*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+jogar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A2*)	(C-A2*)				
+-	(C-A3*)	(C-A3*				
+avaliar	(C-AM-PNC*)	*				
+-	(C-A3*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+ampliar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(C-A3*					
+-	*)					
+-	(V*)					
+proibir	(C-AM-PNC*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+estar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-PRD*	(C-AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+iniciar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+inspirar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-A3*)					
+-	(AM-REC*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ver	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*)				
+ser	*)	(C-AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*)	(C-A3*)				
+ficar	(C-AM-PNC*)	(AM-DIS*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+dizer	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)	(C-A3*				
+afirmar	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*)				
+ser	*)	(C-AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-MNR*)	(C-AM-MNR*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(AM-DIS*)					
+-	(C-A3*)					
+achar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(A1*)					
+-	(C-AM-TMP*					
+-	*)					
+						
+-	(C-A3*)					
+encontrar	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*	*			
+dizer	(C-AM-PNC*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*)	*			
+sequestrar	*)	(C-AM-PNC*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+confundir	(AM-DIS*)	(AM-DIS*)	(C-AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*)					
+receber	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+receber	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+						
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+morrer	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*					
+-	*)					
+realizar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(C-AM-ADV*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+bater	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*)				
+ficar	*)	(C-AM-PNC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+ser	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*)				
+contar	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A1*	(A1*				
+-	*	*				
+-	*)	*)				
+ficar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+derrotar	(C-AM-LOC*	(C-AM-PNC*)				
+-	*	(C-AM-LOC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+ser	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+marcar	(C-A3*)	(C-AM-PNC*)				
+-	(C-AM-LOC*	(C-AM-LOC*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+participar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+ser	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*			
+-	*	(AM-DIS*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*)			
+vender	*)	*)	(C-AM-PNC*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(C-V*	(C-V*	(C-V*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+estar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+comercializar	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+ser	(C-AM-PNC*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+afirmar	*)	(C-AM-PNC*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*)					
+representar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+gostar	(C-AM-PNC*)	(C-A3*	(C-A3*	(C-A3*		
+-	(C-A3*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+resolver	*)	(C-AM-PNC*)	*)	*)		
+pegar	(AM-DIS*	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*		
+-	*	*	(AM-DIS*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*)		
+fazer	*)	*)	*)	(C-AM-PNC*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+encaixar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*)					
+ter	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+denunciar	(AM-DIS*)	(C-AM-PNC*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+mudar	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*	(C-A3*)				
+depender	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+estar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*)				
+desestimular	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-MED*)	(AM-MED*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*)					
+-	(C-A3*)					
+oferecer	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+causar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(C-A3*)	(C-A3*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+tratar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+chegar	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*	*	*			
+-	*	*)	*			
+ser	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*)			
+sair	*)	*)	(C-AM-PNC*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*	*			
+fazer	(C-AM-PNC*)	*	*			
+-	(C-A3*)	*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+pagar	(C-A3*)	(C-AM-PNC*)	(C-A3*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+estar	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-MNR*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-MNR*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)	(V*)			
+pôr	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*)	*			
+interpretar	*)	(C-AM-PNC*)	*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+fazer	(C-A3*)	(C-A3*)	(C-AM-PNC*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*					
+-	*					
+-	*)					
+dirigir	(C-AM-PNC*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-REC*)	(AM-REC*)	(AM-REC*)	(AM-REC*)	(AM-REC*)	
+estar	(C-AM-PNC*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*)	*	*	*	
+resistir	*)	(C-AM-PNC*)	*)	*)	*)	
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+pagar	(C-A3*	(C-A3*	(C-AM-PNC*)	(C-A3*	(C-A3*	
+-	*)	*)	(C-A3*)	*)	*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+filmar	(C-A3*	(C-A3*	(C-A3*	(C-AM-PNC*)	(C-A3*	
+-	*	*	*	(C-A3*	*	
+-	*)	*)	*)	*)	*)	
+ser	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(C-AM-PNC*)	
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*	(C-A3*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)	
+						
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+ser	(C-AM-PNC*)	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	(AM-DIS*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+fazer	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*	(AM-DIS*		
+-	*	(AM-DIS*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*	(C-AM-TMP*		
+-	*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*)	*		
+confirmar	*	*	(C-AM-PNC*)	*		
+-	*)	*)	(C-A3*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*)		
+ser	*	*	*	(C-AM-PNC*)		
+-	*)	*)	*)	(AM-DIS*)		
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+ver	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*)	(V*)				
+jogar	(AM-DIS*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+						
+vencer	(C-AM-PNC*)					
+-	(AM-DIR*)					
+-	(C-V*					
+-	*)					
+-	(AM-DIR*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*				
+bastar	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(V*)	(V*)				
+chegar	(C-A3*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+ancorar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(C-AM-PNC*)	(C-AM-PNC*)				
+tornar	(C-A3*)	(C-A1*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+haver	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*)	(V*)				
+querer	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*)				
+ir	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+dispensar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*)					
+-	(C-AM-LOC*)					
+-	(C-A3*)					
+-	(AM-DIR*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-LOC*)					
+-	(C-A3*					
+-	*)					
+-	(V*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*				
+saber	(C-AM-PNC*)	*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(V*)	(V*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-PNC*	(AM-PNC*)				
+defender	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+chegar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(AM-MED*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-REC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*					
+-	*)					
+discordar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-LOC*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+jogar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-AM-TMP*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+						
+-	(AM-DIS*)					
+-	(C-AM-LOC*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*)					
+						
+-	(AM-DIS*)					
+-	(V*)					
+estar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+apreciar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(C-A2*)	(C-A2*)	(C-A2*)			
+existir	(C-AM-PNC*)	(C-A3*	(C-A3*			
+-	(C-A3*)	*)	*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*)	*)	*)			
+engatinhar	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+aparecer	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(V*)					
+querer	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-DIS*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+dizer	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*)				
+formar	*)	(C-AM-PNC*)				
+-	(C-AM-LOC*)	(C-AM-LOC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+ter	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-DIS*	(AM-DIS*				
+-	*)	*)				
+ter	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A3*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+ser	(C-AM-PNC*)	*)	*)	*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*		
+-	*	*)	*	*		
+pensar	*	(C-AM-PNC*)	*	*		
+-	*)	(C-A3*)	*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*	(C-A3*	(C-A3*)	(C-A3*		
+abastecer	*)	*)	(C-AM-PNC*)	*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(C-A3*	(C-A3*	(C-A3*	(C-A3*		
+-	*	*	*	*)		
+dizer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A3*		
+-	*)	*)	*)	*)		
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*	(AM-DIS*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-A3*)	(C-A3*)	(C-A3*)	(C-A3*)		
+						
+haver	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*)				
+enfrentar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+achar	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*	*)				
+ser	*)	(C-AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-MNR*)	(AM-MNR*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*)	(V*)				
+estar	(C-AM-PNC*)	(C-A3*				
+-	(C-A3*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-A3*	(C-A3*)				
+estimular	*)	(C-AM-PNC*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*	*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A3*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+estimular	(AM-DIS*)	(C-AM-PNC*)	(AM-DIS*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*)			
+promover	*	*	(C-AM-PNC*)			
+-	*)	*)	(C-A3*)			
+-	(AM-DIS*	(AM-DIS*	(AM-DIS*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(V*					
+-	*)					
+eliminar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*					
+-	*)					
+						
+-	(V*)					
+causar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+						
+-	(V*)					
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+-	(V*)					
+reunir	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-A3*					
+-	*)					
+						
+-	(V*)					
+-	(C-A3*					
+-	*)					
+-	(V*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(C-A3*)					
+perder	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(A1*)					
+-	(AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-AM-TMP*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+empurrar	(C-AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*)					
+-	(C-AM-TMP*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-PRD*)	(C-AM-PRD*	(C-AM-PRD*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-AM-PRD*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*)	*			
+prejudicar	*	(C-AM-PNC*)	*			
+-	*	(C-A3*	*			
+-	*	*	*)			
+ser	*	*	(C-AM-PNC*)			
+-	*	*	(C-A3*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*				
+afetar	(C-AM-PNC*)	*)				
+-	(V*)	(V*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dizer	*)	(C-AM-PNC*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+dar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*)	*			
+discursar	*	(C-AM-PNC*)	*			
+-	*)	(C-A3*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*)			
+ler	*)	*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+						
+-	(V*)					
+alterar	(C-AM-PNC*)					
+-	(AM-DIS*)					
+						
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A3*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+levar	(AM-DIS*)	(C-AM-PNC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+-	(AM-DIS*	(AM-DIS*				
+-	*	*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(V*)					
+oscilar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+ter	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-A3*)					
+						
+-	(V*)					
+-	(AM-DIS*)					
+passar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A3*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(C-A3*)					
+						
+-	(C-A3*)					
+-	(AM-DIS*)					
+-	(V*					
+-	*)					
+-	(C-A3*)					
+abrir	(C-AM-PNC*)					
+-	(C-AM-LOC*)					
+-	(AM-DIS*					
+-	*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(C-A3*)					
+						
+-	(V*)	(V*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+fazer	(C-AM-PNC*)	(C-A3*)				
+-	(AM-DIS*)	(AM-DIS*)				
+-	(C-A3*	(C-A3*				
+-	*)	*)				
+-	(AM-DIS*	(AM-DIS*)				
+acompanhar	*	(C-AM-PNC*)				
+-	*	(AM-DIS*				
+-	*)	*)				
+-	(C-AM-TMP*	(C-AM-TMP*				
+-	*)	*)				
+-	(C-A3*	(C-A3*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-A3*)	(C-A3*)				
+						
+-	(C-A3*)					
+-	(V*)					
+marcar	(C-AM-PNC*)					
+-	(AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(V*)					
+-	(AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*)					
+						
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(V*)	(V*)	(V*)			
+entrar	(C-AM-PNC*)	(C-A3*)	(C-A3*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(C-AM-LOC*	(C-AM-LOC*	(C-AM-LOC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*)	*)	*)			
+-	(C-AM-LOC*)	(C-AM-LOC*)	(C-AM-LOC*)			
+-	(C-A3*	(C-A3*	(C-A3*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+obrigar	(AM-DIS*	(C-AM-PNC*)	(AM-DIS*			
+-	*	(AM-DIS*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+assinar	*)	*)	(C-AM-PNC*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+						
+-	(C-A3*					
+-	*)					
+-	(AM-DIS*)					
+-	(C-A3*)					
+-	(AM-DIS*					
+-	*)					
+-	(C-A3*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(AM-DIS*)					
+-	(C-A3*)					

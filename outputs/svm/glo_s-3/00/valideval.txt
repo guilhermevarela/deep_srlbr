@@ -1,0 +1,6708 @@
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+estar	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+reclamar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+adiar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+agendar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+pedir	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(A1*)	(A1*)	(A1*)			
+ajudar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+ocupar	(C-AM-TMP*)					
+-	(A1*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PNC*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*					
+vender	*					
+-	*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(A4*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-ADV*)					
+anunciar	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+						
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+retomar	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A4*)	(A4*)	(A4*)			
+estar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+realçar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+ter	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(V*					
+-	*)					
+-	(A4*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+tocar	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+levar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-DIR*)					
+-	(AM-PRD*					
+fazer	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+negligenciar	*	*				
+-	*	*				
+-	*	*				
+dizer	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+alegar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-MED*)	(AM-MED*)				
+-	(AM-CAU*)	(AM-CAU*)				
+considerar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(C-A0*)	(C-A0*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+comprovar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-MED*)	(AM-MED*)	(AM-MED*)			
+receber	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+concordar	*)	*)	*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-MED*)					
+-	(AM-PRD*					
+dizer	*)					
+-	(V*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	*					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+cumprir	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+transferir	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+dizer	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+verificar	*	*	*	*		
+-	*	*	*	*		
+levar	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+enxergar	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+dizer	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+pilotar	*)					
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+						
+ser	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*	(A3*				
+-	*)	*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+acabar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+sair	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+revelar	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+afirmar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+prever	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+acontecer	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(V*)	(V*)				
+revelar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+estar	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*)					
+-	(A4*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+ser	(AM-PRD*)					
+-	(A3*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+dar	(AM-PRD*)					
+-	(A1*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+precisar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+saber	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+trazer	*)	*)	*)			
+-	*	*	*			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*					
+ser	*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(A3*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+ser	*	*	*			
+-	*)	*)	*)			
+pensar	(A1*)	(A1*)	(A1*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+						
+-	(V*)					
+-	(AM-DIR*)					
+-	(AM-CAU*)					
+ser	(AM-PRD*)					
+-	(A1*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-PRD*					
+-	*)					
+destacar	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-TMP*)					
+-	(C-AM-PRD*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(A1*)					
+morrer	(C-AM-EXT*)					
+-	(V*)					
+-	(A3*)					
+-	(C-AM-EXT*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+morrer	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+estar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+cair	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+estar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+salvar	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(A1*)					
+-	(C-AM-TMP*)					
+-	(AM-PRD*					
+causar	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(A1*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-ADV*)					
+-	(A3*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+provocar	*)					
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+causar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+estar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+bater	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+ter	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+explicar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+ser	*)	*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A4*)	(A4*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+dispor	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+alagar	*	*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+dispor	*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*)					
+dar	(AM-NEG*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+ser	*)	*)	*)	*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(A3*)	(A3*)	(A3*)	(A3*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(A4*)	(A4*)	(A4*)	(A4*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*)	*)	*)	*)		
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+coincidir	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+fazer	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*	(C-AM-EXT*				
+-	*)	*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+fazer	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+tratar	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+falar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+falar	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+traduzir	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+passar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+ter	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*	(V*				
+-	*)	*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+armazenar	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(C-AM-TMP*)					
+responder	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+representar	*					
+-	*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+manter	(AM-PRD*					
+-	*					
+-	*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+multar	*	*				
+-	*)	*)				
+negociar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(A0*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+encontrar	(C-AM-EXT*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PNC*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-LOC*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(C-AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-NEG*)					
+deixar	(AM-PRD*					
+-	*)					
+-	(AM-ADV*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+morrer	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+ferir	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+enfrentar	(C-AM-EXT*)					
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+ver	(AM-PRD*					
+-	*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+buscar	(C-AM-EXT*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*					
+-	*)					
+conseguir	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+ter	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ter	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+deixar	(AM-DIR*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(AM-TMP*)	(AM-TMP*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+inflamar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+existir	*)					
+-	(AM-NEG*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+ser	*)	*)	*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A1*)	(A1*)	(A1*)			
+saber	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+ser	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+ter	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+ganhar	(A4*)	(A4*)	(A4*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+definir	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A4*)	(A4*)	(A4*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(A3*)	(A3*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+fazer	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+constatar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-TMP*)	(AM-TMP*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(A1*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+encontrar	(AM-DIS*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A3*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(A3*)					
+ter	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(A3*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ter	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+ocorrer	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+destacar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A2*)	(A2*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+apresentar	(AM-ADV*)	(AM-ADV*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+publicar	(AM-PRD*					
+-	*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(A0*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+indicar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+estar	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+admitir	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+conquistar	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(V*)	(V*)	(V*)			
+dividir	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+mudar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+continuar	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+conquistar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-V*)	(C-V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ocupar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+assinar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+incluir	*)	*)				
+-	(A4*)	(A4*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)					
+incentivar	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+pertencer	*)	*)				
+-	(A3*)	(A3*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+dominar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+prejudicar	*)					
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+conquistar	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+emplacar	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+ser	(AM-PRD*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+ser	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+narrar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(A0*)	(A0*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*	(A1*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+banir	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+construir	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+recorrer	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+transformar	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+montar	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-CAU*)					
+esconder	(AM-TMP*					
+-	*)					
+-	(AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-EXT*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A4*)					
+discutir	(AM-PRD*					
+-	*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-NEG*)					
+reabrir	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A4*)	(A4*)				
+exigir	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ter	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+ter	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*	*	*	*		
+ter	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(C-AM-EXT*	(C-AM-EXT*	(C-AM-EXT*	(C-AM-EXT*		
+deixar	*)	*)	*)	*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+conseguir	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(A3*)	(A3*)	(A3*)	(A3*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+envolver	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+ser	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+discriminar	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+pagar	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+ser	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(A1*)					
+fumar	(AM-TMP*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(A1*)	(A1*)				
+prender	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+cobrar	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+indiciar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+vender	(A1*	(A1*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)					
+indiciar	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+prender	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+entregar	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(A1*)					
+-	(V*)					
+-	(AM-PRD*					
+ser	*)					
+-	(A3*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+ganhar	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A5*)	(A5*)				
+-	(A2*)	(A2*)				
+permitir	(AM-PRD*	(AM-PRD*				
+verificar	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*					
+-	*					
+ficar	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(A1*	(A1*	(A1*			
+comprar	*)	*)	*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(V*)	(V*)	(V*)			
+-	(A0*)	(A0*)	(A0*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+beneficiar	*	*	*			
+-	*)	*)	*)			
+-	(V*	(V*	(V*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+executar	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-REC*)	(AM-REC*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+provocar	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+dizer	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(A1*	(A1*	(A1*			
+-	*)	*)	*)			
+receber	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+estar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-ADV*)	(AM-ADV*)				
+orientar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+negociar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-TMP*	(AM-TMP*	(AM-TMP*	(AM-TMP*	(AM-TMP*	(AM-TMP*
+-	*)	*)	*)	*)	*)	*)
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*
+-	*)	*)	*)	*)	*)	*)
+observar	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)
+-	(V*	(V*	(V*	(V*	(V*	(V*
+-	*)	*)	*)	*)	*)	*)
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)
+-	(V*)	(V*)	(V*)	(V*)	(V*)	(V*)
+-	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*
+-	*	*	*	*	*	*
+-	*)	*)	*)	*)	*)	*)
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)
+-	(V*)	(V*)	(V*)	(V*)	(V*)	(V*)
+arrumar	(A4*)	(A4*)	(A4*)	(A4*)	(A4*)	(A4*)
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)
+-	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)
+estar	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+escutar	*	*	*	*	*	*
+-	*)	*)	*)	*)	*)	*)
+-	(V*)	(V*)	(V*)	(V*)	(V*)	(V*)
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*
+incentivar	*)	*)	*)	*)	*)	*)
+-	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)
+começar	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*
+-	*)	*)	*)	*)	*)	*)
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+aumentar	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A4*)	(A4*)	(A4*)			
+terminar	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+começar	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+ser	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*)	*)	*)	*)	*)	
+-	(V*	(V*	(V*	(V*	(V*	
+-	*)	*)	*)	*)	*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+ter	*)	*)	*)	*)	*)	
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+casar	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+ter	*)	*)	*)	*)	*)	
+-	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	
+-	(A2*)	(A2*)	(A2*)	(A2*)	(A2*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+						
+-	(AM-CAU*)					
+-	(AM-PNC*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(A5*)					
+-	(AM-PRD*					
+oferecer	*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+beber	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+levar	(A1*)	(A1*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+dizer	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+preocupar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-EXT*)	(AM-EXT*)	(AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+estar	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+criar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+ser	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+associar	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)					
+-	(A4*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+ser	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(A1*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+precisar	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+marcar	(A3*)	(A3*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+consolidar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-V*)					
+aproximar	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(V*)	(V*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+valorizar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-V*)	(C-V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+chegar	(A1*)	(A1*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+confirmar	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*					
+-	*					
+ser	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-EXT*)					
+negociar	(AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+estar	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+inaugurar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+ser	(AM-PRD*					
+-	*)					
+-	(C-AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-NEG*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	*					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+dar	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+substituir	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+sair	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+-	(C-AM-EXT*)					
+estar	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+defender	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+prever	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+tratar	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-PNC*)	(AM-PNC*)				
+gostar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+ajudar	(A1*)	(A1*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+buscar	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+ser	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+quebrar	*)	*)	*)	*)		
+-	(AM-EXT*)	(AM-EXT*)	(AM-EXT*)	(AM-EXT*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+começar	(C-AM-EXT*)					
+-	(AM-CAU*)					
+-	(AM-NEG*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+começar	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+promover	*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+visar	*	*				
+orientar	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(A1*)					
+estar	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+acontecer	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+esfriar	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)	
+conversar	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*)	*)	*)	*)	*)	
+-	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)	
+convencer	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*	(V*	(V*	(V*	(V*	
+-	*)	*)	*)	*)	*)	
+fazer	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+reprimir	*)	*)	*)	*)	*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+dizer	*)	*)	*)	*)	*)	
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+atuar	*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-TMP*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+haver	(AM-PRD*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+ser	*)	*)				
+negociar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+aliciar	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*	*				
+-	*)	*)				
+-	(AM-NEG*)	(AM-NEG*)				
+imperar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A4*)	(A4*)				
+-	(AM-PRD*)	(AM-PRD*)				
+desconhecer	(C-A0*)	(C-A0*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+apontar	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+sonhar	(A1*)	(A1*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+chegar	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+passar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+realizar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+trazer	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)					
+-	(AM-PNC*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+vir	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+haver	*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+ser	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+suspeitar	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+morrer	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+ficar	*)	*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+subir	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*)	(V*)				
+-	(AM-NEG*)	(AM-NEG*)				
+pedir	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-MED*)	(AM-MED*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+apurar	(AM-ADV*)	(AM-ADV*)				
+-	(A3*)	(A3*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+retirar	*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+usar	*)	*)	*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+corrigir	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+garantir	*)	*)	*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+produzir	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+ser	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*	(AM-PRD*				
+ter	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+explicar	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+fixar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+evitar	*	*	*			
+-	*)	*)	*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+ter	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+reajustar	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-AM-DIS*)					
+-	(C-AM-ADV*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*)					
+-	(AM-NEG*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+dizer	*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+beneficiar	*	*	*			
+-	*	*	*			
+-	*	*	*			
+demorar	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+receber	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A4*)	(A4*)	(A4*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+ganhar	(AM-NEG*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+ter	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+dizer	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-EXT*)	(AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+ter	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(A1*)					
+atribuir	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PNC*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+pensar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+receber	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+ser	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+ver	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+esperar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*					
+-	*					
+-	*)					
+aproximar	(AM-PRD*					
+-	*)					
+						
+-	(C-AM-ADV*)					
+precisar	(A4*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+ir	*)					
+-	(A3*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+fazer	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-DIR*)					
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(V*)	(V*)	(V*)			
+atacar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+ter	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+ficar	*)	*)	*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	*	*	*			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+prever	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-CAU*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+afetar	(C-AM-EXT*)					
+-	(A3*)					
+-	(A4*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+fazer	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+trazer	(AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(A3*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+levantar	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+confirmar	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+comprovar	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+acusar	*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-DIR*)					
+-	(V*)					
+-	(AM-PRD*					
+comparecer	*					
+-	*)					
+-	(A3*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(A1*)					
+-	(AM-PRD*)					
+acusar	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+-	*					
+condenar	*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(A3*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+punir	(AM-NEG*)	(AM-NEG*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+cumprir	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+tomar	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-MNR*)					
+anunciar	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*					
+-	*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+ficar	(AM-CAU*)					
+-	(A3*)					
+-	(C-AM-DIS*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+começar	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(A1*)					
+-	(AM-CAU*					
+-	*					
+-	*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(C-AM-DIS*)					
+-	(V*)					
+atender	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+ser	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+dizer	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+ser	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+dizer	*)	*)				
+-	(V*)	(V*)				
+faltar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-CAU*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(A3*)					
+viver	(AM-CAU*)					
+-	(A1*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+dizer	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+faltar	*)	*)				
+-	(AM-MED*)	(AM-MED*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ter	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-ADV*)	(AM-ADV*)				
+renovar	(AM-DIR*)	(AM-DIR*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+acontecer	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+adiantar	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+afirmar	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+saber	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+						
+-	(C-V*)	(C-V*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+começar	*)	*)				
+-	(AM-TMP*	(AM-TMP*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+ganhar	(A4*)	(A4*)	(A4*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+disputar	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+terminar	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*					
+ser	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)					
+multar	(AM-REC*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+						
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+autuar	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-ADV*)					
+-	(AM-CAU*)					
+apresentar	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-TMP*					
+-	*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+descumprir	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+chegar	(A1*)	(A1*)				
+-	(A3*)	(A3*)				
+-	(A1*)	(A1*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+aplicar	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(A1*)					
+produzir	(AM-DIR*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+instalar	(AM-DIR*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(A1*)					
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*					
+-	*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-MNR*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+tomar	(V*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-PNC*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+fazer	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+aconselhar	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(A3*)	(A3*)	(A3*)			
+conversar	(A1*)	(A1*)	(A1*)			
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+reverter	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+ser	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*	*				
+perder	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+fazer	*	*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+criticar	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+ser	*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+cumprir	*)					
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+preferir	(AM-PRD*)	(AM-PRD*)				
+manter	(A4*)	(A4*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+ter	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+dizer	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+querer	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+simpatizar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+ganhar	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)					
+-	(A1*)					
+narrar	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+haver	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+separar	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+ocorrer	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+colocar	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+chegar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-DIR*)					
+-	(A3*)					
+-	(C-AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-PRD*					
+expulsar	*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+ser	*	*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+adotar	(AM-TMP*)	(AM-TMP*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+dar	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+ser	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-NEG*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+forçar	(AM-PNC*)	(AM-PNC*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+reduzir	(AM-DIR*)	(AM-DIR*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+dizer	*)	*)				
+-	*	*				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)		
+-	(V*)	(V*)	(V*)	(V*)		
+estar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+ir	(A4*)	(A4*)	(A4*)	(A4*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)		
+vetar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(A3*)	(A3*)	(A3*)	(A3*)		
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(C-AM-DIS*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+ser	*)					
+-	(C-AM-ADV*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*					
+-	*)					
+-	(A1*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+estar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+investir	(AM-DIR*)	(AM-DIR*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+firmar	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+valer	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(A3*)					
+-	(C-AM-ADV*)					
+crescer	(C-AM-EXT*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+elevar	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(A3*)	(A3*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(V*)	(V*)	(V*)			
+divulgar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+demonstrar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+conseguir	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+estar	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(A3*)	(A3*)	(A3*)	(A3*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(A3*)	(A3*)	(A3*)	(A3*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+escolher	*	*	*	*		
+-	*	*	*	*		
+estar	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+treinar	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+						
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(AM-NEG*)					
+subir	(AM-ADV*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-CAU*)					
+falar	(AM-PRD*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+estimular	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+ganhar	(AM-NEG*)	(AM-NEG*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+trabalhar	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+vir	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+compensar	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(V*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+ser	*)					
+-	(A1*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(C-V*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+haver	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)	(AM-DIS*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+substituir	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*	*	*	*		
+ter	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(V*)	(V*)	(V*)	(V*)		
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+						
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+jogar	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+avaliar	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+ampliar	(AM-DIR*)	(AM-DIR*)				
+-	(A3*)	(A3*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+proibir	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(C-AM-EXT*)					
+-	(AM-ADV*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-NEG*)	(AM-NEG*)				
+estar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+iniciar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(AM-DIR*)	(AM-DIR*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+inspirar	*)					
+-	(V*)					
+-	(A3*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-A3*)	(C-A3*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+ver	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*	(AM-PRD*				
+ficar	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+dizer	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(A1*)	(A1*)				
+afirmar	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-ADV*)	(AM-ADV*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*					
+achar	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+						
+-	(AM-PRD*					
+encontrar	*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(A1*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-ADV*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+dizer	*	*	*			
+-	*	*	*			
+-	*	*	*			
+sequestrar	*	*	*			
+-	*)	*)	*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+confundir	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*					
+-	*					
+receber	*)					
+-	(A3*)					
+-	(V*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+						
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+receber	*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-ADV*)					
+-	(C-AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+morrer	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*					
+realizar	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-DIR*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+ser	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+						
+-	(AM-ADV*)	(AM-ADV*)				
+bater	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+ficar	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-ADV*)	(AM-ADV*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+contar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+-	(A3*)	(A3*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-MNR*)	(C-AM-MNR*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+ficar	*)	*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+derrotar	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+marcar	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+participar	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PNC*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+ser	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+ser	*)	*)	*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+vender	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(A1*)	(A1*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+estar	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+comercializar	(AM-TMP*)	(AM-TMP*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+ser	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+afirmar	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+representar	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+						
+gostar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+resolver	*)	*)	*)	*)		
+pegar	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+fazer	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+						
+-	(AM-PRD*)					
+-	(AM-ADV*)					
+-	(AM-CAU*)					
+encaixar	(AM-TMP*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*					
+ter	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+denunciar	*	*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(A3*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-EXT*)	(AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+mudar	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+depender	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+estar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(A1*)	(A1*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+desestimular	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A1*)	(A1*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*					
+-	*					
+oferecer	*)					
+-	(A3*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-NEG*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+						
+causar	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-TMP*)	(C-AM-TMP*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+tratar	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+chegar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*	*	*			
+ser	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+sair	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+fazer	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+pagar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+estar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(A1*	(A1*	(A1*			
+-	*)	*)	*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+ser	(AM-PRD*					
+-	*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+pôr	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+interpretar	(A1*)	(A1*)	(A1*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+fazer	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*					
+-	*					
+-	*					
+ser	*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(AM-PRD*)					
+						
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+dirigir	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A1*)					
+-	(V*)					
+-	(A1*					
+-	*)					
+-	(V*)					
+-	(A4*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(A5*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)	
+estar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*	
+-	*)	*)	*)	*)	*)	
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	
+-	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+resistir	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(A3*)	(A3*)	(A3*)	(A3*)	(A3*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+pagar	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*)	*)	*)	*)	*)	
+-	(A1*)	(A1*)	(A1*)	(A1*)	(A1*)	
+filmar	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(A5*)	(A5*)	(A5*)	(A5*)	(A5*)	
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(V*)	(V*)	(V*)	(V*)	(V*)	
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+fazer	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(A1*)	(A1*)	(A1*)	(A1*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+confirmar	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(V*	(V*	(V*	(V*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+ver	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+jogar	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+vencer	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)	(AM-PRD*)				
+bastar	(AM-NEG*)	(AM-NEG*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+chegar	*)	*)				
+-	(A3*)	(A3*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+ancorar	*)	*)				
+-	(V*)	(V*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+tornar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*	(V*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+haver	(AM-PRD*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)					
+-	(AM-PRD*					
+ser	*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*	(AM-CAU*				
+querer	*)	*)				
+-	(AM-PRD*	(AM-PRD*				
+ir	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-CAU*)					
+dispensar	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+saber	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A0*)	(A0*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(A3*)	(A3*)				
+defender	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*					
+chegar	*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-DIS*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*)					
+discordar	(AM-PRD*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*					
+-	*)					
+-	(AM-PRD*)					
+-	(C-AM-DIS*)					
+-	(A1*)					
+jogar	(AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(V*					
+-	*)					
+-	*					
+-	(AM-PRD*)					
+-	(AM-DIR*)					
+-	(AM-PRD*)					
+-	(AM-NEG*)					
+ser	(AM-PRD*)					
+-	(AM-REC*)					
+-	(AM-PRD*)					
+						
+-	(AM-PNC*)					
+-	(AM-PRD*					
+estar	*)					
+-	(AM-TMP*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(C-AM-EXT*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-PNC*)					
+-	(V*)					
+apreciar	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+existir	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+engatinhar	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+aparecer	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-NEG*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(A1*					
+querer	*)					
+-	(V*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(A1*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(A0*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*)					
+						
+-	(V*)	(V*)				
+dizer	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*	(AM-CAU*				
+-	*)	*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*	(AM-PRD*				
+formar	*	*				
+-	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-PRD*)	(C-AM-PRD*)				
+ter	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A1*)	(A1*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+ter	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+ser	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+pensar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(A4*)	(A4*)	(A4*)	(A4*)		
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)		
+abastecer	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)		
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)		
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*	(AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+-	(AM-NEG*	(AM-NEG*	(AM-NEG*	(AM-NEG*		
+-	*)	*)	*)	*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*	*	*	*		
+dizer	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(V*)	(V*)	(V*)	(V*)		
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)		
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*	(AM-PRD*		
+-	*)	*)	*)	*)		
+						
+haver	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+enfrentar	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(V*)	(V*)				
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(A1*)					
+-	(AM-PRD*					
+ser	*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(A3*)					
+-	(A1*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(A1*)	(A1*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+achar	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+ser	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+estar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+estimular	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(V*	(V*	(V*			
+-	*)	*)	*)			
+estimular	(AM-DIR*)	(AM-DIR*)	(AM-DIR*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+promover	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+eliminar	(AM-TMP*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*					
+causar	*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-ADV*)					
+						
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-TMP*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+reunir	(AM-PRD*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(A3*)					
+-	(AM-PRD*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*					
+-	*)					
+perder	(AM-CAU*)					
+-	(V*)					
+-	(A1*)					
+-	(C-AM-DIS*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-PNC*)					
+-	(AM-PRD*)					
+						
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-ADV*)					
+-	(AM-PRD*)					
+-	(A0*)					
+-	(AM-PRD*)					
+empurrar	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+ser	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(A4*)	(A4*)	(A4*)			
+prejudicar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+ser	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(A4*)	(A4*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+afetar	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(A3*)	(A3*)				
+-	(A4*)	(A4*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+dizer	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-PRD*)	(AM-PRD*)				
+						
+-	(AM-CAU*	(AM-CAU*	(AM-CAU*			
+-	*)	*)	*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+dar	*)	*)	*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(A3*)	(A3*)	(A3*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+discursar	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+ler	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-NEG*)	(AM-NEG*)	(AM-NEG*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+						
+-	(AM-PRD*)					
+alterar	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+ser	(AM-PRD*)	(AM-PRD*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-EXT*)	(C-AM-EXT*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+levar	(AM-TMP*)	(AM-TMP*)				
+-	(A3*)	(A3*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+						
+-	(A3*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+oscilar	(AM-TMP*)					
+-	(AM-CAU*)					
+-	(V*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+						
+ter	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(C-AM-EXT*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-PRD*)					
+						
+-	(AM-PRD*)					
+-	(AM-PNC*)					
+passar	(AM-PRD*					
+-	*)					
+-	(A3*)					
+-	(AM-CAU*)					
+-	(C-AM-ADV*)					
+-	(AM-PRD*)					
+						
+-	(V*)					
+-	(AM-PRD*					
+-	*					
+-	*					
+-	*)					
+abrir	(C-AM-EXT*)					
+-	(AM-PRD*)					
+-	(AM-CAU*)					
+-	(A4*)					
+-	(C-AM-EXT*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+						
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+fazer	*	*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+acompanhar	(AM-PRD*	(AM-PRD*				
+-	*)	*)				
+-	(V*)	(V*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-CAU*)	(AM-CAU*)				
+-	(AM-PRD*)	(AM-PRD*)				
+-	(V*)	(V*)				
+-	(AM-PRD*	(AM-PRD*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-TMP*)					
+-	(AM-PRD*					
+marcar	*)					
+-	(AM-CAU*)					
+-	(V*					
+-	*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*)					
+-	(AM-DIR*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-REC*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-PRD*					
+-	*)					
+-	(V*)					
+-	(AM-CAU*)					
+-	(AM-TMP*)					
+-	(AM-PRD*)					
+-	(A0*)					
+-	(AM-PRD*)					
+						
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+entrar	*)	*)	*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(C-AM-TMP*)	(C-AM-TMP*)	(C-AM-TMP*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+obrigar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(AM-CAU*)	(AM-CAU*)	(AM-CAU*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A3*)	(A3*)	(A3*)			
+assinar	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(A1*)	(A1*)	(A1*)			
+-	(AM-PRD*)	(AM-PRD*)	(AM-PRD*)			
+-	(V*)	(V*)	(V*)			
+-	(AM-PRD*	(AM-PRD*	(AM-PRD*			
+-	*)	*)	*)			
+						
+-	(A1*)					
+-	(A3*)					
+-	(AM-PRD*					
+-	*)					
+-	(AM-CAU*					
+-	*)					
+-	(AM-PRD*)					
+-	(A3*)					
+ser	(AM-PRD*					
+-	*					
+-	*)					
