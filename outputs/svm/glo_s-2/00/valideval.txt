@@ -1,0 +1,6708 @@
+-	(AM-PNC*					
+-	*					
+-	*)					
+estar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+reclamar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+adiar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+agendar	(A4*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+pedir	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*)			
+ajudar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ocupar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+vender	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+anunciar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+retomar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+estar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+realçar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ter	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+tocar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+levar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+fazer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+negligenciar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+alegar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+considerar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+comprovar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+receber	*)	(A4*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+concordar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dizer	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+cumprir	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+transferir	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*)			
+dizer	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+verificar	(A4*)	*	*	*		
+-	(AM-PNC*	*)	*	*		
+levar	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+enxergar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+dizer	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+pilotar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+acabar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+sair	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+revelar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+afirmar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*)	*			
+prever	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*)			
+acontecer	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+revelar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+estar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+dar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+precisar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+saber	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*)			
+trazer	*)	*)	(A4*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(C-AM-CAU*)					
+ser	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+ser	(A4*)	*	*			
+-	(AM-PNC*	*)	*			
+pensar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+ser	*)	*)	(A4*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+destacar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)					
+morrer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+morrer	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+estar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*)			
+cair	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+salvar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+causar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+provocar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+causar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+estar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+bater	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+explicar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dispor	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+alagar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dispor	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(C-AM-CAU*)					
+dar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ser	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+coincidir	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*)		
+fazer	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+ser	(A4*)	(AM-PNC*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+fazer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+tratar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*	*	*		
+falar	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+falar	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+traduzir	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+ser	*	*	*	(A4*)		
+-	*)	*)	*)	(AM-PNC*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+passar	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ter	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*)				
+armazenar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+responder	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+representar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+manter	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+multar	(A4*)	*				
+-	(AM-PNC*	*)				
+negociar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+encontrar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+deixar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+morrer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+ferir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+enfrentar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+ver	(A4*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+buscar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*)					
+conseguir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ter	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+deixar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+inflamar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+existir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+ser	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+saber	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+ser	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+ter	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ganhar	*	(A4*)	*			
+-	*)	(AM-PNC*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+definir	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+fazer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+constatar	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+encontrar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+ter	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ocorrer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+destacar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+apresentar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+publicar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+indicar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+estar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+admitir	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+conquistar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*)	(AM-PNC*			
+dividir	*	(A4*)	*			
+-	*)	(AM-PNC*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+mudar	(AM-PNC*	(AM-PNC*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*					
+-	*)					
+continuar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+conquistar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ocupar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+assinar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+incluir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+incentivar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+pertencer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+dominar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*)					
+prejudicar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+conquistar	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+emplacar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+narrar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+banir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+construir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+recorrer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+transformar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+montar	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+esconder	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+discutir	(A4*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+reabrir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+exigir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+ter	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ter	(A4*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ter	*	(A4*)	*	*		
+-	*)	(AM-PNC*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+deixar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+conseguir	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*)				
+envolver	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ser	(A4*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(A4*)	*	*		
+-	*	(AM-PNC*	*)	*		
+discriminar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*)		
+pagar	*	*	*	(A4*)		
+-	*)	*)	*)	(AM-PNC*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*)					
+fumar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+prender	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*)				
+cobrar	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+indiciar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+vender	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)					
+indiciar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+prender	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+entregar	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+ganhar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+permitir	(A4*)	(AM-PNC*)				
+verificar	(AM-PNC*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+ficar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+ser	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+comprar	*)	(A4*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+beneficiar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+executar	(A4*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+provocar	*)	(A4*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+dizer	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+receber	(AM-PNC*)	(A4*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+estar	(AM-PNC*	(AM-PNC*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*)	(AM-PNC*				
+orientar	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+negociar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*
+-	*)	*)	*)	*)	*)	*)
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*
+-	*)	*	*	*	*	*
+observar	(A4*)	*	*	*	*	*
+-	(AM-PNC*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*)	*	*	*	*
+arrumar	*	(A4*)	*	*	*	*
+-	*	(AM-PNC*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*)	*	*	*
+estar	*	*	(A4*)	*	*	*
+-	*	*	(AM-PNC*	*	*	*
+-	*	*	*	*)	*	*
+escutar	*	*	*	(A4*)	*	*
+-	*	*	*	(AM-PNC*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*)	*
+incentivar	*	*	*	*	(A4*)	*
+-	*	*	*	*	(AM-PNC*	*)
+começar	*	*	*	*	*	(A4*)
+-	*	*	*	*	*	(AM-PNC*
+-	*	*	*	*	*	*
+-	*)	*)	*)	*)	*)	*)
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+aumentar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+terminar	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+começar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+ser	(A4*)	*	*	*	*	
+-	(AM-PNC*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*)	*	*	*	
+ter	*	(A4*)	*	*	*	
+-	*	(AM-PNC*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)	(AM-PNC*	(AM-PNC*	
+casar	*	*	(A4*)	*	*	
+-	*	*	(AM-PNC*	*)	*	
+ter	*	*	*	(A4*)	*	
+-	*	*	*	(AM-PNC*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*)	
+ser	*	*	*	*	(A4*)	
+-	*)	*)	*)	*)	(AM-PNC*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+oferecer	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+beber	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+levar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+dizer	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ser	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+preocupar	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+criar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+associar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+precisar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+marcar	(A4*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+consolidar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+aproximar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+valorizar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+chegar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+ser	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*)				
+confirmar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+negociar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+inaugurar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+ser	(A4*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+dar	(A4*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*)	*			
+substituir	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+sair	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+estar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+defender	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+prever	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+tratar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+gostar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*)				
+ajudar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ser	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+buscar	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*)	*		
+ser	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+quebrar	*)	*)	*)	(A4*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+começar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+começar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+promover	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+visar	(A4*)	*)				
+orientar	(AM-PNC*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+estar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+acontecer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+esfriar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+conversar	(A4*)	*	*	*	*	
+-	(AM-PNC*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*)	*	*	*	
+convencer	*)	(A4*)	*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)	(AM-PNC*	(AM-PNC*	
+fazer	*	*	(A4*)	*	*	
+-	*)	*)	(AM-PNC*)	*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*)	*	
+reprimir	*	*	*	(A4*)	*	
+-	*)	*)	*)	(AM-PNC*)	*)	
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*	*	*	*	*)	
+dizer	*	*	*	*	(A4*)	
+-	*	*	*	*	(AM-PNC*	
+-	*)	*)	*)	*)	*)	
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+atuar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+haver	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*)				
+negociar	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+aliciar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+ser	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+imperar	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+desconhecer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+apontar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*				
+sonhar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+chegar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+passar	(A4*)	(AM-PNC*	(AM-PNC*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+realizar	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+trazer	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+vir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+haver	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+suspeitar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+morrer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ficar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+subir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+pedir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+apurar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+retirar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+usar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+corrigir	*)	(A4*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+garantir	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+produzir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+ser	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+explicar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+fixar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+evitar	*)	(A4*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*)			
+ter	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+reajustar	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dizer	(A4*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+beneficiar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*)	*			
+demorar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+receber	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+ganhar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*				
+ter	(A4*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+ter	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+atribuir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+pensar	(A4*)	*	*			
+-	(AM-PNC*	*)	*			
+receber	*)	(A4*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+ser	(AM-PNC*	(AM-PNC*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ver	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*)				
+esperar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+aproximar	(A4*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)					
+precisar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+ir	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+fazer	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+atacar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ter	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+ficar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+prever	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+afetar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+fazer	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+trazer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+levantar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+confirmar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+comprovar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+acusar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+comparecer	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*)					
+acusar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*)					
+condenar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+punir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+cumprir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+tomar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+anunciar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+ficar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+começar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+atender	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+dizer	(A4*)	*				
+-	(AM-PNC*	*)				
+faltar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+viver	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+dizer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+faltar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+renovar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*	*	*		
+acontecer	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+adiantar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+afirmar	*	*	*	(A4*)		
+-	*)	*)	*)	(AM-PNC*)		
+						
+saber	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*)				
+ser	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+começar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+ganhar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+disputar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*)			
+terminar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+multar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+autuar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+apresentar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+descumprir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+chegar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+aplicar	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+produzir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+instalar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+tomar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+fazer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+aconselhar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+conversar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+reverter	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+perder	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+fazer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+criticar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*)					
+ser	(A4*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+cumprir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+preferir	(A4*)	*)				
+manter	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+ter	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+dizer	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+querer	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+simpatizar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+ganhar	(AM-PNC*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+narrar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+haver	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+separar	*	(A4*)				
+-	*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+ocorrer	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+colocar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*)			
+chegar	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+expulsar	(A4*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+adotar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+dar	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+forçar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+reduzir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+ser	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*	*	*		
+estar	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ser	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+ir	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+vetar	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+investir	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+firmar	(A4*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+valer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+crescer	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+ser	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+elevar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+divulgar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+demonstrar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*)			
+conseguir	*)	*)	(A4*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+estar	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+escolher	*	(A4*)	*	*		
+-	*	(AM-PNC*	*)	*		
+estar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+treinar	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+subir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+falar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*)				
+estimular	(A4*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ganhar	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+trabalhar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+vir	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+compensar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*	*	*		
+haver	(A4*)	*)	*)	*)		
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*		
+-	*)	*)	*)	*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*)	*	*		
+substituir	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+ter	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+ser	*)	*)	*)	(A4*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+jogar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+avaliar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*)				
+ampliar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+proibir	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+iniciar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+inspirar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ver	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+ficar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+afirmar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+ser	(AM-PNC*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+achar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+encontrar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+dizer	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*)	*			
+sequestrar	*	(A4*)	*			
+-	*)	(AM-PNC*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+confundir	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+receber	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+receber	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+morrer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+realizar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+bater	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*)				
+ficar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+contar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ficar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+derrotar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+marcar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+participar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+ser	(A4*)	*	*			
+-	(AM-PNC*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ser	*)	(A4*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+vender	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+comercializar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+afirmar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+representar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+gostar	(A4*)	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+resolver	*	(A4*)	*)	*		
+pegar	*	(AM-PNC*	(A4*)	*		
+-	*)	*)	(AM-PNC*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*)		
+fazer	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)		
+						
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*)					
+encaixar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+ter	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+denunciar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+mudar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+depender	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+estar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+desestimular	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+oferecer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*)					
+						
+causar	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+tratar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+chegar	(A4*)	(AM-PNC*	(AM-PNC*			
+-	(AM-PNC*	*	*			
+-	*	*)	*			
+ser	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+sair	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+fazer	(A4*)	*	*			
+-	(AM-PNC*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+pagar	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+estar	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+ser	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*	(AM-PNC*			
+pôr	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+interpretar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+fazer	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+dirigir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*	
+-	*)	*	*	*	*	
+estar	(A4*)	*	*	*	*	
+-	(AM-PNC*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*)	*	*	*	
+resistir	*	(A4*)	*	*	*	
+-	*	(AM-PNC*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*)	*	*	
+pagar	*	*	(A4*)	*	*	
+-	*	*	(AM-PNC*	*	*	
+-	*	*	*	*)	*	
+filmar	*	*	*	(A4*)	*	
+-	*	*	*	(AM-PNC*	*	
+-	*	*	*	*	*)	
+ser	*	*	*	*	(A4*)	
+-	*	*	*	*	(AM-PNC*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	*)	
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*	*	*		
+ser	(A4*)	*	*	*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+fazer	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+confirmar	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+ser	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+ver	(A4*)	(AM-PNC*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+jogar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+vencer	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+bastar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+chegar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ancorar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+tornar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+haver	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+querer	(A4*)	*				
+-	(AM-PNC*	*)				
+ir	*	(A4*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dispensar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+saber	(A4*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+defender	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)					
+chegar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*)					
+discordar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+jogar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+ser	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+estar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+apreciar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*	*			
+existir	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*)	(AM-PNC*			
+engatinhar	*	(A4*)	*			
+-	*	(AM-PNC*	*)			
+aparecer	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+querer	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)	(AM-PNC*				
+dizer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+formar	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ter	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+ser	(A4*)	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	(AM-PNC*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+pensar	*	(A4*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+abastecer	*	*	(A4*)	*		
+-	*	*	(AM-PNC*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)		
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+dizer	*	*	*	(A4*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+						
+haver	(A4*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*)				
+enfrentar	*)	(A4*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+ser	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+achar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*)				
+ser	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*)	(AM-PNC*				
+estar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*)				
+estimular	(C-AM-CAU*)	(A4*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	(C-AM-CAU*	(C-AM-CAU*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+ser	(A4*)	*)	*)			
+-	(C-AM-CAU*	(C-AM-CAU*	(C-AM-CAU*			
+-	*)	*)	*)			
+-	(AM-PNC*	(AM-PNC*)	(AM-PNC*			
+estimular	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*)			
+promover	*	*	(A4*)			
+-	*)	*)	(AM-PNC*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*					
+-	*)					
+eliminar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+causar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+reunir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+perder	(A4*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+empurrar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+ser	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+prejudicar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*)			
+ser	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*				
+afetar	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+dizer	*	(A4*)				
+-	*	(AM-PNC*				
+-	*)	*)				
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+dar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+discursar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ler	*	*	(A4*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(AM-PNC*)					
+alterar	(A4*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-CAU*)	(C-AM-CAU*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*)	*				
+ser	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+levar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+oscilar	(A4*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+ter	(A4*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-CAU*)					
+passar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+abrir	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+fazer	(A4*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+acompanhar	*	(A4*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-PNC*					
+-	*)					
+marcar	(A4*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-CAU*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*	*			
+entrar	(A4*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+obrigar	*	(A4*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+assinar	*)	*)	(A4*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*	(AM-PNC*	(AM-PNC*			
+-	*)	*)	*)			
+-	(C-AM-CAU*)	(C-AM-CAU*)	(C-AM-CAU*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+						
+-	(C-AM-CAU*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(A4*)					
+-	(AM-PNC*					
+-	*)					

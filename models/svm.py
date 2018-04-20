@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # optargs = ('-s ')
     # encoding = 'emb'
     # encoding = 'hot'
-    encoding = 'glo'
+    encoding = 'wan'
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     #(1, 3, 4, 5, 6, 7)
     #(0, 1, 2, 3, 4, 5, 6, 7)
     # for s in (0, 1, 2, 3, 4, 5, 6, 7):
-    for s in [5]:
+    for s in (0, 1, 2, 3, 4, 5, 6, 7):
         # optargs = '-s {:} -v 10'.format(s)
         optargs = '-s {:}'.format(s)
         print('Training ... with_optargs({:})'.format(optargs))
