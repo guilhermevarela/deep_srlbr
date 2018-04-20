@@ -13,14 +13,15 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnShifter', 'ColumnShifterCTX_P'}
+        return {'ColumnShifter', 'ColumnShifterCTX_P', 'ColumnPredDist'}
 
     # Creates an instance of class given schema and db
     @staticmethod
     def make(klass, dict_db):
         if klass == 'ColumnShifter': return ColumnShifter(dict_db)
         if klass == 'ColumnShifterCTX_P': return ColumnShifterCTX_P(dict_db)
-        raise ValueError('klass must be in {:}'.format(FeatureFamily.klasses))
+        if klass == 'ColumnPredDist': return ColumnPredDist(dict_db)
+        raise ValueError('klass must be in {:}'.format(FeatureFactory.klasses))
 
 
 class ColumnShifter(object):
@@ -177,9 +178,9 @@ class ColumnShifterCTX_P(object):
             predicate_time =  predicate_d[proposition]
             for col in self.columns:
                 for s in self.shifts:
-                    new_col = self.mapper[(s, col)]
-                    if (time + s in self.dict_db['P']) and\
-                         (self.dict_db['P'][time + s] == proposition):
+                    new_col = self.mapper[(s, col)]                    
+                    if (predicate_time + s in self.dict_db['P']) and\
+                         (self.dict_db['P'][predicate_time + s] == proposition):
                         self.dict_shifted[new_col][time] = self.dict_db[col][predicate_time + s]
                     else:
                         self.dict_shifted[new_col][time] = None
@@ -187,27 +188,125 @@ class ColumnShifterCTX_P(object):
         return self.dict_shifted
 
 
+class ColumnPredDist(object):
+    '''
+        Computes the distance to the predicate
+
+        Usage:
+            See below (main)
+    '''
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    # Columns over which we want to perform the shifting
+    def define(self):
+        '''
+            Defines with columns will be effectively shifted and by what amount
+
+            args:
+                columns .: list<str> column names that will be shifted
+
+                shifts .: list<int> of size m holding integers, negative numbers are delays
+                    positive numbers are leads
+
+                new_columns .: list<str> of size n holding new column names if none 
+                                one name will be generated
+
+            returns:
+                column_shifter .: object<ColumnShifter> an instance of column shifter
+
+        '''
+        if not '(V*)' in set(self.dict_db['ARG'].values()):
+            raise ValueError('(V*) not in ARG')
+
+        return self
+
+    def exec(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                preddist .: dict<PRED_DIST, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        self.preddist = {'PRED_DIST': OrderedDict({})}
+
+        # Finds predicate position
+        predicate_d = {
+            self.dict_db['P'][time]: time
+            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+        }
+        for time, proposition in self.dict_db['P'].items():
+            predicate_time = predicate_d[proposition]
+
+            self.preddist['PRED_DIST'][time] = predicate_time - time
+
+        return self.preddist
+
+
+def _process_shifter(dictdb, columns, shifts):
+
+    shifter = FeatureFactory().make('ColumnShifter', dictdb)
+    target_dir = '../datasets/csvs/column_shifter/'
+    shifted = shifter.define(columns, shifts).exec()
+
+    _store_columns(shifted, columns, target_dir)
+
+
+def _process_shifter_ctx_p(db, columns, shifts):
+
+    shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
+    target_dir = '../datasets/csvs/column_shifts_ctx_p/'
+    shifted = shifter.define(columns, shifts).exec()
+
+    _store_columns(shifted, columns, target_dir)
+
+
+def _process_predicate_dist(dictdb):
+
+    pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
+    d = pred_dist.define().exec()
+    
+    target_dir = '../datasets/csvs/column_preddist/'
+    filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def _store_columns(columns_dict, columns, target_dir):
+    for col in columns:
+        d = {new_col: columns_dict[new_col]
+             for new_col in columns_dict if col in new_col}
+
+        df = pd.DataFrame.from_dict(d)
+        filename = '{:}{:}.csv'.format(target_dir, col.lower())
+        df.to_csv(filename, sep=',', encoding='utf-8')
+
 
 if __name__ == '__main__':
     '''
         Usage of FeatureFactory
     '''
-
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
-    # shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
 
-    delta = 1
-    # columns = ['FORM', 'LEMMA', 'GPOS']
-    columns = ('LEMMA', 'GPOS')
-    # shifts = [d for d in range(-delta, delta+1, 1) if d != 0]
-    shifts = [d for d in range(-delta, delta+1, 1)]
-    shifted = shifter.define(columns, shifts).exec()
-    target_dir = '../datasets/csvs/gs_column_shifts_ctx_p/'
-    for col in columns:
-        d = {new_col: shifted[new_col]
-             for new_col in shifted if col in new_col}
-        df = pd.DataFrame.from_dict(d)
-        filename = '{:}{:}.csv'.format(target_dir, col.lower())
-        df.to_csv(filename, sep=',', encoding='utf-8')
+    # Making column moving windpw around column
+    # columns = ('FORM', 'LEMMA', 'FUNC', 'GPOS')
+    # delta = 3
+    # shifts = [d for d in range(-delta, delta + 1, 1) if d != 0]
+    # _process_shifter(dictdb, columns, shifts)
+
+
+    # Making window around predicate
+    # columns = ('FUNC', 'GPOS', 'LEMMA')
+    # delta = 1
+    # shifts = [d for d in range(-delta, delta + 1, 1)]
+    # _process_shifter_ctx_p(dictdb, columns, shifts)
+
+
+    # Computing the distance to target predicate
+    _process_predicate_dist(dictdb)
+    # pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
+    # d = pred_dist.define().exec()
+    # target_dir = '../datasets/csvs/column_preddist/'
+    # filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
+    # pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
