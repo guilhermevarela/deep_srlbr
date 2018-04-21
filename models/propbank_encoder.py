@@ -33,7 +33,7 @@ class PropbankEncoder(object):
 
     onehot = defaultdict(OrderedDict)
     hotone = defaultdict(OrderedDict)
-    data = defaultdict(OrderedDict)
+    db = defaultdict(OrderedDict)
     encodings = ('CAT', 'IDX', 'HOT', 'EMB')
     schema_d = {}
     columns_mapper_d = {}
@@ -49,10 +49,48 @@ class PropbankEncoder(object):
             if self.schema_d[col]['type'] == 'str':
                 self.lexicon = self.lexicon.union(self.schema_d[col]['domain'])
 
-    def define(self, dbpt_d, language_model='glove_s50.txt', verbose=True):
+        # SOLVES CATEGORICAL        
+        self._process_onehot(self):        
+    def define(self, dbpt_d, language_model='glove_s50.txt', dbname='dbpt', verbose=True):
 
         # RUNS EMBEDDINGS
         self._process_embeddings(language_model, verbose)
+
+        # COMPUTES data dict
+        self._process_db(dbpt_d, dbname)
+
+        # GOOD FOR CHAINING
+        return self
+
+    @classmethod
+    def recover(cls, file_path):
+        '''
+        Returns a copy from the instanced saved @file_path
+        args:
+            file_path .: string a full path to a serialized dump of propbank object
+
+        returns:
+             object   .: propbank object instanced saved at file_path
+        '''
+        with open(file_path, 'rb') as f:
+            propbank_instance= pickle.load(f)
+        return propbank_instance
+
+    def persist(self, file_dir, filename=''):
+        '''
+        Serializes this object in pickle format @ file_dir+filename
+        args:
+            file_dir    .: string representing the directory
+            filename  .: string (optional) filename
+    '''
+        if not(filename):
+            _moniker = (file_dir, self.dbname, self.embeddings_model, self.embeddings_sz)
+            filename = '{:}{:}_{:}_s{:}.pickle'.format(*_moniker)
+        else:
+            filename = '{:}{:}.pickle'.format(file_dir, filename)
+
+        with open(filename, 'wb') as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
 
     def _process_embeddings(self, language_model, verbose):
@@ -80,8 +118,16 @@ class PropbankEncoder(object):
                 self.embeddings[i] = word2vec[tok]
                 i += 1
 
+    def _process_onehot(self):
+        for col in self.schema_d:
+            if self.schema_d[col]['type'] in ('choice'):
+                _keys = list(set(self.schema_d[col]['domain']))
+                _values = list(range(len(_keys)))
+                self.onehot[col] = OrderedDict(dict(zip(_keys, _values)))
+                self.hotone[col] = OrderedDict(dict(zip(_values, _keys)))
 
-    def _process_db(self, dbpt_d):
+    def _process_db(self, dbpt_d, dbname):
+        self.dbname = dbname
         # Computes a dictionary that maps one column to a base column
         self.columns = self.columns.union(self.dbpt_d.keys())
         self.columns_mapper = {col: re.sub(r'[\+|\-|\d|]|(_CTX_P)', '', col)
@@ -91,26 +137,20 @@ class PropbankEncoder(object):
             base_col = columns_mapper[col]
             if col in ('INDEX') or not base_col in self.schema_d:
                 #Boolean values, numerical values come here
-                self.data[col] = OrderedDict(self.dbpt_d[col])
+                self.db[col] = OrderedDict(self.dbpt_d[col])
             else:
                 if self.schema_d[base_col] in ('choice'):
-                    if not base_col in self.onehot:
-                        if base_col in self.schema_d
-                            d = self.schema_d[base_col]['domain']
-                        else:
-                            d = set(self.dbpt_d[col].values())
-
-                    self.data[col] = OrderedDict({
-                        idx: self.onehot[base_col][idx] for idx, category in self.dbpt_d[col]
+                    self.db[col] = OrderedDict({
+                        idx: self.onehot[base_col][category] for idx, category in self.dbpt_d[col]
                     })
 
                 elif self.schema_d[base_col] in ('str'):
-                    self.data[col] = OrderedDict({
+                    self.db[col] = OrderedDict({
                         idx: self.tok2idx[self.lex2tok[word]] for idx, word in self.dbpt_d[col]
                     })
                 else:
                     #Boolean values, numerical values come here
-
+                    raise ValueError('Code shouldnt be reaching this line')
 
 
 
