@@ -7,7 +7,9 @@ Created on Mar 14, 2018
 '''
 
 #INPUTS AND DATASETS
-INPUT_DIR= 'datasets/binaries/'
+INPUT_DIR = 'datasets/binaries/'
+SCHEMA_DIR = 'datasets/schemas/'
+LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 DATASET_TRAIN_PATH= '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_PATH= '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_PATH = '{:}dbtest_pt.tfrecords'.format(INPUT_DIR)
@@ -34,5 +36,3 @@ DEFAULT_INPUT_SEQUENCE_FEATURES= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'CTX_P-1', 'CT
 DEFAULT_OUTPUT_SEQUENCE_TARGET= 'T'
 
 META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
-
-
