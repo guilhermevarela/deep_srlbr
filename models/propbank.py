@@ -71,7 +71,7 @@ class Propbank(object):
 
     ''' 
     lexicon = set([])
-    lex2tok = {}     
+    lex2tok = {}
     tok2idx = {}
     idx2tok = {}
     embeddings = np.array([])

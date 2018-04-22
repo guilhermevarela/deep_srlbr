@@ -37,7 +37,7 @@ class ColumnShifter(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    # Columns over which we want to perform the shifting        
+    # Columns over which we want to perform the shifting
     def define(self, columns, shifts):
         '''
             Defines with columns will be effectively shifted and by what amount
@@ -385,9 +385,10 @@ if __name__ == '__main__':
 
     # Making window around predicate
     # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
-    # delta = 1
-    # shifts = [d for d in range(-delta, delta + 1, 1)]
-    # _process_shifter_ctx_p(dictdb, columns, shifts)
+    columns = ['FORM']
+    delta = 3
+    shifts = [d for d in range(-delta, delta + 1, 1)]
+    _process_shifter_ctx_p(dictdb, columns, shifts)
 
 
     # Computing the distance to target predicate
@@ -398,5 +399,6 @@ if __name__ == '__main__':
     # target_dir = '../datasets/csvs/column_preddist/'
     # filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     # pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
-    _process_t(dictdb)
-    _process_predicate_marker(dictdb)
+
+    # _process_t(dictdb)
+    # _process_predicate_marker(dictdb)
