@@ -9,6 +9,7 @@ import yaml
 import numpy as np
 import pandas as pd
 import sys
+import pickle
 sys.path.append('..')
 import config
 from collections import OrderedDict, defaultdict
@@ -19,22 +20,33 @@ from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
 # EMBEDDINGS_PATH = '../{:'.format(config.LANGUAGE_MODEL_DIR)
 
+
 class _EncoderIterator(object):
-    def __init__(self, low, high, dbparser_fn):
+    def __init__(self, low, high, decoder_fn):
         self.low = low
         self.high = high
-        self.dbparser_fn = dbparser_fn
+        self.decoder_fn = decoder_fn
         self.current = self.low
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current > self.high:
+            raise StopIteration
+        else:
+            self.current += 1
+            return self.current - 1, self.decoder_fn(self.current - 1)
 
 
 class PropbankEncoder(object):
     '''
         PropbankEncoder mantains an indexed representation of the database
-        There are numerical types, str types and categorical types. The return
-        format will depend on the desired format. 
+        There are numerical types, str types and categorical types.
+        The return format will depend on requested encoding
 
         Encondings:
-        CAT     .:  tokens and categorical values will be returned                   
+        CAT     .:  tokens and categorical values will be returned
         EMB     .:  tokens will be embeded into the language model,
                     categorical values will be onehot encoded
         HOT     .:  tokens and categorical values will be onehot encoded
@@ -111,7 +123,7 @@ class PropbankEncoder(object):
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    def iterator(self, ds_type, columns, encoding='EMB'):
+    def iterator(self, ds_type, filter_columns=['P', 'FORM', 'ARG'], encoding='EMB'):
         if not(ds_type in ['train', 'valid', 'test']):
             errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
             raise ValueError(errmessage)
@@ -125,10 +137,20 @@ class PropbankEncoder(object):
             else:
                 lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
                 ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+            
 
-        for col in columns:
+            interval = [idx
+                        for idx, p in self.db['P'].items()
+                        if p > lb and p <= ub]
+            if not interval:
+                import code; code.interact(local=dict(globals(), **locals()))
+            low = min(interval)
+            high = max(interval)
+
+
+        for col in filter_columns:
             if not col in self.db:
-                errmessage = 'column {:} not in db columns {:}'.format(col, self.columns)
+                errmessage = 'column {:} not in db columns {:}'.format(col, self.db)
                 raise ValueError(errmessage)
 
 
@@ -136,7 +158,32 @@ class PropbankEncoder(object):
             _errmessage = 'encoding {:} not in {:}'.format(encoding, self.encodings)
             raise ValueError(_errmessage)
         else:
-            fn = lambda x: self._decode(x, encoding)
+            fn = lambda x: self._decode(x, filter_columns, encoding)
+
+        return _EncoderIterator(low, high, fn)
+
+    def column_dimensions(self, column, encoding):
+        if encoding in ('IDX', 'CAT'):
+            return 1
+
+        base_col = self.columns_mapper.get(column, None)
+        if not base_col:
+            return 1
+
+        col_type = self.schema_d[base_col]['type']
+        if encoding in ('HOT'):
+            if col_type in ('str', 'choice'):
+                return len(self.schema_d[base_col]['domain'])
+            else:
+                return 1
+
+        if encoding in ('EMB'):
+            if col_type in ('str'):
+                return self.embeddings_sz
+            elif col_type in ('choice'):
+                return len(self.schema_d[base_col]['domain'])
+            else:
+                return 1
 
     def _process_embeddings(self, language_model, verbose):
         # computes embeddings
@@ -150,17 +197,18 @@ class PropbankEncoder(object):
             tokens = set(self.lex2tok.values())
             print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(words), len(tokens)))
 
-        embeddings_shape = (len(tokens) + 1, self.embeddings_sz) # unk token
+        # embeddings_shape = (len(tokens) + 1, self.embeddings_sz) # unk token
         self.tok2idx = {'unk': 0}
         self.idx2tok = {0: 'unk'}
-        self.embeddings = np.zeros(embeddings_shape, dtype=np.float32)
-        self.embeddings[0] = word2vec['unk']
+        # self.embeddings = np.zeros(embeddings_shape, dtype=np.float32)
+        self.embeddings = []
+        self.embeddings.append(word2vec['unk'].tolist())
 
         i = 1
         for tok in list(tokens):
             self.tok2idx[tok] = i
             self.idx2tok[i] = tok
-            self.embeddings[i] = word2vec[tok]
+            self.embeddings.append(word2vec[tok].tolist())
             i += 1
 
     def _process_onehot(self):
@@ -180,31 +228,75 @@ class PropbankEncoder(object):
 
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
-            try:
-                if col in ('INDEX') or not base_col in self.schema_d:
+            if col in ('INDEX') or not base_col in self.schema_d:
+                #Boolean values, numerical values come here
+                self.db[col] = OrderedDict(dbpt_d[col])
+            else:                
+                if self.schema_d[base_col]['type'] in ('choice'):
+                    self.db[col] = OrderedDict({
+                        idx: self.onehot[base_col][category] for idx, category in dbpt_d[col].items()
+                    })
+
+                elif self.schema_d[base_col]['type'] in ('str'):
+                    self.db[col] = OrderedDict({
+                        idx: self.tok2idx[self.lex2tok[word]] for idx, word in dbpt_d[col].items()
+                    })
+                else:                    
                     #Boolean values, numerical values come here
                     self.db[col] = OrderedDict(dbpt_d[col])
-                else:                
-                    if self.schema_d[base_col]['type'] in ('choice'):
-                        self.db[col] = OrderedDict({
-                            idx: self.onehot[base_col][category] for idx, category in dbpt_d[col].items()
-                        })
 
-                    elif self.schema_d[base_col]['type'] in ('str'):
-                        self.db[col] = OrderedDict({
-                            idx: self.tok2idx[self.lex2tok[word]] for idx, word in dbpt_d[col].items()
-                        })
-                    else:                    
-                        #Boolean values, numerical values come here
-                        self.db[col] = OrderedDict(dbpt_d[col])
-            except KeyError:
-                import code; code.interact(local=dict(globals(), **locals()))
+    def _decode(self, x, columns, encoding):
+        d = OrderedDict()
+        for col in columns:
+            base_col = self.columns_mapper.get(col, None)
+            if base_col:
+                col_type = self.schema_d[base_col]['type']
 
-    def _decode(self, x, encoding):
+            if encoding in ('IDX') or not base_col or col_type in ('int'):
+                d[col] = self.db[col][x]
+
+            elif encoding in ('CAT'):
+                if col_type in ('choice'):
+                    d[col] = self.hotone[base_col][self.db[col][x]]
+                elif col_type in ('str'):
+                    d[col] = self.idx2tok[self.db[col][x]]
+                else:
+                    d[col] = self.db[col][x]
+
+            elif encoding in ('EMB'):
+                if col_type in ('str'):
+                    d[col] = self.embeddings[self.db[col][x]]
+                elif col_type in ('str'):
+                    sz = self.column_dimensions(col, encoding)
+                    d[col] = [0] * sz
+                    d[col][self.db[col][x]] = 1
+                else:
+                    d[col] = self.db[col][x]
+
+            elif encoding in ('HOT'):
+                sz = self.column_dimensions(col, encoding)
+                d[col] = [0] * sz
+                d[col][self.db[col][x]] = 1
+            else:
+                raise Exception('Unhandled exception')
+
+        return d
 
 
-if __name__ == '__main__':    
-    dfgs = pd.read_csv('../datasets/csvs/gs.csv')
-    propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
-    import code; code.interact(local=dict(globals(), **locals()))
-    propbank_encoder.schema_d
+if __name__ == '__main__':
+    # dfgs = pd.read_csv('../datasets/csvs/gs.csv')
+    # propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
+    # propbank_encoder.persist('../datasets/binaries/')
+    propbank_encoder = PropbankEncoder.recover('../datasets/binaries/dbpt_glove_s50.pickle')
+    filter_columns = ['P', 'GPOS', 'FORM']
+    for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
+        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+
+    for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
+        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+    
+    for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
+        print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
+
+
+    # import code; code.interact(local=dict(globals(), **locals()))
