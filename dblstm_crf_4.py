@@ -27,9 +27,7 @@ import re
 # this is not recommended but where just importing a bunch of constants
 from config import *
 
-# from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
 from data_tfrecords import input_fn, tfrecords_extract_v2
-# from models.propbank import Propbank
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
@@ -79,13 +77,13 @@ def dblstm_1(X, seqlens, sz):
             time_major=False
         )
         outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-        
+
     return outputs_bw, outputs_fw
 
 
 def dblstm_n(outputs, h, seqlens, sz):
 
-    
+
     with tf.variable_scope('fw'):
         inputs_fw = tf.concat((outputs, h), axis=2)
         # CREATE / REUSE FWD/BWD CELL
@@ -99,7 +97,7 @@ def dblstm_n(outputs, h, seqlens, sz):
             time_major=False
         )
 
-    with tf.variable_scope('bw'):           
+    with tf.variable_scope('bw'):
         cell_bw=    get_cell(sz)
         inputs_bw = tf.concat((outputs_fw, outputs), axis=2)
         inputs_bw = tf.reverse_sequence(inputs_bw, seqlens, batch_axis=0, seq_axis=1)
@@ -202,46 +200,31 @@ if __name__== '__main__':
     propbank_encoder = PropbankEncoder.recover(PROP_PATH)
     print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
 
-    # PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
-    # propbank = Propbank.recover(PROP_PATH)
-
     # Updata settings
     LAYER_1_NAME = embeddings_id
     HIDDEN_SIZE = hidden_size
     BATCH_SIZE = batch_size
     EMBEDDING_SIZE = embeddings_size
-    # INPUT_TRAIN_PATH = '{:}{:}/dbtrain_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
-    # INPUT_VALID_PATH = '{:}{:}/dbvalid_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
     INPUT_TRAIN_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
     INPUT_VALID_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
-    # SANITY CHECK 1: ALL LINGUISTIC FEATURES
-    # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
-    # SANITY CHECK 2: ARG
-    # input_sequence_features = ['ID', 'LEMMA', 'M_R', 'PRED_1']
+
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P+0']
 
     if ctx_p > 0:
-        # input_sequence_features+=['CTX_P{:+d}'.format(i) 
-        #     for i in range(-ctx_p,ctx_p+1) if i !=0 ]
         input_sequence_features+=['FORM_CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]
 
 
-    # feature_size = propbank.size(input_sequence_features)
+
     columns_dimensions = propbank_encoder.columns_dimensions('EMB')
     feature_size = sum([
         columns_dimensions[col]
         for col in input_sequence_features
     ])
 
-    # hotencode2sz = {
-    #         feat: propbank.size(feat)
-    #         for feat, feat_type in META.items() if feat_type == 'hot'}
-
-    # target_size = hotencode2sz[target]+1
     target_size = columns_dimensions[target]
     target2idx = propbank_encoder.onehot[target]
 
@@ -370,7 +353,7 @@ if __name__== '__main__':
                     acc_train = calculator_train.accuracy(predictions_d)
 
                     predictions_d = propbank_encoder.t2arg(predictions_d)
-                    
+
 
                     evaluator_train.evaluate( predictions_d, True)
 

@@ -19,8 +19,6 @@ import data_propbankbr as br
 
 
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
-# EMBEDDINGS_PATH = '../{:'.format(config.LANGUAGE_MODEL_DIR)
-
 
 class _EncoderIterator(object):
     def __init__(self, low, high, decoder_fn):
@@ -331,51 +329,18 @@ class PropbankEncoder(object):
 
         return dict(zip(T.keys(), ARG))
 
-
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
         for col in columns:
             val = self.db[col].get(idx, 0)
             d[col] = self._decode_with_value(val, col, encoding)
-        #     base_col = self.columns_mapper.get(col, None)
-        #     x = self.db[col].get(idx, 0)
 
-        #     if base_col and base_col in self.schema_d:
-        #         col_type = self.schema_d[base_col]['type']
-
-        #     if encoding in ('IDX') or not base_col or col_type in ('int', 'bool'):
-        #         d[col] = x
-
-        #     elif encoding in ('CAT'):
-        #         if col_type in ('choice'):
-        #             d[col] = self.hotone[base_col][x]
-        #         elif col_type in ('str'):
-        #             d[col] = self.idx2tok[x]
-        #         else:
-        #             d[col] = x
-
-        #     elif encoding in ('EMB'):
-        #         if col_type in ('str'):
-        #             d[col] = self.embeddings[x]
-        #         elif col_type in ('choice'):
-        #             sz = self.column_dimensions(col, encoding)
-
-        #             d[col] = [1 if i == x else 0 for i in range(sz)]
-        #         else:
-        #             d[col] = x
-
-        #     elif encoding in ('HOT'):
-        #         sz = self.column_dimensions(col, encoding)
-
-        #         d[col] = [1 if i == x else 0 for i in range(sz)]
-        #     else:
-        #         raise Exception('Unhandled exception')
         if len(columns) == 1:
             return d[col]
         else:
             return d
 
-    def _decode_with_value(self, x, column, encoding):        
+    def _decode_with_value(self, x, column, encoding):
         base_col = self.columns_mapper.get(column, None)
 
         if base_col and base_col in self.schema_d:
@@ -396,14 +361,14 @@ class PropbankEncoder(object):
             if col_type in ('str'):
                 return self.embeddings[x]
             elif col_type in ('choice'):
-                sz = self.column_dimensions(col, encoding)
+                sz = self.column_dimensions(column, encoding)
 
                 return [1 if i == x else 0 for i in range(sz)]
             else:
                 return x
 
         elif encoding in ('HOT'):
-            sz = self.column_dimensions(col, encoding)
+            sz = self.column_dimensions(column, encoding)
 
             return [1 if i == x else 0 for i in range(sz)]
         else:
@@ -413,7 +378,7 @@ class PropbankEncoder(object):
 if __name__ == '__main__':
     dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
     dfgs.set_index('INDEX', inplace=True)
-    dfgs['INDEX'] = dfgs.index.tolist() 
+    dfgs['INDEX'] = dfgs.index.tolist()
 
 
     column_files = [

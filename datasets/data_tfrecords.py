@@ -679,11 +679,6 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
         for index, d in propbank_iter:
             if d['P'] != prev_p:
                 if not refresh:
-                    # compute the context feature 'L'
-                    # ex.context.feature['L'].int64_list.value.append(l)
-                    # context = tf.train.Features(
-                    #     feature={'T': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-                    # )
                     context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
                     feature_list = {}
                     for feat, values in feature_lists.items():
@@ -721,13 +716,12 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                                     ]
                                 )
                         else:
-                            raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-                    # ex.feature_lists = tf.train.FeatureLists(feature_list=feature_list)
+                            raise TypeError('Unhandled type {:}'.format(type(test_value)))
+
                     ex = tf.train.SequenceExample(
                         context=  tf.train.Features(feature=context),
                         feature_lists=tf.train.FeatureLists(feature_list=feature_list)
                     )
-                    # import code; code.interact(local=dict(globals(), **locals()))         
 
                     writer.write(ex.SerializeToString())
                 refresh = False
@@ -742,31 +736,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
             for feat, value in d.items():
                 feature_lists[feat].append(value)
-                # if not(feat in helper_d):
-                    # helper_d[feat] = ex.feature_lists.feature_list[feat]
-                    # feature_list[feat] = tf.train.FeatureList()
-                    # feature_lists[feat] = []
 
-
-                # prev = feature_lists[feat]
-                # prev.append(value)
-                # feature_lists[feat] = prev
-
-                # if isinstance(value, list):
-                #     feature_lists[feat].append(value)
-                #     # if isinstance(value[0], float):
-                #     #     helper_d[feat].feature.add().float_list.value.extend(value)                        
-                #     # elif isinstance(value[0], int) or isinstance(value[0], bool):                        
-                #     #     helper_d[feat].feature.add().int64_list.value.extend(value)
-                #     # else:
-                #         raise TypeError('Unhandled type {:}'.format(type(value[0])))
-
-                # elif isinstance(value, float):                    
-                #     helper_d[feat].feature.add().float_list.value.append(value)
-                # elif isinstance(value, int) or isinstance(value, bool):                    
-                #     helper_d[feat].feature.add().int64_list.value.append(value)                    
-                # else:
-                #     raise TypeError('Unhandled type {:}'.format(type(value)))
 
             num_records += 1
             prev_p=d['P']
@@ -835,77 +805,8 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 if __name__== '__main__':
     propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
-    # propbank = Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
-    # UNCOMMENT this to save an updated version
-    # language_models = ['fasttext_s50', 'word2vec_s50', 'wang2vec_s50']
-    # language_models = ['glove_s50']    
 
-    # for lm in language_models:
-    #     propbank = Propbank(language_model=lm)
-    #     propbank.persist('')
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
         tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type)
-
-    # for ds_type in ['test']:
-    #     tfrecords_builder(propbank.iterator(ds_type, column_filters), ds_type)
-
-    # hotencode2sz= {feat: propbank.size(feat)
-    #       for feat, feat_type in conf.META.items() if feat_type == 'hot'}     
-    
-
-    # TEST          
-    # test_sequence_features= ['ID', 'LEMMA']
-    # X_valid, T_valid, L_valid, D_valid= tfrecords_extract(
-    #   'valid', 
-    #   propbank.embeddings, 
-    #   hotencode2sz, 
-    #   input_features=test_sequence_features,
-    #   output_target='T'
-    # )
-    
-    # l1 = L_valid[0]
-    # X1 = X_valid[0,:l1,:]
-    # index = D_valid[0,:l1,0]
-    # i0=0
-    # import code; code.interact(local=dict(globals(), **locals()))         
-    # # print('index:{:}'.format(index))
-    # for j, feature in enumerate(test_sequence_features):              
-    #   for i, idx in  enumerate(index):
-    #       x1 = X1[i,:]
-    #       db_value= propbank.decode(propbank.data[feature][idx], feature)         
-    #       if conf.META[feature] in ['txt']:
-    #           # search for the index
-    #           min_dist=99999999
-    #           min_idx=-1              
-    #           for k in range(propbank.embeddings.shape[0]): 
-    #               check= propbank.embeddings[k]
-    #               norm= np.linalg.norm(check - x1[i0:i0+50])
-    #               if norm < min_dist:
-    #                   min_dist=norm
-    #                   min_idx= k
-    #           tf_value= propbank.idx2tok[min_idx]
-    #           print('min distance:', min_dist)
-    #       if conf.META[feature] in ['int']:
-    #           tf_value= int(x1[i0])
-
-    #       if conf.META[feature] in ['hot']:   
-    #           tf_value= np.argmax(x1[i0:i0+hotencode2sz[feature]])                
-
-    #       print('INDEX:{:}\tFEATURE:{:}\tDB:{:}\tTF{:}\t'.format(idx, feature, db_value, tf_value))               
-
-    #   if conf.META[feature] in ['txt']:
-    #       i0+= 50
-    #   else:
-    #       if conf.META[feature] in ['int']:
-    #           i0+=1
-    #       elif conf.META[feature] in ['hot']:
-    #               i0+= hotencode2sz[feature]          
-    
-    
-
-
-
-
-
