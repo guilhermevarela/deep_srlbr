@@ -28,8 +28,8 @@ import re
 from config import *
 
 # from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
-from data_tfrecords import input_fn, tfrecords_extract
-from models.propbank import Propbank
+from data_tfrecords import input_fn, tfrecords_extract_v2
+# from models.propbank import Propbank
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
@@ -202,8 +202,8 @@ if __name__== '__main__':
     propbank_encoder = PropbankEncoder.recover(PROP_PATH)
     print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
 
-    PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
-    propbank = Propbank.recover(PROP_PATH)
+    # PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
+    # propbank = Propbank.recover(PROP_PATH)
 
     # Updata settings
     LAYER_1_NAME = embeddings_id
@@ -237,12 +237,13 @@ if __name__== '__main__':
         for col in input_sequence_features
     ])
 
-    hotencode2sz = {
-            feat: propbank.size(feat)
-            for feat, feat_type in META.items() if feat_type == 'hot'}
+    # hotencode2sz = {
+    #         feat: propbank.size(feat)
+    #         for feat, feat_type in META.items() if feat_type == 'hot'}
 
-    target_size = hotencode2sz[target]+1
-    target2idx = propbank.onehot[target]
+    # target_size = hotencode2sz[target]+1
+    target_size = columns_dimensions[target]
+    target2idx = propbank_encoder.onehot[target]
 
     load_dir = ''
     outputs_dir = dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)
@@ -252,38 +253,35 @@ if __name__== '__main__':
 
     print('{:}_size:{:}'.format(target, columns_dimensions[target]))
 
-    calculator_train = Evaluator(propbank.column('train', 'T', True))
+    # calculator_train = Evaluator(propbank.column('train', 'T', True))
+    calculator_train = Evaluator(propbank_encoder.column('train', 'T', 'CAT'))
     evaluator_train = EvaluatorConll(
-        'train', 
-        propbank.column('train', 'S', True),
-        propbank.column('train', 'P', True),
-        propbank.column('train', 'PRED', True),
-        propbank.column('train', 'ARG', True),
+        'train',
+        propbank_encoder.column('train', 'S', 'CAT'),
+        propbank_encoder.column('train', 'P', 'CAT'),
+        propbank_encoder.column('train', 'PRED', 'CAT'),
+        propbank_encoder.column('train', 'ARG', 'CAT'),
         outputs_dir
     )
 
-    X_train, T_train, mb_train, D_train = tfrecords_extract(
+    X_train, T_train, mb_train, D_train = tfrecords_extract_v2(
         'train', 
-        propbank.embeddings, 
-        hotencode2sz, 
         input_sequence_features, 
         target
     )
     
-    calculator_valid=Evaluator(propbank.column('valid', 'T', True))    
+    calculator_valid=Evaluator(propbank_encoder.column('valid', 'T', 'CAT'))
     evaluator_valid= EvaluatorConll(
         'valid', 
-        propbank.column('valid', 'S', True),
-        propbank.column('valid', 'P', True),
-        propbank.column('valid', 'PRED', True),
-        propbank.column('valid', 'ARG', True),
-        outputs_dir     
+        propbank_encoder.column('valid', 'S', 'CAT'),
+        propbank_encoder.column('valid', 'P', 'CAT'),
+        propbank_encoder.column('valid', 'PRED', 'CAT'),
+        propbank_encoder.column('valid', 'ARG', 'CAT'),
+        outputs_dir
     )
     
-    X_valid, T_valid, mb_valid, D_valid=tfrecords_extract(
+    X_valid, T_valid, mb_valid, D_valid=tfrecords_extract_v2(
         'valid', 
-        propbank.embeddings, 
-        hotencode2sz, 
         input_sequence_features, 
         target
     )
@@ -348,7 +346,7 @@ if __name__== '__main__':
                     [inputs, targets, sequence_length, descriptors]
                 )
 
-                # import code; code.interact(local=dict(globals(), **locals()))
+
                 _, Yhat, loss = session.run(
                     [optimizer_op, viterbi_sequence, cost_op],
                     feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
@@ -364,24 +362,28 @@ if __name__== '__main__':
                                     minibatch: mb_train
                                    }
                     )
+                
+                    index = D_train[:, :, 0].astype(np.int32)
 
-                    index = D_train[:, :, 1]
-                    predictions_d = propbank.tensor2column(
+                    predictions_d = propbank_encoder.tensor2column(
                         index, Yhat, mb_train, 'T')
                     acc_train = calculator_train.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
-                    evaluator_train.evaluate( predictions_d, True )
+
+                    predictions_d = propbank_encoder.t2arg(predictions_d)
+                    
+
+                    evaluator_train.evaluate( predictions_d, True)
 
                     Yhat = session.run(
                         viterbi_sequence,
                         feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
                     )
 
-                    index = D_valid[:, :, 0]
-                    predictions_d = propbank.tensor2column(
+                    index = D_valid[:, :, 0].astype(np.int32)
+                    predictions_d = propbank_encoder.tensor2column(
                         index, Yhat, mb_valid, 'T')
                     acc_valid = calculator_valid.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
+                    predictions_d = propbank_encoder.t2arg(predictions_d)
                     evaluator_valid.evaluate(predictions_d, False)
 
                     print('Iter={:5d}'.format(step + 1),

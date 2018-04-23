@@ -83,6 +83,43 @@ def tfrecords_extract(ds_type, embeddings, feat2size,
 
     return inputs, targets, lengths, others
 
+def tfrecords_extract_v2(ds_type,
+                        input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES,
+                        output_target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET):
+    '''
+        Fetches validation set and retuns as a numpy array
+        args:
+
+        returns: 
+            features    .:
+            targets     .: 
+            lengths     .: 
+            others      .: 
+    '''     
+    if not(ds_type in ['train', 'valid', 'test']):
+        buff= 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+        raise ValueError(buff)
+    else:
+        if ds_type in ['train']:
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH 
+            dataset_size=conf.DATASET_TRAIN_SIZE
+        if ds_type in ['test']:
+            dataset_path=   conf.DATASET_TEST_V2_PATH
+            dataset_size=conf.DATASET_TEST_SIZE
+        if ds_type in ['valid']:    
+            dataset_path=   conf.DATASET_VALID_V2_PATH
+            dataset_size=conf.DATASET_VALID_SIZE
+
+    inputs, targets, lengths, others= tensor2numpy_v2(
+        dataset_path, 
+        dataset_size,
+        input_sequence_features=input_features, 
+        output_sequence_target=output_target, 
+        msg='input_{:}: done converting {:} set to numpy'.format(ds_type, ds_type)
+    )   
+
+    return inputs, targets, lengths, others    
+
 def tensor2numpy(dataset_path, dataset_size, 
                                 embeddings, feat2size, input_sequence_features, 
                                 output_sequence_target,msg='tensor2numpy: done'):   
@@ -135,6 +172,56 @@ def tensor2numpy(dataset_path, dataset_size,
             coord.join(threads)
     return inputs, targets, times, descriptors      
 
+def tensor2numpy_v2(dataset_path, dataset_size,
+                     input_sequence_features,
+                     output_sequence_target,
+                     msg='tensor2numpy: done'):
+    '''
+        Converts a .tfrecord into a numpy representation of a tensor
+        args:
+
+        returns: 
+            features    .:
+            targets     .: 
+            lengths     .: 
+            others      .: 
+    ''' 
+    # other_features=['ARG_0', 'P', 'IDX', 'FUNC']
+    # input_sequence_features=list(set(conf.SEQUENCE_FEATURES).intersection(set(filter_features)) - set(other_features)- set(['targets']))
+
+
+    with tf.name_scope('pipeline'):
+        X, T, L, D= input_fn(
+            [dataset_path], 
+            dataset_size, 
+            1, 
+            features=input_sequence_features,
+            target=output_sequence_target
+        )
+
+    init_op = tf.group( 
+        tf.global_variables_initializer(),
+        tf.local_variables_initializer()
+    )
+
+    with tf.Session() as session: 
+        session.run(init_op) 
+        coord= tf.train.Coordinator()
+        threads= tf.train.start_queue_runners(coord=coord)
+        
+        # This first loop instanciates validation set
+        try:
+            while not coord.should_stop():              
+                inputs, targets, times, descriptors=session.run([X, T, L, D])                   
+
+        except tf.errors.OutOfRangeError:
+            print(msg)          
+
+        finally:
+            #When done, ask threads to stop
+            coord.request_stop()            
+            coord.join(threads)
+    return inputs, targets, times, descriptors      
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_with_embeddings_fn(filenames, batch_size,  num_epochs, 
@@ -236,8 +323,7 @@ def input_fn(filenames, batch_size, num_epochs,
         dynamic_pad=True
     )
     return X_batch, T_batch, L_batch, D_batch
-    # return X_batch, T_batch, L_batch
-    # return X_batch, L_batch
+
 
 
 
@@ -370,6 +456,7 @@ def _process_v2( context_features, sequence_features,
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
+    print('_process_v2:{:}'.format(sequence_features.keys()))
     for key in conf.SEQUENCE_FEATURES_V2:
     # for key in sel:
 
@@ -475,7 +562,8 @@ def _read_and_decode_v2(filename_queue):
     }
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
+        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1',
+         'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
     })
 
     print(TF_SEQUENCE_FEATURES_V2)

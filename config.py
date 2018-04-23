@@ -31,8 +31,10 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 	'PRED_1', 'T']
 
 
-SEQUENCE_FEATURES_V2 = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 
-'ID', 'LEMMA', 'PRED_MARKER', 'T', 'P', 'INDEX']
+SEQUENCE_FEATURES_V2 = ['FORM', 
+'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1', 
+'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3',
+'ID', 'LEMMA', 'PRED_MARKER', 'T', 'INDEX', 'P']
 
 
 SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',  

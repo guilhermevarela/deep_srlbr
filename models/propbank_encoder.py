@@ -11,10 +11,11 @@ import pandas as pd
 import sys
 import pickle
 sys.path.append('..')
+sys.path.append('../datasets')
 import config
 from collections import OrderedDict, defaultdict
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
-
+import data_propbankbr as br
 
 
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
@@ -160,7 +161,7 @@ class PropbankEncoder(object):
             _errmessage = 'encoding {:} not in {:}'.format(encoding, self.encodings)
             raise ValueError(_errmessage)
         else:
-            fn = lambda x: self._decode(x, filter_columns, encoding)
+            fn = lambda x: self._decode_with_idx(x, filter_columns, encoding)
 
         return _EncoderIterator(low, high, fn)
 
@@ -213,7 +214,7 @@ class PropbankEncoder(object):
                 ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
 
         return {
-                x:self._decode(x,[column], encoding)
+                x:self._decode_with_idx(x,[column], encoding)
                 for x, p in self.db['P'].items()
                 if p > lb and p <= ub
                 }
@@ -281,44 +282,132 @@ class PropbankEncoder(object):
                     #Boolean values, numerical values come here
                     self.db[col] = OrderedDict(dbpt_d[col])
 
-    def _decode(self, x, columns, encoding):
+    def tensor2column(self, tensor_index, tensor_values, times, column):
+        '''
+            Converts a zero padded tensor to a dict
+        
+            Tensors must have the following shape [DATABASE_SIZE, MAX_TIME] with
+                zeros if for t=0,....,MAX_TIME t>times[i] for i=0...DATABASE_SIZE 
+
+        args:
+            tensor_index  .: with db index
+
+            tensor_values .: with db int values representations
+
+            times  .: list<int> [DATABASE_SIZE] holding the times for each proposition
+
+            column .: str           db column name
+
+        returns:
+            column .: dict<int, str> keys in db_index, values in columns or values in targets
+        '''
+        if not(column) in self.db:
+            buff= '{:} must be in {:}'.format(column, self.db)
+            raise KeyError(buff)
+        
+        # import code; code.interact(local=dict(globals(), **locals()))
+        index=[item  for i, sublist in enumerate(tensor_index.tolist())
+            for j, item in enumerate(sublist) if j < times[i]]
+
+        values = [self.hotone[column][item]
+            for i, sublist in enumerate(tensor_values.tolist())
+            for j, item in enumerate(sublist) if j < times[i]]
+
+        return dict(zip(index, values))
+
+    def t2arg(self, T):
+        '''
+            Converts column T into ARG
+
+            args:
+                T .: dict<int, str> keys in db_index, values: prediction label
+
+            args:
+                ARG .: dict<int, str> keys in db_index, values in target label
+        '''        
+        propositions= {idx: self.db['P'][idx] for idx in T}
+
+        ARG = br.propbankbr_t2arg(propositions.values(), T.values())
+
+        return dict(zip(T.keys(), ARG))
+
+
+    def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
         for col in columns:
-            base_col = self.columns_mapper.get(col, None)
-            obsval = self.db[col].get(x, 0)
+            val = self.db[col].get(idx, 0)
+            d[col] = self._decode_with_value(val, col, encoding)
+        #     base_col = self.columns_mapper.get(col, None)
+        #     x = self.db[col].get(idx, 0)
 
-            if base_col and base_col in self.schema_d:
-                col_type = self.schema_d[base_col]['type']
+        #     if base_col and base_col in self.schema_d:
+        #         col_type = self.schema_d[base_col]['type']
 
-            if encoding in ('IDX') or not base_col or col_type in ('int', 'bool'):
-                d[col] = obsval
+        #     if encoding in ('IDX') or not base_col or col_type in ('int', 'bool'):
+        #         d[col] = x
 
-            elif encoding in ('CAT'):
-                if col_type in ('choice'):
-                    d[col] = self.hotone[base_col][obsval]
-                elif col_type in ('str'):
-                    d[col] = self.idx2tok[obsval]
-                else:
-                    d[col] = obsval
+        #     elif encoding in ('CAT'):
+        #         if col_type in ('choice'):
+        #             d[col] = self.hotone[base_col][x]
+        #         elif col_type in ('str'):
+        #             d[col] = self.idx2tok[x]
+        #         else:
+        #             d[col] = x
 
-            elif encoding in ('EMB'):
-                if col_type in ('str'):
-                    d[col] = self.embeddings[obsval]
-                elif col_type in ('choice'):
-                    sz = self.column_dimensions(col, encoding)
+        #     elif encoding in ('EMB'):
+        #         if col_type in ('str'):
+        #             d[col] = self.embeddings[x]
+        #         elif col_type in ('choice'):
+        #             sz = self.column_dimensions(col, encoding)
 
-                    d[col] = [1 if i == obsval else 0 for i in range(sz)]
-                else:
-                    d[col] = obsval
+        #             d[col] = [1 if i == x else 0 for i in range(sz)]
+        #         else:
+        #             d[col] = x
 
-            elif encoding in ('HOT'):
+        #     elif encoding in ('HOT'):
+        #         sz = self.column_dimensions(col, encoding)
+
+        #         d[col] = [1 if i == x else 0 for i in range(sz)]
+        #     else:
+        #         raise Exception('Unhandled exception')
+        if len(columns) == 1:
+            return d[col]
+        else:
+            return d
+
+    def _decode_with_value(self, x, column, encoding):        
+        base_col = self.columns_mapper.get(column, None)
+
+        if base_col and base_col in self.schema_d:
+            col_type = self.schema_d[base_col]['type']
+
+        if encoding in ('IDX') or not base_col or col_type in ('int', 'bool'):
+            return x
+
+        elif encoding in ('CAT'):
+            if col_type in ('choice'):
+                return self.hotone[base_col][x]
+            elif col_type in ('str'):
+                return self.idx2tok[x]
+            else:
+                return x
+
+        elif encoding in ('EMB'):
+            if col_type in ('str'):
+                return self.embeddings[x]
+            elif col_type in ('choice'):
                 sz = self.column_dimensions(col, encoding)
 
-                d[col] = [1 if i == obsval else 0 for i in range(sz)]
+                return [1 if i == x else 0 for i in range(sz)]
             else:
-                raise Exception('Unhandled exception')
+                return x
 
-        return d
+        elif encoding in ('HOT'):
+            sz = self.column_dimensions(col, encoding)
+
+            return [1 if i == x else 0 for i in range(sz)]
+        else:
+            raise Exception('Unhandled exception')
 
 
 if __name__ == '__main__':
@@ -339,7 +428,7 @@ if __name__ == '__main__':
 
     propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
     print(propbank_encoder.db.keys())
-    # propbank_encoder.persist('../datasets/binaries/', filename='deep')
+    propbank_encoder.persist('../datasets/binaries/', filename='deep')
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep.pickle')
     # filter_columns = ['P', 'GPOS', 'FORM']
     # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
