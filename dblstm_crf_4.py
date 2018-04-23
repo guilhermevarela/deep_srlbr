@@ -27,8 +27,10 @@ import re
 # this is not recommended but where just importing a bunch of constants
 from config import *
 
-from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
+# from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
+from data_tfrecords import input_fn, tfrecords_extract
 from models.propbank import Propbank
+from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist
@@ -195,6 +197,11 @@ if __name__== '__main__':
     target = 'T'
 
     PROP_DIR = './datasets/binaries/'
+    
+    PROP_PATH = '{:}{:}'.format(PROP_DIR, 'deep.pickle')
+    propbank_encoder = PropbankEncoder.recover(PROP_PATH)
+    print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
+
     PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
     propbank = Propbank.recover(PROP_PATH)
 
@@ -203,21 +210,33 @@ if __name__== '__main__':
     HIDDEN_SIZE = hidden_size
     BATCH_SIZE = batch_size
     EMBEDDING_SIZE = embeddings_size
-    INPUT_TRAIN_PATH = '{:}{:}/dbtrain_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
-    INPUT_VALID_PATH = '{:}{:}/dbvalid_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
+    # INPUT_TRAIN_PATH = '{:}{:}/dbtrain_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
+    # INPUT_VALID_PATH = '{:}{:}/dbvalid_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
+    INPUT_TRAIN_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
+    INPUT_VALID_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
     # SANITY CHECK 1: ALL LINGUISTIC FEATURES
     # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
     # SANITY CHECK 2: ARG
-    input_sequence_features = ['ID', 'LEMMA', 'M_R', 'PRED_1']
+    # input_sequence_features = ['ID', 'LEMMA', 'M_R', 'PRED_1']
+    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P+0']
+
     if ctx_p > 0:
-        input_sequence_features+=['CTX_P{:+d}'.format(i) 
+        # input_sequence_features+=['CTX_P{:+d}'.format(i) 
+        #     for i in range(-ctx_p,ctx_p+1) if i !=0 ]
+        input_sequence_features+=['FORM_CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]
 
 
-    feature_size = propbank.size(input_sequence_features)
+    # feature_size = propbank.size(input_sequence_features)
+    columns_dimensions = propbank_encoder.columns_dimensions('EMB')
+    feature_size = sum([
+        columns_dimensions[col]
+        for col in input_sequence_features
+    ])
+
     hotencode2sz = {
             feat: propbank.size(feat)
             for feat, feat_type in META.items() if feat_type == 'hot'}
@@ -231,7 +250,7 @@ if __name__== '__main__':
     print('outputs_dir', outputs_dir)
     outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-    print('{:}_size:{:}'.format(target, hotencode2sz[target]))
+    print('{:}_size:{:}'.format(target, columns_dimensions[target]))
 
     calculator_train = Evaluator(propbank.column('train', 'T', True))
     evaluator_train = EvaluatorConll(
@@ -250,7 +269,7 @@ if __name__== '__main__':
         input_sequence_features, 
         target
     )
-
+    
     calculator_valid=Evaluator(propbank.column('valid', 'T', True))    
     evaluator_valid= EvaluatorConll(
         'valid', 
@@ -260,7 +279,7 @@ if __name__== '__main__':
         propbank.column('valid', 'ARG', True),
         outputs_dir     
     )
-
+    
     X_valid, T_valid, mb_valid, D_valid=tfrecords_extract(
         'valid', 
         propbank.embeddings, 
@@ -283,16 +302,10 @@ if __name__== '__main__':
 
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
-        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
-            [DATASET_TRAIN_PATH], batch_size, num_epochs,
-            propbank.embeddings, hotencode2sz,
+        # inputs, targets, sequence_length, descriptors = input_fn(
+        inputs, targets, sequence_length = input_fn(
+            [DATASET_TRAIN_V2_PATH], batch_size, num_epochs,
             input_sequence_features, target)
-
-        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
-            [DATASET_TRAIN_PATH], batch_size, num_epochs,
-            propbank.embeddings, hotencode2sz,
-            input_sequence_features, target)
-
 
     with tf.name_scope('predict'):
         predict_op = forward(X, minibatch, hidden_size)
@@ -332,59 +345,64 @@ if __name__== '__main__':
 
         try:
             while not coord.should_stop():
-                X_batch, Y_batch, mb, D_batch = session.run(
-                    [inputs, targets, sequence_length, descriptors]
+                # X_batch, Y_batch, mb, D_batch = session.run(
+                #     [inputs, targets, sequence_length, descriptors]
+                # )
+                X_batch = session.run(
+                    [inputs]
                 )
 
-                _, Yhat, loss = session.run(
-                    [optimizer_op, viterbi_sequence, cost_op],
-                    feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
-                )
+                import code; code.interact(local=dict(globals(), **locals()))
 
-                total_loss += loss
-                if (step + 1) % DISPLAY_STEP == 0:
-                    # This will be caugth by input_with_embeddings_fn
-                    Yhat = session.run(
-                        viterbi_sequence,
-                        feed_dict={ X: X_train,
-                                    T: T_train,
-                                    minibatch: mb_train
-                                   }
-                    )
+                # _, Yhat, loss = session.run(
+                #     [optimizer_op, viterbi_sequence, cost_op],
+                #     feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
+                # )
+ 
+                # total_loss += loss
+                # if (step + 1) % DISPLAY_STEP == 0:
+                #     # This will be caugth by input_with_embeddings_fn
+                #     Yhat = session.run(
+                #         viterbi_sequence,
+                #         feed_dict={ X: X_train,
+                #                     T: T_train,
+                #                     minibatch: mb_train
+                #                    }
+                #     )
 
-                    index = D_train[:, :, 0]
-                    predictions_d = propbank.tensor2column(
-                        index, Yhat, mb_train, 'T')
-                    acc_train = calculator_train.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
-                    evaluator_train.evaluate( predictions_d, True )
+                #     index = D_train[:, :, 0]
+                #     predictions_d = propbank.tensor2column(
+                #         index, Yhat, mb_train, 'T')
+                #     acc_train = calculator_train.accuracy(predictions_d)
+                #     predictions_d = propbank.t2arg(predictions_d)
+                #     evaluator_train.evaluate( predictions_d, True )
 
-                    Yhat = session.run(
-                        viterbi_sequence,
-                        feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
-                    )
+                #     Yhat = session.run(
+                #         viterbi_sequence,
+                #         feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
+                #     )
 
-                    index = D_valid[:, :, 0]
-                    predictions_d = propbank.tensor2column(
-                        index, Yhat, mb_valid, 'T')
-                    acc_valid = calculator_valid.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
-                    evaluator_valid.evaluate(predictions_d, False)
+                #     index = D_valid[:, :, 0]
+                #     predictions_d = propbank.tensor2column(
+                #         index, Yhat, mb_valid, 'T')
+                #     acc_valid = calculator_valid.accuracy(predictions_d)
+                #     predictions_d = propbank.t2arg(predictions_d)
+                #     evaluator_valid.evaluate(predictions_d, False)
 
-                    print('Iter={:5d}'.format(step + 1),
-                          'train-f1 {:.2f}%'.format(evaluator_train.f1),
-                          'avg acc {:.2f}%'.format(100 * acc_train),
-                          'valid-f1 {:.2f}%'.format(evaluator_valid.f1),
-                          'valid acc {:.2f}%'.format(100 * acc_valid),
-                          'avg. cost {:.6f}'.format(total_loss / DISPLAY_STEP))
-                    total_loss = 0.0
-                    total_acc = 0.0
+                #     print('Iter={:5d}'.format(step + 1),
+                #           'train-f1 {:.2f}%'.format(evaluator_train.f1),
+                #           'avg acc {:.2f}%'.format(100 * acc_train),
+                #           'valid-f1 {:.2f}%'.format(evaluator_valid.f1),
+                #           'valid acc {:.2f}%'.format(100 * acc_valid),
+                #           'avg. cost {:.6f}'.format(total_loss / DISPLAY_STEP))
+                #     total_loss = 0.0
+                #     total_acc = 0.0
 
-                    if best_validation_rate < evaluator_valid.f1:
-                        best_validation_rate = evaluator_valid.f1
-                        evaluator_valid.evaluate(predictions_d, True)
+                #     if best_validation_rate < evaluator_valid.f1:
+                #         best_validation_rate = evaluator_valid.f1
+                #         evaluator_valid.evaluate(predictions_d, True)
 
-                step += 1
+                # step += 1
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')

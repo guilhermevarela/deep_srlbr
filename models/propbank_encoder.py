@@ -173,9 +173,14 @@ class PropbankEncoder(object):
             return 1
 
         col_type = self.schema_d[base_col]['type']
+        if not col_type:
+            return 1
+
         if encoding in ('HOT'):
-            if col_type in ('str', 'choice'):
-                return len(self.schema_d[base_col]['domain'])
+            if col_type in ('str'):
+                return len(self.lexicon)
+            elif col_type in ('choice'):
+                return len(self.onehot[base_col])
             else:
                 return 1
 
@@ -183,9 +188,35 @@ class PropbankEncoder(object):
             if col_type in ('str'):
                 return self.embeddings_sz
             elif col_type in ('choice'):
-                return len(self.schema_d[base_col]['domain'])
+                return len(self.onehot[base_col])
             else:
                 return 1
+
+    def columns_dimensions(self, encoding):
+        return {
+            col: self.column_dimensions(col, encoding) for col in self.columns
+        }
+
+    def column(self, ds_type, column, encoding):
+        if not(ds_type in ['train', 'valid', 'test']):
+            errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+            raise ValueError(errmessage)
+        else:
+            if ds_type in ['train']:
+                lb = 0
+                ub = config.DATASET_TRAIN_SIZE
+            elif ds_type in ['valid']:
+                lb = config.DATASET_TRAIN_SIZE
+                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+            else:
+                lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+
+        return {
+                x:self._decode(x,[column], encoding)
+                for x, p in self.db['P'].items()
+                if p > lb and p <= ub
+                }
 
     def _process_embeddings(self, language_model, verbose):
         # computes embeddings
@@ -291,29 +322,31 @@ class PropbankEncoder(object):
 
 
 if __name__ == '__main__':
-    # dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
-    # dfgs.set_index('INDEX', inplace=True)
+    dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
+    dfgs.set_index('INDEX', inplace=True)
+    dfgs['INDEX'] = dfgs.index.tolist() 
 
 
-    # column_files = [
-    #     '../datasets/csvs/column_predmarker/predicate_marker.csv',
-    #     '../datasets/csvs/column_shifts_ctx_p/form.csv',
-    #     '../datasets/csvs/column_t/t.csv'
-    # ]
+    column_files = [
+        '../datasets/csvs/column_predmarker/predicate_marker.csv',
+        '../datasets/csvs/column_shifts_ctx_p/form.csv',
+        '../datasets/csvs/column_t/t.csv'
+    ]
 
-    # for col_f in column_files:
-    #     _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
-    #     dfgs = pd.concat((dfgs, _df), axis=1)
+    for col_f in column_files:
+        _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
+        dfgs = pd.concat((dfgs, _df), axis=1)
 
-    # propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
+    propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
+    print(propbank_encoder.db.keys())
     # propbank_encoder.persist('../datasets/binaries/', filename='deep')
-    propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep.pickle')
-    filter_columns = ['P', 'GPOS', 'FORM']
-    for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
-        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep.pickle')
+    # filter_columns = ['P', 'GPOS', 'FORM']
+    # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
+    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
 
-    for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
-        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+    # for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
+    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
 
-    for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
-        print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
+    # for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
+    #     print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))

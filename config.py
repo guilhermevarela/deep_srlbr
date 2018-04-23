@@ -14,6 +14,10 @@ DATASET_TRAIN_PATH= '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_PATH= '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_PATH = '{:}dbtest_pt.tfrecords'.format(INPUT_DIR)
 
+DATASET_TRAIN_V2_PATH= '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_V2_PATH= '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_TEST_V2_PATH = '{:}dbtest_pt_v2.tfrecords'.format(INPUT_DIR)
+
 DATASET_SIZE= 5931
 DATASET_TRAIN_SIZE= 5099
 DATASET_VALID_SIZE= 569
@@ -25,6 +29,14 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 	'CTREE', 'PRED',  'ARG', 'CTX_P-3', 'CTX_P-2', 
 	'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3',  'M_R', 
 	'PRED_1', 'T']
+
+# SEQUENCE_FEATURES_V2=      [ 'ID', 'P',
+# 	'FORM', 'LEMMA', 'GPOS', 'MORF',  'DTREE', 'FUNC', 
+# 	'CTREE', 'PRED',  'ARG', 'PRED_MARKER'
+# 	'FORM_CTX_P-1', 'FORM_CTX_P+1', 'FORM_CTX_P+0', 'T']	
+
+SEQUENCE_FEATURES_V2 = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 
+'ID', 'LEMMA', 'PRED_MARKER', 'T', 'P']
 
 SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',  
 	'txt', 'hot', 'hot', 'hot', 'hot', 
