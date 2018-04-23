@@ -219,26 +219,25 @@ def input_fn(filenames, batch_size, num_epochs,
     context_features, sequence_features = _read_and_decode_v2(filename_queue)   
     
 
-    X, T, L = _process_v2(context_features, 
+    X, T, L, D = _process_v2(context_features, 
         sequence_features,
         features,
-        target,       
+        target,
     )   
     
     min_after_dequeue = 10000
     capacity = min_after_dequeue + 3 * batch_size
 
     # https://www.tensorflow.org/api_docs/python/tf/train/batch
-    # X_batch, T_batch, L_batch, D_batch =tf.train.batch(
-    #     [X, T, L, D], 
-    X_batch, T_batch, L_batch = tf.train.batch(
-        [X, T, L], 
-        batch_size=batch_size, 
-        capacity=capacity, 
+    X_batch, T_batch, L_batch, D_batch =tf.train.batch(
+        [X, T, L, D], 
+        batch_size=batch_size,
+        capacity=capacity,
         dynamic_pad=True
     )
-    # return X_batch, T_batch, L_batch, D_batch
-    return X_batch, T_batch, L_batch
+    return X_batch, T_batch, L_batch, D_batch
+    # return X_batch, T_batch, L_batch
+    # return X_batch, L_batch
 
 
 
@@ -371,9 +370,8 @@ def _process_v2( context_features, sequence_features,
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
-    print('extract features{:}'.format(sequence_features.keys()))
-    # for key in conf.SEQUENCE_FEATURES_V2:
-    for key in sel:
+    for key in conf.SEQUENCE_FEATURES_V2:
+    # for key in sel:
 
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])     
         
@@ -419,17 +417,18 @@ def _process_v2( context_features, sequence_features,
         if key in features:
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
-            # T= tf.squeeze(dense_tensor1, 1, name='squeeze_T')
-            T = dense_tensor1
+            T = dense_tensor
         else:
+            print('descriptors: {:}'.format(key))
             sequence_descriptors.append(dense_tensor1)
 
     #UNCOMMENT
     # X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
     X = tf.concat(sequence_inputs, 1)
-    # D = tf.concat(sequence_descriptors, 1)
+    D = tf.concat(sequence_descriptors, 1)
     # return X, T, L, D
-    return X, T, L
+    return X, T, L, D
+
 
 def _read_and_decode(filename_queue):
     '''
@@ -472,11 +471,11 @@ def _read_and_decode_v2(filename_queue):
     '''
     TF_SEQUENCE_FEATURES_V2 = {
         key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER']
+        for key in ['ID', 'PRED_MARKER', 'P','INDEX', 'T']
     }
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'T']
+        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     })
 
     print(TF_SEQUENCE_FEATURES_V2)
@@ -597,7 +596,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                     # context = tf.train.Features(
                     #     feature={'T': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
                     # )
-                    context = {'T': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
+                    context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
                     feature_list = {}
                     for feat, values in feature_lists.items():
                         test_value = values[0]
@@ -697,7 +696,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
         # write the one last example        
-        context = {'T': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
+        context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
         feature_list = {}
         for feat, values in feature_lists.items():
             test_value = values[0]

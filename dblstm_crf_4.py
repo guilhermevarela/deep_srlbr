@@ -241,7 +241,7 @@ if __name__== '__main__':
             feat: propbank.size(feat)
             for feat, feat_type in META.items() if feat_type == 'hot'}
 
-    target_size = hotencode2sz[target]
+    target_size = hotencode2sz[target]+1
     target2idx = propbank.onehot[target]
 
     load_dir = ''
@@ -302,8 +302,7 @@ if __name__== '__main__':
 
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
-        # inputs, targets, sequence_length, descriptors = input_fn(
-        inputs, targets, sequence_length = input_fn(
+        inputs, targets, sequence_length, descriptors = input_fn(
             [DATASET_TRAIN_V2_PATH], batch_size, num_epochs,
             input_sequence_features, target)
 
@@ -313,7 +312,7 @@ if __name__== '__main__':
         Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
 
     with tf.name_scope('xent'):
-        # Compute the log-likelihood of the gold sequences and keep the transition
+        # Compute the log-likelihood of the gold sequences and xkeep the transition
         # params for inference at test time.
         log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
             predict_op, Tflat, minibatch)
@@ -345,64 +344,60 @@ if __name__== '__main__':
 
         try:
             while not coord.should_stop():
-                # X_batch, Y_batch, mb, D_batch = session.run(
-                #     [inputs, targets, sequence_length, descriptors]
-                # )
-                X_batch = session.run(
-                    [inputs]
+                X_batch, Y_batch, mb, D_batch = session.run(
+                    [inputs, targets, sequence_length, descriptors]
                 )
 
-                import code; code.interact(local=dict(globals(), **locals()))
+                # import code; code.interact(local=dict(globals(), **locals()))
+                _, Yhat, loss = session.run(
+                    [optimizer_op, viterbi_sequence, cost_op],
+                    feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
+                )
 
-                # _, Yhat, loss = session.run(
-                #     [optimizer_op, viterbi_sequence, cost_op],
-                #     feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
-                # )
- 
-                # total_loss += loss
-                # if (step + 1) % DISPLAY_STEP == 0:
-                #     # This will be caugth by input_with_embeddings_fn
-                #     Yhat = session.run(
-                #         viterbi_sequence,
-                #         feed_dict={ X: X_train,
-                #                     T: T_train,
-                #                     minibatch: mb_train
-                #                    }
-                #     )
+                total_loss += loss
+                if (step + 1) % DISPLAY_STEP == 0:
+                    # This will be caugth by input_with_embeddings_fn
+                    Yhat = session.run(
+                        viterbi_sequence,
+                        feed_dict={ X: X_train,
+                                    T: T_train,
+                                    minibatch: mb_train
+                                   }
+                    )
 
-                #     index = D_train[:, :, 0]
-                #     predictions_d = propbank.tensor2column(
-                #         index, Yhat, mb_train, 'T')
-                #     acc_train = calculator_train.accuracy(predictions_d)
-                #     predictions_d = propbank.t2arg(predictions_d)
-                #     evaluator_train.evaluate( predictions_d, True )
+                    index = D_train[:, :, 1]
+                    predictions_d = propbank.tensor2column(
+                        index, Yhat, mb_train, 'T')
+                    acc_train = calculator_train.accuracy(predictions_d)
+                    predictions_d = propbank.t2arg(predictions_d)
+                    evaluator_train.evaluate( predictions_d, True )
 
-                #     Yhat = session.run(
-                #         viterbi_sequence,
-                #         feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
-                #     )
+                    Yhat = session.run(
+                        viterbi_sequence,
+                        feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
+                    )
 
-                #     index = D_valid[:, :, 0]
-                #     predictions_d = propbank.tensor2column(
-                #         index, Yhat, mb_valid, 'T')
-                #     acc_valid = calculator_valid.accuracy(predictions_d)
-                #     predictions_d = propbank.t2arg(predictions_d)
-                #     evaluator_valid.evaluate(predictions_d, False)
+                    index = D_valid[:, :, 0]
+                    predictions_d = propbank.tensor2column(
+                        index, Yhat, mb_valid, 'T')
+                    acc_valid = calculator_valid.accuracy(predictions_d)
+                    predictions_d = propbank.t2arg(predictions_d)
+                    evaluator_valid.evaluate(predictions_d, False)
 
-                #     print('Iter={:5d}'.format(step + 1),
-                #           'train-f1 {:.2f}%'.format(evaluator_train.f1),
-                #           'avg acc {:.2f}%'.format(100 * acc_train),
-                #           'valid-f1 {:.2f}%'.format(evaluator_valid.f1),
-                #           'valid acc {:.2f}%'.format(100 * acc_valid),
-                #           'avg. cost {:.6f}'.format(total_loss / DISPLAY_STEP))
-                #     total_loss = 0.0
-                #     total_acc = 0.0
+                    print('Iter={:5d}'.format(step + 1),
+                          'train-f1 {:.2f}%'.format(evaluator_train.f1),
+                          'avg acc {:.2f}%'.format(100 * acc_train),
+                          'valid-f1 {:.2f}%'.format(evaluator_valid.f1),
+                          'valid acc {:.2f}%'.format(100 * acc_valid),
+                          'avg. cost {:.6f}'.format(total_loss / DISPLAY_STEP))
+                    total_loss = 0.0
+                    total_acc = 0.0
 
-                #     if best_validation_rate < evaluator_valid.f1:
-                #         best_validation_rate = evaluator_valid.f1
-                #         evaluator_valid.evaluate(predictions_d, True)
+                    if best_validation_rate < evaluator_valid.f1:
+                        best_validation_rate = evaluator_valid.f1
+                        evaluator_valid.evaluate(predictions_d, True)
 
-                # step += 1
+                step += 1
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')
