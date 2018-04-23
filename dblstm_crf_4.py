@@ -27,8 +27,8 @@ import re
 # this is not recommended but where just importing a bunch of constants
 from config import *
 
-from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
-from models.propbank import Propbank
+from data_tfrecords import input_fn, tfrecords_extract_v2
+from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist
@@ -77,13 +77,13 @@ def dblstm_1(X, seqlens, sz):
             time_major=False
         )
         outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-        
+
     return outputs_bw, outputs_fw
 
 
 def dblstm_n(outputs, h, seqlens, sz):
 
-    
+
     with tf.variable_scope('fw'):
         inputs_fw = tf.concat((outputs, h), axis=2)
         # CREATE / REUSE FWD/BWD CELL
@@ -97,7 +97,7 @@ def dblstm_n(outputs, h, seqlens, sz):
             time_major=False
         )
 
-    with tf.variable_scope('bw'):           
+    with tf.variable_scope('bw'):
         cell_bw=    get_cell(sz)
         inputs_bw = tf.concat((outputs_fw, outputs), axis=2)
         inputs_bw = tf.reverse_sequence(inputs_bw, seqlens, batch_axis=0, seq_axis=1)
@@ -195,35 +195,38 @@ if __name__== '__main__':
     target = 'T'
 
     PROP_DIR = './datasets/binaries/'
-    PROP_PATH = '{:}{:}'.format(PROP_DIR, 'db_pt_LEMMA_{:}.pickle'.format(embeddings_id))
-    propbank = Propbank.recover(PROP_PATH)
+    
+    PROP_PATH = '{:}{:}'.format(PROP_DIR, 'deep.pickle')
+    propbank_encoder = PropbankEncoder.recover(PROP_PATH)
+    print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
 
     # Updata settings
     LAYER_1_NAME = embeddings_id
     HIDDEN_SIZE = hidden_size
     BATCH_SIZE = batch_size
     EMBEDDING_SIZE = embeddings_size
-    INPUT_TRAIN_PATH = '{:}{:}/dbtrain_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
-    INPUT_VALID_PATH = '{:}{:}/dbvalid_pt.tfrecords'.format(INPUT_DIR, LAYER_1_NAME)
+    INPUT_TRAIN_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
+    INPUT_VALID_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
-    # SANITY CHECK 1: ALL LINGUISTIC FEATURES
-    # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
-    # SANITY CHECK 2: ARG
-    input_sequence_features = ['ID', 'LEMMA', 'M_R', 'PRED_1']
+
+    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P+0']
+
     if ctx_p > 0:
-        input_sequence_features+=['CTX_P{:+d}'.format(i) 
+        input_sequence_features+=['FORM_CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]
 
 
-    feature_size = propbank.size(input_sequence_features)
-    hotencode2sz = {
-            feat: propbank.size(feat)
-            for feat, feat_type in META.items() if feat_type == 'hot'}
 
-    target_size = hotencode2sz[target]
-    target2idx = propbank.onehot[target]
+    columns_dimensions = propbank_encoder.columns_dimensions('EMB')
+    feature_size = sum([
+        columns_dimensions[col]
+        for col in input_sequence_features
+    ])
+
+    target_size = columns_dimensions[target]
+    target2idx = propbank_encoder.onehot[target]
 
     load_dir = ''
     outputs_dir = dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)
@@ -231,40 +234,37 @@ if __name__== '__main__':
     print('outputs_dir', outputs_dir)
     outputs_settings_persist(outputs_dir, dict(globals(), **locals()))
 
-    print('{:}_size:{:}'.format(target, hotencode2sz[target]))
+    print('{:}_size:{:}'.format(target, columns_dimensions[target]))
 
-    calculator_train = Evaluator(propbank.column('train', 'T', True))
+    # calculator_train = Evaluator(propbank.column('train', 'T', True))
+    calculator_train = Evaluator(propbank_encoder.column('train', 'T', 'CAT'))
     evaluator_train = EvaluatorConll(
-        'train', 
-        propbank.column('train', 'S', True),
-        propbank.column('train', 'P', True),
-        propbank.column('train', 'PRED', True),
-        propbank.column('train', 'ARG', True),
+        'train',
+        propbank_encoder.column('train', 'S', 'CAT'),
+        propbank_encoder.column('train', 'P', 'CAT'),
+        propbank_encoder.column('train', 'PRED', 'CAT'),
+        propbank_encoder.column('train', 'ARG', 'CAT'),
         outputs_dir
     )
 
-    X_train, T_train, mb_train, D_train = tfrecords_extract(
+    X_train, T_train, mb_train, D_train = tfrecords_extract_v2(
         'train', 
-        propbank.embeddings, 
-        hotencode2sz, 
         input_sequence_features, 
         target
     )
-
-    calculator_valid=Evaluator(propbank.column('valid', 'T', True))    
+    
+    calculator_valid=Evaluator(propbank_encoder.column('valid', 'T', 'CAT'))
     evaluator_valid= EvaluatorConll(
         'valid', 
-        propbank.column('valid', 'S', True),
-        propbank.column('valid', 'P', True),
-        propbank.column('valid', 'PRED', True),
-        propbank.column('valid', 'ARG', True),
-        outputs_dir     
+        propbank_encoder.column('valid', 'S', 'CAT'),
+        propbank_encoder.column('valid', 'P', 'CAT'),
+        propbank_encoder.column('valid', 'PRED', 'CAT'),
+        propbank_encoder.column('valid', 'ARG', 'CAT'),
+        outputs_dir
     )
-
-    X_valid, T_valid, mb_valid, D_valid=tfrecords_extract(
+    
+    X_valid, T_valid, mb_valid, D_valid=tfrecords_extract_v2(
         'valid', 
-        propbank.embeddings, 
-        hotencode2sz, 
         input_sequence_features, 
         target
     )
@@ -283,16 +283,9 @@ if __name__== '__main__':
 
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
-        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
-            [DATASET_TRAIN_PATH], batch_size, num_epochs,
-            propbank.embeddings, hotencode2sz,
+        inputs, targets, sequence_length, descriptors = input_fn(
+            [DATASET_TRAIN_V2_PATH], batch_size, num_epochs,
             input_sequence_features, target)
-
-        inputs, targets, sequence_length, descriptors = input_with_embeddings_fn(
-            [DATASET_TRAIN_PATH], batch_size, num_epochs,
-            propbank.embeddings, hotencode2sz,
-            input_sequence_features, target)
-
 
     with tf.name_scope('predict'):
         predict_op = forward(X, minibatch, hidden_size)
@@ -300,7 +293,7 @@ if __name__== '__main__':
         Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
 
     with tf.name_scope('xent'):
-        # Compute the log-likelihood of the gold sequences and keep the transition
+        # Compute the log-likelihood of the gold sequences and xkeep the transition
         # params for inference at test time.
         log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
             predict_op, Tflat, minibatch)
@@ -336,6 +329,7 @@ if __name__== '__main__':
                     [inputs, targets, sequence_length, descriptors]
                 )
 
+
                 _, Yhat, loss = session.run(
                     [optimizer_op, viterbi_sequence, cost_op],
                     feed_dict= { X: X_batch, T: Y_batch, minibatch: mb}
@@ -351,24 +345,28 @@ if __name__== '__main__':
                                     minibatch: mb_train
                                    }
                     )
+                
+                    index = D_train[:, :, 0].astype(np.int32)
 
-                    index = D_train[:, :, 0]
-                    predictions_d = propbank.tensor2column(
+                    predictions_d = propbank_encoder.tensor2column(
                         index, Yhat, mb_train, 'T')
                     acc_train = calculator_train.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
-                    evaluator_train.evaluate( predictions_d, True )
+
+                    predictions_d = propbank_encoder.t2arg(predictions_d)
+
+
+                    evaluator_train.evaluate( predictions_d, True)
 
                     Yhat = session.run(
                         viterbi_sequence,
                         feed_dict={X: X_valid, T: T_valid, minibatch: mb_valid}
                     )
 
-                    index = D_valid[:, :, 0]
-                    predictions_d = propbank.tensor2column(
+                    index = D_valid[:, :, 0].astype(np.int32)
+                    predictions_d = propbank_encoder.tensor2column(
                         index, Yhat, mb_valid, 'T')
                     acc_valid = calculator_valid.accuracy(predictions_d)
-                    predictions_d = propbank.t2arg(predictions_d)
+                    predictions_d = propbank_encoder.t2arg(predictions_d)
                     evaluator_valid.evaluate(predictions_d, False)
 
                     print('Iter={:5d}'.format(step + 1),

@@ -4,24 +4,27 @@
     Feature engineering module
     * Converts linguist and end-to-end features into objects
 '''
+import sys
+sys.path.append('../datasets')
 from collections import OrderedDict
 
+import data_propbankbr as br
 import pandas as pd
-
+import yaml
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnShifter', 'ColumnShifterCTX_P', 'ColumnPredDist'}
+        return {'ColumnShifter', 'ColumnShifterCTX_P', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnT'}
 
     # Creates an instance of class given schema and db
     @staticmethod
     def make(klass, dict_db):
-        if klass == 'ColumnShifter': return ColumnShifter(dict_db)
-        if klass == 'ColumnShifterCTX_P': return ColumnShifterCTX_P(dict_db)
-        if klass == 'ColumnPredDist': return ColumnPredDist(dict_db)
-        raise ValueError('klass must be in {:}'.format(FeatureFactory.klasses))
+        if klass in FeatureFactory.klasses():
+            return eval(klass)(dict_db)
+        else:
+            raise ValueError('klass must be in {:}'.format(FeatureFactory.klasses()))
 
 
 class ColumnShifter(object):
@@ -34,7 +37,7 @@ class ColumnShifter(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    # Columns over which we want to perform the shifting        
+    # Columns over which we want to perform the shifting
     def define(self, columns, shifts):
         '''
             Defines with columns will be effectively shifted and by what amount
@@ -244,6 +247,71 @@ class ColumnPredDist(object):
         return self.preddist
 
 
+class ColumnT(object):
+    '''
+        Computes a "simplified" version of ARG
+        Removes chunking from ARG
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    def exec(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                preddist .: dict<PRED_DIST, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        T = br.propbankbr_arg2t(self.dict_db['P'].values(), self.dict_db['ARG'].values())
+
+        self.t = {'T': OrderedDict(
+            dict(zip(self.dict_db['ARG'].keys(), T))
+        )}
+
+        return self.t
+
+
+class ColumnPredMarker(object):
+    '''
+        Marks if we are in the predicate context
+        1 if time > predicate_time
+        0 otherwise
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    def exec(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                preddist .: dict<PRED_DIST, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+
+        # Finds predicate position
+        predicate_d = {
+            self.dict_db['P'][time]: time
+            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+        }
+        for time, proposition in self.dict_db['P'].items():
+            predicate_time = predicate_d[proposition]
+
+            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+
+        return self.predmarker
+
+
 def _process_shifter(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
@@ -266,9 +334,28 @@ def _process_predicate_dist(dictdb):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().exec()
-    
+
     target_dir = '../datasets/csvs/column_preddist/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def _process_t(dictdb):
+
+    column_t = FeatureFactory().make('ColumnT', dictdb)
+    d = column_t.exec()
+
+    target_dir = '../datasets/csvs/column_t/'
+    filename = '{:}{:}.csv'.format(target_dir, 't')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+def _process_predicate_marker(dictdb):
+
+    column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
+    d = column_t.exec()
+
+    target_dir = '../datasets/csvs/column_predmarker/'
+    filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
@@ -297,16 +384,21 @@ if __name__ == '__main__':
 
 
     # Making window around predicate
-    # columns = ('FUNC', 'GPOS', 'LEMMA')
-    # delta = 1
-    # shifts = [d for d in range(-delta, delta + 1, 1)]
-    # _process_shifter_ctx_p(dictdb, columns, shifts)
+    # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
+    columns = ['FORM']
+    delta = 3
+    shifts = [d for d in range(-delta, delta + 1, 1)]
+    _process_shifter_ctx_p(dictdb, columns, shifts)
 
 
     # Computing the distance to target predicate
-    _process_predicate_dist(dictdb)
+    # import code; code.interact(local=dict(globals(), **locals()))
+
     # pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     # d = pred_dist.define().exec()
     # target_dir = '../datasets/csvs/column_preddist/'
     # filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     # pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+    _process_t(dictdb)
+    _process_predicate_marker(dictdb)

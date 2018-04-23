@@ -71,7 +71,7 @@ class Propbank(object):
 
     ''' 
     lexicon = set([])
-    lex2tok = {}     
+    lex2tok = {}
     tok2idx = {}
     idx2tok = {}
     embeddings = np.array([])
@@ -187,6 +187,7 @@ class Propbank(object):
         else:
             filename = '{:}{:}.pickle'.format(file_dir, filename)
 
+        
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
