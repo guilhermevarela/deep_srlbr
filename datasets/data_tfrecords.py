@@ -409,11 +409,25 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
             else:
                 l += 1
 
-            
+
             for feat, value in d.items():
                 if not(feat in helper_d):
-                    helper_d[feat] = ex.feature_lists.feature_list[feat]                
-                helper_d[feat].feature.add().int64_list.value.append(value)
+                    helper_d[feat] = ex.feature_lists.feature_list[feat]
+
+                if isinstance(value, list):
+                    if isinstance(value[0], float):
+                        helper_d[feat].feature.add().float_list.value.extend(value)
+                    elif isinstance(value[0], int) or isinstance(value[0], bool):
+                        helper_d[feat].feature.add().int64_list.value.extend(value)
+                    else:
+                        raise TypeError('Unhandled type {:}'.format(type(value[0])))
+
+                elif isinstance(value, float):
+                    helper_d[feat].feature.add().float_list.value.append(value)
+                elif isinstance(value, int) or isinstance(value[0], bool):
+                    helper_d[feat].feature.add().int64_list.value.append(value)
+                else:
+                    raise TypeError('Unhandled type {:}'.format(type(value)))
 
             num_records += 1
             prev_p=d['P']

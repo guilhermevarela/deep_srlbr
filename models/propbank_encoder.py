@@ -255,10 +255,11 @@ class PropbankEncoder(object):
         for col in columns:
             base_col = self.columns_mapper.get(col, None)
             obsval = self.db[col].get(x, 0)
-            if base_col:
+
+            if base_col and base_col in self.schema_d:
                 col_type = self.schema_d[base_col]['type']
 
-            if encoding in ('IDX') or not base_col or col_type in ('int'):
+            if encoding in ('IDX') or not base_col or col_type in ('int', 'bool'):
                 d[col] = obsval
 
             elif encoding in ('CAT'):
