@@ -53,23 +53,25 @@ class PropbankEncoder(object):
         IDX     .:
 
     '''
-    lexicon = set([])
-    lex2tok = {}
-    tok2idx = {}
-    idx2tok = {}
-    embeddings = np.array([])
-    embeddings_model = ''
-    embeddings_sz = 0
-
-    onehot = defaultdict(OrderedDict)
-    hotone = defaultdict(OrderedDict)
-    db = defaultdict(OrderedDict)
-    encodings = ('CAT', 'EMB', 'HOT', 'IDX')
-    schema_d = {}
-    columns_mapper = {}
-    columns = set([])
 
     def __init__(self):
+        # Pickled variables must live within __init__()
+        self.lexicon = set([])
+        self.lex2tok = {}
+        self.tok2idx = {}
+        self.idx2tok = {}
+        self.embeddings = np.array([])
+        self.embeddings_model = ''
+        self.embeddings_sz = 0
+
+        self.onehot = defaultdict(OrderedDict)
+        self.hotone = defaultdict(OrderedDict)
+        self.db = defaultdict(OrderedDict)
+        self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
+        self.schema_d = {}
+        self.columns_mapper = {}
+        self.columns = set([])
+
         # loads schema so that indexes will be the same
         with open(SCHEMA_PATH, mode='r') as f:
             self.schema_d = yaml.load(f)
@@ -137,7 +139,8 @@ class PropbankEncoder(object):
             else:
                 lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
                 ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
-            
+
+
 
             interval = [idx
                         for idx, p in self.db['P'].items()
@@ -145,12 +148,13 @@ class PropbankEncoder(object):
             low = min(interval)
             high = max(interval)
 
-
-        for col in filter_columns:
-            if not col in self.db:
-                errmessage = 'column {:} not in db columns {:}'.format(col, self.db)
-                raise ValueError(errmessage)
-
+        if filter_columns:
+            for col in filter_columns:
+                if not col in self.db:
+                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db)
+                    raise ValueError(errmessage)
+        else:
+            filter_columns = list(self.db.keys())
 
         if not encoding in self.encodings:
             _errmessage = 'encoding {:} not in {:}'.format(encoding, self.encodings)
@@ -286,23 +290,23 @@ class PropbankEncoder(object):
 
 
 if __name__ == '__main__':
-    dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
-    dfgs.set_index('INDEX', inplace=True)
+    # dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
+    # dfgs.set_index('INDEX', inplace=True)
 
 
-    column_files = [
-        '../datasets/csvs/column_predmarker/predicate_marker.csv',
-        '../datasets/csvs/column_shifts_ctx_p/form.csv',
-        '../datasets/csvs/column_t/t.csv'
-    ]
+    # column_files = [
+    #     '../datasets/csvs/column_predmarker/predicate_marker.csv',
+    #     '../datasets/csvs/column_shifts_ctx_p/form.csv',
+    #     '../datasets/csvs/column_t/t.csv'
+    # ]
 
-    for col_f in column_files:
-        _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
-        dfgs = pd.concat((dfgs, _df), axis=1)
+    # for col_f in column_files:
+    #     _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
+    #     dfgs = pd.concat((dfgs, _df), axis=1)
 
-    propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
-    propbank_encoder.persist('../datasets/binaries/', filename='deep')
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/dbpt_glove_s50.pickle')
+    # propbank_encoder = PropbankEncoder().define(dfgs.to_dict())
+    # propbank_encoder.persist('../datasets/binaries/', filename='deep')
+    propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep.pickle')
     filter_columns = ['P', 'GPOS', 'FORM']
     for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
         print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))

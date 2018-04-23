@@ -187,6 +187,7 @@ class Propbank(object):
         else:
             filename = '{:}{:}.pickle'.format(file_dir, filename)
 
+        
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 

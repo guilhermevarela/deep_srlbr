@@ -24,6 +24,7 @@ import numpy as np
 
 #Uncomment if launched from /datasets
 from propbank import Propbank
+from propbank_encoder import PropbankEncoder
 # from data_propbankbr import  propbankbr_lazyload
 # from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
 
@@ -438,16 +439,16 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    # propbank= Propbank.recover('./datasets/binaries/db_pt_LEMMA_glove_s50.pickle')
+    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
     # UNCOMMENT this to save an updated version
     # language_models = ['fasttext_s50', 'word2vec_s50', 'wang2vec_s50']
-    language_models = ['glove_s50']    
-    for lm in language_models:
-        propbank = Propbank(language_model=lm)
-        propbank.persist('')
-
-        for ds_type in ('train', 'test', 'valid'):
-            tfrecords_builder_v2(propbank.iterator(ds_type), ds_type)
+    # language_models = ['glove_s50']    
+    # for lm in language_models:
+    #     propbank = Propbank(language_model=lm)
+    #     propbank.persist('')
+    column_filters = None
+    for ds_type in ('train', 'test', 'valid'):
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type)
 
     # hotencode2sz= {feat: propbank.size(feat)
     #       for feat, feat_type in conf.META.items() if feat_type == 'hot'}     
