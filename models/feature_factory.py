@@ -400,5 +400,5 @@ if __name__ == '__main__':
     # filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     # pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
-    # _process_t(dictdb)
-    # _process_predicate_marker(dictdb)
+    _process_t(dictdb)
+    _process_predicate_marker(dictdb)

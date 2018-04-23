@@ -268,17 +268,17 @@ class PropbankEncoder(object):
             elif encoding in ('EMB'):
                 if col_type in ('str'):
                     d[col] = self.embeddings[obsval]
-                elif col_type in ('str'):
+                elif col_type in ('choice'):
                     sz = self.column_dimensions(col, encoding)
-                    d[col] = [0] * sz
-                    d[col][obsval] = 1
+
+                    d[col] = [1 if i == obsval else 0 for i in range(sz)]
                 else:
                     d[col] = obsval
 
             elif encoding in ('HOT'):
                 sz = self.column_dimensions(col, encoding)
-                d[col] = [0] * sz
-                d[col][obsval] = 1
+
+                d[col] = [1 if i == obsval else 0 for i in range(sz)]
             else:
                 raise Exception('Unhandled exception')
 
