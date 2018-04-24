@@ -558,7 +558,7 @@ def _read_and_decode_v2(filename_queue):
     '''
     TF_SEQUENCE_FEATURES_V2 = {
         key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER', 'P','INDEX', 'T']
+        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
     }
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
@@ -566,6 +566,14 @@ def _read_and_decode_v2(filename_queue):
          'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
     })
 
+    TF_SEQUENCE_FEATURES_V2.update({
+        key:tf.VarLenFeature(tf.float32) 
+        for key in ['LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
+    })
+    TF_SEQUENCE_FEATURES_V2.update({
+        key:tf.VarLenFeature(tf.int64)
+        for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    })
     print(TF_SEQUENCE_FEATURES_V2)
     reader= tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
@@ -685,14 +693,14 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                         test_value = values[0]
                         if isinstance(test_value, list):
                             test_value = test_value[0]
-                            if isinstance(test_value, int):
+                            if isinstance(test_value, int) or isinstance(test_value, np.int64):
                                 feature_list[feat] = tf.train.FeatureList(
                                     feature=[
                                         tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
                                         for sublist in values
                                     ]
                                 )
-                            elif isinstance(test_value, float):
+                            elif isinstance(test_value, float) or isinstance(test_value, np.float):
                                 feature_list[feat] = tf.train.FeatureList(
                                     feature=[
                                         tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
@@ -700,15 +708,16 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                                     ]
                                 )
                             else:
-                                raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-                        elif isinstance(test_value, int):
+                                raise TypeError('Unhandled type {:}'.format(type(test_value)))
+
+                        elif isinstance(test_value, int) or isinstance(test_value, np.int64):
                                 feature_list[feat] = tf.train.FeatureList(
                                     feature=[
                                         tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
                                         for value in values
                                     ]
                                 )
-                        elif isinstance(test_value, float):
+                        elif isinstance(test_value, float) or isinstance(test_value, np.float):
                                 feature_list[feat] = tf.train.FeatureList(
                                     feature=[
                                         tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
@@ -760,14 +769,14 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
             test_value = values[0]
             if isinstance(test_value, list):
                 test_value = test_value[0]
-                if isinstance(test_value, int):
+                if isinstance(test_value, int) or isinstance(test_value, np.int64):
                     feature_list[feat] = tf.train.FeatureList(
                         feature=[
                             tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
                             for sublist in values
                         ]
                     )
-                elif isinstance(test_value, float):
+                elif isinstance(test_value, float) or isinstance(test_value, np.float):
                     feature_list[feat] = tf.train.FeatureList(
                         feature=[
                             tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
@@ -776,14 +785,15 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                     )
                 else:
                     raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-            elif isinstance(test_value, int):
+
+            elif isinstance(test_value, int) or isinstance(test_value, np.int64):
                     feature_list[feat] = tf.train.FeatureList(
                         feature=[
                             tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
                             for value in values
                         ]
                     )
-            elif isinstance(test_value, float):
+            elif isinstance(test_value, float) or isinstance(test_value, np.float):
                     feature_list[feat] = tf.train.FeatureList(
                         feature=[
                             tf.train.Feature(float_list=tf.train.FloatList(value=[value]))

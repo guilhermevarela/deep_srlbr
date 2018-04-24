@@ -211,7 +211,9 @@ if __name__== '__main__':
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P+0']
+    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'GPOS', 'PRED_MARKER', 'FORM_CTX_P+0',
+        'LEMMA_CTX_P-1','LEMMA_CTX_P+0','LEMMA_CTX_P+1',
+        'GPOS_CTX_P-1','GPOS_CTX_P+0','GPOS_CTX_P+1']
 
     if ctx_p > 0:
         input_sequence_features+=['FORM_CTX_P{:+d}'.format(i) 
@@ -224,7 +226,6 @@ if __name__== '__main__':
         columns_dimensions[col]
         for col in input_sequence_features
     ])
-
     target_size = columns_dimensions[target]
     target2idx = propbank_encoder.onehot[target]
 
@@ -354,7 +355,7 @@ if __name__== '__main__':
 
                     predictions_d = propbank_encoder.t2arg(predictions_d)
 
-
+                    
                     evaluator_train.evaluate( predictions_d, True)
 
                     Yhat = session.run(

@@ -229,10 +229,9 @@ class PropbankEncoder(object):
             tokens = set(self.lex2tok.values())
             print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(words), len(tokens)))
 
-        # embeddings_shape = (len(tokens) + 1, self.embeddings_sz) # unk token
+        
         self.tok2idx = {'unk': 0}
         self.idx2tok = {0: 'unk'}
-        # self.embeddings = np.zeros(embeddings_shape, dtype=np.float32)
         self.embeddings = []
         self.embeddings.append(word2vec['unk'].tolist())
 
@@ -269,7 +268,7 @@ class PropbankEncoder(object):
             else:
                 if self.schema_d[base_col]['type'] in ('choice'):
                     self.db[col] = OrderedDict({
-                        idx: self.onehot[base_col][category] for idx, category in dbpt_d[col].items()
+                        idx: self.onehot[base_col].get(category, 0) for idx, category in dbpt_d[col].items()
                     })
 
                 elif self.schema_d[base_col]['type'] in ('str'):
@@ -384,6 +383,8 @@ if __name__ == '__main__':
     column_files = [
         '../datasets/csvs/column_predmarker/predicate_marker.csv',
         '../datasets/csvs/column_shifts_ctx_p/form.csv',
+        '../datasets/csvs/column_shifts_ctx_p/gpos.csv',
+        '../datasets/csvs/column_shifts_ctx_p/lemma.csv',
         '../datasets/csvs/column_t/t.csv'
     ]
 
