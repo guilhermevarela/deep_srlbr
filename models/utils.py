@@ -123,7 +123,6 @@ def preprocess(lexicon, word2vec):
                         if word in locs:
                             lexicon2token[word] = 'local'               
 
-    import code; code.interact(local=dict(globals(), **locals()))                            
     total_tokens=   len([val for val in  lexicon2token.values() if not val in ('unk')])
     
     print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_tokens,
