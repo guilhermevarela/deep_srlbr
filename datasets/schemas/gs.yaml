@@ -68,7 +68,7 @@ DTREE:
     61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
     81, 82, 83, 84, 85, 86, 88, 89, 91, 513]
   name: DTREE
-  type: int
+  type: str
 FORM:
   category: feature
   domain: ['!', $%, $/, '%', '''', (, ), ',', '-', --, ., '...', '0', '0,22', '0,23',
@@ -2001,8 +2001,8 @@ GPOS:
     PRON-INDP, PRON-PERS, PROP, PRP, PU, V-FIN, V-GER, V-INF, V-PCP, VP, XX]
   name: GPOS
   type: choice
-ID: {category: feature, type: int}
-INDEX: {category: meta, type: int}
+ID: {category: feature, type: str}
+INDEX: {category: meta, type: str}
 LEMMA:
   category: feature
   domain: [$/, '%', '-', '0,22', '0,23', '0,24', '0,26', '0,34', '0,47', '0,59', '0,62',
@@ -3372,7 +3372,7 @@ MORF:
     PR|3S, PR|3S|IND, PR|3S|SUBJ, PS/MQP|3P|IND, PS|1/3S|IND, PS|1P|IND, PS|1S|IND,
     PS|3P|IND, PS|3S|IND, PS|3S|SUBJ, S|S, V|PCP|F|S]
   type: choice
-P: {category: meta, type: int}
+P: {category: meta, type: str}
 PRED:
   category: feature
   domain: ['-', abafar, abalar, abandonar, abastecer, abolir, abordar, abranger, "abra\xE7\
@@ -3500,8 +3500,8 @@ PRED:
     visualizar, viver, voar, voltar, votar, zerar, zonear]
   type: str
 PRED_MARKER: {category: feature, type: bool}
-P_S: {category: meta, type: int}
-S: {category: meta, type: int}
+P_S: {category: meta, type: str}
+S: {category: meta, type: str}
 T:
   category: target
   domain: ['*', A0, A1, A2, A3, A4, A5, AM-ADV, AM-CAU, AM-DIR, AM-DIS, AM-EXT, AM-LOC,

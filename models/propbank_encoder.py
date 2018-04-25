@@ -13,13 +13,14 @@ import pickle
 sys.path.append('..')
 sys.path.append('../datasets')
 import config
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict, defaultdict, namedtuple
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 import data_propbankbr as br
 
 
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
 
+MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 class _EncoderIterator(object):
     def __init__(self, low, high, decoder_fn):
         self.low = low
@@ -69,6 +70,7 @@ class PropbankEncoder(object):
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
         self.schema_d = {}
         self.columns_mapper = {}
+        self.columns_meta = {}
         self.columns = set([])
 
         # loads schema so that indexes will be the same
@@ -259,6 +261,55 @@ class PropbankEncoder(object):
         self.columns = self.columns.union(dbpt_d.keys())
         self.columns_mapper = {col: re.sub(r'[\+|\-|\d|]|(_CTX_P)', '', col)
                                for col in self.columns}
+
+        for col in list(self.columns):
+            base_col = self.columns_mapper[col]
+            if col in ('INDEX') or not base_col in self.schema_d:
+                #Boolean values, numerical values come here
+                self.db[col] = OrderedDict(dbpt_d[col])
+            else:
+                if self.schema_d[base_col]['type'] in ('choice'):
+                    self.db[col] = OrderedDict({
+                        idx: self.onehot[base_col].get(category, 0) for idx, category in dbpt_d[col].items()
+                    })
+
+                elif self.schema_d[base_col]['type'] in ('str'):
+                    self.db[col] = OrderedDict({
+                        idx: self.tok2idx[self.lex2tok.get(word,'unk')] for idx, word in dbpt_d[col].items()
+                    })
+                else:
+                    #Boolean values, numerical values come here
+                    self.db[col] = OrderedDict(dbpt_d[col])
+
+    def _process_metadata(self, dbpt_d, schema_d):
+        '''
+            Define columns and metadata about columns
+        '''
+        self.dbname = dbname
+        # Computes a dictionary that maps one column to a base column
+        self.columns = self.columns.union(dbpt_d.keys())
+        self.columns_mapper = {col: re.sub(r'[\+|\-|\d|]|(_CTX_P)', '', col)
+                               for col in self.columns}
+
+        # Creates descriptors about the data
+        self.columns_meta = {}
+        dflt_dict = MetaColumn('dflt', 'feature', 'int', None)._asdict()
+        for col in list(self.columns):
+            # Defines metadata
+            if self.columns_mapper[col] in schema_d:
+                colitem = schema_d[self.columns_mapper[col]]
+                meta_dict = {key: colitem[key] if key in colitem else len(colitem.get('domain', [1]))
+                    for key in ['name', 'category', 'type', 'dims']}
+            else:
+                meta_dict = dflt_dict
+                meta_dict[name] = col
+            self.columns_meta[col] = MetaColumn(**meta_dict)
+
+
+        # Creates lexicons
+        for col in list(self.columns):
+            self.columns_meta[col].category in ('feature') and 
+
 
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
