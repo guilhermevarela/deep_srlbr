@@ -34,12 +34,14 @@ from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
-
+from collections import namedtuple
 
 MODEL_NAME = 'dblstm_crf_4'
 LAYER_1_NAME = 'glove_s50'
 LAYER_2_NAME = 'dblstm'
 LAYER_3_NAME = 'crf'
+
+MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 # Command line defaults
 LEARNING_RATE = 5e-4
@@ -181,6 +183,7 @@ if __name__== '__main__':
     hidden_size = args.depth
     embeddings_name, embeddings_size = args.embeddings_model[0]
 
+    model_alias = 'wrd' if embeddings_name == 'word2vec' else embeddings_name[:3]
 
 
 
@@ -196,7 +199,7 @@ if __name__== '__main__':
 
     PROP_DIR = './datasets/binaries/'
     
-    PROP_PATH = '{:}{:}'.format(PROP_DIR, 'deep.pickle')
+    PROP_PATH = '{:}deep_{:}{:}.pickle'.format(PROP_DIR, model_alias, embeddings_size)
     propbank_encoder = PropbankEncoder.recover(PROP_PATH)
     print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
 
@@ -205,8 +208,8 @@ if __name__== '__main__':
     HIDDEN_SIZE = hidden_size
     BATCH_SIZE = batch_size
     EMBEDDING_SIZE = embeddings_size
-    INPUT_TRAIN_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
-    INPUT_VALID_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
+    INPUT_TRAIN_PATH = '{:}dbtrain_{:}{:}.tfrecords'.format(INPUT_DIR, model_alias, embeddings_size)
+    INPUT_VALID_PATH = '{:}dbvalid_{:}{:}.tfrecords'.format(INPUT_DIR, model_alias, embeddings_size)
 
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
@@ -227,7 +230,7 @@ if __name__== '__main__':
         for col in input_sequence_features
     ])
     target_size = columns_dimensions[target]
-    target2idx = propbank_encoder.onehot[target]
+    target2idx = propbank_encoder.lex2idx[target]
 
     load_dir = ''
     outputs_dir = dir_getoutputs(lr, hidden_size, ctx_p=ctx_p, embeddings_id=embeddings_id, model_name=MODEL_NAME)
@@ -285,7 +288,7 @@ if __name__== '__main__':
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
-            [DATASET_TRAIN_V2_PATH], batch_size, num_epochs,
+            [DATASET_TRAIN_V2_PATH.replace('_pt_v2','_wan50')], batch_size, num_epochs,
             input_sequence_features, target)
 
     with tf.name_scope('predict'):

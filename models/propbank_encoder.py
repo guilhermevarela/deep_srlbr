@@ -56,9 +56,11 @@ class PropbankEncoder(object):
 
     '''
 
+
     def __init__(self, dbpt_d, schema_d, language_model='glove_s50', dbname='dbpt', verbose=True):
         # Pickled variables must live within __init__()
         # self.lexicon = set([])
+        
         self.lex2idx = {}
         self.idx2lex = {}
         self.tokens = set({}) # words after embedding model
@@ -333,7 +335,7 @@ class PropbankEncoder(object):
         index=[item  for i, sublist in enumerate(tensor_index.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
 
-        values = [self.hotone[column][item]
+        values = [self.idx2lex[column][item]
             for i, sublist in enumerate(tensor_values.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
 
@@ -424,19 +426,27 @@ if __name__ == '__main__':
         _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, _df), axis=1)
 
+    #In order to use glove uncheck
+    dbname = 'deep_glo50'    
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
+    # dbname = 'deep_wan50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    # dbname = 'deep_wrd50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    
 
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model=mdl, dbname=dbname)
     propbank_encoder.persist('../datasets/binaries/', filename=dbname)
-    # print(propbank_encoder.db.keys())
-    propbank_encoder.persist('../datasets/binaries/', filename='deep_glo50')
+
+    
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
-    propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wrd50.pickle')
-    filter_columns = ['P', 'GPOS', 'FORM']
-    for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
-        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wan50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wrd50.pickle')
+    # filter_columns = ['P', 'GPOS', 'FORM']
+    # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
+    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
 
-    for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
-        print('t:{:}\tP:{:}\tFORM:{:}'.format(t, d['P'], d['FORM']))
+    # for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
+    #     print('t:{:}\tP:{:}\tFORM:{:}'.format(t, d['P'], d['FORM']))
 
-    for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
-        print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
+    # for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
+    #     print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))

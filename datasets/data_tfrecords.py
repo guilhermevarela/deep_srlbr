@@ -30,7 +30,7 @@ from propbank_encoder import PropbankEncoder
 
 import tensorflow as tf 
 from collections import defaultdict 
-
+from collections import namedtuple
 TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
     for key in conf.SEQUENCE_FEATURES
 }
@@ -40,7 +40,7 @@ TF_CONTEXT_FEATURES=    {
 }
 
 
-
+MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 
 ############################# tfrecords reader ############################# 
@@ -101,13 +101,13 @@ def tfrecords_extract_v2(ds_type,
         raise ValueError(buff)
     else:
         if ds_type in ['train']:
-            dataset_path=   conf.DATASET_TRAIN_V2_PATH 
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wan50')
             dataset_size=conf.DATASET_TRAIN_SIZE
         if ds_type in ['test']:
-            dataset_path=   conf.DATASET_TEST_V2_PATH
+            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wan50')
             dataset_size=conf.DATASET_TEST_SIZE
         if ds_type in ['valid']:    
-            dataset_path=   conf.DATASET_VALID_V2_PATH
+            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wan50')
             dataset_size=conf.DATASET_VALID_SIZE
 
     inputs, targets, lengths, others= tensor2numpy_v2(
@@ -814,9 +814,13 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
+    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
+    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_glo50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wan50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wrd50.pickle')
 
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type)
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='glo50')
+
