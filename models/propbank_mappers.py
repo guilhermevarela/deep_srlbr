@@ -57,10 +57,21 @@ class MapperT2ARG(PropbankEncoder):
         return OrderedDict(ordered_dict)
 
 
-class MapperTensor2Col(PropbankEncoder):
+class MapperTensor2Column(PropbankEncoder):
     '''
     '''
-    def __init__(self, tensor_index, tensor_values, times, column):
+    def __init__(self, tensor_index, tensor_values, tensor_times, column):
+        '''
+            Tensors are zero padded numpy arrays i.e :
+                tensor.shape ~ [DATABASE_SIZE, MAX_TIME] 
+                0 if for t=0,....,MAX_TIME t > times[i] for i=0...DATABASE_SIZE 
+
+            args:
+                tensor_index          .: int in db['INDEX']
+                tensor_values         .: int in lex2idx[column].values()
+                tensor_times         .: int in db['ID'] times or ID column
+                column                .: str in db.keys()
+        '''
         if column not in self.db:
             buff= '{:} must be in {:}'.format(column, self.db)
             raise KeyError(buff)
@@ -75,27 +86,21 @@ class MapperTensor2Col(PropbankEncoder):
         '''
             Converts a zero padded tensor to a dict
 
-            Tensors must have the following shape [DATABASE_SIZE, MAX_TIME] with
-                zeros if for t=0,....,MAX_TIME t>times[i] for i=0...DATABASE_SIZE 
-
-        args:
-            tensor_index  .: with db index
-
-            tensor_values .: with db int values representations
-
-            times  .: list<int> [DATABASE_SIZE] holding the times for each proposition
-
-            column .: str           db column name
-
-        returns:
-            column .: dict<int, str> keys in db_index, values in columns or values in targets
+            returns:
+                column .: dict<int, str> keys in db_index, values in columns or values in targets
         '''
+        tensor_index = self.__tensor_index
+        tensor_values = self.__tensor_values
+        times = self.__tensor_times
+        column = self.__tensor_column
 
-        index=[item  for i, sublist in enumerate(tensor_index.tolist())
+        index = [item 
+            for i, sublist in enumerate(tensor_index.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
 
         values = [self.idx2lex[column][item]
             for i, sublist in enumerate(tensor_values.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
 
-        return dict(zip(index, values))
+        ordered_dict = sorted(zip(index, values), key=lambda x: x[0])
+        return OrderedDict(ordered_dict)
