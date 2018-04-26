@@ -2,7 +2,8 @@
     Created on Apr 20, 2018
         @author: Varela
 
-    PropbankEncoder wrapps a set of columns indexing them
+    PropbankEncoder wraps a set of columns storing an integer indexed representation
+        of the original dataset atributes. Provides column information
 '''
 import re
 import yaml
@@ -13,14 +14,13 @@ import pickle
 sys.path.append('..')
 sys.path.append('../datasets')
 import config
-from collections import OrderedDict, defaultdict, namedtuple
+from collections import OrderedDict, defaultdict
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 import data_propbankbr as br
 
 
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
 
-MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 
 class _EncoderIterator(object):
@@ -78,7 +78,7 @@ class PropbankEncoder(object):
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
         self.schema_d = {}
         self.columns_mapper = {}
-        self.columns_meta = {}
+        self.columns_config = {}
         self.columns = set([])
 
         self._process(dbpt_d, schema_d, dbname, language_model, verbose)
@@ -160,21 +160,21 @@ class PropbankEncoder(object):
         if encoding in ('IDX', 'CAT'):
             return 1
 
-        info = self.columns_meta.get(column, None)
-        if not info:
+        colconfig = self.columns_config.get(column, None)
+        if not colconfig:
             return 1
 
         if encoding in ('HOT'):
-            if info.type in ('text', 'choice'):
-                return info.dims
+            if colconfig['type'] in ('text', 'choice'):
+                return colconfig['dims']
             else:
                 return 1
 
         if encoding in ('EMB'):
-            if info.type in ('text'):
+            if colconfig['type'] in ('text'):
                 return self.embeddings_sz
-            elif info.type in ('choice'):
-                return info.dims
+            elif colconfig['type'] in ('choice'):
+                return colconfig['dims']
             else:
                 return 1
 
@@ -247,11 +247,11 @@ class PropbankEncoder(object):
 
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
-            info = self.columns_meta.get(col, None)
-            if col in ('INDEX') or not info:
+            colconfig = self.columns_config.get(col, None)
+            if col in ('INDEX') or not colconfig:
                 #Boolean values, numerical values come here
                 self.db[col] = OrderedDict(dbpt_d[col])
-            elif info.type in ('choice', 'text'):
+            elif colconfig['type'] in ('choice', 'text'):
                 self.db[col] = OrderedDict({
                     idx: self.lex2idx[col].get(word, 0) for idx, word in dbpt_d[col].items() 
                 })
@@ -272,8 +272,8 @@ class PropbankEncoder(object):
                                for col in self.columns}
 
         # Creates descriptors about the data
-        dflt_dict = MetaColumn('dflt', 'feature', 'int', None)._asdict()
-
+        
+        dflt_dict =  {'name':'dflt', 'category':'feature', 'type':'int', 'dims': None}
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
 
@@ -282,30 +282,29 @@ class PropbankEncoder(object):
                 colitem = schema_d[base_col]
                 domain = colitem.get('domain', None) # numerical values
 
-                meta_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
+                config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
 
-                meta_dict['dims'] = len(domain) if domain else None
+                config_dict['dims'] = len(domain) if domain else None
             else:
-                meta_dict = dflt_dict
-                meta_dict['name'] = col
+                config_dict = dflt_dict
+                config_dict['name'] = col
 
 
             # Lexicon for each column unk is not present
-            if meta_dict['type'] in ('text') or \
-                (meta_dict['category'] in ('feature') and meta_dict['type'] in ('choice')):
+            if config_dict['type'] in ('text') or \
+                (config_dict['category'] in ('feature') and config_dict['type'] in ('choice')):
                 # features might be absent ( in case of leading and lagging )
                 sorted(domain).insert(0, 'unk')
 
-                if meta_dict['type'] in ('text'):
+                if config_dict['type'] in ('text'):
                     self.words = self.words.union(set(domain))
 
             if domain:
                 self.lex2idx[col] = dict(zip(domain, range(len(domain))))
                 self.idx2lex[col] = dict(zip(range(len(domain)), domain))
-                meta_dict['dims'] = len(domain)
+                config_dict['dims'] = len(domain)
 
-            metacol = MetaColumn(**meta_dict)
-            self.columns_meta[col] = metacol
+            self.columns_config[col] = config_dict
 
 
     def tensor2column(self, tensor_index, tensor_values, times, column):
@@ -369,27 +368,24 @@ class PropbankEncoder(object):
             return d
 
     def _decode_with_value(self, x, column, encoding):
-        # base_col = self.columns_mapper.get(column, None)
 
-        # if base_col and base_col in self.schema_d:
-        #     col_type = self.schema_d[base_col]['type']
-        info = self.columns_meta[column]
-        if encoding in ('IDX') or info.type in ('int', 'bool'):
+        colconfig = self.columns_config[column]
+        if encoding in ('IDX') or colconfig['type'] in ('int', 'bool'):
             return x
 
         elif encoding in ('CAT'):
-            if info.type in ('choice', 'text'):
+            if colconfig['type'] in ('choice', 'text'):
                 return self.idx2lex[column][x]
             else:
                 return x
 
         elif encoding in ('EMB'):
-            if info.type in ('text'):
+            if colconfig['type'] in ('text'):
                 word = self.idx2lex[column][x]
                 token = self.lex2tok[word]
                 return self.embeddings[self.tok2idx[token]]
 
-            elif info.type in ('choice'):
+            elif colconfig['type'] in ('choice'):
                 sz = self.column_dimensions(column, encoding)
                 return [1 if i == x else 0 for i in range(sz)]
 
@@ -427,12 +423,12 @@ if __name__ == '__main__':
         dfgs = pd.concat((dfgs, _df), axis=1)
 
     #In order to use glove uncheck
-    dbname = 'deep_glo50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
+    # dbname = 'deep_glo50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
     # dbname = 'deep_wan50'    
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
-    # dbname = 'deep_wrd50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    dbname = 'deep_wrd50'    
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
     
 
     propbank_encoder.persist('../datasets/binaries/', filename=dbname)
@@ -441,12 +437,12 @@ if __name__ == '__main__':
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wan50.pickle')
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wrd50.pickle')
-    # filter_columns = ['P', 'GPOS', 'FORM']
-    # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
+    filter_columns = ['P', 'GPOS', 'FORM']
+    for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
+        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
 
-    # for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
-    #     print('t:{:}\tP:{:}\tFORM:{:}'.format(t, d['P'], d['FORM']))
+    for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
+        print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
 
-    # for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
+    for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
+        print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))

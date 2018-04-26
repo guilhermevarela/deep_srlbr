@@ -34,14 +34,14 @@ from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 from data_propbankbr import propbankbr_t2arg
 from utils import cross_entropy, error_rate2, precision, recall
-from collections import namedtuple
+# from collections import namedtuple
 
 MODEL_NAME = 'dblstm_crf_4'
 LAYER_1_NAME = 'glove_s50'
 LAYER_2_NAME = 'dblstm'
 LAYER_3_NAME = 'crf'
 
-MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
+# MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 # Command line defaults
 LEARNING_RATE = 5e-4

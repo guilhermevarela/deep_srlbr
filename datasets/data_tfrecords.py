@@ -30,7 +30,7 @@ from propbank_encoder import PropbankEncoder
 
 import tensorflow as tf 
 from collections import defaultdict 
-from collections import namedtuple
+# from collections import namedtuple
 TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
     for key in conf.SEQUENCE_FEATURES
 }
@@ -40,7 +40,7 @@ TF_CONTEXT_FEATURES=    {
 }
 
 
-MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
+# MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 
 ############################# tfrecords reader ############################# 
@@ -815,12 +815,12 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 if __name__== '__main__':
     # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
-    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_glo50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_glo50.pickle')
     # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wan50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wrd50.pickle')
+    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wrd50.pickle')
 
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='glo50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wrd50')
 
