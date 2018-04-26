@@ -90,7 +90,7 @@ class MapperTensor2Col(PropbankEncoder):
         returns:
             column .: dict<int, str> keys in db_index, values in columns or values in targets
         '''
-        
+
         index=[item  for i, sublist in enumerate(tensor_index.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
 

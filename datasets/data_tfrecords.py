@@ -560,10 +560,14 @@ def _read_and_decode_v2(filename_queue):
         key:tf.VarLenFeature(tf.int64)
         for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
     }
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.float32) 
+    #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1',
+    #      'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
+    # })
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1',
-         'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
+        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1','FORM_CTX_P+0', 'FORM_CTX_P+1']
     })
 
     TF_SEQUENCE_FEATURES_V2.update({
