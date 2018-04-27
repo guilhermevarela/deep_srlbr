@@ -72,8 +72,7 @@ class PropbankEncoder(object):
         self.embeddings_model = ''
         self.embeddings_sz = 0
 
-        # self.onehot = defaultdict(OrderedDict)
-        # self.hotone = defaultdict(OrderedDict)
+
         self.db = defaultdict(OrderedDict)
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
         self.schema_d = {}

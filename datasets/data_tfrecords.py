@@ -25,12 +25,10 @@ import numpy as np
 #Uncomment if launched from /datasets
 from propbank import Propbank
 from propbank_encoder import PropbankEncoder
-# from data_propbankbr import  propbankbr_lazyload
-# from data_vocabularies import vocab_lazyload_with_embeddings, vocab_lazyload, vocab_preprocess
 
 import tensorflow as tf 
 from collections import defaultdict 
-# from collections import namedtuple
+
 TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
     for key in conf.SEQUENCE_FEATURES
 }
@@ -39,8 +37,6 @@ TF_CONTEXT_FEATURES=    {
     'L': tf.FixedLenFeature([], tf.int64)           
 }
 
-
-# MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 
 ############################# tfrecords reader ############################# 
@@ -458,49 +454,10 @@ def _process_v2( context_features, sequence_features,
     #paginates over all available columnx   
     print('_process_v2:{:}'.format(sequence_features.keys()))
     for key in conf.SEQUENCE_FEATURES_V2:
-    # for key in sel:
-
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])     
         
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
-        #Selects how to handle column from conf.META
-        # if key in sel: 
-        #     import code; code.interact(local=dict(globals(), **locals()))
-        #     if conf.META[key] in ['txt']: 
-        #         '''
-        #             UserWarning: Converting sparse IndexedSlices to a dense Tensor of 
-        #             unknown shape. This may consume a large amount of memory.
-        #             "Converting sparse IndexedSlices to a dense Tensor of unknown shape. ""
-        #         '''
-        #         # https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
-        #         dense_tensor1 = tf.nn.embedding_lookup(embeddings, dense_tensor)
-                
-                
-        #     elif conf.META[key] in ['hot']:
-        #         dense_tensor1= tf.one_hot(
-        #             dense_tensor, 
-        #             feat2size[key],
-        #             on_value=1,
-        #             off_value=0,
-        #             dtype=tf.int32
-        #         )                               
-        #         if key in input_sequence_features:
-        #             dense_tensor1= tf.cast(dense_tensor1, tf.float32)
-                
-
-        #     else: 
-        #         if key in input_sequence_features:
-        #             # Cast to tf.float32 in order to concatenate in a single array with embeddings                  
-        #             dense_tensor1=tf.expand_dims(tf.cast(dense_tensor,tf.float32), 2)
-                    
-        #         else:
-        #             dense_tensor1= dense_tensor
-        # else:
-        #     #keep their numerical values 
-        #     dense_tensor1= dense_tensor
-
-
-
+        
         if key in features:
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
@@ -510,7 +467,6 @@ def _process_v2( context_features, sequence_features,
             sequence_descriptors.append(dense_tensor1)
 
     #UNCOMMENT
-    # X= tf.squeeze( tf.concat(sequence_inputs, 2),1, name='squeeze_X') 
     X = tf.concat(sequence_inputs, 1)
     D = tf.concat(sequence_descriptors, 1)
     # return X, T, L, D

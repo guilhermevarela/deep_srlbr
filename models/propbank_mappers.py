@@ -209,4 +209,4 @@ class Mapper2SVM(BaseMapper):
 if __name__ == '__main__':
     propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
     to_svm = Mapper2SVM(propbank_encoder)
-    to_svm.define(excludecols=['P','ARG', 'S', 'INDEX']).map()
+    to_svm.define(excludecols=['P','ARG', 'S', 'INDEX'], encoding='HOT').map()
