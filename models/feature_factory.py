@@ -16,8 +16,9 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnShifter', 'ColumnShifterCTX_P', 
-        'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph','ColumnT'}
+        return {'ColumnShifter', 'ColumnShifterCTX_P',
+        'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
+        'ColumnT'}
 
     # Creates an instance of class given schema and db
     @staticmethod
@@ -105,6 +106,7 @@ class ColumnShifter(object):
                         self.dict_shifted[new_col][time] = None
 
         return self.dict_shifted
+
 
 class ColumnShifterCTX_P(object):
     '''
@@ -276,6 +278,53 @@ class ColumnT(object):
 
         return self.t
 
+class ColumnPassiveVoice(object):
+    '''
+        Passive voice indicator
+        1 if POS of target verb GPOS=v-pcp and is preceeded by LEMMA=ser
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    def exec(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                passive_voice .: dict<PASSIVE_VOICE, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        self.passive_voice = {'PASSIVE_VOICE': OrderedDict({})}
+
+        # Finds predicate position
+        predicate_d = {
+            self.dict_db['P'][time]: time
+            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+        }
+        pos_d = {
+            self.dict_db['P'][time]: time
+            for time, pos in self.dict_db['GPOS'].items() if pos == 'V-PCP'
+        }
+        lemma_d = {
+            self.dict_db['P'][time]: time
+            for time, lem in self.dict_db['LEMMA'].items() if lem == 'ser'
+        }
+        
+        for time, proposition in self.dict_db['P'].items():
+            predicate_time = predicate_d[proposition]
+            lemma_time = lemma_d.get(proposition, None)
+            pos_time = pos_d.get(proposition, None)
+            if lemma_time and pos_time:
+                self.passive_voice['PASSIVE_VOICE'][time] = 1 if lemma_time < predicate_time and pos_time == predicate_time else 0
+            else:
+                self.passive_voice['PASSIVE_VOICE'][time] = 0 
+
+        return self.passive_voice
+
 
 class ColumnPredMarker(object):
     '''
@@ -322,7 +371,6 @@ class ColumnPredMorph(object):
         Usage:
             See below (main)
     '''
-
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
@@ -363,6 +411,42 @@ class ColumnPredMorph(object):
                 self.predmorph['PRED_MORPH'][key][time] = val
 
         return self.predmorph
+
+
+class ColumnFindKernel(object):
+    '''
+        Finds Kernel
+    '''
+
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    def exec(self):
+        '''
+            Computes the distance to the target predicate
+        '''
+        # defines output data structure
+        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+
+        # Finds predicate position
+        predicate_d = {
+            self.dict_db['P'][time]: time
+            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+        }
+        for time, proposition in self.dict_db['P'].items():
+            predicate_time = predicate_d[proposition]
+
+            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+
+        return self.predmarker
+
+def _process_passivevoice(dictdb):
+
+    pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
+    target_dir = '../datasets/csvs/column_passivevoice/'
+    passivevoice = pvoice_marker.exec()
+
+    _store(passivevoice, 'passive_voice', target_dir)
 
 
 def _process_predmorph(dictdb):
@@ -462,4 +546,5 @@ if __name__ == '__main__':
 
     # _process_t(dictdb)
     # _process_predicate_marker(dictdb)
-    _process_predmorph(dictdb)
+    # _process_predmorph(dictdb)
+    _process_passivevoice(dictdb)
