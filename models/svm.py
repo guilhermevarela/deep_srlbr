@@ -78,14 +78,19 @@ if __name__ == '__main__':
     # optargs = ('-s ')
     # encoding = 'emb'
     # encoding = 'hot'
-    encoding = 'wan'
+    # encoding = 'wan'
+    encoding = 'glo'
+    alias = 'glo50'
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
+    # input_path = 'datasets/svms/{:}/train_{:}.svm'.format(encoding, alias)
     input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
+    print(input_path)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
+    # input_path = 'datasets/svms/{:}/valid_{:}.svm'.format(encoding, alias)
     input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')

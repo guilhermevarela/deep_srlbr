@@ -29,19 +29,19 @@ from config import *
 
 from data_tfrecords import input_fn, tfrecords_extract_v2
 from models.propbank_encoder import PropbankEncoder
+from models.propbank_mappers import MapperTensor2Column, MapperT2ARG
 from models.evaluator_conll import EvaluatorConll
 from models.evaluator import Evaluator
 from data_outputs import  dir_getoutputs, outputs_settings_persist
-from data_propbankbr import propbankbr_t2arg
+
 from utils import cross_entropy, error_rate2, precision, recall
-# from collections import namedtuple
+
 
 MODEL_NAME = 'dblstm_crf_4'
 LAYER_1_NAME = 'glove_s50'
 LAYER_2_NAME = 'dblstm'
 LAYER_3_NAME = 'crf'
 
-# MetaColumn = namedtuple('MetaColumn', ('name', 'category', 'type', 'dims'))
 
 # Command line defaults
 LEARNING_RATE = 5e-4
@@ -198,9 +198,11 @@ if __name__== '__main__':
     target = 'T'
 
     PROP_DIR = './datasets/binaries/'
-    
+
     PROP_PATH = '{:}deep_{:}{:}.pickle'.format(PROP_DIR, model_alias, embeddings_size)
     propbank_encoder = PropbankEncoder.recover(PROP_PATH)
+    tensor2column = MapperTensor2Column(propbank_encoder)
+    t2arg = MapperT2ARG(propbank_encoder)
     print('propbank_encoder columns {:}'.format(propbank_encoder.columns))
 
     # Updata settings
@@ -352,12 +354,14 @@ if __name__== '__main__':
                 
                     index = D_train[:, :, 0].astype(np.int32)
 
-                    predictions_d = propbank_encoder.tensor2column(
-                        index, Yhat, mb_train, 'T')
+                    # predictions_d = propbank_encoder.tensor2column(
+                    #     index, Yhat, mb_train, 'T')
+                    # acc_train = calculator_train.accuracy(predictions_d)
+
+                    # predictions_d = propbank_encoder.t2arg(predictions_d)
+                    predictions_d = tensor2column.define(index, Yhat, mb_train, 'T').map()
                     acc_train = calculator_train.accuracy(predictions_d)
-
-                    predictions_d = propbank_encoder.t2arg(predictions_d)
-
+                    predictions_d = t2arg.define(predictions_d, 'CAT').map()
                     
                     evaluator_train.evaluate( predictions_d, True)
 
@@ -367,11 +371,16 @@ if __name__== '__main__':
                     )
 
                     index = D_valid[:, :, 0].astype(np.int32)
-                    predictions_d = propbank_encoder.tensor2column(
-                        index, Yhat, mb_valid, 'T')
+                    # predictions_d = propbank_encoder.tensor2column(
+                    #     index, Yhat, mb_valid, 'T')
+                    # acc_valid = calculator_valid.accuracy(predictions_d)
+                    # predictions_d = propbank_encoder.t2arg(predictions_d)
+                    # evaluator_valid.evaluate(predictions_d, False)
+                    predictions_d = tensor2column.define(index, Yhat, mb_valid, 'T').map()
                     acc_valid = calculator_valid.accuracy(predictions_d)
-                    predictions_d = propbank_encoder.t2arg(predictions_d)
+                    predictions_d = t2arg.define(predictions_d, 'CAT').map()
                     evaluator_valid.evaluate(predictions_d, False)
+
 
                     print('Iter={:5d}'.format(step + 1),
                           'train-f1 {:.2f}%'.format(evaluator_train.f1),
