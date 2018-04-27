@@ -338,31 +338,40 @@ class ColumnPredMorph(object):
 
         # Finds all single flag
         composite_morph = sorted(list(set(self.dict_db['MORF'].values())))
-        morph = _flatten([
-            m.split('|') for m in composite_morph])
 
-        morph = sorted(morph)
+        morph = [item
+                 for sublist in
+                 [m.split('|') for m in composite_morph]
+                 for item in sublist]
+
+        morph = sorted(list(set(morph)))
         rng = range(len(morph))
-        morph2idx = dict(zip(morph,rng))
+        morph2idx = dict(zip(morph, rng))
 
-        sz = len(morph)
+
         for time, morph_comp in self.dict_db['MORF'].items():
             _features = [1 if m in morph_comp.split('|') else 0
                          for m in morph2idx]
-            self.predmorph['PRED_MORPH'][time] = {
-                'PredMorph_{:02d}'.format(i):feat_i
-                for i, feat_i in _features}
+
+            _features = {
+                'PredMorph_{:02d}'.format(i + 1):feat_i
+                for i, feat_i in enumerate(_features)}
+
+            for key, val in _features.items():
+                if key not in self.predmorph['PRED_MORPH']:
+                    self.predmorph['PRED_MORPH'][key] = OrderedDict({})
+                self.predmorph['PRED_MORPH'][key][time] = val
 
         return self.predmorph
 
 
-def _process_predmorph(dictdb, columns, shifts):
+def _process_predmorph(dictdb):
 
-    shifter = FeatureFactory().make('ColumnPredMorph', dictdb)
+    morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
     target_dir = '../datasets/csvs/column_predmorph/'
-    predmorph = shifter.exec()
+    predmorph = morpher.exec()
 
-    _store_columns(predmorph, columns, target_dir)
+    _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
 
 def _process_shifter(dictdb, columns, shifts):
@@ -402,6 +411,7 @@ def _process_t(dictdb):
     filename = '{:}{:}.csv'.format(target_dir, 't')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
+
 def _process_predicate_marker(dictdb):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
@@ -422,17 +432,12 @@ def _store_columns(columns_dict, columns, target_dir):
         df.to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _flatten(x):
-    '''
-        Flatten an irregular list of lists
-    '''
-    result = []
-    for el in x:
-        if hasattr(el, "__iter__") and not isinstance(el, basestring):
-            result.extend(flatten(el))
-        else:
-            result.append(el)
-    return result
+def _store(d, target_name, target_dir):
+        df = pd.DataFrame.from_dict(d)        
+        filename = '{:}{:}.csv'.format(target_dir, target_name)
+        df.to_csv(filename, sep=',', encoding='utf-8', index=True)
+
+
 if __name__ == '__main__':
     '''
         Usage of FeatureFactory
