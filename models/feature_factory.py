@@ -312,6 +312,46 @@ class ColumnPredMarker(object):
         return self.predmarker
 
 
+class ColumnPredMorph(object):
+    '''
+        Genatate 32 binary array 
+        the field MORF is multivalued and is pipe separator ('|')
+        Receives 1 if attribute is present 0 otherwise 
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.dict_db = dict_db
+
+    def exec(self):
+        '''
+            Computes 32 item list of zeros and ones
+            args:
+            returns:
+                predmorph .: dict<PRED_MORPH, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        self.predmorph = {'PRED_MORPH': OrderedDict({})}
+
+        # Finds all single flag
+        composite_morph = sorted(list(set(self.dict_db['MORF'].values())))
+        morph = _flatten([
+            m.split('|') for m in composite_morph])
+
+        morph = sorted(morph)
+        rng = range(len(morph))
+        morph2idx = dict(zip(morph,rng))
+
+        sz = len(morph)
+        for time, morph_comp in self.dict_db['MORF'].items():
+            self.predmorph['PRED_MORPH'][time] = 
+            [1 if m in morph_comp.split('|')  else 0 for m in morph2idx]
+
+        return self.predmorph
+
+
 def _process_shifter(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
@@ -369,6 +409,17 @@ def _store_columns(columns_dict, columns, target_dir):
         df.to_csv(filename, sep=',', encoding='utf-8')
 
 
+def _flatten(x):
+    '''
+        Flatten an irregular list of lists
+    '''
+    result = []
+    for el in x:
+        if hasattr(el, "__iter__") and not isinstance(el, basestring):
+            result.extend(flatten(el))
+        else:
+            result.append(el)
+    return result
 if __name__ == '__main__':
     '''
         Usage of FeatureFactory

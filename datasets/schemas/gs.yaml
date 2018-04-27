@@ -68,7 +68,7 @@ DTREE:
     61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
     81, 82, 83, 84, 85, 86, 88, 89, 91, 513]
   name: DTREE
-  type: int
+  type: choice
 FORM:
   category: feature
   domain: ['!', $%, $/, '%', '''', (, ), ',', '-', --, ., '...', '0', '0,22', '0,23',
@@ -1986,7 +1986,7 @@ FORM:
       ltimo", "\xFAltimos", "\xFAnica", "\xFAnicas", "\xFAnico", "\xFAteis", "\xFA\
       til"]
   name: FORM
-  type: str
+  type: text
 FUNC:
   category: feature
   domain: ['>A', '>N', '>P', A<, A<ARG, ACC, ACC-PASS, ADVL, APP, AUX, AUX<, CJT,
@@ -3353,7 +3353,7 @@ LEMMA:
       ntimo", "\xF3bvio", "\xF3culos", "\xF3leo", "\xF3pera", "\xF3rbita", "\xF3rg\xE3\
       o", "\xF3ticas_Trevo", "\xF4nibus", "\xF4nus", "\xFAlcera", "\xFAltimo", "\xFA\
       nico", "\xFAtil"]
-  type: str
+  type: text
 MORF:
   category: feature
   domain: ['-', 1P, 1S, 3P, 3S, COND|1/3S, COND|1S, COND|3P, COND|3S, FUT|1/3S|SUBJ,
@@ -3498,7 +3498,7 @@ PRED:
     variar, varrer, vasculhar, velar, vencer, vender, ver, verificar, vestir, vetar,
     viabilizar, viajar, vigiar, violar, violentar, vir, virar, visar, visitar, vislumbrar,
     visualizar, viver, voar, voltar, votar, zerar, zonear]
-  type: str
+  type: text
 PRED_MARKER: {category: feature, type: bool}
 P_S: {category: meta, type: int}
 S: {category: meta, type: int}
