@@ -305,56 +305,6 @@ class PropbankEncoder(object):
 
             self.columns_config[col] = config_dict
 
-
-    # def tensor2column(self, tensor_index, tensor_values, times, column):
-    #     '''
-    #         Converts a zero padded tensor to a dict
-        
-    #         Tensors must have the following shape [DATABASE_SIZE, MAX_TIME] with
-    #             zeros if for t=0,....,MAX_TIME t>times[i] for i=0...DATABASE_SIZE 
-
-    #     args:
-    #         tensor_index  .: with db index
-
-    #         tensor_values .: with db int values representations
-
-    #         times  .: list<int> [DATABASE_SIZE] holding the times for each proposition
-
-    #         column .: str           db column name
-
-    #     returns:
-    #         column .: dict<int, str> keys in db_index, values in columns or values in targets
-    #     '''
-    #     if not(column) in self.db:
-    #         buff= '{:} must be in {:}'.format(column, self.db)
-    #         raise KeyError(buff)
-        
-    #     # import code; code.interact(local=dict(globals(), **locals()))
-    #     index=[item  for i, sublist in enumerate(tensor_index.tolist())
-    #         for j, item in enumerate(sublist) if j < times[i]]
-
-    #     values = [self.idx2lex[column][item]
-    #         for i, sublist in enumerate(tensor_values.tolist())
-    #         for j, item in enumerate(sublist) if j < times[i]]
-
-    #     return dict(zip(index, values))
-
-    # def t2arg(self, T):
-    #     '''
-    #         Converts column T into ARG
-
-    #         args:
-    #             T .: dict<int, str> keys in db_index, values: prediction label
-
-    #         args:
-    #             ARG .: dict<int, str> keys in db_index, values in target label
-    #     '''        
-    #     propositions= {idx: self.db['P'][idx] for idx in T}
-
-    #     ARG = br.propbankbr_t2arg(propositions.values(), T.values())
-
-    #     return dict(zip(T.keys(), ARG))
-
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
         for col in columns:

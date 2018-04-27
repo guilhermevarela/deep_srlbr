@@ -16,7 +16,8 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnShifter', 'ColumnShifterCTX_P', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnT'}
+        return {'ColumnShifter', 'ColumnShifterCTX_P', 
+        'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph','ColumnT'}
 
     # Creates an instance of class given schema and db
     @staticmethod
@@ -346,10 +347,22 @@ class ColumnPredMorph(object):
 
         sz = len(morph)
         for time, morph_comp in self.dict_db['MORF'].items():
-            self.predmorph['PRED_MORPH'][time] = 
-            [1 if m in morph_comp.split('|')  else 0 for m in morph2idx]
+            _features = [1 if m in morph_comp.split('|') else 0
+                         for m in morph2idx]
+            self.predmorph['PRED_MORPH'][time] = {
+                'PredMorph_{:02d}'.format(i):feat_i
+                for i, feat_i in _features}
 
         return self.predmorph
+
+
+def _process_predmorph(dictdb, columns, shifts):
+
+    shifter = FeatureFactory().make('ColumnPredMorph', dictdb)
+    target_dir = '../datasets/csvs/column_predmorph/'
+    predmorph = shifter.exec()
+
+    _store_columns(predmorph, columns, target_dir)
 
 
 def _process_shifter(dictdb, columns, shifts):
@@ -436,20 +449,12 @@ if __name__ == '__main__':
 
     # Making window around predicate
     # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
-    columns = ['FORM']
-    delta = 3
-    shifts = [d for d in range(-delta, delta + 1, 1)]
-    _process_shifter_ctx_p(dictdb, columns, shifts)
+    # columns = ['FORM']
+    # delta = 3
+    # shifts = [d for d in range(-delta, delta + 1, 1)]
+    # _process_shifter_ctx_p(dictdb, columns, shifts)
 
 
-    # Computing the distance to target predicate
-    # import code; code.interact(local=dict(globals(), **locals()))
-
-    # pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
-    # d = pred_dist.define().exec()
-    # target_dir = '../datasets/csvs/column_preddist/'
-    # filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
-    # pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
-
-    _process_t(dictdb)
-    _process_predicate_marker(dictdb)
+    # _process_t(dictdb)
+    # _process_predicate_marker(dictdb)
+    _process_predmorph(dictdb)
