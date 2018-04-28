@@ -11,6 +11,7 @@ from collections import OrderedDict
 import data_propbankbr as br
 import pandas as pd
 import yaml
+import networkx as nx
 
 class FeatureFactory(object):
     # Allowed classes to be created
@@ -413,32 +414,112 @@ class ColumnPredMorph(object):
         return self.predmorph
 
 
-class ColumnFindKernel(object):
+class ColumnDepFinder(object):
     '''
-        Finds Kernel
+        Finds columns in Dependency Tree
     '''
 
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def exec(self):
         '''
             Computes the distance to the target predicate
         '''
         # defines output data structure
-        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+        self.kernel = {'HEAD': OrderedDict({})}
 
         # Finds predicate position
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
-        for time, proposition in self.dict_db['P'].items():
-            predicate_time = predicate_d[proposition]
+        propositions = sorted(list(set(self.db['P'].values())))
+        col = 'FORM'
+        prev_prop = -1
+        prev_time = -1
+        for time, proposition in self.db['P'].items():
+            if prev_prop < proposition:
+                lb = time
+                if prev_prop > 0:
+                    process = True 
 
-            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+            if process:
+                #Do amazing stuff
+                G, root = self._build(lb, prev_time)
+                d = self._make_lookupnodes()
+                for i in range(lb, prev_time):
+                    self._dfs(G, root, i, d)
+                    import code; code.interact(local=dict(globals(), **locals()))
 
-        return self.predmarker
+            process = False
+            prev_prop = proposition
+            prev_time = time
+
+        return self.kernel
+
+    def _make_lookupnodes(self):
+        _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
+        return dict.fromkeys(_list_keys)
+
+    def _update_children(self, node, lookup_nodes):
+        if lookup_nodes['child_1']:
+            if lookup_nodes['child_2']:
+                lookup_nodes['child_3'] = node
+            else:
+                lookup_nodes['child_2'] = node
+        else:
+            lookup_nodes['child_1'] = node
+
+    def _update_ancestors(self, node, lookup_nodes):
+        if lookup_nodes['parent']:
+            lookup_nodes['grand_parent'] = lookup_nodes['parent']
+        lookup_nodes['parent'] = node
+
+    def _dfs(self, G, u, i, lookup_nodes):
+        G[u]['discovered'] = True
+        # updates ancestors if target i is undiscovered
+        if not G[i]['discovered']:
+            self._update_parents(u, lookup_nodes)
+
+        # current node u is target node i
+        if i == u:
+            for n, v in enumerate(G.neighbors(u)):
+                    if not G[v]['discovered']:  # shouldn't be true
+                        self._update_children(v, lookup_nodes)
+                    if n == 2:
+                        return False
+        else:
+            # keep looking
+            for v in G.neighbors(u):
+                    if not G[v]['discovered']:
+                        search = self._dfs(G, v, i, lookup_nodes)
+                        if not search:
+                            return False
+
+    def _refresh(self, G):
+        for u in G:
+            u.discovered = False
+
+    def _build(self, lb, ub):
+        G = nx.Graph()
+        root = None
+        for i in range(lb, ub):
+            G.add_node(i, **self._crosssection(i))
+
+        for i in range(lb, ub):
+            v = G[i]['DTREE']  # reference to the next node
+            u = G[i]['ID']  # reference to the current node within proposition
+            G.add_edge(i, (v - u) + i)
+            if v == 0:
+                root = i
+        return G, root
+
+    def _crosssection(self, idx):
+        list_keys = list(self.db.keys())
+        d = {key: self.db[key][idx] for key in list_keys}
+        d['discovered'] = False
+        return d
+
+
+
+
 
 def _process_passivevoice(dictdb):
 
