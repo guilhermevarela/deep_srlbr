@@ -12,6 +12,7 @@ import data_propbankbr as br
 import pandas as pd
 import yaml
 
+
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
@@ -417,28 +418,68 @@ class ColumnFindKernel(object):
     '''
         Finds Kernel
     '''
-
+    GPOS = {
+        'art': set('art'),
+        'adjective':  set('adj'),
+        'adverb':  set('adv'),
+        'noun' : set('n', 'n-adj'),
+        'pronoun': set('pron-det', 'pron-rel', 'pron-pes'),
+        'verb': set('v-fin', 'v-ger', 'v-pcp', 'v-inf'),
+    }
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def exec(self):
         '''
             Computes the distance to the target predicate
         '''
         # defines output data structure
-        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+        self.kernel = {'KERNEL': OrderedDict({})}
 
         # Finds predicate position
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
-        for time, proposition in self.dict_db['P'].items():
-            predicate_time = predicate_d[proposition]
+        # predicate_d = {
+        #     self.dict_db['P'][time]: time
+        #     for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+        # }
+        for col in ('FORM',):
+            for time, proposition in self.db['P'].items():
+                predicate_time = predicate_d[proposition]
+                self._findkernel(func, col, time, proposition)
 
-            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+
+        self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
 
         return self.predmarker
+
+    def _findkernel(self, func, column, time, prop):
+        if self.db['P'][time] != prop:
+            return None
+        idx = self.db['ID'][time]
+        step = self.db['DTREE'][time]
+        import code; code.interact(local=dict(globals(), **locals()))
+        # first son
+        son1_time = time + (step - idx)
+        gpos = self.db['GPOS'][son1_time]
+        if func in ('NP',) and gpos in GPOS['noun'].union(GPOS['pronoun']):
+            return self.db[column][son1_time]
+
+        elif func in ('AP',) and gpos in GPOS['noun']: # determinante?? --> adjp
+            return self.db[column][son1_time]
+
+        elif func in ('ADVP',) and gpos in GPOS['adv']:
+            return self.db[column][son1_time]
+
+        elif func in ('VP', 'FCL', 'ICL') and gpos in GPOS['verb']:
+            return self.db[column][son1_time]
+
+        elif func in ('PP',) and gpos in ('preposição',):
+            return self.db[column][son1_time]
+
+        elif func in ('ADVP',) and gpos in ('adverbio',):
+            return self.db[column][son1_time]
+
+        self._findkernel(func, column, son1_time, prop)
+
 
 def _process_passivevoice(dictdb):
 

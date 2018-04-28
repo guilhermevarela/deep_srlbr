@@ -127,7 +127,7 @@ class EvaluatorConll(object):
 
         self._parse(self.txt)
 
-    def evaluate_fromliblinear(self, target_path, propbank):
+    def evaluate_fromliblinear(self, target_path, mapper_t2arg):
         '''
             Opens up a conll file and parses it
 
@@ -139,21 +139,22 @@ class EvaluatorConll(object):
         with open(target_path, 'rb') as f:
             d = pickle.load(f)
         f.close()
-
-        idx2tok = propbank.hotone['T']
+        print(d)
+        # idx2lex = propbank.idx2lex
         print('liblinear accuracy:{:0.2f}'.format(d['acc']))
         print('liblinear mse:{:0.2f}'.format(d['mse']))
 
-        Y = [idx2tok[idx] for idx in d['yhat']]
-        if len(Y) != len(self.ARG):
+        # Y = [idx2lex[idx] for idx in d['yhat']]        
+        if len(d['yhat']) != len(self.ARG):
             raise ValueError('number of predictions must match targets')
         else:
             self.target_dir = '/'.join(target_path.split('/')[:-1])
             self.target_dir += '/'
 
-            Y = dict(zip(self.ARG.keys(), Y))
-            Z = propbank.t2arg(Y)
-            self.evaluate(Z, store=True)
+            # Y = dict(zip(self.ARG.keys(), Y))
+            # Z = propbank.t2arg(Y)
+            Y = mapper_t2arg.define(d['yhat'], encoding='IDX')
+            self.evaluate(Y, store=True)
 
     def _refresh(self):
         self.num_propositions= -1
