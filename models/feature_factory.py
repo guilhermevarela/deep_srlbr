@@ -20,7 +20,7 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnDepFinder', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnDepTreeParser', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -418,18 +418,10 @@ class ColumnPredMorph(object):
         return self.predmorph
 
 
-class ColumnDepFinder(object):
+class ColumnDepTreeParser(object):
     '''
         Finds columns in Dependency Tree
     '''
-    GPOS = {
-        'art': set('art'),
-        'adjective':  set('adj'),
-        'adverb':  set('adv'),
-        'noun' : set('n', 'n-adj'),
-        'pronoun': set('pron-det', 'pron-rel', 'pron-pes'),
-        'verb': set('v-fin', 'v-ger', 'v-pcp', 'v-inf'),
-    }
     def __init__(self, dict_db):
         self.db = dict_db
 
@@ -438,22 +430,6 @@ class ColumnDepFinder(object):
             Computes the distance to the target predicate
         '''
         # defines output data structure
-<<<<<<< HEAD
-        self.kernel = {'KERNEL': OrderedDict({})}
-
-        # Finds predicate position
-        # predicate_d = {
-        #     self.dict_db['P'][time]: time
-        #     for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        # }
-        for col in ('FORM',):
-            for time, proposition in self.db['P'].items():
-                predicate_time = predicate_d[proposition]
-                self._findkernel(func, col, time, proposition)
-
-
-        self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
-=======
         self.kernel = defaultdict(OrderedDict)
 
         # Finds predicate position
@@ -472,17 +448,12 @@ class ColumnDepFinder(object):
                     process = True
 
             if process:
-                #Do amazing stuff
                 G, root = self._build(lb, ub)
-                # nx.draw(G, with_labels=True)
-                # plt.show()
-                # import code; code.interact(local=dict(globals(), **locals()))
                 for i in range(lb, ub):
-                    # if i == 94540:
-                    #     import code; code.interact(local=dict(globals(), **locals()))
-                    d = self._make_lookupnodes()
-                    self._dfs(G, root, i, d)
-                    for key, val in d.items():
+                    result = self._make_lookupnodes()
+                    q = deque(list())
+                    self._dfs(G, root, i, q, result)
+                    for key, val in result.items():
                         self.kernel[key][i] = val
                     self._refresh(G)
 
@@ -496,63 +467,44 @@ class ColumnDepFinder(object):
         _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
         return dict.fromkeys(_list_keys)
 
-    def _update_children(self, node, lookup_nodes):
-        if not lookup_nodes['child_1'] is None:
-            if not lookup_nodes['child_2'] is None:
-                lookup_nodes['child_3'] = node
-            else:
-                lookup_nodes['child_2'] = node
-        else:
-            lookup_nodes['child_1'] = node
+    def _update_lookupnodes(self, siblings_l, ancestors_q, lookup_nodes):
+        try:
+            lookup_nodes['parent'] = ancestors_q.pop()
+            lookup_nodes['grand_parent'] = ancestors_q.pop()
+        except IndexError:
+            pass
+        finally:
+            def notparent_fn(x): return (not x == lookup_nodes['parent'])
+            n = 0
+            for v in siblings_l:
+                if (notparent_fn(v)):
+                    key = 'child_{:}'.format(n + 1)
+                    lookup_nodes[key] = v
+                    n += 1
+                if n == 3:
+                    break
 
-    def _add_ancestor(self, node, ancestor_q):
-        lookup_nodes['grand_parent'] = lookup_nodes['parent']
-        lookup_nodes['parent'] = node
-
-    def _remove_ancestor(self, node, ancestor_q):
-        lookup_nodes['parent'] = lookup_nodes['grand_parent']
-        lookup_nodes['grand_parent'] = None
-
-    def _dfs(self, G, u, i, lookup_nodes, ancestor_q):
-        if i == 6 and u == 6:
-            import code; code.interact(local=dict(globals(), **locals()))
+    def _dfs(self, G, u, i, q, lookup_nodes):
         G.nodes[u]['discovered'] = True
-
 
         # updates ancestors if target i is undiscovered
         if not G.nodes[i]['discovered']:
-            # self._add_ancestor(u, lookup_nodes)
-            ancestor_q.append(u)
+            q.append(u)
 
         # current node u is target node i
         if i == u:
-            n = 1
-            for v in G.neighbors(u):
-                # if i == 4 and u == 4:
-                #     print(v, lookup_nodes)
-                if not v == lookup_nodes['parent']:  # shouldn't be the parent
-                    self._update_children(v, lookup_nodes)
-                    if n == 3:
-                        break
-                    else:
-                        n += 1
-            # if i == 4 and u == 4:
-            #     import code; code.interact(local=dict(globals(), **locals()))
+            self._update_lookupnodes(G.neighbors(u), q, lookup_nodes)
             return False
         else:
             # keep looking
             for v in G.neighbors(u):
                 if not G.node[v]['discovered']:
-                    if i == 6:
-                        print('{:} -> {:}\t{:}'.format(u, v, lookup_nodes))
-                    search = self._dfs(G, v, i, lookup_nodes)
-                    if i == 6:
-                        print('{:} <- {:}\t{:}'.format(u, v, lookup_nodes))
+                    search = self._dfs(G, v, i, q, lookup_nodes)
                     if not search:
                         return False
 
         if not G.nodes[i]['discovered']:
-            ancestor_q.pop()
+            q.pop()
         return True
 
 
@@ -581,38 +533,71 @@ class ColumnDepFinder(object):
         d = {key: self.db[key][idx] for key in list_keys}
         d['discovered'] = False
         return d
->>>>>>> c06e6f9de605a5799121928a957df34475ca3a37
 
 
-    def _findkernel(self, func, column, time, prop):
-        if self.db['P'][time] != prop:
-            return None
-        idx = self.db['ID'][time]
-        step = self.db['DTREE'][time]
-        import code; code.interact(local=dict(globals(), **locals()))
-        # first son
-        son1_time = time + (step - idx)
-        gpos = self.db['GPOS'][son1_time]
-        if func in ('NP',) and gpos in GPOS['noun'].union(GPOS['pronoun']):
-            return self.db[column][son1_time]
+# class ColumnSyntTree(object):
+#     '''
+#         Finds columns in Dependency Tree
+#     '''
+#     GPOS = {
+#         'art': set('art'),
+#         'adjective':  set('adj'),
+#         'adverb':  set('adv'),
+#         'noun' : set('n', 'n-adj'),
+#         'pronoun': set('pron-det', 'pron-rel', 'pron-pes'),
+#         'verb': set('v-fin', 'v-ger', 'v-pcp', 'v-inf'),
+#     }
+#     def __init__(self, dict_db):
+#         self.db = dict_db        
 
-        elif func in ('AP',) and gpos in GPOS['noun']: # determinante?? --> adjp
-            return self.db[column][son1_time]
+#     def run(self):
+#         '''
+#             Computes the distance to the target predicate
+#         '''
+#         # defines output data structure
+#         self.kernel = {'KERNEL': OrderedDict({})}
 
-        elif func in ('ADVP',) and gpos in GPOS['adv']:
-            return self.db[column][son1_time]
+#         # Finds predicate position
+#         # predicate_d = {
+#         #     self.dict_db['P'][time]: time
+#         #     for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+#         # }
+#         for col in ('FORM',):
+#             for time, proposition in self.db['P'].items():
+#                 predicate_time = predicate_d[proposition]
+#                 self._findkernel(func, col, time, proposition)
 
-        elif func in ('VP', 'FCL', 'ICL') and gpos in GPOS['verb']:
-            return self.db[column][son1_time]
 
-        elif func in ('PP',) and gpos in ('preposição',):
-            return self.db[column][son1_time]
+#         self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
 
-        elif func in ('ADVP',) and gpos in ('adverbio',):
-            return self.db[column][son1_time]
+#     def _findkernel(self, func, column, time, prop):
+#         if self.db['P'][time] != prop:
+#             return None
+#         idx = self.db['ID'][time]
+#         step = self.db['DTREE'][time]
+#         import code; code.interact(local=dict(globals(), **locals()))
+#         # first son
+#         son1_time = time + (step - idx)
+#         gpos = self.db['GPOS'][son1_time]
+#         if func in ('NP',) and gpos in GPOS['noun'].union(GPOS['pronoun']):
+#             return self.db[column][son1_time]
 
-        self._findkernel(func, column, son1_time, prop)
+#         elif func in ('AP',) and gpos in GPOS['noun']: # determinante?? --> adjp
+#             return self.db[column][son1_time]
 
+#         elif func in ('ADVP',) and gpos in GPOS['adv']:
+#             return self.db[column][son1_time]
+
+#         elif func in ('VP', 'FCL', 'ICL') and gpos in GPOS['verb']:
+#             return self.db[column][son1_time]
+
+#         elif func in ('PP',) and gpos in ('preposição',):
+#             return self.db[column][son1_time]
+
+#         elif func in ('ADVP',) and gpos in ('adverbio',):
+#             return self.db[column][son1_time]
+
+#         self._findkernel(func, column, son1_time, prop)
 
 def _process_passivevoice(dictdb):
 
@@ -702,7 +687,7 @@ if __name__ == '__main__':
     '''
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
-    depfinder = FeatureFactory().make('ColumnDepFinder', dictdb)
+    depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
     dependency_d = depfinder.run()
     _store(dependency_d, 'dependencies', '../datasets/csvs/column_dep/')
 
