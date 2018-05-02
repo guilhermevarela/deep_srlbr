@@ -424,6 +424,26 @@ class ColumnDepTreeParser(object):
     '''
     def __init__(self, dict_db):
         self.db = dict_db
+        self.columns = []
+    def define(self, columns):
+        '''
+            Defines which columns to return
+
+            args:
+                columns .: list<str> columns a column in db
+
+            returns:
+                deptree_parser .: object< ColumnDepTreeParser>
+
+        '''
+        _msg = 'columns must belong to database {:} got {:}'
+        for col in columns:
+            if col in self.db:
+                self.columns.append(col)
+            else:
+                raise ValueError(_msg.format(list(self.db.keys()), col))
+
+        return self
 
     def run(self):
         '''
@@ -432,9 +452,6 @@ class ColumnDepTreeParser(object):
         # defines output data structure
         self.kernel = defaultdict(OrderedDict)
 
-        # Finds predicate position
-        propositions = sorted(list(set(self.db['P'].values())))
-        col = 'FORM'
         lb = 0
         ub = 0
         prev_prop = -1
@@ -453,8 +470,17 @@ class ColumnDepTreeParser(object):
                     result = self._make_lookupnodes()
                     q = deque(list())
                     self._dfs(G, root, i, q, result)
-                    for key, val in result.items():
-                        self.kernel[key][i] = val
+                    try:
+                        for key, node_time in result.items():
+                            for col in self.columns:
+                                new_key = '{:}_{:}'.format(col, key).upper()
+                                if node_time is None:
+                                    self.kernel[new_key][i] = None
+                                else:
+                                    self.kernel[new_key][i] = self.db[col][node_time]
+                                    
+                    except KeyError:
+                        import code; code.interact(local=dict(globals(), **locals()))
                     self._refresh(G)
 
             process = False
@@ -474,10 +500,9 @@ class ColumnDepTreeParser(object):
         except IndexError:
             pass
         finally:
-            def notparent_fn(x): return (not x == lookup_nodes['parent'])
             n = 0
             for v in siblings_l:
-                if (notparent_fn(v)):
+                if (not v == lookup_nodes['parent']):
                     key = 'child_{:}'.format(n + 1)
                     lookup_nodes[key] = v
                     n += 1
@@ -688,7 +713,7 @@ if __name__ == '__main__':
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
     depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
-    dependency_d = depfinder.run()
+    dependency_d = depfinder.define(['LEMMA']).run()
     _store(dependency_d, 'dependencies', '../datasets/csvs/column_dep/')
 
     # Making column moving windpw around column
