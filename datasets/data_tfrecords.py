@@ -523,7 +523,9 @@ def _read_and_decode_v2(filename_queue):
     # })
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1','FORM_CTX_P+0', 'FORM_CTX_P+1']
+
+        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
+        'FORM_CTX_P+0', 'FORM_CTX_P+1']
     })
 
     TF_SEQUENCE_FEATURES_V2.update({

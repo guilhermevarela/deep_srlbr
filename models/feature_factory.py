@@ -6,18 +6,21 @@
 '''
 import sys
 sys.path.append('../datasets')
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict, deque
 
 import data_propbankbr as br
 import pandas as pd
 import yaml
+import networkx as nx
+import matplotlib.pyplot as plt
+
 
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnDepFinder', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -81,7 +84,7 @@ class ColumnShifter(object):
 
         return self
 
-    def exec(self):
+    def run(self):
         '''
             Computes column shifting
             args:
@@ -97,7 +100,7 @@ class ColumnShifter(object):
         # defines output data structure
 
         for time, proposition in self.dict_db['P'].items():
-            for col in self.columns:                
+            for col in self.columns:
                 for s in self.shifts:
                     new_col = self.mapper[(s, col)]
                     if (time + s in self.dict_db['P']) and\
@@ -162,7 +165,7 @@ class ColumnShifterCTX_P(object):
 
         return self
 
-    def exec(self):
+    def run(self):
         '''
             Computes column shifting
             args:
@@ -228,7 +231,7 @@ class ColumnPredDist(object):
 
         return self
 
-    def exec(self):
+    def run(self):
         '''
             Computes the distance to the target predicate
             args:
@@ -263,7 +266,7 @@ class ColumnT(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    def exec(self):
+    def run(self):
         '''
             Computes the distance to the target predicate
             args:
@@ -279,6 +282,7 @@ class ColumnT(object):
 
         return self.t
 
+
 class ColumnPassiveVoice(object):
     '''
         Passive voice indicator
@@ -291,7 +295,7 @@ class ColumnPassiveVoice(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    def exec(self):
+    def run(self):
         '''
             Computes the distance to the target predicate
             args:
@@ -340,7 +344,7 @@ class ColumnPredMarker(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    def exec(self):
+    def run(self):
         '''
             Computes the distance to the target predicate
             args:
@@ -375,7 +379,7 @@ class ColumnPredMorph(object):
     def __init__(self, dict_db):
         self.dict_db = dict_db
 
-    def exec(self):
+    def run(self):
         '''
             Computes 32 item list of zeros and ones
             args:
@@ -414,9 +418,9 @@ class ColumnPredMorph(object):
         return self.predmorph
 
 
-class ColumnFindKernel(object):
+class ColumnDepFinder(object):
     '''
-        Finds Kernel
+        Finds columns in Dependency Tree
     '''
     GPOS = {
         'art': set('art'),
@@ -429,11 +433,12 @@ class ColumnFindKernel(object):
     def __init__(self, dict_db):
         self.db = dict_db
 
-    def exec(self):
+    def run(self):
         '''
             Computes the distance to the target predicate
         '''
         # defines output data structure
+<<<<<<< HEAD
         self.kernel = {'KERNEL': OrderedDict({})}
 
         # Finds predicate position
@@ -448,8 +453,136 @@ class ColumnFindKernel(object):
 
 
         self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+=======
+        self.kernel = defaultdict(OrderedDict)
 
-        return self.predmarker
+        # Finds predicate position
+        propositions = sorted(list(set(self.db['P'].values())))
+        col = 'FORM'
+        lb = 0
+        ub = 0
+        prev_prop = -1
+        prev_time = -1
+        process = False
+        for time, proposition in self.db['P'].items():
+            if prev_prop < proposition:
+                if prev_prop > 0:
+                    lb = ub
+                    ub = prev_time + 1  # ub must be inclusive
+                    process = True
+
+            if process:
+                #Do amazing stuff
+                G, root = self._build(lb, ub)
+                # nx.draw(G, with_labels=True)
+                # plt.show()
+                # import code; code.interact(local=dict(globals(), **locals()))
+                for i in range(lb, ub):
+                    # if i == 94540:
+                    #     import code; code.interact(local=dict(globals(), **locals()))
+                    d = self._make_lookupnodes()
+                    self._dfs(G, root, i, d)
+                    for key, val in d.items():
+                        self.kernel[key][i] = val
+                    self._refresh(G)
+
+            process = False
+            prev_prop = proposition
+            prev_time = time
+
+        return self.kernel
+
+    def _make_lookupnodes(self):
+        _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
+        return dict.fromkeys(_list_keys)
+
+    def _update_children(self, node, lookup_nodes):
+        if not lookup_nodes['child_1'] is None:
+            if not lookup_nodes['child_2'] is None:
+                lookup_nodes['child_3'] = node
+            else:
+                lookup_nodes['child_2'] = node
+        else:
+            lookup_nodes['child_1'] = node
+
+    def _add_ancestor(self, node, ancestor_q):
+        lookup_nodes['grand_parent'] = lookup_nodes['parent']
+        lookup_nodes['parent'] = node
+
+    def _remove_ancestor(self, node, ancestor_q):
+        lookup_nodes['parent'] = lookup_nodes['grand_parent']
+        lookup_nodes['grand_parent'] = None
+
+    def _dfs(self, G, u, i, lookup_nodes, ancestor_q):
+        if i == 6 and u == 6:
+            import code; code.interact(local=dict(globals(), **locals()))
+        G.nodes[u]['discovered'] = True
+
+
+        # updates ancestors if target i is undiscovered
+        if not G.nodes[i]['discovered']:
+            # self._add_ancestor(u, lookup_nodes)
+            ancestor_q.append(u)
+
+        # current node u is target node i
+        if i == u:
+            n = 1
+            for v in G.neighbors(u):
+                # if i == 4 and u == 4:
+                #     print(v, lookup_nodes)
+                if not v == lookup_nodes['parent']:  # shouldn't be the parent
+                    self._update_children(v, lookup_nodes)
+                    if n == 3:
+                        break
+                    else:
+                        n += 1
+            # if i == 4 and u == 4:
+            #     import code; code.interact(local=dict(globals(), **locals()))
+            return False
+        else:
+            # keep looking
+            for v in G.neighbors(u):
+                if not G.node[v]['discovered']:
+                    if i == 6:
+                        print('{:} -> {:}\t{:}'.format(u, v, lookup_nodes))
+                    search = self._dfs(G, v, i, lookup_nodes)
+                    if i == 6:
+                        print('{:} <- {:}\t{:}'.format(u, v, lookup_nodes))
+                    if not search:
+                        return False
+
+        if not G.nodes[i]['discovered']:
+            ancestor_q.pop()
+        return True
+
+
+    def _refresh(self, G):
+        for u in G:
+            G.nodes[u]['discovered'] = False
+
+    def _build(self, lb, ub):
+        G = nx.Graph()
+        root = None
+        for i in range(lb, ub):
+            G.add_node(i, **self._crosssection(i))
+
+        for i in range(lb, ub):
+            v = G.node[i]['DTREE']  # reference to the next node
+            u = G.node[i]['ID']  # reference to the current node within proposition
+            if v == 0:
+                root = i
+            else:
+                G.add_edge(i, (v - u) + i)
+
+        return G, root
+
+    def _crosssection(self, idx):
+        list_keys = list(self.db.keys())
+        d = {key: self.db[key][idx] for key in list_keys}
+        d['discovered'] = False
+        return d
+>>>>>>> c06e6f9de605a5799121928a957df34475ca3a37
+
 
     def _findkernel(self, func, column, time, prop):
         if self.db['P'][time] != prop:
@@ -485,7 +618,7 @@ def _process_passivevoice(dictdb):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
     target_dir = '../datasets/csvs/column_passivevoice/'
-    passivevoice = pvoice_marker.exec()
+    passivevoice = pvoice_marker.run()
 
     _store(passivevoice, 'passive_voice', target_dir)
 
@@ -494,7 +627,7 @@ def _process_predmorph(dictdb):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
     target_dir = '../datasets/csvs/column_predmorph/'
-    predmorph = morpher.exec()
+    predmorph = morpher.run()
 
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
@@ -503,7 +636,7 @@ def _process_shifter(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
     target_dir = '../datasets/csvs/column_shifter/'
-    shifted = shifter.define(columns, shifts).exec()
+    shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
@@ -512,7 +645,7 @@ def _process_shifter_ctx_p(db, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
     target_dir = '../datasets/csvs/column_shifts_ctx_p/'
-    shifted = shifter.define(columns, shifts).exec()
+    shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
@@ -520,7 +653,7 @@ def _process_shifter_ctx_p(db, columns, shifts):
 def _process_predicate_dist(dictdb):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
-    d = pred_dist.define().exec()
+    d = pred_dist.define().run()
 
     target_dir = '../datasets/csvs/column_preddist/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
@@ -530,7 +663,7 @@ def _process_predicate_dist(dictdb):
 def _process_t(dictdb):
 
     column_t = FeatureFactory().make('ColumnT', dictdb)
-    d = column_t.exec()
+    d = column_t.run()
 
     target_dir = '../datasets/csvs/column_t/'
     filename = '{:}{:}.csv'.format(target_dir, 't')
@@ -540,7 +673,7 @@ def _process_t(dictdb):
 def _process_predicate_marker(dictdb):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
-    d = column_t.exec()
+    d = column_t.run()
 
     target_dir = '../datasets/csvs/column_predmarker/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
@@ -558,7 +691,7 @@ def _store_columns(columns_dict, columns, target_dir):
 
 
 def _store(d, target_name, target_dir):
-        df = pd.DataFrame.from_dict(d)        
+        df = pd.DataFrame.from_dict(d)
         filename = '{:}{:}.csv'.format(target_dir, target_name)
         df.to_csv(filename, sep=',', encoding='utf-8', index=True)
 
@@ -569,6 +702,9 @@ if __name__ == '__main__':
     '''
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
+    depfinder = FeatureFactory().make('ColumnDepFinder', dictdb)
+    dependency_d = depfinder.run()
+    _store(dependency_d, 'dependencies', '../datasets/csvs/column_dep/')
 
     # Making column moving windpw around column
     # columns = ('FORM', 'LEMMA', 'FUNC', 'GPOS')
@@ -588,4 +724,4 @@ if __name__ == '__main__':
     # _process_t(dictdb)
     # _process_predicate_marker(dictdb)
     # _process_predmorph(dictdb)
-    _process_passivevoice(dictdb)
+    # _process_passivevoice(dictdb)
