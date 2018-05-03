@@ -438,10 +438,9 @@ class ColumnDepTreeParser(object):
         '''
         _msg = 'columns must belong to database {:} got {:}'
         for col in columns:
-            if col in self.db:
-                self.columns.append(col)
-            else:
+            if col not in self.db:
                 raise ValueError(_msg.format(list(self.db.keys()), col))
+        self.columns = columns
 
         return self
 
@@ -452,6 +451,11 @@ class ColumnDepTreeParser(object):
         # defines output data structure
         self.kernel = defaultdict(OrderedDict)
 
+        # finds predicate time 
+        predicate_d = {
+            self.db['P'][time]: time
+            for time, arg in self.db['ARG'].items() if arg == '(V*)'
+        }
         lb = 0
         ub = 0
         prev_prop = -1
@@ -467,20 +471,35 @@ class ColumnDepTreeParser(object):
             if process:
                 G, root = self._build(lb, ub)
                 for i in range(lb, ub):
+                    # Find children, parent and grand-parent
                     result = self._make_lookupnodes()
                     q = deque(list())
-                    self._dfs(G, root, i, q, result)
-                    try:
-                        for key, node_time in result.items():
-                            for col in self.columns:
-                                new_key = '{:}_{:}'.format(col, key).upper()
-                                if node_time is None:
+                    self._dfs_lookup(G, root, i, q, result)
+                    for key, nodeidx in result.items():
+                        for col in self.columns:
+                            new_key = '{:}_{:}'.format(col, key).upper()
+                            if nodeidx is None:
+                                self.kernel[new_key][i] = None
+                            else:
+                                self.kernel[new_key][i] = self.db[col][nodeidx]
+
+                    # Find path to predicate
+                    self._refresh(G)
+                    result = {}
+                    q = deque(list())
+                    pred = predicate_d[prev_prop]
+                    self._dfs_path(G, i, pred, q, result)
+
+                    for key, nodeidx in result.items():
+                        for col in self.columns:
+                            if col in ('GPOS', 'FUNC'):
+                                _key = key.split('_')[0]
+                                new_key = '{:}_{:}'.format(col, _key).upper()
+                                if nodeidx is None:
                                     self.kernel[new_key][i] = None
                                 else:
-                                    self.kernel[new_key][i] = self.db[col][node_time]
-                                    
-                    except KeyError:
-                        import code; code.interact(local=dict(globals(), **locals()))
+                                    self.kernel[new_key][i] = self.db[col][nodeidx]
+
                     self._refresh(G)
 
             process = False
@@ -493,25 +512,34 @@ class ColumnDepTreeParser(object):
         _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
         return dict.fromkeys(_list_keys)
 
-    def _update_lookupnodes(self, siblings_l, ancestors_q, lookup_nodes):
+    def _update_lookupnodes(self, children_l, ancestors_q, lookup_nodes):
+        self._update_ancestors(ancestors_q, lookup_nodes)
+        self._update_children(children_l, lookup_nodes)
+
+    def _update_path(self, ancestors_q, lookup_nodes):
+        for i, nidx in enumerate(ancestors_q):
+            _key = '{:02d}_node'.format(i)
+            lookup_nodes[_key] = nidx
+
+    def _update_ancestors(self, ancestors_q, lookup_nodes):
         try:
             lookup_nodes['parent'] = ancestors_q.pop()
             lookup_nodes['grand_parent'] = ancestors_q.pop()
         except IndexError:
             pass
-        finally:
-            n = 0
-            for v in siblings_l:
-                if (not v == lookup_nodes['parent']):
-                    key = 'child_{:}'.format(n + 1)
-                    lookup_nodes[key] = v
-                    n += 1
-                if n == 3:
-                    break
 
-    def _dfs(self, G, u, i, q, lookup_nodes):
+    def _update_children(self, children_l, lookup_nodes):
+        n = 0
+        for v in children_l:
+            if (not v == lookup_nodes['parent']):
+                key = 'child_{:}'.format(n + 1)
+                lookup_nodes[key] = v
+                n += 1
+            if n == 3:
+                break
+
+    def _dfs_lookup(self, G, u, i, q, lookup_nodes):
         G.nodes[u]['discovered'] = True
-
         # updates ancestors if target i is undiscovered
         if not G.nodes[i]['discovered']:
             q.append(u)
@@ -524,7 +552,29 @@ class ColumnDepTreeParser(object):
             # keep looking
             for v in G.neighbors(u):
                 if not G.node[v]['discovered']:
-                    search = self._dfs(G, v, i, q, lookup_nodes)
+                    search = self._dfs_lookup(G, v, i, q, lookup_nodes)
+                    if not search:
+                        return False
+
+        if not G.nodes[i]['discovered']:
+            q.pop()
+        return True
+
+    def _dfs_path(self, G, u, i, q, path_nodes):
+        # updates ancestors if target i is undiscovered
+        if not G.nodes[i]['discovered']:
+            q.append(u)
+        G.nodes[u]['discovered'] = True
+
+        # current node u is target node i
+        if i == u:            
+            self._update_path(q, path_nodes)
+            return False
+        else:
+            # keep looking
+            for v in G.neighbors(u):
+                if not G.node[v]['discovered']:
+                    search = self._dfs_path(G, v, i, q, path_nodes)
                     if not search:
                         return False
 
@@ -713,8 +763,13 @@ if __name__ == '__main__':
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
     depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
-    dependency_d = depfinder.define(['LEMMA']).run()
-    _store(dependency_d, 'dependencies', '../datasets/csvs/column_dep/')
+    # columns = ['LEMMA']
+    lemma_d = depfinder.define(['LEMMA']).run()
+    _store(lemma_d, 'lemma', '../datasets/csvs/column_deptree/')
+    gpos_d = depfinder.define(['GPOS']).run()
+    _store(gpos_d, 'gpos', '../datasets/csvs/column_deptree/')
+    func_d = depfinder.define(['FUNC']).run()
+    _store(func_d, 'func', '../datasets/csvs/column_deptree/')
 
     # Making column moving windpw around column
     # columns = ('FORM', 'LEMMA', 'FUNC', 'GPOS')
