@@ -454,7 +454,7 @@ def _process_v2( context_features, sequence_features,
     #paginates over all available columnx   
     print('_process_v2:{:}'.format(sequence_features.keys()))
     for key in conf.SEQUENCE_FEATURES_V2:
-        dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])     
+        dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
         
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
         
@@ -523,7 +523,9 @@ def _read_and_decode_v2(filename_queue):
     # })
     TF_SEQUENCE_FEATURES_V2.update({
         key:tf.VarLenFeature(tf.float32) 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1','FORM_CTX_P+0', 'FORM_CTX_P+1']
+
+        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
+        'FORM_CTX_P+0', 'FORM_CTX_P+1']
     })
 
     TF_SEQUENCE_FEATURES_V2.update({

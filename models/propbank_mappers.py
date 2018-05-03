@@ -4,9 +4,11 @@
 
     PropbankMappers provides extra functionality for propbank encoder
 '''
+import sys
+sys.path.append('..')
 from collections import OrderedDict
-from propbank_encoder import PropbankEncoder
-import data_propbankbr as br
+from models.propbank_encoder import PropbankEncoder
+import datasets.data_propbankbr as br
 
 
 class BaseMapper(object):
