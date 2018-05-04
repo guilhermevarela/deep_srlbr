@@ -41,7 +41,7 @@ class ColumnShifter(object):
             See below (main)
     '''
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     # Columns over which we want to perform the shifting
     def define(self, columns, shifts):
@@ -62,8 +62,8 @@ class ColumnShifter(object):
 
         '''
         # Check if columns is subset of db columns
-        if not(set(columns) <= set(self.dict_db.keys())):
-            unknown_columns = set(columns) - set(self.dict_db.keys())
+        if not(set(columns) <= set(self.db.keys())):
+            unknown_columns = set(columns) - set(self.db.keys())
             raise ValueError('Unknown columns {:}'.format(unknown_columns))
         else:
             self.columns = columns
@@ -99,13 +99,13 @@ class ColumnShifter(object):
 
         # defines output data structure
 
-        for time, proposition in self.dict_db['P'].items():
+        for time, proposition in self.db['P'].items():
             for col in self.columns:
                 for s in self.shifts:
                     new_col = self.mapper[(s, col)]
-                    if (time + s in self.dict_db['P']) and\
-                         (self.dict_db['P'][time + s] == proposition):
-                        self.dict_shifted[new_col][time] = self.dict_db[col][time + s]
+                    if (time + s in self.db['P']) and\
+                         (self.db['P'][time + s] == proposition):
+                        self.dict_shifted[new_col][time] = self.db[col][time + s]
                     else:
                         self.dict_shifted[new_col][time] = None
 
@@ -121,7 +121,7 @@ class ColumnShifterCTX_P(object):
     '''
 
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     # Columns over which we want to perform the shifting    
     def define(self, columns, shifts):
@@ -142,8 +142,8 @@ class ColumnShifterCTX_P(object):
 
         '''
         # Check if columns is subset of db columns
-        if not(set(columns) <= set(self.dict_db.keys())):
-            unknown_columns = set(columns) - set(self.dict_db.keys())
+        if not(set(columns) <= set(self.db.keys())):
+            unknown_columns = set(columns) - set(self.db.keys())
             raise ValueError('Unknown columns {:}'.format(unknown_columns))
         else:
             self.columns = columns
@@ -156,7 +156,7 @@ class ColumnShifterCTX_P(object):
         else:
             self.shifts = sorted(shifts)
 
-        if not '(V*)' in set(self.dict_db['ARG'].values()):
+        if not '(V*)' in set(self.db['ARG'].values()):
             raise ValueError('(V*) not in ARG')
 
         self.mapper = OrderedDict(
@@ -180,18 +180,15 @@ class ColumnShifterCTX_P(object):
 
         # defines output data structure
         times = []
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
-        for time, proposition in self.dict_db['P'].items():
+        predicate_d = _predicatedict(self.db)
+        for time, proposition in self.db['P'].items():
             predicate_time =  predicate_d[proposition]
             for col in self.columns:
                 for s in self.shifts:
                     new_col = self.mapper[(s, col)]                    
-                    if (predicate_time + s in self.dict_db['P']) and\
-                         (self.dict_db['P'][predicate_time + s] == proposition):
-                        self.dict_shifted[new_col][time] = self.dict_db[col][predicate_time + s]
+                    if (predicate_time + s in self.db['P']) and\
+                         (self.db['P'][predicate_time + s] == proposition):
+                        self.dict_shifted[new_col][time] = self.db[col][predicate_time + s]
                     else:
                         self.dict_shifted[new_col][time] = None
 
@@ -206,7 +203,7 @@ class ColumnPredDist(object):
             See below (main)
     '''
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     # Columns over which we want to perform the shifting
     def define(self):
@@ -226,7 +223,7 @@ class ColumnPredDist(object):
                 column_shifter .: object<ColumnShifter> an instance of column shifter
 
         '''
-        if not '(V*)' in set(self.dict_db['ARG'].values()):
+        if not '(V*)' in set(self.db['ARG'].values()):
             raise ValueError('(V*) not in ARG')
 
         return self
@@ -242,11 +239,8 @@ class ColumnPredDist(object):
         self.preddist = {'PRED_DIST': OrderedDict({})}
 
         # Finds predicate position
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
-        for time, proposition in self.dict_db['P'].items():
+        predicate_d = _predicatedict(self.db)
+        for time, proposition in self.db['P'].items():
             predicate_time = predicate_d[proposition]
 
             self.preddist['PRED_DIST'][time] = predicate_time - time
@@ -264,7 +258,7 @@ class ColumnT(object):
     '''
 
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def run(self):
         '''
@@ -274,10 +268,10 @@ class ColumnT(object):
                 preddist .: dict<PRED_DIST, OrderedDict<int, int>>
         '''
         # defines output data structure
-        T = br.propbankbr_arg2t(self.dict_db['P'].values(), self.dict_db['ARG'].values())
+        T = br.propbankbr_arg2t(self.db['P'].values(), self.db['ARG'].values())
 
         self.t = {'T': OrderedDict(
-            dict(zip(self.dict_db['ARG'].keys(), T))
+            dict(zip(self.db['ARG'].keys(), T))
         )}
 
         return self.t
@@ -293,7 +287,7 @@ class ColumnPassiveVoice(object):
     '''
 
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def run(self):
         '''
@@ -306,20 +300,17 @@ class ColumnPassiveVoice(object):
         self.passive_voice = {'PASSIVE_VOICE': OrderedDict({})}
 
         # Finds predicate position
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
+        predicate_d = _predicatedict(self.db)
         pos_d = {
-            self.dict_db['P'][time]: time
-            for time, pos in self.dict_db['GPOS'].items() if pos == 'V-PCP'
+            self.db['P'][time]: time
+            for time, pos in self.db['GPOS'].items() if pos == 'V-PCP'
         }
         lemma_d = {
-            self.dict_db['P'][time]: time
-            for time, lem in self.dict_db['LEMMA'].items() if lem == 'ser'
+            self.db['P'][time]: time
+            for time, lem in self.db['LEMMA'].items() if lem == 'ser'
         }
         
-        for time, proposition in self.dict_db['P'].items():
+        for time, proposition in self.db['P'].items():
             predicate_time = predicate_d[proposition]
             lemma_time = lemma_d.get(proposition, None)
             pos_time = pos_d.get(proposition, None)
@@ -342,7 +333,7 @@ class ColumnPredMarker(object):
     '''
 
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def run(self):
         '''
@@ -355,11 +346,8 @@ class ColumnPredMarker(object):
         self.predmarker = {'PRED_MARKER': OrderedDict({})}
 
         # Finds predicate position
-        predicate_d = {
-            self.dict_db['P'][time]: time
-            for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
-        }
-        for time, proposition in self.dict_db['P'].items():
+        predicate_d = _predicatedict(self.db)
+        for time, proposition in self.db['P'].items():
             predicate_time = predicate_d[proposition]
 
             self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
@@ -377,7 +365,7 @@ class ColumnPredMorph(object):
             See below (main)
     '''
     def __init__(self, dict_db):
-        self.dict_db = dict_db
+        self.db = dict_db
 
     def run(self):
         '''
@@ -390,7 +378,7 @@ class ColumnPredMorph(object):
         self.predmorph = {'PRED_MORPH': OrderedDict({})}
 
         # Finds all single flag
-        composite_morph = sorted(list(set(self.dict_db['MORF'].values())))
+        composite_morph = sorted(list(set(self.db['MORF'].values())))
 
         morph = [item
                  for sublist in
@@ -402,7 +390,7 @@ class ColumnPredMorph(object):
         morph2idx = dict(zip(morph, rng))
 
 
-        for time, morph_comp in self.dict_db['MORF'].items():
+        for time, morph_comp in self.db['MORF'].items():
             _features = [1 if m in morph_comp.split('|') else 0
                          for m in morph2idx]
 
@@ -452,10 +440,7 @@ class ColumnDepTreeParser(object):
         self.kernel = defaultdict(OrderedDict)
 
         # finds predicate time 
-        predicate_d = {
-            self.db['P'][time]: time
-            for time, arg in self.db['ARG'].items() if arg == '(V*)'
-        }
+        predicate_d = _predicatedict(self.db)
         lb = 0
         ub = 0
         prev_prop = -1
@@ -610,6 +595,13 @@ class ColumnDepTreeParser(object):
         return d
 
 
+def _predicatedict(db):
+    d = {
+        db['P'][time]: time
+        for time, arg in db['ARG'].items() 
+            if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+    }
+    return d
 # class ColumnSyntTree(object):
 #     '''
 #         Finds columns in Dependency Tree
@@ -634,8 +626,8 @@ class ColumnDepTreeParser(object):
 
 #         # Finds predicate position
 #         # predicate_d = {
-#         #     self.dict_db['P'][time]: time
-#         #     for time, arg in self.dict_db['ARG'].items() if arg == '(V*)'
+#         #     self.db['P'][time]: time
+#         #     for time, arg in self.db['ARG'].items() if arg == '(V*)'
 #         # }
 #         for col in ('FORM',):
 #             for time, proposition in self.db['P'].items():
@@ -762,14 +754,6 @@ if __name__ == '__main__':
     '''
     df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
     dictdb = df.to_dict()
-    depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
-    # columns = ['LEMMA']
-    lemma_d = depfinder.define(['LEMMA']).run()
-    _store(lemma_d, 'lemma', '../datasets/csvs/column_deptree/')
-    gpos_d = depfinder.define(['GPOS']).run()
-    _store(gpos_d, 'gpos', '../datasets/csvs/column_deptree/')
-    func_d = depfinder.define(['FUNC']).run()
-    _store(func_d, 'func', '../datasets/csvs/column_deptree/')
 
     # Making column moving windpw around column
     # columns = ('FORM', 'LEMMA', 'FUNC', 'GPOS')
@@ -779,12 +763,22 @@ if __name__ == '__main__':
 
 
     # Making window around predicate
-    # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
-    # columns = ['FORM']
-    # delta = 3
-    # shifts = [d for d in range(-delta, delta + 1, 1)]
-    # _process_shifter_ctx_p(dictdb, columns, shifts)
+    columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
+    # columns = ['PRED']
+    delta = 3
+    shifts = [d for d in range(-delta, delta + 1, 1)]
+    _process_shifter_ctx_p(dictdb, columns, shifts)
+    
 
+    # Making DepTree Parser
+    # depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
+    # # columns = ['LEMMA']
+    # lemma_d = depfinder.define(['LEMMA']).run()
+    # _store(lemma_d, 'lemma', '../datasets/csvs/column_deptree/')
+    # gpos_d = depfinder.define(['GPOS']).run()
+    # _store(gpos_d, 'gpos', '../datasets/csvs/column_deptree/')
+    # func_d = depfinder.define(['FUNC']).run()
+    # _store(func_d, 'func', '../datasets/csvs/column_deptree/')
 
     # _process_t(dictdb)
     # _process_predicate_marker(dictdb)
