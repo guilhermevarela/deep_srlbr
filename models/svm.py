@@ -28,7 +28,7 @@ class SVM(object):
     def predict(self, X, Y, i0=0):
         # return pred_labels, (ACC, MSE, SCC), pred_values
         labels, metrics, values = lin.predict(Y, X, self._svm)
-        index = range(i0, len(labels), 1)
+        index = range(i0, i0 + len(labels), 1)
         d = {
             'Yhat': dict(zip(index, labels)),
             'acc': metrics[0],
@@ -98,14 +98,14 @@ if __name__ == '__main__':
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     # input_path = 'datasets/svms/{:}/train_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
     print(input_path)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
     # input_path = 'datasets/svms/{:}/valid_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
@@ -130,6 +130,7 @@ if __name__ == '__main__':
         print('Outsample prediction ...')
         outputs = svm.predict(Xvalid, Yvalid, i0=len(train_d))
         valid_d = outputs['Yhat'].copy()
+
         del outputs['Yhat']
         validstats_d = outputs.copy()
 

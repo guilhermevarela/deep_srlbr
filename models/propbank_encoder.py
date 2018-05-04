@@ -364,6 +364,7 @@ if __name__ == '__main__':
         '../datasets/csvs/column_shifts_ctx_p/form.csv',
         '../datasets/csvs/column_shifts_ctx_p/gpos.csv',
         '../datasets/csvs/column_shifts_ctx_p/lemma.csv',
+        '../datasets/csvs/column_shifts_ctx_p/pred.csv',
         '../datasets/csvs/column_t/t.csv'
     ]
 

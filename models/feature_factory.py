@@ -763,11 +763,11 @@ if __name__ == '__main__':
 
 
     # Making window around predicate
-    columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
+    # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
     # columns = ['PRED']
-    delta = 3
-    shifts = [d for d in range(-delta, delta + 1, 1)]
-    _process_shifter_ctx_p(dictdb, columns, shifts)
+    # delta = 3
+    # shifts = [d for d in range(-delta, delta + 1, 1)]
+    # _process_shifter_ctx_p(dictdb, columns, shifts)
     
 
     # Making DepTree Parser
@@ -780,7 +780,7 @@ if __name__ == '__main__':
     # func_d = depfinder.define(['FUNC']).run()
     # _store(func_d, 'func', '../datasets/csvs/column_deptree/')
 
-    # _process_t(dictdb)
+    _process_t(dictdb)
     # _process_predicate_marker(dictdb)
     # _process_predmorph(dictdb)
     # _process_passivevoice(dictdb)
