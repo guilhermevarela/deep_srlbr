@@ -41,12 +41,12 @@ class EvaluatorConll(object):
             PRED    .:  dict<int,str> keys are the index, values are verbs/ predicates
             ARG     .:  dict<int,str> keys are the index, values are ARG
         '''             
-        self.ds_type=ds_type
-        self.S=S 
-        self.P=P 
-        self.PRED=PRED
-        self.ARG=ARG
-        self.target_dir=target_dir
+        self.ds_type = ds_type
+        self.S = S 
+        self.P = P 
+        self.PRED = PRED
+        self.ARG = ARG
+        self.target_dir = target_dir
 
         self._refresh()
 
@@ -157,29 +157,29 @@ class EvaluatorConll(object):
             self.evaluate(Y, store=True)
 
     def _refresh(self):
-        self.num_propositions= -1
-        self.num_sentences=-1
-        self.perc_propositions=-1
-        self.txt=''
-        self.err=''
-        self.f1= -1
-        self.precision=-1
-        self.recall=-1  
+        self.num_propositions = -1
+        self.num_sentences = -1
+        self.perc_propositions = -1
+        self.txt = ''
+        self.err = ''
+        self.f1 = -1
+        self.precision = -1
+        self.recall = -1
 
-    def _conll_format(self, Y):     
-        df_eval= conll_with_dicts(self.S, self.P, self.PRED, Y, True)       
-        df_gold= conll_with_dicts(self.S, self.P, self.PRED, self.ARG, True)
+    def _conll_format(self, Y):
+        df_eval = conll_with_dicts(self.S, self.P, self.PRED, Y, True)
+        df_gold = conll_with_dicts(self.S, self.P, self.PRED, self.ARG, True)
         return df_eval, df_gold
 
     def _store(self, df_eval, df_gold):
-        eval_path=self.target_dir + '{:}eval.txt'.format(self.ds_type)
-        df_eval.to_csv(eval_path, sep= '\t', index=False, header=False) 
+        eval_path = self.target_dir + '{:}eval.txt'.format(self.ds_type)
+        df_eval.to_csv(eval_path, sep='\t', index=False, header=False)
 
 
-        gold_path=self.target_dir + '{:}gold.txt'.format(self.ds_type)
-        df_gold.to_csv(gold_path, sep= '\t', index=False, header=False) 
+        gold_path = self.target_dir + '{:}gold.txt'.format(self.ds_type)
+        df_gold.to_csv(gold_path, sep ='\t', index=False, header=False)
         return eval_path, gold_path
-    
+
     def _parse(self, txt):
         '''
         Parses srlconll-1.1/bin/srl-eval.pl script output text 
@@ -219,20 +219,19 @@ class EvaluatorConll(object):
                      V      457      32      96    93.46   82.64   87.72
         ------------------------------------------------------------
 
-        '''  
-        lines= txt.split('\n')
+        '''
+        lines = txt.split('\n')
         for i, line in enumerate(lines):
-            if i ==0:
-                self.num_sentences= int(line.split(':')[-1])
-            if i ==1:
-                self.num_propositions= int(line.split(':')[-1])         
-            if i ==2:   
-                self.perc_propositions= float(line.split(':')[-1])          
-            if i==6:    
-                self.precision, self.recall, self.f1    = map(float, line.split()[-3:])
+            if (i == 0):
+                self.num_sentences = int(line.split(':')[-1])
+            if (i == 1):
+                self.num_propositions = int(line.split(':')[-1])
+            if (i == 2):
+                self.perc_propositions = float(line.split(':')[-1])
+            if (i == 6):
+                self.precision, self.recall, self.f1 = map(float, line.split()[-3:])
                 break
-    
-    
+
 
 def conll_with_dicts(S, P, PRED, Y, to_frame=True):
   '''
@@ -256,25 +255,25 @@ def conll_with_dicts(S, P, PRED, Y, to_frame=True):
         refs: 
             http://localhost:8888/notebooks/05-evaluations_conll.ipynb              
   '''
-  d_conll={}
-  index1=0  
-  index0=0 # marks the beginning of a new SENTENCE
-  prev_p=-1
-  prev_s=-1
-  pps=-1 #propostion per sentence  
-  first=True  
+  d_conll = {}
+  index1 = 0
+  index0 = 0 # marks the beginning of a new SENTENCE
+  prev_p = -1
+  prev_s = -1
+  pps = -1 #propostion per sentence  
+  first = True
   for index, s in S.items():
     p = P[index]
     pred = PRED[index]
     y = Y[index]
     if p != prev_p and s != prev_s: #New Sentence and new proposition
-        pps=0  # fills ARG0  
+        pps = 0  # fills ARG0  
         # conll format .: skip a row for each new sentence after the first
-        if not(first): 
+        if not(first):
             for colname in d_conll:
                 d_conll[colname][index1]=''
-            index1+=1
-        index0=index1 #Stores the beginning of the sentence                
+            index1 += 1
+        index0 = index1 #Stores the beginning of the sentence                
     elif p != prev_p:#New proposition
         pps+=1  #  updates column to write
         index1=index0 # back to the first key
