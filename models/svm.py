@@ -12,7 +12,7 @@ import pickle
 import os
 import glob
 import svmlib.liblinearutil as lin
-
+from collections import defaultdict
 
 class SVM(object):
     _svm = None
@@ -25,12 +25,12 @@ class SVM(object):
     def fit(self, X, Y, argstr):
         self._svm = lin.train(Y, X, argstr)
 
-    def predict(self, X, Y):
+    def predict(self, X, Y, i0=0):
         # return pred_labels, (ACC, MSE, SCC), pred_values
         labels, metrics, values = lin.predict(Y, X, self._svm)
-
+        index = range(i0, len(labels), 1)
         d = {
-            'yhat': labels,
+            'Yhat': dict(zip(index, labels)),
             'acc': metrics[0],
             'mse': metrics[1],
             'scc': metrics[2],
@@ -38,6 +38,19 @@ class SVM(object):
         }
         return d
 
+    def predict_with_propositions(self, X, Y, P_d):
+        d = self.predict(X, Y)
+
+        indexes = list(P_d.keys())
+
+        Yhat_d = {indexes[i]: int(y_hat)
+                  for i, y_hat in enumerate(d['y_hat'])}
+
+        labels_d = defaultdict(dict)
+        labels_d['P'] = P_d
+        labels_d['Y'] = Yhat_d
+        del d['y_hat']
+        return labels_d, d
 
 class _SVMIO(object):
 
@@ -81,23 +94,21 @@ if __name__ == '__main__':
     # encoding = 'wan'
     # encoding = 'glo'
     # alias = 'glo50'
+    # propbank = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     # input_path = 'datasets/svms/{:}/train_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
     print(input_path)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
     # input_path = 'datasets/svms/{:}/valid_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/test.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
-    #(1, 3, 4, 5, 6, 7)
-    #(0, 1, 2, 3, 4, 5, 6, 7)
-    # for s in (0, 1, 2, 3, 4, 5, 6, 7):
     for s in (0, 1, 2, 3, 4, 5, 6, 7):
         # optargs = '-s {:} -v 10'.format(s)
         optargs = '-s {:}'.format(s)
@@ -107,13 +118,24 @@ if __name__ == '__main__':
 
         keys = ('y_hat', 'acc', 'mse', 'scc')
         print('Insample prediction ...')
-        train_d = svm.predict(Xtrain, Ytrain)
+
+        outputs = svm.predict(Xtrain, Ytrain)
+        train_d = outputs['Yhat'].copy()
+        del outputs['Yhat']
+        trainstats_d = outputs.copy()
+
         print('Insample prediction ... done')
 
 
         print('Outsample prediction ...')
-        valid_d = svm.predict(Xvalid, Yvalid)
+        outputs = svm.predict(Xvalid, Yvalid, i0=len(train_d))
+        valid_d = outputs['Yhat'].copy()
+        del outputs['Yhat']
+        validstats_d = outputs.copy()
+
+        # valid_d, validstats_d = svm.predict_with_propositions(Xvalid, Yvalid, Pvalid_d)
         print('Outsample prediction ... done')
 
 
-        _SVMIO.dump(encoding, optargs, train=train_d, valid=valid_d)
+        _SVMIO.dump(encoding, optargs, train=train_d, train_stats=trainstats_d,
+                    valid=valid_d, valid_stats=validstats_d)

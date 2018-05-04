@@ -153,6 +153,7 @@ class EvaluatorConll(object):
 
             # Y = dict(zip(self.ARG.keys(), Y))
             # Z = propbank.t2arg(Y)
+            import code; code.interact(local=dict(globals(), **locals()))
             Y = mapper_t2arg.define(d['yhat'], encoding='IDX')
             self.evaluate(Y, store=True)
 
