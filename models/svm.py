@@ -134,9 +134,6 @@ if __name__ == '__main__':
         del outputs['Yhat']
         validstats_d = outputs.copy()
 
-        # valid_d, validstats_d = svm.predict_with_propositions(Xvalid, Yvalid, Pvalid_d)
         print('Outsample prediction ... done')
-
-
         _SVMIO.dump(encoding, optargs, train=train_d, train_stats=trainstats_d,
                     valid=valid_d, valid_stats=validstats_d)

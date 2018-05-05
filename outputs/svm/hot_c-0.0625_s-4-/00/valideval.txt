@@ -1,0 +1,6708 @@
+-	(AM-EXT*					
+-	*					
+-	*)					
+estar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+reclamar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	*				
+-	*	(C-AM-DIS*)				
+adiar	*	(C-AM-PNC*)				
+-	*	(AM-PNC*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*			
+-	*)	*	*			
+agendar	(C-AM-PNC*)	*)	*			
+-	(C-A2*	(C-A2*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-DIS*)	*			
+pedir	*	(C-AM-PNC*)	*			
+-	*	(C-A2*	*)			
+-	*	*	*			
+ajudar	*	*	(C-AM-PNC*)			
+-	*	*	(C-A2*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+ocupar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+vender	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+anunciar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*)	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*	*			
+retomar	(C-AM-PNC*)	*	*			
+-	(AM-PNC*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(V*)	*	*			
+-	(AM-EXT*)	*	*)			
+-	(C-A2*	*	(A4*)			
+-	*	*	(C-AM-DIS*)			
+-	*)	*)	(A4*			
+-	(AM-PNC*)	(AM-EXT*)	*			
+-	(C-A2*	(C-A2*	*			
+-	*	*)	*			
+estar	*)	(C-AM-PNC*)	*)			
+-	(AM-EXT*	(AM-EXT*	(AM-EXT*			
+-	*	*	*)			
+-	*	*	(A4*			
+-	*	*	*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(A4*)			
+-	*	*	*			
+realçar	*)	*	(C-AM-PNC*)			
+-	(C-A2*	*	(C-A2*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+tocar	(C-AM-PNC*)	(AM-EXT*				
+-	(C-A2*	*)				
+-	*)	(AM-MED*				
+-	(V*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-NEG*	(AM-MED*)				
+-	*	(C-AM-DIS*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(V*)	(AM-MED*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	(C-V*)				
+levar	*	(C-AM-PNC*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-EXT*)				
+-	*	(A0*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+fazer	(C-AM-PNC*)					
+-	(V*					
+-	*)					
+-	(AM-PNC*)					
+-	(V*					
+-	*)					
+-	(A3*)					
+-	(V*)					
+-	(AM-PNC*)					
+-	(A3*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-A2*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+negligenciar	(C-AM-PNC*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+dizer	*	(C-AM-PNC*)				
+-	*	*				
+-	*	(AM-EXT*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	(AM-PNC*)				
+-	*	(C-A2*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+alegar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	*				
+-	*	*				
+-	*	(C-V*)				
+considerar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*			
+comprovar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*)	*)			
+-	*	*	(C-A2*)			
+-	*	*	(C-AM-DIS*			
+receber	*	(C-AM-PNC*)	*)			
+-	*	(C-A2*	(C-A2*			
+-	*	*	*			
+-	*	*)	*)			
+-	*	(C-AM-DIS*)	(C-AM-DIS*)			
+concordar	*	(AM-MED*)	(C-AM-PNC*)			
+-	*	(A0*)	(C-A2*			
+-	*	(V*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(AM-EXT*)	*			
+-	*)	(AM-MED*	*			
+-	(AM-MED*)	*)	*			
+-	(C-A2*	(V*	*			
+-	*	*)	*			
+-	*	(AM-MED*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A0*	*			
+-	*	*)	*			
+-	*	(V*	*			
+-	*	*)	*			
+-	*	(A0*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*)	(V*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+dizer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*)			
+-	*	*	(C-A2*			
+-	*)	*	*			
+-	*	*)	*			
+-	*	(C-A2*	*			
+-	(C-A2*)	*)	*			
+-	(C-AM-DIS*	(C-AM-DIS*	*			
+-	*	*	*			
+-	*)	*	*			
+cumprir	(C-AM-PNC*)	*)	*			
+-	(C-A2*	(C-A2*	*			
+-	*)	*)	*			
+-	(C-AM-DIS*	(C-AM-DIS*)	*			
+transferir	*	(C-AM-PNC*)	*			
+-	*	(C-A2*)	*			
+-	*	(AM-EXT*	*			
+-	*	*	*			
+-	*	*)	*)			
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*)			
+dizer	*	*	(C-AM-PNC*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-A2*		
+-	*)	*)	*	*		
+-	(C-A2*	(C-A2*	*	*		
+-	*)	*)	*	*		
+-	(C-AM-DIS*)	(C-AM-DIS*	*	*		
+verificar	(C-AM-PNC*)	*	*	*		
+-	(C-AM-DIS*	*)	*	*		
+levar	*	(C-AM-PNC*)	*	*		
+-	*	(AM-EXT*	*	*)		
+-	*	*)	*	(C-AM-DIS*)		
+-	*	(C-AM-DIS*	*)	(C-A2*		
+-	*	*	(C-V*)	*		
+enxergar	*	*	(C-AM-PNC*)	*		
+-	*	*	(C-A2*)	*		
+-	*	*	(C-AM-DIS*	*)		
+-	*	*	*	(C-AM-DIS*)		
+dizer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(AM-PNC*)		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	(C-AM-DIS*)		
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+pilotar	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(A0*	(C-AM-DIS*				
+-	*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+acabar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+sair	*	(C-AM-PNC*)				
+-	*	(A3*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*	(AM-PNC*)				
+-	*	(A3*				
+-	*	*)				
+-	*	(AM-MED*)				
+-	*	(A3*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-V*)					
+-	(C-AM-DIS*)					
+revelar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+afirmar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*)			
+-	*	*	(C-A2*			
+-	*	*)	*			
+-	*	(A3*)	*			
+-	*	(C-A2*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*)	*			
+-	*	(C-A2*)	*			
+-	*	*	*			
+-	*	*	*			
+prever	*	(C-AM-PNC*)	*			
+-	*	(AM-EXT*)	*			
+-	*	(A3*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*)			
+-	*	(C-A2*)	(C-V*)			
+acontecer	*)	(C-AM-DIS*	(C-AM-PNC*)			
+-	(C-AM-DIS*)	*)	(C-AM-DIS*)			
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	(C-A2*	*				
+-	*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+revelar	(C-AM-PNC*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*)				
+estar	*	(C-AM-PNC*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-EXT*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(A0*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+dar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-V*)	(C-AM-DIS*	(C-AM-DIS*			
+precisar	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-A1*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-AM-MNR*	*	*			
+-	*	*)	*			
+saber	*)	(C-AM-PNC*)	*)			
+-	(C-AM-ADV*	(C-A2*	(V*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(V*)			
+-	*)	*)	(C-AM-DIS*			
+-	(C-AM-DIS*)	(C-AM-DIS*	*)			
+-	*	*	*			
+-	(C-AM-MNR*	*	(C-V*)			
+trazer	*)	*	(C-AM-PNC*)			
+-	(C-A2*)	*	(C-A2*)			
+-	(C-AM-DIS*)	*)	(C-AM-DIS*)			
+						
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*)					
+						
+-	(C-AM-ADV*)	(C-AM-DIS*	(C-AM-DIS*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*)	*)	*			
+pensar	*	(C-AM-PNC*)	*)			
+-	(C-AM-DIS*)	(C-A2*	(C-A2*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ser	*)	*	(C-AM-PNC*)			
+-	(C-AM-DIS*)	*	(C-A2*)			
+-	(C-A2*)	*	(AM-EXT*)			
+-	(C-AM-DIS*)	*	(C-A2*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*)	*)			
+						
+-	(C-A2*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+destacar	(C-AM-PNC*)					
+-	(C-A2*)					
+-	*					
+-	*					
+-	(C-A2*)					
+-	*					
+-	*					
+-	(AM-EXT*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*)					
+morrer	(C-AM-PNC*)					
+-	(AM-NEG*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-NEG*)					
+-	(C-AM-MNR*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+						
+-	(C-A2*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+morrer	(C-AM-PNC*)	*	*			
+-	(AM-PNC*)	*	*			
+-	(AM-NEG*	*	*			
+-	*)	*	*			
+-	(AM-PNC*	*	*			
+-	*)	*)	*			
+-	(C-AM-MNR*	(AM-EXT*	*)			
+-	*	*	(C-AM-EXT*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(C-AM-MNR*)			
+-	*)	*)	(C-AM-DIS*			
+-	(AM-PNC*)	(C-AM-DIS*	*			
+-	(C-AM-MNR*	*	*			
+-	*	*)	*			
+-	*	(AM-EXT*)	*			
+-	*)	(C-AM-DIS*)	*			
+estar	(C-A2*)	(C-AM-PNC*)	*			
+-	(AM-EXT*)	(C-AM-DIS*)	*)			
+-	(C-A2*	(C-A2*)	(C-A2*)			
+cair	*)	(C-AM-DIS*)	(C-AM-PNC*)			
+-	(AM-EXT*	(AM-EXT*	(C-AM-EXT*)			
+-	*	*	(AM-EXT*)			
+-	*	*	(C-AM-EXT*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(AM-REC*)				
+salvar	*	(C-AM-PNC*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*					
+-	(C-AM-DIS*					
+-	*)					
+causar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+provocar	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+causar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-A2*)	*			
+estar	*	(C-AM-PNC*)	*)			
+-	*	(AM-EXT*	(AM-NEG*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-DIS*			
+-	*	*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	*			
+bater	*	*)	(C-AM-PNC*)			
+-	*	(AM-EXT*	(AM-NEG*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A4*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+-	(A4*)	*)				
+-	*	*				
+-	(AM-PNC*)	(C-AM-DIS*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+ter	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+explicar	*	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	*				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+ser	(C-AM-PNC*)	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	(C-AM-DIS*	*)				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+-	(C-A2*)	(C-AM-ADV*)				
+-	(AM-NEG*	(C-AM-DIS*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(C-V*				
+-	*	*)				
+dispor	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-AM-MNR*	*				
+-	*)	*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(C-AM-MNR*	*				
+-	*	(C-AM-DIS*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+alagar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+dispor	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	(C-A2*)					
+dar	(C-AM-PNC*)					
+-	(AM-REC*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-AM-DIS*	(C-A2*	(C-AM-DIS*		
+-	*	*)	*	*		
+-	*	*	*	*		
+-	*	(C-AM-DIS*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*)	(C-A2*	*	*		
+-	(C-A2*	*)	*)	*		
+-	*)	(C-AM-DIS*	(A0*	*		
+ser	(C-AM-PNC*)	*	*	*		
+-	(C-A2*)	*	*)	*		
+-	(C-AM-DIS*	*	(C-AM-DIS*)	*		
+-	*	*	(C-AM-EXT*)	*		
+-	*	*	(A0*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+-	*	*	(AM-EXT*)	*		
+-	*)	*	(A0*	*		
+-	(AM-NEG*)	*)	*)	*		
+ser	(C-AM-DIS*)	(C-AM-PNC*)	*	*		
+-	(C-A1*)	(C-A1*)	(C-A1*)	*		
+-	(C-AM-DIS*	*	*	*		
+-	*	*	*	*		
+-	*	(C-A2*	(C-A2*	*		
+-	*	*	*)	*		
+-	*	*)	*	*		
+-	*	*	*	*		
+-	*	(C-A2*)	*	*		
+-	*	(C-AM-DIS*	*	*		
+coincidir	*	*	(C-AM-PNC*)	*		
+-	*	*	(AM-EXT*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(C-A2*)		
+-	*	*	*	(C-AM-DIS*		
+-	*	*	*	*)		
+-	*	*	*	*		
+-	*	*	*	(C-AM-ADV*)		
+fazer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A2*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*)	*)		
+-	*)	*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+-	*	*				
+ser	(C-AM-PNC*)	*				
+-	(A4*)	*				
+-	(AM-EXT*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(V*)	*)				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	(AM-NEG*)				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(C-AM-DIS*	(C-A2*				
+-	*)	*				
+-	(A0*)	*)				
+-	(C-AM-DIS*	(V*)				
+-	*	(C-A2*)				
+fazer	*	(C-AM-PNC*)				
+-	*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*					
+-	*					
+-	*)					
+-	*					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-V*)					
+-	*					
+tratar	(C-AM-PNC*)					
+-	(AM-ADV*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*		
+-	*	*	*	*		
+falar	(C-AM-PNC*)	(AM-PNC*	*	*		
+-	(AM-TMP*)	*)	*	*		
+-	(C-A2*	(C-A2*)	*	*		
+-	*)	(AM-PNC*)	*	*		
+-	(C-AM-DIS*	(C-AM-DIS*)	*	*		
+falar	*	(C-AM-PNC*)	*	*		
+-	*	*	*	*		
+-	*	(C-A2*	*	*		
+-	*	*	*)	*		
+-	*	*	(AM-EXT*)	*		
+traduzir	*	*	(C-AM-PNC*)	*)		
+-	*	*	(C-A2*	(C-A2*)		
+-	*	*	*	*		
+-	*	*	*)	(C-AM-DIS*)		
+ser	*	*	(C-AM-DIS*	(C-AM-PNC*)		
+-	*	*	*	(C-A2*		
+-	*	*	*	*)		
+-	*	*	*	(AM-NEG*		
+-	*	*)	*	*)		
+-	*)	(C-AM-DIS*)	*)	(C-AM-DIS*)		
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+passar	(C-AM-PNC*)	*				
+-	(AM-EXT*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*				
+-	*)	*)				
+-	(C-AM-DIS*	*				
+ter	*	(C-AM-PNC*)				
+-	*	(AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(AM-NEG*)	*				
+-	(AM-EXT*)	*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+-	(AM-EXT*)	*)				
+-	(C-A2*)	*				
+armazenar	(C-AM-DIS*)	(C-AM-PNC*)				
+-	(C-A2*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*				
+-	*	*)				
+-	*	(C-A2*				
+-	*)	*)				
+-	(AM-NEG*	(AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(V*)					
+-	(AM-NEG*)					
+-	(AM-PNC*)					
+-	(V*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+responder	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+representar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	(C-A1*)					
+manter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+multar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+negociar	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(AM-EXT*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-PNC*)					
+encontrar	(AM-REC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+deixar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+morrer	(C-AM-PNC*)	*				
+-	(C-AM-DIS*	*)				
+-	*	*				
+-	*	(AM-REC*)				
+ferir	*	(C-AM-PNC*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-NEG*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*	(AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+enfrentar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+ver	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(V*)					
+-	(AM-EXT*)					
+						
+-	*					
+-	(C-AM-DIS*)					
+buscar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A2*)					
+-	(AM-PNC*)					
+-	(AM-MED*					
+-	*)					
+-	(V*					
+-	*)					
+-	(AM-MED*)					
+-	(AM-EXT*)					
+-	(AM-MED*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*					
+-	*)					
+conseguir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+ter	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*	(C-V*)				
+ter	*	(C-AM-PNC*)				
+-	*)	(C-A2*				
+-	(C-A2*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-PNC*)					
+-	(C-AM-ADV*)					
+deixar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-A2*				
+ser	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-A2*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+-	*	(C-AM-PNC*)				
+inflamar	*	(AM-REC*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+existir	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-A2*)	*	*			
+-	*	*	*			
+-	(AM-NEG*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*)	*			
+-	*	(C-A2*)	*			
+saber	(C-AM-DIS*	(C-AM-PNC*)	*)			
+-	*	(C-A2*)	(V*)			
+ser	*)	(C-AM-DIS*)	(C-AM-PNC*)			
+-	(C-A2*	(C-A2*	(C-A2*			
+-	*)	*	*)			
+-	(C-AM-DIS*	*)	(AM-NEG*)			
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*)	*)	*)			
+						
+-	(C-A2*)	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+ter	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ganhar	*	(C-AM-PNC*)	*			
+-	*	(C-A2*	*)			
+-	*	*	(C-A2*)			
+-	*	*	(C-AM-DIS*			
+-	*	*)	*			
+-	*	(C-AM-DIS*)	*)			
+-	*	(C-A2*	*			
+-	*	*)	(C-AM-DIS*)			
+definir	*	(C-AM-DIS*)	(C-AM-PNC*)			
+-	*	(C-A2*)	(C-A2*			
+-	*	(C-AM-DIS*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-A2*)	*)			
+-	*	(C-AM-DIS*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(C-AM-DIS*	*	(C-AM-DIS*			
+-	*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*)	*	*			
+-	(C-A2*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*)	*)	*)			
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-DIS*)	*				
+fazer	(C-AM-PNC*)	*				
+-	(C-AM-MNR*	*)				
+-	*)	*				
+-	*	*				
+-	(C-AM-ADV*	*				
+constatar	*)	(C-AM-PNC*)				
+-	(C-A2*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)	(C-AM-DIS*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(AM-EXT*)	*				
+-	(C-AM-ADV*)	*				
+-	(AM-EXT*)	*				
+-	(A0*)	*				
+-	(AM-EXT*)	*				
+-	(A0*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(A0*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(AM-PNC*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*)				
+-	*	(AM-EXT*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+encontrar	(C-AM-PNC*)					
+-	(A3*)					
+-	(AM-NEG*)					
+-	(A3*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+ter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-A2*				
+-	*	*)				
+-	*)	(AM-NEG*)				
+-	(C-A2*)	(C-A2*)				
+-	*	*				
+ter	(C-AM-PNC*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ocorrer	*	(C-AM-PNC*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+destacar	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-A2*	*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	(C-AM-DIS*				
+-	*	*)				
+-	*	*				
+-	*	*				
+-	*	(C-AM-DIS*)				
+apresentar	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	*				
+-	*	(C-AM-DIS*)				
+-	*	*				
+-	*	*				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+publicar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+indicar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*)	*)			
+-	*	(C-A2*	(C-A2*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(C-A2*			
+-	*	*	*)			
+-	*	*)	(C-AM-DIS*			
+estar	*)	(C-AM-PNC*)	*)			
+-	(AM-EXT*)	(AM-EXT*)	(AM-EXT*)			
+-	(C-A2*	(C-AM-DIS*)	(C-AM-DIS*)			
+-	*	(AM-EXT*	(AM-EXT*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-A2*)			
+-	(C-A2*	(AM-EXT*)	(C-AM-DIS*)			
+admitir	*)	(C-AM-DIS*	(C-AM-PNC*)			
+-	(C-AM-DIS*	*	(AM-PNC*			
+-	*	*	*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*	(C-AM-DIS*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+conquistar	(C-AM-PNC*)	*	*)			
+-	(C-A2*	*	(AM-MED*)			
+-	*	*	(AM-EXT*)			
+-	*)	*	(AM-PNC*)			
+-	(C-AM-DIS*	*	(C-AM-DIS*)			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	*	*			
+dividir	*	(C-AM-PNC*)	*			
+-	*	(AM-EXT*)	*			
+-	*	(C-A2*)	(C-A2*)			
+mudar	*	(C-AM-DIS*	(C-AM-PNC*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-A2*					
+-	*					
+-	*)					
+continuar	(C-AM-PNC*)					
+-	(A3*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+conquistar	(C-AM-PNC*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+-	(AM-EXT*)	(AM-NEG*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	(AM-PNC*)	*)				
+ocupar	*	(C-AM-PNC*)				
+-	(C-A2*	(C-A2*				
+-	*	*				
+-	*)	*)				
+-	(AM-EXT*	(AM-NEG*				
+-	*)	*				
+-	(A0*)	*)				
+-	(AM-EXT*	(C-AM-DIS*)				
+-	*	(A4*)				
+-	*	(AM-MED*)				
+-	*)	(A0*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+assinar	(C-AM-PNC*)	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+incluir	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*					
+incentivar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-A2*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+pertencer	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+dominar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+prejudicar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(AM-PNC*				
+-	*)	*				
+conquistar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(AM-PNC*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(AM-PNC*)				
+-	*)	(C-A2*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+emplacar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+ser	(C-AM-PNC*)					
+-	(C-A1*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-DIR*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+ser	(C-AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+narrar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-EXT*)	*				
+-	(C-A2*)	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	*	*				
+banir	(AM-EXT*	(C-AM-PNC*)				
+-	*)	(AM-ADV*)				
+-	(C-A2*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(AM-PNC*)				
+construir	(C-AM-PNC*)	(AM-MED*)				
+-	(C-A2*	(AM-PNC*)				
+-	*	(AM-MED*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	*				
+recorrer	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(AM-PNC*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	(AM-PNC*)				
+-	*	(C-A2*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+transformar	(C-AM-PNC*)	*)				
+-	(C-A2*)	(C-A2*)				
+-	(AM-EXT*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+-	*)	(C-AM-DIS*)				
+montar	(C-A2*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*)	*)				
+-	(AM-EXT*	(AM-NEG*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-V*)					
+esconder	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+discutir	(C-AM-PNC*)					
+-	(C-A2*)					
+						
+-	*					
+-	*					
+-	(AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+reabrir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+exigir	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+-	*	(C-V*)				
+ter	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A4*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-MNR*)	(C-AM-DIS*		
+-	*	*	*	*)		
+-	*	*	*	(C-AM-ADV*)		
+-	(C-V*)	(C-AM-DIS*	(C-AM-ADV*)	(C-AM-DIS*		
+ter	(C-AM-PNC*)	*	(C-A1*)	*)		
+-	(C-A2*)	*	(C-A2*)	(C-A2*)		
+-	(C-AM-DIS*	*	(C-AM-NEG*)	(C-AM-DIS*		
+-	*	*	(C-AM-MNR*)	*		
+-	*	*)	(C-AM-DIS*	*		
+ter	*	(C-AM-PNC*)	*	*		
+-	*	(AM-EXT*)	*	*		
+-	*	(C-A1*)	*	*		
+-	*	(C-AM-DIS*	*)	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	(C-AM-DIS*)	*		
+deixar	*	*	(C-AM-PNC*)	*		
+-	*	*	(AM-REC*)	*		
+-	*	*	(AM-NEG*)	*)		
+-	*	*	(C-A2*	(C-A2*		
+-	*	*	*	*)		
+-	*	*	*	(C-AM-DIS*		
+-	*	*	*	*)		
+-	*	*	*	*		
+-	*	*	*	(C-V*)		
+conseguir	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A2*		
+-	*)	*	*	*		
+-	(C-A2*)	*	*	*		
+-	(C-AM-DIS*	*	*	*		
+-	*	*	*)	*)		
+-	*)	*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(A5*)	*				
+-	(C-AM-MNR*	*)				
+envolver	*)	(C-AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(C-A1*)	(C-A1*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(C-AM-MNR*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-MNR*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-AM-MNR*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(AM-NEG*)	(C-AM-DIS*	(C-AM-DIS*		
+-	*	(C-A2*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(C-A2*)	*	*	*		
+-	(C-AM-DIS*)	*	*	*		
+ser	(C-AM-PNC*)	*)	*	*		
+-	(C-A2*)	(C-AM-DIS*	*	*		
+-	(C-AM-DIS*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-A2*)	*	*		
+-	*	(AM-MED*)	*	*		
+-	*	(AM-NEG*)	*	*		
+-	*	(AM-PNC*	*	*		
+-	*	*)	*	*		
+ser	*	(C-AM-PNC*)	*	*		
+-	*	(C-AM-DIS*	*)	*		
+discriminar	*	*)	(C-AM-PNC*)	*)		
+-	*	*	(C-A2*	*		
+-	*	(C-A2*	*	(C-AM-DIS*)		
+pagar	*	*)	*)	(C-AM-PNC*)		
+-	*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+-	(C-A1*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	*					
+-	*					
+fumar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	*	(C-AM-DIS*				
+prender	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-MNR*	*)				
+cobrar	*)	(C-AM-PNC*)				
+-	(C-A2*)	(C-A2*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+indiciar	(C-AM-PNC*)	*				
+-	(AM-PNC*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(AM-EXT*	*)				
+vender	*)	(C-AM-PNC*)				
+-	(C-A2*)	(C-A2*				
+-	(V*)	*				
+-	(AM-EXT*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)					
+indiciar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*					
+-	*)					
+-	(C-A2*)					
+-	*					
+-	(C-A2*)					
+-	(C-AM-DIS*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+prender	(C-AM-PNC*)	*)				
+-	(AM-PNC*	(AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*				
+-	(AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-ADV*)	(C-AM-DIS*)				
+entregar	(AM-PNC*)	(C-AM-PNC*)				
+-	(C-A2*	(C-A2*				
+-	*)	*)				
+-	(C-AM-MNR*	(AM-EXT*				
+-	*	*)				
+-	*	(V*				
+-	*	*)				
+-	*	*				
+-	*)	*				
+-	(AM-PNC*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-A1*)	*				
+-	(AM-PNC*)	*				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*)					
+-	*					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+ganhar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+permitir	(C-AM-PNC*)	*)				
+verificar	(C-A2*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-MNR*)					
+-	(AM-EXT*)					
+-	(V*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+ficar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	(C-A2*)	*	*			
+-	*	*	*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	*	*	*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*)	*)	*			
+-	*	*	*			
+comprar	(C-A2*	(C-AM-PNC*)	*			
+-	*)	(C-A2*)	*			
+-	(AM-EXT*)	(AM-NEG*	*			
+-	(C-AM-DIS*)	*)	*			
+-	(AM-DIR*	(C-AM-DIS*)	*)			
+-	*	(AM-NEG*)	(C-A2*			
+-	*)	(C-AM-DIS*)	*)			
+-	(C-AM-DIS*	(AM-NEG*)	(C-AM-DIS*)			
+beneficiar	*	(C-AM-DIS*	(C-AM-PNC*)			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(AM-NEG*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+executar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	*				
+provocar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+dizer	(C-AM-PNC*)	*	*			
+-	(C-A2*	*)	*			
+-	*	(AM-PNC*)	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+receber	*	(C-AM-PNC*)	*			
+-	*	(C-AM-DIS*)	*			
+-	*	(C-A2*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*	*)			
+-	*	*	(C-A2*)			
+-	*)	*	(C-AM-DIS*)			
+estar	(AM-PNC*)	*	(C-AM-PNC*)			
+-	(C-A2*)	*	(AM-EXT*			
+-	(AM-EXT*	*	*			
+-	*)	*	*)			
+-	(C-AM-DIS*)	*)	(C-AM-DIS*)			
+						
+-	*	(C-AM-DIS*				
+orientar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(AM-PNC*)	*)				
+negociar	(V*	(C-AM-PNC*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*
+-	*)	*	*	*	*	*
+-	(C-AM-DIS*	*	*	*	*	*
+-	*)	*	*	*	*	*
+observar	(C-AM-PNC*)	*	*	*	*	*
+-	(V*	*)	*	*	*	*
+-	*	(C-AM-MNR*)	*	*	*	*
+-	*)	(C-AM-DIS*)	*	*	*	*
+-	(AM-NEG*)	(C-AM-MNR*)	*	*	*	*
+-	(V*	(AM-EXT*)	*	*	*	*
+-	*)	(C-AM-DIS*	*	*	*	*
+-	(C-AM-DIS*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*)	*	*)	*	*	*
+-	(AM-PNC*)	*	(AM-PNC*)	*	*	*
+-	(C-AM-DIS*)	*)	(C-AM-DIS*	*	*	*
+arrumar	(AM-PNC*)	(C-AM-PNC*)	*	*	*	*
+-	(C-AM-DIS*)	(C-A2*	*	*	*	*
+-	(C-A2*)	*)	*	*	*	*
+-	(C-AM-DIS*)	(C-AM-DIS*	*)	*	*)	*
+-	(C-AM-MNR*)	*	(C-V*)	*	(AM-EXT*)	*
+estar	(C-AM-DIS*)	*	(C-AM-PNC*)	*	(C-AM-DIS*)	*
+-	(C-AM-MNR*)	*	(AM-EXT*)	*	(AM-EXT*)	*
+-	(C-AM-DIS*	*	(C-AM-DIS*	*)	(C-AM-DIS*	*
+escutar	*	*	*)	(C-AM-PNC*)	*	*
+-	*	*	(C-A2*	(C-AM-DIS*	*)	*
+-	*	*	*	*	*	*
+-	*	*	*	*	(AM-EXT*)	*
+incentivar	*	*	*	*	(C-AM-PNC*)	*
+-	*	*	*)	*	(AM-EXT*	*)
+começar	*	*	(AM-EXT*)	*	*	(C-AM-PNC*)
+-	*	*	(C-A2*	*	*	(C-A2*
+-	*	*	*)	*	*)	*)
+-	*)	*)	(C-AM-DIS*)	*)	(C-AM-DIS*)	(C-AM-DIS*)
+						
+-	(AM-PNC*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+aumentar	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+terminar	*)	(C-AM-PNC*)	*)			
+-	(C-A2*	(C-A2*	(C-A2*)			
+começar	*)	*)	(C-AM-PNC*)			
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*			
+-	*)	*)	*)			
+						
+-	(C-A2*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	
+-	*)	*	*	*	*	
+-	(C-V*)	*	*	*	*	
+ser	(C-AM-PNC*)	*	*	*	*	
+-	(C-A2*)	*	*	*	*	
+-	(AM-NEG*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(C-AM-DIS*)	*	*	*	*	
+-	(C-AM-MNR*	*	*	*	*	
+-	*	*)	*	*	*	
+ter	*	(C-AM-PNC*)	*	*	*	
+-	*	(C-A2*	*)	*)	*)	
+-	*	*	(C-A2*	(C-A2*	(C-A2*)	
+-	*	*	*	*	(AM-MED*)	
+-	*	*	*)	*	(C-AM-DIS*)	
+casar	*)	*)	(C-AM-PNC*)	*)	(AM-MED*)	
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*)	(C-AM-DIS*	
+ter	*	*	*	(C-AM-PNC*)	*	
+-	*	*	*	(C-A2*)	*	
+-	*)	*	*	(C-AM-DIS*	*)	
+-	(C-A2*)	*	*	*	(C-A2*)	
+-	(C-AM-MNR*	*	*	*	(C-V*)	
+ser	*	*	*	*	(C-AM-PNC*)	
+-	*)	*	*	*	(C-A2*)	
+-	(C-AM-ADV*	*	*	*	(C-AM-DIS*)	
+-	*)	*	*	*	(C-A2*)	
+-	(C-AM-MNR*)	*)	*	*	(C-AM-DIS*)	
+-	(C-AM-ADV*	(C-AM-ADV*)	*	*	(A4*)	
+-	*	(C-AM-DIS*	*	*	(C-A2*)	
+-	*)	*	*	*	(A4*	
+-	(C-AM-MNR*	*	*	*	*	
+-	*	*)	*	*	*	
+-	*)	(A4*)	*	*	*)	
+-	(C-AM-DIS*)	(C-AM-DIS*)	*)	*)	(C-AM-DIS*)	
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+oferecer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A0*)					
+-	(A3*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+beber	(C-AM-PNC*)	*				
+-	(AM-PNC*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+levar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(AM-EXT*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(AM-NEG*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(V*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(A3*)	*	*			
+-	(C-A2*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	*	*	*			
+-	*	*	*			
+dizer	(C-AM-PNC*)	*	*			
+-	(C-A2*	*)	*)			
+-	*	(C-A2*)	(C-A2*)			
+-	*	(AM-PNC*)	(C-AM-DIS*			
+-	*	(C-V*)	*			
+ser	*	(C-AM-PNC*)	*)			
+-	*	(C-A2*)	(C-AM-PNC*)			
+preocupar	*	(C-AM-DIS*)	(AM-REC*)			
+-	*	(AM-EXT*	(AM-EXT*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(C-A2*	*				
+-	*)	*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	(AM-REC*)				
+criar	*	(C-AM-PNC*)				
+-	*	(AM-EXT*)				
+-	*	(AM-PNC*				
+-	*	*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	(C-V*)					
+-	(C-A2*)					
+associar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	(C-AM-DIS*					
+-	*)					
+-	(C-A2*)					
+-	*					
+-	*					
+precisar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(V*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+marcar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	*				
+consolidar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+aproximar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+valorizar	(C-AM-PNC*)	*				
+-	(AM-ADV*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*)				
+chegar	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(V*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+ser	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+-	(C-A2*	(C-A2*)				
+confirmar	*	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	*					
+-	(C-AM-DIS*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+negociar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*)	(C-AM-DIS*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+inaugurar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(AM-NEG*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+ser	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+-	*					
+-	(C-A2*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+dar	(C-AM-PNC*)	*	*			
+-	(C-A2*)	*	*			
+-	(AM-EXT*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*	*)	*			
+substituir	*	(C-AM-PNC*)	*			
+-	*	(AM-EXT*	*			
+-	*	*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*	*)			
+-	*	*	*			
+-	*	*	*			
+-	*	*	(AM-PNC*)			
+sair	*	*	(C-AM-PNC*)			
+-	*	*	(A3*)			
+-	*	*	(C-A2*			
+-	*	*	*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*)					
+estar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+defender	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+prever	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+tratar	(C-AM-PNC*)					
+-	*					
+-	(C-AM-DIS*)					
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(A0*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+gostar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+ajudar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-MNR*)	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*		
+-	(C-A1*)	*	*	*		
+-	(C-AM-DIS*)	*	*	*		
+-	(C-A1*)	*	*	*		
+-	(C-AM-DIS*)	*	*	*		
+ser	(C-AM-PNC*)	*	*	*		
+-	(C-AM-DIS*	*	*	*		
+-	*)	*)	*)	*)		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	(C-A2*)	*		
+buscar	(C-A2*	(C-AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*		
+-	*	(C-A2*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+-	*	*	(C-A2*)	*		
+-	*	*	(C-AM-DIS*	*		
+-	*	*	*)	*		
+-	*	*	(C-A2*	*		
+-	*	*	*)	*		
+-	*	*	(C-AM-DIS*)	*		
+-	*	*	(C-A2*)	*		
+ser	*)	*)	(C-AM-PNC*)	*		
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*	*)		
+-	*	(C-A2*)	*	*		
+-	(C-AM-DIS*	(C-AM-DIS*	*	(C-AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+quebrar	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A2*)		
+-	*	*	*	(C-AM-DIS*)		
+-	*	*	*	(V*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(AM-PNC*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*)	*)	*)	(C-AM-DIS*)		
+						
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+começar	(C-AM-PNC*)					
+-	(V*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	(C-AM-ADV*)					
+começar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-DIS*					
+-	*)					
+promover	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-MED*)					
+-	(AM-EXT*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*				
+visar	(C-AM-PNC*)	*)				
+orientar	(C-A2*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)					
+estar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+acontecer	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*					
+-	*)					
+esfriar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*	*	(C-A2*	
+-	*	*	*	(C-AM-DIS*)	*	
+-	*	*	*	*	*	
+-	(C-A2*	*	*	(C-AM-DIS*	*	
+-	*)	*	*	*	*	
+-	(C-AM-DIS*	*	*	*	*	
+-	*)	*	*	*	*	
+conversar	(C-AM-PNC*)	*)	*	*	*	
+-	(AM-EXT*	(AM-EXT*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*	*	*	
+-	(C-AM-DIS*)	(C-AM-DIS*)	*)	*	*	
+-	(AM-MED*)	(AM-EXT*)	(AM-MED*)	*	*	
+convencer	(AM-PNC*	(C-AM-PNC*)	(C-AM-DIS*)	*	*	
+-	*	(C-A2*)	(C-A2*	*	*	
+-	*)	(AM-EXT*	*)	*	*	
+fazer	(AM-MED*	*	(C-AM-PNC*)	*	*	
+-	*	*	(C-A2*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(AM-EXT*)	*)	*)	*	*)	
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*	*	(C-AM-DIS*)	
+-	(C-A1*)	*	*	*	(C-A2*	
+-	(C-AM-DIS*	*	*	*)	*	
+reprimir	*)	*	*	(C-AM-PNC*)	*	
+-	(C-A2*	*	*	(C-A2*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*)	*)	
+-	(C-AM-DIS*	*	*	(C-AM-DIS*	(C-AM-DIS*)	
+dizer	*	*	*	*	(C-AM-PNC*)	
+-	*	*	*	*	*	
+-	*)	*)	*)	*)	(C-AM-DIS*)	
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+atuar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-V*)					
+haver	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+ser	(C-AM-PNC*)	*)				
+negociar	(C-A2*)	(C-AM-PNC*)				
+-	(AM-PNC*)	(V*)				
+-	(AM-EXT*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+aliciar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-PNC*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+ser	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-PNC*)				
+-	*	*				
+-	(C-A2*	*				
+imperar	*)	(C-AM-PNC*)				
+-	(AM-EXT*)	(AM-PNC*)				
+-	(AM-NEG*)	(AM-NEG*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-EXT*	(AM-NEG*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-AM-DIS*	(C-AM-MNR*				
+-	*)	*				
+-	(C-A2*)	*				
+-	*	*)				
+-	*	(AM-DIR*)				
+-	*	(C-AM-MNR*				
+desconhecer	(C-AM-PNC*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-DIR*)				
+-	*	(AM-EXT*)				
+-	*	(C-AM-DIS*)				
+-	*	*				
+-	*	*				
+-	*	(AM-PNC*				
+-	*	*)				
+apontar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+sonhar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-NEG*				
+-	*)	*)				
+-	(C-A2*	(C-A2*)				
+chegar	*)	(C-AM-PNC*)				
+-	(AM-EXT*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(V*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+passar	(C-AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*			
+-	(AM-REC*)	*)	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*	(C-AM-DIS*)	*			
+-	*	*	*			
+-	*	*	*			
+-	*	(AM-MNR*)	*			
+realizar	*	(C-AM-PNC*)	*			
+-	*	(C-AM-DIS*)	*)			
+trazer	*)	(V*	(C-AM-PNC*)			
+-	(C-A2*)	*)	(C-A2*			
+-	(C-AM-DIS*)	(C-AM-ADV*)	*)			
+-	(C-A1*)	(C-A1*)	(C-A1*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(C-AM-ADV*)	(V*	(AM-PNC*)			
+-	(C-AM-DIS*	*	(C-AM-DIS*)			
+-	*	*)	(C-A2*)			
+-	*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A2*)					
+vir	(C-AM-PNC*)					
+-	(A3*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-AM-ADV*)					
+-	(C-AM-DIS*)					
+-	(A3*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-ADV*)					
+haver	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-MED*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-PNC*)					
+-	(AM-EXT*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+suspeitar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+morrer	*	(C-AM-PNC*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+ficar	(C-AM-PNC*)	*)				
+-	(AM-EXT*	(V*)				
+-	*	(C-AM-DIS*)				
+-	*	(V*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(V*				
+-	*	*)				
+subir	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*	(C-AM-CAU*)				
+-	*)	(C-AM-EXT*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+pedir	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-A1*)	*)				
+apurar	(AM-PNC*	(C-AM-PNC*)				
+-	*)	(C-A2*				
+-	(AM-MED*)	*				
+-	(AM-PNC*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(AM-MED*)	*				
+-	(AM-PNC*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-V*)					
+-	(C-AM-DIS*)					
+retirar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-A2*			
+-	*	*	*			
+-	(C-AM-DIS*)	*	*			
+usar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+-	(AM-EXT*	*)	*			
+corrigir	*)	(C-AM-PNC*)	*			
+-	(AM-MED*)	(C-A2*)	*)			
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*)			
+garantir	*	*	(C-AM-PNC*)			
+-	*	*	*			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+produzir	(C-AM-PNC*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	*				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*)	*)				
+						
+-	(C-AM-DIS*)	(C-A2*				
+ter	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*)				
+-	*)	(C-AM-DIS*)				
+-	(AM-PNC*	(C-A2*				
+-	*)	*				
+-	(AM-NEG*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+explicar	*	(C-AM-PNC*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*			
+-	(AM-EXT*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-V*)	*	*			
+-	(C-AM-DIS*)	*	*			
+fixar	(C-AM-PNC*)	*	*			
+-	(AM-EXT*	*	*			
+-	*)	*	*			
+-	(AM-MED*)	*)	*			
+evitar	(AM-EXT*	(C-AM-PNC*)	*			
+-	*	(C-A2*	*			
+-	*)	*)	*			
+-	(C-AM-DIS*	(C-AM-DIS*	*			
+-	*	*	*)			
+ter	*	*	(C-AM-PNC*)			
+-	*	*	(C-A2*			
+-	*	*	*)			
+-	*	*	(A0*)			
+-	*	*	(AM-NEG*)			
+-	*	*	(A4*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(AM-PNC*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*)	*				
+reajustar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-A2*)				
+-	(C-AM-ADV*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+ser	*	(C-AM-PNC*)				
+-	*)	(AM-EXT*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+dizer	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*			
+beneficiar	(C-AM-PNC*)	*	*			
+-	(C-AM-MNR*	*)	*			
+-	*	(AM-PNC*)	*			
+demorar	*	(C-AM-PNC*)	*			
+-	*	(AM-PNC*)	*			
+-	*)	(C-AM-DIS*)	*			
+-	(AM-PNC*)	(AM-PNC*)	*			
+-	(AM-MED*)	(AM-MED*)	*)			
+receber	(AM-EXT*)	(AM-EXT*)	(C-AM-PNC*)			
+-	(C-AM-MNR*)	(AM-MED*	(C-A2*			
+-	(AM-MED*)	*	*			
+-	(C-AM-MNR*	*	*			
+-	*)	*)	*			
+-	(AM-EXT*	(AM-EXT*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	*					
+ganhar	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+ter	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-AM-MNR*	*				
+-	*)	*)				
+-	(C-A1*)	(C-A2*)				
+dizer	(A0*)	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	(C-A0*)	*				
+-	*	*				
+-	(C-A0*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(A0*)	*				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-NEG*	(AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(C-A1*)	(AM-MED*				
+-	(AM-MED*)	*				
+-	(A0*)	*				
+-	(AM-MED*)	*				
+-	(V*)	*)				
+-	(AM-NEG*	(A0*)				
+-	*)	(AM-MED*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)					
+-	*					
+-	(C-AM-DIS*)					
+ter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	*					
+atribuir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+pensar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*)	*			
+receber	*	(C-AM-PNC*)	*			
+-	*	(C-AM-DIS*)	*			
+-	*)	(C-A2*)	*			
+-	(C-AM-DIS*	(C-AM-DIS*	*			
+-	*	*	*)			
+-	*	*	(AM-PNC*			
+-	*)	*	*			
+-	(C-A2*	*	*)			
+-	*	*	(C-A2*			
+-	*)	*	*)			
+ser	(C-AM-DIS*)	*	(C-AM-PNC*)			
+-	(C-A2*	*	(C-A2*)			
+-	*	*	(V*)			
+-	*)	*	(C-AM-DIS*			
+-	(C-AM-DIS*)	*)	*)			
+						
+-	(AM-NEG*)	(C-AM-DIS*				
+-	(C-A2*)	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+ver	(C-AM-PNC*)	*)				
+-	(C-A2*	(C-A2*)				
+-	*	*				
+esperar	*)	(C-AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	(C-AM-PNC*)					
+aproximar	(AM-REC*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+precisar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	(C-A2*)					
+ir	(C-AM-PNC*)					
+-	(C-AM-EXT*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+fazer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	*	(C-AM-DIS*			
+-	*)	*	*			
+-	*	*	*			
+atacar	(C-AM-PNC*)	*	*			
+-	(C-A2*)	(C-A2*)	*			
+-	(AM-PNC*)	*	*			
+-	(C-AM-DIS*	(C-V*)	*			
+ter	*	(C-AM-PNC*)	*			
+-	*	(C-A2*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-DIS*	*)			
+ficar	*	*	(C-AM-PNC*)			
+-	*	*	(AM-EXT*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A4*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(C-AM-DIS*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A4*)	*)			
+-	*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-A2*)					
+-	(C-AM-DIS*					
+-	*					
+-	*)					
+-	(C-A2*)					
+-	(C-AM-DIS*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	*					
+prever	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-V*)					
+-	(C-AM-DIS*)					
+afetar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-V*)	(C-AM-DIS*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*	(C-AM-DIS*)				
+fazer	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	(C-V*)					
+trazer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+levantar	(C-AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(AM-EXT*)					
+-	(C-A1*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+confirmar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+comprovar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+acusar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-EXT*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+comparecer	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-MED*)					
+-	(C-A2*)					
+-	(AM-MED*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+acusar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*					
+-	*)					
+condenar	(C-AM-PNC*)					
+-	(A3*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(V*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+punir	(C-AM-PNC*)	*				
+-	(V*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(AM-PNC*)				
+cumprir	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*					
+tomar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+anunciar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+ficar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-EXT*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+começar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+atender	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-A2*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(C-AM-DIS*				
+-	*	*)				
+dizer	*	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	*					
+ser	(C-AM-PNC*)					
+-	(AM-REC*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+dizer	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+faltar	*	(C-AM-PNC*)				
+-	*	*				
+-	*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+						
+-	*					
+-	*					
+-	(C-AM-DIS*					
+-	*)					
+viver	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-PNC*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+dizer	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*)				
+faltar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	*	(C-AM-DIS*				
+-	(C-AM-ADV*)	*				
+ter	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*)				
+-	*	*				
+-	*	*				
+renovar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-AM-DIS*	(C-AM-DIS*)	(C-AM-DIS*	(C-A2*)		
+-	*)	(C-AM-MNR*	*)	(C-AM-DIS*)		
+-	(C-A2*)	*)	(C-A1*	(C-A2*		
+acontecer	(C-AM-PNC*)	(C-A1*)	*)	*		
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	*		
+-	*	*	*	*		
+-	*	*)	*)	*		
+ser	*	(C-AM-PNC*)	(C-A1*	*		
+-	*	(C-A1*)	*)	*		
+-	*	(C-AM-DIS*)	(C-AM-DIS*)	*		
+-	*	(C-AM-MNR*	(C-A1*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-V*)	*)	*		
+adiantar	*	(C-AM-DIS*)	(C-AM-PNC*)	*		
+-	*	(C-A1*)	(C-A1*)	*		
+-	*	(C-AM-DIS*	(C-AM-DIS*	*)		
+-	*	*	*	(C-AM-DIS*)		
+afirmar	*	*	*	(C-AM-PNC*)		
+-	*)	*)	*)	(C-AM-DIS*)		
+						
+saber	(C-AM-PNC*)	(C-AM-DIS*)				
+-	(C-A2*	(AM-EXT*)				
+ser	*	(C-AM-PNC*)				
+-	*)	(C-A2*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(AM-NEG*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+começar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(AM-PNC*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*)	(C-A2*)				
+-	(AM-EXT*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-AM-DIS*	(AM-PNC*	(C-AM-DIS*			
+-	*	*)	*			
+-	*	(C-AM-DIS*)	*			
+-	*)	(AM-PNC*	*			
+ganhar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*)	*			
+-	*)	(AM-EXT*	*			
+-	(C-AM-DIS*	*	*			
+-	*	*)	*			
+-	*	(AM-PNC*)	*			
+-	*	(AM-NEG*)	*			
+-	*	(AM-PNC*)	*			
+-	*	(C-AM-DIS*)	*			
+-	*	*	*			
+disputar	*	(C-AM-PNC*)	*			
+-	*	(AM-EXT*	*			
+-	*	*)	*			
+-	*	(C-AM-DIS*)	*)			
+terminar	*	(C-AM-ADV*)	(C-AM-PNC*)			
+-	*	(AM-NEG*)	(AM-NEG*			
+-	*	(C-AM-ADV*)	*)			
+-	*	(AM-EXT*)	(C-A2*)			
+-	*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*)					
+						
+-	*					
+multar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+autuar	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-NEG*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	(C-V*)					
+apresentar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+-	*	*				
+descumprir	(C-AM-PNC*)	(C-AM-DIS*)				
+-	(C-A2*	(C-A2*				
+-	*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+chegar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(A3*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-A1*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-A1*)					
+-	(C-AM-ADV*)					
+-	(C-AM-DIS*)					
+aplicar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+produzir	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+						
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+instalar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+tomar	(C-AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+fazer	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+aconselhar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+-	(AM-EXT*	*)	*			
+conversar	*	(C-AM-PNC*)	*)			
+-	*	(AM-EXT*	(AM-EXT*)			
+-	*	*	(C-AM-DIS*)			
+-	*)	*)	(AM-EXT*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+-	(AM-MED*	(C-AM-ADV*)	(AM-EXT*)			
+reverter	*	(C-A2*)	(C-AM-PNC*)			
+-	*)	(C-AM-DIS*)	(C-A2*			
+-	(C-A2*)	(C-A2*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(C-A1*)	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*)				
+-	*	*				
+-	*	(C-A2*)				
+perder	*)	(C-AM-PNC*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	(C-AM-DIS*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-MED*)	*				
+-	(C-AM-MNR*)	*				
+-	(C-AM-DIS*)	*				
+fazer	(C-AM-PNC*)	(C-AM-MNR*)				
+-	(C-A2*	(C-A2*				
+-	*)	*)				
+-	(AM-PNC*)	(C-AM-DIS*)				
+-	(AM-NEG*	(AM-PNC*)				
+-	*)	(C-AM-DIS*)				
+-	(C-AM-DIS*	(C-A2*)				
+-	*	(C-A1*)				
+-	*	(C-AM-DIS*)				
+criticar	*	(C-AM-PNC*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)					
+ser	(C-AM-PNC*)					
+-	*					
+-	(A5*)					
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+cumprir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-AM-MNR*)					
+-	(A4*)					
+-	(C-AM-MNR*)					
+-	(V*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	(C-AM-MNR*)	(C-AM-DIS*				
+-	(AM-PNC*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+preferir	(C-AM-PNC*)	*)				
+manter	(C-A2*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+ter	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*)	*)			
+dizer	*	(C-AM-PNC*)	(AM-PNC*)			
+-	*	(C-A2*	(AM-EXT*)			
+querer	*)	*)	(C-AM-PNC*)			
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*			
+-	*)	*)	*)			
+						
+-	(C-AM-DIS*	(A0*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*				
+-	*	*)				
+-	*	(A0*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-PNC*)				
+-	*	(A0*)				
+-	*	(AM-EXT*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*	(V*				
+-	*	*)				
+-	*	(AM-NEG*)				
+-	*)	(AM-MED*)				
+-	(C-A2*	(A4*)				
+-	*)	(C-AM-DIS*				
+simpatizar	(C-AM-PNC*)	*)				
+-	(C-A2*)	(AM-EXT*				
+-	(AM-EXT*)	*				
+-	(C-A2*)	*				
+-	(V*)	*				
+-	(AM-EXT*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+-	(AM-NEG*)	(AM-EXT*				
+-	(AM-EXT*)	*				
+-	(AM-NEG*)	*				
+-	(C-AM-DIS*	*)				
+-	*	*				
+-	*	*				
+ganhar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+narrar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+haver	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	*				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*)				
+separar	*)	(C-AM-PNC*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-AM-MNR*	(C-AM-DIS*)			
+-	(C-A2*)	*)	(C-AM-MNR*)			
+ocorrer	(C-AM-PNC*)	(AM-EXT*)	(C-AM-DIS*			
+-	(C-AM-DIS*	(C-AM-DIS*)	*			
+-	*	(C-A2*)	*			
+-	*	(C-AM-DIS*)	*			
+colocar	*)	(C-AM-PNC*)	*			
+-	(C-A2*	(AM-EXT*	*)			
+-	*)	*)	(C-A2*)			
+-	(AM-PNC*)	(AM-PNC*)	(AM-PNC*)			
+chegar	(C-AM-DIS*	(AM-EXT*	(C-AM-PNC*)			
+-	*	*)	(C-AM-EXT*			
+-	*	(C-AM-CAU*)	*			
+-	*	(AM-EXT*)	*)			
+-	*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-MNR*)					
+-	(C-AM-DIS*					
+-	*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-MNR*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+-	(V*)					
+expulsar	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	(C-AM-DIS*)				
+-	*	*				
+-	*	*				
+-	(C-A2*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+-	*	*				
+adotar	(C-A2*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*					
+-	*)					
+dar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(V*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*)	*				
+forçar	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A1*)	*				
+-	(C-AM-DIS*)	*				
+-	(AM-EXT*)	*)				
+reduzir	(C-AM-MNR*)	(C-AM-PNC*)				
+-	(AM-PNC*	(C-A2*				
+-	*)	*)				
+-	(AM-EXT*	(C-AM-EXT*)				
+-	*	(C-AM-DIS*)				
+-	*)	(C-A2*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+ser	(C-AM-PNC*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+dizer	*	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	(C-A2*	(C-AM-DIS*	(C-AM-DIS*		
+-	*)	*)	*	*		
+-	(C-A2*)	*	*	*		
+estar	(C-AM-PNC*)	*	*	*		
+-	(AM-EXT*	*	*	*		
+-	*	*	*	*		
+-	*	(C-A2*	*	*		
+-	*	*)	*	*		
+-	*)	*	*	*		
+ser	(C-AM-DIS*	(C-AM-PNC*)	*	*		
+-	*	(C-A2*)	*	*		
+-	*	(C-AM-DIS*)	*	*		
+-	*	(C-A2*	*	*		
+-	*	*)	*)	*)		
+-	*	*	(C-AM-EXT*)	*		
+-	*	(C-AM-DIS*	(C-AM-DIS*)	(C-AM-DIS*)		
+ir	*	*	(C-AM-PNC*)	(C-A2*)		
+-	*	*	(C-AM-EXT*	(C-AM-EXT*)		
+-	*	*	*	(C-AM-DIS*		
+-	*	*	*)	*		
+-	*	*	(C-AM-DIS*	*		
+-	*	*	*	*)		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+vetar	*	*	(AM-EXT*)	(C-AM-PNC*)		
+-	*	*	(C-AM-DIS*	(C-A2*		
+-	*	*	*)	*		
+-	*	*	(C-A2*)	*)		
+-	*)	*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+ser	(C-AM-PNC*)					
+-	(C-A1*)					
+-	*					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(V*)	*				
+-	(AM-NEG*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*)	*)				
+-	(A4*)	*				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+-	(AM-NEG*	(AM-NEG*)				
+-	*)	(C-AM-DIS*				
+-	(AM-PNC*)	*				
+-	(C-AM-DIS*)	*)				
+investir	(AM-NEG*)	(C-AM-PNC*)				
+-	(AM-EXT*	(AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-PNC*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+-	*	*)				
+-	*	(C-A2*)				
+firmar	(C-AM-PNC*)	(C-AM-DIS*)				
+-	(C-A2*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*)				
+valer	*	(C-AM-PNC*)				
+-	*	(AM-EXT*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*)					
+crescer	(C-AM-PNC*)					
+-	(A3*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-EXT*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-NEG*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*)				
+elevar	(AM-DIR*)	(C-AM-PNC*)				
+-	(C-AM-ADV*)	(C-A2*				
+-	(C-A2*)	*)				
+-	(V*)	(A3*)				
+-	(C-AM-ADV*	(C-AM-EXT*				
+-	*	*)				
+-	*	(A3*				
+-	*)	*				
+-	(AM-DIR*	*)				
+-	*	(C-AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+divulgar	(C-AM-PNC*)	*	*			
+-	(AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-A2*)	*			
+-	*	(C-AM-DIS*	*			
+-	*)	*	*			
+-	(C-AM-DIS*)	*)	*			
+demonstrar	(C-AM-ADV*)	(C-AM-PNC*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-A2*)			
+-	(C-AM-ADV*)	*	*			
+-	(C-A2*	(C-A2*	*			
+conseguir	*	*	(C-AM-PNC*)			
+-	*	*	(C-A2*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(C-AM-ADV*	*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-MNR*	(C-AM-DIS*	(C-AM-DIS*		
+estar	(C-AM-PNC*)	*	*	*		
+-	(AM-EXT*	*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(C-AM-MNR*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*)		
+-	*	*	(AM-EXT*)	(AM-NEG*)		
+-	*)	*)	(C-AM-DIS*	(C-AM-DIS*		
+-	(C-AM-DIS*	(C-AM-DIS*)	*	*		
+-	*	(C-A2*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-DIS*)	*	*		
+escolher	*	(C-AM-PNC*)	*	*		
+-	*	(C-AM-MNR*	*)	*)		
+estar	*	*	(C-AM-PNC*)	(C-AM-MNR*)		
+-	*	*	(AM-EXT*	(C-AM-DIS*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*)	*)		
+-	(AM-NEG*)	*	(AM-NEG*)	(AM-NEG*		
+-	(C-AM-DIS*	*	(AM-EXT*	*)		
+-	*	*	*	*		
+treinar	*)	*	*)	(C-AM-PNC*)		
+-	(AM-PNC*	*)	(AM-PNC*	(AM-PNC*		
+-	*	(AM-PNC*	*	*		
+-	*)	*)	*)	*)		
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+-	(C-A2*					
+-	*					
+-	*)					
+subir	(C-AM-PNC*)					
+-	(V*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-V*)					
+falar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(AM-MED*				
+estimular	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	(AM-PNC*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A0*)				
+-	*	(C-AM-EXT*)				
+-	*	*				
+-	*	*				
+ganhar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	*					
+-	*					
+trabalhar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(A3*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*				
+-	(A3*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*	*)				
+-	*)	*				
+vir	(C-AM-PNC*)	(C-AM-DIS*				
+-	(A3*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(V*)	*				
+-	(A3*	*				
+-	*	*				
+-	*)	*				
+-	(AM-PNC*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+compensar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A3*)	(V*				
+-	(C-AM-DIS*)	*				
+-	(A3*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(A0*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*)				
+-	*)	(C-A2*)				
+ser	(AM-EXT*)	(C-AM-PNC*)				
+-	(A0*)	(V*)				
+-	(AM-EXT*)	(AM-NEG*)				
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(AM-EXT*)	*)				
+-	(C-A2*)	(C-A2*)				
+-	(C-AM-EXT*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+-	(C-AM-EXT*	(V*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
+-	(A4*)					
+-	(AM-NEG*					
+-	*)					
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-EXT*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(A4*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(A4*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-V*)	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*		
+-	(C-AM-DIS*)	*	*	*		
+haver	(C-AM-PNC*)	*)	*	*		
+-	(C-A2*	(C-A2*)	*	*		
+-	*	(C-AM-DIS*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+substituir	*	(C-AM-PNC*)	*	*		
+-	*)	(C-AM-DIS*	*	*		
+-	(C-AM-DIS*)	*	*	*		
+-	(AM-MED*	*	*)	*		
+ter	*	*	(C-AM-PNC*)	*		
+-	*)	*	(AM-NEG*)	*)		
+-	(C-A2*	*	(C-A2*	(C-A2*		
+-	*	*	*	*)		
+-	*	*	*	(C-AM-DIS*)		
+ser	*	*	*	(C-AM-PNC*)		
+-	*)	*	*)	(C-AM-DIS*		
+-	(C-AM-DIS*)	*	(C-AM-DIS*)	*)		
+-	(C-A2*	*	(C-A2*	(C-A2*		
+-	*	*	*	*)		
+-	*)	*	*)	(C-AM-DIS*		
+-	(C-AM-DIS*)	*)	(C-AM-DIS*)	*)		
+						
+-	(V*)					
+-	(AM-MED*)					
+-	(V*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(V*)					
+-	(C-A1*)					
+-	(V*)					
+-	(C-AM-DIS*)					
+-	(C-V*)					
+-	*					
+-	(C-AM-DIS*)					
+jogar	(C-AM-PNC*)					
+-	(V*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	(C-A1*	(C-AM-DIS*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(C-V*)	*				
+-	(C-AM-DIS*)	*				
+avaliar	(C-AM-PNC*)	*)				
+-	(C-A2*	(C-A2*)				
+-	*	(C-AM-DIS*)				
+ampliar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(V*				
+-	*	*				
+-	*	*)				
+-	*	*				
+-	*	(AM-MED*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*					
+-	*					
+-	(C-V*)					
+proibir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*)	*)				
+-	(C-AM-MNR*)	(C-A2*				
+-	(C-A2*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+iniciar	*)	(C-AM-PNC*)				
+-	(AM-EXT*	(AM-PNC*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(A0*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+inspirar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*)				
+-	*)	*				
+-	*	*				
+-	(C-AM-DIS*	*				
+-	*	(C-A2*)				
+-	*	*				
+-	*	(C-A2*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	(C-AM-DIS*)	(C-AM-DIS*				
+ver	(C-AM-PNC*)	*)				
+-	(C-A2*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*)				
+-	*	(A0*)				
+-	*	(AM-EXT*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-A2*				
+ficar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(C-AM-DIS*)				
+dizer	*	(C-AM-PNC*)				
+-	*)	(AM-EXT*				
+-	(AM-EXT*)	*				
+-	(C-AM-DIS*	*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+afirmar	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A1*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+achar	(C-AM-PNC*)					
+-	(AM-EXT*)					
+-	(A3*					
+-	*)					
+-	(AM-NEG*)					
+						
+-	*					
+encontrar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*)	(C-AM-DIS*			
+-	*	(C-A2*	*			
+-	*	*)	*			
+dizer	(C-AM-PNC*)	(C-AM-DIS*	*			
+-	(C-A2*	*	*			
+-	*	*)	*			
+sequestrar	*	(C-AM-PNC*)	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	*			
+-	*	*	(C-A2*)			
+-	*	*	(C-AM-DIS*)			
+confundir	*	*	(C-AM-PNC*)			
+-	*	(C-AM-MNR*)	(AM-EXT*)			
+-	*)	*	(A3*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+receber	(C-AM-PNC*)					
+-	(AM-EXT*)					
+-	(V*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-A2*					
+-	*)					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+receber	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+morrer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+-	(C-AM-DIS*)					
+realizar	(C-AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(AM-PNC*)					
+-	*					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(AM-REC*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-MNR*)					
+-	(C-A2*					
+-	*)					
+-	(A3*)					
+-	(C-AM-EXT*)					
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+bater	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*)				
+ficar	*	(C-AM-PNC*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	(C-A2*	*				
+-	*)	*				
+-	*	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-NEG*	(AM-NEG*				
+-	*	*)				
+-	*	(A0*				
+-	*	*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*	*)				
+-	*)	*				
+contar	(C-A2*)	(C-AM-PNC*)				
+-	(C-AM-DIS*)	(C-A2*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+-	(AM-EXT*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(A0*)	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+ficar	(C-AM-PNC*)	*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+derrotar	*)	(C-AM-PNC*)				
+-	(AM-PNC*	(AM-PNC*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+-	*	(AM-PNC*)				
+-	*	(C-AM-DIS*)				
+-	*)	(AM-NEG*)				
+-	(AM-EXT*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	(AM-ADV*)				
+-	(AM-EXT*)	(V*)				
+-	(AM-PNC*	(AM-ADV*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*)	*				
+-	(AM-EXT*)	*				
+-	(AM-PNC*)	*)				
+-	(AM-EXT*)	(AM-NEG*)				
+-	(AM-PNC*	(C-AM-DIS*				
+-	*	*)				
+-	*)	(AM-NEG*)				
+-	(AM-EXT*)	(V*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A2*)	*				
+-	*	*)				
+-	*	*				
+marcar	*	(C-AM-PNC*)				
+-	(C-A2*	(C-A2*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-PNC*)					
+-	(AM-NEG*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+participar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	(C-A2*	*	*			
+-	*)	*	*			
+-	*	*	*			
+-	*	*	*			
+ser	(C-AM-PNC*)	*	*			
+-	*	*	*			
+-	(C-AM-DIS*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-EXT*)	*)	*			
+ser	(A0*	(C-AM-PNC*)	*			
+-	*)	(C-AM-DIS*)	*			
+-	(AM-MED*)	(C-A2*)	*			
+-	(A4*)	(C-AM-DIS*	*			
+-	(A0*	*	*			
+-	*)	*	*			
+-	(C-A2*	*	*)			
+-	*)	*	(C-A2*)			
+-	(C-AM-DIS*	*	(C-AM-DIS*)			
+vender	*	*	(C-AM-PNC*)			
+-	*	*	(AM-EXT*)			
+-	*)	*	(A3*			
+-	(A0*)	*	*			
+-	(C-AM-DIS*	*	*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	(AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*)	*				
+estar	(C-AM-PNC*)	*				
+-	(AM-EXT*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+comercializar	*	(C-AM-PNC*)				
+-	*	(V*)				
+-	*	(AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-A2*				
+-	(C-A2*	*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-A1*)	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*)				
+-	*	(C-AM-DIS*)				
+afirmar	*	(C-AM-PNC*)				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-A1*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+representar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+gostar	(C-AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*		
+-	(C-A2*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(C-AM-DIS*	*)	*	*		
+resolver	*)	(C-AM-PNC*)	*)	*)		
+pegar	(C-A2*	(C-A2*	(C-AM-PNC*)	(C-A2*		
+-	*	*	(C-A2*	*		
+-	*)	*	*)	*)		
+-	(C-AM-DIS*	*	(C-AM-DIS*	(C-AM-DIS*)		
+fazer	*	*)	*	(C-AM-PNC*)		
+-	*	(C-AM-DIS*	*	(AM-NEG*		
+-	*	*	*	*)		
+-	*	*	*	(AM-PNC*)		
+-	*)	*)	*)	(C-AM-DIS*)		
+						
+-	*					
+-	(C-A2*)					
+-	(C-AM-PNC*)					
+encaixar	(AM-REC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)					
+ter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*	(C-AM-DIS*				
+-	*)	*				
+ser	(C-AM-PNC*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*	*				
+-	*	*				
+-	*	(C-AM-DIS*)				
+denunciar	*	(C-AM-PNC*)				
+-	*	(AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	(C-A2*)				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	(C-A2*				
+mudar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-DIS*)				
+depender	*	(C-AM-PNC*)				
+-	*	(AM-ADV*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+estar	(C-AM-PNC*)	(C-AM-DIS*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(AM-NEG*	*				
+-	*)	*				
+-	(AM-EXT*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+desestimular	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+oferecer	(C-AM-PNC*)					
+-	(A3*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(A0*)					
+-	(A3*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+causar	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*)				
+-	*	*				
+tratar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+chegar	(C-AM-PNC*)	(C-AM-DIS*	(C-AM-DIS*			
+-	(AM-PNC*)	*	*			
+-	(C-AM-DIS*	*)	*			
+ser	*	(C-AM-PNC*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*)	*			
+-	*	(C-AM-MNR*	*			
+-	*	*)	*			
+-	*	(C-AM-DIS*	*)			
+sair	*)	*	(C-AM-PNC*)			
+-	(AM-PNC*	*	(AM-PNC*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(C-AM-DIS*)	*)	(C-AM-DIS*)			
+						
+-	(AM-NEG*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-A1*)	*	*			
+-	(C-AM-DIS*)	*	*			
+-	*	*	*			
+fazer	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	*	*)			
+pagar	*	(C-AM-PNC*)	(AM-EXT*			
+-	*	(AM-EXT*)	*)			
+estar	*)	(A3*)	(C-AM-PNC*)			
+-	(C-AM-DIS*	(AM-EXT*	(AM-EXT*			
+-	*)	*	*			
+-	(C-A2*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+ser	(C-AM-PNC*)					
+-	(C-A1*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-NEG*)					
+-	(C-A2*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+pôr	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-MED*)	*)	*			
+interpretar	(AM-EXT*)	(C-AM-PNC*)	*			
+-	(C-A2*	(C-A2*	*			
+-	*)	*	*)			
+-	(AM-MED*)	*	(C-A2*)			
+-	(AM-EXT*)	*	(C-AM-DIS*			
+-	(C-A2*)	*	*			
+-	(C-AM-DIS*	*)	*			
+-	*	(C-AM-DIS*	*			
+-	*	*	*)			
+-	*	*	*			
+fazer	*)	*	(C-AM-PNC*)			
+-	(AM-EXT*)	*)	(C-AM-DIS*			
+-	(C-A2*	(C-A2*	*			
+-	*	*)	*)			
+-	*	(C-AM-DIS*)	(A3*)			
+-	*	(C-A2*	(C-A2*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+dirigir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*)	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*	
+-	(C-A1*)	*	*	*	*	
+estar	(C-AM-PNC*)	*	*	*	*	
+-	(AM-EXT*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(C-AM-DIS*	*)	*	*	*	
+-	*	(C-V*)	*	*	*	
+resistir	*)	(C-AM-PNC*)	*	*	*	
+-	(AM-EXT*)	(C-A2*)	*	*	*	
+-	(C-AM-DIS*)	(AM-EXT*)	*	*	*	
+-	(AM-EXT*	(C-A2*	*	*	*	
+-	*)	*	*	*	*	
+-	(C-AM-DIS*	*)	*	*	*	
+-	*	(C-AM-DIS*	*	*	*	
+-	*)	*)	*)	*	*	
+-	(AM-EXT*)	*	*	*	*	
+pagar	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-PNC*)	*	*	
+-	(AM-EXT*	(AM-EXT*)	(A3*)	*)	*	
+-	*	(C-AM-DIS*)	(C-AM-DIS*	*	*	
+filmar	*	(AM-EXT*)	*	(C-AM-PNC*)	*	
+-	*	(C-A2*	*	(C-AM-DIS*	*)	
+-	*)	*)	*	*	(C-A2*)	
+ser	(C-AM-DIS*)	(C-AM-DIS*	*	*	(C-AM-PNC*)	
+-	(AM-EXT*	*	*	*	(C-AM-DIS*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*)	*	*	*	
+-	*)	(AM-EXT*)	*	*	*	
+-	(C-AM-DIS*)	(C-AM-DIS*)	*)	*)	*)	
+						
+-	(C-AM-DIS*)	(C-AM-DIS*	(C-AM-ADV*	(C-AM-DIS*		
+-	(C-A2*)	*	*	*		
+-	(C-AM-DIS*)	*	*	*		
+ser	(C-AM-PNC*)	*	*)	*		
+-	(C-A2*	*	(C-A2*	*		
+-	*)	*	*)	*		
+-	(C-AM-DIS*	*	(C-AM-DIS*	*		
+-	*	*)	*)	*		
+fazer	*	(C-AM-PNC*)	(C-A2*)	*		
+-	*	(C-AM-DIS*)	(C-AM-DIS*	*		
+-	*	(C-A2*	*)	*		
+-	*	*	(C-A2*)	*		
+-	*	*	(C-AM-DIS*	*		
+-	*	*)	*)	*		
+-	*	(AM-NEG*)	(C-A2*)	*		
+-	*	(C-A2*	(C-AM-DIS*	*		
+-	*	*)	*	*		
+-	*	(AM-NEG*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-DIS*	*	*		
+-	*	*	*)	*		
+confirmar	*	*	(C-AM-PNC*)	*		
+-	*	*	*	*)		
+-	*	*	(C-A2*	(C-A2*		
+-	*	*	*	*		
+-	*	*	*	*)		
+ser	*	*	*	(C-AM-PNC*)		
+-	*	*	*	(C-A2*)		
+-	*	*	*)	(AM-EXT*)		
+-	*)	*)	(C-AM-DIS*)	(C-AM-DIS*)		
+						
+ver	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*)	*				
+-	(AM-NEG*	*				
+-	*)	*				
+-	(AM-EXT*)	*				
+-	(AM-NEG*)	*				
+-	(C-AM-DIS*)	*)				
+-	(C-A2*	*				
+-	*	*				
+jogar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+vencer	(C-AM-PNC*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-ADV*)	(C-AM-DIS*				
+bastar	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(AM-EXT*	*				
+-	*)	*				
+-	(C-A1*)	*				
+-	(C-AM-DIS*	*				
+-	*)	*)				
+-	*	*				
+-	(C-A2*)	*				
+-	(C-AM-DIS*)	(C-AM-ADV*)				
+-	(C-A2*	(C-AM-DIS*)				
+chegar	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(AM-EXT*)				
+-	*)	(C-AM-EXT*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+ancorar	(C-AM-PNC*)	*				
+-	(AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-PNC*)	*				
+-	(AM-NEG*	(C-AM-PNC*)				
+tornar	*)	(AM-REC*)				
+-	(AM-EXT*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-PNC*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(AM-NEG*					
+-	*					
+-	*)					
+haver	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(A5*)					
+-	(C-AM-DIS*)					
+						
+-	*	*				
+querer	(C-AM-PNC*)	*				
+-	(C-AM-DIS*	(C-AM-DIS*)				
+ir	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*	(AM-PNC*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	*					
+dispensar	(C-AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(V*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*)					
+-	(V*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(V*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-PNC*)	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+saber	(C-AM-PNC*)	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-DIS*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+defender	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)					
+chegar	(C-AM-PNC*)					
+-	(C-AM-EXT*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(AM-PNC*)					
+-	(C-AM-DIS*)					
+-	(C-A1*)					
+-	(C-AM-EXT*)					
+-	(C-AM-MNR*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	*					
+-	*					
+discordar	(C-AM-PNC*)					
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-ADV*)					
+-	(AM-PNC*)					
+-	(V*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+jogar	(C-AM-PNC*)					
+-	(C-AM-ADV*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*)					
+-	(AM-PNC*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A2*					
+-	*)					
+estar	(C-AM-PNC*)					
+-	(AM-EXT*)					
+-	(AM-PNC*)					
+-	(AM-NEG*)					
+-	(AM-EXT*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*)					
+-	*					
+apreciar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-A2*	(C-AM-DIS*	(C-AM-DIS*			
+-	*)	*	*			
+-	(C-AM-ADV*)	*	*			
+existir	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*	*)	*			
+-	*	*	*			
+-	*	(C-A2*)	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	(C-AM-DIS*)	*			
+engatinhar	*	(C-AM-PNC*)	*)			
+-	*	(AM-PNC*	(AM-PNC*)			
+aparecer	*	*	(C-AM-PNC*)			
+-	*	*	(C-A2*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(C-AM-DIS*	*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(C-A2*			
+-	*	*	*)			
+-	*)	*)	(C-AM-DIS*)			
+						
+-	(AM-PNC*					
+-	*)					
+-	(AM-NEG*)					
+-	(AM-PNC*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	*					
+querer	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+dizer	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-DIS*)				
+formar	*	(C-AM-PNC*)				
+-	*	(AM-PNC*)				
+-	*	(V*)				
+-	*	(AM-EXT*)				
+-	*)	(C-AM-MNR*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	*	*				
+ter	(C-AM-PNC*)	*				
+-	(AM-NEG*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*	*				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	(C-AM-DIS*)	(C-AM-DIS*				
+-	*	*				
+ter	(C-AM-PNC*)	*				
+-	(AM-NEG*)	*				
+-	(C-AM-DIS*	*				
+-	*	*)				
+-	*	*				
+ser	*	(C-AM-PNC*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*				
+-	*)	*)				
+						
+-	(C-AM-DIS*)	(C-A2*	(C-AM-DIS*	(C-A2*		
+-	(C-A2*	*	*	*		
+-	*)	*)	*	*		
+ser	(C-AM-PNC*)	(C-AM-DIS*)	*	*		
+-	(AM-EXT*)	(C-A2*)	*	*		
+-	(C-AM-DIS*	(C-AM-DIS*)	*	*)		
+-	*	(C-A2*)	*	(C-AM-DIS*)		
+pensar	*	(C-AM-PNC*)	*	(C-A2*)		
+-	*)	(C-A2*	*)	(C-AM-DIS*)		
+-	(C-AM-ADV*)	*	(C-A2*)	(C-A2*		
+-	(C-AM-DIS*	*	(C-AM-DIS*)	*		
+abastecer	*)	*	(C-AM-PNC*)	*		
+-	(C-A2*	*	(C-A2*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(C-AM-DIS*)	*	*)	*		
+-	(AM-PNC*)	*	(AM-PNC*)	*		
+-	(C-AM-DIS*	*	(C-AM-DIS*	*		
+-	*	*)	*	*		
+-	*	(C-AM-DIS*	*	*)		
+-	*	*	*	(C-AM-DIS*)		
+dizer	*	*	*	(C-AM-PNC*)		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-A2*	*	*		
+-	*	*)	*	*		
+-	*)	(C-AM-DIS*)	*)	(C-AM-DIS*)		
+						
+haver	(C-AM-PNC*)	(C-AM-DIS*				
+-	(C-A2*	*)				
+-	*	*				
+enfrentar	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-A1*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	*	*				
+achar	(C-AM-PNC*)	*				
+-	(C-A2*	*)				
+-	*	(C-A2*)				
+-	*	(C-AM-DIS*)				
+ser	*	(C-AM-PNC*)				
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-EXT*)				
+-	*	(C-AM-DIS*)				
+-	*	(C-A2*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)	(C-AM-DIS*				
+estar	(C-AM-PNC*)	*)				
+-	(AM-EXT*	(AM-EXT*)				
+-	*	(C-AM-DIS*				
+-	*	*)				
+estimular	*	(C-AM-PNC*)				
+-	*	(C-A2*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*)	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+ser	(C-AM-PNC*)	*	*			
+-	(C-AM-DIS*	*	*			
+-	*)	*)	*)			
+-	*	*	*			
+estimular	(C-A2*)	(C-AM-PNC*)	(C-AM-DIS*)			
+-	(AM-NEG*)	(AM-EXT*)	(AM-NEG*)			
+-	(A0*)	(AM-NEG*	(C-AM-DIS*			
+-	(C-AM-DIS*	*)	*			
+-	*)	(C-A2*	*)			
+-	(C-A2*	*	(C-A2*)			
+-	*	*	(C-AM-DIS*			
+-	*)	*)	*			
+-	(C-AM-DIS*)	(C-AM-DIS*)	*)			
+promover	(C-AM-ADV*	(C-AM-ADV*)	(C-AM-PNC*)			
+-	*	*	*			
+-	*	(C-AM-ADV*	(C-A2*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	*					
+-	*					
+eliminar	(C-AM-PNC*)					
+-	(C-A2*)					
+-	(AM-NEG*					
+-	*)					
+						
+-	*					
+causar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(C-AM-DIS*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	(C-AM-DIS*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
+-	*					
+reunir	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+perder	(C-AM-PNC*)					
+-	(C-A2*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-A2*)					
+-	(AM-EXT*					
+-	*)					
+-	(C-A2*					
+-	*)					
+-	(AM-PNC*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-DIS*					
+-	*)					
+-	*					
+-	*					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	(C-A2*)					
+-	(C-AM-DIS*)					
+empurrar	(C-AM-PNC*)					
+-	*					
+-	*					
+-	*					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	(C-AM-DIS*	(C-AM-DIS*)	(C-AM-DIS*			
+-	*)	(C-AM-ADV*	*			
+ser	(C-AM-PNC*)	*	*			
+-	*	*	*			
+-	(C-AM-DIS*)	*	*			
+-	*	*)	*			
+-	(C-A2*)	(C-AM-MNR*	*			
+-	*	*)	*			
+-	(C-AM-DIS*	(C-AM-DIS*)	*			
+-	*	(C-A2*)	*			
+-	*	(C-V*)	*			
+prejudicar	*	(C-AM-PNC*)	*			
+-	*	(C-A2*	*			
+-	*	*	*)			
+ser	*	*	(C-AM-PNC*)			
+-	*	*	(C-AM-DIS*)			
+-	*	*	(C-AM-MNR*)			
+-	*	*)	(C-AM-DIS*			
+-	*)	(C-AM-DIS*)	*)			
+						
+-	(C-A1*)	(C-A2*				
+-	(C-AM-DIS*	*				
+-	*)	*				
+afetar	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*)	*				
+-	(C-AM-DIS*)	*				
+-	*	*				
+-	(C-A1*)	*				
+-	*	*)				
+-	(C-AM-DIS*	(C-AM-DIS*				
+-	*	*)				
+dizer	*	(C-AM-PNC*)				
+-	*	*				
+-	*)	(C-AM-DIS*)				
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*)			
+-	*	*	*			
+-	*	*	*			
+-	*	*	(C-AM-DIS*)			
+-	*	*	*			
+dar	(C-AM-PNC*)	*	(C-AM-DIS*			
+-	(C-A2*	*	*)			
+-	*)	*	(C-A2*)			
+-	(AM-PNC*	*	(C-AM-DIS*			
+-	*	*)	*			
+-	*	(AM-PNC*)	*			
+-	*)	(C-AM-DIS*	*			
+-	(C-AM-DIS*)	*	*			
+-	(AM-PNC*	*	*			
+-	*	*)	*			
+discursar	*	(C-AM-PNC*)	*			
+-	*	(AM-PNC*)	*			
+-	*)	(V*)	*			
+-	(AM-MED*)	(AM-EXT*	*			
+-	(AM-PNC*	*)	*			
+-	*	(AM-PNC*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(AM-PNC*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*	(C-AM-DIS*	(C-AM-DIS*)			
+ler	*	*	(C-AM-PNC*)			
+-	*	*	(C-A2*)			
+-	*	*	(AM-NEG*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-DIS*			
+-	*)	*)	*)			
+						
+-	*					
+alterar	(C-AM-PNC*)					
+-	(C-A2*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	(C-A2*)	*				
+-	*	*				
+-	*	*				
+ser	(C-AM-PNC*)	*				
+-	*	*				
+-	(C-AM-DIS*)	*				
+-	(C-A2*)	*)				
+-	*	*				
+levar	(C-A2*)	(C-AM-PNC*)				
+-	(AM-EXT*	(AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-A2*	*				
+-	*)	*)				
+-	(C-AM-DIS*)	(C-AM-DIS*)				
+						
+-	(C-A2*					
+-	*					
+-	*					
+-	*)					
+oscilar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+ter	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+passar	(C-AM-PNC*)					
+-	(AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+abrir	(C-AM-PNC*)					
+-	(AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*)					
+-	(AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+fazer	(C-AM-PNC*)	*				
+-	(C-A2*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*)				
+acompanhar	*	(C-AM-PNC*)				
+-	*	(AM-PNC*)				
+-	*	(AM-NEG*				
+-	*	*				
+-	*	*)				
+-	*	(C-A2*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-DIS*				
+-	(C-AM-DIS*)	*)				
+						
+-	*					
+-	*					
+marcar	(C-AM-PNC*)					
+-	(C-A2*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+						
+-	*	(C-AM-DIS*	(C-AM-DIS*			
+-	*	*	*			
+entrar	(C-AM-PNC*)	*	*			
+-	(C-A2*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-PNC*	*	*			
+-	*)	*	*			
+-	(C-A2*)	*	*			
+-	(V*)	*	*			
+-	(AM-PNC*)	*	*			
+-	(C-A2*)	*	*			
+-	(V*)	*)	*			
+-	(AM-PNC*	(AM-PNC*)	*)			
+obrigar	*)	(C-AM-PNC*)	(AM-PNC*)			
+-	(C-A2*	(C-A2*	(C-AM-DIS*			
+-	*	*	*)			
+-	*	*	(C-A2*)			
+-	*)	*)	(C-AM-DIS*)			
+-	(AM-MED*)	(AM-EXT*	(AM-PNC*)			
+assinar	(AM-EXT*)	*	(C-AM-PNC*)			
+-	(C-A2*	*	(C-A2*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(C-AM-DIS*)	(C-AM-DIS*)	(C-AM-DIS*)			
+						
+-	(AM-PNC*					
+-	*					
+-	*)					
+-	(C-AM-DIS*)					
+-	*					
+-	*					
+-	(C-AM-DIS*					
+-	*)					
+ser	(C-AM-PNC*)					
+-	(AM-NEG*)					
+-	(C-AM-DIS*)					
