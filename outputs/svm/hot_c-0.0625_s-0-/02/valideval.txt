@@ -1,0 +1,6708 @@
+-	(C-AM-NEG*					
+-	*					
+-	*)					
+estar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*)					
+-	(AM-ADV*)					
+-	(C-AM-NEG*)					
+-	(AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+reclamar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+adiar	*	(AM-DIR*)				
+-	*	(AM-TMP*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*)	(A5*	(A5*			
+-	(A5*)	*	*			
+agendar	(AM-DIR*)	*)	*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*)	(A5*			
+-	*	(A5*)	*			
+pedir	*	(AM-DIR*)	*)			
+-	*	(C-AM-ADV*	(C-AM-ADV*)			
+-	*	*	(AM-ADV*)			
+ajudar	*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ocupar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*)					
+vender	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*)					
+anunciar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(A5*	(A5*			
+-	(A5*	*	*			
+-	*)	*	*			
+-	(AM-ADV*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(A5*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(A5*)	*	*			
+retomar	(AM-DIR*)	*	*			
+-	(AM-TMP*)	*	*			
+-	(A5*)	*	*			
+-	(C-AM-NEG*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*)	(C-AM-NEG*	*			
+-	(C-AM-EXT*)	*)	*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*	*)	*			
+estar	*)	(AM-DIR*)	*)			
+-	(C-AM-NEG*	(C-AM-NEG*	(C-AM-NEG*			
+-	*	*	*)			
+-	*	*	(A5*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*)	*	(AM-ADV*)			
+realçar	(C-AM-ADV*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+tocar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(C-AM-EXT*)	*				
+-	(A5*)	*				
+-	(C-AM-EXT*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(AM-DIS*)				
+levar	*	(AM-DIR*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*)				
+-	*)	(A5*)				
+						
+-	(AM-TMP*)					
+-	(C-AM-EXT*)					
+-	(AM-TMP*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+fazer	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-MNR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*)	*				
+-	(A5*)	*				
+negligenciar	(AM-DIR*)	*)				
+-	(A5*	(A5*				
+-	*	*)				
+dizer	*	(AM-DIR*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-ADV*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+alegar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(AM-ADV*				
+-	*	*)				
+-	*	(AM-DIS*)				
+considerar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(C-AM-NEG*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*)	(C-AM-NEG*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)	(A5*	(A5*			
+comprovar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*)	*			
+-	*	(AM-ADV*	*			
+-	*	*)	*			
+receber	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*)			
+-	*	*	(C-AM-ADV*			
+-	*	*)	*)			
+-	*	(A5*)	(A5*)			
+concordar	*	*	(AM-DIR*)			
+-	*	(C-AM-NEG*)	(C-AM-ADV*			
+-	*	(A5*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-NEG*	*			
+-	*)	*	*			
+-	*	*)	*			
+-	(C-AM-ADV*	(A5*)	*			
+-	*	(C-AM-NEG*)	*			
+-	*	(A5*)	*			
+-	*	(C-AM-NEG*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-MNR*)	*			
+-	*	(A5*	*			
+-	*	*)	*			
+-	*	(C-AM-NEG*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+dizer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(A5*	(A5*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*			
+-	*	*	*			
+-	*)	*	*			
+cumprir	(AM-DIR*)	*)	*			
+-	(C-AM-ADV*	(C-AM-ADV*	*			
+-	*)	*)	*			
+-	(A5*	(A5*)	*			
+transferir	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(C-AM-NEG*	*			
+-	*	*	*			
+-	*	*)	*)			
+-	*	(A5*	(A5*			
+-	*	*	*)			
+dizer	*	*	(AM-DIR*)			
+-	*)	*)	(A5*)			
+						
+-	(A5*	(A5*	(A5*	(C-AM-ADV*		
+-	*)	*)	*)	*		
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*)	*		
+-	*)	*)	(A5*	*		
+-	(A5*)	(A5*	*	*		
+verificar	(AM-DIR*)	*	*	*		
+-	(A5*	*)	*	*		
+levar	*	(AM-DIR*)	*	*		
+-	*	(C-AM-NEG*	*	*)		
+-	*	*)	*	(A5*)		
+-	*	(A5*	*)	(C-AM-ADV*		
+-	*	*	(AM-DIS*)	*		
+enxergar	*	*)	(AM-DIR*)	*		
+-	*	(C-AM-ADV*)	(C-AM-ADV*)	*		
+-	*	(A5*	(A5*	*)		
+-	*	*	*	(A5*)		
+dizer	*	*	*	(AM-DIR*)		
+-	*	*	*	(AM-TMP*)		
+-	*	*	*	(AM-ADV*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*)	*)	*)	(A5*)		
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+pilotar	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*				
+-	(AM-TMP*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*)	*				
+acabar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+-	(C-AM-ADV*	(AM-ADV*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+sair	*)	(AM-DIR*)				
+-	(C-AM-NEG*	(C-AM-ADV*				
+-	*	*)				
+-	*	(C-AM-NEG*)				
+-	*	(C-AM-ADV*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*)				
+-	(C-AM-NEG*	(C-AM-NEG*)				
+-	*	(C-AM-EXT*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(AM-TMP*				
+-	*	*)				
+-	*	(C-AM-LOC*)				
+-	*)	(C-AM-NEG*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-DIS*)					
+-	(A5*)					
+revelar	(AM-DIR*)					
+-	(AM-TMP*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+afirmar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*)	(A5*)			
+-	*	(C-AM-ADV*)	(C-AM-ADV*)			
+-	*	(AM-ADV*	(AM-ADV*)			
+-	*	*)	(C-AM-ADV*			
+prever	*	(AM-DIR*)	*			
+-	*	(C-AM-NEG*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A5*	*)			
+-	*	*)	(A5*)			
+-	*	(C-AM-NEG*)	(C-AM-ADV*)			
+-	*	(A5*	(AM-DIS*)			
+acontecer	*)	*	(AM-DIR*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+revelar	(AM-DIR*)	*				
+-	(C-AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+estar	*	(AM-DIR*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)					
+-	(A3*)					
+-	(A5*)					
+-	(AM-ADV*)					
+dar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-DIS*)	(A5*	(A5*			
+precisar	(AM-DIR*)	*	*			
+-	(A5*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*			
+saber	(AM-MNR*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*)	(A5*	*			
+-	(A5*)	*	*)			
+-	(AM-ADV*)	*	(AM-ADV*)			
+-	(AM-MNR*)	*	(A5*)			
+trazer	(C-AM-ADV*	*	(AM-DIR*)			
+-	*)	*	(A5*			
+-	(A5*)	*)	*)			
+						
+-	(C-AM-ADV*)					
+ser	(AM-DIR*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-MNR*)	(A5*	(A5*			
+ser	(AM-DIR*)	*	*			
+-	(A5*	*)	*			
+pensar	*)	(AM-DIR*)	*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+ser	*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+						
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+destacar	(AM-DIR*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)					
+morrer	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*)	(A5*	(A5*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*)	*	*			
+morrer	(AM-DIR*)	*	*			
+-	(AM-TMP*)	*	*			
+-	(C-AM-EXT*	*	*			
+-	*)	*	*			
+-	(AM-TMP*	*	*			
+-	*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(C-AM-PNC*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*)	(C-AM-NEG*)	*			
+-	(C-AM-ADV*	(A5*	*			
+-	*	*	*			
+-	*)	*)	*			
+-	(C-AM-EXT*)	(C-AM-NEG*)	*			
+-	(AM-TMP*)	(A5*)	*			
+estar	(C-AM-ADV*)	(AM-DIR*)	*			
+-	(C-AM-NEG*)	(A5*)	*)			
+-	(C-AM-ADV*	(C-AM-NEG*)	(C-AM-ADV*)			
+cair	*)	(A5*)	(AM-DIR*)			
+-	(C-AM-NEG*	(C-AM-NEG*	(C-AM-NEG*			
+-	*)	*)	*)			
+-	(C-AM-ADV*)	(A5*	(A5*)			
+-	(C-AM-NEG*)	*	(C-AM-NEG*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(A5*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+salvar	*	(AM-DIR*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*)					
+-	(A5*					
+-	*)					
+causar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+provocar	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+causar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+estar	*	(AM-DIR*)	*)			
+-	*	(C-AM-NEG*	(C-AM-EXT*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-EXT*)			
+-	*	*)	(A5*			
+-	*	(A5*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(AM-ADV*)			
+bater	*	*)	(AM-DIR*)			
+-	*	(C-AM-NEG*	(C-AM-EXT*)			
+-	*	*	(C-AM-NEG*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*	(AM-ADV*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(AM-TMP*)	(A5*				
+-	(A5*	*				
+-	*)	*				
+ter	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+explicar	*	(AM-DIR*)				
+-	*	(AM-ADV*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*	(A5*)				
+-	*	(AM-ADV*)				
+-	*	(A5*				
+-	*)	*)				
+ser	(AM-DIR*)	(AM-MNR*				
+-	(A5*	*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+-	*	(AM-DIS*				
+-	*	*)				
+dispor	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(AM-TMP*	*				
+-	*	*)				
+-	*	(AM-TMP*)				
+-	*	(A5*				
+-	*)	*				
+-	(A5*)	*)				
+-	(C-AM-PNC*)	(AM-ADV*)				
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+-	(A5*	*)				
+alagar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*				
+-	*)	*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+dispor	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*)					
+dar	(AM-DIR*)					
+-	(C-AM-DIS*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(A5*	(AM-ADV*	(A5*		
+-	*	*)	*	*		
+-	*	(AM-ADV*)	*	*		
+-	*	(A5*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-ADV*)	*)	*		
+-	*)	(A5*	(C-AM-ADV*)	*		
+-	(C-AM-ADV*)	*	(A5*)	*		
+ser	(AM-DIR*)	*	(AM-ADV*)	*		
+-	(A5*	*	(A5*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(C-AM-ADV*	*	*	*		
+-	*	*	*	*		
+-	*)	*)	*)	*		
+ser	(A5*	(AM-DIR*)	(AM-ADV*)	*		
+-	*	(C-A3*)	(C-A3*)	*		
+-	*	(A5*	(AM-ADV*	*		
+-	*	*)	*)	*		
+-	*	(C-AM-ADV*	(C-AM-ADV*)	*		
+-	*	*	(AM-ADV*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(A5*	*)	*		
+coincidir	*	*	(AM-DIR*)	*		
+-	*	*	(C-AM-NEG*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(AM-ADV*)		
+-	*	*	*	(AM-MNR*)		
+fazer	*	*	*)	(AM-DIR*)		
+-	*	*)	(C-AM-ADV*	(C-AM-ADV*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(A5*	*)	*)		
+-	*	*	(C-AM-NEG*	(C-AM-EXT*)		
+-	*	*	*	(A5*		
+-	*	*	*)	*		
+-	*)	*)	(A5*)	*)		
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*)				
+-	(C-AM-NEG*	(AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*	*)				
+-	*	(C-AM-ADV*)				
+-	*)	(AM-ADV*				
+-	(AM-ADV*)	*)				
+-	(A5*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+fazer	*	(AM-DIR*)				
+-	*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(AM-ADV*)					
+tratar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(AM-TMP*)	(A5*	(A5*		
+-	(AM-ADV*)	(AM-ADV*)	*	*		
+falar	(AM-DIR*)	(AM-TMP*)	*	*		
+-	(A5*)	(C-AM-ADV*	*	*		
+-	(C-AM-ADV*	*	*	*		
+-	*)	*)	*	*		
+-	(A5*	(A5*)	*	*		
+falar	*	(AM-DIR*)	*	*		
+-	*	(AM-ADV*)	*	*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+traduzir	*	*	(AM-DIR*)	*)		
+-	*	*	(C-AM-ADV*	(C-AM-ADV*)		
+-	*	*	*)	(AM-ADV*)		
+-	*	*	(A5*	(A5*)		
+ser	*	*	*	(AM-DIR*)		
+-	*	*	*	(C-AM-ADV*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*)		
+-	*)	(A5*)	*)	(A5*)		
+						
+-	(A5*	(A5*				
+-	*	*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+passar	(AM-DIR*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-NEG*	(AM-ADV*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(AM-ADV*)				
+ter	*	(AM-DIR*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+armazenar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-EXT*	(C-AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-TMP*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+responder	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+representar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*)					
+-	(C-A3*)					
+manter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+multar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+negociar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-TMP*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-DIR*)					
+encontrar	(C-AM-DIS*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+deixar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+-	(AM-ADV*)	*				
+morrer	(AM-DIR*)	*				
+-	(A5*	*)				
+-	*	(AM-ADV*)				
+-	*	(A5*)				
+ferir	*	(AM-DIR*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+enfrentar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+ver	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-ADV*)					
+-	(A5*)					
+buscar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*					
+-	*)					
+conseguir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(A5*)	(A5*				
+ter	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+-	*	(AM-DIS*)				
+ter	*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-TMP*)					
+-	(AM-MNR*)					
+deixar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(C-AM-ADV*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*)				
+-	*	(A5*				
+-	*	*)				
+-	*	(AM-DIR*)				
+inflamar	*	(C-AM-DIS*)				
+-	*)	(A5*)				
+						
+-	(C-A3*					
+-	*)					
+-	(A5*					
+-	*)					
+existir	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*	(A5*			
+ser	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*)	*	*			
+-	(C-AM-EXT*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*)	*			
+-	(C-AM-ADV*)	(C-AM-ADV*)	*			
+saber	(A5*	(AM-DIR*)	*)			
+-	*	(C-AM-ADV*)	(C-AM-ADV*)			
+ser	*)	(A5*)	(AM-DIR*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*)	*	*			
+-	(A5*	*)	*)			
+-	*	(A5*	(A5*			
+-	*)	*)	*)			
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+ter	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*)	*			
+ganhar	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(AM-ADV*)			
+-	*	*)	(A5*)			
+definir	*	(A5*)	(AM-DIR*)			
+-	*	(C-AM-ADV*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*)			
+-	*	(A5*	(AM-TMP*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(A5*)	*	(A5*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*)	*)			
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-MNR*)	*				
+-	(A5*)	*				
+fazer	(AM-DIR*)	*				
+-	(C-AM-PNC*)	*)				
+-	(AM-ADV*	(AM-ADV*				
+-	*	*				
+-	*)	*)				
+constatar	(A5*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)	(A5*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(AM-MNR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A3*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-NEG*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+ser	(A5*	(AM-DIR*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*	*				
+-	*)	*)				
+						
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*)					
+-	(A5*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+encontrar	(AM-DIR*)					
+-	(A5*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*)					
+ter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(AM-ADV*)				
+-	*	(C-AM-ADV*)				
+-	*)	(AM-ADV*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(AM-ADV*)	(AM-ADV*)				
+ter	(AM-DIR*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+ocorrer	*	(AM-DIR*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+destacar	(AM-DIR*)	(A5*				
+-	(C-AM-ADV*	*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+apresentar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+publicar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+indicar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*	(A5*			
+-	*	*)	*			
+estar	*	(AM-DIR*)	*)			
+-	*	(C-AM-NEG*	(C-AM-ADV*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-NEG*			
+-	*	*	*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-NEG*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*)	(C-AM-ADV*)			
+-	(A5*)	(A5*)	(A5*			
+-	(C-AM-ADV*	(C-AM-NEG*)	*)			
+admitir	*)	(A5*	(AM-DIR*)			
+-	(A5*)	*	(AM-TMP*			
+-	(AM-TMP*)	*	*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(A5*	(A5*	(AM-TMP*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*	(A5*)			
+conquistar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	(C-AM-ADV*			
+-	*	*	*)			
+-	*)	*	(AM-TMP*)			
+-	(A5*	*	(A5*)			
+-	*	*	(AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(AM-ADV*)	*			
+dividir	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*)			
+-	*	*)	(C-AM-ADV*)			
+mudar	*	(A5*	(AM-DIR*)			
+-	*)	*)	(A5*)			
+						
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+continuar	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-EXT*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+conquistar	(AM-DIR*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-EXT*)				
+-	*	(AM-TMP*				
+-	*	*)				
+-	*	(A5*)				
+ocupar	*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-EXT*	(C-AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-NEG*	(C-AM-NEG*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*)	(C-AM-NEG*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+assinar	(AM-DIR*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+-	(AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*)				
+incluir	*	(AM-DIR*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*)					
+incentivar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*)	*				
+pertencer	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+dominar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(C-AM-EXT*)				
+-	*	(A5*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+prejudicar	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(AM-TMP*				
+-	*)	*)				
+conquistar	(AM-DIR*)	(A5*)				
+-	(C-AM-ADV*	(AM-TMP*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*)	*)				
+-	(A5*	(A5*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+emplacar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*)	(A5*)				
+						
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+narrar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+banir	(C-AM-ADV*)	(AM-DIR*)				
+-	(C-AM-NEG*)	(A5*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)	(AM-TMP*)				
+construir	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(A5*)				
+-	*	(AM-ADV*)				
+recorrer	*	(AM-DIR*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*	(A5*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+transformar	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*)	(A5*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+-	(C-AM-NEG*)	(A5*)				
+montar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*)	*)				
+-	(C-AM-NEG*	(C-AM-EXT*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+esconder	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+discutir	(AM-DIR*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-ADV*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+reabrir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+exigir	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(AM-DIS*)				
+ter	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(A5*)	(A5*	(AM-MNR*)	(A5*		
+-	(AM-ADV*	*	(AM-ADV*	*		
+-	*)	*	*)	*		
+-	(AM-DIS*)	*	(AM-MNR*)	*		
+ter	(AM-DIR*)	*	(A5*)	*		
+-	(C-AM-ADV*)	*	(C-AM-ADV*)	*		
+-	(A5*	*	(A5*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+ter	*	(AM-DIR*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(C-AM-EXT*)	*	*		
+-	*	(A5*	*)	*		
+-	*	*	(AM-ADV*	*		
+-	*	*	*)	*		
+-	*	*	(A5*)	*		
+deixar	*	*	(AM-DIR*)	*		
+-	*	*	(AM-TMP*)	*		
+-	*	*	(C-AM-EXT*)	*		
+-	*	*	(C-AM-ADV*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(AM-ADV*)		
+-	*	*	*	(AM-DIS*)		
+conseguir	*)	*	*	(AM-DIR*)		
+-	(C-AM-ADV*	*	*	(C-AM-ADV*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*)	*)		
+-	(A5*)	*)	(A5*)	(A5*)		
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*	*				
+-	*)	*)				
+envolver	(C-AM-PNC*)	(AM-DIR*)				
+-	(A5*)	(A5*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(A5*)	(A5*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*)				
+-	*)	(A5*)				
+						
+-	(A5*	(A5*)	(A5*	(A5*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(C-AM-ADV*)	*)	*	*		
+-	(A5*)	(A5*	*	*		
+ser	(AM-DIR*)	*	*	*		
+-	(C-AM-ADV*)	*	*	*		
+-	(A5*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(A5*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	*	*	*		
+-	*	(C-AM-ADV*)	*	*		
+ser	*	(AM-DIR*)	*	*		
+-	*	(A5*	*)	*		
+discriminar	*	*)	(AM-DIR*)	*)		
+-	*	(AM-ADV*)	(C-AM-ADV*	(AM-ADV*)		
+-	*	(C-AM-ADV*	*	(A5*)		
+pagar	*	*)	*)	(AM-DIR*)		
+-	*)	(A5*)	(A5*)	(A5*)		
+						
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*)					
+ser	(AM-DIR*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*)					
+fumar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*)	(A5*				
+prender	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*)				
+cobrar	(C-AM-ADV*	(AM-DIR*)				
+-	*)	(C-AM-ADV*)				
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+indiciar	(AM-DIR*)	*				
+-	(AM-TMP*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(C-AM-PNC*)	*)				
+vender	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)					
+indiciar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*					
+-	*)					
+-	(AM-ADV*)					
+-	(A5*)					
+-	(AM-ADV*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+-	(A5*)	*				
+prender	(AM-DIR*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(AM-ADV*	(AM-ADV*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(AM-ADV*)	*)				
+-	(C-AM-ADV*)	(A5*				
+-	(A5*)	*)				
+entregar	(AM-TMP*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*)	*)				
+-	(C-AM-NEG*	(C-AM-NEG*				
+-	*)	*)				
+-	(AM-TMP*)	(C-AM-MNR*)				
+-	(C-AM-PNC*)	(AM-ADV*				
+-	(AM-TMP*	*				
+-	*	*				
+-	*)	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-ADV*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+ganhar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+permitir	(AM-DIR*)	*)				
+verificar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-PNC*					
+-	*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*)					
+ficar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-ADV*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(AM-ADV*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+ser	(AM-DIR*)	*	*			
+-	(A5*	*	*			
+-	*)	*)	*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+comprar	(C-AM-ADV*	(AM-DIR*)	(A5*			
+-	*)	(C-AM-ADV*)	*			
+-	(C-AM-NEG*)	(A5*	*			
+-	(A5*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*)			
+-	*	*	(A5*)			
+beneficiar	*	*	(AM-DIR*)			
+-	*	*	(AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(C-AM-EXT*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+executar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(AM-ADV*)				
+provocar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*)	(A5*	(A5*			
+dizer	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*)	*			
+-	*	(AM-ADV*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+receber	*	(AM-DIR*)	*			
+-	*	(A5*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*	(A5*)			
+estar	*	*	(AM-DIR*)			
+-	*	*	(C-AM-NEG*			
+-	*	*	*			
+-	*)	*	*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(AM-ADV*)	(A5*				
+orientar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(AM-TMP*	*)				
+negociar	*	(AM-DIR*)				
+-	*)	(C-AM-NEG*				
+-	(C-AM-MNR*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*	(A5*	(A5*	(A5*	(A5*
+-	*)	*	*	*	*	*
+-	(A5*	*	*	*	*	*
+-	*)	*	*	*	*	*
+observar	(AM-DIR*)	*	*	*	*	*
+-	(C-AM-EXT*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*	*	*	*	*	*
+-	*)	*	*	*	*	*
+-	(C-AM-ADV*)	*	*	*	*	*
+-	(C-AM-NEG*)	*	*	*	*	*
+-	(A5*	*	*	*	*	*
+-	*)	*	*	*	*	*
+-	(AM-TMP*	*	*	*	*	*
+-	*)	*	*	*	*	*
+-	(A5*	*)	*	*	*	*
+arrumar	*)	(AM-DIR*)	*	*	*	*
+-	(C-AM-ADV*	(C-AM-ADV*	*	*	*	*
+-	*)	*)	*	*	*	*
+-	(A5*	(A5*	*)	*	*	*
+-	*	*	(AM-DIS*)	*	*	*
+estar	*	*	(AM-DIR*)	*	*	*
+-	*	*	(C-AM-NEG*)	*	*	*
+-	*	*	(A5*	*)	*	*
+escutar	*	*	*)	(AM-DIR*)	*	*
+-	*	*	(C-AM-ADV*	(A5*	*)	*
+-	*	*	*	*	(AM-ADV*)	*
+-	*	*	*	*	(C-AM-ADV*)	*
+incentivar	*	*	*	*	(AM-DIR*)	*
+-	*	*	*	*	(C-AM-NEG*	*)
+começar	*	*	*	*	*	(AM-DIR*)
+-	*)	*	*	*	*	(C-AM-ADV*
+-	(C-AM-ADV*)	*	*)	*	*)	*)
+-	(A5*)	*)	(A5*)	*)	(A5*)	(A5*)
+						
+-	(AM-TMP*	(A5*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(AM-ADV*)	*	*			
+aumentar	(AM-DIR*)	*	*			
+-	(A5*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+terminar	*)	(AM-DIR*)	*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*)			
+começar	*)	*)	(AM-DIR*)			
+-	(A5*	(A5*	(A5*			
+-	*)	*)	*)			
+						
+-	(C-AM-ADV*	(A5*	(A5*	(A5*	(A5*	
+-	*)	*	*	*	*	
+-	(AM-DIS*)	*	*	*	*	
+ser	(AM-DIR*)	*	*	*	*	
+-	(C-AM-ADV*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(C-AM-EXT*)	*	*	*	*	
+-	(C-AM-ADV*)	*	*	*	*	
+-	(A5*)	*	*	*	*	
+-	(AM-MNR*)	*	*	*	*	
+-	(C-AM-PNC*	*)	*	*	*	
+ter	*	(AM-DIR*)	*)	*)	*	
+-	*	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*)	*	
+-	(A5*)	*	*)	(A5*)	*	
+casar	(C-AM-PNC*)	*)	(AM-DIR*)	(C-AM-ADV*)	*	
+-	(A5*	(A5*	(A5*	(A5*)	*	
+ter	*	*)	*	(AM-DIR*)	*	
+-	*	(C-AM-ADV*)	*	(C-AM-ADV*)	*	
+-	*)	(A5*	*	(A5*	*)	
+-	(C-AM-ADV*	*	*	*	(C-AM-ADV*)	
+-	*)	*	*	*	(A5*)	
+ser	(A5*)	*	*	*	(AM-DIR*)	
+-	(C-AM-ADV*	*	*	*	(C-AM-ADV*)	
+-	*	*	*	*	(A5*)	
+-	*)	*	*	*	(C-AM-ADV*)	
+-	(A5*)	*	*	*	(A5*	
+-	(AM-MNR*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(C-AM-PNC*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(A5*)	*)	*)	*)	*)	
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+oferecer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(AM-ADV*				
+-	(A5*	*				
+-	*)	*)				
+beber	(AM-DIR*)	(C-AM-ADV*)				
+-	(AM-TMP*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+levar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(C-AM-NEG*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-AM-EXT*	(A5*	(A5*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(AM-ADV*	*	*			
+-	*)	*	*			
+dizer	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*)	*)			
+-	*	(C-AM-ADV*)	(C-AM-ADV*)			
+-	*	(A5*)	(A5*			
+-	*	(AM-DIS*)	*			
+ser	*	(AM-DIR*)	*)			
+-	*	(C-AM-ADV*)	(AM-DIR*)			
+preocupar	*	(A5*)	(C-AM-DIS*)			
+-	*	(C-AM-NEG*	(C-AM-ADV*)			
+-	*)	*)	(C-AM-NEG*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*)	(A5*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(A5*)				
+criar	*	(AM-DIR*)				
+-	*	(AM-TMP*)				
+-	*	(A5*)				
+-	*	(AM-TMP*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(C-AM-ADV*)					
+ser	(AM-DIR*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*)					
+-	(AM-DIS*)					
+-	(C-AM-ADV*)					
+associar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+						
+-	(C-A3*)					
+-	*					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*					
+-	*)					
+						
+-	(A5*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*)					
+precisar	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(A5*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+marcar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(AM-ADV*)				
+consolidar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*)	(A5*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+aproximar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+valorizar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+chegar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*)	(AM-TMP*)				
+-	(A5*)	(A5*)				
+						
+ser	(AM-DIR*)	(A5*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*)				
+confirmar	*	(AM-DIR*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+-	(C-AM-ADV*)	(AM-ADV*)				
+-	(AM-TMP*)	(A5*)				
+-	(C-AM-ADV*)	(AM-ADV*)				
+-	(A5*	(A5*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*)					
+-	(A5*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*)					
+negociar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(A5*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+inaugurar	*	(AM-DIR*)				
+-	*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-NEG*	*)				
+-	*	(C-AM-EXT*)				
+-	*	(A5*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*	(A5*			
+dar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(C-AM-NEG*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*	*	*			
+-	*	*)	*			
+substituir	*	(AM-DIR*)	*			
+-	*	(C-AM-NEG*	*			
+-	*	*)	*			
+-	*	(AM-TMP*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A5*	*			
+-	*	*	*)			
+-	*	*	(AM-ADV*			
+-	*	*	*)			
+-	*	*	(A5*)			
+sair	*	*	(AM-DIR*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(C-AM-EXT*					
+-	*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+estar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*				
+defender	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+prever	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+tratar	(AM-DIR*)					
+-	(AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(C-A3*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*)	(A5*				
+-	(A5*)	*				
+-	(C-AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+gostar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+ajudar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-PNC*)	(A5*	(A5*	(A5*		
+-	(C-A3*)	*	*	*		
+-	(A5*)	*	*	*		
+-	(C-A3*)	*	*	*		
+-	(A5*)	*	*	*		
+ser	(AM-DIR*)	*	*	*		
+-	(A5*)	*	*	*		
+-	(C-AM-ADV*)	*)	*)	*)		
+-	(AM-ADV*	(AM-ADV*	(AM-ADV*	(AM-ADV*		
+-	*	*	*)	*		
+-	*)	*)	(A5*	*)		
+buscar	(C-AM-ADV*	(AM-DIR*)	*	(A5*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+-	*	*	(C-AM-ADV*)	*		
+ser	*	*)	(AM-DIR*)	*		
+-	*	(A5*)	(A5*	*		
+-	*)	(C-AM-ADV*)	*	*		
+-	(A5*	(A5*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+quebrar	*	*	*	(AM-DIR*)		
+-	*	*	*	(C-AM-ADV*)		
+-	*	*	*	(A5*)		
+-	*	*	*	(C-AM-MNR*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*	*	*)		
+-	*	*	*	(C-AM-ADV*)		
+-	*)	*)	*)	(A5*)		
+						
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+começar	(AM-DIR*)					
+-	(C-AM-MNR*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(AM-MNR*)					
+começar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*)					
+-	(A5*					
+-	*)					
+promover	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	*					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+visar	(AM-DIR*)	*)				
+orientar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-MNR*)				
+-	*)	(C-AM-ADV*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)					
+estar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-A3*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+acontecer	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-EXT*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+esfriar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(A5*	(A5*	(A5*	(C-AM-ADV*	
+-	(AM-ADV*)	*	*	*	*	
+-	(C-AM-ADV*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(A5*	*	*	*	*	
+-	*)	*	*	*	*	
+conversar	(AM-DIR*)	*)	*	*	*	
+-	(C-AM-NEG*)	(C-AM-NEG*)	*	*	*	
+-	(C-AM-ADV*)	(A5*	*	*	*	
+-	(C-AM-NEG*)	*	*	*	*)	
+-	(A5*)	*	*	*	(A5*)	
+-	(AM-TMP*)	*)	*	*	(C-AM-ADV*	
+convencer	(C-AM-NEG*)	(AM-DIR*)	*	*	*	
+-	(C-AM-ADV*)	(C-AM-ADV*)	*)	*	*	
+-	(C-AM-NEG*	(C-AM-NEG*)	(C-AM-ADV*)	*	*	
+fazer	*	(C-AM-ADV*	(AM-DIR*)	*	*	
+-	*	*	(C-AM-ADV*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*)	*	*)	
+-	(A5*)	(A5*	(A5*	*	(A5*)	
+-	(AM-TMP*)	*	*	*	(C-AM-ADV*	
+-	(A5*	*	*	*)	*)	
+reprimir	*)	*	*	(AM-DIR*)	(A5*)	
+-	(C-AM-ADV*	*	*	(C-AM-ADV*	(C-AM-ADV*	
+-	*	*	*	*	*	
+-	*)	*	*	*)	*)	
+-	(A5*	*	*	(A5*	(A5*)	
+dizer	*	*	*	*	(AM-DIR*)	
+-	*	*	*	*	(AM-ADV*)	
+-	*)	*)	*)	*)	(A5*)	
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+atuar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-DIS*)					
+haver	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+ser	(AM-DIR*)	*)				
+negociar	(A5*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-MNR*)				
+-	*)	(C-AM-NEG*				
+-	(C-AM-NEG*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*)					
+aliciar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+						
+ser	(AM-DIR*)	(A5*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*				
+-	*	*)				
+-	*)	(C-AM-EXT*)				
+-	(AM-ADV*)	(AM-ADV*				
+-	(C-AM-ADV*	*)				
+imperar	*	(AM-DIR*)				
+-	*	(A5*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(A5*	(A5*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-PNC*)				
+-	(AM-ADV*	(AM-ADV*				
+-	*	*				
+-	*)	*)				
+desconhecer	(AM-DIR*)	(A5*				
+-	(A5*	*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*	(C-AM-NEG*)				
+-	*	(AM-MNR*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(AM-ADV*				
+-	*	*)				
+-	*	(AM-TMP*				
+-	*	*)				
+apontar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+sonhar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+chegar	(C-AM-NEG*	(AM-DIR*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+passar	(AM-DIR*)	(A5*	(A5*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*	*)	*			
+-	*)	(AM-ADV*	*			
+-	(C-AM-ADV*	*)	*			
+-	*)	(A5*)	*			
+realizar	(A5*	(AM-DIR*)	*			
+-	*	(A5*	*)			
+trazer	*)	*)	(AM-DIR*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*			
+-	(A5*)	(A5*)	*)			
+-	(C-A3*)	(C-A3*)	(C-A3*)			
+-	(A5*)	(A5*)	(A5*			
+-	(AM-MNR*)	(AM-TMP*)	*			
+-	(A5*)	(A5*)	*)			
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-ADV*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+vir	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(C-AM-LOC*					
+-	*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-MNR*)					
+haver	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	*					
+-	*					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+suspeitar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(A5*)				
+morrer	*	(AM-DIR*)				
+-	*)	(AM-TMP*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)	(A5*				
+-	(A5*)	*				
+ficar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+subir	*	(AM-DIR*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*)	(C-AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+pedir	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+apurar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(A5*)					
+retirar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*	(C-AM-ADV*			
+-	*)	*	*			
+-	(A5*)	*	*			
+usar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*)	*	*			
+-	(C-AM-NEG*)	*)	*			
+corrigir	*	(AM-DIR*)	*			
+-	(C-AM-NEG*)	(C-AM-ADV*)	*)			
+-	(A5*	(A5*	(A5*)			
+garantir	*	*	(AM-DIR*)			
+-	*	*	(AM-ADV*)			
+-	*)	*)	(A5*)			
+						
+-	(A5*)	(A5*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+produzir	(AM-DIR*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(A5*)	(C-AM-ADV*				
+ter	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*)				
+-	*)	(A5*)				
+-	(C-AM-EXT*)	(C-AM-ADV*				
+-	(AM-TMP*)	*				
+-	(C-AM-EXT*)	*)				
+-	(A5*	(A5*				
+-	*	*)				
+explicar	*	(AM-DIR*)				
+-	*)	(A5*)				
+						
+-	(AM-TMP*)	(A5*	(A5*			
+-	(C-AM-ADV*)	*	*			
+-	(C-AM-NEG*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(A5*)	*	*			
+-	(AM-DIS*)	*	*			
+-	(A5*)	*	*			
+fixar	(AM-DIR*)	*	*			
+-	(C-AM-NEG*	*	*			
+-	*)	*	*			
+-	*	*)	*			
+evitar	(C-AM-NEG*)	(AM-DIR*)	*			
+-	(C-AM-ADV*	(C-AM-ADV*	*			
+-	*)	*)	*			
+-	(A5*	(A5*	*			
+-	*	*	*)			
+ter	*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*)			
+-	*	*	(A5*)			
+-	*	*	(A3*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(A5*)	(A5*				
+-	(AM-TMP*	*				
+-	*)	*				
+-	(AM-MNR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-TMP*)	*				
+-	(A5*	*				
+-	*)	*				
+reajustar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(C-AM-ADV*)				
+-	(AM-MNR*)	(A5*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+ser	(AM-MNR*	(AM-DIR*)				
+-	*)	(A5*				
+-	(A5*)	*)				
+						
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+dizer	(AM-DIR*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*	(A5*			
+beneficiar	(AM-DIR*)	*	*			
+-	(C-AM-PNC*)	*)	*			
+-	(AM-TMP*)	(AM-TMP*)	*			
+demorar	(C-AM-PNC*)	(AM-DIR*)	*			
+-	(AM-TMP*	(AM-TMP*	*			
+-	*	*	*			
+-	*)	*)	*			
+-	(C-AM-PNC*	(A5*	*)			
+receber	*)	*	(AM-DIR*)			
+-	(C-AM-ADV*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-PNC*)	*)	*			
+-	(C-AM-NEG*)	(C-AM-NEG*)	*			
+-	(C-AM-ADV*)	(C-AM-ADV*)	*			
+-	(C-AM-NEG*	(C-AM-NEG*)	*			
+-	*)	(A5*	*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+ganhar	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*				
+-	(A5*)	*				
+ter	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(C-AM-PNC*)	*				
+-	(A5*)	*)				
+dizer	(C-AM-EXT*)	(AM-DIR*)				
+-	(AM-ADV*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+-	(C-AM-EXT*	(C-AM-EXT*				
+-	*	*				
+-	*)	*)				
+-	*	(C-AM-NEG*)				
+-	*	*				
+-	*	(C-AM-NEG*)				
+-	*	(A5*)				
+-	*	(C-AM-NEG*)				
+-	(C-AM-EXT*	(A5*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(A5*)					
+-	(AM-ADV*)					
+-	(A5*)					
+ter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*)					
+atribuir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*	(A5*			
+-	(C-AM-ADV*)	*	*			
+-	(AM-ADV*)	*	*			
+pensar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*)	*			
+receber	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*)	*)	*			
+-	(A5*	(A5*	*			
+-	*	*	*)			
+-	*	*	(AM-TMP*			
+-	*)	*	*			
+-	(C-AM-ADV*	*	*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*)			
+ser	*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*	(A5*			
+-	*)	*	*			
+-	(A5*)	*)	*)			
+						
+-	(C-AM-EXT*)	(A5*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+ver	(AM-DIR*)	*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*)				
+esperar	*)	(AM-DIR*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-DIR*)					
+aproximar	(C-AM-DIS*)					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+precisar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*)					
+ir	(AM-DIR*)					
+-	(C-V*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+fazer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+						
+-	(A5*	(AM-ADV*	(A5*			
+-	*)	*	*			
+-	(AM-ADV*)	*	*			
+atacar	(AM-DIR*)	*)	*			
+-	(C-AM-ADV*)	(C-AM-ADV*)	*			
+-	(AM-ADV*)	(AM-ADV*)	*			
+-	(A5*	(AM-DIS*)	*			
+ter	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A5*	*)			
+ficar	*	*	(AM-DIR*)			
+-	*	*	(C-AM-NEG*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+prever	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-A3*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+-	(A5*)					
+afetar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-DIS*)	(A5*				
+ser	(AM-DIR*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-ADV*	(A5*)				
+fazer	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+trazer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+levantar	(AM-DIR*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*)					
+-	(A5*)					
+						
+-	(AM-TMP*)					
+-	(C-AM-NEG*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*					
+-	*)					
+confirmar	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+comprovar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+acusar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+comparecer	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)					
+-	(A5*)					
+acusar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*					
+-	*)					
+condenar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(AM-ADV*					
+-	*)					
+-	(C-AM-MNR*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+-	(C-AM-MNR*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(A5*				
+-	(A5*)	*				
+punir	(AM-DIR*)	*				
+-	(C-AM-MNR*)	*				
+-	(C-AM-NEG*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+cumprir	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*)					
+tomar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+anunciar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+ficar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+começar	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(C-AM-NEG*)					
+-	(C-AM-EXT*)					
+-	(C-AM-NEG*)					
+-	(C-AM-EXT*)					
+-	(C-AM-NEG*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*)					
+atender	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*	*)				
+-	*	(A5*				
+-	*	*)				
+dizer	*	(AM-DIR*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-ADV*)				
+-	*)	(A5*)				
+						
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+dizer	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+faltar	*	(AM-DIR*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-ADV*					
+-	*)					
+-	(A5*					
+-	*)					
+viver	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+dizer	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*)				
+faltar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(A5*				
+-	*)	*)				
+						
+-	(AM-ADV*)	(A5*				
+-	(AM-MNR*)	*				
+ter	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+renovar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(A5*	(A5*	(A5*	(C-AM-ADV*)		
+-	*)	*)	*)	(A5*)		
+-	(C-AM-ADV*)	(C-AM-ADV*)	(C-AM-PNC*)	(C-AM-ADV*)		
+acontecer	(AM-DIR*)	(AM-MNR*)	(A5*	(AM-MNR*)		
+-	(A5*	(A5*	*	(A5*)		
+-	*	*	*	(C-AM-ADV*		
+-	*	*)	*	*		
+ser	*	(AM-DIR*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(A5*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(AM-TMP*)	*	*		
+-	*	(C-AM-ADV*)	*)	*		
+-	*	(AM-DIS*)	(AM-DIS*)	*)		
+adiantar	*	(A5*)	(AM-DIR*)	(A5*)		
+-	*	(C-AM-ADV*)	(C-A3*)	(C-AM-ADV*		
+-	*	(A5*	(A5*	*)		
+-	*	*	*	(A5*)		
+afirmar	*	*	*	(AM-DIR*)		
+-	*)	*)	*)	(A5*)		
+						
+saber	(AM-DIR*)	(A5*)				
+-	(C-AM-ADV*	(C-AM-ADV*)				
+ser	*	(AM-DIR*)				
+-	*)	(C-AM-ADV*)				
+						
+-	(A5*)	(A5*				
+-	(AM-TMP*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-EXT*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+começar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-TMP*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-TMP*	*)				
+ser	*)	(AM-DIR*)				
+-	(A5*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*)	*)				
+						
+-	(A5*	(AM-TMP*	(A5*			
+-	*	*)	*			
+-	*	(A5*)	*			
+-	*)	(AM-TMP*	*			
+ganhar	(AM-DIR*)	*)	*			
+-	(C-AM-ADV*	(C-AM-ADV*)	*			
+-	*	(AM-TMP*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*			
+-	*)	*)	*			
+-	(C-AM-EXT*)	(AM-TMP*)	*			
+-	(A5*)	(C-AM-EXT*)	*			
+-	(C-AM-EXT*)	(AM-TMP*)	*			
+-	(A5*	(A5*)	*			
+-	*	(AM-ADV*)	*			
+disputar	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*)	*			
+-	*	(A5*)	*)			
+terminar	*	(AM-TMP*)	(AM-DIR*)			
+-	*	(C-AM-NEG*	(A5*)			
+-	*	*	(C-AM-ADV*			
+-	*	*)	*)			
+-	*)	(A5*)	(A5*)			
+						
+-	(C-AM-ADV*)					
+ser	(AM-DIR*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*)					
+multar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+autuar	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-EXT*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+-	(AM-DIS*)					
+apresentar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(AM-ADV*)				
+-	*	(A5*)				
+-	*	(AM-ADV*)				
+-	*)	(A5*)				
+-	(AM-ADV*)	(AM-ADV*)				
+descumprir	(AM-DIR*)	(A5*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*)	*)				
+-	(A5*	(A5*)				
+chegar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-A3*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-MNR*)					
+-	(A5*)					
+aplicar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)					
+produzir	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*)					
+-	(A5*)					
+instalar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+tomar	(AM-DIR*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+fazer	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*	(A5*			
+aconselhar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*)	*	*			
+-	(C-AM-NEG*	*)	*			
+conversar	*	(AM-DIR*)	*			
+-	*	(C-AM-NEG*	*			
+-	*	*	*			
+-	*)	*)	*			
+-	(A5*)	(A5*	*			
+-	(AM-MNR*)	*)	*)			
+reverter	(C-AM-ADV*	(C-AM-ADV*)	(AM-DIR*)			
+-	*	(A5*)	(C-AM-ADV*			
+-	*)	(C-AM-ADV*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*)	(A5*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*)	*				
+-	(A5*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+-	(C-AM-ADV*)	(C-AM-ADV*)				
+perder	(AM-MNR*)	(AM-DIR*)				
+-	(A5*	(A5*				
+-	*)	*)				
+						
+-	(A5*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(AM-ADV*)				
+-	*	(A5*				
+-	*)	*				
+fazer	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(AM-TMP*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(C-AM-ADV*)				
+-	*	(C-A3*)				
+-	*	(A5*)				
+criticar	*	(AM-DIR*)				
+-	*)	(A5*)				
+						
+-	(A5*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*)					
+-	(A5*)					
+cumprir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-MNR*					
+-	*					
+-	*)					
+-	(C-AM-PNC*)					
+-	(C-AM-MNR*)					
+-	(C-AM-PNC*)					
+-	(C-AM-MNR*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-TMP*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+preferir	(AM-DIR*)	*)				
+manter	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)	(A5*	(A5*			
+-	(AM-ADV*)	*	*			
+ter	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*)	*			
+dizer	*	(AM-DIR*)	*)			
+-	*	(C-AM-ADV*	(C-AM-ADV*)			
+querer	*)	*)	(AM-DIR*)			
+-	(A5*	(A5*	(A5*			
+-	*)	*)	*)			
+						
+-	(A5*	(A5*)				
+-	*	(AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(A5*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(AM-ADV*				
+-	*	*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+simpatizar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-NEG*	(C-AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(C-AM-EXT*)				
+-	*	(AM-ADV*				
+-	*	*)				
+ganhar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*)					
+narrar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+haver	(AM-DIR*)	(A5*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+separar	*)	(AM-DIR*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)	(C-AM-PNC*)	(A5*			
+-	(C-AM-ADV*)	(C-AM-ADV*)	*			
+ocorrer	(AM-DIR*)	(AM-MNR*)	*			
+-	(A5*	(A5*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*)	*			
+colocar	*	(AM-DIR*)	*			
+-	*)	(C-AM-NEG*	*			
+-	(C-AM-ADV*)	*)	*)			
+-	(AM-TMP*)	(AM-TMP*)	(AM-TMP*)			
+chegar	(A5*	(C-AM-NEG*	(AM-DIR*)			
+-	*	*	(C-V*			
+-	*	*	*			
+-	*	*)	*)			
+-	*)	(A5*)	(A5*)			
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+expulsar	(AM-DIR*)					
+-	(A5*)					
+						
+-	(C-A3*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+adotar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*					
+-	*)					
+dar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*)					
+-	(AM-MNR*					
+-	*)					
+-	(C-AM-MNR*)					
+-	(A5*)					
+						
+-	(A5*	(A5*				
+-	*)	*				
+forçar	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-MNR*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*)	*)				
+reduzir	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*)	*				
+-	(C-AM-NEG*	*)				
+-	*	(A5*)				
+-	*)	(C-AM-ADV*)				
+-	(A5*)	(A5*)				
+						
+ser	(AM-DIR*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*)				
+-	(A5*	(A5*				
+-	*	*)				
+dizer	*	(AM-DIR*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*	(AM-ADV*)	(A5*	(A5*		
+-	*)	(C-AM-ADV*)	*	*		
+-	(C-AM-ADV*)	(AM-ADV*	*	*		
+estar	(AM-DIR*)	*	*	*		
+-	(C-AM-NEG*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*)	*	*		
+-	*)	(AM-ADV*)	*	*		
+ser	(A5*	(AM-DIR*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(A5*)	*	*		
+-	*	(C-AM-ADV*)	*	*		
+-	*	(A5*)	*)	*)		
+-	*	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)		
+-	*	(A5*	(A5*)	(A5*		
+ir	*	*	(AM-DIR*)	*		
+-	*	*	(C-V*	*		
+-	*	*	*	*		
+-	*	*	*)	*		
+-	*	*	(A5*	*		
+-	*	*	*	*)		
+-	*	*	*	(AM-ADV*		
+-	*	*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(AM-ADV*)	*)	*)		
+vetar	*	(A5*	(C-AM-NEG*)	(AM-DIR*)		
+-	*	*	(A5*	(C-AM-ADV*		
+-	*	*	*)	*		
+-	*	*	(C-AM-ADV*)	*)		
+-	*)	*)	(A5*)	(A5*)		
+						
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+ser	(AM-DIR*)					
+-	(C-A3*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(AM-ADV*)				
+-	(A5*)	(A5*)				
+-	(C-AM-EXT*)	(C-AM-EXT*				
+-	(C-AM-NEG*	*)				
+-	*)	(A5*				
+-	(A5*)	*)				
+investir	(C-AM-NEG*	(AM-DIR*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-TMP*)	(A5*				
+-	(A5*)	*				
+-	(AM-ADV*	*				
+-	*)	*				
+firmar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+valer	*	(AM-DIR*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*)				
+-	*	(A5*				
+-	*	*)				
+-	*)	(C-AM-EXT*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*)					
+crescer	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(AM-TMP*)					
+-	(C-V*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-EXT*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*)				
+elevar	*)	(AM-DIR*)				
+-	(C-AM-ADV*	(C-AM-ADV*				
+-	*)	*)				
+-	(C-AM-MNR*)	(A5*)				
+-	(AM-MNR*	(C-AM-ADV*)				
+-	*	(A5*				
+-	*)	*				
+-	(AM-TMP*	*				
+-	*)	*)				
+-	(A3*)	(C-V*				
+-	(C-V*)	*)				
+-	(AM-MNR*)	(A5*)				
+-	(C-V*	(C-V*				
+-	*)	*				
+-	(AM-TMP*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+divulgar	(AM-DIR*)	*	*			
+-	(AM-TMP*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*			
+-	*)	*	*			
+-	(A5*	*)	*			
+demonstrar	*)	(AM-DIR*)	*)			
+-	(AM-MNR*)	(A5*)	(C-AM-ADV*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(AM-ADV*			
+-	*	*	*)			
+conseguir	*	*	(AM-DIR*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*	(A3*)			
+-	(AM-TMP*	*	(AM-TMP*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*)	(C-AM-PNC*)	(A5*	(A5*		
+estar	(AM-DIR*)	(AM-MNR*)	*	*		
+-	(C-AM-NEG*	(C-AM-PNC*)	*	*		
+-	*	(AM-MNR*)	*	*		
+-	*	(C-AM-PNC*)	*	*		
+-	*	(AM-TMP*)	*	*		
+-	*	(C-AM-PNC*	*	*		
+-	*	*	*	*		
+-	*)	*)	*	*		
+-	(A5*	(A5*)	*	*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*)	*	*		
+-	*	(A5*)	*	*		
+escolher	*	(AM-DIR*)	*	*		
+-	*	(C-AM-PNC*	*)	*		
+estar	*)	*	(AM-DIR*)	*		
+-	(C-AM-NEG*)	*	(C-AM-NEG*	*		
+-	(A5*	*	*	*		
+-	*	*	*)	*		
+-	*	*)	(A5*)	*)		
+-	*	(C-AM-EXT*)	(C-AM-EXT*)	(C-AM-EXT*)		
+-	*	(C-AM-PNC*	(A5*)	(AM-ADV*		
+-	*	*	(C-AM-NEG*	*)		
+treinar	*)	*)	*)	(AM-DIR*)		
+-	(AM-TMP*	(AM-TMP*	(AM-TMP*	(AM-TMP*		
+-	*	*	*	*		
+-	*)	*)	*)	*)		
+-	(A5*)	(A5*)	(A5*)	(A5*)		
+						
+-	(AM-ADV*					
+-	*					
+-	*)					
+subir	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(AM-DIS*)					
+falar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*)				
+estimular	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	(C-AM-ADV*)				
+-	(A5*	(A5*)				
+-	*	(AM-TMP*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(AM-ADV*				
+-	*	*)				
+ganhar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+trabalhar	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(C-AM-MNR*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*				
+-	(C-AM-LOC*)	*				
+-	(AM-TMP*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*	*				
+-	*)	*				
+-	(C-AM-ADV*	*)				
+-	*)	(AM-ADV*)				
+vir	(AM-DIR*)	(A5*				
+-	(AM-TMP*	*				
+-	*)	*				
+-	(C-AM-LOC*)	*				
+-	(AM-TMP*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*)				
+compensar	*	(AM-DIR*)				
+-	*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*)				
+-	(A5*	(A5*)				
+-	*	(C-AM-NEG*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+ser	*)	(AM-DIR*)				
+-	(A5*)	(A5*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-EXT*)					
+-	(A5*					
+-	*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-DIS*)	(A5*	(A5*	(A5*		
+-	(A5*)	*	*	*		
+haver	(AM-DIR*)	*)	*	*		
+-	(C-AM-ADV*	(C-AM-ADV*)	*	*		
+-	*	(A5*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*)	*	*		
+-	*	(A5*)	*	*		
+substituir	*	(AM-DIR*)	*	*		
+-	*)	(C-AM-ADV*)	*	*		
+-	(A5*)	(A5*	*	*		
+-	(C-AM-ADV*	*	*)	*		
+ter	*)	*	(AM-DIR*)	*		
+-	(A5*)	*	(C-AM-ADV*	*)		
+-	(C-AM-ADV*	*	*	(C-AM-ADV*		
+-	*	*	*	*)		
+-	*	*	*	(A5*)		
+ser	*	*	*	(AM-DIR*)		
+-	*	*	*	(A5*		
+-	*	*	*	*)		
+-	*	*	*	(C-AM-ADV*)		
+-	*	*	*	(A5*		
+-	*)	*	*)	*		
+-	(A5*)	*)	(A5*)	*)		
+						
+-	(C-A3*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(AM-ADV*)					
+-	(C-AM-MNR*)					
+-	(A5*)					
+-	(AM-DIS*)					
+-	(AM-ADV*)					
+-	(A5*)					
+jogar	(AM-DIR*)					
+-	(C-AM-MNR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+						
+-	(C-A3*	(A5*				
+-	*)	*				
+-	(A5*)	*				
+-	(AM-ADV*)	*				
+-	(AM-DIS*)	*				
+-	(A5*)	*				
+avaliar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*)				
+ampliar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-MNR*)				
+-	*	(A5*)				
+-	*	(C-AM-MNR*)				
+-	*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*					
+-	*)					
+-	(AM-DIS*)					
+proibir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*				
+-	*)	*)				
+-	(C-AM-NEG*)	(C-AM-ADV*				
+-	(C-AM-ADV*)	*)				
+-	(A5*	(A5*				
+-	*	*)				
+iniciar	*)	(AM-DIR*)				
+-	(C-AM-NEG*)	(AM-TMP*				
+-	(AM-TMP*)	*				
+-	(A5*	*)				
+-	*)	(A5*)				
+						
+-	(A5*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+inspirar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(C-AM-ADV*					
+-	*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(AM-ADV*				
+-	(C-AM-ADV*)	*)				
+-	(A5*	(C-AM-ADV*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-ADV*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*)				
+-	(A5*)	(A5*				
+ver	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(A5*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*)	(C-AM-ADV*				
+ficar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*)				
+-	*	(A5*)				
+dizer	*	(AM-DIR*)				
+-	*)	(C-AM-NEG*				
+-	(C-AM-NEG*	*				
+-	*)	*)				
+-	(A5*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*)	(A5*				
+afirmar	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-A3*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(C-AM-ADV*)					
+-	(A5*)					
+achar	(AM-DIR*)					
+-	(C-AM-NEG*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*)					
+encontrar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(AM-ADV*	(A5*			
+-	*	*)	*			
+-	*)	(C-AM-ADV*)	*			
+dizer	(AM-DIR*)	(A5*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*)	*			
+sequestrar	*	(AM-DIR*)	*			
+-	*	(AM-ADV*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*)			
+-	*	*	(A5*)			
+confundir	*	*	(AM-DIR*)			
+-	*	*	(C-AM-NEG*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(C-AM-ADV*)					
+-	(A5*)					
+receber	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-NEG*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-ADV*					
+-	*)					
+-	(A5*)					
+receber	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-EXT*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+morrer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+-	(A5*)					
+realizar	(AM-DIR*)					
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(AM-TMP*)					
+-	(AM-ADV*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+ser	(AM-DIR*)					
+-	(A5*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*				
+bater	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*	*)				
+ficar	*	(AM-DIR*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-EXT*	(C-AM-EXT*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+-	(AM-ADV*)	(C-AM-ADV*)				
+contar	(C-AM-ADV*)	(AM-DIR*)				
+-	(C-AM-NEG*	(C-AM-ADV*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ficar	(AM-DIR*)	*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+derrotar	*)	(AM-DIR*)				
+-	(AM-TMP*	(AM-TMP*				
+-	*	*)				
+-	*	(A5*				
+-	*	*)				
+-	*)	(AM-TMP*)				
+-	(C-AM-NEG*	(A5*)				
+-	*	(C-AM-EXT*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-TMP*)	(AM-TMP*)				
+-	(C-AM-NEG*	(C-A1*				
+-	*)	*)				
+-	(AM-TMP*)	(A5*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-TMP*	(AM-TMP*				
+-	*)	*)				
+-	(C-AM-NEG*	(A5*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(C-AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+marcar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+participar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*	(A5*			
+-	(C-AM-ADV*)	*	*			
+-	(AM-ADV*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(AM-ADV*	*	*			
+-	*)	*	*			
+ser	(AM-DIR*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(A5*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(C-AM-NEG*	*)	*			
+ser	*	(AM-DIR*)	*			
+-	*	(A5*)	*			
+-	*)	(C-AM-ADV*)	*			
+-	(A5*)	(A5*	*			
+-	(C-AM-NEG*	*	*			
+-	*)	*	*			
+-	(C-AM-ADV*	*	*)			
+-	*)	*	(C-AM-ADV*)			
+-	(A5*	*	(A5*)			
+vender	*	*	(AM-DIR*)			
+-	*	*	(C-AM-NEG*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(A5*)	(A5*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*				
+estar	(AM-DIR*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*	*				
+-	*	*)				
+comercializar	*	(AM-DIR*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-EXT*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*)	(C-AM-ADV*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*	*)				
+-	*	(A5*)				
+afirmar	*	(AM-DIR*)				
+-	*	(AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(C-A3*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*)					
+representar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+gostar	(AM-DIR*)	(A5*	(A5*	(A5*		
+-	(C-AM-ADV*	*	*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(A5*	*)	*	*		
+resolver	*)	(AM-DIR*)	*)	*		
+pegar	(C-AM-ADV*	(C-AM-ADV*	(AM-DIR*)	*)		
+-	*	*	(C-AM-ADV*	(C-AM-ADV*		
+-	*)	*	*)	*)		
+-	(A5*	*	(A5*	(A5*)		
+fazer	*	*)	*	(AM-DIR*)		
+-	*	(A5*	*	(C-AM-ADV*)		
+-	*	*	*	(C-AM-EXT*)		
+-	*	*	*	(AM-TMP*)		
+-	*)	*)	*)	(A5*)		
+						
+-	(AM-ADV*)					
+-	(C-AM-ADV*)					
+-	(AM-DIR*)					
+encaixar	(C-AM-DIS*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*)					
+ter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*	(A5*				
+-	*)	*				
+ser	(AM-DIR*)	*				
+-	(A5*	*				
+-	*	*)				
+-	*	(AM-ADV*)				
+-	*	(A5*				
+-	*	*)				
+denunciar	*	(AM-DIR*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-NEG*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*	(AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-ADV*				
+-	*)	*)				
+-	(C-AM-ADV*)	(C-AM-ADV*				
+mudar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*	(A5*)				
+-	*	(AM-TMP*)				
+-	*	(A5*)				
+depender	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+estar	(AM-DIR*)	(A5*				
+-	(C-AM-NEG*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-EXT*)	*				
+-	(C-AM-NEG*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+desestimular	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)					
+-	(A5*)					
+oferecer	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(A5*					
+-	*)					
+-	(A3*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+causar	(AM-DIR*)	(A5*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-EXT*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(AM-ADV*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+tratar	(C-AM-ADV*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+-	*)	(C-AM-ADV*)				
+-	(A5*)	(A5*)				
+						
+chegar	(AM-DIR*)	(A5*	(A5*			
+-	(AM-TMP*)	*	*			
+-	(A5*	*)	*			
+ser	*	(AM-DIR*)	*			
+-	*	(A5*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*)			
+sair	*)	*	(AM-DIR*)			
+-	(AM-TMP*	*	(AM-TMP*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(A5*)	*)	(A5*)			
+						
+-	(C-AM-EXT*	(A5*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(AM-ADV*)	*	*			
+fazer	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+pagar	*	(AM-DIR*)	*			
+-	*	(A5*	*)			
+estar	*)	*)	(AM-DIR*)			
+-	(A5*	(C-AM-NEG*)	(C-AM-NEG*			
+-	*)	(A5*	*			
+-	(C-AM-ADV*)	*	*)			
+-	(A5*)	*)	(A5*)			
+						
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*	(A5*			
+pôr	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*)	*			
+interpretar	(C-AM-ADV*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*			
+-	(A5*	(A5*	*			
+-	*	*	*			
+-	*)	*	*)			
+-	(C-AM-ADV*	*	(AM-ADV*)			
+fazer	*	*)	(AM-DIR*)			
+-	*	(C-AM-ADV*	(A5*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*)					
+dirigir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)	(A5*	(A5*	(A5*	(A5*	
+-	(C-A3*)	*	*	*	*	
+estar	(AM-DIR*)	*	*	*	*	
+-	(C-AM-NEG*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*	*	*	*	
+-	(A5*)	*)	*	*	*	
+-	(AM-DIS*)	(AM-DIS*)	*	*	*	
+resistir	(A5*)	(AM-DIR*)	*	*	*	
+-	(C-AM-NEG*	(C-AM-ADV*)	*	*	*	
+-	*	(C-AM-NEG*	*	*	*	
+-	*	*	*	*	*	
+-	*	*	*	*	*	
+-	*)	*)	*	*	*	
+-	(A5*	(A5*	*	*	*	
+-	*)	*)	*)	*	*	
+-	(C-AM-NEG*)	(C-AM-NEG*)	(AM-ADV*)	*	*	
+pagar	(A5*)	(A5*)	(AM-DIR*)	*	*	
+-	(C-AM-NEG*	(C-AM-NEG*	(A5*	*)	*	
+-	*	*	*	(C-AM-ADV*)	*	
+filmar	*	*)	*	(AM-DIR*)	*	
+-	*	(C-AM-ADV*	*)	(A5*	*)	
+-	*	*	(C-AM-ADV*)	*	(C-AM-ADV*)	
+ser	*	*)	(A5*	*	(AM-DIR*)	
+-	*	(C-AM-NEG*)	*	*	(A5*	
+-	*	(A5*	*	*	*	
+-	*	*)	*	*	*	
+-	*)	(C-AM-NEG*)	*	*	*	
+-	(A5*)	(A5*)	*	*	*	
+-	(C-AM-NEG*)	(C-AM-NEG*)	*	*	*	
+-	(A5*)	(A5*)	*)	*)	*)	
+						
+-	(A5*)	(A5*	(C-AM-ADV*)	(A5*		
+-	(C-AM-ADV*)	*	(AM-MNR*	*		
+-	(A5*)	*	*	*		
+ser	(AM-DIR*)	*	*)	*		
+-	(C-AM-ADV*	*	(C-AM-ADV*	*		
+-	*)	*	*)	*		
+-	(A5*	*	(A5*	*		
+-	*	*)	*	*		
+fazer	*	(AM-DIR*)	*	*		
+-	*	(C-AM-ADV*	*)	*		
+-	*	*)	(C-AM-ADV*	*		
+-	*	(A5*)	*)	*		
+-	*	(C-AM-ADV*)	(A5*	*		
+-	*	(C-AM-EXT*)	*	*		
+-	*	(C-AM-ADV*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-EXT*	*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(A5*	*	*		
+-	*	*	*)	*		
+confirmar	*	*	(AM-DIR*)	*		
+-	*	*	(AM-ADV*)	*		
+-	*	*	(C-AM-ADV*	*)		
+-	*)	*	*	(C-AM-ADV*		
+-	(C-AM-ADV*)	*	*	*)		
+ser	(A5*	*	*	(AM-DIR*)		
+-	*	*	*	(C-AM-ADV*)		
+-	*	*	*)	(A5*		
+-	*)	*)	(A5*)	*)		
+						
+ver	(AM-DIR*)	(A5*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+-	(C-AM-ADV*	(AM-ADV*)				
+-	*	(A5*)				
+jogar	*	(AM-DIR*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+vencer	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-MNR*)	(A5*				
+bastar	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*)	*				
+-	(C-AM-NEG*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*)				
+-	(AM-ADV*	(AM-ADV*				
+-	*)	*)				
+-	(AM-MNR*)	(AM-MNR*)				
+-	(C-AM-ADV*	(A5*)				
+chegar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(AM-ADV*	(A5*				
+-	*)	*				
+ancorar	(AM-DIR*)	*				
+-	(C-AM-EXT*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(C-AM-ADV*	(AM-ADV*)				
+-	*)	(AM-DIR*)				
+tornar	(C-AM-EXT*)	(C-AM-DIS*)				
+-	(C-AM-NEG*	(C-AM-NEG*				
+-	*)	*)				
+-	(AM-TMP*	(A5*				
+-	*	*				
+-	*)	*				
+-	(A5*)	*)				
+						
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+haver	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+ser	(AM-DIR*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*)	(AM-ADV*				
+querer	(AM-DIR*)	*)				
+-	(A5*	(A5*)				
+ir	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+-	*	(AM-TMP*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+-	*	(AM-TMP*)				
+-	*	(C-V*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*					
+-	*					
+-	*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+dispensar	(AM-DIR*)					
+-	(A5*)					
+-	(AM-TMP*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-NEG*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*)	(A5*				
+-	(AM-ADV*	*				
+-	*)	*				
+saber	(AM-DIR*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*)	*				
+-	(C-AM-NEG*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+defender	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*)				
+						
+-	(A5*)					
+chegar	(AM-DIR*)					
+-	(C-V*					
+-	*)					
+-	(A5*)					
+-	(AM-TMP*)					
+-	(A5*)					
+-	(C-A3*)					
+-	(C-V*					
+-	*)					
+-	(A5*					
+-	*)					
+						
+-	(AM-ADV*					
+-	*)					
+discordar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(AM-MNR*)					
+-	(AM-TMP*)					
+-	(AM-MNR*)					
+-	(C-AM-MNR*)					
+-	(AM-TMP*)					
+-	(A5*)					
+-	(AM-ADV*					
+-	*)					
+jogar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*					
+-	*)					
+estar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*					
+-	*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+apreciar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*					
+-	*					
+-	*)					
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+-	(AM-MNR*)	*	*			
+existir	(AM-DIR*)	*	*			
+-	(A5*	*)	*			
+-	*	(AM-ADV*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(A5*)	*			
+engatinhar	*	(AM-DIR*)	*			
+-	*	(AM-TMP*	*)			
+aparecer	*	*)	(AM-DIR*)			
+-	*	(A5*	(C-AM-ADV*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*	*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*)			
+-	*)	*)	(A5*)			
+						
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(AM-ADV*)					
+querer	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*)	(A5*				
+dizer	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(A5*)				
+formar	*	(AM-DIR*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-NEG*				
+-	*	*)				
+-	*)	(AM-TMP*)				
+-	(A5*)	(A5*)				
+						
+-	(A5*)	(A5*				
+-	(AM-ADV*)	*				
+ter	(AM-DIR*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*				
+-	*	*				
+-	*)	*)				
+						
+-	(A5*)	(A5*				
+-	(AM-ADV*)	*				
+ter	(AM-DIR*)	*				
+-	(AM-TMP*)	*				
+-	(A5*	*				
+-	*	*				
+-	*	*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*				
+-	*	*				
+-	*)	*)				
+						
+-	(A5*)	(A5*)	(A5*	(C-AM-ADV*		
+-	(C-AM-ADV*	(C-AM-ADV*	*	*		
+-	*)	*)	*	*		
+ser	(AM-DIR*)	(A5*)	*	*		
+-	(A5*	(C-AM-ADV*)	*	*		
+-	*	(A5*)	*	*)		
+-	*	(C-AM-ADV*)	*	(A5*)		
+pensar	*	(AM-DIR*)	*	(C-AM-ADV*		
+-	*)	(C-AM-ADV*	*)	*		
+-	(C-AM-ADV*)	*	(C-AM-ADV*)	*		
+-	(A5*	*	(A5*)	*		
+abastecer	*)	*	(AM-DIR*)	*		
+-	(C-AM-ADV*	*	(C-AM-ADV*	*		
+-	*	*	*	*		
+-	*)	*	*	*		
+-	(A5*	*	*)	*		
+-	*	*	(A5*	*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(A5*	*	*)		
+-	*	*	*	(A5*)		
+dizer	*	*	*	(AM-DIR*)		
+-	*	*	*	(AM-ADV*		
+-	*	*	*	*		
+-	*	*)	*	*		
+-	*	(C-AM-ADV*)	*	*)		
+-	*	(A5*	*	(C-AM-ADV*)		
+-	*)	*)	*)	(A5*)		
+						
+haver	(AM-DIR*)	(A5*				
+-	(C-AM-ADV*	*)				
+-	*	(AM-ADV*)				
+enfrentar	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*					
+-	*)					
+ser	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(A5*				
+-	*)	*				
+-	(AM-ADV*	*				
+-	*)	*				
+achar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*)				
+-	*	(C-AM-ADV*				
+-	*	*)				
+ser	*	(AM-DIR*)				
+-	*	(A5*)				
+-	*	(C-AM-ADV*)				
+-	*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)	(A5*				
+estar	(AM-DIR*)	*)				
+-	(C-AM-NEG*	(C-AM-NEG*)				
+-	*	(A5*				
+-	*	*)				
+estimular	*	(AM-DIR*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+ser	(AM-DIR*)	*	*			
+-	(C-AM-ADV*)	*	*			
+-	(A5*)	*)	*			
+-	(AM-ADV*)	(AM-ADV*)	*			
+estimular	(C-AM-ADV*)	(AM-DIR*)	*			
+-	(C-AM-EXT*)	(C-AM-EXT*	*			
+-	(A5*	*	*			
+-	*)	*)	*			
+-	(C-AM-ADV*	(C-AM-ADV*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*	(A5*			
+-	*)	*)	*			
+-	(A5*)	(A5*)	*)			
+promover	(AM-MNR*)	(AM-MNR*)	(AM-DIR*)			
+-	(AM-ADV*)	(AM-ADV*)	(AM-ADV*)			
+-	(AM-MNR*	(C-AM-ADV*	(C-AM-ADV*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(AM-ADV*					
+-	*)					
+eliminar	(AM-DIR*)					
+-	(C-AM-ADV*)					
+-	(C-AM-EXT*					
+-	*)					
+						
+-	(AM-ADV*)					
+causar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+						
+-	(A5*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(A5*)					
+-	(AM-ADV*)					
+reunir	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+perder	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(C-AM-NEG*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(AM-TMP*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*					
+-	*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-EXT*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+						
+-	(AM-TMP*)					
+-	(C-AM-EXT*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+-	(C-AM-ADV*)					
+-	(A5*)					
+empurrar	(AM-DIR*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(A5*	(A5*)	(A5*			
+-	*)	(AM-MNR*	*			
+ser	(AM-DIR*)	*)	*			
+-	(C-AM-ADV*)	(A5*	*			
+-	(A5*	*	*			
+-	*)	*)	*			
+-	(C-AM-ADV*)	(C-AM-PNC*)	*			
+-	(A5*	(A5*	*			
+-	*	*)	*			
+-	*	(C-AM-ADV*)	*			
+-	*	(A5*)	*			
+prejudicar	*	(AM-DIR*)	*			
+-	*	(C-AM-ADV*	*)			
+-	*	*	(C-AM-ADV*)			
+ser	*	*	(AM-DIR*)			
+-	*	*	(A5*)			
+-	*	*	(C-AM-ADV*)			
+-	*	*)	(A5*			
+-	*)	(A5*)	*)			
+						
+-	(AM-TMP*)	(C-AM-ADV*				
+-	(A5*	*				
+-	*)	*				
+afetar	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*)	*				
+-	(A5*	*				
+-	*)	*				
+-	(AM-TMP*)	*				
+-	(C-AM-EXT*)	*)				
+-	(A5*	(A5*				
+-	*	*)				
+dizer	*	(AM-DIR*)				
+-	*	(AM-ADV*)				
+-	*)	(A5*)				
+						
+-	(AM-ADV*	(A5*	(AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*)			
+dar	(AM-DIR*)	*	(A5*			
+-	(C-AM-ADV*	*	*			
+-	*)	*	*			
+-	(AM-TMP*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(AM-TMP*	*	*			
+-	*	*)	*			
+discursar	*	(AM-DIR*)	*			
+-	*	(AM-TMP*)	*			
+-	*)	(A5*	*			
+-	*	*)	*			
+-	(AM-TMP*	(AM-TMP*	*			
+-	*	*	*			
+-	*	*)	*			
+-	*	(C-AM-EXT*)	*)			
+-	*	(AM-TMP*)	(AM-TMP*			
+-	*	(A5*	*			
+-	*)	*	*)			
+-	(A5*	*	(A5*)			
+ler	*)	*	(AM-DIR*)			
+-	(C-AM-ADV*)	*	(C-AM-ADV*)			
+-	(A5*	*	(C-AM-EXT*			
+-	*	*	*			
+-	*	*	*)			
+-	*	*	(A5*			
+-	*)	*)	*)			
+						
+-	(AM-ADV*)					
+alterar	(AM-DIR*)					
+-	(C-AM-ADV*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*)	*				
+-	(C-AM-ADV*)	*				
+-	(AM-ADV*)	*				
+-	(C-AM-ADV*)	*				
+ser	(AM-DIR*)	*				
+-	(C-AM-ADV*)	*				
+-	(A5*)	*				
+-	(C-AM-ADV*)	*)				
+-	(AM-ADV*)	(AM-ADV*)				
+levar	(C-AM-ADV*)	(AM-DIR*)				
+-	(C-AM-NEG*)	(C-AM-NEG*				
+-	(C-AM-ADV*)	*				
+-	(C-AM-NEG*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*				
+-	*)	*)				
+-	(A5*)	(A5*)				
+						
+-	(C-AM-ADV*)					
+-	(AM-ADV*					
+-	*					
+-	*)					
+oscilar	(AM-DIR*)					
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+ter	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(C-AM-ADV*)					
+-	(AM-ADV*)					
+passar	(AM-DIR*)					
+-	(C-AM-NEG*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*)					
+abrir	(AM-DIR*)					
+-	(AM-TMP*)					
+-	(C-AM-ADV*					
+-	*					
+-	*)					
+-	(C-AM-EXT*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*)	*				
+fazer	(AM-DIR*)	*				
+-	(C-AM-ADV*	*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*)				
+acompanhar	*	(AM-DIR*)				
+-	*	(AM-TMP*)				
+-	*	(C-AM-EXT*				
+-	*	*				
+-	*	*)				
+-	*	(C-AM-ADV*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*				
+-	*	*)				
+-	*)	(A5*				
+-	(A5*)	*)				
+						
+-	(AM-ADV*					
+-	*)					
+marcar	(AM-DIR*)					
+-	(C-AM-ADV*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*					
+-	*)					
+-	(A5*)					
+						
+-	(AM-ADV*	(A5*	(A5*			
+-	*)	*	*			
+entrar	(AM-DIR*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-TMP*)	*	*			
+-	(C-AM-ADV*	*	*			
+-	*	*	*			
+-	*)	*	*			
+-	(AM-TMP*	*	*			
+-	*)	*	*			
+-	(A5*)	*	*			
+-	(AM-TMP*	*)	*			
+obrigar	*)	(AM-DIR*)	*			
+-	(C-AM-ADV*	(C-AM-ADV*	*			
+-	*	*	*)			
+-	*	*	(C-AM-ADV*)			
+-	*)	*)	(A5*			
+-	(C-AM-NEG*	(A5*	*)			
+assinar	*)	*)	(AM-DIR*)			
+-	(C-AM-ADV*	(C-AM-ADV*	(C-AM-ADV*			
+-	*	*	*			
+-	*	*	*			
+-	*)	*)	*)			
+-	(A5*)	(A5*)	(A5*)			
+						
+-	(AM-TMP*					
+-	*					
+-	*)					
+-	(A5*)					
+-	(AM-ADV*)					
+-	(A5*					
+-	*					
+-	*)					
+ser	(AM-DIR*)					
+-	(A5*					
+-	*)					

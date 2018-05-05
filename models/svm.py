@@ -90,7 +90,7 @@ if __name__ == '__main__':
     # optargs = '-c 4'
     # optargs = ('-s ')
     # encoding = 'emb'
-    encoding = 'hot'
+    encoding = 'sc'
     # encoding = 'wan'
     # encoding = 'glo'
     # alias = 'glo50'
@@ -109,7 +109,8 @@ if __name__ == '__main__':
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
-    for s in (0, 1, 2, 3, 4, 5, 6, 7):
+    # for s in (0, 1, 2, 3, 4, 5, 6, 7):
+    for s in (1, 2, 3, 4, 5, 6, 7):
         # optargs = '-s {:} -v 10'.format(s)
         optargs = '-s {:} -c {:0.4f}'.format(s, 0.0625)
         print('Training ... with_optargs({:})'.format(optargs))

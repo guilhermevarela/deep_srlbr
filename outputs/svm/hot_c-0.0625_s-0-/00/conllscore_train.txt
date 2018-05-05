@@ -1,4 +1,4 @@
-	Number of Sentences    :        2878
+Number of Sentences    :        2878
 Number of Propositions :        5099
 Percentage of perfect props :   0.00
 

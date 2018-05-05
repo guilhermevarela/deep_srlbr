@@ -267,11 +267,10 @@ class PropbankEncoder(object):
         # Computes a dictionary that maps one column to a base column
 
         self.columns = self.columns.union(dbpt_d.keys())
-        self.columns_mapper = {col: re.sub(r'[\+|\-|\d|]|(_CTX_P)', '', col)
+        self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
 
         # Creates descriptors about the data
-        
         dflt_dict =  {'name':'dflt', 'category':'feature', 'type':'int', 'dims': None}
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
@@ -304,6 +303,14 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
+
+    def _subcol(self, col):
+        re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
+        re_repl = r'(_CHILD)|(_PARENT)|(_GRAND_PARENT)'
+
+        bcol = re.sub(re_ctxp, '', col)
+        bcol = re.sub(re_repl, '', bcol)
+        return bcol
 
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
