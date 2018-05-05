@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
     for s in (0, 1, 2, 3, 4, 5, 6, 7):
         # optargs = '-s {:} -v 10'.format(s)
-        optargs = '-s {:}'.format(s)
+        optargs = '-s {:} -c {:0.4f}'.format(s, 0.0625)
         print('Training ... with_optargs({:})'.format(optargs))
         svm.fit(Xtrain, Ytrain, optargs)
         print('Training ... done')
