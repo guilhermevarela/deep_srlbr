@@ -137,7 +137,7 @@ def propbankbr_parser():
     # preprocess
     df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
     usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
-        'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
         'ARG5', 'ARG6'
     ]
 
@@ -356,7 +356,86 @@ def propbankbr_arg2t(propositions, arguments):
         prev_tag= tag   
         prev_prop= prop     
         new_tags.append(new_tag)
-    return new_tags             
+    return new_tags
+
+
+def propbankbr_arg2r(arguments):
+    '''
+        Converts arguments to root_arguments .:
+        Only the root of semantic chuck carries the tag.
+
+    '''
+    new_tags = []
+    for tag in arguments:
+        if (tag in ('*')):
+            new_tag = '*'
+        elif (tag in ('*)')):
+            new_tag = ')'
+        else:
+            new_tag = re.sub(r'\(|\)|\*|', '', tag)
+
+        new_tags.append(new_tag)
+    return new_tags
+
+
+def propbankbr_r2arg(forms, propositions, arguments):
+    '''
+        Root arguments into golden standard arguments
+
+        Only the root of semantic chuck carries the tag.
+
+    '''
+    isopen = False
+    prev_tag = '*'
+    prev_prop = -1
+    new_tags = []
+    triples = zip(forms, propositions, arguments)
+    i = 0 
+    for form, prop, tag in triples:
+        # if i == 79:
+        #     import code; code.interact(local=dict(globals(), **locals()))
+        if prop != prev_prop:
+            prev_tag = '*'
+            if isopen: # Close 
+                if ')' not in new_tags:
+                    new_tags[-1] += ')'
+                    isopen = False
+
+        if tag == ')':
+            new_tag = '*)'
+            isopen = False
+
+        elif tag != '*' and tag != prev_tag:
+            if prev_prop == prop and\
+             (prev_tag not in ('*', ')') or (form == '.' and isopen)):
+                if ')' not in new_tags[-1]:
+                    new_tags[-1] += ')'
+                    isopen = False
+
+            if tag != '*':
+                new_tag = '({:}*'.format(tag)
+                isopen = True
+
+        elif prev_prop == prop:
+            if form == '.' and isopen:
+                # Close previous
+                if ')' not in new_tags[-1]:
+                    new_tags[-1] = '*)'
+                    isopen = False
+            new_tag = '*'
+        else:
+            new_tag = '*'
+
+
+        prev_tag = tag if tag != '*' else prev_tag
+        prev_prop = prop
+        new_tags.append(new_tag)
+        i += 1
+    if isopen:
+        new_tags[-1] += ')'
+        isopen = False
+
+    return new_tags
 
 
 def get_signature(mappings): 
@@ -369,20 +448,37 @@ def trim(val):
     return val
 
 if __name__== '__main__':
-    df = propbankbr_parser()
-    propbankbr_persist(df, dataset_name='gs')
+    # Test propbank parsing
+    df = propbankbr_parser()  # --> needs update
+    # propbankbr_persist(df, dataset_name='gs')
     # print('Parsing propbank')
     # df = propbankbr_parser2(ctx_p_size=3)
-
-    # print('Done. with shape=', df.shape)
-    # print('Spliting dataset')
-    # # df = pd.read_csv(TARGET_PATH + 'zhou_1.csv', sep=',')
     # df_train, df_valid, df_test =propbankbr_split(df)
-    # print('Train. with shape=', df_train.shape)
-    # print('Valid. with shape=', df_valid.shape)
-    # print('Test.  with shape=', df_test.shape)
-    # print('Persisting propbank')
-    # propbankbr_persist(df, dataset_name='zhou_1')
 
-    
+    #testing new arguments
+    # dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
+    # propositions = dfgs['P'].values
+    # forms = dfgs['FORM'].values
+    # arguments = dfgs['ARG'].values
+
+    # arg2t = propbankbr_arg2t(propositions, arguments)
+    # t2arg = propbankbr_t2arg(propositions, arg2t)
+    # arg2r = propbankbr_arg2r(arguments)
+    # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
+    # with open('test_arguments.csv', mode='w') as f:
+    #     f.write(',ARG,T,T2ARG,R,R2ARG\n')
+    #     for i, arg in enumerate(arguments):
+    #         line = '{:},{:},{:},{:},{:},{:}\n'.format(i, arg, arg2t[i], t2arg[i], arg2r[i], r2arg[i])
+    #         f.write(line)
+
+
+
+
+
+
+
+
+
+
+
     
