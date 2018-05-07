@@ -97,13 +97,13 @@ def tfrecords_extract_v2(ds_type,
         raise ValueError(buff)
     else:
         if ds_type in ['train']:
-            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_TRAIN_SIZE
         if ds_type in ['test']:
-            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_TEST_SIZE
         if ds_type in ['valid']:    
-            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_VALID_SIZE
 
     inputs, targets, lengths, others= tensor2numpy_v2(
@@ -784,5 +784,5 @@ if __name__== '__main__':
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wrd50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wan50')
 

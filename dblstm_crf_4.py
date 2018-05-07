@@ -290,7 +290,7 @@ if __name__== '__main__':
     print('feature_size: ',feature_size)
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
-            [DATASET_TRAIN_V2_PATH.replace('_pt_v2','_wan50')], batch_size, num_epochs,
+            [DATASET_TRAIN_V2_PATH.replace('_pt_v2','_glo50')], batch_size, num_epochs,
             input_sequence_features, target)
 
     with tf.name_scope('predict'):
