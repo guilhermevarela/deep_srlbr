@@ -176,7 +176,7 @@ def propbankbr_parser2():
     # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
     df_const2 = df_const['CTREE']
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
-        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
         'ARG5', 'ARG6'
     ]
 
