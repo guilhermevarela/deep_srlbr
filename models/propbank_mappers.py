@@ -208,6 +208,29 @@ class Mapper2SVM(BaseMapper):
         return self.embeddings[idx]
 
 
+class MapperIDX2CAT(BaseMapper):
+    '''
+        Maps index 2 categorical
+    '''
+    _propbank_attributes_ = ('columns', 'idx2lex', 'lex2tok', 'tok2idx')
+    _ds_types_ = ['test', 'valid', 'train']
+
+    def __init__(self, propbank_encoder):
+        super().__init__(propbank_encoder)
+
+    def define(self, d, column):
+        if column not in self.columns:
+            raise ValueError('column {:} must be in {:}')
+        else:
+            self.column = column
+        self.d = d
+        return self
+
+    def map(self):
+        return [self.idx2lex[self.column][int(val)]
+                for _, val in self.d.items()]
+
+
 if __name__ == '__main__':
     propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
     to_svm = Mapper2SVM(propbank_encoder)

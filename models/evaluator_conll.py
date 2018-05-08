@@ -92,7 +92,7 @@ class EvaluatorConll(object):
 
         if (self.err):
             print('srl-eval.pl says:\t{:}'.format(self.err))
-        
+
         #Step 4 - Parse     
         self._parse(self.txt)
         if store:
@@ -127,7 +127,7 @@ class EvaluatorConll(object):
 
         self._parse(self.txt)
 
-    def evaluate_fromliblinear(self, target_path, mapper_t2arg):
+    def evaluate_fromliblinear(self, target_path, mapper, target_column='T'):
         '''
             Opens up a conll file and parses it
 
@@ -139,15 +139,18 @@ class EvaluatorConll(object):
         with open(target_path, 'rb') as f:
             d = pickle.load(f)
         f.close()
-        
+
 
         if len(d) != len(self.ARG):
-            import code; code.interact(local=dict(globals(), **locals()))
             raise ValueError('number of predictions must match targets')
         else:
             self.target_dir = '/'.join(target_path.split('/')[:-1])
-            self.target_dir += '/'            
-            Y = mapper_t2arg.define(d, 'IDX').map()
+            self.target_dir += '/'
+            if target_column in ('T'):
+                Y = mapper.define(d, 'IDX').map()
+            else:
+                Y = mapper.define(d, target_column).map()
+
             self.evaluate(Y, store=True)
 
     def _refresh(self):

@@ -111,9 +111,9 @@ def propbankbr_split(df, testN=263, validN=569):
     return dftrain, dfvalid, dftest
 
 
-def propbankbr_parser():        
+def propbankbr_parser():
     '''
-    Uses refs/1421593_2016_completo.pdf
+    Users arguments as of CONLL 2005 (FLATTENED ARGUMENT) <--> SYNTHATIC TREE
 
     'ID'    : Contador de tokens que inicia em 1 para cada nova proposição
     'FORM'  : Forma da palavra ou sinal de pontuação
@@ -132,12 +132,13 @@ def propbankbr_parser():
     'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
     'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
     '''
-    df_const= _const_read()
-    df_dep= _dep_read() 
+    df_const = _const_read()
+    df_dep = _dep_read()
+
     # preprocess
-    df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
-    usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
-        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+    df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
         'ARG5', 'ARG6'
     ]
 
@@ -147,7 +148,44 @@ def propbankbr_parser():
 
     return df
 
+def propbankbr_parser2():
+    '''
+    Users arguments as of CONLL 2005 (ONLY THE ARGUMENT SETTING AT THE ROOT OF THE TREE) <--> DTREE
 
+    'ID'    : Contador de tokens que inicia em 1 para cada nova proposição
+    'FORM'  : Forma da palavra ou sinal de pontuação
+    'LEMMA' : Lema gold-standard da FORM 
+    'GPOS'  : Etiqueta part-of-speech gold-standard
+    'MORF'  : Atributos morfológicos  gold-standard
+    'DTREE' : Árvore Sintagmática gold-standard completa    
+    'FUNC'  : Função Sintática do token gold-standard para com seu regente na árvore de dependência
+    'CTREE' : Árvore Sintagmática gold-standard completa
+    'PRED'  : Predicatos semânticos na proposição
+    'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    '''
+    df_const = _const_read()
+    df_dep = _dep_read()
+
+    # preprocess
+    # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    df_const2 = df_const['CTREE']
+    usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
+        'ARG5', 'ARG6'
+    ]
+
+    df = pd.concat((df_dep, df_const2), axis=1)
+    df = df[usecols]
+    df = df.applymap(trim)
+    df['GPOS'] = df['GPOS'].str.upper()
+
+    return df
 
 def propbankbr_argument_stats(df):
     '''
@@ -392,8 +430,6 @@ def propbankbr_r2arg(forms, propositions, arguments):
     triples = zip(forms, propositions, arguments)
     i = 0 
     for form, prop, tag in triples:
-        # if i == 79:
-        #     import code; code.interact(local=dict(globals(), **locals()))
         if prop != prev_prop:
             prev_tag = '*'
             if isopen: # Close 
@@ -450,7 +486,7 @@ def trim(val):
 if __name__== '__main__':
     # Test propbank parsing
     df = propbankbr_parser()  # --> needs update
-    # propbankbr_persist(df, dataset_name='gs')
+    propbankbr_persist(df, dataset_name='gssynth')
     # print('Parsing propbank')
     # df = propbankbr_parser2(ctx_p_size=3)
     # df_train, df_valid, df_test =propbankbr_split(df)

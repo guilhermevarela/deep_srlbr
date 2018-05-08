@@ -90,27 +90,28 @@ if __name__ == '__main__':
     # optargs = '-c 4'
     # optargs = ('-s ')
     # encoding = 'emb'
-    encoding = 'sc'
+    # encoding = 'sc'
     # encoding = 'wan'
-    # encoding = 'glo'
+    encoding = 'sc'
     # alias = 'glo50'
     # propbank = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     # input_path = 'datasets/svms/{:}/train_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/train-sc.svm'.format(encoding)
     print(input_path)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
     # input_path = 'datasets/svms/{:}/valid_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/valid-sc.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
     # for s in (0, 1, 2, 3, 4, 5, 6, 7):
-    for s in (1, 2, 3, 4, 5, 6, 7):
+    # for s in (1, 2, 3, 4, 5, 6, 7):
+    for s in (0, 1, 2, 3, 4, 5, 6, 7):
         # optargs = '-s {:} -v 10'.format(s)
         optargs = '-s {:} -c {:0.4f}'.format(s, 0.0625)
         print('Training ... with_optargs({:})'.format(optargs))
