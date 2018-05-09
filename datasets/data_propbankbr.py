@@ -455,83 +455,100 @@ def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
 
 
 def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
-        # finds predicate time 
-        root_d = {P[i]:ID[i] for i, pred in enumerate(PRED) if pred != '-'}
-        lb = 0
-        ub = 0
-        prev_prop = -1
-        prev_time = -1
-        process = False
-        last_ancestor = None
-        ARG = []
-        for t, proposition in enumerate(P):
-            if prev_prop < proposition:
-                if prev_prop > 0:
-                    lb = ub
-                    ub = prev_time + 1  # ub must be inclusive
-                    process = True
-                    last_ancestor = None
+    # finds predicate time 
+    root_d = {P[i]:i for i, pred in enumerate(PRED) if pred != '-'}
+    lb = 0
+    ub = 0
+    prev_prop = -1
+    prev_time = -1
+    process = False
+    last_ancestor = None
+    ARG = []
+    for t, proposition in enumerate(P):
+        if prev_prop < proposition:
+            if prev_prop > 0:
+                lb = ub
+                ub = prev_time + 1  # ub must be inclusive
+                process = True
+                last_ancestor = None
 
-            if process:
-                G, root = _dtree_build(Dtree, ID, lb, ub)
-                subroot = root_d[prev_prop]
-                isopen = False
-                for i in range(lb, ub):
-                    subroot = root_d[prev_prop]
-                    q = deque(list())
-                    _, ancestor = _dtree_dfs(G, root, i, q)
-                    print('i:{:}\tID[i]:{:}\tancestor:{:}'.format(i, ID[i], ancestor))
-                    if ID[i] == subroot: # verb found
-                        if last_ancestor is not None:
+        if process:
+            G, root = _dtree_build(Dtree, ID, lb, ub)
+            subroot = root_d[prev_prop]
+            isopen = False
+            for i in range(lb, ub):
+                q = deque(list())
+                _, ancestor = _dtree_dfs(G, subroot, i, q)
+                if i == subroot: # verb found
+                    if last_ancestor is not None:
+                        if isopen:
                             ARG[-1] += ')'
                             isopen = False
-                        arg = '(V*)'
+                    arg = '(V*)'
+                else:
+                    if ancestor is None:
+                        if isopen:
+                            ARG[-1] += ')'
+                            isopen = False
+                        arg = '*'
                     else:
                         if ancestor != last_ancestor:
                             if isopen:
                                 ARG[-1] += ')'                    
                             arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
-                            isopen = True
+                            isopen = Y[ancestor] != '-'
                         else:
                             arg = '*'
-                    ARG.append(arg)
-                    last_ancestor = ancestor
-                    _dtree_refresh(G)
+                ARG.append(arg)
+                last_ancestor = ancestor
+                _dtree_refresh(G)
 
+            if isopen:
+                ARG[-2] += ')'
+                isopen = False
+            process = False
+
+
+        prev_prop = proposition
+        prev_time = t
+
+    lb = ub
+    ub = prev_time + 1  # ub must be inclusive
+    last_ancestor = None
+    G, root = _dtree_build(Dtree, ID, lb, ub)
+    subroot = root_d[prev_prop]
+    isopen = False
+    for i in range(lb, ub):
+        q = deque(list())
+        _, ancestor = _dtree_dfs(G, subroot, i, q)
+        if i == subroot: # verb found
+            if last_ancestor is not None:
                 if isopen:
-                    ARG[-2] += ')'
-
-
-            prev_prop = proposition
-            prev_time = t
-
-        lb = ub
-        ub = prev_time + 1  # ub must be inclusive
-        last_ancestor = None
-        G, root = _dtree_build(Dtree, ID, lb, ub)
-
-        for i in range(lb, ub):
-            subroot = root_d[prev_prop]
-            q = deque(list())
-            _, ancestor = _dtree_dfs(G, root, i, q)
-            print('i:{:}\tID[i]:{:}\tancestor:{:}'.format(i, ID[i], ancestor))
-            if ID[i] == subroot: # verb found
-                if last_ancestor is not None:
                     ARG[-1] += ')'
                     isopen = False
-                arg = '(V*)'
+            arg = '(V*)'
+        else:
+            if ancestor is None:
+                if isopen:
+                    ARG[-1] += ')'
+                    isopen = False
+                arg = '*'
             else:
                 if ancestor != last_ancestor:
+                    if isopen:
+                        ARG[-1] += ')'
                     arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
-                    isopen = True
+                    isopen = Y[ancestor] != '-'
                 else:
                     arg = '*'
-            ARG.append(arg)
-            last_ancestor = ancestor
-            _dtree_refresh(G)
-        if isopen:
-            ARG[-2] += ')'
-        return ARG
+        ARG.append(arg)
+        last_ancestor = ancestor
+        _dtree_refresh(G)
+
+    if isopen:
+        ARG[-2] += ')'
+        isopen = False
+    return ARG
 
 
 def _dtree_dfs(G, u, i, q):
