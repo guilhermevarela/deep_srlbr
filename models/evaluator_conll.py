@@ -15,7 +15,7 @@
 '''
 import sys
 sys.path.append('../datasets/')
-import os 
+import os
 import subprocess
 import string
 import pandas as pd

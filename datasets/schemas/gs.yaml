@@ -3509,3 +3509,10 @@ T:
     C-AM-ADV, C-AM-CAU, C-AM-DIS, C-AM-EXT, C-AM-LOC, C-AM-MNR, C-AM-NEG, C-AM-PNC,
     C-AM-PRD, C-AM-TMP, C-V, V]
   type: choice
+Y:
+  category: target
+  domain: ['-', A0, A1, A2, A3, A4, A5, AM-ADV, AM-CAU, AM-DIR, AM-DIS, AM-EXT, AM-LOC,
+    AM-MED, AM-MNR, AM-NEG, AM-PNC, AM-PRD, AM-REC, AM-TMP, C-A0, C-A1, C-A2, C-A3,
+    C-AM-ADV, C-AM-DIS, C-AM-EXT, C-AM-LOC, C-AM-MNR, C-AM-NEG, C-AM-PNC, C-AM-PRD,
+    C-AM-TMP]
+  type: choice

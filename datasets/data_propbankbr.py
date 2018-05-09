@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np 
 import re
 import os.path
-
+from collections import defaultdict, deque
 PROPBANKBR_PATH='../datasets/txts/conll/'
 # PROPBANKBR_PATH='../datasets/conll/'
 TARGET_PATH='../datasets/csvs/'
@@ -360,7 +360,74 @@ def propbankbr_t2arg(propositions, arguments):
         new_tags[-1]+=')'       
         isopen=False
 
-    return new_tags 
+    return new_tags
+
+
+def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
+    # Stores the PRED index for the verb
+    root_d = {P[i]:ID[i] for i, pred in enumerate(PRED) if pred != '-'}
+    ARG = []
+    prev_p = -1
+
+    for i in range(len(Y)):
+        if P[i] != prev_p:
+            root = root_d[P[i]]
+            unlabeled = deque([])
+            levels = defaultdict(list)
+            labels = {}
+
+            if prev_p > 0 and i + 1 < len(Y):
+                ARG[-2] += ')'
+                ARG[-1] = '*'
+
+        if ID[i] != root:
+            unlabeled.append(i)
+            if Dtree[i] == root:
+                levels[0].append(ID[i])
+                labels[ID[i]] = Y[i]
+                try:
+                    j = 0
+                    while True:
+                        unlabeled.pop()
+                        y = '({:}*'.format(Y[i]) if j == 0 else '*'
+                        ARG.append(y)
+                        j += 1
+                except IndexError:
+                    pass
+            else:
+
+                # belongs to one of the subtrees?
+                for l, nodes in levels.items():
+                    if Dtree[i] in nodes:
+                        print(Dtree[i], nodes, levels)
+                        y = labels[Dtree[i]]
+                        try:
+                            while True:
+                                unlabeled.pop()
+                                ARG.append('*')
+                        except IndexError:
+                            levels[l + 1].append(ID[i])
+                            labels[ID[i]] = y
+                        finally:
+                            break
+        else:
+            ARG[-1] += ')'
+            try:
+                while True:
+                    unlabeled.pop()
+                    ARG.append('*')
+            except IndexError:
+                ARG.append('(V*)')
+        print(ARG)
+        prev_p = P[i]
+    
+    ARG[-2] += ')'
+    ARG[-1] = '*'
+    return ARG
+
+
+
+
 
 def propbankbr_arg2t(propositions, arguments):
     '''
@@ -484,9 +551,11 @@ def trim(val):
     return val
 
 if __name__== '__main__':
+    
+
     # Test propbank parsing
-    df = propbankbr_parser()  # --> needs update
-    propbankbr_persist(df, dataset_name='gssynth')
+    # df = propbankbr_parser()  # --> needs update
+    # propbankbr_persist(df, dataset_name='gssynth')
     # print('Parsing propbank')
     # df = propbankbr_parser2(ctx_p_size=3)
     # df_train, df_valid, df_test =propbankbr_split(df)
@@ -496,6 +565,18 @@ if __name__== '__main__':
     # propositions = dfgs['P'].values
     # forms = dfgs['FORM'].values
     # arguments = dfgs['ARG'].values
+    # testing Y2ARG
+    P = [0] * 9
+    ID = list(range(1, 10))
+    PRED = ['-'] * 9
+    PRED[-3] = 'negar'
+    Dtree = [2, 7, 2, 5, 2, 5, 0, 7, 7]
+    Y = ['-'] * 9
+    Y[1] = 'A0'
+    Y[7] = 'A1'
+    
+    ARG = propbankbr_y2arg(P, ID, PRED, Dtree, Y)
+    import code; code.interact(local=dict(globals(), **locals()))
 
     # arg2t = propbankbr_arg2t(propositions, arguments)
     # t2arg = propbankbr_t2arg(propositions, arg2t)

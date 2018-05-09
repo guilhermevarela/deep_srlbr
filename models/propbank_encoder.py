@@ -365,6 +365,16 @@ if __name__ == '__main__':
     dfgs.set_index('INDEX', inplace=True)
     dfgs['INDEX'] = dfgs.index.tolist()
 
+    #Searches for column Y
+    dfdtree  = pd.read_csv('../datasets/csvs/gsdtree.csv', index_col=None)
+    dfdtree.set_index('INDEX', inplace=True)
+    dfdtree['INDEX'] = dfdtree.index.tolist()
+    dfY = dfdtree['ARG'].to_frame().rename(columns={'ARG': 'Y'})
+
+
+    dfgs = pd.concat((dfgs, dfY), axis=1)
+
+
 
     column_files = [
         '../datasets/csvs/column_predmarker/predicate_marker.csv',
@@ -381,10 +391,10 @@ if __name__ == '__main__':
     #In order to use glove uncheck
     # dbname = 'deep_glo50'    
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
-    # dbname = 'deep_wan50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
-    dbname = 'deep_wrd50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    dbname = 'deep_wan50'    
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    # dbname = 'deep_wrd50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
 
 
     propbank_encoder.persist('../datasets/binaries/', filename=dbname)

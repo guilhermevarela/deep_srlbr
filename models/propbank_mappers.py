@@ -74,6 +74,65 @@ class MapperT2ARG(BaseMapper):
         return OrderedDict(ordered_dict)
 
 
+class MapperY2ARG(BaseMapper):
+    '''
+        Converts a Y column in indexed or categorical representation
+            into ARG column for CONLL evaluation
+    '''
+    _propbank_attributes_ = ('idx2lex', 'db')
+    def __init__(self, propbank_encoder):
+        super().__init__(propbank_encoder)
+
+    def define(self, Y, encoding):
+        '''
+            Converts column Y into ARG
+
+            args:
+                Y .: dict<int, int>  if encoding == 'IDX'
+                     dict<int, int>  if encoding == 'IDX'
+                     Predictions encoded for each index
+
+
+                encoding .: str in ('CAT', 'IDX') 
+                    'CAT' for categorical representation 'A0', '-', etc
+                    'IDX' for indexed representation 1, 3, 4 ~ [0-35]
+
+
+        '''
+
+        if encoding not in ('CAT', 'IDX'):
+            _errmessage = 'encoding must be in {:} got {:}'
+            _errmessage = _errmessage .format(('CAT', 'IDX'), encoding)
+            raise ValueError(_errmessage)
+        else:
+            if encoding in ('IDX'):
+                Y = {idx: self.idx2lex['Y'][iidx] for idx, iidx in Y.items()}
+
+        self._Y = Y
+        return self
+
+    def map(self):
+        '''
+            Converts categorical column Y holding predictions into ARG
+
+            args:
+                Dtree .: dict<int, int> Dtree golden standard
+                PRED  .: dict<int, str> PRED 
+
+            returns:
+                ARG .: dict<int, str> keys in db_index, values in target label
+        '''
+        db = self.db
+        P = [db['P'][idx] for idx in self._Y]
+        ID = [db['ID'][idx] for idx in self._Y]
+        PRED = [db['PRED'][idx] for idx in self._Y]
+        Dtree = [db['DTREE'][idx] for idx in self._Y]
+
+        ARG = br.propbankbr_y2arg(P, ID, PRED, Dtree, self._Y.values())
+        ordered_dict = sorted(zip(self._Y.keys(), ARG), key=lambda x: x[0])
+        return OrderedDict(ordered_dict)
+
+
 class MapperTensor2Column(BaseMapper):
     '''
         Converts a tensor into a propbank column
@@ -229,6 +288,7 @@ class MapperIDX2CAT(BaseMapper):
     def map(self):
         return [self.idx2lex[self.column][int(val)]
                 for _, val in self.d.items()]
+
 
 
 if __name__ == '__main__':

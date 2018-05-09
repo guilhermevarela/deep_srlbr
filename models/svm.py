@@ -14,6 +14,7 @@ import glob
 import svmlib.liblinearutil as lin
 from collections import defaultdict
 
+
 class SVM(object):
     _svm = None
 
@@ -92,20 +93,20 @@ if __name__ == '__main__':
     # encoding = 'emb'
     # encoding = 'sc'
     # encoding = 'wan'
-    encoding = 'sc'
+    encoding = 'hot'
     # alias = 'glo50'
     # propbank = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
     print('Loading train set ...')
     # input_path = 'datasets/svms/{:}/train_LEMMA_glove_s50.svm'.format(encoding)
     # input_path = 'datasets/svms/{:}/train_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/train-sc.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/train.svm'.format(encoding)
     print(input_path)
     Ytrain, Xtrain = _SVMIO.read(input_path)
     print('Loading train set ... done')
 
     print('Loading validation set ...')
     # input_path = 'datasets/svms/{:}/valid_{:}.svm'.format(encoding, alias)
-    input_path = 'datasets/svms/{:}/valid-sc.svm'.format(encoding)
+    input_path = 'datasets/svms/{:}/valid.svm'.format(encoding)
     Yvalid, Xvalid = _SVMIO.read(input_path)
     print('Loading validation set ... done')
 
