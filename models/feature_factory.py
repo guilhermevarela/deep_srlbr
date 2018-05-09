@@ -552,7 +552,7 @@ class ColumnDepTreeParser(object):
         G.nodes[u]['discovered'] = True
 
         # current node u is target node i
-        if i == u:            
+        if i == u:
             self._update_path(q, path_nodes)
             return False
         else:

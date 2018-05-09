@@ -13,6 +13,8 @@ import pandas as pd
 import numpy as np 
 import re
 import os.path
+import networkx as nx
+import matplotlib.pyplot as plt
 from collections import defaultdict, deque
 PROPBANKBR_PATH='../datasets/txts/conll/'
 # PROPBANKBR_PATH='../datasets/conll/'
@@ -368,7 +370,7 @@ def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
     root_d = {P[i]:ID[i] for i, pred in enumerate(PRED) if pred != '-'}
     ARG = []
     prev_p = -1
-
+    isopen = False # flags if argument is open
     for i in range(len(Y)):
         if P[i] != prev_p:
             root = root_d[P[i]]
@@ -377,19 +379,35 @@ def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
             labels = {}
 
             if prev_p > 0 and i + 1 < len(Y):
-                ARG[-2] += ')'
-                ARG[-1] = '*'
-
+                if unlabeled:
+                    try:
+                        while True:
+                            unlabeled.pop()
+                            ARG.append('*')
+                    except IndexError:
+                        pass
+                if isopen:
+                    ARG[-2] += ')'
+                    ARG[-1] = '*'
+                    isopen = False
+        # if i == 32 + 12:
+        #     import code; code.interact(local=dict(globals(), **locals()))
         if ID[i] != root:
             unlabeled.append(i)
             if Dtree[i] == root:
                 levels[0].append(ID[i])
                 labels[ID[i]] = Y[i]
+                if isopen and Y[i] == '-':
+                    # Changed arguments
+                    ARG[-1] += ')'
+                    isopen = False
+                else:
+                    isopen = True
                 try:
                     j = 0
                     while True:
                         unlabeled.pop()
-                        y = '({:}*'.format(Y[i]) if j == 0 else '*'
+                        y = '({:}*'.format(Y[i]) if j == 0 and Y[i] != '-' else '*'
                         ARG.append(y)
                         j += 1
                 except IndexError:
@@ -399,7 +417,6 @@ def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
                 # belongs to one of the subtrees?
                 for l, nodes in levels.items():
                     if Dtree[i] in nodes:
-                        print(Dtree[i], nodes, levels)
                         y = labels[Dtree[i]]
                         try:
                             while True:
@@ -411,21 +428,279 @@ def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
                         finally:
                             break
         else:
-            ARG[-1] += ')'
+            if isopen:
+                ARG[-1] += ')'
+                isopen = False
             try:
                 while True:
                     unlabeled.pop()
                     ARG.append('*')
             except IndexError:
                 ARG.append('(V*)')
-        print(ARG)
+        print(P[i], prev_p, isopen, ARG)
         prev_p = P[i]
-    
-    ARG[-2] += ')'
-    ARG[-1] = '*'
+
+    if unlabeled:
+        try:
+            while True:
+                unlabeled.pop()
+                ARG.append('*')
+        except IndexError:
+            pass
+
+    if isopen:
+        ARG[-2] += ')'
+        ARG[-1] = '*'
     return ARG
 
 
+def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
+        # finds predicate time 
+        root_d = {P[i]:ID[i] for i, pred in enumerate(PRED) if pred != '-'}
+        lb = 0
+        ub = 0
+        prev_prop = -1
+        prev_time = -1
+        process = False
+        last_ancestor = None
+        ARG = []
+        for t, proposition in enumerate(P):
+            if prev_prop < proposition:
+                if prev_prop > 0:
+                    lb = ub
+                    ub = prev_time + 1  # ub must be inclusive
+                    process = True
+                    last_ancestor = None
+
+            if process:
+                G, root = _dtree_build(Dtree, ID, lb, ub)
+                subroot = root_d[prev_prop]
+                isopen = False
+                for i in range(lb, ub):
+                    subroot = root_d[prev_prop]
+                    q = deque(list())
+                    _, ancestor = _dtree_dfs(G, root, i, q)
+                    print('i:{:}\tID[i]:{:}\tancestor:{:}'.format(i, ID[i], ancestor))
+                    if ID[i] == subroot: # verb found
+                        if last_ancestor is not None:
+                            ARG[-1] += ')'
+                            isopen = False
+                        arg = '(V*)'
+                    else:
+                        if ancestor != last_ancestor:
+                            if isopen:
+                                ARG[-1] += ')'                    
+                            arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
+                            isopen = True
+                        else:
+                            arg = '*'
+                    ARG.append(arg)
+                    last_ancestor = ancestor
+                    _dtree_refresh(G)
+
+                if isopen:
+                    ARG[-2] += ')'
+
+
+            prev_prop = proposition
+            prev_time = t
+
+        lb = ub
+        ub = prev_time + 1  # ub must be inclusive
+        last_ancestor = None
+        G, root = _dtree_build(Dtree, ID, lb, ub)
+
+        for i in range(lb, ub):
+            subroot = root_d[prev_prop]
+            q = deque(list())
+            _, ancestor = _dtree_dfs(G, root, i, q)
+            print('i:{:}\tID[i]:{:}\tancestor:{:}'.format(i, ID[i], ancestor))
+            if ID[i] == subroot: # verb found
+                if last_ancestor is not None:
+                    ARG[-1] += ')'
+                    isopen = False
+                arg = '(V*)'
+            else:
+                if ancestor != last_ancestor:
+                    arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
+                    isopen = True
+                else:
+                    arg = '*'
+            ARG.append(arg)
+            last_ancestor = ancestor
+            _dtree_refresh(G)
+        if isopen:
+            ARG[-2] += ')'
+        return ARG
+
+
+def _dtree_dfs(G, u, i, q):
+    '''
+        Returns true is u is ancestor of i
+    '''
+    G.nodes[u]['discovered'] = True
+    q.append(u)
+
+    # current node u is target node i
+    if i == u:
+        try:
+            ancestor = q.popleft() # root
+            ancestor = q.popleft() # first child
+        except IndexError:
+            pass        
+        return False, ancestor # target tag is equal to the first children
+    else:
+        # keep looking
+        for v in G.neighbors(u):
+            if not G.node[v]['discovered']:
+                search, ancestor = _dtree_dfs(G, v, i, q)
+                if not search:
+                    return False, ancestor
+
+    q.pop()
+    return True, None
+
+
+def _dtree_refresh(G):
+    for u in G:
+        G.nodes[u]['discovered'] = False
+
+
+def _dtree_build(Dtree, ID, lb, ub):
+    G = nx.Graph()
+    root = None
+    for i in range(lb, ub):
+        G.add_node(i, discovered=False)
+
+    for i in range(lb, ub):
+        v = Dtree[i]
+        u = ID[i]
+        if v == 0:
+            root = i
+        else:
+            G.add_edge(i, (v - u) + i)
+
+    return G, root
+
+#     def run(self):
+#         '''
+#             Computes the distance to the target predicate
+#         '''
+#         # defines output data structure
+#         self.kernel = defaultdict(OrderedDict)
+
+#         # finds predicate time 
+#         predicate_d = _predicatedict(self.db)
+#         lb = 0
+#         ub = 0
+#         prev_prop = -1
+#         prev_time = -1
+#         process = False
+#         for time, proposition in self.db['P'].items():
+#             if prev_prop < proposition:
+#                 if prev_prop > 0:
+#                     lb = ub
+#                     ub = prev_time + 1  # ub must be inclusive
+#                     process = True
+
+#             if process:
+#                 G, root = self._build(lb, ub)
+#                 for i in range(lb, ub):
+#                     # Find children, parent and grand-parent
+#                     result = self._make_lookupnodes()
+#                     q = deque(list())
+#                     self._dfs_lookup(G, root, i, q, result)
+#                     for key, nodeidx in result.items():
+#                         for col in self.columns:
+#                             new_key = '{:}_{:}'.format(col, key).upper()
+#                             if nodeidx is None:
+#                                 self.kernel[new_key][i] = None
+#                             else:
+#                                 self.kernel[new_key][i] = self.db[col][nodeidx]
+
+#                     # Find path to predicate
+#                     self._refresh(G)
+#                     result = {}
+#                     q = deque(list())
+#                     pred = predicate_d[prev_prop]
+#                     self._dfs_path(G, i, pred, q, result)
+
+#                     for key, nodeidx in result.items():
+#                         for col in self.columns:
+#                             if col in ('GPOS', 'FUNC'):
+#                                 _key = key.split('_')[0]
+#                                 new_key = '{:}_{:}'.format(col, _key).upper()
+#                                 if nodeidx is None:
+#                                     self.kernel[new_key][i] = None
+#                                 else:
+#                                     self.kernel[new_key][i] = self.db[col][nodeidx]
+
+#                     self._refresh(G)
+
+#             process = False
+#             prev_prop = proposition
+#             prev_time = time
+
+#         return self.kernel
+    # def _make_lookupnodes(self):
+    #     _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
+    #     return dict.fromkeys(_list_keys)
+
+    # def _update_lookupnodes(self, children_l, ancestors_q, lookup_nodes):
+    #     self._update_ancestors(ancestors_q, lookup_nodes)
+    #     self._update_children(children_l, lookup_nodes)
+
+    # def _update_path(self, ancestors_q, lookup_nodes):
+    #     for i, nidx in enumerate(ancestors_q):
+    #         _key = '{:02d}_node'.format(i)
+    #         lookup_nodes[_key] = nidx
+
+    # def _update_ancestors(self, ancestors_q, lookup_nodes):
+    #     try:
+    #         lookup_nodes['parent'] = ancestors_q.pop()
+    #         lookup_nodes['grand_parent'] = ancestors_q.pop()
+    #     except IndexError:
+    #         pass
+
+    # def _update_children(self, children_l, lookup_nodes):
+    #     n = 0
+    #     for v in children_l:
+    #         if (not v == lookup_nodes['parent']):
+    #             key = 'child_{:}'.format(n + 1)
+    #             lookup_nodes[key] = v
+    #             n += 1
+    #         if n == 3:
+    #             break
+
+    # def _dfs_lookup(self, G, u, i, q, lookup_nodes):
+    #     G.nodes[u]['discovered'] = True
+    #     # updates ancestors if target i is undiscovered
+    #     if not G.nodes[i]['discovered']:
+    #         q.append(u)
+
+    #     # current node u is target node i
+    #     if i == u:
+    #         self._update_lookupnodes(G.neighbors(u), q, lookup_nodes)
+    #         return False
+    #     else:
+    #         # keep looking
+    #         for v in G.neighbors(u):
+    #             if not G.node[v]['discovered']:
+    #                 search = self._dfs_lookup(G, v, i, q, lookup_nodes)
+    #                 if not search:
+    #                     return False
+
+    #     if not G.nodes[i]['discovered']:
+    #         q.pop()
+    #     return True
+
+
+
+    # def _crosssection(self, idx):
+    #     list_keys = list(self.db.keys())
+    #     d = {key: self.db[key][idx] for key in list_keys}
+    #     d['discovered'] = False
+    #     return d
 
 
 
@@ -566,16 +841,42 @@ if __name__== '__main__':
     # forms = dfgs['FORM'].values
     # arguments = dfgs['ARG'].values
     # testing Y2ARG
-    P = [0] * 9
-    ID = list(range(1, 10))
-    PRED = ['-'] * 9
-    PRED[-3] = 'negar'
-    Dtree = [2, 7, 2, 5, 2, 5, 0, 7, 7]
-    Y = ['-'] * 9
+    # P = [0] * 9
+    # ID = list(range(1, 10))
+    # PRED = ['-'] * 9
+    # PRED[-3] = 'negar'
+    # Dtree = [2, 7, 2, 5, 2, 5, 0, 7, 7]
+    # Y = ['-'] * 9
+    # Y[1] = 'A0'
+    # Y[7] = 'A1'
+
+    # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
+    # print(ARG)
+
+    P = [1] * 33
+    ID = list(range(1, 34))
+    PRED = ['-'] * 33
+    PRED[4] = 'revelar'
+    Dtree = [5, 5, 2, 3, 0, 7, 5, 7, 7,
+             25, 12, 10, 12, 25, 17, 17, 25,
+             17, 20, 17, 17, 17, 24, 22, 7,
+             27, 25, 25, 28, 31, 29, 31, 5]
+    Y = ['-'] * 33
     Y[1] = 'A0'
-    Y[7] = 'A1'
-    
-    ARG = propbankbr_y2arg(P, ID, PRED, Dtree, Y)
+    Y[6] = 'A1'
+
+    P += [2] * 33
+    ID += list(range(1, 34))
+    PRED += ['recusar' if i == 9 else '-' for i in range(33)] 
+    # PRED[32 + 9] = 'revelar'
+    Dtree += [5, 5, 2, 3, 0, 7, 5, 7, 7,
+             25, 12, 10, 12, 25, 17, 17, 25,
+             17, 20, 17, 17, 17, 24, 22, 7,
+             27, 25, 25, 28, 31, 29, 31, 5]
+    # Y += ['-'] * 32
+    # Y[32 + 12] = 'A1'
+    Y += ['A1' if i == 11 else '-' for i in range(33)] 
+    ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
     import code; code.interact(local=dict(globals(), **locals()))
 
     # arg2t = propbankbr_arg2t(propositions, arguments)
@@ -587,15 +888,3 @@ if __name__== '__main__':
     #     for i, arg in enumerate(arguments):
     #         line = '{:},{:},{:},{:},{:},{:}\n'.format(i, arg, arg2t[i], t2arg[i], arg2r[i], r2arg[i])
     #         f.write(line)
-
-
-
-
-
-
-
-
-
-
-
-    

@@ -22,7 +22,6 @@ from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
 
 
-
 class _EncoderIterator(object):
     def __init__(self, low, high, decoder_fn):
         self.low = low
