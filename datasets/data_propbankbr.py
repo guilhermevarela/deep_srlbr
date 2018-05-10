@@ -30,7 +30,7 @@ CONST_HEADER=[
 ]
 DEP_HEADER=[
     'ID','FORM','LEMMA','GPOS','MORF', 'DTREE', 'FUNC', 
-    'IGN1', 'PRED','ARG0','ARG1','ARG2','ARG3',
+    'IGN1', 'IS_PRED', 'PRED','ARG0','ARG1','ARG2','ARG3',
     'ARG4','ARG5','ARG6'
 ]
 
@@ -64,6 +64,7 @@ MAPPER= {
             'MORF':4,
             'DTREE':5,
             'FUNC':6,
+            'IS_PRED':7,
             'PRED':8,
             'ARG0':9,
             'ARG1':10,
@@ -138,9 +139,9 @@ def propbankbr_parser():
     df_dep = _dep_read()
 
     # preprocess
-    df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    df_dep2 = df_dep[['FUNC', 'DTREE', 'IS_PRED', 'S', 'P', 'P_S' ]]
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
-        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
+        'DTREE', 'FUNC', 'CTREE', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
         'ARG5', 'ARG6'
     ]
 
@@ -178,7 +179,7 @@ def propbankbr_parser2():
     # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
     df_const2 = df_const['CTREE']
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
-        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
+        'DTREE', 'FUNC', 'CTREE', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
         'ARG5', 'ARG6'
     ]
 
@@ -293,6 +294,9 @@ def _dep_read():
                 if keys_count in mappings_inv.keys():
                     key=mappings_inv[keys_count]    
                     
+                    if (key=='IS_PRED'):
+                        val = 1 if val=='Y' else 0
+
                     if (key=='PRED'):
                         if (val != '-'):
                             p_count+=1
@@ -310,10 +314,11 @@ def _dep_read():
             for keys_count in range(key_max+1, M+1, 1): 
                 key=mappings_inv[keys_count]    
                 sentences[key].append(None)
-            
+                
             sentence_count.append(s_count)
             proposition_count.append(p_count)
             proposition_per_sentence_count.append(ps_count)
+    
     
     sentences['S']= sentence_count # adds a new column with number of sentences
     sentences['P']= proposition_count # adds a new column with number of propositions
@@ -475,39 +480,9 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
         if process:
             G, root = _dtree_build(Dtree, ID, lb, ub)
             subroot = root_d[prev_prop]
-            isopen = False
-            for i in range(lb, ub):
-                q = deque(list())
-                _, ancestor = _dtree_dfs(G, subroot, i, q)
-                if i == subroot: # verb found
-                    if last_ancestor is not None:
-                        if isopen:
-                            ARG[-1] += ')'
-                            isopen = False
-                    arg = '(V*)'
-                else:
-                    if ancestor is None:
-                        if isopen:
-                            ARG[-1] += ')'
-                            isopen = False
-                        arg = '*'
-                    else:
-                        if ancestor != last_ancestor:
-                            if isopen:
-                                ARG[-1] += ')'                    
-                            arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
-                            isopen = Y[ancestor] != '-'
-                        else:
-                            arg = '*'
-                ARG.append(arg)
-                last_ancestor = ancestor
-                _dtree_refresh(G)
-
-            if isopen:
-                ARG[-2] += ')'
-                isopen = False
+            ARG_PRED = _dtree_process(G, subroot, lb, ub)
+            ARG += ARG_PRED
             process = False
-
 
         prev_prop = proposition
         prev_time = t
@@ -518,10 +493,20 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
     G, root = _dtree_build(Dtree, ID, lb, ub)
     subroot = root_d[prev_prop]
     isopen = False
+    ARG_PRED = _dtree_process(G, subroot, lb, ub)
+    ARG += ARG_PRED
+    return ARG
+
+
+def _dtree_process(G, predicate_node, lb, ub):
+    ARG = []
+    last_ancestor = None
+    isopen = False
+    print(predicate_node)
     for i in range(lb, ub):
-        q = deque(list())
-        _, ancestor = _dtree_dfs(G, subroot, i, q)
-        if i == subroot: # verb found
+        ancestor = _dtree_find_ancestor(G, predicate_node, i)
+        print('i:{:}\tancestor:{:}\tlast_ancestor:{:}\tARG{:}'.format(i, ancestor, last_ancestor, ARG))
+        if i == predicate_node: # verb found
             if last_ancestor is not None:
                 if isopen:
                     ARG[-1] += ')'
@@ -543,7 +528,6 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
                     arg = '*'
         ARG.append(arg)
         last_ancestor = ancestor
-        _dtree_refresh(G)
 
     if isopen:
         ARG[-2] += ')'
@@ -551,9 +535,43 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
     return ARG
 
 
+def _dtree_find_ancestor(G, predicate_node, current_node):
+    '''
+        Returns common ancestor node
+        Each node follows the rule:
+        1 - current_node == predicate_node --> return current_node
+        2 - current_node in neightbors(predicate_node) --> return current_node
+        3 - current_node in  grand_children(predicate_node) -->  return first_child
+        4 - current_node is not in sublist --> return None
+
+        args:
+            G .: Dtree 
+            predicate_node .:
+            current_node .:
+
+        returns:
+            ancestor_node .:
+    '''
+    q = deque(list())
+    _, ancestor_node = _dtree_dfs(G, predicate_node, current_node, q)
+    _dtree_refresh(G)
+    return ancestor_node
+
+
 def _dtree_dfs(G, u, i, q):
     '''
-        Returns true is u is ancestor of i
+        Returns searches for i in subtree rooted at u
+        args:
+            G .: networkx.Graph Dtree
+            u .: int ancestor node
+            i .: int node
+            q .: deque
+
+        returns:
+            ancestor .: int or None
+                if i is in subtree rooted at first u then
+                ancestor == root if u == i 
+                ancestor == min(neighbors(root), i)
     '''
     G.nodes[u]['discovered'] = True
     q.append(u)
@@ -573,6 +591,7 @@ def _dtree_dfs(G, u, i, q):
                 search, ancestor = _dtree_dfs(G, v, i, q)
                 if not search:
                     return False, ancestor
+
 
     q.pop()
     return True, None
@@ -598,127 +617,6 @@ def _dtree_build(Dtree, ID, lb, ub):
             G.add_edge(i, (v - u) + i)
 
     return G, root
-
-#     def run(self):
-#         '''
-#             Computes the distance to the target predicate
-#         '''
-#         # defines output data structure
-#         self.kernel = defaultdict(OrderedDict)
-
-#         # finds predicate time 
-#         predicate_d = _predicatedict(self.db)
-#         lb = 0
-#         ub = 0
-#         prev_prop = -1
-#         prev_time = -1
-#         process = False
-#         for time, proposition in self.db['P'].items():
-#             if prev_prop < proposition:
-#                 if prev_prop > 0:
-#                     lb = ub
-#                     ub = prev_time + 1  # ub must be inclusive
-#                     process = True
-
-#             if process:
-#                 G, root = self._build(lb, ub)
-#                 for i in range(lb, ub):
-#                     # Find children, parent and grand-parent
-#                     result = self._make_lookupnodes()
-#                     q = deque(list())
-#                     self._dfs_lookup(G, root, i, q, result)
-#                     for key, nodeidx in result.items():
-#                         for col in self.columns:
-#                             new_key = '{:}_{:}'.format(col, key).upper()
-#                             if nodeidx is None:
-#                                 self.kernel[new_key][i] = None
-#                             else:
-#                                 self.kernel[new_key][i] = self.db[col][nodeidx]
-
-#                     # Find path to predicate
-#                     self._refresh(G)
-#                     result = {}
-#                     q = deque(list())
-#                     pred = predicate_d[prev_prop]
-#                     self._dfs_path(G, i, pred, q, result)
-
-#                     for key, nodeidx in result.items():
-#                         for col in self.columns:
-#                             if col in ('GPOS', 'FUNC'):
-#                                 _key = key.split('_')[0]
-#                                 new_key = '{:}_{:}'.format(col, _key).upper()
-#                                 if nodeidx is None:
-#                                     self.kernel[new_key][i] = None
-#                                 else:
-#                                     self.kernel[new_key][i] = self.db[col][nodeidx]
-
-#                     self._refresh(G)
-
-#             process = False
-#             prev_prop = proposition
-#             prev_time = time
-
-#         return self.kernel
-    # def _make_lookupnodes(self):
-    #     _list_keys = ['parent', 'grand_parent', 'child_1', 'child_2', 'child_3']
-    #     return dict.fromkeys(_list_keys)
-
-    # def _update_lookupnodes(self, children_l, ancestors_q, lookup_nodes):
-    #     self._update_ancestors(ancestors_q, lookup_nodes)
-    #     self._update_children(children_l, lookup_nodes)
-
-    # def _update_path(self, ancestors_q, lookup_nodes):
-    #     for i, nidx in enumerate(ancestors_q):
-    #         _key = '{:02d}_node'.format(i)
-    #         lookup_nodes[_key] = nidx
-
-    # def _update_ancestors(self, ancestors_q, lookup_nodes):
-    #     try:
-    #         lookup_nodes['parent'] = ancestors_q.pop()
-    #         lookup_nodes['grand_parent'] = ancestors_q.pop()
-    #     except IndexError:
-    #         pass
-
-    # def _update_children(self, children_l, lookup_nodes):
-    #     n = 0
-    #     for v in children_l:
-    #         if (not v == lookup_nodes['parent']):
-    #             key = 'child_{:}'.format(n + 1)
-    #             lookup_nodes[key] = v
-    #             n += 1
-    #         if n == 3:
-    #             break
-
-    # def _dfs_lookup(self, G, u, i, q, lookup_nodes):
-    #     G.nodes[u]['discovered'] = True
-    #     # updates ancestors if target i is undiscovered
-    #     if not G.nodes[i]['discovered']:
-    #         q.append(u)
-
-    #     # current node u is target node i
-    #     if i == u:
-    #         self._update_lookupnodes(G.neighbors(u), q, lookup_nodes)
-    #         return False
-    #     else:
-    #         # keep looking
-    #         for v in G.neighbors(u):
-    #             if not G.node[v]['discovered']:
-    #                 search = self._dfs_lookup(G, v, i, q, lookup_nodes)
-    #                 if not search:
-    #                     return False
-
-    #     if not G.nodes[i]['discovered']:
-    #         q.pop()
-    #     return True
-
-
-
-    # def _crosssection(self, idx):
-    #     list_keys = list(self.db.keys())
-    #     d = {key: self.db[key][idx] for key in list_keys}
-    #     d['discovered'] = False
-    #     return d
-
 
 
 def propbankbr_arg2t(propositions, arguments):
@@ -870,38 +768,54 @@ if __name__== '__main__':
     # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
     # print(ARG)
 
-    P = [1] * 33
-    ID = list(range(1, 34))
-    PRED = ['-'] * 33
-    PRED[4] = 'revelar'
-    Dtree = [5, 5, 2, 3, 0, 7, 5, 7, 7,
-             25, 12, 10, 12, 25, 17, 17, 25,
-             17, 20, 17, 17, 17, 24, 22, 7,
-             27, 25, 25, 28, 31, 29, 31, 5]
-    Y = ['-'] * 33
-    Y[1] = 'A0'
-    Y[6] = 'A1'
+    # P = [1] * 33
+    # ID = list(range(1, 34))
+    # PRED = ['-'] * 33
+    # PRED[4] = 'revelar'
+    # Dtree = [5, 5, 2, 3, 0, 7, 5, 7, 7,
+    #          25, 12, 10, 12, 25, 17, 17, 25,
+    #          17, 20, 17, 17, 17, 24, 22, 7,
+    #          27, 25, 25, 28, 31, 29, 31, 5]
+    # Y = ['-'] * 33
+    # Y[1] = 'A0'
+    # Y[6] = 'A1'
 
-    P += [2] * 33
-    ID += list(range(1, 34))
-    PRED += ['recusar' if i == 9 else '-' for i in range(33)] 
+    # P += [2] * 33
+    # ID += list(range(1, 34))
+    # PRED += ['recusar' if i == 9 else '-' for i in range(33)] 
     # PRED[32 + 9] = 'revelar'
-    Dtree += [5, 5, 2, 3, 0, 7, 5, 7, 7,
-             25, 12, 10, 12, 25, 17, 17, 25,
-             17, 20, 17, 17, 17, 24, 22, 7,
-             27, 25, 25, 28, 31, 29, 31, 5]
+    # Dtree += [5, 5, 2, 3, 0, 7, 5, 7, 7,
+    #          25, 12, 10, 12, 25, 17, 17, 25,
+    #          17, 20, 17, 17, 17, 24, 22, 7,
+    #          27, 25, 25, 28, 31, 29, 31, 5]
     # Y += ['-'] * 32
     # Y[32 + 12] = 'A1'
-    Y += ['A1' if i == 11 else '-' for i in range(33)] 
-    ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
-    import code; code.interact(local=dict(globals(), **locals()))
+    # Y += ['A1' if i == 11 else '-' for i in range(33)] 
+    # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
+    # import code; code.interact(local=dict(globals(), **locals()))
+    # dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
+    dfdtree = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=0, encoding='utf-8', sep=',')
 
+    # propositions = list(dfsynth['P'].values)
+    # arguments = list(dfsynth['ARG'].values)
+
+    Y = list(dfdtree['ARG'].values)
+    ID = list(dfdtree['ID'].values)
+    P = list(dfdtree['P'].values)
+    PRED = list(dfdtree['PRED'].values)
+    Dtree = list(dfdtree['DTREE'].values)
+
+    # def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
     # arg2t = propbankbr_arg2t(propositions, arguments)
     # t2arg = propbankbr_t2arg(propositions, arg2t)
+
+    ARG = propbankbr_y2arg2(P[99:132], ID[99:132], PRED[99:132], Dtree[99:132], Y[99:132])
+    import code; code.interact(local=dict(globals(), **locals()))
+
     # arg2r = propbankbr_arg2r(arguments)
     # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
     # with open('test_arguments.csv', mode='w') as f:
-    #     f.write(',ARG,T,T2ARG,R,R2ARG\n')
+    #     f.write(',ARG2T,T2ARG,Y2ARG\n')
     #     for i, arg in enumerate(arguments):
-    #         line = '{:},{:},{:},{:},{:},{:}\n'.format(i, arg, arg2t[i], t2arg[i], arg2r[i], r2arg[i])
+    #         line = '{:},{:},{:},{:},{:}\n'.format(i, arg, arg2t[i], t2arg[i],  y2arg[i])
     #         f.write(line)
