@@ -242,6 +242,7 @@ def _const_read():
 
     return df 
 
+
 def _dep_read():
     '''
         Reads the file 'PropBankBr_v1.1_Dep.conll.txt' returning a pandas DataFrame
@@ -314,7 +315,7 @@ def _dep_read():
             for keys_count in range(key_max+1, M+1, 1): 
                 key=mappings_inv[keys_count]    
                 sentences[key].append(None)
-                
+
             sentence_count.append(s_count)
             proposition_count.append(p_count)
             proposition_per_sentence_count.append(ps_count)
@@ -370,96 +371,8 @@ def propbankbr_t2arg(propositions, arguments):
     return new_tags
 
 
-def propbankbr_y2arg(P, ID, PRED, Dtree, Y):
-    # Stores the PRED index for the verb
-    root_d = {P[i]:ID[i] for i, pred in enumerate(PRED) if pred != '-'}
-    ARG = []
-    prev_p = -1
-    isopen = False # flags if argument is open
-    for i in range(len(Y)):
-        if P[i] != prev_p:
-            root = root_d[P[i]]
-            unlabeled = deque([])
-            levels = defaultdict(list)
-            labels = {}
 
-            if prev_p > 0 and i + 1 < len(Y):
-                if unlabeled:
-                    try:
-                        while True:
-                            unlabeled.pop()
-                            ARG.append('*')
-                    except IndexError:
-                        pass
-                if isopen:
-                    ARG[-2] += ')'
-                    ARG[-1] = '*'
-                    isopen = False
-        # if i == 32 + 12:
-        #     import code; code.interact(local=dict(globals(), **locals()))
-        if ID[i] != root:
-            unlabeled.append(i)
-            if Dtree[i] == root:
-                levels[0].append(ID[i])
-                labels[ID[i]] = Y[i]
-                if isopen and Y[i] == '-':
-                    # Changed arguments
-                    ARG[-1] += ')'
-                    isopen = False
-                else:
-                    isopen = True
-                try:
-                    j = 0
-                    while True:
-                        unlabeled.pop()
-                        y = '({:}*'.format(Y[i]) if j == 0 and Y[i] != '-' else '*'
-                        ARG.append(y)
-                        j += 1
-                except IndexError:
-                    pass
-            else:
-
-                # belongs to one of the subtrees?
-                for l, nodes in levels.items():
-                    if Dtree[i] in nodes:
-                        y = labels[Dtree[i]]
-                        try:
-                            while True:
-                                unlabeled.pop()
-                                ARG.append('*')
-                        except IndexError:
-                            levels[l + 1].append(ID[i])
-                            labels[ID[i]] = y
-                        finally:
-                            break
-        else:
-            if isopen:
-                ARG[-1] += ')'
-                isopen = False
-            try:
-                while True:
-                    unlabeled.pop()
-                    ARG.append('*')
-            except IndexError:
-                ARG.append('(V*)')
-        print(P[i], prev_p, isopen, ARG)
-        prev_p = P[i]
-
-    if unlabeled:
-        try:
-            while True:
-                unlabeled.pop()
-                ARG.append('*')
-        except IndexError:
-            pass
-
-    if isopen:
-        ARG[-2] += ')'
-        ARG[-1] = '*'
-    return ARG
-
-
-def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
+def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y):
     # finds predicate time 
     root_d = {P[i]:i for i, pred in enumerate(PRED) if pred != '-'}
     lb = 0
@@ -478,7 +391,7 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
                 last_ancestor = None
 
         if process:
-            G, root = _dtree_build(Dtree, ID, lb, ub)
+            G, root = _dtree_build(Dtree, ID, IS_PRED, lb, ub)
             subroot = root_d[prev_prop]
             ARG_PRED = _dtree_process(G, subroot, lb, ub)
             ARG += ARG_PRED
@@ -490,7 +403,7 @@ def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
     lb = ub
     ub = prev_time + 1  # ub must be inclusive
     last_ancestor = None
-    G, root = _dtree_build(Dtree, ID, lb, ub)
+    G, root = _dtree_build(Dtree, ID, IS_PRED, lb, ub)
     subroot = root_d[prev_prop]
     isopen = False
     ARG_PRED = _dtree_process(G, subroot, lb, ub)
@@ -502,10 +415,8 @@ def _dtree_process(G, predicate_node, lb, ub):
     ARG = []
     last_ancestor = None
     isopen = False
-    print(predicate_node)
     for i in range(lb, ub):
         ancestor = _dtree_find_ancestor(G, predicate_node, i)
-        print('i:{:}\tancestor:{:}\tlast_ancestor:{:}\tARG{:}'.format(i, ancestor, last_ancestor, ARG))
         if i == predicate_node: # verb found
             if last_ancestor is not None:
                 if isopen:
@@ -573,16 +484,21 @@ def _dtree_dfs(G, u, i, q):
                 ancestor == root if u == i 
                 ancestor == min(neighbors(root), i)
     '''
+    if i == 76:
+        print('u:{:} --> i:{:}'.format(ID[u], ID[i]))
     G.nodes[u]['discovered'] = True
     q.append(u)
 
     # current node u is target node i
     if i == u:
         try:
-            ancestor = q.popleft() # root
-            ancestor = q.popleft() # first child
+            # pop all ancestors that are predicate
+            # in order to find which is the root token
+            while q and G.node[q[0]]['predicate']:
+                ancestor = q.popleft()
+            ancestor = q.popleft()
         except IndexError:
-            pass        
+            pass
         return False, ancestor # target tag is equal to the first children
     else:
         # keep looking
@@ -602,11 +518,11 @@ def _dtree_refresh(G):
         G.nodes[u]['discovered'] = False
 
 
-def _dtree_build(Dtree, ID, lb, ub):
+def _dtree_build(Dtree, ID, IS_PRED, lb, ub):
     G = nx.Graph()
     root = None
     for i in range(lb, ub):
-        G.add_node(i, discovered=False)
+        G.add_node(i, discovered=False, predicate=bool(IS_PRED[i]))
 
     for i in range(lb, ub):
         v = Dtree[i]
@@ -793,6 +709,7 @@ if __name__== '__main__':
     # Y += ['A1' if i == 11 else '-' for i in range(33)] 
     # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
     # import code; code.interact(local=dict(globals(), **locals()))
+    
     # dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
     dfdtree = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=0, encoding='utf-8', sep=',')
 
@@ -803,14 +720,17 @@ if __name__== '__main__':
     ID = list(dfdtree['ID'].values)
     P = list(dfdtree['P'].values)
     PRED = list(dfdtree['PRED'].values)
+    IS_PRED = list(dfdtree['IS_PRED'].values)
     Dtree = list(dfdtree['DTREE'].values)
 
-    # def propbankbr_y2arg2(P, ID, PRED, Dtree, Y):
+    
     # arg2t = propbankbr_arg2t(propositions, arguments)
     # t2arg = propbankbr_t2arg(propositions, arg2t)
 
-    ARG = propbankbr_y2arg2(P[99:132], ID[99:132], PRED[99:132], Dtree[99:132], Y[99:132])
+    ARG = propbankbr_y2arg2(P[:132], ID[:132], PRED[:132], IS_PRED[:132], Dtree[:132], Y[:132])
     import code; code.interact(local=dict(globals(), **locals()))
+    # y2arg = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y)
+    
 
     # arg2r = propbankbr_arg2r(arguments)
     # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
