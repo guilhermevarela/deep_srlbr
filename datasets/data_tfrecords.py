@@ -294,7 +294,7 @@ def input_fn(filenames, batch_size, num_epochs,
             D_batch             .: [M] features that serve as descriptors but are not used for training
                     M= len(input_sequence_features)
     '''
-    
+    print(target)
     filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
     
     
@@ -448,7 +448,6 @@ def _process_v2( context_features, sequence_features,
     # Fetch only context variable the length of the proposition
     L = context_features['L']
     
-    
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
@@ -461,6 +460,7 @@ def _process_v2( context_features, sequence_features,
         if key in features:
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
+            print('target is', target)
             T = dense_tensor
         else:
             print('descriptors: {:}'.format(key))
@@ -514,7 +514,8 @@ def _read_and_decode_v2(filename_queue):
     '''
     TF_SEQUENCE_FEATURES_V2 = {
         key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
+        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'ARG']
+        # for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
     }
     # TF_SEQUENCE_FEATURES_V2.update({
     #     key:tf.VarLenFeature(tf.float32) 

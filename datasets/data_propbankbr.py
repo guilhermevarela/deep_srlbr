@@ -64,7 +64,6 @@ MAPPER= {
             'MORF':4,
             'DTREE':5,
             'FUNC':6,
-            'IS_PRED':7,
             'PRED':8,
             'ARG0':9,
             'ARG1':10,
@@ -139,9 +138,9 @@ def propbankbr_parser():
     df_dep = _dep_read()
 
     # preprocess
-    df_dep2 = df_dep[['FUNC', 'DTREE', 'IS_PRED', 'S', 'P', 'P_S' ]]
+    df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
-        'DTREE', 'FUNC', 'CTREE', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
         'ARG5', 'ARG6'
     ]
 
@@ -179,7 +178,7 @@ def propbankbr_parser2():
     # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
     df_const2 = df_const['CTREE']
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
-        'DTREE', 'FUNC', 'CTREE', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
         'ARG5', 'ARG6'
     ]
 
@@ -294,9 +293,6 @@ def _dep_read():
             for keys_count, val in enumerate(values): 
                 if keys_count in mappings_inv.keys():
                     key=mappings_inv[keys_count]    
-                    
-                    if (key=='IS_PRED'):
-                        val = 1 if val=='Y' else 0
 
                     if (key=='PRED'):
                         if (val != '-'):
@@ -372,7 +368,7 @@ def propbankbr_t2arg(propositions, arguments):
 
 
 
-def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y):
+def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y):
     # finds predicate time 
     root_d = {P[i]:i for i, pred in enumerate(PRED) if pred != '-'}
     lb = 0
@@ -391,7 +387,7 @@ def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y):
                 last_ancestor = None
 
         if process:
-            G, root = _dtree_build(Dtree, ID, IS_PRED, lb, ub)
+            G, root = _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub)
             subroot = root_d[prev_prop]
             ARG_PRED = _dtree_process(G, subroot, lb, ub)
             ARG += ARG_PRED
@@ -403,7 +399,7 @@ def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y):
     lb = ub
     ub = prev_time + 1  # ub must be inclusive
     last_ancestor = None
-    G, root = _dtree_build(Dtree, ID, IS_PRED, lb, ub)
+    G, root = _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub)
     subroot = root_d[prev_prop]
     isopen = False
     ARG_PRED = _dtree_process(G, subroot, lb, ub)
@@ -484,17 +480,22 @@ def _dtree_dfs(G, u, i, q):
                 ancestor == root if u == i 
                 ancestor == min(neighbors(root), i)
     '''
-    if i == 76:
-        print('u:{:} --> i:{:}'.format(ID[u], ID[i]))
+    # if i == 44:
+    #     print('u:{:} --> i:{:}'.format(ID[u], ID[i]))
     G.nodes[u]['discovered'] = True
     q.append(u)
 
     # current node u is target node i
     if i == u:
+        # if i == 44:
+        #     import code; code.interact(local=dict(globals(), **locals()))
         try:
             # pop all ancestors that are predicate
             # in order to find which is the root token
-            while q and G.node[q[0]]['predicate']:
+            ancestor = q.popleft()
+            while q and G.node[q[0]]['predicate'] and not\
+                ('ICL' in G.node[q[0]]['synth'] or
+                    ('FCL' in G.node[q[0]]['synth'])):
                 ancestor = q.popleft()
             ancestor = q.popleft()
         except IndexError:
@@ -518,11 +519,15 @@ def _dtree_refresh(G):
         G.nodes[u]['discovered'] = False
 
 
-def _dtree_build(Dtree, ID, IS_PRED, lb, ub):
+def _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub):
     G = nx.Graph()
     root = None
     for i in range(lb, ub):
-        G.add_node(i, discovered=False, predicate=bool(IS_PRED[i]))
+        # if i == 43:
+        #     import code; code.interact(local=dict(globals(), **locals()))
+        synth = re.sub('\*|\)', '', str(Ctree[i]))
+        synth = {e for e in synth.split('(') if e}
+        G.add_node(i, discovered=False, predicate=bool(IS_PRED[i]), synth=synth)
 
     for i in range(lb, ub):
         v = Dtree[i]
@@ -709,33 +714,35 @@ if __name__== '__main__':
     # Y += ['A1' if i == 11 else '-' for i in range(33)] 
     # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
     # import code; code.interact(local=dict(globals(), **locals()))
-    
-    # dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
+
+    dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
     dfdtree = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=0, encoding='utf-8', sep=',')
 
-    # propositions = list(dfsynth['P'].values)
-    # arguments = list(dfsynth['ARG'].values)
+    propositions = list(dfsynth['P'].values)
+    arguments = list(dfsynth['ARG'].values)
 
+    FORM = list(dfdtree['FORM'].values)
     Y = list(dfdtree['ARG'].values)
     ID = list(dfdtree['ID'].values)
     P = list(dfdtree['P'].values)
     PRED = list(dfdtree['PRED'].values)
-    IS_PRED = list(dfdtree['IS_PRED'].values)
+    # IS_PRED = list(dfdtree['IS_PRED'].values)
     Dtree = list(dfdtree['DTREE'].values)
+    Ctree = list(dfdtree['CTREE'].values)
 
-    
-    # arg2t = propbankbr_arg2t(propositions, arguments)
-    # t2arg = propbankbr_t2arg(propositions, arg2t)
 
-    ARG = propbankbr_y2arg2(P[:132], ID[:132], PRED[:132], IS_PRED[:132], Dtree[:132], Y[:132])
-    import code; code.interact(local=dict(globals(), **locals()))
-    # y2arg = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Y)
+    arg2t = propbankbr_arg2t(propositions, arguments)
+    t2arg = propbankbr_t2arg(propositions, arg2t)
+
+    # ARG = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
+    # import code; code.interact(local=dict(globals(), **locals()))
+    # y2arg = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
     
 
     # arg2r = propbankbr_arg2r(arguments)
     # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
     # with open('test_arguments.csv', mode='w') as f:
-    #     f.write(',ARG2T,T2ARG,Y2ARG\n')
+    #     f.write('INDEX\tFORM\tCTREE\tARG\tARG2T\tT2ARG\tY2ARG\n')
     #     for i, arg in enumerate(arguments):
-    #         line = '{:},{:},{:},{:},{:}\n'.format(i, arg, arg2t[i], t2arg[i],  y2arg[i])
+    #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, FORM[i], Ctree[i], arg, arg2t[i], t2arg[i],  y2arg[i])
     #         f.write(line)
