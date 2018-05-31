@@ -13,7 +13,9 @@ import pandas as pd
 import numpy as np 
 import re
 import os.path
-
+import networkx as nx
+import matplotlib.pyplot as plt
+from collections import defaultdict, deque
 PROPBANKBR_PATH='../datasets/txts/conll/'
 # PROPBANKBR_PATH='../datasets/conll/'
 TARGET_PATH='../datasets/csvs/'
@@ -28,7 +30,7 @@ CONST_HEADER=[
 ]
 DEP_HEADER=[
     'ID','FORM','LEMMA','GPOS','MORF', 'DTREE', 'FUNC', 
-    'IGN1', 'PRED','ARG0','ARG1','ARG2','ARG3',
+    'IGN1', 'IS_PRED', 'PRED','ARG0','ARG1','ARG2','ARG3',
     'ARG4','ARG5','ARG6'
 ]
 
@@ -111,9 +113,9 @@ def propbankbr_split(df, testN=263, validN=569):
     return dftrain, dfvalid, dftest
 
 
-def propbankbr_parser():        
+def propbankbr_parser():
     '''
-    Uses refs/1421593_2016_completo.pdf
+    Users arguments as of CONLL 2005 (FLATTENED ARGUMENT) <--> SYNTHATIC TREE
 
     'ID'    : Contador de tokens que inicia em 1 para cada nova proposição
     'FORM'  : Forma da palavra ou sinal de pontuação
@@ -132,12 +134,13 @@ def propbankbr_parser():
     'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
     'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
     '''
-    df_const= _const_read()
-    df_dep= _dep_read() 
+    df_const = _const_read()
+    df_dep = _dep_read()
+
     # preprocess
-    df_dep2= df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
-    usecols= ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF', 
-        'DTREE', 'FUNC', 'CTREE', 'PRED',  'ARG0', 'ARG1', 'ARG2','ARG3', 'ARG4', 
+    df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 
         'ARG5', 'ARG6'
     ]
 
@@ -147,7 +150,44 @@ def propbankbr_parser():
 
     return df
 
+def propbankbr_parser2():
+    '''
+    Users arguments as of CONLL 2005 (ONLY THE ARGUMENT SETTING AT THE ROOT OF THE TREE) <--> DTREE
 
+    'ID'    : Contador de tokens que inicia em 1 para cada nova proposição
+    'FORM'  : Forma da palavra ou sinal de pontuação
+    'LEMMA' : Lema gold-standard da FORM 
+    'GPOS'  : Etiqueta part-of-speech gold-standard
+    'MORF'  : Atributos morfológicos  gold-standard
+    'DTREE' : Árvore Sintagmática gold-standard completa    
+    'FUNC'  : Função Sintática do token gold-standard para com seu regente na árvore de dependência
+    'CTREE' : Árvore Sintagmática gold-standard completa
+    'PRED'  : Predicatos semânticos na proposição
+    'ARG0'  : 1o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG1'  : 2o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG2'  : 3o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG3'  : 4o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG4'  : 5o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG5'  : 6o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
+    '''
+    df_const = _const_read()
+    df_dep = _dep_read()
+
+    # preprocess
+    # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    df_const2 = df_const['CTREE']
+    usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
+        'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
+        'ARG5', 'ARG6'
+    ]
+
+    df = pd.concat((df_dep, df_const2), axis=1)
+    df = df[usecols]
+    df = df.applymap(trim)
+    df['GPOS'] = df['GPOS'].str.upper()
+
+    return df
 
 def propbankbr_argument_stats(df):
     '''
@@ -201,6 +241,7 @@ def _const_read():
 
     return df 
 
+
 def _dep_read():
     '''
         Reads the file 'PropBankBr_v1.1_Dep.conll.txt' returning a pandas DataFrame
@@ -252,7 +293,7 @@ def _dep_read():
             for keys_count, val in enumerate(values): 
                 if keys_count in mappings_inv.keys():
                     key=mappings_inv[keys_count]    
-                    
+
                     if (key=='PRED'):
                         if (val != '-'):
                             p_count+=1
@@ -270,10 +311,11 @@ def _dep_read():
             for keys_count in range(key_max+1, M+1, 1): 
                 key=mappings_inv[keys_count]    
                 sentences[key].append(None)
-            
+
             sentence_count.append(s_count)
             proposition_count.append(p_count)
             proposition_per_sentence_count.append(ps_count)
+    
     
     sentences['S']= sentence_count # adds a new column with number of sentences
     sentences['P']= proposition_count # adds a new column with number of propositions
@@ -322,7 +364,181 @@ def propbankbr_t2arg(propositions, arguments):
         new_tags[-1]+=')'       
         isopen=False
 
-    return new_tags 
+    return new_tags
+
+
+
+def propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y):
+    # finds predicate time 
+    root_d = {P[i]:i for i, pred in enumerate(PRED) if pred != '-'}
+    lb = 0
+    ub = 0
+    prev_prop = -1
+    prev_time = -1
+    process = False
+    last_ancestor = None
+    ARG = []
+    for t, proposition in enumerate(P):
+        if prev_prop < proposition:
+            if prev_prop > 0:
+                lb = ub
+                ub = prev_time + 1  # ub must be inclusive
+                process = True
+                last_ancestor = None
+
+        if process:
+            G, root = _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub)
+            subroot = root_d[prev_prop]
+            ARG_PRED = _dtree_process(G, subroot, lb, ub)
+            ARG += ARG_PRED
+            process = False
+
+        prev_prop = proposition
+        prev_time = t
+
+    lb = ub
+    ub = prev_time + 1  # ub must be inclusive
+    last_ancestor = None
+    G, root = _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub)
+    subroot = root_d[prev_prop]
+    isopen = False
+    ARG_PRED = _dtree_process(G, subroot, lb, ub)
+    ARG += ARG_PRED
+    return ARG
+
+
+def _dtree_process(G, predicate_node, lb, ub):
+    ARG = []
+    last_ancestor = None
+    isopen = False
+    for i in range(lb, ub):
+        ancestor = _dtree_find_ancestor(G, predicate_node, i)
+        if i == predicate_node: # verb found
+            if last_ancestor is not None:
+                if isopen:
+                    ARG[-1] += ')'
+                    isopen = False
+            arg = '(V*)'
+        else:
+            if ancestor is None:
+                if isopen:
+                    ARG[-1] += ')'
+                    isopen = False
+                arg = '*'
+            else:
+                if ancestor != last_ancestor:
+                    if isopen:
+                        ARG[-1] += ')'
+                    arg = '({:}*'.format(Y[ancestor]) if Y[ancestor] != '-' else '*'
+                    isopen = Y[ancestor] != '-'
+                else:
+                    arg = '*'
+        ARG.append(arg)
+        last_ancestor = ancestor
+
+    if isopen:
+        ARG[-2] += ')'
+        isopen = False
+    return ARG
+
+
+def _dtree_find_ancestor(G, predicate_node, current_node):
+    '''
+        Returns common ancestor node
+        Each node follows the rule:
+        1 - current_node == predicate_node --> return current_node
+        2 - current_node in neightbors(predicate_node) --> return current_node
+        3 - current_node in  grand_children(predicate_node) -->  return first_child
+        4 - current_node is not in sublist --> return None
+
+        args:
+            G .: Dtree 
+            predicate_node .:
+            current_node .:
+
+        returns:
+            ancestor_node .:
+    '''
+    q = deque(list())
+    _, ancestor_node = _dtree_dfs(G, predicate_node, current_node, q)
+    _dtree_refresh(G)
+    return ancestor_node
+
+
+def _dtree_dfs(G, u, i, q):
+    '''
+        Returns searches for i in subtree rooted at u
+        args:
+            G .: networkx.Graph Dtree
+            u .: int ancestor node
+            i .: int node
+            q .: deque
+
+        returns:
+            ancestor .: int or None
+                if i is in subtree rooted at first u then
+                ancestor == root if u == i 
+                ancestor == min(neighbors(root), i)
+    '''
+    # if i == 44:
+    #     print('u:{:} --> i:{:}'.format(ID[u], ID[i]))
+    G.nodes[u]['discovered'] = True
+    q.append(u)
+
+    # current node u is target node i
+    if i == u:
+        # if i == 44:
+        #     import code; code.interact(local=dict(globals(), **locals()))
+        try:
+            # pop all ancestors that are predicate
+            # in order to find which is the root token
+            ancestor = q.popleft()
+            while q and G.node[q[0]]['predicate'] and not\
+                ('ICL' in G.node[q[0]]['synth'] or
+                    ('FCL' in G.node[q[0]]['synth'])):
+                ancestor = q.popleft()
+            ancestor = q.popleft()
+        except IndexError:
+            pass
+        return False, ancestor # target tag is equal to the first children
+    else:
+        # keep looking
+        for v in G.neighbors(u):
+            if not G.node[v]['discovered']:
+                search, ancestor = _dtree_dfs(G, v, i, q)
+                if not search:
+                    return False, ancestor
+
+
+    q.pop()
+    return True, None
+
+
+def _dtree_refresh(G):
+    for u in G:
+        G.nodes[u]['discovered'] = False
+
+
+def _dtree_build(Dtree, Ctree, ID, IS_PRED, lb, ub):
+    G = nx.Graph()
+    root = None
+    for i in range(lb, ub):
+        # if i == 43:
+        #     import code; code.interact(local=dict(globals(), **locals()))
+        synth = re.sub('\*|\)', '', str(Ctree[i]))
+        synth = {e for e in synth.split('(') if e}
+        G.add_node(i, discovered=False, predicate=bool(IS_PRED[i]), synth=synth)
+
+    for i in range(lb, ub):
+        v = Dtree[i]
+        u = ID[i]
+        if v == 0:
+            root = i
+        else:
+            G.add_edge(i, (v - u) + i)
+
+    return G, root
+
 
 def propbankbr_arg2t(propositions, arguments):
     '''
@@ -356,7 +572,84 @@ def propbankbr_arg2t(propositions, arguments):
         prev_tag= tag   
         prev_prop= prop     
         new_tags.append(new_tag)
-    return new_tags             
+    return new_tags
+
+
+def propbankbr_arg2r(arguments):
+    '''
+        Converts arguments to root_arguments .:
+        Only the root of semantic chuck carries the tag.
+
+    '''
+    new_tags = []
+    for tag in arguments:
+        if (tag in ('*')):
+            new_tag = '*'
+        elif (tag in ('*)')):
+            new_tag = ')'
+        else:
+            new_tag = re.sub(r'\(|\)|\*|', '', tag)
+
+        new_tags.append(new_tag)
+    return new_tags
+
+
+def propbankbr_r2arg(forms, propositions, arguments):
+    '''
+        Root arguments into golden standard arguments
+
+        Only the root of semantic chuck carries the tag.
+
+    '''
+    isopen = False
+    prev_tag = '*'
+    prev_prop = -1
+    new_tags = []
+    triples = zip(forms, propositions, arguments)
+    i = 0 
+    for form, prop, tag in triples:
+        if prop != prev_prop:
+            prev_tag = '*'
+            if isopen: # Close 
+                if ')' not in new_tags:
+                    new_tags[-1] += ')'
+                    isopen = False
+
+        if tag == ')':
+            new_tag = '*)'
+            isopen = False
+
+        elif tag != '*' and tag != prev_tag:
+            if prev_prop == prop and\
+             (prev_tag not in ('*', ')') or (form == '.' and isopen)):
+                if ')' not in new_tags[-1]:
+                    new_tags[-1] += ')'
+                    isopen = False
+
+            if tag != '*':
+                new_tag = '({:}*'.format(tag)
+                isopen = True
+
+        elif prev_prop == prop:
+            if form == '.' and isopen:
+                # Close previous
+                if ')' not in new_tags[-1]:
+                    new_tags[-1] = '*)'
+                    isopen = False
+            new_tag = '*'
+        else:
+            new_tag = '*'
+
+
+        prev_tag = tag if tag != '*' else prev_tag
+        prev_prop = prop
+        new_tags.append(new_tag)
+        i += 1
+    if isopen:
+        new_tags[-1] += ')'
+        isopen = False
+
+    return new_tags
 
 
 def get_signature(mappings): 
@@ -369,20 +662,87 @@ def trim(val):
     return val
 
 if __name__== '__main__':
-    df = propbankbr_parser()
-    propbankbr_persist(df, dataset_name='gs')
+    
+
+    # Test propbank parsing
+    # df = propbankbr_parser()  # --> needs update
+    # propbankbr_persist(df, dataset_name='gssynth')
     # print('Parsing propbank')
     # df = propbankbr_parser2(ctx_p_size=3)
-
-    # print('Done. with shape=', df.shape)
-    # print('Spliting dataset')
-    # # df = pd.read_csv(TARGET_PATH + 'zhou_1.csv', sep=',')
     # df_train, df_valid, df_test =propbankbr_split(df)
-    # print('Train. with shape=', df_train.shape)
-    # print('Valid. with shape=', df_valid.shape)
-    # print('Test.  with shape=', df_test.shape)
-    # print('Persisting propbank')
-    # propbankbr_persist(df, dataset_name='zhou_1')
 
+    #testing new arguments
+    # dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
+    # propositions = dfgs['P'].values
+    # forms = dfgs['FORM'].values
+    # arguments = dfgs['ARG'].values
+    # testing Y2ARG
+    # P = [0] * 9
+    # ID = list(range(1, 10))
+    # PRED = ['-'] * 9
+    # PRED[-3] = 'negar'
+    # Dtree = [2, 7, 2, 5, 2, 5, 0, 7, 7]
+    # Y = ['-'] * 9
+    # Y[1] = 'A0'
+    # Y[7] = 'A1'
+
+    # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
+    # print(ARG)
+
+    # P = [1] * 33
+    # ID = list(range(1, 34))
+    # PRED = ['-'] * 33
+    # PRED[4] = 'revelar'
+    # Dtree = [5, 5, 2, 3, 0, 7, 5, 7, 7,
+    #          25, 12, 10, 12, 25, 17, 17, 25,
+    #          17, 20, 17, 17, 17, 24, 22, 7,
+    #          27, 25, 25, 28, 31, 29, 31, 5]
+    # Y = ['-'] * 33
+    # Y[1] = 'A0'
+    # Y[6] = 'A1'
+
+    # P += [2] * 33
+    # ID += list(range(1, 34))
+    # PRED += ['recusar' if i == 9 else '-' for i in range(33)] 
+    # PRED[32 + 9] = 'revelar'
+    # Dtree += [5, 5, 2, 3, 0, 7, 5, 7, 7,
+    #          25, 12, 10, 12, 25, 17, 17, 25,
+    #          17, 20, 17, 17, 17, 24, 22, 7,
+    #          27, 25, 25, 28, 31, 29, 31, 5]
+    # Y += ['-'] * 32
+    # Y[32 + 12] = 'A1'
+    # Y += ['A1' if i == 11 else '-' for i in range(33)] 
+    # ARG = propbankbr_y2arg2(P, ID, PRED, Dtree, Y)
+    # import code; code.interact(local=dict(globals(), **locals()))
+
+    dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
+    dfdtree = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=0, encoding='utf-8', sep=',')
+
+    propositions = list(dfsynth['P'].values)
+    arguments = list(dfsynth['ARG'].values)
+
+    FORM = list(dfdtree['FORM'].values)
+    Y = list(dfdtree['ARG'].values)
+    ID = list(dfdtree['ID'].values)
+    P = list(dfdtree['P'].values)
+    PRED = list(dfdtree['PRED'].values)
+    # IS_PRED = list(dfdtree['IS_PRED'].values)
+    Dtree = list(dfdtree['DTREE'].values)
+    Ctree = list(dfdtree['CTREE'].values)
+
+
+    arg2t = propbankbr_arg2t(propositions, arguments)
+    t2arg = propbankbr_t2arg(propositions, arg2t)
+
+    # ARG = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
+    # import code; code.interact(local=dict(globals(), **locals()))
+    # y2arg = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
     
-    
+
+    # arg2r = propbankbr_arg2r(arguments)
+    # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
+    # with open('test_arguments.csv', mode='w') as f:
+    #     f.write('INDEX\tFORM\tCTREE\tARG\tARG2T\tT2ARG\tY2ARG\n')
+    #     for i, arg in enumerate(arguments):
+    #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, FORM[i], Ctree[i], arg, arg2t[i], t2arg[i],  y2arg[i])
+    #         f.write(line)

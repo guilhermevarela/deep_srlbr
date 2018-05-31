@@ -22,7 +22,6 @@ from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
 
 
-
 class _EncoderIterator(object):
     def __init__(self, low, high, decoder_fn):
         self.low = low
@@ -267,11 +266,10 @@ class PropbankEncoder(object):
         # Computes a dictionary that maps one column to a base column
 
         self.columns = self.columns.union(dbpt_d.keys())
-        self.columns_mapper = {col: re.sub(r'[\+|\-|\d|]|(_CTX_P)', '', col)
+        self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
 
         # Creates descriptors about the data
-        
         dflt_dict =  {'name':'dflt', 'category':'feature', 'type':'int', 'dims': None}
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
@@ -304,6 +302,14 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
+
+    def _subcol(self, col):
+        re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
+        re_repl = r'(_CHILD)|(_PARENT)|(_GRAND_PARENT)'
+
+        bcol = re.sub(re_ctxp, '', col)
+        bcol = re.sub(re_repl, '', bcol)
+        return bcol
 
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
@@ -358,6 +364,16 @@ if __name__ == '__main__':
     dfgs.set_index('INDEX', inplace=True)
     dfgs['INDEX'] = dfgs.index.tolist()
 
+    #Searches for column Y
+    dfdtree  = pd.read_csv('../datasets/csvs/gsdtree.csv', index_col=None)
+    dfdtree.set_index('INDEX', inplace=True)
+    dfdtree['INDEX'] = dfdtree.index.tolist()
+    dfY = dfdtree['ARG'].to_frame().rename(columns={'ARG': 'Y'})
+
+
+    dfgs = pd.concat((dfgs, dfY), axis=1)
+
+
 
     column_files = [
         '../datasets/csvs/column_predmarker/predicate_marker.csv',
@@ -374,11 +390,11 @@ if __name__ == '__main__':
     #In order to use glove uncheck
     # dbname = 'deep_glo50'    
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
-    # dbname = 'deep_wan50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
-    dbname = 'deep_wrd50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
-    
+    dbname = 'deep_wan50'    
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    # dbname = 'deep_wrd50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+
 
     propbank_encoder.persist('../datasets/binaries/', filename=dbname)
 

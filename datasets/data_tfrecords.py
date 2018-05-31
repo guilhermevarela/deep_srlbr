@@ -97,13 +97,13 @@ def tfrecords_extract_v2(ds_type,
         raise ValueError(buff)
     else:
         if ds_type in ['train']:
-            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_TRAIN_SIZE
         if ds_type in ['test']:
-            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_TEST_SIZE
         if ds_type in ['valid']:    
-            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_glo50')
             dataset_size=conf.DATASET_VALID_SIZE
 
     inputs, targets, lengths, others= tensor2numpy_v2(
@@ -294,7 +294,7 @@ def input_fn(filenames, batch_size, num_epochs,
             D_batch             .: [M] features that serve as descriptors but are not used for training
                     M= len(input_sequence_features)
     '''
-    
+    print(target)
     filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
     
     
@@ -448,7 +448,6 @@ def _process_v2( context_features, sequence_features,
     # Fetch only context variable the length of the proposition
     L = context_features['L']
     
-    
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
@@ -461,6 +460,7 @@ def _process_v2( context_features, sequence_features,
         if key in features:
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
+            print('target is', target)
             T = dense_tensor
         else:
             print('descriptors: {:}'.format(key))
@@ -514,7 +514,8 @@ def _read_and_decode_v2(filename_queue):
     '''
     TF_SEQUENCE_FEATURES_V2 = {
         key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
+        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'ARG']
+        # for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
     }
     # TF_SEQUENCE_FEATURES_V2.update({
     #     key:tf.VarLenFeature(tf.float32) 
@@ -784,5 +785,5 @@ if __name__== '__main__':
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wrd50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wan50')
 
