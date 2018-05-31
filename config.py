@@ -18,6 +18,10 @@ DATASET_TRAIN_V2_PATH= '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_V2_PATH= '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_V2_PATH = '{:}dbtest_pt_v2.tfrecords'.format(INPUT_DIR)
 
+DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_GLO50_PATH= '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_TEST_GLO50_PATH = '{:}dbtest_pt_v2.tfrecords'.format(INPUT_DIR)
+
 DATASET_SIZE= 5931
 DATASET_TRAIN_SIZE= 5099
 DATASET_VALID_SIZE= 569
