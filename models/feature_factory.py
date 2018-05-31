@@ -602,69 +602,7 @@ def _predicatedict(db):
             if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
     }
     return d
-# class ColumnSyntTree(object):
-#     '''
-#         Finds columns in Dependency Tree
-#     '''
-#     GPOS = {
-#         'art': set('art'),
-#         'adjective':  set('adj'),
-#         'adverb':  set('adv'),
-#         'noun' : set('n', 'n-adj'),
-#         'pronoun': set('pron-det', 'pron-rel', 'pron-pes'),
-#         'verb': set('v-fin', 'v-ger', 'v-pcp', 'v-inf'),
-#     }
-#     def __init__(self, dict_db):
-#         self.db = dict_db        
 
-#     def run(self):
-#         '''
-#             Computes the distance to the target predicate
-#         '''
-#         # defines output data structure
-#         self.kernel = {'KERNEL': OrderedDict({})}
-
-#         # Finds predicate position
-#         # predicate_d = {
-#         #     self.db['P'][time]: time
-#         #     for time, arg in self.db['ARG'].items() if arg == '(V*)'
-#         # }
-#         for col in ('FORM',):
-#             for time, proposition in self.db['P'].items():
-#                 predicate_time = predicate_d[proposition]
-#                 self._findkernel(func, col, time, proposition)
-
-
-#         self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
-
-#     def _findkernel(self, func, column, time, prop):
-#         if self.db['P'][time] != prop:
-#             return None
-#         idx = self.db['ID'][time]
-#         step = self.db['DTREE'][time]
-#         import code; code.interact(local=dict(globals(), **locals()))
-#         # first son
-#         son1_time = time + (step - idx)
-#         gpos = self.db['GPOS'][son1_time]
-#         if func in ('NP',) and gpos in GPOS['noun'].union(GPOS['pronoun']):
-#             return self.db[column][son1_time]
-
-#         elif func in ('AP',) and gpos in GPOS['noun']: # determinante?? --> adjp
-#             return self.db[column][son1_time]
-
-#         elif func in ('ADVP',) and gpos in GPOS['adv']:
-#             return self.db[column][son1_time]
-
-#         elif func in ('VP', 'FCL', 'ICL') and gpos in GPOS['verb']:
-#             return self.db[column][son1_time]
-
-#         elif func in ('PP',) and gpos in ('preposição',):
-#             return self.db[column][son1_time]
-
-#         elif func in ('ADVP',) and gpos in ('adverbio',):
-#             return self.db[column][son1_time]
-
-#         self._findkernel(func, column, son1_time, prop)
 
 def _process_passivevoice(dictdb):
 
@@ -746,41 +684,3 @@ def _store(d, target_name, target_dir):
         df = pd.DataFrame.from_dict(d)
         filename = '{:}{:}.csv'.format(target_dir, target_name)
         df.to_csv(filename, sep=',', encoding='utf-8', index=True)
-
-
-if __name__ == '__main__':
-    '''
-        Usage of FeatureFactory
-    '''
-    df = pd.read_csv('../datasets/csvs/gs.csv', index_col=0, encoding='utf-8')
-    dictdb = df.to_dict()
-
-    # Making column moving windpw around column
-    # columns = ('FORM', 'LEMMA', 'FUNC', 'GPOS')
-    # delta = 3
-    # shifts = [d for d in range(-delta, delta + 1, 1) if d != 0]
-    # _process_shifter(dictdb, columns, shifts)
-
-
-    # Making window around predicate
-    # columns = ('FUNC', 'GPOS', 'LEMMA', 'FORM')
-    # columns = ['PRED']
-    # delta = 3
-    # shifts = [d for d in range(-delta, delta + 1, 1)]
-    # _process_shifter_ctx_p(dictdb, columns, shifts)
-    
-
-    # Making DepTree Parser
-    # depfinder = FeatureFactory().make('ColumnDepTreeParser', dictdb)
-    # # columns = ['LEMMA']
-    # lemma_d = depfinder.define(['LEMMA']).run()
-    # _store(lemma_d, 'lemma', '../datasets/csvs/column_deptree/')
-    # gpos_d = depfinder.define(['GPOS']).run()
-    # _store(gpos_d, 'gpos', '../datasets/csvs/column_deptree/')
-    # func_d = depfinder.define(['FUNC']).run()
-    # _store(func_d, 'func', '../datasets/csvs/column_deptree/')
-
-    _process_t(dictdb)
-    # _process_predicate_marker(dictdb)
-    # _process_predmorph(dictdb)
-    # _process_passivevoice(dictdb)

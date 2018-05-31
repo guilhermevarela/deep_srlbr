@@ -1,7 +1,0 @@
-#!/bin/bash
-CURRENT_DIR=$PWD
-MODELS_DIR="models/"
-SVM_FILE="svm.py"
-PY_SCRIPT="$CURRENT_DIR/$MODELS_DIR$SVM_FILE"
-
-python $PY_SCRIPT 
