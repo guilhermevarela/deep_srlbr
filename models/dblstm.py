@@ -12,10 +12,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath('datasets'))
 
 from data_tfrecords import input_fn
-# from tf.nn.rnn_cell import BasicLSTMCell
-# from utils import error_rate2
-import os
-print(os.getcwd())
+
 INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
 HIDDEN_SIZE = [32, 32, 32]
@@ -41,96 +38,6 @@ def lazy_property(function):
         return getattr(self, attribute)
 
     return decorator
-
-
-class DataLayer(object):
-    '''
-      Defines the first layer for DBLSTM model
-    '''
-    def __init__(self, size):
-        self.size = size
-        with tf.variable_scope('fw'):
-            self.cell_fw = get_unit(self.size)
-
-        with tf.variable_scope('bw'):
-            self.cell_bw = get_unit(self.size)
-
-    @lazy_property
-    def forward0(self, X, seqlens):
-        with tf.variable_scope('fw{:}'.format(id(self))):
-            # CREATE / REUSE FWD/BWD CELL
-            self.cell_fw = get_unit(self.size)
-
-            outputs_fw, states = tf.nn.dynamic_rnn(
-                cell= self.cell_fw,
-                inputs=X,
-                sequence_length=seqlens,
-                dtype=tf.float32,
-                time_major=False
-            )
-
-        with tf.variable_scope('bw{:}'.format(id(self))):
-            self.cell_bw = get_unit(self.size)
-
-            inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
-
-            outputs_bw, states = tf.nn.dynamic_rnn(
-                cell=self.cell_bw,
-                inputs=inputs_bw,
-                sequence_length=seqlens,
-                dtype=tf.float32,
-                time_major=False
-            )
-            outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-
-        return outputs_bw, outputs_fw
-
-
-
-class HiddenLayer(object):
-    '''
-      Defines the hidden layers for model
-    '''
-    def __init__(self, size):
-        self.size = size
-
-        with tf.variable_scope('fw{:}'.format(id(self))):
-            self.cell_fw = get_unit(self.size)
-
-        with tf.variable_scope('bw{:}'.format(id(self))):
-            self.cell_bw = get_unit(self.size)
-
-    @lazy_property
-    def forward1(self, h, h_1, seqlens):
-        with tf.variable_scope('fw{:}'.format(id(self))):
-            inputs_fw = tf.concat((h, h_1), axis=2)
-
-            self.cell_fw = get_unit(self.size)
-
-            outputs_fw, states = tf.nn.dynamic_rnn(
-                cell=self.cell_fw,
-                inputs=inputs_fw,
-                sequence_length=seqlens,
-                dtype=tf.float32,
-                time_major=False
-            )
-
-        with tf.variable_scope('bw{:}'.format(id(self))):
-            inputs_bw = tf.concat((outputs_fw, h), axis=2)
-            inputs_bw = tf.reverse_sequence(inputs_bw, seqlens, batch_axis=0, seq_axis=1)
-            self.cell_bw = get_unit(self.size)
-
-            outputs_bw, states = tf.nn.dynamic_rnn(
-                cell=self.cell_bw,
-                inputs=inputs_bw,
-                sequence_length=seqlens,
-                dtype=tf.float32,
-                time_major=False
-            )
-            outputs_bw = tf.reverse_sequence(outputs_bw, seqlens, batch_axis=0, seq_axis=1)
-
-        return outputs_bw, outputs_fw
-
 
 
 class DBLSTM(object):
@@ -224,22 +131,6 @@ class DBLSTM(object):
                 outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
         return score
 
-    # def prediction(self):
-    #     with tf.variable_scope('forward_0', reuse=tf.AUTO_REUSE):
-    #         outputs, hidden = self.layers[0].forward0(self.X, self.seqlens)
-
-    #     for i, layer in enumerate(self.layers[1:]):
-    #         with tf.variable_scope('forward_{:}'.format(i+1), reuse=tf.AUTO_REUSE):
-    #             outputs, hidden = layer.forward1(outputs, hidden, self.seqlens)
-
-    #     with tf.variable_scope('score'):
-    #         outputs = tf.concat((outputs, hidden), axis=2)
-
-    #     # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-    #     score = tf.scan(
-    #         lambda a, x: tf.matmul(x, Wo),
-    #         outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
-    #     return score
 
     @lazy_property
     def optimize(self):
@@ -259,15 +150,15 @@ class DBLSTM(object):
 
     @lazy_property
     def error(self):
-        prediction = tf.cast(tf.argmax(self.prediction, 2), tf.int32)
-        mistakes = tf.not_equal(prediction, self.Tflat)
+        mistakes = tf.not_equal(tf.argmax(self.prediction, 2), tf.argmax(self.T, 2))
         mistakes = tf.cast(mistakes, tf.float32)
+        mask = tf.sign(tf.reduce_max(tf.abs(self.T), reduction_indices=2))
+        mask = tf.cast(mask, tf.float32)
+        mistakes *= mask
 
-        # mistakes *= mask
         # Average over actual sequence lengths.
         mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
         mistakes /= tf.cast(self.seqlens, tf.float32)
-
         return tf.reduce_mean(mistakes)
 
 def main():
@@ -280,14 +171,6 @@ def main():
     num_epochs = 10
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     target = 'ARG'
-    # mnist = input_data.read_data_sets('./mnist/', one_hot=True)
-
-
-    Wo_shape = (2 * layers_sizes[-1], target_size)
-    bo_shape = (target_size,)
-
-    Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
-    bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
 
     # pipeline control place holders
     # This makes training slower - but code is reusable
@@ -323,8 +206,8 @@ def main():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
 
-                _, loss, error = session.run(
-                    [dblstm.optimize, dblstm.cost, dblstm.error],
+                _, loss, Yish, error = session.run(
+                    [dblstm.optimize, dblstm.cost, dblstm.prediction, dblstm.error],
                     feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
                 )
 
