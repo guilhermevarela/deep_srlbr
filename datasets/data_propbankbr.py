@@ -448,24 +448,23 @@ def propbankbr_iob2arg(propositions, arguments):
         returns:
             iob          .: list<str>
     '''
-    prev_tag = ''
+    prev_tag = 'O'
     prev_prop = -1
     new_tags = []
-    for prop, tag in zip(propositions, arguments):
+    for prop, tag in zip(propositions, arguments):        
         if prev_prop == prop:
             if (tag[0] == 'B'):
                 new_tag = re.sub(r'B-', '(', tag) + '*'
             else:
                 new_tag = '*'
-
-            if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):
-                new_tags[-1] += ')'
         else:
             if (tag in ['O']):
                 new_tag = '*'
             else:
                 new_tag = re.sub(r'B-', '(', tag) + '*'
-
+        
+        if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):
+            new_tags[-1] += ')'
         prev_tag = tag
         prev_prop = prop
         new_tags.append(new_tag)
