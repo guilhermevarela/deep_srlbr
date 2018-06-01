@@ -168,7 +168,7 @@ def main():
     feature_size = 1 * 2 + 50 * (2 + 3)
     target_size = 60
     batch_size = 250
-    num_epochs = 10
+    num_epochs = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     target = 'ARG'
 

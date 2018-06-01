@@ -372,32 +372,102 @@ def propbankbr_arg2t(propositions, arguments):
         Converts default argument 0 into argument 1  format for easier softmax
 
     '''
-    prev_tag=''
-    prev_prop=-1
-    new_tags=[]
+    prev_tag = ''
+    prev_prop = -1
+    new_tags = []
     for prop, tag in zip(propositions, arguments):
-        if prev_prop == prop: 
-            if (tag in ['*']): # Either repeat or nothing
-                if (')' in prev_tag): 
-                    new_tag='*'
-                else:   
-                    new_tag=new_tags[-1] # repeat last
+        if prev_prop == prop:
+            if (tag in ['*']):  # Either repeat or nothing
+                if (')' in prev_tag):
+                    new_tag = '*'
+                else:
+                    new_tag = new_tags[-1]  # repeat last
             else:
-                if  (')' in prev_tag): #last tag is closed, refresh                  
-                    new_tag=re.sub(r'\(|\)|\*|','',tag)                 
+                if (')' in prev_tag):  # last tag is closed, refresh
+                    new_tag = re.sub(r'\(|\)|\*|', '', tag)
                 else:
                     if prev_tag != tag and tag != '*)':
-                        new_tag=re.sub(r'\(|\)|\*|','',tag)                 
+                        new_tag = re.sub(r'\(|\)|\*|', '', tag)
                     else:
-                        new_tag=new_tags[-1]            
-        else: 
+                        new_tag = new_tags[-1]
+        else:
             if (tag in ['*']):
-                new_tag='*'
+                new_tag = '*'
             else:
-                new_tag=re.sub(r'\(|\)|\*|','',tag)
+                new_tag = re.sub(r'\(|\)|\*|', '', tag)
 
-        prev_tag= tag   
-        prev_prop= prop     
+        prev_tag = tag
+        prev_prop = prop
+        new_tags.append(new_tag)
+    return new_tags
+
+
+def propbankbr_arg2iob(propositions, arguments):
+    '''
+        Converts FLAT TREE format to IOB format
+
+        args:
+            proposition  .: list<int>
+            arguments    .: list<str>
+
+        returns:
+            iob          .: list<str>
+    '''
+    prev_tag = ''
+    prev_prop = -1
+    new_tags = []
+    for prop, tag in zip(propositions, arguments):
+        if prev_prop == prop:
+            if (tag in ['*', '*)']):
+                if ((new_tags[-1] in ['O']) or ('*)' in prev_tag)):
+                    new_tag = 'O'
+                else:
+                    new_tag = 'I-{:}'.format(re.sub(r'I-|B-|', '', new_tags[-1]))
+            else:
+                new_tag = 'B-{:}'.format(re.sub(r'\(|\)|\*|', '', tag))
+        else:
+            if (tag in ['*']):
+                new_tag = 'O'
+            else:
+                new_tag = 'B-{:}'.format(re.sub(r'\(|\)|\*|', '', tag))
+
+        prev_tag = tag
+        prev_prop = prop
+        new_tags.append(new_tag)
+    return new_tags
+
+
+def propbankbr_iob2arg(propositions, arguments):
+    '''
+        Converts IOB format to FLAT TREE format
+
+        args:
+            proposition  .: list<int>
+            arguments    .: list<str>
+
+        returns:
+            iob          .: list<str>
+    '''
+    prev_tag = ''
+    prev_prop = -1
+    new_tags = []
+    for prop, tag in zip(propositions, arguments):
+        if prev_prop == prop:
+            if (tag[0] == 'B'):
+                new_tag = re.sub(r'B-', '(', tag) + '*'
+            else:
+                new_tag = '*'
+
+            if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):
+                new_tags[-1] += ')'
+        else:
+            if (tag in ['O']):
+                new_tag = '*'
+            else:
+                new_tag = re.sub(r'B-', '(', tag) + '*'
+
+        prev_tag = tag
+        prev_prop = prop
         new_tags.append(new_tag)
     return new_tags
 
@@ -431,15 +501,11 @@ if __name__== '__main__':
     arg2t = propbankbr_arg2t(propositions, arguments)
     t2arg = propbankbr_t2arg(propositions, arg2t)
 
-    # ARG = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
+    arg2iob = propbankbr_arg2iob(propositions, arguments)
+    iob2arg = propbankbr_iob2arg(propositions, arg2iob)
     # import code; code.interact(local=dict(globals(), **locals()))
-    # y2arg = propbankbr_y2arg2(P, ID, PRED, IS_PRED, Dtree, Ctree, Y)
-    
-
-    # arg2r = propbankbr_arg2r(arguments)
-    # r2arg = propbankbr_r2arg(forms, propositions, arg2r)
-    # with open('test_arguments.csv', mode='w') as f:
-    #     f.write('INDEX\tFORM\tCTREE\tARG\tARG2T\tT2ARG\tY2ARG\n')
-    #     for i, arg in enumerate(arguments):
-    #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, FORM[i], Ctree[i], arg, arg2t[i], t2arg[i],  y2arg[i])
-    #         f.write(line)
+    with open('test_arguments.csv', mode='w') as f:
+        f.write('INDEX\tARG\tARG2T\tARG2IOB\tT2ARG\tIOB2ARG\n')
+        for i, arg in enumerate(arguments):
+            line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, arg, arg2t[i], arg2iob[i], t2arg[i], iob2arg[i])
+            f.write(line)
