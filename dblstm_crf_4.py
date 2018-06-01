@@ -31,7 +31,7 @@ from data_tfrecords import input_fn, tfrecords_extract_v2
 from models.propbank_encoder import PropbankEncoder
 from models.propbank_mappers import MapperTensor2Column, MapperT2ARG
 from models.evaluator_conll import EvaluatorConll
-from models.evaluator import Evaluator
+
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 
 from utils import cross_entropy, error_rate2, precision, recall

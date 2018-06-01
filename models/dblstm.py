@@ -17,6 +17,7 @@ INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
 HIDDEN_SIZE = [32, 32, 32]
 TARGET_SIZE = 60
+LEARNING_RATE = 5 * 1e-3
 
 
 def get_unit(sz):
@@ -42,24 +43,27 @@ def lazy_property(function):
 
 class DBLSTM(object):
 
-    def __init__(self, X, T, seqlens):
+    def __init__(self, X, T, seqlens, learning_rate=5 * 1e-3, hidden_size=[32, 32], target_size=60):
         self.X = X
         self.T = T
         self.Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
         self.seqlens = seqlens
 
+        self.learning_rate = learning_rate
+        self.hidden_size = hidden_size
+        self.target_size = target_size
+
         self.prediction
+        self.cost
         self.optimize
         self.error
 
 
 
     @lazy_property
-    def prediction(self):
-        global HIDDEN_SIZE
-        global TARGET_SIZE
+    def prediction(self):                
         with tf.variable_scope('fw{:}'.format(id(self))):
-            self.cell_fw = get_unit(HIDDEN_SIZE[0])
+            self.cell_fw = get_unit(self.hidden_size[0])
 
             outputs_fw, states = tf.nn.dynamic_rnn(
                 cell= self.cell_fw,
@@ -70,7 +74,7 @@ class DBLSTM(object):
             )
 
         with tf.variable_scope('bw{:}'.format(id(self))):
-            self.cell_bw = get_unit(HIDDEN_SIZE[0])
+            self.cell_bw = get_unit(self.hidden_size[0])
 
             inputs_bw = tf.reverse_sequence(outputs_fw, self.seqlens, batch_axis=0, seq_axis=1)
 
@@ -85,7 +89,7 @@ class DBLSTM(object):
 
         h = outputs_bw
         h_1 = outputs_fw
-        for i, sz in enumerate(HIDDEN_SIZE[1:]):            
+        for i, sz in enumerate(self.hidden_size[1:]):            
             n = id(self) + i + 1
             with tf.variable_scope('fw{:}'.format(n)):
                 inputs_fw = tf.concat((h, h_1), axis=2)
@@ -116,8 +120,8 @@ class DBLSTM(object):
             h_1 = outputs_fw
 
         with tf.variable_scope('score'):
-            Wo_shape = (2 * HIDDEN_SIZE[-1], TARGET_SIZE)
-            bo_shape = (TARGET_SIZE,)
+            Wo_shape = (2 * self.hidden_size[-1], self.target_size)
+            bo_shape = (self.target_size,)
 
             Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
             bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
@@ -133,9 +137,8 @@ class DBLSTM(object):
 
     @lazy_property
     def optimize(self):
-        global LEARNING_RATE
         with tf.variable_scope('optimize'):
-            optimum = tf.train.AdamOptimizer(learning_rate=5 * 1e-3).minimize(self.cost)
+            optimum = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost)
         return optimum
 
     @lazy_property
@@ -145,7 +148,6 @@ class DBLSTM(object):
 
             # Compute the viterbi sequence and score.
             viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.prediction, transition_params, self.seqlens)
-
         return tf.reduce_mean(-log_likelihood)
 
     @lazy_property
@@ -161,13 +163,14 @@ class DBLSTM(object):
         mistakes /= tf.cast(self.seqlens, tf.float32)
         return tf.reduce_mean(mistakes)
 
-def main():    
+
+def main():
     HIDDEN_SIZE = [32, 32, 32]
-    LEARNING_RATE = 5 * 1e-3
+    lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
     TARGET_SIZE = 60
     BATCH_SIZE = 250
-    NUM_EPOCHS = 10
+    NUM_EPOCHS = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'ARG'
 
@@ -181,10 +184,15 @@ def main():
 
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
-            [DATASET_TRAIN_GLO50_PATH], NUM_EPOCHS, NUM_EPOCHS,
+            [DATASET_TRAIN_GLO50_PATH], BATCH_SIZE, NUM_EPOCHS,
             input_sequence_features, TARGET)
 
-    dblstm = DBLSTM(X, T, seqlens)
+    params = {
+        'learning_rate': lr, 
+        'hidden_size':HIDDEN_SIZE,
+        'target_size':TARGET_SIZE
+    }
+    dblstm = DBLSTM(X, T, seqlens, **params)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -212,10 +220,10 @@ def main():
 
                 total_loss += loss
                 total_error += error
-                if (step + 1) % 5 == 0:
+                if (step + 1) % 15 == 0:
                     print('Iter={:5d}'.format(step + 1),
-                          '\tavg. cost {:.6f}'.format(total_loss / 5),
-                          '\tavg. error {:.6f}'.format(total_error / 5))
+                          '\tavg. cost {:.6f}'.format(total_loss / 15),
+                          '\tavg. error {:.6f}'.format(total_error / 15))
                     total_loss = 0.0
                     total_error = 0.0
                 step += 1
