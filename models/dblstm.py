@@ -12,6 +12,11 @@ import sys, os
 sys.path.insert(0, os.path.abspath('datasets'))
 
 from data_tfrecords import input_fn
+from evaluator_conll import EvaluatorConll2
+from propbank_encoder import PropbankEncoder
+from propbank_mappers import MapperTensor2Column
+
+import numpy as np
 
 INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
@@ -46,22 +51,22 @@ class DBLSTM(object):
     def __init__(self, X, T, seqlens, learning_rate=5 * 1e-3, hidden_size=[32, 32], target_size=60):
         self.X = X
         self.T = T
-        self.Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
         self.seqlens = seqlens
 
         self.learning_rate = learning_rate
         self.hidden_size = hidden_size
         self.target_size = target_size
 
-        self.prediction
+        self.propagation
         self.cost
         self.optimize
+        self.prediction
         self.error
 
 
 
     @lazy_property
-    def prediction(self):                
+    def propagation(self):
         with tf.variable_scope('fw{:}'.format(id(self))):
             self.cell_fw = get_unit(self.hidden_size[0])
 
@@ -144,15 +149,22 @@ class DBLSTM(object):
     @lazy_property
     def cost(self):
         with tf.variable_scope('cost'):
-            log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(self.prediction, self.Tflat, self.seqlens)
-
-            # Compute the viterbi sequence and score.
-            viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.prediction, transition_params, self.seqlens)
+            Tflat = tf.cast(tf.argmax(self.T, 2), tf.int32)
+            log_likelihood, self.transition_params = tf.contrib.crf.crf_log_likelihood(self.propagation, Tflat, self.seqlens)
+            
         return tf.reduce_mean(-log_likelihood)
 
     @lazy_property
+    def prediction(self):
+        with tf.variable_scope('prediction'):
+            # Compute the viterbi sequence and score.
+            viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.propagation, self.transition_params, self.seqlens)
+
+        return tf.cast(viterbi_sequence, tf.int32)
+
+    @lazy_property
     def error(self):
-        mistakes = tf.not_equal(tf.argmax(self.prediction, 2), tf.argmax(self.T, 2))
+        mistakes = tf.not_equal(self.prediction, tf.cast(tf.argmax(self.T, 2), tf.int32))
         mistakes = tf.cast(mistakes, tf.float32)
         mask = tf.sign(tf.reduce_max(tf.abs(self.T), reduction_indices=2))
         mask = tf.cast(mask, tf.float32)
@@ -169,10 +181,14 @@ def main():
     lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
     TARGET_SIZE = 60
-    BATCH_SIZE = 250
+    BATCH_SIZE = 100
     NUM_EPOCHS = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'ARG'
+    
+    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
+    tensor_converter = MapperTensor2Column(propbank_encoder)
+    evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
 
     # pipeline control place holders
     # This makes training slower - but code is reusable
@@ -213,17 +229,30 @@ def main():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
 
-                _, loss, Yish, error = session.run(
-                    [dblstm.optimize, dblstm.cost, dblstm.prediction, dblstm.error],
+                loss, _, Yish, error = session.run(
+                    [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
                     feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
                 )
-
+                
+                # import code; code.interact(local=dict(globals(), **locals()))
                 total_loss += loss
                 total_error += error
-                if (step + 1) % 15 == 0:
+                if (step + 1) % 5 == 0:
+                    
+                    # (self, ds_type, props_dict, hparams, store=False)
+                    index = D_batch[:, :, -2].astype(np.int32)
+                    predictions_prop = tensor_converter.define(index, Yish, L_batch, TARGET).map()
+
+                    # acc_valid = calculator_valid.accuracy(predictions_d)
+                    # predictions_d = propbank_encoder.t2arg(predictions_d)
+                    # evaluator_valid.evaluate(predictions_d, False)
+                    # predictions_d = tensor2column.define(index, Yhat, mb_valid, 'T').map()
+                    evaluator.evaluate('train', predictions_prop, params)
+                    import code; code.interact(local=dict(globals(), **locals()))
                     print('Iter={:5d}'.format(step + 1),
-                          '\tavg. cost {:.6f}'.format(total_loss / 15),
-                          '\tavg. error {:.6f}'.format(total_error / 15))
+                          '\tavg. cost {:.6f}'.format(total_loss / 5),
+                          '\tavg. error {:.6f}'.format(total_error / 5),
+                          '\tf1-train {:.6f}'.format(evaluator.f1))
                     total_loss = 0.0
                     total_error = 0.0
                 step += 1

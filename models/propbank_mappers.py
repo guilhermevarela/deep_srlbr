@@ -180,7 +180,8 @@ class MapperTensor2Column(BaseMapper):
         index = [item 
             for i, sublist in enumerate(tensor_index.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
-
+        
+        
         values = [self.idx2lex[column][item]
             for i, sublist in enumerate(tensor_values.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
