@@ -43,8 +43,6 @@ def lazy_property(function):
 class DBLSTM(object):
 
     def __init__(self, X, T, seqlens):
-        # self._initialize_layers([32, 32, 32])
-
         self.X = X
         self.T = T
         self.Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
@@ -58,6 +56,8 @@ class DBLSTM(object):
 
     @lazy_property
     def prediction(self):
+        global HIDDEN_SIZE
+        global TARGET_SIZE
         with tf.variable_scope('fw{:}'.format(id(self))):
             self.cell_fw = get_unit(HIDDEN_SIZE[0])
 
@@ -85,8 +85,7 @@ class DBLSTM(object):
 
         h = outputs_bw
         h_1 = outputs_fw
-        for i, sz in enumerate(HIDDEN_SIZE[1:]):
-            # outputs, hidden = layer.forward1(outputs, hidden, self.seqlens)
+        for i, sz in enumerate(HIDDEN_SIZE[1:]):            
             n = id(self) + i + 1
             with tf.variable_scope('fw{:}'.format(n)):
                 inputs_fw = tf.concat((h, h_1), axis=2)
@@ -134,6 +133,7 @@ class DBLSTM(object):
 
     @lazy_property
     def optimize(self):
+        global LEARNING_RATE
         with tf.variable_scope('optimize'):
             optimum = tf.train.AdamOptimizer(learning_rate=5 * 1e-3).minimize(self.cost)
         return optimum
@@ -161,29 +161,28 @@ class DBLSTM(object):
         mistakes /= tf.cast(self.seqlens, tf.float32)
         return tf.reduce_mean(mistakes)
 
-def main():
-    # PARAMETERS
-    layers_sizes = [32, 32, 32]
-    lr = 5 * 1e-3
-    feature_size = 1 * 2 + 50 * (2 + 3)
-    target_size = 60
-    batch_size = 250
-    num_epochs = 100
+def main():    
+    HIDDEN_SIZE = [32, 32, 32]
+    LEARNING_RATE = 5 * 1e-3
+    FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
+    TARGET_SIZE = 60
+    BATCH_SIZE = 250
+    NUM_EPOCHS = 10
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    target = 'ARG'
+    TARGET = 'ARG'
 
     # pipeline control place holders
     # This makes training slower - but code is reusable
-    X_shape = (None, None, feature_size)
-    T_shape = (None, None, target_size)
+    X_shape = (None, None, FEATURE_SIZE)
+    T_shape = (None, None, TARGET_SIZE)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
-            [DATASET_TRAIN_GLO50_PATH], batch_size, num_epochs,
-            input_sequence_features, target)
+            [DATASET_TRAIN_GLO50_PATH], NUM_EPOCHS, NUM_EPOCHS,
+            input_sequence_features, TARGET)
 
     dblstm = DBLSTM(X, T, seqlens)
 
