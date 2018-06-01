@@ -301,7 +301,7 @@ def input_fn(filenames, batch_size, num_epochs,
 
     context_features, sequence_features = _read_and_decode_v2(filename_queue)   
     
-
+    
     X, T, L, D = _process_v2(context_features, 
         sequence_features,
         features,

@@ -8,15 +8,22 @@
 '''
 import functools
 import tensorflow as tf
+import sys, os
+sys.path.insert(0, os.path.abspath('datasets'))
 
-from tf.nn.rnn_cell import BasicLSTMCell
-from utils import error_rate2
-
-from config import DATASET_TRAIN_GLO50_PATH
+from data_tfrecords import input_fn
+# from tf.nn.rnn_cell import BasicLSTMCell
+# from utils import error_rate2
+import os
+print(os.getcwd())
+INPUT_DIR = 'datasets/binaries/'
+DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
+HIDDEN_SIZE = [32, 32, 32]
+TARGET_SIZE = 60
 
 
 def get_unit(sz):
-    return BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
+    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 
 def lazy_property(function):
@@ -49,8 +56,8 @@ class DataLayer(object):
             self.cell_bw = get_unit(self.size)
 
     @lazy_property
-    def prediction(self, X, seqlens):
-        with tf.variable_scope('fw{:}'.format(id)):
+    def forward0(self, X, seqlens):
+        with tf.variable_scope('fw{:}'.format(id(self))):
             # CREATE / REUSE FWD/BWD CELL
             self.cell_fw = get_unit(self.size)
 
@@ -62,7 +69,7 @@ class DataLayer(object):
                 time_major=False
             )
 
-        with tf.variable_scope('bw{:}'.format(id)):
+        with tf.variable_scope('bw{:}'.format(id(self))):
             self.cell_bw = get_unit(self.size)
 
             inputs_bw = tf.reverse_sequence(outputs_fw, seqlens, batch_axis=0, seq_axis=1)
@@ -87,15 +94,15 @@ class HiddenLayer(object):
     def __init__(self, size):
         self.size = size
 
-        with tf.variable_scope('fw{:}'.format(id)):
+        with tf.variable_scope('fw{:}'.format(id(self))):
             self.cell_fw = get_unit(self.size)
 
-        with tf.variable_scope('bw{:}'.format(id)):
+        with tf.variable_scope('bw{:}'.format(id(self))):
             self.cell_bw = get_unit(self.size)
 
     @lazy_property
-    def prediction(self, h, h_1, seqlens):
-        with tf.variable_scope('fw{:}'.format(id)):
+    def forward1(self, h, h_1, seqlens):
+        with tf.variable_scope('fw{:}'.format(id(self))):
             inputs_fw = tf.concat((h, h_1), axis=2)
 
             self.cell_fw = get_unit(self.size)
@@ -108,7 +115,7 @@ class HiddenLayer(object):
                 time_major=False
             )
 
-        with tf.variable_scope('bw'):
+        with tf.variable_scope('bw{:}'.format(id(self))):
             inputs_bw = tf.concat((outputs_fw, h), axis=2)
             inputs_bw = tf.reverse_sequence(inputs_bw, seqlens, batch_axis=0, seq_axis=1)
             self.cell_bw = get_unit(self.size)
@@ -129,7 +136,7 @@ class HiddenLayer(object):
 class DBLSTM(object):
 
     def __init__(self, X, T, seqlens):
-        self._initialize_layers([32, 32, 32])
+        # self._initialize_layers([32, 32, 32])
 
         self.X = X
         self.T = T
@@ -140,93 +147,144 @@ class DBLSTM(object):
         self.optimize
         self.error
 
-        # self.layers = []
-        # for i, sz in enumerate(layers_sizes):
-        #     if i == 0:
-        #         self.layers.append(DataLayer(sz))
-        #     else:
-        #         self.layers.append(HiddenLayer(sz))
 
-        # build graph variables & placeholders
-        # Wo_shape = (2 * layers_sizes[-1], target_size)
-        # bo_shape = (target_size)
-        # self.Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
-        # self.bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
-
-        # # pipeline control place holders
-        # # This makes training slower - but code is reusable
-        # X_shape = (None, None, feature_size)
-        # T_shape = (None, None, target_size)
-        # self.X = tf.placeholder(tf.float32, shape=X_shape, name='X')
-        # self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
-        # self.minibatch = tf.placeholder(tf.int32, shape=(None,), name='minibatch') # mini batches size
-
-    def _initialize_layers(self, layers_sizes):
-        if self.layers is None:
-            self.layers = []
-            for i, sz in enumerate(layers_sizes):
-                if i == 0:
-                    self.layers.append(DataLayer(sz))
-                else:
-                    self.layers.append(HiddenLayer(sz))
 
     @lazy_property
     def prediction(self):
-        with tf.variable_scope('forward_0', reuse=tf.AUTO_REUSE):
-            outputs, hidden = self.layers[0].prediction(self.X, self.seqlens)
+        with tf.variable_scope('fw{:}'.format(id(self))):
+            self.cell_fw = get_unit(HIDDEN_SIZE[0])
 
-        for i, layer in enumerate(self.layers[1:]):
-            with tf.variable_scope('forward_{:}'.format(i+1), reuse=tf.AUTO_REUSE):
-                outputs, hidden = layer.prediction(outputs, hidden)
+            outputs_fw, states = tf.nn.dynamic_rnn(
+                cell= self.cell_fw,
+                inputs=self.X,
+                sequence_length=self.seqlens,
+                dtype=tf.float32,
+                time_major=False
+            )
+
+        with tf.variable_scope('bw{:}'.format(id(self))):
+            self.cell_bw = get_unit(HIDDEN_SIZE[0])
+
+            inputs_bw = tf.reverse_sequence(outputs_fw, self.seqlens, batch_axis=0, seq_axis=1)
+
+            outputs_bw, states = tf.nn.dynamic_rnn(
+                cell=self.cell_bw,
+                inputs=inputs_bw,
+                sequence_length=self.seqlens,
+                dtype=tf.float32,
+                time_major=False
+            )
+            outputs_bw = tf.reverse_sequence(outputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+
+        h = outputs_bw
+        h_1 = outputs_fw
+        for i, sz in enumerate(HIDDEN_SIZE[1:]):
+            # outputs, hidden = layer.forward1(outputs, hidden, self.seqlens)
+            n = id(self) + i + 1
+            with tf.variable_scope('fw{:}'.format(n)):
+                inputs_fw = tf.concat((h, h_1), axis=2)
+                self.cell_fw = get_unit(sz)
+
+                outputs_fw, states = tf.nn.dynamic_rnn(
+                    cell=self.cell_fw,
+                    inputs=inputs_fw,
+                    sequence_length=self.seqlens,
+                    dtype=tf.float32,
+                    time_major=False)
+
+            with tf.variable_scope('bw{:}'.format(n)):
+                inputs_bw = tf.concat((outputs_fw, h), axis=2)
+                inputs_bw = tf.reverse_sequence(inputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+                self.cell_bw = get_unit(sz)
+
+                outputs_bw, states = tf.nn.dynamic_rnn(
+                    cell=self.cell_bw,
+                    inputs=inputs_bw,
+                    sequence_length=self.seqlens,
+                    dtype=tf.float32,
+                    time_major=False)
+
+                outputs_bw = tf.reverse_sequence(outputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+
+            h = outputs_bw
+            h_1 = outputs_fw
 
         with tf.variable_scope('score'):
-            outputs = tf.concat((outputs, hidden), axis=2)
+            Wo_shape = (2 * HIDDEN_SIZE[-1], TARGET_SIZE)
+            bo_shape = (TARGET_SIZE,)
+
+            Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
+            bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
+
+            outputs = tf.concat((h, h_1), axis=2)
 
         # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-        score = tf.scan(
-            lambda a, x: tf.matmul(x, Wo),
-            outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
+            score = tf.scan(
+                lambda a, x: tf.matmul(x, Wo),
+                outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
         return score
+
+    # def prediction(self):
+    #     with tf.variable_scope('forward_0', reuse=tf.AUTO_REUSE):
+    #         outputs, hidden = self.layers[0].forward0(self.X, self.seqlens)
+
+    #     for i, layer in enumerate(self.layers[1:]):
+    #         with tf.variable_scope('forward_{:}'.format(i+1), reuse=tf.AUTO_REUSE):
+    #             outputs, hidden = layer.forward1(outputs, hidden, self.seqlens)
+
+    #     with tf.variable_scope('score'):
+    #         outputs = tf.concat((outputs, hidden), axis=2)
+
+    #     # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
+    #     score = tf.scan(
+    #         lambda a, x: tf.matmul(x, Wo),
+    #         outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
+    #     return score
 
     @lazy_property
     def optimize(self):
-        log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(self.prediction, self.Tflat, self.seqlens)
-
-        # Compute the viterbi sequence and score.
-        viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.prediction, transition_params, self.seqlens)
-
-        cost_op = tf.reduce_mean(-log_likelihood)
-
-        return tf.train.AdamOptimizer(learning_rate=5 * 1e-3).minimize(self.cost)
+        with tf.variable_scope('optimize'):
+            optimum = tf.train.AdamOptimizer(learning_rate=5 * 1e-3).minimize(self.cost)
+        return optimum
 
     @lazy_property
     def cost(self):
-        log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(self.prediction, self.Tflat, self.seqlens)
+        with tf.variable_scope('cost'):
+            log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(self.prediction, self.Tflat, self.seqlens)
 
-        # Compute the viterbi sequence and score.
-        viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.prediction, transition_params, self.seqlens)
+            # Compute the viterbi sequence and score.
+            viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.prediction, transition_params, self.seqlens)
 
         return tf.reduce_mean(-log_likelihood)
 
     @lazy_property
     def error(self):
-        return error_rate2(self.prediction, self.Tflat, self.error)
+        prediction = tf.cast(tf.argmax(self.prediction, 2), tf.int32)
+        mistakes = tf.not_equal(prediction, self.Tflat)
+        mistakes = tf.cast(mistakes, tf.float32)
+
+        # mistakes *= mask
+        # Average over actual sequence lengths.
+        mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
+        mistakes /= tf.cast(self.seqlens, tf.float32)
+
+        return tf.reduce_mean(mistakes)
 
 def main():
     # PARAMETERS
     layers_sizes = [32, 32, 32]
     lr = 5 * 1e-3
     feature_size = 1 * 2 + 50 * (2 + 3)
-    target_size = 30
+    target_size = 60
     batch_size = 250
     num_epochs = 10
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    target = 'T'
+    target = 'ARG'
     # mnist = input_data.read_data_sets('./mnist/', one_hot=True)
 
 
     Wo_shape = (2 * layers_sizes[-1], target_size)
-    bo_shape = (target_size)
+    bo_shape = (target_size,)
 
     Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
     bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
@@ -266,7 +324,7 @@ def main():
 
 
                 _, loss, error = session.run(
-                    dblstm.optimize, dblstm.cost, dblstm.error,
+                    [dblstm.optimize, dblstm.cost, dblstm.error],
                     feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
                 )
 
