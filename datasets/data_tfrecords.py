@@ -777,13 +777,13 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wan50.pickle')
-    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wrd50.pickle')
+    
+    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wan50.pickle')
+    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wrd50.pickle')
 
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wan50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type, lang='wrd50')
 
