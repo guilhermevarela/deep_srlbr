@@ -82,7 +82,7 @@ class EvaluatorConll2(object):
         #Step 2 - Uses target dir to save files     
         # eval_path, gold_path= self._store(df_eval, df_gold)
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] 
-                      for i, s in self.db['S'].items() if s in set(gold_index_list)}
+                      for i, p in self.db['P'].items() if p in set(gold_index_list)}
 
         # import code; code.interact(local=dict(globals(), **locals()))
         gold_path = self._store(ds_type, 'gold',self.db, self.idx2lex, gold_props, hparams, self.target_dir)

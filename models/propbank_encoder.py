@@ -11,15 +11,16 @@ import numpy as np
 import pandas as pd
 import sys
 import pickle
-sys.path.append('..')
-sys.path.append('../datasets')
+root_path = re.sub('/models', '', sys.path[0])
+sys.path.append(root_path)
+
 import config
 from collections import OrderedDict, defaultdict
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 # import data_propbankbr as br
 
 
-SCHEMA_PATH = '../{:}gs.yaml'.format(config.SCHEMA_DIR)
+SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
 
 
 class _EncoderIterator(object):
@@ -360,18 +361,19 @@ if __name__ == '__main__':
     with open(SCHEMA_PATH, mode='r') as f:
         schema_d = yaml.load(f)
 
-    dfgs = pd.read_csv('../datasets/csvs/gs.csv', index_col=None)
-    dfgs.set_index('INDEX', inplace=True)
-    dfgs['INDEX'] = dfgs.index.tolist()
+    dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
+    # dfgs.set_index('INDEX', inplace=True)
+    # dfgs['INDEX'] = dfgs.index.tolist()
+
 
     #Searches for column Y
-    dfdtree  = pd.read_csv('../datasets/csvs/gsdtree.csv', index_col=None)
-    dfdtree.set_index('INDEX', inplace=True)
-    dfdtree['INDEX'] = dfdtree.index.tolist()
-    dfY = dfdtree['ARG'].to_frame().rename(columns={'ARG': 'Y'})
+    # dfdtree  = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=None)
+    # dfdtree.set_index('INDEX', inplace=True)
+    # dfdtree['INDEX'] = dfdtree.index.tolist()
+    # dfY = dfdtree['ARG'].to_frame().rename(columns={'ARG': 'Y'})
 
 
-    dfgs = pd.concat((dfgs, dfY), axis=1)
+    # dfgs = pd.concat((dfgs, dfY), axis=1)
 
 
 
@@ -383,6 +385,7 @@ if __name__ == '__main__':
         '../datasets/csvs/column_t/t.csv'
     ]
 
+    import code; code.interact(local=dict(globals(), **locals()))
     for col_f in column_files:
         _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, _df), axis=1)
