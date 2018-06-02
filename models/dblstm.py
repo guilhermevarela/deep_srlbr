@@ -184,7 +184,7 @@ def main():
     BATCH_SIZE = 100
     NUM_EPOCHS = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    TARGET = 'ARG'
+    TARGET = 'T'
     
     propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
     tensor_converter = MapperTensor2Column(propbank_encoder)

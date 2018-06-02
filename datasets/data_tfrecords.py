@@ -38,6 +38,27 @@ TF_CONTEXT_FEATURES=    {
 }
 
 
+# TF_SEQUENCE_FEATURES_V2 = {
+#     key: tf.VarLenFeature(tf.int64)
+#     for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
+#  }.update({
+#     key: tf.VarLenFeature(tf.float32)
+#     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
+# }).update({
+#     key: tf.VarLenFeature(tf.int64)
+#     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+# })
+
+TF_SEQUENCE_FEATURES_V2 = {
+    key: tf.VarLenFeature(tf.int64)
+    for key in conf.CATEGORICAL_FEATURES
+}
+TF_SEQUENCE_FEATURES_V2.update({
+    key: tf.VarLenFeature(tf.float32)
+    for key in conf.EMBEDDED_FEATURES
+})
+
+
 
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
@@ -300,8 +321,9 @@ def input_fn(filenames, batch_size, num_epochs,
     
 
     context_features, sequence_features = _read_and_decode_v2(filename_queue)   
-    
-    
+
+    # import code; code.interact(local=dict(globals(), **locals()))
+
     X, T, L, D = _process_v2(context_features, 
         sequence_features,
         features,
@@ -452,7 +474,7 @@ def _process_v2( context_features, sequence_features,
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
     print('_process_v2:{:}'.format(sequence_features.keys()))
-    for key in conf.SEQUENCE_FEATURES_V2:
+    for key in TF_SEQUENCE_FEATURES_V2:
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
         
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
@@ -512,31 +534,27 @@ def _read_and_decode_v2(filename_queue):
             sequence_features.: features that are held variable thru sequence ex: word_idx
 
     '''
-    TF_SEQUENCE_FEATURES_V2 = {
-        key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'ARG']
-        # for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
-    }
+    
     # TF_SEQUENCE_FEATURES_V2.update({
     #     key:tf.VarLenFeature(tf.float32) 
     #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1',
     #      'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
     # })
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.float32) 
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.float32) 
 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
-        'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    })
+    #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
+    #     'FORM_CTX_P+0', 'FORM_CTX_P+1']
+    # })
 
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.float32) 
-        for key in ['LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
-    })
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.int64)
-        for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    })
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.float32) 
+    #     for key in ['LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
+    # })
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.int64)
+    #     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    # })
     print(TF_SEQUENCE_FEATURES_V2)
     reader= tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
