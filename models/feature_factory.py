@@ -20,7 +20,7 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnDepTreeParser', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -275,6 +275,34 @@ class ColumnT(object):
         )}
 
         return self.t
+
+
+class ColumnIOB(object):
+    '''
+        Computes the IOB version
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        IOB = br.propbankbr_arg2iob(self.db['P'].values(), self.db['ARG'].values())
+
+        self.iob = {'IOB': OrderedDict(
+            dict(zip(self.db['ARG'].keys(), IOB))
+        )}
+
+        return self.iob
 
 
 class ColumnPassiveVoice(object):
@@ -660,6 +688,16 @@ def _process_t(dictdb):
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
+def _process_iob(dictdb):
+
+    column_iob = FeatureFactory().make('ColumnIOB', dictdb)
+    d = column_iob.run()
+
+    target_dir = 'datasets/csvs/column_iob/'
+    filename = '{:}{:}.csv'.format(target_dir, 'iob')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
 def _process_predicate_marker(dictdb):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
@@ -687,7 +725,7 @@ def _store(d, target_name, target_dir):
 
 if __name__ == '__main__':
     gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
-    db = gsdf.to_dict()    
+    db = gsdf.to_dict()
 
     columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
     shifts = [i for i in range(-3, 4) if i != 0] 
@@ -695,3 +733,4 @@ if __name__ == '__main__':
     _process_shifter_ctx_p(db, columns, shifts)
     _process_t(db)
     _process_predicate_marker(db)
+    _process_iob(db)
