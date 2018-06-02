@@ -17,6 +17,7 @@ from propbank_encoder import PropbankEncoder
 from propbank_mappers import MapperTensor2Column
 
 import numpy as np
+import yaml
 
 INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
@@ -177,16 +178,19 @@ class DBLSTM(object):
 
 
 def main():
+    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
+
     HIDDEN_SIZE = [32, 32, 32]
     lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
-    TARGET_SIZE = 60
+    # TARGET_SIZE = 60
     BATCH_SIZE = 100
     NUM_EPOCHS = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'T'
-    
-    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
+    TARGET_SIZE = propbank_encoder.column_dimensions(TARGET, 'HOT')
+    print(TARGET, TARGET_SIZE )
+
     tensor_converter = MapperTensor2Column(propbank_encoder)
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
 

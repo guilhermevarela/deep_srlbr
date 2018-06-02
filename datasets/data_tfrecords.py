@@ -476,7 +476,7 @@ def _process_v2( context_features, sequence_features,
     print('_process_v2:{:}'.format(sequence_features.keys()))
     for key in TF_SEQUENCE_FEATURES_V2:
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
-        
+
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
         
         if key in features:
