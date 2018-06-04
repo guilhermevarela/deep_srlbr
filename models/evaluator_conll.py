@@ -225,6 +225,26 @@ class EvaluatorConll2(object):
             hparam_string += '_{:}'.format(embeddings_id)
         return hparam_string
 
+    def _get_dir(self, hparams):
+        hparam_string = self._make_hparam_string(**hparams)
+        target_dir += '/{:}/'.format(hparam_string)
+        if not os.path.isdir(target_dir):
+            os.mkdir(target_dir)
+        return target_dir
+
+    def _get_goldindex_list(self, ds_type):
+        if ds_type in ['train']:
+            gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
+        elif ds_type in ['valid']:
+            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
+                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
+        elif ds_type in ['test']:
+            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
+                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
+        else:
+            raise ValueError('{:} unknown dataset type'.format(ds_type))
+        return gold_index_list
+
 
 class EvaluatorConll(object):
 
