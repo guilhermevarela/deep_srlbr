@@ -206,7 +206,6 @@ def main():
     HIDDEN_SIZE = [32, 32, 32]
     lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
-    # TARGET_SIZE = 60
     BATCH_SIZE = 100
     NUM_EPOCHS = 100
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
@@ -217,12 +216,13 @@ def main():
     index_column = get_index(columns_list, columns_dimsdict,'INDEX')
     print(TARGET, TARGET_SIZE, index_column)
 
-    tensor_converter = MapperTensor2Column(propbank_encoder)
-    t2arg = MapperT2ARG(propbank_encoder)
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
-
-    # pipeline control place holders
-    # This makes training slower - but code is reusable
+    params = {
+        'learning_rate': lr, 
+        'hidden_size':HIDDEN_SIZE,
+        'target_size':TARGET_SIZE
+    }
+    # BUILDING the execution graph
     X_shape = (None, None, FEATURE_SIZE)
     T_shape = (None, None, TARGET_SIZE)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
@@ -234,11 +234,6 @@ def main():
             [DATASET_TRAIN_GLO50_PATH], BATCH_SIZE, NUM_EPOCHS,
             input_list, TARGET)
 
-    params = {
-        'learning_rate': lr, 
-        'hidden_size':HIDDEN_SIZE,
-        'target_size':TARGET_SIZE
-    }
     dblstm = DBLSTM(X, T, seqlens, **params)
 
     init_op = tf.group(
@@ -268,19 +263,11 @@ def main():
                 total_loss += loss
                 total_error += error
                 if (step + 1) % 5 == 0:
-                    # (self, ds_type, props_dict, hparams, store=False)
                     index = D_batch[:, :, index_column].astype(np.int32)
 
-                    predictions_prop = tensor_converter.define(index, Yish, L_batch, TARGET).map()
-                    # import code; code.interact(local=dict(globals(), **locals()))
-                    # import code; code.interact(local=dict(globals(), **locals()))
-                    # acc_valid = calculator_valid.accuracy(predictions_d)
-                    predictions_prop = t2arg.define(predictions_prop, 'CAT').map()
 
-                    # evaluator_valid.evaluate(predictions_d, False)
-                    # predictions_d     = tensor2column.define(index, Yhat, mb_valid, 'T').map()
-                    evaluator.evaluate('extract', predictions_prop, params)
-                    # import code; code.interact(local=dict(globals(), **locals()))
+                    evaluator.evaluate_tensor('extract', index, Yish, L_batch, TARGET, params)
+
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 5),
                           '\tavg. error {:.6f}'.format(total_error / 5),
