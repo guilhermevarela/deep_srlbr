@@ -50,7 +50,7 @@ class MapperT2ARG(BaseMapper):
             _errmessage = _errmessage .format(('CAT', 'IDX'), encoding)
             raise ValueError(_errmessage)
         else:
-            if encoding in ('IDX'):
+            if encoding in ('IDX'):                
                 T = {idx: self.idx2lex['T'][iidx] for idx, iidx in T.items()}
 
         self._T = T
@@ -66,9 +66,10 @@ class MapperT2ARG(BaseMapper):
             returns:
                 ARG .: dict<int, str> keys in db_index, values in target label
         '''
-        db = self.db
+        db = self.db        
         propositions = {idx: db['P'][idx] for idx in self._T}
 
+        
         ARG = br.propbankbr_t2arg(propositions.values(), self._T.values())
         ordered_dict = sorted(zip(self._T.keys(), ARG), key=lambda x: x[0])
         return OrderedDict(ordered_dict)
@@ -185,7 +186,8 @@ class MapperTensor2Column(BaseMapper):
         values = [self.idx2lex[column][item]
             for i, sublist in enumerate(tensor_values.tolist())
             for j, item in enumerate(sublist) if j < times[i]]
-
+        
+        
         ordered_dict = sorted(zip(index, values), key=lambda x: x[0])
         return OrderedDict(ordered_dict)
 

@@ -40,7 +40,7 @@ class EvaluatorConll2(object):
 
         self._refresh()
 
-    def evaluate(self, ds_type, props, hparams):
+    def evaluate(self, prefix, props, hparams):
         '''
             Evaluates the conll scripts returning total precision, recall and F1
                 if self.target_dir is set will also save conll.txt@self.target_dir
@@ -67,32 +67,34 @@ class EvaluatorConll2(object):
         self._refresh()
         #Step 1 - Transforms columns into with args and predictions into a dictionary
         # ready with conll format
-        if ds_type in ['train']:
-            gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
-        elif ds_type in ['valid']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
-        elif ds_type in ['test']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
-        else:
-            raise ValueError('{:} unknown dataset type'.format(ds_type))
+        # if ds_type in ['train']:
+        #     gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
+        # elif ds_type in ['valid']:
+        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
+        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
+        # elif ds_type in ['test']:
+        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
+        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
+        # else:
+        #     raise ValueError('{:} unknown dataset type'.format(ds_type))
         # df_eval, df_gold = self._conll_format(Y)        
 
         #Step 2 - Uses target dir to save files     
         # eval_path, gold_path= self._store(df_eval, df_gold)
-        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] 
-                      for i, p in self.db['P'].items() if p in set(gold_index_list)}
+        indexes = sorted(list(props.keys()))
+        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
+                      for i in indexes}
 
         # import code; code.interact(local=dict(globals(), **locals()))
-        gold_path = self._store(ds_type, 'gold',self.db, self.idx2lex, gold_props, hparams, self.target_dir)
-        
-        
-        # eval_props = {i: self.idx2lex[pred] for i, pred in props_dict.items()}
-        eval_path = self._store(ds_type, 'eval', self.db, self.idx2lex, props, hparams, self.target_dir)
+        gold_path = self._store(prefix, 'gold', self.db, self.idx2lex, gold_props, hparams, self.target_dir)
+
+
+        # eval_props = {i: self.idx2lex['ARG'][arg_id]
+        #               for i, arg_id in props.items()}
+        eval_path = self._store(prefix, 'eval', self.db, self.idx2lex, props, hparams, self.target_dir)
 
         #Step 3 - Popen runs the pearl script storing in the variable PIPE
-        pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        pipe = subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         #out is a byte with each line separated by \n
         #ers is stderr      
         txt, err = pipe.communicate()
@@ -104,22 +106,12 @@ class EvaluatorConll2(object):
 
         #Step 4 - Parse     
         self._parse(self.txt)
-        if store:
+        # if store:
             # Step 5 - Stores
-            target_path= '{:}conllscore_{:}.txt'.format(self.target_dir, self.ds_type)
-            with open(target_path, 'w+') as f:
-                f.write(self.txt)
-        else:
-            # Step 6 - Removes tmp
-            try:
-                os.remove(eval_path)
-            except OSError:
-                pass
+        target_path= '{:}conllscore_{:}.txt'.format(self.target_dir,prefix)
+        with open(target_path, 'w+') as f:
+            f.write(self.txt)
 
-            try:
-                os.remove(gold_path)
-            except OSError:
-                pass
 
     def evaluate_fromconllfile(self, target_path):
         '''
@@ -145,20 +137,6 @@ class EvaluatorConll2(object):
         self.f1 = -1
         self.precision = -1
         self.recall = -1
-
-    # def _conll_format(self, Y):
-    #     df_eval = conll_with_dicts(self.S, self.P, self.PRED, Y, True)
-    #     df_gold = conll_with_dicts(self.S, self.P, self.PRED, self.ARG, True)
-    #     return df_eval, df_gold
-
-    # def _store(self, df_eval, df_gold):
-    #     eval_path = self.target_dir + '{:}eval.txt'.format(self.ds_type)
-    #     df_eval.to_csv(eval_path, sep='\t', index=False, header=False)
-
-
-    #     gold_path = self.target_dir + '{:}gold.txt'.format(self.ds_type)
-    #     df_gold.to_csv(gold_path, sep ='\t', index=False, header=False)
-    #     return eval_path, gold_path
 
     def _parse(self, txt):
         '''
@@ -229,8 +207,8 @@ class EvaluatorConll2(object):
                 if db['P'][idx] != p:
                     f.write('\n')
                     p = db['P'][idx]
-                # import code; code.interact(local=dict(globals(), **locals()))
                 f.write('{:}\t{:}\n'.format(lexicons['PRED'][db['PRED'][idx]], prop))
+
         f.close()
         return target_path
 
