@@ -11,7 +11,7 @@ import tensorflow as tf
 import sys, os
 sys.path.insert(0, os.path.abspath('datasets'))
 
-from data_tfrecords import input_fn
+from data_tfrecords import input_fn, tensor2numpy_v2
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
 from propbank_mappers import MapperTensor2Column
@@ -188,7 +188,7 @@ def main():
     NUM_EPOCHS = 100
     input_sequence_features = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'T'
-    TARGET_SIZE = propbank_encoder.column_dimensions(TARGET, 'HOT')
+    TARGET_SIZE = propbank_encoder.column_dimensions(TARGET, 'IDX')
     print(TARGET, TARGET_SIZE )
 
     tensor_converter = MapperTensor2Column(propbank_encoder)
@@ -232,13 +232,13 @@ def main():
             while not coord.should_stop():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
-
+                import code; code.interact(local=dict(globals(), **locals()))
                 loss, _, Yish, error = session.run(
                     [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
                     feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
                 )
                 
-                # import code; code.interact(local=dict(globals(), **locals()))
+                
                 total_loss += loss
                 total_error += error
                 if (step + 1) % 5 == 0:
@@ -270,4 +270,11 @@ def main():
             coord.join(threads)
 
 if __name__ == '__main__':
-    main()
+    # main()
+    inputs, targets, times, descriptors = tensor2numpy_v2(
+        [DATASET_TRAIN_GLO50_PATH],
+        250,
+        ['ID', 'FORM'],
+        'T'
+    )
+    import code; code.interact(local=dict(globals(), **locals()))

@@ -469,7 +469,7 @@ def _process_v2( context_features, sequence_features,
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
-    
+    import code; code.interact(local=dict(globals(), **locals()))
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
@@ -488,10 +488,8 @@ def _process_v2( context_features, sequence_features,
             print('descriptors: {:}'.format(key))
             sequence_descriptors.append(dense_tensor1)
 
-    #UNCOMMENT
     X = tf.concat(sequence_inputs, 1)
     D = tf.concat(sequence_descriptors, 1)
-    # return X, T, L, D
     return X, T, L, D
 
 
@@ -709,7 +707,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                             raise TypeError('Unhandled type {:}'.format(type(test_value)))
 
                     ex = tf.train.SequenceExample(
-                        context=  tf.train.Features(feature=context),
+                        context=tf.train.Features(feature=context),
                         feature_lists=tf.train.FeatureLists(feature_list=feature_list)
                     )
 
