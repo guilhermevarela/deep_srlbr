@@ -206,8 +206,8 @@ def main():
     HIDDEN_SIZE = [32, 32, 32]
     lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
-    BATCH_SIZE = 100
-    NUM_EPOCHS = 100
+    BATCH_SIZE = 250
+    NUM_EPOCHS = 1000
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'T'
     columns_dimsdict = propbank_encoder.columns_dimensions('HOT')    
@@ -262,7 +262,7 @@ def main():
 
                 total_loss += loss
                 total_error += error
-                if (step + 1) % 5 == 0:
+                if (step + 1) % 25 == 0:
                     index = D_batch[:, :, index_column].astype(np.int32)
 
 
