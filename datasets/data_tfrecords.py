@@ -300,8 +300,8 @@ def input_with_embeddings_fn(filenames, batch_size,  num_epochs,
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size, num_epochs,
              features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES,
-             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET
-            ):
+             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET,
+             shuffle=True):
     '''
         Produces sequence_examples shuffling at every epoch while batching every batch_size
             number of examples
@@ -322,13 +322,9 @@ def input_fn(filenames, batch_size, num_epochs,
                     M= len(input_sequence_features)
     '''
     print(target)
-    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
-    
-    
+    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=shuffle)
 
-    context_features, sequence_features = _read_and_decode_v2(filename_queue)   
-
-    # import code; code.interact(local=dict(globals(), **locals()))
+    context_features, sequence_features = _read_and_decode_v2(filename_queue)
 
     X, T, L, D = _process_v2(context_features, 
         sequence_features,

@@ -237,7 +237,7 @@ def main():
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, BATCH_SIZE, NUM_EPOCHS,
-            input_list, TARGET)
+            input_list, TARGET, shuffle=False)
 
     dblstm = DBLSTM(X, T, seqlens, **params)
 
@@ -252,6 +252,7 @@ def main():
         threads = tf.train.start_queue_runners(coord=coord)
         # Training control variables
         step = 0
+        i = 0
         total_loss = 0.0
         total_error = 0.0
         best_validation_rate = -1
@@ -259,10 +260,13 @@ def main():
             while not coord.should_stop():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
+                if  step % 25 == i:
+                    X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
+
                 if (step + 1) % 25 == 0:
                     Yish = session.run(
                         dblstm.prediction,
-                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                        feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
                     )
 
                     index = D_batch[:, :, index_column].astype(np.int32)
@@ -298,6 +302,7 @@ def main():
                     total_loss += loss
                     total_error += error
                 step += 1
+                i = step / 25
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')
