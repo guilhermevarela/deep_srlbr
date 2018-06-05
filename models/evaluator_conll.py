@@ -22,8 +22,9 @@ import pandas as pd
 import pickle
 import re
 
+from collections import OrderedDict
 from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
-
+import datasets.data_propbankbr as br
 
 PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
 
@@ -37,62 +38,66 @@ class EvaluatorConll2(object):
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
-
+        self.target_columns = ('ARG', 'T')
         self._refresh()
 
-    def evaluate(self, ds_type, props, hparams):
+
+    def evaluate_tensor(self, prefix, index_tensor, predictions_tensor, len_tensor, target_column, hparams):
         '''
             Evaluates the conll scripts returning total precision, recall and F1
-                if self.target_dir is set will also save conll.txt@self.target_dir
+                if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
 
-            Performs a 6-step procedure in order to use the script evaluation
-            1) Formats      .: inputs in order to obtain proper conll format ()
-            2) Saves      .:  two tmp files tmpgold.txt and tmpy.txt on self.root_dir.
-            3) Run            .:  the perl script using subprocess module.
-            4) Parses     .:  parses results from 3 in variables self.f1, self.prec, self.rec. 
-            5) Stores     .:  stores results from 3 in self.target_dir 
-            6) Cleans     .:  files left from step 2.
-                
             args:
-                PRED            .: list<string> predicates according to PRED column
-                T               .: list<string> target according to ARG column
-                Y               .: list<string> 
+                index_tensor        .:
+                predictions_tensor  .:
+                len_tensor          .:
+
+            returns:
+                prec                .: float<> precision
+                rec                 .: float<> recall 
+                f1                  .: float<> F1 score
+        '''
+        if target_column not in self.target_columns:
+           raise ValueError('target_column must be in {:} got target_column {:}'.format(self.target_columns, target_column))
+
+        props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
+
+        if target_column in ('T',):
+            props_dict = self._t2arg(props_dict)
+
+        self.evaluate(prefix, props_dict, hparams)
+
+
+    def evaluate(self, prefix, props, hparams):
+        '''
+            Evaluates the conll scripts returning total precision, recall and F1
+                if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
+
+            args:
+                prefix            .: list<string>
+                props             .: list<string>
+                hparams           .: list<string> 
+
             returns:
                 prec            .: float<> precision
                 rec       .: float<> recall 
                 f1        .: float<> F1 score
         '''
-
         #Resets state
         self._refresh()
-        #Step 1 - Transforms columns into with args and predictions into a dictionary
-        # ready with conll format
-        if ds_type in ['train']:
-            gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
-        elif ds_type in ['valid']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
-        elif ds_type in ['test']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
-        else:
-            raise ValueError('{:} unknown dataset type'.format(ds_type))
-        # df_eval, df_gold = self._conll_format(Y)        
 
-        #Step 2 - Uses target dir to save files     
-        # eval_path, gold_path= self._store(df_eval, df_gold)
-        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] 
-                      for i, p in self.db['P'].items() if p in set(gold_index_list)}
+        #Generate GOLD standard labels
+        indexes = sorted(list(props.keys()))
+        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] for i in indexes}
 
-        # import code; code.interact(local=dict(globals(), **locals()))
-        gold_path = self._store(ds_type, 'gold',self.db, self.idx2lex, gold_props, hparams, self.target_dir)
-        
-        
-        # eval_props = {i: self.idx2lex[pred] for i, pred in props_dict.items()}
-        eval_path = self._store(ds_type, 'eval', self.db, self.idx2lex, props, hparams, self.target_dir)
+        #Stores GOLD standard labels
+        gold_path = self._store(prefix, 'gold', self.db, self.idx2lex, gold_props, hparams)
 
-        #Step 3 - Popen runs the pearl script storing in the variable PIPE
-        pipe= subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        #Stores evaluation labels
+        eval_path = self._store(prefix, 'eval', self.db, self.idx2lex, props, hparams)
+
+        #Runs official conll 2005 shared task script
+        pipe = subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         #out is a byte with each line separated by \n
         #ers is stderr      
         txt, err = pipe.communicate()
@@ -102,24 +107,15 @@ class EvaluatorConll2(object):
         if (self.err):
             print('srl-eval.pl says:\t{:}'.format(self.err))
 
-        #Step 4 - Parse     
+        #Parses final txt
         self._parse(self.txt)
-        if store:
-            # Step 5 - Stores
-            target_path= '{:}conllscore_{:}.txt'.format(self.target_dir, self.ds_type)
-            with open(target_path, 'w+') as f:
-                f.write(self.txt)
-        else:
-            # Step 6 - Removes tmp
-            try:
-                os.remove(eval_path)
-            except OSError:
-                pass
 
-            try:
-                os.remove(gold_path)
-            except OSError:
-                pass
+        #Stores target_dir/<hparams>/prefix
+        target_dir = self._get_dir(hparams)
+        target_path = '{:}/conll-{:}.txt'.format(target_dir, prefix)
+        with open(target_path, 'w+') as f:
+            f.write(self.txt)
+
 
     def evaluate_fromconllfile(self, target_path):
         '''
@@ -145,20 +141,6 @@ class EvaluatorConll2(object):
         self.f1 = -1
         self.precision = -1
         self.recall = -1
-
-    # def _conll_format(self, Y):
-    #     df_eval = conll_with_dicts(self.S, self.P, self.PRED, Y, True)
-    #     df_gold = conll_with_dicts(self.S, self.P, self.PRED, self.ARG, True)
-    #     return df_eval, df_gold
-
-    # def _store(self, df_eval, df_gold):
-    #     eval_path = self.target_dir + '{:}eval.txt'.format(self.ds_type)
-    #     df_eval.to_csv(eval_path, sep='\t', index=False, header=False)
-
-
-    #     gold_path = self.target_dir + '{:}gold.txt'.format(self.ds_type)
-    #     df_gold.to_csv(gold_path, sep ='\t', index=False, header=False)
-    #     return eval_path, gold_path
 
     def _parse(self, txt):
         '''
@@ -212,15 +194,15 @@ class EvaluatorConll2(object):
                 self.precision, self.recall, self.f1 = map(float, line.split()[-3:])
                 break
 
-    def _store(self, ds_type, prediction_type, db, lexicons, props, hparams, target_dir):
+    def _store(self, ds_type, prediction_type, db, lexicons, props, hparams):
         '''
             Stores props and stats into target_dir 
         '''
-        hparam_string = self._make_hparam_string(**hparams)
-        target_dir += '/{:}/'.format(hparam_string)
-        if not os.path.isdir(target_dir):
-            os.mkdir(target_dir)
-
+        # hparam_string = self._make_hparam_string(**hparams)
+        # target_dir += '/{:}/'.format(hparam_string)
+        # if not os.path.isdir(target_dir):
+        #     os.mkdir(target_dir)
+        target_dir = self._get_dir(hparams)
         target_path = '{:}/{:}-{:}.props'.format(target_dir, ds_type, prediction_type)
 
         p = db['P'][min(props)]
@@ -229,8 +211,8 @@ class EvaluatorConll2(object):
                 if db['P'][idx] != p:
                     f.write('\n')
                     p = db['P'][idx]
-                # import code; code.interact(local=dict(globals(), **locals()))
                 f.write('{:}\t{:}\n'.format(lexicons['PRED'][db['PRED'][idx]], prop))
+
         f.close()
         return target_path
 
@@ -246,6 +228,45 @@ class EvaluatorConll2(object):
         if embeddings_id:
             hparam_string += '_{:}'.format(embeddings_id)
         return hparam_string
+
+    def _get_dir(self, hparams):
+        hparam_string = self._make_hparam_string(**hparams)
+        target_dir = '{:}{:}/'.format(self.target_dir, hparam_string)
+        if not os.path.isdir(target_dir):
+            os.mkdir(target_dir)
+        return target_dir
+
+    def _get_goldindex_list(self, ds_type):
+        if ds_type in ['train']:
+            gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
+        elif ds_type in ['valid']:
+            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
+                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
+        elif ds_type in ['test']:
+            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
+                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
+        else:
+            raise ValueError('{:} unknown dataset type'.format(ds_type))
+        return gold_index_list
+
+    def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
+        index = [item
+            for i, sublist in enumerate(index_tensor.tolist())
+            for j, item in enumerate(sublist) if j < len_tensor[i]]
+
+        values = [self.idx2lex[target_column][int(item)]
+            for i, sublist in enumerate(predictions_tensor.tolist())
+            for j, item in enumerate(sublist) if j < len_tensor[i]]
+
+        return OrderedDict(sorted(zip(index, values), key=lambda x: x[0]))
+
+    def _t2arg(self, tprops_dict):
+        propositions = {idx: self.db['P'][idx] for idx in tprops_dict}
+
+
+        ARG = br.propbankbr_t2arg(propositions.values(), tprops_dict.values())
+        return OrderedDict(sorted(zip(tprops_dict.keys(), ARG), key=lambda x: x[0]))
+
 
 
 class EvaluatorConll(object):
