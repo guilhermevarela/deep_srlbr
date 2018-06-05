@@ -11,13 +11,9 @@ import tensorflow as tf
 import sys, os
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.abspath('datasets'))
-<<<<<<< HEAD
 
-from data_tfrecords import input_fn, tensor2numpy_v2
-=======
 import config
 from data_tfrecords import input_fn
->>>>>>> fc6dad600b0f99aabc5b0ab05991b234b89af0ff
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
 from propbank_mappers import MapperTensor2Column, MapperT2ARG
@@ -27,6 +23,7 @@ import yaml
 
 INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_GLO50_PATH= '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
 HIDDEN_SIZE = [32, 32, 32]
 TARGET_SIZE = 60
 LEARNING_RATE = 5 * 1e-3
@@ -207,24 +204,22 @@ def get_index(columns_list, columns_dimsdict, column_name):
 
 def main():
     propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
-
+    datasets_list = [DATASET_TRAIN_GLO50_PATH, DATASET_VALID_GLO50_PATH]
+    num_propositions  = config.DATASET_VALID_SIZE + config.DATASET_TRAIN_SIZE 
     HIDDEN_SIZE = [32, 32, 32]
     lr = 1 * 1e-3
     FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
-    BATCH_SIZE = 250
+    BATCH_SIZE = int(num_propositions / 25)
     NUM_EPOCHS = 1000
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
     TARGET = 'T'
-<<<<<<< HEAD
-    TARGET_SIZE = propbank_encoder.column_dimensions(TARGET, 'IDX')
-    print(TARGET, TARGET_SIZE )
-=======
     columns_dimsdict = propbank_encoder.columns_dimensions('HOT')    
     TARGET_SIZE = columns_dimsdict[TARGET]
     columns_list = input_list + [TARGET]
     index_column = get_index(columns_list, columns_dimsdict,'INDEX')
-    print(TARGET, TARGET_SIZE, index_column)
->>>>>>> fc6dad600b0f99aabc5b0ab05991b234b89af0ff
+    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column)
+
+
 
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
@@ -241,7 +236,7 @@ def main():
 
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
-            [DATASET_TRAIN_GLO50_PATH], BATCH_SIZE, NUM_EPOCHS,
+            datasets_list, BATCH_SIZE, NUM_EPOCHS,
             input_list, TARGET)
 
     dblstm = DBLSTM(X, T, seqlens, **params)
@@ -264,35 +259,32 @@ def main():
             while not coord.should_stop():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
-<<<<<<< HEAD
-                import code; code.interact(local=dict(globals(), **locals()))
-=======
->>>>>>> fc6dad600b0f99aabc5b0ab05991b234b89af0ff
-                loss, _, Yish, error = session.run(
-                    [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
-                    feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
-                )
-<<<<<<< HEAD
-                
-                
-=======
-
-
->>>>>>> fc6dad600b0f99aabc5b0ab05991b234b89af0ff
-                total_loss += loss
-                total_error += error
                 if (step + 1) % 25 == 0:
+                    Yish = session.run(
+                        dblstm.prediction,
+                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                    )
+
                     index = D_batch[:, :, index_column].astype(np.int32)
 
 
-                    evaluator.evaluate_tensor('extract', index, Yish, L_batch, TARGET, params)
+                    evaluator.evaluate_tensor('valid', index, Yish, L_batch, TARGET, params)
 
                     print('Iter={:5d}'.format(step + 1),
-                          '\tavg. cost {:.6f}'.format(total_loss / 5),
-                          '\tavg. error {:.6f}'.format(total_error / 5),
+                          '\tavg. cost {:.6f}'.format(total_loss / 24),
+                          '\tavg. error {:.6f}'.format(total_error / 24),
                           '\tf1-train {:.6f}'.format(evaluator.f1))
                     total_loss = 0.0
                     total_error = 0.0
+                else:
+                    loss, _, Yish, error = session.run(
+                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                    )
+
+
+                    total_loss += loss
+                    total_error += error
                 step += 1
 
         except tf.errors.OutOfRangeError:
@@ -304,11 +296,4 @@ def main():
             coord.join(threads)
 
 if __name__ == '__main__':
-    # main()
-    inputs, targets, times, descriptors = tensor2numpy_v2(
-        [DATASET_TRAIN_GLO50_PATH],
-        250,
-        ['ID', 'FORM'],
-        'T'
-    )
-    import code; code.interact(local=dict(globals(), **locals()))
+    main()

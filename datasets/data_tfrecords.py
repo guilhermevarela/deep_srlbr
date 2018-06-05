@@ -468,8 +468,7 @@ def _process_v2( context_features, sequence_features,
     sequence_target=[]
 
     # Fetch only context variable the length of the proposition
-    L = context_features['L']
-    import code; code.interact(local=dict(globals(), **locals()))
+    L = context_features['L']    
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
