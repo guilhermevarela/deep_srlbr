@@ -261,6 +261,7 @@ def main():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
                 if  step % 25 == i:
+                    print('validation band:', step)
                     X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
 
                 if (step + 1) % 25 == 0:
