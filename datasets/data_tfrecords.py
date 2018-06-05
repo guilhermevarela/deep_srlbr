@@ -59,6 +59,12 @@ TF_SEQUENCE_FEATURES_V2.update({
 })
 
 
+def get_test(input_labels_list, target_label):
+    return tfrecords_extract_v2(
+        'test',
+        input_features=input_labels_list,
+        output_target=target_label
+    )
 
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
