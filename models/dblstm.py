@@ -200,6 +200,9 @@ def get_index(columns_list, columns_dims_dict, column_name):
             index += columns_dims_dict[descriptor]
     return index
 
+def kfold_blocktrim(X, Y, L, D, index_list, index_column):
+    ind = np.isin(D[:,:, index_column], index_list)
+    
 
 def main():
     propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
@@ -307,7 +310,7 @@ def main():
 
                         evaluator.evaluate_tensor('test', index, Yish, L_test, TARGET, params)
                 step += 1
-                i = (int(step / 25) + 1) % 25
+                i = int(step / 25) % 25 + 1
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')
