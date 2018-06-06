@@ -66,6 +66,13 @@ def get_test(input_labels_list, target_label):
         output_target=target_label
     )
 
+
+def get_valid(input_labels_list, target_label):
+    return tfrecords_extract_v2(
+        'valid',
+        input_features=input_labels_list,
+        output_target=target_label
+    )
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
                                             input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
@@ -300,8 +307,8 @@ def input_with_embeddings_fn(filenames, batch_size,  num_epochs,
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size, num_epochs,
              features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES,
-             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET
-            ):
+             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET,
+             shuffle=True):
     '''
         Produces sequence_examples shuffling at every epoch while batching every batch_size
             number of examples
@@ -321,35 +328,31 @@ def input_fn(filenames, batch_size, num_epochs,
             D_batch             .: [M] features that serve as descriptors but are not used for training
                     M= len(input_sequence_features)
     '''
-    print(target)
-    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
-    
-    
+    filename_queue = tf.train.string_input_producer(
+        filenames,
+        num_epochs=num_epochs,
+        shuffle=shuffle
+    )
+    context_features, sequence_features = _read_and_decode_v2(filename_queue)
 
-    context_features, sequence_features = _read_and_decode_v2(filename_queue)   
-
-    # import code; code.interact(local=dict(globals(), **locals()))
-
-    X, T, L, D = _process_v2(context_features, 
+    X, T, L, D = _process_v2(
+        context_features,
         sequence_features,
         features,
-        target,
-    )   
-    
+        target
+    )
+
     min_after_dequeue = 10000
     capacity = min_after_dequeue + 3 * batch_size
 
     # https://www.tensorflow.org/api_docs/python/tf/train/batch
-    X_batch, T_batch, L_batch, D_batch =tf.train.batch(
-        [X, T, L, D], 
+    X_batch, T_batch, L_batch, D_batch = tf.train.batch(
+        [X, T, L, D],
         batch_size=batch_size,
         capacity=capacity,
         dynamic_pad=True
     )
     return X_batch, T_batch, L_batch, D_batch
-
-
-
 
 
 # conf.SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']

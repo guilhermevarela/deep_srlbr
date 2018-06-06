@@ -1,1 +1,1 @@
-from data_tfrecords import input_fn
+from data_tfrecords import input_fn, get_test, get_valid
