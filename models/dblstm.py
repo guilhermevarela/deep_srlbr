@@ -23,7 +23,7 @@ import yaml
 INPUT_DIR = 'datasets/binaries/'
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_GLO50_PATH= '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
-HIDDEN_SIZE = [32, 32, 32]
+HIDDEN_SIZE = [16, 16, 16, 16]
 TARGET_SIZE = 60
 LEARNING_RATE = 5 * 1e-3
 
