@@ -252,17 +252,28 @@ def main():
         threads = tf.train.start_queue_runners(coord=coord)
         # Training control variables
         step = 0
-        i = 0
+        i = 1
         total_loss = 0.0
         total_error = 0.0
         best_validation_rate = -1
         try:
             while not coord.should_stop():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
-
-                if  step % 25 == i:
-                    print('validation band:', step)
+                
+                if  (step + 1) % 25 == i:
+                    # import code; code.interact(local=dict(globals(), **locals()))
+                    # print('step:', step, 'band:', i)
                     X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
+                    print('step:', step, 'rem:', (step + 1) % 25, 'band:', i, 'validation')
+                else:
+                    print('step:', step, 'rem:', (step + 1) % 25, 'band:', i, 'train')
+                    loss, _, Yish, error = session.run(
+                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                    )
+
+                    total_loss += loss
+                    total_error += error
 
                 if (step + 1) % 25 == 0:
                     Yish = session.run(
@@ -270,9 +281,11 @@ def main():
                         feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
                     )
 
-                    index = D_batch[:, :, index_column].astype(np.int32)
+                    index = D_valid[:, :, index_column].astype(np.int32)
 
-                    evaluator.evaluate_tensor('valid', index, Yish, L_batch, TARGET, params)
+                    evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
+                    print('band:', i, min(evaluator.props_dict),
+                          max(evaluator.props_dict), max(evaluator.props_dict) - min(evaluator.props_dict))
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
@@ -293,17 +306,8 @@ def main():
                         index = D_test[:, :, index_column].astype(np.int32)
 
                         evaluator.evaluate_tensor('test', index, Yish, L_test, TARGET, params)
-
-                else:
-                    loss, _, Yish, error = session.run(
-                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
-                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
-                    )
-
-                    total_loss += loss
-                    total_error += error
                 step += 1
-                i = step / 25
+                i = (int(step / 25) + 1) % 25
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')

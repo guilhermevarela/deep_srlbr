@@ -39,6 +39,7 @@ class EvaluatorConll2(object):
         self.idx2lex = idx2lex
         self.target_dir = target_dir
         self.target_columns = ('ARG', 'T')
+        self.props_dict = {} 
         self._refresh()
 
 
@@ -60,12 +61,12 @@ class EvaluatorConll2(object):
         if target_column not in self.target_columns:
            raise ValueError('target_column must be in {:} got target_column {:}'.format(self.target_columns, target_column))
 
-        props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
+        self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
 
         if target_column in ('T',):
-            props_dict = self._t2arg(props_dict)
+            self._t2arg()
 
-        self.evaluate(prefix, props_dict, hparams)
+        self.evaluate(prefix, self.props_dict, hparams)
 
 
     def evaluate(self, prefix, props, hparams):
@@ -251,21 +252,26 @@ class EvaluatorConll2(object):
 
     def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
         index = [item
-            for i, sublist in enumerate(index_tensor.tolist())
-            for j, item in enumerate(sublist) if j < len_tensor[i]]
+                 for i, sublist in enumerate(index_tensor.tolist())
+                 for j, item in enumerate(sublist) if j < len_tensor[i]]
 
         values = [self.idx2lex[target_column][int(item)]
-            for i, sublist in enumerate(predictions_tensor.tolist())
-            for j, item in enumerate(sublist) if j < len_tensor[i]]
+                  for i, sublist in enumerate(predictions_tensor.tolist())
+                  for j, item in enumerate(sublist) if j < len_tensor[i]]
 
-        return OrderedDict(sorted(zip(index, values), key=lambda x: x[0]))
+        _zip_list = sorted(zip(index, values), key=lambda x: x[0])
+        self.props_dict = OrderedDict(_zip_list)
 
-    def _t2arg(self, tprops_dict):
-        propositions = {idx: self.db['P'][idx] for idx in tprops_dict}
+        return self.props_dict
+
+    def _t2arg(self):
+        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
 
 
-        ARG = br.propbankbr_t2arg(propositions.values(), tprops_dict.values())
-        return OrderedDict(sorted(zip(tprops_dict.keys(), ARG), key=lambda x: x[0]))
+        ARG = br.propbankbr_t2arg(propositions.values(), self.props_dict.values())
+        self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), ARG), key=lambda x: x[0]))
+
+        return self.props_dict
 
 
 
