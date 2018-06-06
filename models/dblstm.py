@@ -199,10 +199,14 @@ def get_index(columns_list, columns_dims_dict, column_name):
         else:
             index += columns_dims_dict[descriptor]
     return index
-
-def kfold_blocktrim(X, Y, L, D, index_list, index_column):
-    ind = np.isin(D[:,:, index_column], index_list)
     
+
+def tensor2list(A, seqlens, column):
+    val = [item
+             for i, sublist in enumerate(A[:,:, column].tolist())
+             for j, item in enumerate(sublist) if j < seqlens[i]]
+    return val
+
 
 def main():
     propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
@@ -255,21 +259,21 @@ def main():
         threads = tf.train.start_queue_runners(coord=coord)
         # Training control variables
         step = 0
-        i = 1
+        i = 0
         total_loss = 0.0
         total_error = 0.0
         best_validation_rate = -1
+
         try:
             while not coord.should_stop():
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
-                
-                if  (step + 1) % 25 == i:
-                    # import code; code.interact(local=dict(globals(), **locals()))
-                    # print('step:', step, 'band:', i)
+
+                if  step % 25 == i:
                     X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
-                    print('step:', step, 'rem:', (step + 1) % 25, 'band:', i, 'validation')
-                else:
-                    print('step:', step, 'rem:', (step + 1) % 25, 'band:', i, 'train')
+
+
+                else:                
+
                     loss, _, Yish, error = session.run(
                         [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
                         feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
@@ -277,8 +281,12 @@ def main():
 
                     total_loss += loss
                     total_error += error
+                    batch_index = [int(i)
+                                   for i in tensor2list(D_batch, L_batch, index_column)]
+                
+                    exclude_index_list += batch_index
 
-                if (step + 1) % 25 == 0:
+                if (step + 1) % 25 == 0 and step > 0:
                     Yish = session.run(
                         dblstm.prediction,
                         feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
@@ -287,13 +295,13 @@ def main():
                     index = D_valid[:, :, index_column].astype(np.int32)
 
                     evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
-                    print('band:', i, min(evaluator.props_dict),
-                          max(evaluator.props_dict), max(evaluator.props_dict) - min(evaluator.props_dict))
+                    
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
                           '\tavg. error {:.6f}'.format(total_error / 24),
                           '\tf1-train {:.6f}'.format(evaluator.f1))
+                    
                     total_loss = 0.0
                     total_error = 0.0
 
@@ -310,7 +318,7 @@ def main():
 
                         evaluator.evaluate_tensor('test', index, Yish, L_test, TARGET, params)
                 step += 1
-                i = int(step / 25) % 25 + 1
+                i = int(step / 25) % 25
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')
