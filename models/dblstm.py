@@ -281,10 +281,7 @@ def main():
 
                     total_loss += loss
                     total_error += error
-                    batch_index = [int(i)
-                                   for i in tensor2list(D_batch, L_batch, index_column)]
-                
-                    exclude_index_list += batch_index
+
 
                 if (step + 1) % 25 == 0 and step > 0:
                     Yish = session.run(

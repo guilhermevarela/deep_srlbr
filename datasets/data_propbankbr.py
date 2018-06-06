@@ -13,8 +13,8 @@ import pandas as pd
 import numpy as np 
 import re
 import os.path
-import networkx as nx
-import matplotlib.pyplot as plt
+#import networkx as nx
+#import matplotlib.pyplot as plt
 from collections import defaultdict, deque
 PROPBANKBR_PATH='../datasets/txts/conll/'
 # PROPBANKBR_PATH='../datasets/conll/'
