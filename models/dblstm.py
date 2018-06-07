@@ -12,11 +12,12 @@ import sys, os
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.abspath('datasets'))
 
+
 import config
 from data_tfrecords import input_fn, get_test
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
-from utils import get_index, get_dims
+from models.utils import get_index, get_dims
 import numpy as np
 import yaml
 
@@ -26,6 +27,7 @@ DATASET_VALID_GLO50_PATH = '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
 DATASET_TRAIN_WAN50_PATH = '{:}dbtrain_wan50.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_WAN50_PATH = '{:}dbvalid_wan50.tfrecords'.format(INPUT_DIR)
 PROPBANK_WAN50_PATH = '{:}deep_wan50.pickle'.format(INPUT_DIR)
+
 
 
 def lazy_property(function):

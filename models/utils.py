@@ -22,6 +22,7 @@ Created on Mar 12, 2018
 import pandas as pd
 import re
 import string
+import config
 
 from gensim.models import KeyedVectors
 INPUT_DIR = 'datasets/binaries/'
