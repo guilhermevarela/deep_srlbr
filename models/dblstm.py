@@ -12,24 +12,31 @@ import sys, os
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.abspath('datasets'))
 
+
 import config
 from data_tfrecords import input_fn, get_test
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
-
+from models.utils import get_index, get_dims
 import numpy as np
 import yaml
 
 INPUT_DIR = 'datasets/binaries/'
+<<<<<<< HEAD
 DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_GLO50_PATH= '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
 HIDDEN_SIZE = [16, 16, 16, 16]
 TARGET_SIZE = 60
 LEARNING_RATE = 5 * 1e-3
 
+=======
+DATASET_TRAIN_GLO50_PATH = '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_GLO50_PATH = '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_TRAIN_WAN50_PATH = '{:}dbtrain_wan50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_WAN50_PATH = '{:}dbvalid_wan50.tfrecords'.format(INPUT_DIR)
+PROPBANK_WAN50_PATH = '{:}deep_wan50.pickle'.format(INPUT_DIR)
+>>>>>>> bfda07ef95e6859dc896dae13c65c89196a58969
 
-def get_unit(sz):
-    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 
 def lazy_property(function):
@@ -48,6 +55,8 @@ def lazy_property(function):
 
     return decorator
 
+def get_unit(sz):
+    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 class DBLSTM(object):
 
@@ -179,6 +188,7 @@ class DBLSTM(object):
         return tf.reduce_mean(mistakes)
 
 
+<<<<<<< HEAD
 def get_index(columns_list, columns_dims_dict, column_name):
     '''
         Returns column index from descriptor
@@ -208,31 +218,35 @@ def tensor2list(A, seqlens, column):
     return val
 
 
+=======
+>>>>>>> bfda07ef95e6859dc896dae13c65c89196a58969
 def main():
-    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
-    datasets_list = [DATASET_TRAIN_GLO50_PATH, DATASET_VALID_GLO50_PATH]
+    propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
+    dims_dict = propbank_encoder.columns_dimensions('EMB')
+    datasets_list = [DATASET_TRAIN_WAN50_PATH, DATASET_VALID_WAN50_PATH]
     devel_size = config.DATASET_VALID_SIZE + config.DATASET_TRAIN_SIZE
-    HIDDEN_SIZE = [32, 32, 32]
-    lr = 1 * 1e-3
-    FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
+    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
+                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    TARGET = 'T'
+    columns_list = input_list + [TARGET]
+
+    index_column = get_index(columns_list, dims_dict, 'INDEX')
+    X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
+    FEATURE_SIZE = get_dims(input_list, dims_dict)
+
     BATCH_SIZE = int(devel_size / 25)
     NUM_EPOCHS = 1000
-    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    TARGET = 'T'
-    columns_dims_dict = propbank_encoder.columns_dimensions('HOT')
-    TARGET_SIZE = columns_dims_dict[TARGET]
-    columns_list = input_list + [TARGET]
-    index_column = get_index(columns_list, columns_dims_dict,'INDEX')
-    X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
-    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column)
-
-
+    HIDDEN_SIZE = [16] * 4
+    lr = 1 * 1e-3
+    TARGET_SIZE = dims_dict[TARGET]
+    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column, FEATURE_SIZE)
 
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
-        'learning_rate': lr, 
-        'hidden_size':HIDDEN_SIZE,
-        'target_size':TARGET_SIZE
+        'learning_rate': lr,
+        'hidden_size': HIDDEN_SIZE,
+        'target_size': TARGET_SIZE
     }
     # BUILDING the execution graph
     X_shape = (None, None, FEATURE_SIZE)

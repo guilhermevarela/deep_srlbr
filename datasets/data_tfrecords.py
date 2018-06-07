@@ -29,25 +29,14 @@ from propbank_encoder import PropbankEncoder
 import tensorflow as tf 
 from collections import defaultdict 
 
-TF_SEQUENCE_FEATURES= {key:tf.VarLenFeature(tf.int64) 
+TF_SEQUENCE_FEATURES = {key:tf.VarLenFeature(tf.int64) 
     for key in conf.SEQUENCE_FEATURES
 }
 
-TF_CONTEXT_FEATURES=    {
-    'L': tf.FixedLenFeature([], tf.int64)           
+TF_CONTEXT_FEATURES = {
+    'L': tf.FixedLenFeature([], tf.int64)
 }
 
-
-# TF_SEQUENCE_FEATURES_V2 = {
-#     key: tf.VarLenFeature(tf.int64)
-#     for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
-#  }.update({
-#     key: tf.VarLenFeature(tf.float32)
-#     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
-# }).update({
-#     key: tf.VarLenFeature(tf.int64)
-#     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-# })
 
 TF_SEQUENCE_FEATURES_V2 = {
     key: tf.VarLenFeature(tf.int64)
@@ -66,6 +55,13 @@ def get_test(input_labels_list, target_label):
         output_target=target_label
     )
 
+
+def get_valid(input_labels_list, target_label):
+    return tfrecords_extract_v2(
+        'valid',
+        input_features=input_labels_list,
+        output_target=target_label
+    )
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
                                             input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
@@ -124,13 +120,13 @@ def tfrecords_extract_v2(ds_type,
         raise ValueError(buff)
     else:
         if ds_type in ['train']:
-            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_glo50')
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wan0')
             dataset_size=conf.DATASET_TRAIN_SIZE
         if ds_type in ['test']:
-            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_glo50')
+            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wan50')
             dataset_size=conf.DATASET_TEST_SIZE
         if ds_type in ['valid']:    
-            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_glo50')
+            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wan50')
             dataset_size=conf.DATASET_VALID_SIZE
 
     inputs, targets, lengths, others= tensor2numpy_v2(
@@ -235,8 +231,9 @@ def tensor2numpy_v2(dataset_path, dataset_size,
         # This first loop instanciates validation set
         try:
             while not coord.should_stop():              
-                inputs, targets, times, descriptors=session.run([X, T, L, D])                   
-
+                # inputs, targets, times, descriptors=session.run([X, T, L, D])                   
+                targets=session.run(T)                   
+                import code; code.interact(local=dict(globals(), **locals()))
         except tf.errors.OutOfRangeError:
             print(msg)          
 
@@ -321,31 +318,45 @@ def input_fn(filenames, batch_size, num_epochs,
             D_batch             .: [M] features that serve as descriptors but are not used for training
                     M= len(input_sequence_features)
     '''
-    print(target)
-    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=shuffle)
 
+    filename_queue = tf.train.string_input_producer(
+        filenames,
+        num_epochs=num_epochs,
+        shuffle=shuffle
+    )
     context_features, sequence_features = _read_and_decode_v2(filename_queue)
 
-    X, T, L, D = _process_v2(context_features, 
+    # X, T, L, D = _process_v2(
+    #     context_features,
+    #     sequence_features,
+    #     features,
+    #     target
+    # )
+    T = _process_v2(
+        context_features,
         sequence_features,
         features,
-        target,
-    )   
+        target
+    )
     
+    import code; code.interact(local=dict(globals(), **locals()))
     min_after_dequeue = 10000
     capacity = min_after_dequeue + 3 * batch_size
 
     # https://www.tensorflow.org/api_docs/python/tf/train/batch
-    X_batch, T_batch, L_batch, D_batch =tf.train.batch(
-        [X, T, L, D], 
+    # X_batch, T_batch, L_batch, D_batch = tf.train.batch(
+    #     [X, T, L, D],
+    #     batch_size=batch_size,
+    #     capacity=capacity,
+    #     dynamic_pad=True
+    # )
+    T_batch= tf.train.batch(
+        T,
         batch_size=batch_size,
         capacity=capacity,
         dynamic_pad=True
     )
-    return X_batch, T_batch, L_batch, D_batch
-
-
-
+    return T_batch
 
 
 # conf.SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
@@ -479,7 +490,7 @@ def _process_v2( context_features, sequence_features,
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
 
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
-        
+
         if key in features:
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
@@ -489,9 +500,10 @@ def _process_v2( context_features, sequence_features,
             print('descriptors: {:}'.format(key))
             sequence_descriptors.append(dense_tensor1)
 
-    X = tf.concat(sequence_inputs, 1)
-    D = tf.concat(sequence_descriptors, 1)
-    return X, T, L, D
+    # X = tf.concat(sequence_inputs, 1)
+    # D = tf.concat(sequence_descriptors, 1)
+    # return X, T, L, D
+    return T
 
 
 def _read_and_decode(filename_queue):
@@ -669,7 +681,8 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                 if not refresh:
                     context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
                     feature_list = {}
-                    for feat, values in feature_lists.items():
+                    print(feature_lists.keys())
+                    for feat, values in feature_lists.items():                        
                         test_value = values[0]
                         if isinstance(test_value, list):
                             test_value = test_value[0]
@@ -710,7 +723,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                     ex = tf.train.SequenceExample(
                         context=tf.train.Features(feature=context),
                         feature_lists=tf.train.FeatureLists(feature_list=feature_list)
-                    )
+                    )                    
 
                     writer.write(ex.SerializeToString())
                 refresh = False
@@ -794,13 +807,13 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    
+    embeddings = 'wan50'
+    bin_path = 'datasets/binaries/deep_{:}.pickle'.format(embeddings)
     # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wan50.pickle')
-    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wrd50.pickle')
+    propbank_encoder = PropbankEncoder.recover(bin_path)
+    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wrd50.pickle')
 
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
-    # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type, lang='wrd50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type, lang=embeddings)
 

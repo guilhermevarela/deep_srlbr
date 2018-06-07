@@ -22,9 +22,10 @@ Created on Mar 12, 2018
 import pandas as pd
 import re
 import string
+import config
 
 from gensim.models import KeyedVectors
-
+INPUT_DIR = 'datasets/binaries/'
 EMBEDDINGS_DIR = 'datasets/txts/embeddings/'
 CORPUS_EXCEPTIONS_DIR = 'datasets/txts/corpus_exceptions/'
 
@@ -80,21 +81,21 @@ def preprocess(lexicon, word2vec):
     New Word embedding size = embedding size + one-hot enconding of 2   
     '''
     # define outputs
-    total_words= len(lexicon)
+    total_words = len(lexicon)
     lexicon2token = dict(zip(lexicon, ['unk']*total_words))
 
     # fetch exceptions list
-    pers= fetch_corpus_exceptions('corpus-word-missing-pers.txt')
-    locs= fetch_corpus_exceptions('corpus-word-missing-locs.txt')
-    orgs= fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
-    
+    pers = fetch_corpus_exceptions('corpus-word-missing-pers.txt')
+    locs = fetch_corpus_exceptions('corpus-word-missing-locs.txt')
+    orgs = fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
+
 
     #define regex
-    re_punctuation= re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE) 
-    re_number= re.compile(r'^\d+$')
-    re_tel   = re.compile(r'^tel\._')
-    re_time  = re.compile(r'^\d{1,2}h\d{0,2}$') 
-    re_ordinals= re.compile(r'º|ª') 
+    re_punctuation = re.compile(r'[{:}]'.format(string.punctuation), re.UNICODE)
+    re_number = re.compile(r'^\d+$')
+    re_tel = re.compile(r'^tel\._')
+    re_time = re.compile(r'^\d{1,2}h\d{0,2}$')
+    re_ordinals = re.compile(r'º|ª')
 
     for word in list(lexicon):
         # some hiffenized words belong to embeddings
@@ -113,19 +114,53 @@ def preprocess(lexicon, word2vec):
 
             if token in word2vec:
                 lexicon2token[word]= token.lower()
-            else:   
+            else:
                 if word in pers:
                     lexicon2token[word] = 'pessoa'
-                else:   
+                else:
                     if word in orgs:
-                        lexicon2token[word] = 'organização' 
+                        lexicon2token[word] = 'organização'
                     else:
                         if word in locs:
-                            lexicon2token[word] = 'local'               
+                            lexicon2token[word] = 'local'
 
-    total_tokens=   len([val for val in  lexicon2token.values() if not val in ('unk')])
-    
+    total_tokens = len([val for val in  lexicon2token.values() if not val in ('unk')])
+
     print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_tokens,
      total_words, 100*float(total_words-total_tokens)/ total_words))                
 
     return lexicon2token
+
+def get_index(columns_list, columns_dims_dict, column_name):
+    '''
+        Returns column index from descriptor
+        args:
+            columns_list            .: list<str> input features + target
+            columns_dims_dict        .: dict<str, int> holding the columns
+            column_name             .:  str name of the column to get the index from
+
+        returns:
+    '''
+    features_set = set(config.CATEGORICAL_FEATURES).union(config.EMBEDDED_FEATURES)
+    used_set = set(columns_list)
+    descriptor_list = sorted(list(features_set - used_set))
+    index = 0
+    for descriptor in descriptor_list:
+        if descriptor == column_name:
+            break
+        else:
+            index += columns_dims_dict[descriptor]
+    return index
+
+
+def get_dims(labels_list, labels_dim_dict):
+    return sum([labels_dim_dict[label] for label in labels_list])
+
+def get_binary(ds_type, embeddings):
+    if ds_type not in ('train', 'test', 'valid', 'deep'):
+        raise ValueError('Invalid dataset label {:}'.format(ds_type))
+
+    prefix = '' if ds_type in ('deep') else 'db'
+    ext = 'pickle' if ds_type in ('deep') else 'trecords'
+    dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings, ext)
+    return '{:}{:}'.format(INPUT_DIR, dbname)
