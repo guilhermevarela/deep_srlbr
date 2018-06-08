@@ -190,7 +190,7 @@ def main():
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    TARGET = 'T'
+    TARGET = 'IOB'
     columns_list = input_list + [TARGET]
 
     index_column = get_index(columns_list, dims_dict, 'INDEX')
@@ -234,7 +234,7 @@ def main():
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord)
         # Training control variables
-        step = 0
+        step = 1
         total_loss = 0.0
         total_error = 0.0
         best_validation_rate = -1
@@ -250,7 +250,7 @@ def main():
 
                 total_loss += loss
                 total_error += error
-                if (step % 25 == 0 and step > 0):
+                if (step % 5 == 0 and step > 0):
                     index = I_batch[:, :, 0].astype(np.int32)
                     f1_train = evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
                     
@@ -259,14 +259,14 @@ def main():
 
                     if f1_valid and f1_train:
                         print('Iter={:5d}'.format(step),
-                              '\tavg. cost {:.6f}'.format(total_loss / 25),
-                              '\tavg. error {:.6f}'.format(total_error / 25),
+                              '\tavg. cost {:.6f}'.format(total_loss / 5),
+                              '\tavg. error {:.6f}'.format(total_error / 5),
                               '\tf1-train {:.6f}'.format(f1_train),
                               '\tf1-valid {:.6f}'.format(f1_valid))
                     else:
                         print('Iter={:5d}'.format(step),
-                              '\tavg. cost {:.6f}'.format(total_loss / 25),
-                              '\tavg. error {:.6f}'.format(total_error / 25))
+                              '\tavg. cost {:.6f}'.format(total_loss / 5),
+                              '\tavg. error {:.6f}'.format(total_error / 5))
                     total_loss = 0.0
                     total_error = 0.0
 

@@ -451,23 +451,49 @@ def propbankbr_iob2arg(propositions, arguments):
     prev_tag = 'O'
     prev_prop = -1
     new_tags = []
+    cop = 0
+    ccl = 0
     for prop, tag in zip(propositions, arguments):        
         if prev_prop == prop:
             if (tag[0] == 'B'):
                 new_tag = re.sub(r'B-', '(', tag) + '*'
+                cop += 1
+                if prev_tag[:2] == 'B-':
+                    ccl += 1 
+                    new_tags[-1] += ')'
+
+            elif (tag[0] == 'I'):
+                if prev_tag[:2] == 'B-' and prev_tag[2:] != tag[2:]:
+                    ccl += 1 
+                    new_tags[-1] += ')'
+
+                if (prev_tag[2:] != tag[2:]):
+                    new_tag = re.sub(r'I-', '(', tag) + '*'
+                    cop += 1
+                else:
+                    new_tag = '*'
             else:
                 new_tag = '*'
+            if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):            
+                ccl += 1 
+                new_tags[-1] += ')'
         else:
+            if cop > ccl:
+                new_tags[-1] += ')'
+            
+            cop = 0
+            ccl = 0 
             if (tag in ['O']):
                 new_tag = '*'
             else:
-                new_tag = re.sub(r'B-', '(', tag) + '*'
-
-        if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):
-            new_tags[-1] += ')'
+                new_tag = re.sub(r'B-|I-', '(', tag) + '*'
+                cop += 1
         prev_tag = tag
         prev_prop = prop
         new_tags.append(new_tag)
+    if (prev_tag[0] != 'O'):            
+        new_tags[-1] += ')'
+    
     return new_tags
 
 
