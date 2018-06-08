@@ -38,6 +38,7 @@ class _EncoderIterator(object):
             raise StopIteration
         else:
             self.current += 1
+
             return self.current - 1, self.decoder_fn(self.current - 1)
 
 
@@ -113,7 +114,7 @@ class PropbankEncoder(object):
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    def iterator(self, ds_type, filter_columns=['P', 'FORM', 'ARG'], encoding='EMB'):
+    def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
         if not(ds_type in ['train', 'valid', 'test']):
             errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
             raise ValueError(errmessage)
@@ -130,8 +131,7 @@ class PropbankEncoder(object):
 
 
 
-            interval = [idx
-                        for idx, p in self.db['P'].items()
+            interval = [idx for idx, p in self.db['P'].items()
                         if p > lb and p <= ub]
             low = min(interval)
             high = max(interval)
@@ -139,7 +139,7 @@ class PropbankEncoder(object):
         if filter_columns:
             for col in filter_columns:
                 if not col in self.db:
-                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db)
+                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db.keys())
                     raise ValueError(errmessage)
         else:
             filter_columns = list(self.db.keys())
@@ -314,6 +314,7 @@ class PropbankEncoder(object):
 
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
+
         for col in columns:
             val = self.db[col].get(idx, 0)
             d[col] = self._decode_with_value(val, col, encoding)
@@ -324,7 +325,6 @@ class PropbankEncoder(object):
             return d
 
     def _decode_with_value(self, x, column, encoding):
-
         colconfig = self.columns_config[column]
         if encoding in ('IDX') or colconfig['type'] in ('int', 'bool'):
             return x
