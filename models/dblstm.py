@@ -183,9 +183,9 @@ class DBLSTM(object):
 
 
 def main():
-    propbank_encoder = PropbankEncoder.recover(PROPBANK_GLO50_PATH)
+    propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
-    datasets_list = [DATASET_TRAIN_GLO50_PATH]
+    datasets_list = [DATASET_TRAIN_WAN50_PATH]
     devel_size = config.DATASET_TRAIN_SIZE
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
@@ -194,7 +194,7 @@ def main():
     columns_list = input_list + [TARGET]
 
     index_column = get_index(columns_list, dims_dict, 'INDEX')
-    X_valid, Y_valid, L_valid, D_valid = get_valid(input_list, TARGET)
+    X_valid, Y_valid, L_valid, I_valid = get_valid(input_list, TARGET)
     FEATURE_SIZE = get_dims(input_list, dims_dict)
 
     BATCH_SIZE = 250
@@ -220,7 +220,7 @@ def main():
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, BATCH_SIZE, NUM_EPOCHS,
-            input_list, TARGET, shuffle=False)
+            input_list, TARGET, shuffle=True)
 
     dblstm = DBLSTM(X, T, seqlens, **params)
 
@@ -241,35 +241,38 @@ def main():
 
         try:
             while not coord.should_stop():
-                X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
+                X_batch, Y_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
 
+                loss, _, Yish, error = session.run(
+                    [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                    feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                )
+
+                total_loss += loss
+                total_error += error
                 if (step % 25 == 0 and step > 0):
-                    index = D_batch[:, :, index_column].astype(np.int32)
+                    index = I_batch[:, :, 0].astype(np.int32)
+                    f1_train = evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
+                    
+                    index = I_valid[:, :, 0].astype(np.int32)
+                    f1_valid = evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
 
-                    f1_train =  evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
-            
-                    index = D_valid[:, :, index_column].astype(np.int32)
-                    f1_valid =  evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
-
-                    print('Iter={:5d}'.format(step + 1),
-                          '\tavg. cost {:.6f}'.format(total_loss / 25),
-                          '\tavg. error {:.6f}'.format(total_error / 25),
-                          '\tf1-train {:.6f}'.format(f1_train),
-                          '\tf1-valid {:.6f}'.format(f1_valid))
+                    if f1_valid and f1_train:
+                        print('Iter={:5d}'.format(step),
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25),
+                              '\tf1-train {:.6f}'.format(f1_train),
+                              '\tf1-valid {:.6f}'.format(f1_valid))
+                    else:
+                        print('Iter={:5d}'.format(step),
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25))
                     total_loss = 0.0
                     total_error = 0.0
 
-                    if best_validation_rate < f1_valid:
+                    if f1_valid and best_validation_rate < f1_valid:
                         best_validation_rate = f1_valid
 
-                else:
-                    loss, _, Yish, error = session.run(
-                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
-                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
-                    )
-
-                    total_loss += loss
-                    total_error += error
                 step += 1
 
 

@@ -247,9 +247,15 @@ class PropbankEncoder(object):
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
             colconfig = self.columns_config.get(col, None)
-            if col in ('INDEX') or not colconfig:
+            if col in ('INDEX',) or not colconfig:
                 #Boolean values, numerical values come here
-                self.db[col] = OrderedDict(dbpt_d[col])
+                if col in ('INDEX',):
+                    self.db[col] = OrderedDict(
+                        dict(zip(dbpt_d['FORM'].keys(),
+                                 dbpt_d['FORM'].keys()
+                    )))
+                else:
+                    self.db[col] = OrderedDict(dbpt_d[col])
             elif colconfig['type'] in ('choice', 'text'):
                 self.db[col] = OrderedDict({
                     idx: self.lex2idx[col].get(word, 0) for idx, word in dbpt_d[col].items() 
@@ -266,7 +272,7 @@ class PropbankEncoder(object):
         '''
         # Computes a dictionary that maps one column to a base column
 
-        self.columns = self.columns.union(dbpt_d.keys())
+        self.columns = self.columns.union(dbpt_d.keys()).union(set(['INDEX']))
         self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
 
