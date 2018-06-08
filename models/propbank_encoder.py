@@ -38,6 +38,7 @@ class _EncoderIterator(object):
             raise StopIteration
         else:
             self.current += 1
+
             return self.current - 1, self.decoder_fn(self.current - 1)
 
 
@@ -113,7 +114,7 @@ class PropbankEncoder(object):
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    def iterator(self, ds_type, filter_columns=['P', 'FORM', 'ARG'], encoding='EMB'):
+    def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
         if not(ds_type in ['train', 'valid', 'test']):
             errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
             raise ValueError(errmessage)
@@ -130,8 +131,7 @@ class PropbankEncoder(object):
 
 
 
-            interval = [idx
-                        for idx, p in self.db['P'].items()
+            interval = [idx for idx, p in self.db['P'].items()
                         if p > lb and p <= ub]
             low = min(interval)
             high = max(interval)
@@ -139,7 +139,7 @@ class PropbankEncoder(object):
         if filter_columns:
             for col in filter_columns:
                 if not col in self.db:
-                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db)
+                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db.keys())
                     raise ValueError(errmessage)
         else:
             filter_columns = list(self.db.keys())
@@ -247,9 +247,15 @@ class PropbankEncoder(object):
         for col in list(self.columns):
             base_col = self.columns_mapper[col]
             colconfig = self.columns_config.get(col, None)
-            if col in ('INDEX') or not colconfig:
+            if col in ('INDEX',) or not colconfig:
                 #Boolean values, numerical values come here
-                self.db[col] = OrderedDict(dbpt_d[col])
+                if col in ('INDEX',):
+                    self.db[col] = OrderedDict(
+                        dict(zip(dbpt_d['FORM'].keys(),
+                                 dbpt_d['FORM'].keys()
+                    )))
+                else:
+                    self.db[col] = OrderedDict(dbpt_d[col])
             elif colconfig['type'] in ('choice', 'text'):
                 self.db[col] = OrderedDict({
                     idx: self.lex2idx[col].get(word, 0) for idx, word in dbpt_d[col].items() 
@@ -266,7 +272,7 @@ class PropbankEncoder(object):
         '''
         # Computes a dictionary that maps one column to a base column
 
-        self.columns = self.columns.union(dbpt_d.keys())
+        self.columns = self.columns.union(dbpt_d.keys()).union(set(['INDEX']))
         self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
 
@@ -314,6 +320,7 @@ class PropbankEncoder(object):
 
     def _decode_with_idx(self, idx, columns, encoding):
         d = OrderedDict()
+
         for col in columns:
             val = self.db[col].get(idx, 0)
             d[col] = self._decode_with_value(val, col, encoding)
@@ -324,7 +331,6 @@ class PropbankEncoder(object):
             return d
 
     def _decode_with_value(self, x, column, encoding):
-
         colconfig = self.columns_config[column]
         if encoding in ('IDX') or colconfig['type'] in ('int', 'bool'):
             return x
@@ -378,17 +384,17 @@ if __name__ == '__main__':
 
     # import code; code.interact(local=dict(globals(), **locals()))
     #In order to use glove uncheck
-    dbname = 'deep_glo50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
+    # dbname = 'deep_glo50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
+    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
     
     dbname = 'deep_wan50'    
     propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
     propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
-    dbname = 'deep_wrd50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
+    # dbname = 'deep_wrd50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
 
     # propbank_encoder.persist('../datasets/binaries/', filename=dbname)

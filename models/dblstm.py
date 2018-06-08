@@ -12,24 +12,24 @@ import sys, os
 sys.path.insert(0, os.getcwd())
 sys.path.insert(0, os.path.abspath('datasets'))
 
+
 import config
-from data_tfrecords import input_fn, get_test
+from data_tfrecords import input_fn, get_valid
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
-
+from models.utils import get_index, get_dims
 import numpy as np
 import yaml
 
 INPUT_DIR = 'datasets/binaries/'
-DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_GLO50_PATH= '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
-HIDDEN_SIZE = [16, 16, 16, 16]
-TARGET_SIZE = 60
-LEARNING_RATE = 5 * 1e-3
+DATASET_TRAIN_GLO50_PATH = '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_GLO50_PATH = '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_TRAIN_WAN50_PATH = '{:}dbtrain_wan50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_WAN50_PATH = '{:}dbvalid_wan50.tfrecords'.format(INPUT_DIR)
+PROPBANK_GLO50_PATH = '{:}deep_glo50.pickle'.format(INPUT_DIR)
+PROPBANK_WAN50_PATH = '{:}deep_wan50.pickle'.format(INPUT_DIR)
 
 
-def get_unit(sz):
-    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 
 def lazy_property(function):
@@ -48,6 +48,8 @@ def lazy_property(function):
 
     return decorator
 
+def get_unit(sz):
+    return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
 class DBLSTM(object):
 
@@ -179,60 +181,34 @@ class DBLSTM(object):
         return tf.reduce_mean(mistakes)
 
 
-def get_index(columns_list, columns_dims_dict, column_name):
-    '''
-        Returns column index from descriptor
-        args:
-            columns_list            .: list<str> input features + target
-            columns_dims_dict        .: dict<str, int> holding the columns
-            column_name             .:  str name of the column to get the index from
-
-        returns:
-    '''
-    features_set = set(config.CATEGORICAL_FEATURES).union(config.EMBEDDED_FEATURES)
-    used_set = set(columns_list)
-    descriptor_list = sorted(list(features_set - used_set))
-    index = 0
-    for descriptor in descriptor_list:
-        if descriptor == column_name:
-            break
-        else:
-            index += columns_dims_dict[descriptor]
-    return index
-    
-
-def tensor2list(A, seqlens, column):
-    val = [item
-             for i, sublist in enumerate(A[:,:, column].tolist())
-             for j, item in enumerate(sublist) if j < seqlens[i]]
-    return val
-
 
 def main():
-    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
-    datasets_list = [DATASET_TRAIN_GLO50_PATH, DATASET_VALID_GLO50_PATH]
-    devel_size = config.DATASET_VALID_SIZE + config.DATASET_TRAIN_SIZE
-    HIDDEN_SIZE = [32, 32, 32]
-    lr = 1 * 1e-3
-    FEATURE_SIZE = 1 * 2 + 50 * (2 + 3)
-    BATCH_SIZE = int(devel_size / 25)
-    NUM_EPOCHS = 1000
-    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    TARGET = 'T'
-    columns_dims_dict = propbank_encoder.columns_dimensions('HOT')
-    TARGET_SIZE = columns_dims_dict[TARGET]
+    propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
+    dims_dict = propbank_encoder.columns_dimensions('EMB')
+    datasets_list = [DATASET_TRAIN_WAN50_PATH]
+    devel_size = config.DATASET_TRAIN_SIZE
+    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
+                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    TARGET = 'IOB'
     columns_list = input_list + [TARGET]
-    index_column = get_index(columns_list, columns_dims_dict,'INDEX')
-    X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
-    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column)
 
+    index_column = get_index(columns_list, dims_dict, 'INDEX')
+    X_valid, Y_valid, L_valid, I_valid = get_valid(input_list, TARGET)
+    FEATURE_SIZE = get_dims(input_list, dims_dict)
 
+    BATCH_SIZE = 250
+    NUM_EPOCHS = 1000
+    HIDDEN_SIZE = [16] * 4
+    lr = 1 * 1e-3
+    TARGET_SIZE = dims_dict[TARGET]
+    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column, FEATURE_SIZE)
 
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
-        'learning_rate': lr, 
-        'hidden_size':HIDDEN_SIZE,
-        'target_size':TARGET_SIZE
+        'learning_rate': lr,
+        'hidden_size': HIDDEN_SIZE,
+        'target_size': TARGET_SIZE
     }
     # BUILDING the execution graph
     X_shape = (None, None, FEATURE_SIZE)
@@ -244,7 +220,7 @@ def main():
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, BATCH_SIZE, NUM_EPOCHS,
-            input_list, TARGET, shuffle=False)
+            input_list, TARGET, shuffle=True)
 
     dblstm = DBLSTM(X, T, seqlens, **params)
 
@@ -258,64 +234,47 @@ def main():
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord)
         # Training control variables
-        step = 0
-        i = 0
+        step = 1
         total_loss = 0.0
         total_error = 0.0
         best_validation_rate = -1
 
         try:
             while not coord.should_stop():
-                X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
+                X_batch, Y_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
 
-                if  step % 25 == i:
-                    X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
+                loss, _, Yish, error = session.run(
+                    [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                    feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                )
 
+                total_loss += loss
+                total_error += error
+                if (step + 1) % 25 == 0:
+                    index = I_batch[:, :, 0].astype(np.int32)
+                    f1_train = evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
 
-                else:                
+                    index = I_valid[:, :, 0].astype(np.int32)
+                    f1_valid = evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
 
-                    loss, _, Yish, error = session.run(
-                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
-                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
-                    )
-
-                    total_loss += loss
-                    total_error += error
-
-
-                if (step + 1) % 25 == 0 and step > 0:
-                    Yish = session.run(
-                        dblstm.prediction,
-                        feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
-                    )
-
-                    index = D_valid[:, :, index_column].astype(np.int32)
-
-                    evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
-                    
-
-                    print('Iter={:5d}'.format(step + 1),
-                          '\tavg. cost {:.6f}'.format(total_loss / 24),
-                          '\tavg. error {:.6f}'.format(total_error / 24),
-                          '\tf1-train {:.6f}'.format(evaluator.f1))
-                    
+                    if f1_valid and f1_train:
+                        print('Iter={:5d}'.format(step + 1),
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25),
+                              '\tf1-train {:.6f}'.format(f1_train),
+                              '\tf1-valid {:.6f}'.format(f1_valid))
+                    else:
+                        print('Iter={:5d}'.format(step),
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25))
                     total_loss = 0.0
                     total_error = 0.0
 
-                    if best_validation_rate < evaluator.f1:
-                        best_validation_rate = evaluator.f1
+                    if f1_valid and best_validation_rate < f1_valid:
+                        best_validation_rate = f1_valid
 
-                    if evaluator.f1 > 95:
-                        Yish = session.run(
-                            dblstm.prediction,
-                            feed_dict={X: X_test, T: Y_test, seqlens: L_test}
-                        )
-
-                        index = D_test[:, :, index_column].astype(np.int32)
-
-                        evaluator.evaluate_tensor('test', index, Yish, L_test, TARGET, params)
                 step += 1
-                i = int(step / 25) % 25
+
 
         except tf.errors.OutOfRangeError:
             print('Done training -- epoch limit reached')

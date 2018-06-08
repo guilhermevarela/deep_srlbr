@@ -728,9 +728,9 @@ if __name__ == '__main__':
     db = gsdf.to_dict()
 
     columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
-    shifts = [i for i in range(-3, 4) if i != 0] 
-    _process_shifter(db, columns, shifts)
+    shifts = [i for i in range(-3, 4)] 
+    # _process_shifter(db, columns, shifts)
     _process_shifter_ctx_p(db, columns, shifts)
-    _process_t(db)
-    _process_predicate_marker(db)
-    _process_iob(db)
+    # _process_t(db)
+    # _process_predicate_marker(db)
+    # _process_iob(db)

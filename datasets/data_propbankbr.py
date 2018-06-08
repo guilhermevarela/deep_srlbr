@@ -451,23 +451,55 @@ def propbankbr_iob2arg(propositions, arguments):
     prev_tag = 'O'
     prev_prop = -1
     new_tags = []
-    for prop, tag in zip(propositions, arguments):        
+    cop = 0
+    ccl = 0
+    for prop, tag in zip(propositions, arguments):
         if prev_prop == prop:
-            if (tag[0] == 'B'):
-                new_tag = re.sub(r'B-', '(', tag) + '*'
-            else:
+            if tag[:2] in ('B-',):
+                # if prev_tag[:2] in ('B-',) or prev_tag[2:] != tag[2:]:
+                if prev_tag != 'O':
+                    ccl += 1
+                    new_tags[-1] += ')'
+                new_tag = re.sub(r'I-|B-', '(', tag) + '*'
+                cop += 1
+            elif tag[:2] in ('I-',):
+                if prev_tag[2:] != tag[2:]:
+                    if prev_tag != 'O':
+                        ccl += 1
+                        new_tags[-1] += ')'
+                    new_tag = re.sub(r'I-|B-', '(', tag) + '*'
+                    cop += 1
+                else:
+                    new_tag = '*'
+            elif tag == 'O':
+                if prev_tag != 'O':
+                    ccl += 1
+                    new_tags[-1] += ')'
                 new_tag = '*'
-        else:
-            if (tag in ['O']):
-                new_tag = '*'
             else:
-                new_tag = re.sub(r'B-', '(', tag) + '*'
+                raise ValueError('Unknown {:}', tag)
 
-        if (prev_tag[0] != 'O' and tag[2:] != prev_tag[2:]):
-            new_tags[-1] += ')'
+        else:
+            if cop > ccl:
+                new_tags[-1] += ')'
+            cop = 0
+            ccl = 0
+            if tag == 'O':
+                new_tag = '*'
+            elif tag[:2] in ('I-', 'B-') :
+                new_tag = re.sub(r'I-|B-', '(', tag) + '*'
+                cop += 1
+            else:
+                raise ValueError('Unknown {:}', tag)
+
+
+
         prev_tag = tag
         prev_prop = prop
         new_tags.append(new_tag)
+    if (prev_tag[0] != 'O' and cop > ccl):
+        new_tags[-1] += ')'
+    # import code; code.interact(local=dict(globals(), **locals()))
     return new_tags
 
 
