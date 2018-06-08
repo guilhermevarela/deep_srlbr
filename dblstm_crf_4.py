@@ -31,7 +31,7 @@ from data_tfrecords import input_fn, tfrecords_extract_v2
 from models.propbank_encoder import PropbankEncoder
 from models.propbank_mappers import MapperTensor2Column, MapperT2ARG
 from models.evaluator_conll import EvaluatorConll
-from models.evaluator import Evaluator
+
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 
 from utils import cross_entropy, error_rate2, precision, recall
@@ -195,7 +195,8 @@ if __name__== '__main__':
     num_epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
     embeddings_id = '{:}_s{:}'.format(embeddings_name, embeddings_size) # update LAYER_1_NAME
     DISPLAY_STEP = 50
-    target = 'T'
+    # target = 'T'
+    target = 'ARG'
 
     PROP_DIR = './datasets/binaries/'
 

@@ -2001,8 +2001,26 @@ GPOS:
     PRON-INDP, PRON-PERS, PROP, PRP, PU, V-FIN, V-GER, V-INF, V-PCP, VP, XX]
   name: GPOS
   type: choice
+HEAD:
+  category: target
+  domain: ['-', A0, A1, A2, A3, A4, A5, AM-ADV, AM-CAU, AM-DIR, AM-DIS, AM-EXT, AM-LOC,
+    AM-MED, AM-MNR, AM-NEG, AM-PNC, AM-PRD, AM-REC, AM-TMP, C-A0, C-A1, C-A2, C-A3,
+    C-AM-ADV, C-AM-DIS, C-AM-EXT, C-AM-LOC, C-AM-MNR, C-AM-NEG, C-AM-PNC, C-AM-PRD,
+    C-AM-TMP]
+  type: choice
 ID: {category: feature, type: int}
 INDEX: {category: meta, type: int}
+IOB:
+  category: target
+  domain: [B-A0, B-A1, B-A2, B-A3, B-A4, B-A5, B-AM-ADV, B-AM-CAU, B-AM-DIR, B-AM-DIS,
+    B-AM-EXT, B-AM-LOC, B-AM-MED, B-AM-MNR, B-AM-NEG, B-AM-PNC, B-AM-PRD, B-AM-REC,
+    B-AM-TMP, B-C-A0, B-C-A1, B-C-A2, B-C-A3, B-C-AM-ADV, B-C-AM-CAU, B-C-AM-DIS,
+    B-C-AM-EXT, B-C-AM-LOC, B-C-AM-MNR, B-C-AM-NEG, B-C-AM-PNC, B-C-AM-PRD, B-C-AM-TMP,
+    B-C-V, B-V, I-A0, I-A1, I-A2, I-A3, I-A4, I-A5, I-AM-ADV, I-AM-CAU, I-AM-DIR,
+    I-AM-DIS, I-AM-EXT, I-AM-LOC, I-AM-MED, I-AM-MNR, I-AM-NEG, I-AM-PNC, I-AM-PRD,
+    I-AM-TMP, I-C-A0, I-C-A1, I-C-A2, I-C-A3, I-C-AM-ADV, I-C-AM-CAU, I-C-AM-LOC,
+    I-C-AM-MNR, I-C-AM-PNC, I-C-AM-PRD, I-C-AM-TMP, I-C-V, O]
+  type: choice
 LEMMA:
   category: feature
   domain: [$/, '%', '-', '0,22', '0,23', '0,24', '0,26', '0,34', '0,47', '0,59', '0,62',

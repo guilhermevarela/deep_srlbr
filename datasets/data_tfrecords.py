@@ -38,6 +38,33 @@ TF_CONTEXT_FEATURES=    {
 }
 
 
+# TF_SEQUENCE_FEATURES_V2 = {
+#     key: tf.VarLenFeature(tf.int64)
+#     for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
+#  }.update({
+#     key: tf.VarLenFeature(tf.float32)
+#     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
+# }).update({
+#     key: tf.VarLenFeature(tf.int64)
+#     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+# })
+
+TF_SEQUENCE_FEATURES_V2 = {
+    key: tf.VarLenFeature(tf.int64)
+    for key in conf.CATEGORICAL_FEATURES
+}
+TF_SEQUENCE_FEATURES_V2.update({
+    key: tf.VarLenFeature(tf.float32)
+    for key in conf.EMBEDDED_FEATURES
+})
+
+
+def get_test(input_labels_list, target_label):
+    return tfrecords_extract_v2(
+        'test',
+        input_features=input_labels_list,
+        output_target=target_label
+    )
 
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
@@ -273,8 +300,8 @@ def input_with_embeddings_fn(filenames, batch_size,  num_epochs,
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size, num_epochs,
              features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES,
-             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET
-            ):
+             target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET,
+             shuffle=True):
     '''
         Produces sequence_examples shuffling at every epoch while batching every batch_size
             number of examples
@@ -295,12 +322,9 @@ def input_fn(filenames, batch_size, num_epochs,
                     M= len(input_sequence_features)
     '''
     print(target)
-    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=True)
-    
-    
+    filename_queue = tf.train.string_input_producer(filenames, num_epochs=num_epochs, shuffle=shuffle)
 
-    context_features, sequence_features = _read_and_decode_v2(filename_queue)   
-    
+    context_features, sequence_features = _read_and_decode_v2(filename_queue)
 
     X, T, L, D = _process_v2(context_features, 
         sequence_features,
@@ -446,15 +470,14 @@ def _process_v2( context_features, sequence_features,
     sequence_target=[]
 
     # Fetch only context variable the length of the proposition
-    L = context_features['L']
-    
+    L = context_features['L']    
     sel =   features +  [target]
     #Read all inputs as tf.int64            
     #paginates over all available columnx   
     print('_process_v2:{:}'.format(sequence_features.keys()))
-    for key in conf.SEQUENCE_FEATURES_V2:
+    for key in TF_SEQUENCE_FEATURES_V2:
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
-        
+
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
         
         if key in features:
@@ -466,10 +489,8 @@ def _process_v2( context_features, sequence_features,
             print('descriptors: {:}'.format(key))
             sequence_descriptors.append(dense_tensor1)
 
-    #UNCOMMENT
     X = tf.concat(sequence_inputs, 1)
     D = tf.concat(sequence_descriptors, 1)
-    # return X, T, L, D
     return X, T, L, D
 
 
@@ -512,31 +533,27 @@ def _read_and_decode_v2(filename_queue):
             sequence_features.: features that are held variable thru sequence ex: word_idx
 
     '''
-    TF_SEQUENCE_FEATURES_V2 = {
-        key:tf.VarLenFeature(tf.int64)
-        for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'ARG']
-        # for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T']
-    }
+    
     # TF_SEQUENCE_FEATURES_V2.update({
     #     key:tf.VarLenFeature(tf.float32) 
     #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1',
     #      'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
     # })
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.float32) 
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.float32) 
 
-        for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
-        'FORM_CTX_P+0', 'FORM_CTX_P+1']
-    })
+    #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1',
+    #     'FORM_CTX_P+0', 'FORM_CTX_P+1']
+    # })
 
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.float32) 
-        for key in ['LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
-    })
-    TF_SEQUENCE_FEATURES_V2.update({
-        key:tf.VarLenFeature(tf.int64)
-        for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    })
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.float32) 
+    #     for key in ['LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
+    # })
+    # TF_SEQUENCE_FEATURES_V2.update({
+    #     key:tf.VarLenFeature(tf.int64)
+    #     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    # })
     print(TF_SEQUENCE_FEATURES_V2)
     reader= tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
@@ -691,7 +708,7 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                             raise TypeError('Unhandled type {:}'.format(type(test_value)))
 
                     ex = tf.train.SequenceExample(
-                        context=  tf.train.Features(feature=context),
+                        context=tf.train.Features(feature=context),
                         feature_lists=tf.train.FeatureLists(feature_list=feature_list)
                     )
 
@@ -777,13 +794,13 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep.pickle')
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wan50.pickle')
-    propbank_encoder = PropbankEncoder.recover('./datasets/binaries/deep_wrd50.pickle')
+    
+    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
+    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wan50.pickle')
+    propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wrd50.pickle')
 
     column_filters = None
     for ds_type in ('train', 'test', 'valid'):
     # for ds_type in ['test']:
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type,lang='wan50')
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, column_filters), ds_type, lang='wrd50')
 

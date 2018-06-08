@@ -25,8 +25,8 @@ import string
 
 from gensim.models import KeyedVectors
 
-EMBEDDINGS_DIR = '../datasets/txts/embeddings/'
-CORPUS_EXCEPTIONS_DIR = '../datasets/txts/corpus_exceptions/'
+EMBEDDINGS_DIR = 'datasets/txts/embeddings/'
+CORPUS_EXCEPTIONS_DIR = 'datasets/txts/corpus_exceptions/'
 
 def fetch_corpus(db_name):
     path=  '{:}{:}.csv'.format(CSVS_DIR, db_name)

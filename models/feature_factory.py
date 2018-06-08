@@ -5,7 +5,7 @@
     * Converts linguist and end-to-end features into objects
 '''
 import sys
-sys.path.append('../datasets')
+sys.path.append('datasets')
 from collections import OrderedDict, defaultdict, deque
 
 import data_propbankbr as br
@@ -20,7 +20,7 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnDepTreeParser', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -275,6 +275,34 @@ class ColumnT(object):
         )}
 
         return self.t
+
+
+class ColumnIOB(object):
+    '''
+        Computes the IOB version
+
+        Usage:
+            See below (main)
+    '''
+
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        IOB = br.propbankbr_arg2iob(self.db['P'].values(), self.db['ARG'].values())
+
+        self.iob = {'IOB': OrderedDict(
+            dict(zip(self.db['ARG'].keys(), IOB))
+        )}
+
+        return self.iob
 
 
 class ColumnPassiveVoice(object):
@@ -607,7 +635,7 @@ def _predicatedict(db):
 def _process_passivevoice(dictdb):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
-    target_dir = '../datasets/csvs/column_passivevoice/'
+    target_dir = 'datasets/csvs/column_passivevoice/'
     passivevoice = pvoice_marker.run()
 
     _store(passivevoice, 'passive_voice', target_dir)
@@ -616,7 +644,7 @@ def _process_passivevoice(dictdb):
 def _process_predmorph(dictdb):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
-    target_dir = '../datasets/csvs/column_predmorph/'
+    target_dir = 'datasets/csvs/column_predmorph/'
     predmorph = morpher.run()
 
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
@@ -625,16 +653,16 @@ def _process_predmorph(dictdb):
 def _process_shifter(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    target_dir = '../datasets/csvs/column_shifter/'
+    target_dir = 'datasets/csvs/column_shifts/'
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def _process_shifter_ctx_p(db, columns, shifts):
+def _process_shifter_ctx_p(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
-    target_dir = '../datasets/csvs/column_shifts_ctx_p/'
+    target_dir = 'datasets/csvs/column_shifts_ctx_p/'
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
@@ -645,7 +673,7 @@ def _process_predicate_dist(dictdb):
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().run()
 
-    target_dir = '../datasets/csvs/column_preddist/'
+    target_dir = 'datasets/csvs/column_preddist/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
@@ -655,8 +683,18 @@ def _process_t(dictdb):
     column_t = FeatureFactory().make('ColumnT', dictdb)
     d = column_t.run()
 
-    target_dir = '../datasets/csvs/column_t/'
+    target_dir = 'datasets/csvs/column_t/'
     filename = '{:}{:}.csv'.format(target_dir, 't')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def _process_iob(dictdb):
+
+    column_iob = FeatureFactory().make('ColumnIOB', dictdb)
+    d = column_iob.run()
+
+    target_dir = 'datasets/csvs/column_iob/'
+    filename = '{:}{:}.csv'.format(target_dir, 'iob')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
@@ -665,7 +703,7 @@ def _process_predicate_marker(dictdb):
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
     d = column_t.run()
 
-    target_dir = '../datasets/csvs/column_predmarker/'
+    target_dir = 'datasets/csvs/column_predmarker/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
@@ -684,3 +722,15 @@ def _store(d, target_name, target_dir):
         df = pd.DataFrame.from_dict(d)
         filename = '{:}{:}.csv'.format(target_dir, target_name)
         df.to_csv(filename, sep=',', encoding='utf-8', index=True)
+
+if __name__ == '__main__':
+    gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
+    db = gsdf.to_dict()
+
+    columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
+    shifts = [i for i in range(-3, 4) if i != 0] 
+    _process_shifter(db, columns, shifts)
+    _process_shifter_ctx_p(db, columns, shifts)
+    _process_t(db)
+    _process_predicate_marker(db)
+    _process_iob(db)
