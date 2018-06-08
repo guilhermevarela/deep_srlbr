@@ -321,12 +321,6 @@ def input_fn(filenames, batch_size, num_epochs,
     )
     context_features, sequence_features = _read_and_decode_v2(filename_queue)
 
-    # X, T, L, D = _process_v2(
-    #     context_features,
-    #     sequence_features,
-    #     features,
-    #     target
-    # )
     X, T, L, D = _process_v2(
         context_features,
         sequence_features,
@@ -338,13 +332,7 @@ def input_fn(filenames, batch_size, num_epochs,
     min_after_dequeue = 10000
     capacity = min_after_dequeue + 3 * batch_size
 
-    # https://www.tensorflow.org/api_docs/python/tf/train/batch
-    # X_batch, T_batch, L_batch, D_batch = tf.train.batch(
-    #     [X, T, L, D],
-    #     batch_size=batch_size,
-    #     capacity=capacity,
-    #     dynamic_pad=True
-    # )
+
     X_batch, T_batch, L_batch, D_batch = tf.train.batch(
         [X, T, L, D],
         batch_size=batch_size,
@@ -617,7 +605,7 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
             
             for feat, value in d.items():
                 if not(feat in helper_d):
-                    helper_d[feat] = ex.feature_lists.feature_list[feat]                
+                    helper_d[feat] = ex.feature_lists.feature_list[feat]
                 helper_d[feat].feature.add().int64_list.value.append(value)
 
             num_records += 1
@@ -733,6 +721,35 @@ def read_sequence_example(file_path):
         import code; code.interact(local=dict(globals(), **locals()))
         this_example = tf.train.SequenceExample().FromString(sequence_example_string)
 
+# def make_sequence_example(columns_dict, columns_config):
+#     '''Returns a SequenceExample for the given inputs and labels.
+
+#     args:
+#         inputs: A list of input vectors. Each input vector is a list of floats.
+#         labels: A list of ints.
+
+#     returns:
+#         A tf.train.SequenceExample containing inputs and labels.
+#     '''
+#     feature_lists = []
+#     supported_types = ('choice', 'int', 'text')
+#     for clabel, cvalues in columns_dict:
+#         # makes approximate comparison
+#         config_dict = [columns_config[clabel_]
+#             for clabel_ in columns_config if clabel_ in clabel][0]
+#         # the representaion is integer array
+#         if config_dict['type'] in ('int',):
+#         # the representaion is integer array
+#             pass
+#         elif config_dict['type'] in ('choice',):
+#         # the representaion is float array
+#             pass
+#         elif config_dict['type'] in ('text',):
+#             pass
+#         else:
+#             _params = (config_dict['type'], supported_types)
+#             raise ValueError('type must be in {:} and got {:}'.format(*_params)
+
 # def make_sequence_example(inputs, labels):
 #   """Returns a SequenceExample for the given inputs and labels.
 #   Args:
@@ -787,8 +804,6 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
                     context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
                     feature_list = {}
                     for feat, values in feature_lists.items():
-                        # if feat == 'INDEX':
-                        #     import code; code.interact(local=dict(globals(), **locals()))
                         test_value = values[0]
                         if isinstance(test_value, list):
                             test_value = test_value[0]
@@ -913,23 +928,23 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
 
 
 if __name__== '__main__':
-    # embeddings = 'wan50'
-    # bin_path = 'datasets/binaries/deep_{:}.pickle'.format(embeddings)
-    # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover(bin_path)
-    # # propbank_encoder = PropbankEncoder.recover('datasets/binaries/deep_wrd50.pickle')
+    # Recover a propbank representation
+    embeddings = 'wan50'
+    bin_path = 'datasets/binaries/deep_{:}.pickle'.format(embeddings)
+    propbank_encoder = PropbankEncoder.recover(bin_path)
 
+    # Gets an iterator
     # column_filters = None
-    # for ds_type in ('train', 'test', 'valid'):
+    # for ds_type in ('test', 'valid', 'train'):
     #     tfrecords_builder_v2(propbank_encoder.iterator(ds_type, filter_columns=column_filters), ds_type, lang=embeddings)
+
     # input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
     #               'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
     #               'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    # input_list = ['PRED_MARKER']
-    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
-                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1'
-                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    TARGET = 'T'
-    X_valid, Y_valid, L_valid, D_valid = get_valid(input_list, TARGET)
+
+    # TARGET = 'T'
+    # X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
+
+    # Inspect a sequence_example
     # read_sequence_example('datasets/binaries/dbtest_wan50.tfrecords')
     import code; code.interact(local=dict(globals(), **locals()))

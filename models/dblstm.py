@@ -250,23 +250,23 @@ def main():
 
                 total_loss += loss
                 total_error += error
-                if (step % 5 == 0 and step > 0):
+                if (step + 1) % 25 == 0:
                     index = I_batch[:, :, 0].astype(np.int32)
                     f1_train = evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
-                    
+
                     index = I_valid[:, :, 0].astype(np.int32)
                     f1_valid = evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
 
                     if f1_valid and f1_train:
-                        print('Iter={:5d}'.format(step),
-                              '\tavg. cost {:.6f}'.format(total_loss / 5),
-                              '\tavg. error {:.6f}'.format(total_error / 5),
+                        print('Iter={:5d}'.format(step + 1),
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25),
                               '\tf1-train {:.6f}'.format(f1_train),
                               '\tf1-valid {:.6f}'.format(f1_valid))
                     else:
                         print('Iter={:5d}'.format(step),
-                              '\tavg. cost {:.6f}'.format(total_loss / 5),
-                              '\tavg. error {:.6f}'.format(total_error / 5))
+                              '\tavg. cost {:.6f}'.format(total_loss / 25),
+                              '\tavg. error {:.6f}'.format(total_error / 25))
                     total_loss = 0.0
                     total_error = 0.0
 
