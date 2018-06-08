@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath('datasets'))
 
 
 import config
-from data_tfrecords import input_fn, get_valid
+from data_tfrecords import input_fn, get_valid, get_train
 from evaluator_conll import EvaluatorConll2
 from propbank_encoder import PropbankEncoder
 from models.utils import get_index, get_dims
@@ -186,7 +186,6 @@ def main():
     propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
     datasets_list = [DATASET_TRAIN_WAN50_PATH]
-    devel_size = config.DATASET_TRAIN_SIZE
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
@@ -194,7 +193,9 @@ def main():
     columns_list = input_list + [TARGET]
 
     index_column = get_index(columns_list, dims_dict, 'INDEX')
-    X_valid, Y_valid, L_valid, I_valid = get_valid(input_list, TARGET)
+    X_train, T_train, L_train, I_train = get_train(input_list, TARGET)
+    X_valid, T_valid, L_valid, I_valid = get_valid(input_list, TARGET)
+
     FEATURE_SIZE = get_dims(input_list, dims_dict)
 
     BATCH_SIZE = 250
@@ -210,6 +211,19 @@ def main():
         'hidden_size': HIDDEN_SIZE,
         'target_size': TARGET_SIZE
     }
+
+    def train_eval(Y):
+        index = I_train[:, :, 0].astype(np.int32)
+        evaluator.evaluate_tensor('train', index, Y, L_train, TARGET, params)
+
+        return evaluator.f1
+
+    def valid_eval(Y):
+        index = I_valid[:, :, 0].astype(np.int32)
+        evaluator.evaluate_tensor('valid', index, Y, L_valid, TARGET, params)
+
+        return evaluator.f1
+
     # BUILDING the execution graph
     X_shape = (None, None, FEATURE_SIZE)
     T_shape = (None, None, TARGET_SIZE)
@@ -241,23 +255,30 @@ def main():
 
         try:
             while not coord.should_stop():
-                X_batch, Y_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
+                X_batch, T_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
 
                 loss, _, Yish, error = session.run(
                     [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
-                    feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                    feed_dict={X: X_batch, T: T_batch, seqlens: L_batch}
                 )
 
                 total_loss += loss
                 total_error += error
                 if (step) % 25 == 0:
-                    index = I_batch[:, :, 0].astype(np.int32)
-                    f1_train = evaluator.evaluate_tensor('train', index, Yish, L_batch, TARGET, params)
 
-                    index = I_valid[:, :, 0].astype(np.int32)
-                    f1_valid = evaluator.evaluate_tensor('valid', index, Yish, L_valid, TARGET, params)
+                    Y_train = session.run(
+                        dblstm.prediction,
+                        feed_dict={X: X_train, T: T_train, seqlens: L_train}
+                    )
+                    f1_train = train_eval(Y_train)
 
-                    if f1_valid and f1_train:
+                    Y_valid = session.run(
+                        dblstm.prediction,
+                        feed_dict={X: X_valid, T: T_valid, seqlens: L_valid}
+                    )
+
+                    f1_valid = valid_eval(Y_valid)
+                    if f1_valid is not None and f1_train is not None:
                         print('Iter={:5d}'.format(step),
                               '\tavg. cost {:.6f}'.format(total_loss / 25),
                               '\tavg. error {:.6f}'.format(total_error / 25),

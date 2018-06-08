@@ -62,6 +62,13 @@ def get_valid(input_labels_list, target_label):
         input_features=input_labels_list,
         output_target=target_label
     )
+
+def get_train(input_labels_list, target_label):
+    return tfrecords_extract_v2(
+        'train',
+        input_features=input_labels_list,
+        output_target=target_label
+    )
 ############################# tfrecords reader ############################# 
 def tfrecords_extract(ds_type, embeddings, feat2size, 
                                             input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
@@ -947,4 +954,4 @@ if __name__== '__main__':
 
     # Inspect a sequence_example
     # read_sequence_example('datasets/binaries/dbtest_wan50.tfrecords')
-    import code; code.interact(local=dict(globals(), **locals()))
+    # import code; code.interact(local=dict(globals(), **locals()))

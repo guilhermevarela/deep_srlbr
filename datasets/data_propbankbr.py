@@ -499,7 +499,6 @@ def propbankbr_iob2arg(propositions, arguments):
         new_tags.append(new_tag)
     if (prev_tag[0] != 'O' and cop > ccl):
         new_tags[-1] += ')'
-    # import code; code.interact(local=dict(globals(), **locals()))
     return new_tags
 
 
@@ -513,20 +512,19 @@ def trim(val):
     return val
 
 if __name__== '__main__':
-    dfsynth = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')
-    dfdtree = pd.read_csv('datasets/csvs/gsdtree.csv', index_col=0, encoding='utf-8', sep=',')
+    dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')    
 
-    propositions = list(dfsynth['P'].values)
-    arguments = list(dfsynth['ARG'].values)
+    propositions = list(dfgs['P'].values)
+    arguments = list(dfgs['ARG'].values)
 
-    FORM = list(dfdtree['FORM'].values)
-    Y = list(dfdtree['ARG'].values)
-    ID = list(dfdtree['ID'].values)
-    P = list(dfdtree['P'].values)
-    PRED = list(dfdtree['PRED'].values)
-    # IS_PRED = list(dfdtree['IS_PRED'].values)
-    Dtree = list(dfdtree['DTREE'].values)
-    Ctree = list(dfdtree['CTREE'].values)
+    FORM = list(dfgs['FORM'].values)
+    ARG = list(dfgs['ARG'].values)
+    ID = list(dfgs['ID'].values)
+    P = list(dfgs['P'].values)
+    PRED = list(dfgs['PRED'].values)
+
+    Dtree = list(dfgs['DTREE'].values)
+    Ctree = list(dfgs['CTREE'].values)
 
 
     arg2t = propbankbr_arg2t(propositions, arguments)
