@@ -189,10 +189,9 @@ def main():
     input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    TARGET = 'IOB'
+    TARGET = 'HEAD'
     columns_list = input_list + [TARGET]
 
-    index_column = get_index(columns_list, dims_dict, 'INDEX')
     X_train, T_train, L_train, I_train = get_train(input_list, TARGET)
     X_valid, T_valid, L_valid, I_valid = get_valid(input_list, TARGET)
 
@@ -203,7 +202,7 @@ def main():
     HIDDEN_SIZE = [16] * 4
     lr = 1 * 1e-3
     TARGET_SIZE = dims_dict[TARGET]
-    print(BATCH_SIZE, TARGET, TARGET_SIZE, index_column, FEATURE_SIZE)
+    print(BATCH_SIZE, TARGET, TARGET_SIZE, FEATURE_SIZE)
 
     evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {

@@ -38,8 +38,8 @@ class EvaluatorConll2(object):
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
-        self.target_columns = ('ARG', 'T', 'IOB')
-        self.props_dict = {} 
+        self.target_columns = ('ARG', 'HEAD', 'T', 'IOB')
+        self.props_dict = {}
         self._refresh()
 
 
@@ -63,10 +63,13 @@ class EvaluatorConll2(object):
 
         self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
 
-        if target_column in ('T',):
-            self._t2arg()
-        elif target_column in ('IOB',):
+        if target_column in ('IOB',):
             self._iob2arg()
+        elif target_column in ('HEAD',):
+            self._head2arg()
+        elif target_column in ('T',):
+            self._t2arg()
+
 
         self.evaluate(prefix, self.props_dict, hparams)
 
@@ -281,6 +284,15 @@ class EvaluatorConll2(object):
 
         ARG = br.propbankbr_iob2arg(propositions.values(), self.props_dict.values())
         self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), ARG), key=lambda x: x[0]))
+
+        return self.props_dict
+
+    def _head2arg(self):
+        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}        
+        head = ['*' if head_ == '-' else '({:}*)'.format(head_)
+                for _, head_ in self.props_dict.items()]
+
+        self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), head), key=lambda x: x[0]))
 
         return self.props_dict
 
