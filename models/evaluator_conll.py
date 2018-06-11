@@ -288,7 +288,7 @@ class EvaluatorConll2(object):
         return self.props_dict
 
     def _head2arg(self):
-        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}        
+        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
         head = ['*' if head_ == '-' else '({:}*)'.format(head_)
                 for _, head_ in self.props_dict.items()]
 

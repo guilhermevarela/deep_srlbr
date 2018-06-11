@@ -371,14 +371,14 @@ class ColumnPredMarker(object):
                 preddist .: dict<PRED_DIST, OrderedDict<int, int>>
         '''
         # defines output data structure
-        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+        self.predmarker = {'M_R': OrderedDict({})}
 
         # Finds predicate position
         predicate_d = _predicatedict(self.db)
         for time, proposition in self.db['P'].items():
             predicate_time = predicate_d[proposition]
 
-            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+            self.predmarker['M_R'][time] = 0 if predicate_time - time > 0 else 1
 
         return self.predmarker
 

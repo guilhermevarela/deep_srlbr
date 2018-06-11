@@ -217,7 +217,7 @@ if __name__== '__main__':
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'GPOS', 'PRED_MARKER', 'FORM_CTX_P+0',
+    input_sequence_features = ['ID', 'FORM', 'LEMMA', 'GPOS', 'M_R', 'FORM_CTX_P+0',
         'LEMMA_CTX_P-1','LEMMA_CTX_P+0','LEMMA_CTX_P+1',
         'GPOS_CTX_P-1','GPOS_CTX_P+0','GPOS_CTX_P+1']
 

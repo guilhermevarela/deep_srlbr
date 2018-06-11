@@ -388,13 +388,13 @@ if __name__ == '__main__':
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
     
-    dbname = 'deep_wan50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
-
-    # dbname = 'deep_wrd50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    # dbname = 'deep_wan50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
+
+    dbname = 'deep_wrd50'
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
 
     # propbank_encoder.persist('../datasets/binaries/', filename=dbname)

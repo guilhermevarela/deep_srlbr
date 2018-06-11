@@ -186,7 +186,7 @@ def main():
     propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
     datasets_list = [DATASET_TRAIN_WAN50_PATH]
-    input_list = ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'GPOS',
+    input_list = ['ID', 'FORM', 'LEMMA', 'M_R', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
     TARGET = 'HEAD'

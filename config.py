@@ -35,7 +35,7 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
     'PRED_1', 'T']
 
 # CATEGORICAL_FEATURES = [
-#     'ID', 'PRED_MARKER', 'GPOS', 'P', 'INDEX',
+#     'ID', 'M_R', 'GPOS', 'P', 'INDEX',
 #     'T', 'ARG', 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1'
 # ]
 
@@ -45,7 +45,7 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 #  ]
 
 CATEGORICAL_FEATURES = ['ARG',  'GPOS', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 'GPOS_CTX_P-1',
-'HEAD', 'ID', 'INDEX', 'IOB', 'P', 'PRED_MARKER', 'T']
+'HEAD', 'ID', 'INDEX', 'IOB', 'P', 'M_R', 'T']
 
 EMBEDDED_FEATURES = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 'LEMMA', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 'LEMMA_CTX_P-1']
 
@@ -56,21 +56,21 @@ EMBEDDED_FEATURES = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 'LE
 # 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 
-# 'ID', 'LEMMA', 'PRED_MARKER', 'T', 'INDEX', 'P']
+# 'ID', 'LEMMA', 'M_R', 'T', 'INDEX', 'P']
 # SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
 # 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'PRED_MARKER', 'T', 'INDEX', 'P']
+# 'ID', 'LEMMA', 'M_R', 'T', 'INDEX', 'P']
 # SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
 # 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'PRED_MARKER', 'ARG', 'INDEX', 'P', 'T']
+# 'ID', 'LEMMA', 'M_R', 'ARG', 'INDEX', 'P', 'T']
 
 # TF_SEQUENCE_FEATURES_V2 = {
 #     key: tf.VarLenFeature(tf.int64)
-#     for key in ['ID', 'PRED_MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
+#     for key in ['ID', 'M_R', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
 #  }.update({
 #     key: tf.VarLenFeature(tf.float32)
 #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
