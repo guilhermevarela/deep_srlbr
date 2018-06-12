@@ -42,7 +42,7 @@ if __name__ == '__main__':
                         default=5 * 1e-3,
                         help='''Learning rate of the model\n''')
 
-    parser.add_argument('-k', dest='k', type=int, nargs=1,
+    parser.add_argument('-batch_size', dest='batch_size', type=int, nargs=1,
                         default=250,
                         help='''Batch size kfold is inactive \n''')
 
@@ -61,19 +61,34 @@ if __name__ == '__main__':
     args = parser.parse_args()
     input_labels = FEATURE_LABELS
 
-    if args.ctx_p > 1:
+    if args.ctx_p[0] > 1:
         input_labels.append('FORM_CTX_P-2')
         input_labels.append('FORM_CTX_P+2')
-        if args.ctx_p == 3:
+        if args.ctx_p[0] == 3:
             input_labels.append('FORM_CTX_P-3')
             input_labels.append('FORM_CTX_P+3')
 
     target_label = args.target
     if args.kfold:
+        print(input_labels)
+        print(args.target)
+        print(args.depth)
+        print(args.embeddings)
+        print(args.epochs)
+        print(args.lr)
+        print(args.batch_size)
         optimize_kfold(DBLSTM, input_labels=input_labels, target_label=args.target,
                        hidden_layers=args.depth, embeddings=args.embeddings,
                        epochs=args.epochs, lr=args.lr, fold=25)
     else:
+        print(input_labels)
+        print(args.target)
+        print(args.depth)
+        print(args.embeddings)
+        print(args.epochs)
+        print(args.lr)
+        print(args.batch_size)
+        print(args.ctx_p)
         optimize(DBLSTM, input_labels=input_labels, target_label=args.target,
                  hidden_layers=args.depth, embeddings=args.embeddings,
                  epochs=args.epochs, lr=args.lr, batch_size=args.batch_size)

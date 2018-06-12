@@ -9,7 +9,7 @@ import tensorflow as tf
 import config
 import numpy as np
 from .utils import get_dims, get_index, get_binary
-from datasets import get_valid, get_test, input_fn
+from datasets import get_valid, get_test, input_fn, get_train
 from .propbank_encoder import PropbankEncoder
 from .evaluator_conll import EvaluatorConll
 
