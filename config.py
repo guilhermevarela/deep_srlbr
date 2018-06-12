@@ -31,11 +31,11 @@ DATASET_TEST_SIZE=  263
 SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S', 
     'LEMMA', 'GPOS', 'MORF',  'DTREE',     'FUNC', 
     'CTREE', 'PRED',  'ARG', 'CTX_P-3', 'CTX_P-2', 
-    'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3',  'M_R', 
+    'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3',  'MARKER', 
     'PRED_1', 'T']
 
 # CATEGORICAL_FEATURES = [
-#     'ID', 'M_R', 'GPOS', 'P', 'INDEX',
+#     'ID', 'MARKER', 'GPOS', 'P', 'INDEX',
 #     'T', 'ARG', 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1'
 # ]
 
@@ -44,10 +44,16 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 #  'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1'
 #  ]
 
-CATEGORICAL_FEATURES = ['ARG',  'GPOS', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 'GPOS_CTX_P-1',
-'HEAD', 'ID', 'INDEX', 'IOB', 'P', 'M_R', 'T']
+CATEGORICAL_FEATURES = [
+    'ARG', 'GPOS', 'HEAD', 'ID', 'INDEX',
+    'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 'GPOS_CTX_P-1',
+    'IOB', 'P', 'MARKER', 'T'
+]
 
-EMBEDDED_FEATURES = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 'LEMMA', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 'LEMMA_CTX_P-1']
+EMBEDDED_FEATURES = [
+    'FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 
+    'LEMMA', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 'LEMMA_CTX_P-1'
+]
 
 
 # 
@@ -56,21 +62,21 @@ EMBEDDED_FEATURES = ['FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 'LE
 # 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 
-# 'ID', 'LEMMA', 'M_R', 'T', 'INDEX', 'P']
+# 'ID', 'LEMMA', 'MARKER', 'T', 'INDEX', 'P']
 # SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
 # 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'M_R', 'T', 'INDEX', 'P']
+# 'ID', 'LEMMA', 'MARKER', 'T', 'INDEX', 'P']
 # SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
 # 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
 # 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
 # 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'M_R', 'ARG', 'INDEX', 'P', 'T']
+# 'ID', 'LEMMA', 'MARKER', 'ARG', 'INDEX', 'P', 'T']
 
 # TF_SEQUENCE_FEATURES_V2 = {
 #     key: tf.VarLenFeature(tf.int64)
-#     for key in ['ID', 'M_R', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
+#     for key in ['ID', 'MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
 #  }.update({
 #     key: tf.VarLenFeature(tf.float32)
 #     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
@@ -88,7 +94,7 @@ SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',
     'txt', 'txt',  'txt', 'txt',  'int',  
     'txt', 'hot']
 
-DEFAULT_INPUT_SEQUENCE_FEATURES= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'CTX_P-1', 'CTX_P+1']
+DEFAULT_INPUT_SEQUENCE_FEATURES= ['ID', 'LEMMA', 'MARKER', 'PRED_1', 'CTX_P-1', 'CTX_P+1']
 DEFAULT_OUTPUT_SEQUENCE_TARGET= 'T'
 
 META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))

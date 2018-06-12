@@ -11,4 +11,4 @@ BATCH_SIZE: 250
 N_EPOCHS: 500
 lr: 0.0005
 DISPLAY_STEP: 50
-input_sequence_features: ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF', 'DTREE', 'FUNC', 'CTREE', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']
+input_sequence_features: ['ID', 'LEMMA', 'MARKER', 'PRED_1', 'GPOS', 'MORF', 'DTREE', 'FUNC', 'CTREE', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3']

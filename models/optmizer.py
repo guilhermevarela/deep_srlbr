@@ -13,7 +13,7 @@ from datasets import get_valid, get_test, input_fn
 from propbank_encoder import PropbankEncoder
 from evaluator import EvaluatorConll2
 
-FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'M_R', 'GPOS',
+FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
 

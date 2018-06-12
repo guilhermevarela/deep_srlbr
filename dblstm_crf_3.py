@@ -206,9 +206,9 @@ if __name__== '__main__':
     print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
     # SANITY CHECK 1: ALL LINGUISTIC FEATURES
-    # input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
+    # input_sequence_features= ['ID', 'LEMMA', 'MARKER', 'PRED_1', 'GPOS', 'MORF',  'DTREE', 'FUNC', 'CTREE'] 
     # SANITY CHECK 2: ARG
-    input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED_1']
+    input_sequence_features= ['ID', 'LEMMA', 'MARKER', 'PRED_1']
     if ctx_p > 0:
         input_sequence_features+=['CTX_P{:+d}'.format(i) 
             for i in range(-ctx_p,ctx_p+1) if i !=0 ]

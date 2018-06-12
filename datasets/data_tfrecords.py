@@ -127,13 +127,13 @@ def tfrecords_extract_v2(ds_type,
         raise ValueError(buff)
     else:
         if ds_type in ['train']:
-            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TRAIN_V2_PATH.replace('_pt_v2', '_wrd50')
             dataset_size=conf.DATASET_TRAIN_SIZE
         if ds_type in ['test']:
-            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_TEST_V2_PATH.replace('_pt_v2', '_wrd50')
             dataset_size=conf.DATASET_TEST_SIZE
         if ds_type in ['valid']:    
-            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wan50')
+            dataset_path=   conf.DATASET_VALID_V2_PATH.replace('_pt_v2', '_wrd50')
             dataset_size=conf.DATASET_VALID_SIZE
 
     inputs, targets, lengths, others = tensor2numpy_v2(
@@ -348,7 +348,7 @@ def input_fn(filenames, batch_size, num_epochs,
     )
     return X_batch, T_batch, L_batch, D_batch
 
-# conf.SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'M_R', 'PRED', 'FUNC', 'ARG_0']
+# conf.SEQUENCE_FEATURES=['IDX', 'P_S', 'ID', 'LEMMA', 'MARKER', 'PRED', 'FUNC', 'ARG_0']
 # TARGET_FEATURE=['ARG_1']
 def _process(context_features, sequence_features, 
                             input_sequence_features, output_sequence_targets, 
@@ -470,7 +470,7 @@ def _process_v2(context_features, sequence_features,
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
-    sel = features + [target]
+    # sel = features + [target]
     #Read all inputs as tf.int64
     #paginates over all available column
     print('_process_v2:{:}'.format(sequence_features.keys()))
@@ -481,6 +481,7 @@ def _process_v2(context_features, sequence_features,
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
 
         if key in features:
+            # import code; code.interact(local=dict(globals(), **locals()))
             sequence_inputs.append(dense_tensor1)
         elif key in [target]:
             print('target is', target)
@@ -622,7 +623,6 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
                         dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
                 sys.stdout.write(msg)
                 sys.stdout.flush()
-            
 
         msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
                     dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
@@ -725,7 +725,8 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
 def read_sequence_example(file_path):
     reader = tf.python_io.tf_record_iterator(file_path)
     for sequence_example_string in reader:
-        this_example = tf.train.SequenceExample().FromString(sequence_example_string)
+        # import code; code.interact(local=dict(globals(), **locals()))
+        ex = tf.train.SequenceExample().FromString(sequence_example_string)
 
 def make_feature_list(columns_dict, columns_config):
     '''Returns a SequenceExample for the given inputs and labels.
@@ -744,16 +745,16 @@ def make_feature_list(columns_dict, columns_config):
     supported_types = ('choice', 'int', 'text')
     for clabel, cvalues in columns_dict.items():
         # makes approximate comparison
-        search_label =  'M_R' if clabel == 'M_R' else clabel.split('_')[0]
+        search_label = clabel.split('_')[0]
         config_dict = columns_config[search_label]
 
-        if config_dict['type'] in ('int', 'bool'):
-            # the representation is integer arra
+        if config_dict['type'] in ('bool', 'int'):
+            # the representation is an integer list
             feature_dict[clabel] = tf.train.FeatureList(
                 feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
                          for value in cvalues])
         elif config_dict['type'] in ('choice',):
-            # the representation is integer array
+            # the representation is an integer list or list
             feature_dict[clabel] = tf.train.FeatureList(
                 feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
                          for sublist in cvalues])
@@ -766,6 +767,7 @@ def make_feature_list(columns_dict, columns_config):
             _params = (supported_types, config_dict['type'])
             _msg = 'type must be in {:} and got {:}'
             raise ValueError(_msg.format(*_params))
+    # print(feature_dict['MARKER'])
     return feature_dict
 
 
@@ -780,354 +782,102 @@ def tfrecords_builder_v2(propbank_iter, dataset_type, colconfig_dict , suffix='g
         raise ValueError(buff)
     else:
         if dataset_type in ['train']:       
-            total_propositions= conf.DATASET_TRAIN_SIZE 
+            total_propositions = conf.DATASET_TRAIN_SIZE 
         if dataset_type in ['valid']:       
-            total_propositions= conf.DATASET_VALID_SIZE 
+            total_propositions = conf.DATASET_VALID_SIZE 
         if dataset_type in ['test']:
-            total_propositions= conf.DATASET_TEST_SIZE          
+            total_propositions = conf.DATASET_TEST_SIZE          
 
-    tfrecords_path= conf.INPUT_DIR + 'db{:}_{:}.tfrecords'.format(dataset_type,suffix)
-    with open(tfrecords_path, 'w+') as f:
-        writer= tf.python_io.TFRecordWriter(f.name)
-    
-        l=1
+    def message_print(num_records, num_propositions):
+        _msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'
+        _perc = 100 * float(num_propositions) / total_propositions
+        _msg = _msg.format( dataset_type, num_records, num_propositions, _perc)      
+        sys.stdout.write(_msg)
+        sys.stdout.flush()
+
+    file_path = conf.INPUT_DIR
+    file_path += 'db{:}_{:}.tfrecords'.format(dataset_type, suffix)
+    with open(file_path, 'w+') as f:
+        writer = tf.python_io.TFRecordWriter(f.name)
+        seqlen = 1
         refresh = True
-        prev_p = -1 
-        helper_d= {} # that's a helper dict in order to abbreviate
-        num_records=0
-        num_propositions=0
+        prev_p = -1
+        num_records = 0
+        num_propositions = 0
         for index, d in propbank_iter:
             if d['P'] != prev_p:
                 if not refresh:
-                    context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-                    feature_list = make_feature_list(feature_lists, colconfig_dict)
-                    # feature_list = {}
-                    # for feat, values in feature_lists.items():
-                    #     test_value = values[0]
-                    #     if isinstance(test_value, list):
-                    #         test_value = test_value[0]
-                    #         if isinstance(test_value, int) or isinstance(test_value, np.int64):
-                    #             feature_list[feat] = tf.train.FeatureList(
-                    #                 feature=[
-                    #                     tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
-                    #                     for sublist in values
-                    #                 ]
-                    #             )
-                    #         elif isinstance(test_value, float) or isinstance(test_value, np.float):
-                    #             feature_list[feat] = tf.train.FeatureList(
-                    #                 feature=[
-                    #                     tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
-                    #                     for sublist in values
-                    #                 ]
-                    #             )
-                    #         else:
-                    #             raise TypeError('Unhandled type {:}'.format(type(test_value)))
-
-                    #     elif isinstance(test_value, int) or isinstance(test_value, np.int64):
-                    #             feature_list[feat] = tf.train.FeatureList(
-                    #                 feature=[
-                    #                     tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-                    #                     for value in values
-                    #                 ]
-                    #             )
-                    #     elif isinstance(test_value, float) or isinstance(test_value, np.float):
-                    #             feature_list[feat] = tf.train.FeatureList(
-                    #                 feature=[
-                    #                     tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-                    #                     for value in values
-                    #                 ]
-                    #             )
-                    #     else:
-                    #         raise TypeError('Unhandled type {:}'.format(type(test_value)))
+                    context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[seqlen]))}
+                    feature_lists_dict = make_feature_list(feature_list_dict, colconfig_dict)
 
                     ex = tf.train.SequenceExample(
                         context=tf.train.Features(feature=context),
-                        feature_lists=tf.train.FeatureLists(feature_list=feature_list)
-                    )                    
-
+                        feature_lists=tf.train.FeatureLists(feature_list=feature_lists_dict)
+                    )
                     writer.write(ex.SerializeToString())
                 refresh = False
-                l = 1
-                # helper_d = {}
+                seqlen = 1
                 context = {}
-                feature_lists = defaultdict(list)
+                feature_list_dict = defaultdict(list)
                 num_propositions += 1
             else:
-                l += 1
+                seqlen += 1
 
 
             for feat, value in d.items():
-                feature_lists[feat].append(value)
+                feature_list_dict[feat].append(value)
 
 
             num_records += 1
-            prev_p=d['P']
+            prev_p = d['P']
             if num_propositions % 25:
-                msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
-                        dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
-                sys.stdout.write(msg)
-                sys.stdout.flush()
-            
+                message_print(num_records, num_propositions)
+                # msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
+                #         dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
+                # sys.stdout.write(msg)
+                # sys.stdout.flush()
+        message_print(num_records, num_propositions)
+        # msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
+        #             dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
+        # sys.stdout.write(msg)
+        # sys.stdout.flush()
 
-        msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
-                    dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
-        sys.stdout.write(msg)
-        sys.stdout.flush()
 
-
-        # write the one last example        
-        # context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-        # feature_list = {}
-        context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-        feature_list = make_feature_list(feature_lists, colconfig_dict)
-        # for feat, values in feature_lists.items():
-        #     test_value = values[0]
-        #     if isinstance(test_value, list):
-        #         test_value = test_value[0]
-        #         if isinstance(test_value, int) or isinstance(test_value, np.int64):
-        #             feature_list[feat] = tf.train.FeatureList(
-        #                 feature=[
-        #                     tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
-        #                     for sublist in values
-        #                 ]
-        #             )
-        #         elif isinstance(test_value, float) or isinstance(test_value, np.float):
-        #             feature_list[feat] = tf.train.FeatureList(
-        #                 feature=[
-        #                     tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
-        #                     for sublist in values
-        #                 ]
-        #             )
-        #         else:
-        #             raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-
-        #     elif isinstance(test_value, int) or isinstance(test_value, np.int64):
-        #             feature_list[feat] = tf.train.FeatureList(
-        #                 feature=[
-        #                     tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-        #                     for value in values
-        #                 ]
-        #             )
-        #     elif isinstance(test_value, float) or isinstance(test_value, np.float):
-        #             feature_list[feat] = tf.train.FeatureList(
-        #                 feature=[
-        #                     tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-        #                     for value in values
-        #                 ]
-        #             )
-        #     else:
-        #         raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-        # ex.feature_lists = tf.train.FeatureLists(feature_list=feature_list)
+        # write the one last example
+        context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[seqlen]))}
+        feature_lists_dict = make_feature_list(feature_list_dict, colconfig_dict)
 
         ex = tf.train.SequenceExample(
             context=tf.train.Features(feature=context),
-            feature_lists=tf.train.FeatureLists(feature_list=feature_list)
+            feature_lists=tf.train.FeatureLists(feature_list=feature_lists_dict)
         )
         writer.write(ex.SerializeToString())
 
-    writer.close()
+    writer.close()    
     print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))
-
-
-# def make_sequence_example(inputs, labels):
-#   """Returns a SequenceExample for the given inputs and labels.
-#   Args:
-#     inputs: A list of input vectors. Each input vector is a list of floats.
-#     labels: A list of ints.
-#   Returns:
-#     A tf.train.SequenceExample containing inputs and labels.
-#   """
-#   input_features = [
-#       tf.train.Feature(float_list=tf.train.FloatList(value=input_))
-#       for input_ in inputs]
-#   label_features = [
-#       tf.train.Feature(int64_list=tf.train.Int64List(value=[label]))
-#       for label in labels]
-#   feature_list = {
-#       'inputs': tf.train.FeatureList(feature=input_features),
-#       'labels': tf.train.FeatureList(feature=label_features)
-#   }
-#   feature_lists = tf.train.FeatureLists(feature_list=feature_list)
-# return tf.train.SequenceExample(feature_lists=feature_lists)
-
-# def tfrecords_builder_v2(propbank_iter, dataset_type, lang='pt'):
-#     '''
-#         Iterates within propbank and saves records
-#         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
-#             https://planspace.org/20170323-tfrecords_for_humans/
-#     '''
-#     if not(dataset_type in ['train', 'valid', 'test']):
-#         buff= 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
-#         raise ValueError(buff)
-#     else:
-#         if dataset_type in ['train']:       
-#             total_propositions= conf.DATASET_TRAIN_SIZE 
-#         if dataset_type in ['valid']:       
-#             total_propositions= conf.DATASET_VALID_SIZE 
-#         if dataset_type in ['test']:
-#             total_propositions= conf.DATASET_TEST_SIZE          
-
-#     tfrecords_path= conf.INPUT_DIR + 'db{:}_{:}_v2.tfrecords'.format(dataset_type,lang)
-#     with open(tfrecords_path, 'w+') as f:
-#         writer= tf.python_io.TFRecordWriter(f.name)
-    
-#         l=1
-#         refresh = True
-#         prev_p = -1 
-#         helper_d= {} # that's a helper dict in order to abbreviate
-#         num_records=0
-#         num_propositions=0
-#         for index, d in propbank_iter:
-#             if d['P'] != prev_p:
-#                 if not refresh:
-#                     context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-#                     feature_list = {}
-#                     for feat, values in feature_lists.items():
-#                         test_value = values[0]
-#                         if isinstance(test_value, list):
-#                             test_value = test_value[0]
-#                             if isinstance(test_value, int) or isinstance(test_value, np.int64):
-#                                 feature_list[feat] = tf.train.FeatureList(
-#                                     feature=[
-#                                         tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
-#                                         for sublist in values
-#                                     ]
-#                                 )
-#                             elif isinstance(test_value, float) or isinstance(test_value, np.float):
-#                                 feature_list[feat] = tf.train.FeatureList(
-#                                     feature=[
-#                                         tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
-#                                         for sublist in values
-#                                     ]
-#                                 )
-#                             else:
-#                                 raise TypeError('Unhandled type {:}'.format(type(test_value)))
-
-#                         elif isinstance(test_value, int) or isinstance(test_value, np.int64):
-#                                 feature_list[feat] = tf.train.FeatureList(
-#                                     feature=[
-#                                         tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-#                                         for value in values
-#                                     ]
-#                                 )
-#                         elif isinstance(test_value, float) or isinstance(test_value, np.float):
-#                                 feature_list[feat] = tf.train.FeatureList(
-#                                     feature=[
-#                                         tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-#                                         for value in values
-#                                     ]
-#                                 )
-#                         else:
-#                             raise TypeError('Unhandled type {:}'.format(type(test_value)))
-
-#                     ex = tf.train.SequenceExample(
-#                         context=tf.train.Features(feature=context),
-#                         feature_lists=tf.train.FeatureLists(feature_list=feature_list)
-#                     )                    
-
-#                     writer.write(ex.SerializeToString())
-#                 refresh = False
-#                 l = 1
-#                 # helper_d = {}
-#                 context = {}
-#                 feature_lists = defaultdict(list)
-#                 num_propositions += 1
-#             else:
-#                 l += 1
-
-
-#             for feat, value in d.items():
-#                 feature_lists[feat].append(value)
-
-
-#             num_records += 1
-#             prev_p=d['P']
-#             if num_propositions % 25:
-#                 msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
-#                         dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
-#                 sys.stdout.write(msg)
-#                 sys.stdout.flush()
-            
-
-#         msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
-#                     dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
-#         sys.stdout.write(msg)
-#         sys.stdout.flush()
-
-
-#         # write the one last example        
-#         context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[l]))}
-#         feature_list = {}
-#         for feat, values in feature_lists.items():
-#             test_value = values[0]
-#             if isinstance(test_value, list):
-#                 test_value = test_value[0]
-#                 if isinstance(test_value, int) or isinstance(test_value, np.int64):
-#                     feature_list[feat] = tf.train.FeatureList(
-#                         feature=[
-#                             tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
-#                             for sublist in values
-#                         ]
-#                     )
-#                 elif isinstance(test_value, float) or isinstance(test_value, np.float):
-#                     feature_list[feat] = tf.train.FeatureList(
-#                         feature=[
-#                             tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
-#                             for sublist in values
-#                         ]
-#                     )
-#                 else:
-#                     raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-
-#             elif isinstance(test_value, int) or isinstance(test_value, np.int64):
-#                     feature_list[feat] = tf.train.FeatureList(
-#                         feature=[
-#                             tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-#                             for value in values
-#                         ]
-#                     )
-#             elif isinstance(test_value, float) or isinstance(test_value, np.float):
-#                     feature_list[feat] = tf.train.FeatureList(
-#                         feature=[
-#                             tf.train.Feature(float_list=tf.train.FloatList(value=[value]))
-#                             for value in values
-#                         ]
-#                     )
-#             else:
-#                 raise TypeError('Unhandled type {:}'.format(type(test_value))) 
-#         # ex.feature_lists = tf.train.FeatureLists(feature_list=feature_list)
-#         ex = tf.train.SequenceExample(
-#             context=  tf.train.Features(feature=context),
-#             feature_lists=tf.train.FeatureLists(feature_list=feature_list)
-#         )
-#         writer.write(ex.SerializeToString())
-
-#     writer.close()
-#     print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))
 
 
 if __name__== '__main__':
     # Recover a propbank representation
-    embeddings = 'wrd50'
+    embeddings = 'wan50'
     bin_path = 'datasets/binaries/deep_{:}.pickle'.format(embeddings)
     propbank_encoder = PropbankEncoder.recover(bin_path)
+    # import code; code.interact(local=dict(globals(), **locals()))
 
     # Gets an iterator
     column_filters = None
     colcofig_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
     for ds_type in ('test', 'valid', 'train'):
-        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, filter_columns=column_filters), ds_type, colcofig_dict, suffix=embeddings)
+        tfrecords_builder_v2(propbank_encoder.iterator(ds_type, filter_columns=column_filters), ds_type, colcofig_dict, suffix=embeddings)    
 
-    # input_list = ['ID', 'FORM', 'LEMMA', 'M_R', 'GPOS',
-    #               'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-    #               'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    # input_list = ['ID', 'FORM', 'LEMMA', 'GPOS',
-    #               'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-    #               'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
 
-    # TARGET = 'T'
-    # X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
+    input_list = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
+                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+    # input_list = ['MARKER']
+
+    TARGET = 'T'
+    X_test, Y_test, L_test, D_test = get_test(input_list, TARGET)
 
     # Inspect a sequence_example
-    # read_sequence_example('datasets/binaries/dbtest_wan50.tfrecords')
-    # import code; code.interact(local=dict(globals(), **locals()))
+    # read_sequence_example('datasets/binaries/dbtest_wan50.tfrecords')    

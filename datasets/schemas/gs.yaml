@@ -3517,7 +3517,7 @@ PRED:
     viabilizar, viajar, vigiar, violar, violentar, vir, virar, visar, visitar, vislumbrar,
     visualizar, viver, voar, voltar, votar, zerar, zonear]
   type: text
-M_R: {category: feature, type: bool}
+MARKER: {category: feature, type: int}
 P_S: {category: meta, type: int}
 S: {category: meta, type: int}
 T:

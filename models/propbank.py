@@ -458,7 +458,7 @@ class Propbank(object):
             encoding = 'EMB'
         else:
             # exclude deep learning columns
-            excludecols += ['LEMMA', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3', 'M_R', 'PRED_1']
+            excludecols += ['LEMMA', 'CTX_P-3', 'CTX_P-2', 'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3', 'MARKER', 'PRED_1']
             encoding = 'HOT'
 
         self.to_svm(svm_path=svm_path, encoding=encoding, excludecols=excludecols)
@@ -550,7 +550,7 @@ if __name__ == '__main__':
     propbank.to_svm2(deep_columns=False)
 
     # PRED_d = propbank.feature('valid', 'PRED', True) # text
-    # M_R_d = propbank.feature('valid', 'M_R', True) # numerical
+    # M_R_d = propbank.feature('valid', 'MARKER', True) # numerical
     # ARG_d = propbank.feature('valid', 'ARG', True) # categorical
     # print('found ARGs>\n',set(ARG_d.values()))
     # import code; code.interact(local=dict(globals(), **locals()))     
