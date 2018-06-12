@@ -10,22 +10,22 @@ import tensorflow as tf
 INPUT_DIR = 'datasets/binaries/'
 SCHEMA_DIR = 'datasets/schemas/'
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
-DATASET_TRAIN_PATH= '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_PATH= '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
+DATASET_TRAIN_PATH = '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_PATH = '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_PATH = '{:}dbtest_pt.tfrecords'.format(INPUT_DIR)
 
-DATASET_TRAIN_V2_PATH= '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_V2_PATH= '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_TRAIN_V2_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_V2_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_V2_PATH = '{:}dbtest_pt_v2.tfrecords'.format(INPUT_DIR)
 
-DATASET_TRAIN_GLO50_PATH= '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_GLO50_PATH= '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_TRAIN_GLO50_PATH = '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
+DATASET_VALID_GLO50_PATH = '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
 DATASET_TEST_GLO50_PATH = '{:}dbtest_glo50.tfrecords'.format(INPUT_DIR)
 
-DATASET_SIZE= 5931
-DATASET_TRAIN_SIZE= 5099
-DATASET_VALID_SIZE= 569
-DATASET_TEST_SIZE=  263
+DATASET_SIZE = 5931
+DATASET_TRAIN_SIZE = 5099
+DATASET_VALID_SIZE = 569
+DATASET_TEST_SIZE = 263
 
 
 SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S', 

@@ -11,7 +11,7 @@ import np
 from utils import get_dims, get_index, get_binary
 from datasets import get_valid, get_test, input_fn
 from propbank_encoder import PropbankEncoder
-from evaluator import EvaluatorConll2
+from evaluator import EvaluatorConll
 
 FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
@@ -23,25 +23,25 @@ HIDDEN_LAYERS = [16] * 4
 
 
 def optimize_kfold(DeepLSTM,
-                   feature_labels_list=FEATURE_LABELS,
-                   target_label=TARGET_LABEL, hidden_layers=HIDDEN_LAYERS,
-                   embeddings='wan50', epochs=100, lr=5 * 1e-3, fold=25,
-                   *kwargs):
+                   input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
+                   epochs=100, lr=5 * 1e-3, fold=25, *kwargs):
+
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
     datasets_list = [get_binary('train', embeddings), get_binary('valid', embeddings)]
     dataset_size =  config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-    labels_list = feature_labels_list + [target_label]
+    labels_list = input_labels + [target_label]
 
     index_column = get_index(labels_list, dims_dict, 'INDEX')
-    X_test, T_test, L_test, D_test = get_test(feature_labels_list, target_label)
-    feature_size = get_dims(feature_labels_list, dims_dict)
+    X_test, T_test, L_test, D_test = get_test(input_labels, target_label)
+    feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
     batch_size = int(dataset_size / fold)
     print(batch_size, target_label, target_size, index_column, feature_size)
 
-    evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
+    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
@@ -57,7 +57,7 @@ def optimize_kfold(DeepLSTM,
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, batch_size, epochs,
-            feature_labels_list, target_label, shuffle=True)
+            input_labels, target_label, shuffle=True)
 
     dblstm = DeepLSTM(X, T, seqlens, **params)
 
@@ -136,25 +136,24 @@ def optimize_kfold(DeepLSTM,
 
 
 def optimize(DeepLSTM,
-             feature_labels_list=FEATURE_LABELS,
-             target_label=TARGET_LABEL, hidden_layers=HIDDEN_LAYERS,
-             embeddings='wan50', epochs=100, lr=5 * 1e-3, batch_size=250,
-             *kwargs):
+             input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+             hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
+             epochs=100, lr=5 * 1e-3, batch_size=250, *kwargs):
 
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
     datasets_list = [get_binary('train', embeddings)]
 
-    labels_list = feature_labels_list + [target_label]
+    labels_list = input_labels + [target_label]
 
     index_column = get_index(labels_list, dims_dict, 'INDEX')
-    X_valid, T_valid, L_valid, D_valid = get_valid(feature_labels_list, target_label)
-    feature_size = get_dims(feature_labels_list, dims_dict)
+    X_valid, T_valid, L_valid, D_valid = get_valid(input_labels, target_label)
+    feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
     print(batch_size, target_label, target_size, index_column, feature_size)
 
-    evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
+    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
@@ -170,7 +169,7 @@ def optimize(DeepLSTM,
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, batch_size, epochs,
-            feature_labels_list, target_label, shuffle=True)
+            input_labels, target_label, shuffle=True)
 
     dblstm = DeepLSTM(X, T, seqlens, **params)
 
@@ -202,6 +201,7 @@ def optimize(DeepLSTM,
 
                     evaluator.evaluate_tensor('valid', index, Yish, L_batch, target_label, params)
 
+                    print('Iter={:5d}'.format(step + 1),
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 25),
                           '\tavg. error {:.6f}'.format(total_error / 25),

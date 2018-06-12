@@ -14,8 +14,8 @@ sys.path.insert(0, os.path.abspath('datasets'))
 
 
 import config
-from data_tfrecords import input_fn, get_valid, get_train
-from evaluator_conll import EvaluatorConll2
+from datasets import input_fn, get_valid, get_train
+from evaluator_conll import EvaluatorConll
 from propbank_encoder import PropbankEncoder
 from models.utils import get_index, get_dims
 import numpy as np
@@ -99,7 +99,7 @@ class DBLSTM(object):
 
         h = outputs_bw
         h_1 = outputs_fw
-        for i, sz in enumerate(self.hidden_size[1:]):            
+        for i, sz in enumerate(self.hidden_size[1:]):
             n = id(self) + i + 1
             with tf.variable_scope('fw{:}'.format(n)):
                 inputs_fw = tf.concat((h, h_1), axis=2)
@@ -183,17 +183,18 @@ class DBLSTM(object):
 
 
 def main():
-    propbank_encoder = PropbankEncoder.recover(PROPBANK_WAN50_PATH)
+    embeddings = 'glo50'
+    propbank_encoder = PropbankEncoder.recover(PROPBANK_GLO50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
-    datasets_list = [DATASET_TRAIN_WAN50_PATH]
+    datasets_list = [DATASET_TRAIN_GLO50_PATH]
     input_list = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-    TARGET = 'HEAD'
+    TARGET = 'T'
     columns_list = input_list + [TARGET]
 
-    X_train, T_train, L_train, I_train = get_train(input_list, TARGET)
-    X_valid, T_valid, L_valid, I_valid = get_valid(input_list, TARGET)
+    X_train, T_train, L_train, I_train = get_train(input_list, TARGET, embeddings)
+    X_valid, T_valid, L_valid, I_valid = get_valid(input_list, TARGET, embeddings)
 
     FEATURE_SIZE = get_dims(input_list, dims_dict)
 
@@ -204,7 +205,7 @@ def main():
     TARGET_SIZE = dims_dict[TARGET]
     print(BATCH_SIZE, TARGET, TARGET_SIZE, FEATURE_SIZE)
 
-    evaluator = EvaluatorConll2(propbank_encoder.db, propbank_encoder.idx2lex)
+    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex)
     params = {
         'learning_rate': lr,
         'hidden_size': HIDDEN_SIZE,
@@ -275,8 +276,8 @@ def main():
                         dblstm.prediction,
                         feed_dict={X: X_valid, T: T_valid, seqlens: L_valid}
                     )
-
                     f1_valid = valid_eval(Y_valid)
+
                     if f1_valid is not None and f1_train is not None:
                         print('Iter={:5d}'.format(step),
                               '\tavg. cost {:.6f}'.format(total_loss / 25),
