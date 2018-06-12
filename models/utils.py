@@ -161,6 +161,6 @@ def get_binary(ds_type, embeddings):
         raise ValueError('Invalid dataset label {:}'.format(ds_type))
 
     prefix = '' if ds_type in ('deep') else 'db'
-    ext = 'pickle' if ds_type in ('deep') else 'trecords'
+    ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
     dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings, ext)
     return '{:}{:}'.format(INPUT_DIR, dbname)

@@ -44,16 +44,17 @@ SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 #  'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1'
 #  ]
 
-CATEGORICAL_FEATURES = [
+CATEGORICAL_FEATURES = sorted([
     'ARG', 'GPOS', 'HEAD', 'ID', 'INDEX',
     'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 'GPOS_CTX_P-1',
     'IOB', 'P', 'MARKER', 'T'
-]
+])
 
-EMBEDDED_FEATURES = [
-    'FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1', 
+EMBEDDED_FEATURES = sorted([
+    'FORM', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P-1',
+    'FORM_CTX_P+2', 'FORM_CTX_P+3', 'FORM_CTX_P-2', 'FORM_CTX_P-3',
     'LEMMA', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 'LEMMA_CTX_P-1'
-]
+])
 
 
 # 

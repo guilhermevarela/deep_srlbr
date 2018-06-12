@@ -341,7 +341,7 @@ def tfrecords_builder(propbank_iter, dataset_type,
             total_propositions = conf.DATASET_TEST_SIZE
 
     def message_print(num_records, num_propositions):
-        _msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'
+        _msg = 'Processing {:}\tfrecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'
         _perc = 100 * float(num_propositions) / total_propositions
         _msg = _msg.format( dataset_type, num_records, num_propositions, _perc)
         sys.stdout.write(_msg)

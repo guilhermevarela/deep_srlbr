@@ -317,12 +317,12 @@ def tfrecords_builder(propbank_iter, dataset_type, lang='pt'):
             num_records += 1
             prev_p=d['P']
             if num_propositions % 25:
-                msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
+                msg = 'Processing {:}\tfrecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'.format(
                         dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
                 sys.stdout.write(msg)
                 sys.stdout.flush()
 
-        msg = 'Processing {:}\trecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
+        msg = 'Processing {:}\tfrecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\n'.format(
                     dataset_type, num_records, num_propositions, 100*float(num_propositions)/total_propositions)        
         sys.stdout.write(msg)
         sys.stdout.flush()
