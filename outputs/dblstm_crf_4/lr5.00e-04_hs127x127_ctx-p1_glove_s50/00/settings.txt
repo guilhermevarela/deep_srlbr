@@ -11,4 +11,4 @@ BATCH_SIZE: 250
 N_EPOCHS: 500
 lr: 0.0005
 DISPLAY_STEP: 50
-input_sequence_features: ['ID', 'FORM', 'LEMMA', 'PRED_MARKER', 'FORM_CTX_P+0', 'FORM_CTX_P-1', 'FORM_CTX_P+1']
+input_sequence_features: ['ID', 'FORM', 'LEMMA', 'MARKER', 'FORM_CTX_P+0', 'FORM_CTX_P-1', 'FORM_CTX_P+1']

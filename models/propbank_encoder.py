@@ -184,8 +184,9 @@ class PropbankEncoder(object):
 
     def column(self, ds_type, column, encoding):
         if not(ds_type in ['train', 'valid', 'test']):
-            errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-            raise ValueError(errmessage)
+            _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
+            _msg = _msg.format(ds_type)
+            raise ValueError(_msg)
         else:
             if ds_type in ['train']:
                 lb = 0
@@ -382,23 +383,21 @@ if __name__ == '__main__':
         _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, _df), axis=1)
 
-    # import code; code.interact(local=dict(globals(), **locals()))
     #In order to use glove uncheck
     # dbname = 'deep_glo50'    
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
-    
-    dbname = 'deep_wan50'    
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
-    # dbname = 'deep_wrd50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    # dbname = 'deep_wan50'    
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
+
+    dbname = 'deep_wrd50'
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
 
     # propbank_encoder.persist('../datasets/binaries/', filename=dbname)
-
     
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
     # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wan50.pickle')
