@@ -4,23 +4,24 @@
     Feature engineering module
     * Converts linguist and end-to-end features into objects
 '''
-import sys
-sys.path.append('datasets')
+
+import sys, os
+sys.path.append(os.getcwd())
 from collections import OrderedDict, defaultdict, deque
 
-import data_propbankbr as br
+import datasets as br
 import pandas as pd
 import yaml
 import networkx as nx
 import matplotlib.pyplot as plt
-
+import re
 
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -32,6 +33,81 @@ class FeatureFactory(object):
         else:
             raise ValueError('klass must be in {:}'.format(FeatureFactory.klasses()))
 
+
+class ColumnChunk(object):
+    '''
+        Creates 4 chunk columns
+
+        returns:
+            chunk_id
+            chunk_start
+            chunk_end
+            chunk_tag
+            chunk_candidate_id
+
+        Usage:
+            See below (main)
+    '''
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        # Output lists
+        chunk_id_list = []
+        chunk_start_list = []
+        chunk_finish_list = []
+        chunk_len_list = []
+
+        # Control lists
+        proplen_list = []
+
+        # Control variables
+        chunk_id = 0
+        chunk_start = 0
+        proplen = 0
+
+        propstart = 0
+        prevarg = ''
+        prevprop = -1
+        for idx, arg in self.db['ARG'].items():
+            prop = self.db['P'][idx]
+            proplen += 1
+            if prevprop != prop:
+                chunk_id += 1
+                chunk_start = idx - propstart
+
+            else:  # same proposition
+                # new colored chunk or blank chunk
+                if (re.search(r'\)', prevarg) and arg == '*') or\
+                   (re.search(r'\(', arg)):
+                    chunk_id += 1
+                    chunk_start = idx - propstart
+
+            prevarg = arg
+            prevprop = prop
+            chunk_id_list.append(chunk_id)
+            chunk_start_list.append(chunk_start)
+            if chunk_start == idx - propstart and (idx - propstart) > 0:
+                chunk_len = len(chunk_start_list) - len(chunk_finish_list) - 1
+                chunk_finish_list += [chunk_start] * chunk_len
+                chunk_len_list += [chunk_len] * chunk_len
+
+            if idx + 1 < len(self.db['P']) and \
+               self.db['P'][idx + 1] != prop:
+
+                prevarg = ''
+                chunk_len = len(chunk_start_list) - len(chunk_finish_list)
+                chunk_finish_list += [proplen - propstart] * chunk_len
+                chunk_len_list += [chunk_len] * chunk_len
+
+                proplen_list += [proplen] * proplen
+                proplen = 0
+                propstart = idx + 1
+
+        chunk_len = len(chunk_start_list) - len(chunk_finish_list)
+        chunk_finish_list += [proplen - propstart] * chunk_len
+        chunk_len_list += [chunk_len] * chunk_len
+        proplen_list += [proplen] * proplen
 
 class ColumnShifter(object):
     '''
@@ -641,6 +717,15 @@ def _process_passivevoice(dictdb):
     _store(passivevoice, 'passive_voice', target_dir)
 
 
+def _process_chunk(dictdb):
+
+    chunker = FeatureFactory().make('ColumnChunk', dictdb)
+    target_dir = 'datasets/csvs/column_chunks/'
+    chunks = chunker.run()
+
+    _store(chunks, 'chunks', target_dir)
+
+
 def _process_predmorph(dictdb):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
@@ -727,10 +812,11 @@ if __name__ == '__main__':
     gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
     db = gsdf.to_dict()
 
-    columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
-    shifts = [i for i in range(-3, 4)] 
+    # columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
+    # shifts = [i for i in range(-3, 4)] 
     # _process_shifter(db, columns, shifts)
-    _process_shifter_ctx_p(db, columns, shifts)
+    # _process_shifter_ctx_p(db, columns, shifts)
+    _process_chunk(db)
     # _process_t(db)
     # _process_predicate_marker(db)
     # _process_iob(db)

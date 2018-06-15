@@ -22,7 +22,8 @@ import numpy as np
 
 
 #Uncomment if launched from /datasets
-from propbank_encoder import PropbankEncoder
+# from propbank_encoder import PropbankEncoder
+# from models import PropbankEncoder
 
 import tensorflow as tf
 from collections import defaultdict

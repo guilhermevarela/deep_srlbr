@@ -10,7 +10,7 @@ import functools
 import tensorflow as tf
 import sys, os
 sys.path.insert(0, os.getcwd())
-sys.path.insert(0, os.path.abspath('datasets'))
+# sys.path.insert(0, os.path.abspath('datasets'))
 
 
 import config
