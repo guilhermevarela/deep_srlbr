@@ -370,6 +370,7 @@ if __name__ == '__main__':
 
     dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
     column_files = [
+        'datasets/csvs/column_chunks/chunks.csv',
         'datasets/csvs/column_predmarker/predicate_marker.csv',
         'datasets/csvs/column_shifts_ctx_p/form.csv',
         'datasets/csvs/column_shifts_ctx_p/gpos.csv',
@@ -384,17 +385,17 @@ if __name__ == '__main__':
         dfgs = pd.concat((dfgs, _df), axis=1)
 
     #In order to use glove uncheck
-    # dbname = 'deep_glo50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
-    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
+    dbname = 'deep_glo50'
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
+    propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
     # dbname = 'deep_wan50'    
     # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
-    dbname = 'deep_wrd50'
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
+    # dbname = 'deep_wrd50'
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
 
     # propbank_encoder.persist('../datasets/binaries/', filename=dbname)

@@ -53,10 +53,10 @@ class ColumnChunk(object):
 
     def run(self):
         # Output lists
-        chunk_id_list = []
-        chunk_start_list = []
-        chunk_finish_list = []
-        chunk_len_list = []
+        id_list = []
+        start_list = []
+        finish_list = []
+        len_list = []
 
         # Control lists
         proplen_list = []
@@ -85,29 +85,45 @@ class ColumnChunk(object):
 
             prevarg = arg
             prevprop = prop
-            chunk_id_list.append(chunk_id)
-            chunk_start_list.append(chunk_start)
+            id_list.append(chunk_id)
+            start_list.append(chunk_start)
             if chunk_start == idx - propstart and (idx - propstart) > 0:
-                chunk_len = len(chunk_start_list) - len(chunk_finish_list) - 1
-                chunk_finish_list += [chunk_start] * chunk_len
-                chunk_len_list += [chunk_len] * chunk_len
+                chunk_len = len(start_list) - len(finish_list) - 1
+                finish_list += [chunk_start] * chunk_len
+                len_list += [chunk_len] * chunk_len
 
             if idx + 1 < len(self.db['P']) and \
                self.db['P'][idx + 1] != prop:
 
                 prevarg = ''
-                chunk_len = len(chunk_start_list) - len(chunk_finish_list)
-                chunk_finish_list += [proplen - propstart] * chunk_len
-                chunk_len_list += [chunk_len] * chunk_len
+                chunk_len = len(start_list) - len(finish_list)
+                finish_list += [proplen] * chunk_len
+                len_list += [chunk_len] * chunk_len
 
                 proplen_list += [proplen] * proplen
                 proplen = 0
                 propstart = idx + 1
 
-        chunk_len = len(chunk_start_list) - len(chunk_finish_list)
-        chunk_finish_list += [proplen - propstart] * chunk_len
-        chunk_len_list += [chunk_len] * chunk_len
+
+        chunk_len = len(start_list) - len(finish_list)
+        finish_list += [proplen - propstart] * chunk_len
+        len_list += [chunk_len] * chunk_len
         proplen_list += [proplen] * proplen
+
+        keys = self.db['ARG'].keys()
+        self.chunk_dict = defaultdict(OrderedDict)
+        self.chunk_dict['CHUNK_ID'] = self._list2dict(keys, id_list)
+        self.chunk_dict['CHUNK_START'] = self._list2dict(keys, start_list)
+        self.chunk_dict['CHUNK_FINISH'] = self._list2dict(keys, finish_list)
+        self.chunk_dict['CHUNK_LEN'] = self._list2dict(keys, len_list)
+        return self.chunk_dict
+
+
+    def _list2dict(self, _dict_keys, _list):
+        tuple_list = zip(list(_dict_keys), _list)
+        tuple_list = sorted(tuple_list, key=lambda x: x[0])
+        return OrderedDict(tuple_list)
+
 
 class ColumnShifter(object):
     '''

@@ -8,6 +8,9 @@ ARG:
     (C-AM-CAU*), (C-AM-DIS*), (C-AM-EXT*), (C-AM-LOC*, (C-AM-MNR*, (C-AM-NEG*), (C-AM-PNC*,
     (C-AM-PNC*), (C-AM-PRD*, (C-AM-TMP*, (C-AM-TMP*), (C-V*, (C-V*), (V*), '*', '*)']
   type: choice
+CHUNK:
+  category: target
+  type: int
 CTREE:
   category: feature
   domain: [(-ADJP(ACL*, (-ADVP(ACL*, (-ADVP(FCL*, (-CU(FCL(VP*), (-CU(NP*, (-FCL(-PP(-CU(ICL(VP*),
