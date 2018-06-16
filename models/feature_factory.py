@@ -104,17 +104,21 @@ class ColumnChunk(object):
                 proplen = 0
                 propstart = idx + 1
 
-
         chunk_len = len(start_list) - len(finish_list)
-        finish_list += [proplen - propstart] * chunk_len
+        finish_list += [proplen] * chunk_len
         len_list += [chunk_len] * chunk_len
         proplen_list += [proplen] * proplen
+
+        candidate_id_list = [
+            int(s * proplen_list[i] - (s * (s + 1) / 2) + finish_list[i] - 1)
+            for i, s in enumerate(start_list)]
 
         keys = self.db['ARG'].keys()
         self.chunk_dict = defaultdict(OrderedDict)
         self.chunk_dict['CHUNK_ID'] = self._list2dict(keys, id_list)
         self.chunk_dict['CHUNK_START'] = self._list2dict(keys, start_list)
         self.chunk_dict['CHUNK_FINISH'] = self._list2dict(keys, finish_list)
+        self.chunk_dict['CHUNK_CANDIDATE_ID'] = self._list2dict(keys, candidate_id_list)
         self.chunk_dict['CHUNK_LEN'] = self._list2dict(keys, len_list)
         return self.chunk_dict
 
