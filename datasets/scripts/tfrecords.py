@@ -12,9 +12,9 @@ Created on Jan 25, 2018
     2018-02-26: added input_sequence_features to input_with_embeddings_fn
     2018-03-02: added input_validation and input_train
 '''
-def tfrecords_extract(ds_type, embeddings, feat2size, 
-                                            input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES, 
-                                            output_target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET): 
+def tfrecords_extract(ds_type, embeddings, feat2size,
+                      input_features=conf.DEFAULT_INPUT_SEQUENCE_FEATURES,
+                      output_target=conf.DEFAULT_OUTPUT_SEQUENCE_TARGET):
     '''
         Fetches validation set and retuns as a numpy array
         args:

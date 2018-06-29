@@ -79,15 +79,25 @@ def get_size(ds_type):
 
 
 def tfrecords_extract(ds_type, input_labels, output_label, embeddings):
-    '''
-        Fetches validation set and retuns as a numpy array
-        args:
+    '''Converts the contents of ds_type (train, valid, test) into array
 
-        returns:
-            features    .:
-            targets     .:
-            lengths     .:
-            others      .:
+    Acts as a wrapper for the function tsr2npy
+
+    Arguments:
+        ds_type {str} -- train, valid, test
+        input_labels {list<str>} -- labels from the db columns 
+        output_label {str} -- target_label (T, IOB)
+        embeddings {str]} -- emebddings name (glo50, wan50, wrd50)
+
+    Returns:
+        inputs  {numpy.array} -- a 3D array NUM_RECORDS X MAX_TIME X FEATURE_SIZE
+        targets {numpy.array} -- a 3D array NUM_RECORDS X MAX_TIME X TARGET_SIZE
+        lengths {list<int>} -- a list holding the lengths for every proposition
+        others {numpy.array} -- a 3D array representing the indexes
+
+
+    Raises:
+        ValueError -- validation for database type 
     '''
     if not(ds_type in ['train', 'valid', 'test']):
         buff = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
@@ -109,15 +119,27 @@ def tfrecords_extract(ds_type, input_labels, output_label, embeddings):
 
 def tsr2npy(dataset_path, dataset_size,
             input_labels, output_label, msg='tensor2numpy: done'):
-    '''
-        Converts a .tfrecord into a numpy representation of a tensor
-        args:
+    '''Converts .tfrecords binary format to numpy.array
 
-        returns: 
-            features    .:
-            targets     .: 
-            lengths     .: 
-            others      .: 
+
+    Arguments:
+        dataset_path {str} -- a str path
+        dataset_size {int} -- total number of propositions
+        input_labels {list<str>} -- labels from the db columns 
+        output_label {str} -- target_label (T, IOB)
+
+    Returns:
+        inputs  {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X FEATURE_SIZE
+        targets {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X TARGET_SIZE
+        lengths {numpy.array} -- a 1D array size
+            lengths for every proposition
+        descriptors {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
+            index of tokens
+
+    Raises:
+        ValueError -- validation for database type 
     '''
     with tf.name_scope('pipeline'):
         X, T, L, D = input_fn(
@@ -153,28 +175,33 @@ def tsr2npy(dataset_path, dataset_size,
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size, num_epochs,
-             input_labels, output_label,
-             shuffle=True):
-    '''
-        Produces sequence_examples shuffling at every epoch while batching every batch_size
-            number of examples
-        
-        args:
-            filenames                               .: list containing tfrecord file names
-            batch_size                          .: integer containing batch size        
-            num_epochs                          .: integer # of repetitions per example
-            embeddings                          .: matrix [VOCAB_SZ, EMBEDDINGS_SZ] pre trained array
-            feat2size                           .: int 
-            input_labels .: list containing the feature fields from .csv file
+             input_labels, output_label, shuffle=True):
+    '''[summary]
 
-        returns:
-            X_batch                     .:
-            T_batch                         .:
-            L_batch                     .: 
-            D_batch             .: [M] features that serve as descriptors but are not used for training
-                    M= len(input_labels)
-    '''
+    [description]
 
+    Arguments:
+        filenames {list<str>} -- list containing tfrecord file names
+        batch_size {int} -- integer containing batch size
+        num_epochs {int} -- integer representing the total number 
+            of iterations on filenames.
+        input_labels {[type]} -- list containing the feature fields from .csv file
+        output_label {[type]} -- column
+
+    Keyword Arguments:
+        shuffle {bool} -- If true will shuffle the proposition for 
+            each epoch (default: {True})
+
+    Returns:
+        X_batch {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X FEATURE_SIZE
+        T_batch  {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X TARGET_SIZE                        .:
+        L_batch  {numpy.array} -- a 1D array size
+            lengths for every proposition
+        D_batch  {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
+            index of tokens
+    '''
     filename_queue = tf.train.string_input_producer(
         filenames,
         num_epochs=num_epochs,
@@ -189,7 +216,6 @@ def input_fn(filenames, batch_size, num_epochs,
         output_label
     )
 
-    # import code; code.interact(local=dict(globals(), **locals()))
     min_after_dequeue = 10000
     capacity = min_after_dequeue + 3 * batch_size
 

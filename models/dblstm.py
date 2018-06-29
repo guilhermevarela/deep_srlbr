@@ -246,7 +246,8 @@ class DBLSTM(object):
     def cost(self):
         '''Computes the viterbi_score after the propagation step, returns the cost.
 
-        Consumes the representation coming from the viterbi score
+        Consumes the representation coming from propagation layer, evaluates 
+            the log_likelihod and parameters
 
         Decorators:
             lazy_property
@@ -281,6 +282,16 @@ class DBLSTM(object):
 
     @lazy_property
     def error(self):
+        '''Computes the prediction errors
+
+        Compares target tags to predicted tags
+
+        Decorators:
+            lazy_property
+        
+        Returns:
+            error {float} -- percentage of wrong tokens
+        '''
         mistakes = tf.not_equal(self.prediction, tf.cast(tf.argmax(self.T, 2), tf.int32))
         mistakes = tf.cast(mistakes, tf.float32)
         mask = tf.sign(tf.reduce_max(tf.abs(self.T), reduction_indices=2))
@@ -295,6 +306,10 @@ class DBLSTM(object):
 
 
 def main():
+    '''Showcases an usage for DBLSTM
+
+    Shows usage for DBLSTM
+    '''
     embeddings = 'glo50'
     propbank_encoder = PropbankEncoder.recover(PROPBANK_GLO50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
