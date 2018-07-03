@@ -30,13 +30,25 @@ PROPBANK_GLO50_PATH = '{:}deep_glo50.pickle'.format(INPUT_DIR)
 PROPBANK_WAN50_PATH = '{:}deep_wan50.pickle'.format(INPUT_DIR)
 
 
-
-
 def lazy_property(function):
-    '''
-        It stores the result in a member named after the decorated function 
+    '''Evaluates the function once creating a method
+
+    It stores the result in a member named after the decorated function 
         (prepended with a prefix) and returns this value on any subsequent calls.        
+
+    refs:
+        https://danijar.com/structuring-your-tensorflow-models/
+
+    Decorators:
+        functools.wraps
+
+    Arguments:
+        function {[type]} -- [description]
+
+    Returns:
+        [type] -- [description]
     '''
+
     attribute = '_cache_' + function.__name__
 
     @property
@@ -48,12 +60,48 @@ def lazy_property(function):
 
     return decorator
 
+
 def get_unit(sz):
     return tf.nn.rnn_cell.BasicLSTMCell(sz, forget_bias=1.0, state_is_tuple=True)
 
+
 class DBLSTM(object):
+    '''Estimates a deep learning model according to Zhou and Xu, 2016
+
+    Build a computation graph in tensorflow
+    Updates internal graph parameters at each optimize call
+    Evaluates errors
+
+    '''
 
     def __init__(self, X, T, seqlens, learning_rate=5 * 1e-3, hidden_size=[32, 32], target_size=60):
+        '''Sets the computation graph parameters
+
+        Responsable for building computation graph
+
+        refs:
+            https://www.tensorflow.org/programmers_guide/graphs
+
+        Arguments:
+            X {object<tf.placeholder>} -- A 3D float tensor in which the dimensions are
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * features -- features dimension
+
+            T {object<tf.placeholder>}  -- A 3D float tensor in which the dimensions are
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * features -- features dimension
+
+            seqlens {list<int>} -- a python list of integers carrying the sizes of 
+                each proposition
+
+
+        Keyword Arguments:
+            learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
+            hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
+            target_size {int} -- Parameter holding the layer sizes (default: {60})
+        '''
         self.X = X
         self.T = T
         self.seqlens = seqlens
@@ -68,15 +116,28 @@ class DBLSTM(object):
         self.prediction
         self.error
 
-
-
     @lazy_property
     def propagation(self):
+        '''Forward propagates the inputs X thru interlaced bilstms network
+
+        The inputs X are evaluated by each hidden layer (forward propagating)
+        resulting in scores to be consumed by prediction layer
+        
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            score {tf.Variable} -- a 3D float tensor in which
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * target_size -- ouputs dimension
+        '''
         with tf.variable_scope('fw{:}'.format(id(self))):
             self.cell_fw = get_unit(self.hidden_size[0])
 
             outputs_fw, states = tf.nn.dynamic_rnn(
-                cell= self.cell_fw,
+                cell=self.cell_fw,
                 inputs=self.X,
                 sequence_length=self.seqlens,
                 dtype=tf.float32,
@@ -86,7 +147,12 @@ class DBLSTM(object):
         with tf.variable_scope('bw{:}'.format(id(self))):
             self.cell_bw = get_unit(self.hidden_size[0])
 
-            inputs_bw = tf.reverse_sequence(outputs_fw, self.seqlens, batch_axis=0, seq_axis=1)
+            inputs_bw = tf.reverse_sequence(
+                outputs_fw,
+                self.seqlens,
+                batch_axis=0,
+                seq_axis=1
+            )
 
             outputs_bw, states = tf.nn.dynamic_rnn(
                 cell=self.cell_bw,
@@ -95,7 +161,12 @@ class DBLSTM(object):
                 dtype=tf.float32,
                 time_major=False
             )
-            outputs_bw = tf.reverse_sequence(outputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+            outputs_bw = tf.reverse_sequence(
+                outputs_bw,
+                self.seqlens,
+                batch_axis=0,
+                seq_axis=1
+            )
 
         h = outputs_bw
         h_1 = outputs_fw
@@ -114,7 +185,12 @@ class DBLSTM(object):
 
             with tf.variable_scope('bw{:}'.format(n)):
                 inputs_bw = tf.concat((outputs_fw, h), axis=2)
-                inputs_bw = tf.reverse_sequence(inputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+                inputs_bw = tf.reverse_sequence(
+                    inputs_bw,
+                    self.seqlens,
+                    batch_axis=0,
+                    seq_axis=1
+                )
                 self.cell_bw = get_unit(sz)
 
                 outputs_bw, states = tf.nn.dynamic_rnn(
@@ -124,7 +200,12 @@ class DBLSTM(object):
                     dtype=tf.float32,
                     time_major=False)
 
-                outputs_bw = tf.reverse_sequence(outputs_bw, self.seqlens, batch_axis=0, seq_axis=1)
+                outputs_bw = tf.reverse_sequence(
+                    outputs_bw,
+                    self.seqlens,
+                    batch_axis=0,
+                    seq_axis=1
+                )
 
             h = outputs_bw
             h_1 = outputs_fw
@@ -147,20 +228,52 @@ class DBLSTM(object):
 
     @lazy_property
     def optimize(self):
+        '''Optimize
+
+        [description]
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            [type] -- [description]
+        '''
         with tf.variable_scope('optimize'):
             optimum = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost)
         return optimum
 
     @lazy_property
     def cost(self):
+        '''Computes the viterbi_score after the propagation step, returns the cost.
+
+        Consumes the representation coming from propagation layer, evaluates 
+            the log_likelihod and parameters
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            cost {tf.float64} -- A scalar holding the average log_likelihood 
+            of the loss by estimatiof
+        '''
         with tf.variable_scope('cost'):
             Tflat = tf.cast(tf.argmax(self.T, 2), tf.int32)
             log_likelihood, self.transition_params = tf.contrib.crf.crf_log_likelihood(self.propagation, Tflat, self.seqlens)
-            
+
         return tf.reduce_mean(-log_likelihood)
 
     @lazy_property
     def prediction(self):
+        '''Decodes the viterbi score for the inputs
+        
+        Consumes both results from propagation and and cost layers
+        
+        Decorators:
+            lazy_property
+        
+        Returns:
+            [type] -- [description]
+        '''
         with tf.variable_scope('prediction'):
             # Compute the viterbi sequence and score.
             viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(self.propagation, self.transition_params, self.seqlens)
@@ -169,6 +282,16 @@ class DBLSTM(object):
 
     @lazy_property
     def error(self):
+        '''Computes the prediction errors
+
+        Compares target tags to predicted tags
+
+        Decorators:
+            lazy_property
+        
+        Returns:
+            error {float} -- percentage of wrong tokens
+        '''
         mistakes = tf.not_equal(self.prediction, tf.cast(tf.argmax(self.T, 2), tf.int32))
         mistakes = tf.cast(mistakes, tf.float32)
         mask = tf.sign(tf.reduce_max(tf.abs(self.T), reduction_indices=2))
@@ -183,6 +306,10 @@ class DBLSTM(object):
 
 
 def main():
+    '''Showcases an usage for DBLSTM
+
+    Shows usage for DBLSTM
+    '''
     embeddings = 'glo50'
     propbank_encoder = PropbankEncoder.recover(PROPBANK_GLO50_PATH)
     dims_dict = propbank_encoder.columns_dimensions('EMB')

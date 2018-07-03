@@ -43,7 +43,8 @@ class _EncoderIterator(object):
 
 
 class PropbankEncoder(object):
-    '''
+    '''Mantains a representation of the database
+
         PropbankEncoder mantains an indexed representation of the database
         There are numerical types, str types and categorical types.
         The return format will depend on requested encoding
@@ -53,15 +54,29 @@ class PropbankEncoder(object):
         EMB     .:  tokens will be embeded into the language model,
                     categorical values will be onehot encoded
         HOT     .:  tokens and categorical values will be onehot encoded
-        IDX     .:
+        IDX     .:  raw indexes
 
     '''
 
 
-    def __init__(self, dbpt_d, schema_d, language_model='glove_s50', dbname='dbpt', verbose=True):
-        # Pickled variables must live within __init__()
-        # self.lexicon = set([])
-        
+    def __init__(self, db_dict, schema_dict, language_model='glove_s50', dbname='dbpt', verbose=True):
+        '''Initializer processes raw dataset extracting the numerical representations
+
+        Provides a wrapper around the database
+
+        Arguments:
+            db_dict {dict<str, dict<int, object>>} -- nested dictionary representing
+                database, outer_keys: columns, inner_keys: indexes.
+            schema_dict {dict<str, dict><>} -- dictionary representaiton from schema
+                database, outer_keys: columns, inner_keys: meta data
+
+
+        Keyword Arguments:
+            language_model {str} -- embeddings to be used (default: {'glove_s50'})
+            dbname {str} -- default dbname (default: {'dbpt'})
+            verbose {bool} -- display operations (default: {True})
+        '''
+
         self.lex2idx = {}
         self.idx2lex = {}
         self.tokens = set({}) # words after embedding model
@@ -76,12 +91,12 @@ class PropbankEncoder(object):
 
         self.db = defaultdict(OrderedDict)
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
-        self.schema_d = {}
+        self.schema_dict = {}
         self.columns_mapper = {}
         self.columns_config = {}
         self.columns = set([])
 
-        self._process(dbpt_d, schema_d, dbname, language_model, verbose)
+        self._process(db_dict, schema_dict, dbname, language_model, verbose)
 
 
     @classmethod
@@ -205,15 +220,15 @@ class PropbankEncoder(object):
                 }
 
 
-    def _process(self, dbpt_d, schema_d, dbname, language_model, verbose):
+    def _process(self, db_dict, schema_dict, dbname, language_model, verbose):
         # Defines domains for each column, defines tokens for text columns
-        self._process_lexicons(dbpt_d, schema_d)
+        self._process_lexicons(db_dict, schema_dict)
 
         # MAPS textual columns to the language model
         self._process_embeddings(language_model, verbose)
 
         # Builds db dictionary
-        self._process_db(dbpt_d, dbname)
+        self._process_db(db_dict, dbname)
 
     def _process_embeddings(self, language_model, verbose):
         # computes embeddings
@@ -242,7 +257,7 @@ class PropbankEncoder(object):
                 self.embeddings.append(word2vec[tok].tolist())
                 i += 1
 
-    def _process_db(self, dbpt_d, dbname):
+    def _process_db(self, db_dict, dbname):
         self.dbname = dbname
 
         for col in list(self.columns):
@@ -252,28 +267,28 @@ class PropbankEncoder(object):
                 #Boolean values, numerical values come here
                 if col in ('INDEX',):
                     self.db[col] = OrderedDict(
-                        dict(zip(dbpt_d['FORM'].keys(),
-                                 dbpt_d['FORM'].keys()
+                        dict(zip(db_dict['FORM'].keys(),
+                                 db_dict['FORM'].keys()
                     )))
                 else:
-                    self.db[col] = OrderedDict(dbpt_d[col])
+                    self.db[col] = OrderedDict(db_dict[col])
             elif colconfig['type'] in ('choice', 'text'):
                 self.db[col] = OrderedDict({
-                    idx: self.lex2idx[col].get(word, 0) for idx, word in dbpt_d[col].items() 
+                    idx: self.lex2idx[col].get(word, 0) for idx, word in db_dict[col].items() 
                 })
 
             else:
                 #Boolean values, numerical values come here
-                self.db[col] = OrderedDict(dbpt_d[col])
+                self.db[col] = OrderedDict(db_dict[col])
 
 
-    def _process_lexicons(self, dbpt_d, schema_d):
+    def _process_lexicons(self, db_dict, schema_dict):
         '''
             Define columns and metadata about columns
         '''
         # Computes a dictionary that maps one column to a base column
 
-        self.columns = self.columns.union(dbpt_d.keys()).union(set(['INDEX']))
+        self.columns = self.columns.union(db_dict.keys()).union(set(['INDEX']))
         self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
 
@@ -283,8 +298,8 @@ class PropbankEncoder(object):
             base_col = self.columns_mapper[col]
 
             # Defines metadata
-            if base_col in schema_d:
-                colitem = schema_d[base_col]
+            if base_col in schema_dict:
+                colitem = schema_dict[base_col]
                 domain = colitem.get('domain', None) # numerical values
 
                 config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
@@ -366,7 +381,7 @@ class PropbankEncoder(object):
 if __name__ == '__main__':
     # Getting to the schema
     with open(SCHEMA_PATH, mode='r') as f:
-        schema_d = yaml.load(f)
+        schema_dict = yaml.load(f)
 
     dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
     column_files = [
@@ -386,15 +401,15 @@ if __name__ == '__main__':
 
     #In order to use glove uncheck
     dbname = 'deep_glo50'
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='glove_s50', dbname=dbname)
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='glove_s50', dbname=dbname)
     propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
     # dbname = 'deep_wan50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='wang2vec_s50', dbname=dbname)
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='wang2vec_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
     # dbname = 'deep_wrd50'
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model='word2vec_s50', dbname=dbname)
+    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='word2vec_s50', dbname=dbname)
     # propbank_encoder.persist('datasets/binaries/', filename=dbname)
 
 

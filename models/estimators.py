@@ -3,15 +3,17 @@
 
     @author: Varela
 
-    Runs optimization models
+    Runs training and prediction in order to estimate the parameters
+
 '''
 import tensorflow as tf
 import config
 import numpy as np
 from .utils import get_dims, get_index, get_binary
 from datasets import get_valid, get_test, input_fn, get_train
-from .propbank_encoder import PropbankEncoder
-from .evaluator_conll import EvaluatorConll
+from models.propbank_encoder import PropbankEncoder
+from models.evaluator_conll import EvaluatorConll
+from models.dblstm import DBLSTM
 
 FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
@@ -22,10 +24,34 @@ TARGET_LABEL = 'T'
 HIDDEN_LAYERS = [16] * 4
 
 
-def optimize_kfold(DeepLSTM,
-                   input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-                   epochs=100, lr=5 * 1e-3, fold=25, *kwargs):
+                   epochs=100, lr=5 * 1e-3, fold=25, **kwargs):
+    '''Runs estimate DBLSTM parameters using a kfold cross validation
+
+    Estimates DBLSTM using Stochastic Gradient Descent. The 
+    development set in constructed by merging training
+    and validation set, and each example is evaluated
+    once every `fold` epochs. Evalutions for the model are
+    carried out using 2005 CoNLL Shared Task Scripts and
+    the best proposition forecast and scores are saved on 
+    a dedicated folder.
+
+    Keyword Arguments:
+        input_labels {list<str>}-- Columns which will be 
+            converted into features (default: {FEATURE_LABELS})
+        target_label {str} -- Column which will be
+            used as target (default: {`T`})
+        hidden_layers {list<int>} -- sets the number and
+            sizes for hidden layers (default: {`[16, 16, 16, 16]`})
+        embeddings {str} -- There are three available models
+            `glo50`,`wrd50`, `wan50` (default: {'wan50'})
+        epochs {int} -- Number of iterations (default: {100})
+        lr {float} -- The learning rate (default: {5 * 1e-3})
+        kfold {int} -- The number of partitions from
+            on each iteration (default: {250})
+        **kwargs {dict<str,<key>>} -- unlisted arguments
+    '''
 
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
@@ -58,7 +84,7 @@ def optimize_kfold(DeepLSTM,
             datasets_list, batch_size, epochs,
             input_labels, target_label, shuffle=True)
 
-    dblstm = DeepLSTM(X, T, seqlens, **params)
+    dblstm = DBLSTM(X, T, seqlens, **params)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -133,10 +159,31 @@ def optimize_kfold(DeepLSTM,
             coord.join(threads)
 
 
-def optimize(DeepLSTM,
-             input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-             epochs=100, lr=5 * 1e-3, batch_size=250, *kwargs):
+             epochs=100, lr=5 * 1e-3, batch_size=250, **kwargs):
+    '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
+
+    Estimates DBLSTM using Stochastic Gradient Descent. Both training 
+    set and validation sets are fixed. Evalutions for the model are
+    carried out using 2005 CoNLL Shared Task Scripts and the best 
+    proposition forecast and scores are saved on a dedicated folder.
+
+    Keyword Arguments:
+        input_labels {list<str>}-- Columns which will be 
+            converted into features (default: {FEATURE_LABELS})
+        target_label {str} -- Column which will be
+            used as target (default: {`T`})
+        hidden_layers {list<int>} -- sets the number and
+            sizes for hidden layers (default: {`[16, 16, 16, 16]`})
+        embeddings {str} -- There are three available models
+            `glo50`,`wrd50`, `wan50` (default: {'wan50'})
+        epochs {int} -- Number of iterations (default: {100})
+        lr {float} -- The learning rate (default: {5 * 1e-3})
+        batch_size {int} -- The number of examples consumed 
+            on each iteration (default: {250})
+        **kwargs {dict<str,<key>>} -- unlisted arguments
+    '''
 
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
@@ -181,7 +228,7 @@ def optimize(DeepLSTM,
             datasets_list, batch_size, epochs,
             input_labels, target_label, shuffle=True)
 
-    dblstm = DeepLSTM(X, T, seqlens, **params)
+    dblstm = DBLSTM(X, T, seqlens, **params)
 
     init_op = tf.group(
         tf.global_variables_initializer(),

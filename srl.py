@@ -4,14 +4,25 @@
 
 
     Invokes deep_srlbr scrips from command line arguments
+
     Usage:
     > python srl.py -help 
         Shows docs
+
+    > python srl.py 16 16 16 16
+        Estimates the DBLSTM model with the following defaults:
+            * embeddings: glove of size 50.
+            * predicate context: previous and posterior word from the verb features.
+            * learning rate: 5 * 1e-3
+            * batch size: 250
+            * target: T column
+
 '''
 
 import argparse
-from models import optimize_kfold, optimize
-from models import DBLSTM, PropbankEncoder  # Inner moduler depends on PropbankEncoder
+from models import estimate, estimate_kfold
+from models import PropbankEncoder
+
 
 FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
@@ -51,7 +62,7 @@ if __name__ == '__main__':
                         help='''Number of times to repeat training set during training.\n''')
 
     parser.add_argument('-target', dest='target', nargs=1,
-                        default='IOB', choices=['T', 'IOB', 'HEAD'],
+                        default='T', choices=['T', 'IOB', 'HEAD'],
                         help='''Target representations\n''')
 
     parser.add_argument('-kfold', action='store_true',
@@ -60,8 +71,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     input_labels = FEATURE_LABELS
-
-    if args.ctx_p[0] > 1:
+    print(args)
+    if isinstance(args.ctx_p, list) and args.ctx_p[0] > 1:
         input_labels.append('FORM_CTX_P-2')
         input_labels.append('FORM_CTX_P+2')
         if args.ctx_p[0] == 3:
@@ -77,7 +88,7 @@ if __name__ == '__main__':
         print(args.epochs)
         print(args.lr)
         print(args.batch_size)
-        optimize_kfold(DBLSTM, input_labels=input_labels, target_label=args.target,
+        estimate_kfold(input_labels=input_labels, target_label=args.target,
                        hidden_layers=args.depth, embeddings=args.embeddings,
                        epochs=args.epochs, lr=args.lr, fold=25)
     else:
@@ -89,6 +100,6 @@ if __name__ == '__main__':
         print(args.lr)
         print(args.batch_size)
         print(args.ctx_p)
-        optimize(DBLSTM, input_labels=input_labels, target_label=args.target,
+        estimate(input_labels=input_labels, target_label=args.target,
                  hidden_layers=args.depth, embeddings=args.embeddings,
                  epochs=args.epochs, lr=args.lr, batch_size=args.batch_size)
