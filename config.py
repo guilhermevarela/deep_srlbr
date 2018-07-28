@@ -9,6 +9,8 @@ import tensorflow as tf
 #INPUTS AND DATASETS
 INPUT_DIR = 'datasets/binaries/'
 SCHEMA_DIR = 'datasets/schemas/'
+BASELINE_DIR = 'datasets/baseline/'
+
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 DATASET_TRAIN_PATH = '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_PATH = '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
