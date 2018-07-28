@@ -25,3 +25,6 @@
 
 # Jupyter notebook
 *.ipynb_checkpoints
+
+# Pycharm
+*.idea
