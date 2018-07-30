@@ -9,8 +9,10 @@ import re
 import yaml
 import numpy as np
 import pandas as pd
-import sys
+import sys, os
 import pickle
+import glob
+
 root_path = re.sub('/models', '', sys.path[0])
 sys.path.append(root_path)
 
@@ -377,8 +379,28 @@ class PropbankEncoder(object):
         else:
             raise Exception('Unhandled exception')
 
+def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50'):
+    ''' Creates a ProbankEncoder instance from strings.
 
-if __name__ == '__main__':
+    :param encoder_name:
+    :param language_model:
+    :return:
+    '''
+    # Process inputs
+    prefix_dir = config.LANGUAGE_MODEL_DIR
+    file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
+
+    if not os.path.isfile(file_path):
+        glob_regex = '{:}*'.format(prefix_dir)
+        options_list = [
+            re.sub('\.txt','', re.sub(prefix_dir,'', file_path))
+            for file_path in glob.glob(glob_regex)]
+        _errmsg = '{:} not found avalable options are in {:}'
+        raise ValueError(_errmsg.format(language_model ,options_list))
+
+
+
+
     # Getting to the schema
     with open(SCHEMA_PATH, mode='r') as f:
         schema_dict = yaml.load(f)
@@ -394,36 +416,21 @@ if __name__ == '__main__':
         'datasets/csvs/column_iob/iob.csv'
     ]
 
-
     for col_f in column_files:
         _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, _df), axis=1)
 
-    #In order to use glove uncheck
-    dbname = 'deep_glo50'
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='glove_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
+    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model=language_model, dbname=encoder_name)
+    propbank_encoder.persist('datasets/binaries/', filename=encoder_name)
+    return propbank_encoder
 
-    # dbname = 'deep_wan50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='wang2vec_s50', dbname=dbname)
-    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
+if __name__ == '__main__':
+    # encoding_name = 'deep_wan50'
+    # language_model = 'wang2vec_s50'
+    # 
+    # encoder_name = 'deep_wan50'    
+    # language_model ='wang2vec_s50'
 
-    # dbname = 'deep_wrd50'
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='word2vec_s50', dbname=dbname)
-    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
-
-
-    # propbank_encoder.persist('../datasets/binaries/', filename=dbname)
-    
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wan50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wrd50.pickle')
-    # filter_columns = ['P', 'GPOS', 'FORM']
-    # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
-
-    # for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
-
-    # for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
+    # encoder_name = 'deep_wrd50'
+    # language_model ='word2vec_s50'
+    propbank_encoder = make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50')

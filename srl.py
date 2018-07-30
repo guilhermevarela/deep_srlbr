@@ -20,9 +20,14 @@
 '''
 
 import argparse
+<<<<<<< HEAD
 from models import estimate, estimate_kfold
 from models import PropbankEncoder
 
+=======
+from models import optimize_kfold, optimize
+from models import DBLSTM, PropbankEncoder  # Inner module depends on PropbankEncoder
+>>>>>>> f3e2e620546e3003c0a7af3bf78c31d62f298993
 
 FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
