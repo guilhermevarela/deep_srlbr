@@ -191,8 +191,8 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
     labels_list = input_labels + [target_label]
 
-    X_train, T_train, L_train, D_train = get_train(input_labels, target_label, embeddings)
-    X_valid, T_valid, L_valid, D_valid = get_valid(input_labels, target_label, embeddings)
+    X_train, T_train, L_train, I_train = get_train(input_labels, target_label, embeddings)
+    X_valid, T_valid, L_valid, I_valid = get_valid(input_labels, target_label, embeddings)
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
@@ -200,13 +200,13 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor('train', index, Y, L_train, TARGET, params)
+        evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params)
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
         index = I_valid[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, TARGET, params)
+        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_label, params)
 
         return evaluator.f1
 
