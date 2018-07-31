@@ -49,7 +49,7 @@ def evaluate(gold_list, eval_list, verbose=True):
     return f1
 
 
-def parse_chunk(chunk_stack, chunk_tree, t):
+def update_chunk_stack(chunk_stack, chunk_tree, t):
     i0 = 0
 
     # either seek or store
@@ -89,28 +89,81 @@ def parse_chunk(chunk_stack, chunk_tree, t):
 def chunk_intersection(chunk_stack, t):
     return [
         chunk_
-        for chunk_ in chunk_stack 
-        if t >= chunk_.init and t <= chunk_.finish ]
+        for chunk_ in chunk_stack if chunk_enclosed(chunk_, t)]
+
+def chunk_filter(chunk_stack, t, filter_type):
+
+    if filter_type == 0:
+        fnc = lambda x : chunk_np(x) and chunk_lt(x, t)
+
+    elif filter_type == 1:
+        fnc = lambda x : chunk_np(x) and chunk_gt(x, t)
+
+    else:
+        raise ValueError('Only 0 or 1 allowed')
+
+    return [ chunk_ for chunk_ in chunk_stack if fnc(chunk_)]
+
+
+def chunk_enclosed(chunk, t):
+    return chunk.init <= t and t <= chunk.finish 
+
+def chunk_gt(chunk, t):
+    return chunk.init > t
+
+def chunk_lt(chunk, t):
+    return chunk.finish < t
+
+def chunk_np(chunk):    
+    return chunk.role == 'NP*'
 
 
 def baseline_rules(verb_id, negation_list, pred_list, chunk_stack):
-    baseline_list = []        
+    # A0 & A1 rule
+    chunk_list = chunk_filter(chunk_stack, verb_id, 0)
+    chunk_a0 = chunk_list[-1] if chunk_list else None
 
+    chunk_list = chunk_filter(chunk_stack, verb_id, 1)
+    chunk_a1 = chunk_list[0] if chunk_list else None
+    
+    arg_list = []
+    a0 = False 
+    a1 = False 
     for i_, pred_ in enumerate(pred_list):
+        i_ += 1
+        tag = '*'
+        if chunk_a0 and i_ == chunk_a0.init: 
+            tag = '(A0*'
+            a0 = True
+        
+        if chunk_a1  and  i_ == chunk_a1.init: 
+            tag = '(A1*'
+            a1 = True
+            
+
         if i_ == verb_id:
-            baseline_list.append((pred_, '(V*)'))
-        elif i_ in negation_list:
-            # if verb_id == 25 and i_ == 24:
-            #     import code; code.interact(local=dict(globals(), **locals()))
+            tag = '(V*)'
+
+
+        if i_ in negation_list and not (a1 or a0):
             chunks_verb =  chunk_intersection(chunk_stack, verb_id)
             chunks_neg  =  chunk_intersection(chunk_stack, i_)
-            if chunks_verb[:-1] == chunks_neg[:-1]: # same parent as target verb
-                baseline_list.append((pred_, '(AM-NEG*)')) 
-            else:
-                baseline_list.append((pred_, '*')) 
-        else:
-            baseline_list.append((pred_, '*')) 
-    return baseline_list
+            
+            # same parent as target verb
+            if chunks_verb[:-1] == chunks_neg[:-1]: 
+                tag = '(AM-NEG*)'        
+        
+        if chunk_a0 and i_ == chunk_a0.finish:
+            tag += ')'    
+            a0 = False
+
+        if chunk_a1 and i_ == chunk_a1.finish:
+            tag += ')'   
+            a1 = False
+
+        arg_list.append(tag)
+
+    return zip(pred_list, arg_list)
 
 
 
@@ -121,7 +174,6 @@ if __name__ == '__main__':
     propbank_encoder = PropbankEncoder.recover(encoder_path)
 
 
-    
     columns_ = ['INDEX', 'ID', 'P', 'FORM', 'GPOS','CTREE', 'PRED','ARG']
     iter_ = propbank_encoder.iterator('valid', filter_columns=columns_, encoding='CAT')
     first = True
@@ -140,6 +192,7 @@ if __name__ == '__main__':
     for index_, dict_ in iter_:
         prop_ = dict_['P']
         form_ = dict_['FORM']
+        lemma_ = dict_['LEMMA']
         pred_ = dict_['PRED']
         arg_  = dict_['ARG']
         gpos_ = dict_['GPOS']
@@ -158,39 +211,19 @@ if __name__ == '__main__':
             pred_list = []
             negation_list = []
 
-        # SOLVE FOR CHUNKS
-        # 
-        # if not (first or prop_ == prev_prop_):
-        #     baseline_list.append(None)
-        #     gold_list.append(None)
+        update_chunk_stack(chunk_stack, ctree_, id_)
 
-        #     prev_tag_ = '*'
-        parse_chunk(chunk_stack, ctree_, id_)
 
-        # tag_ = '*'
-        # # VERB RULE
         if not pred_ == '-':
-            # if prev_form_ == 'se':
-            #     tag_ = '(C-V*)'
-            #     prev_tag_ = '(V*)'
-            # else:
-            # tag_ = '(V*)'
-            verb_id =  id_ -1 
-        # elif prev_tag_ == '(V*)' and form_ == 'se':
-        #     tag_ = '(C-V*)'
+            verb_id =  id_
 
-        # # NEGATION RULE
-        # if form_ == 'não' and verb_id > 0:
         if form_ == 'não':
-            # import code; code.interact(local=dict(globals(), **locals()))
             negation_list.append(id_ -1 )
           
-        # if not first:
+
         gold_list.append((pred_, arg_))
         pred_list.append(pred_)
-        # baseline_list.append((pred_, tag_))
-
-        # prev_tag_ = tag_
+        
         prev_prop_ = prop_
         first = False
     
