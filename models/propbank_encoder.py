@@ -19,6 +19,7 @@ sys.path.append(root_path)
 import config
 from collections import OrderedDict, defaultdict
 from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
+from . import feature_factory
 # import data_propbankbr as br
 
 
@@ -406,6 +407,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50')
         schema_dict = yaml.load(f)
 
     dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
+
     column_files = [
         'datasets/csvs/column_chunks/chunks.csv',
         'datasets/csvs/column_predmarker/predicate_marker.csv',
@@ -416,8 +418,13 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50')
         'datasets/csvs/column_iob/iob.csv'
     ]
 
-    for col_f in column_files:
-        _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
+    for column_path in column_files:
+        if not os.path.isfile(column_path):
+            raise NotImplementedError('column search and creation not done')
+            # csv_name = column_path.split('/')[-1]
+
+
+        column_df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, _df), axis=1)
 
     propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_d, language_model=language_model, dbname=encoder_name)
