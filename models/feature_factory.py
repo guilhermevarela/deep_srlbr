@@ -728,7 +728,7 @@ def _predicatedict(db):
     return d
 
 
-def _process_passivevoice(dictdb):
+def process_passivevoice(dictdb):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
     target_dir = 'datasets/csvs/column_passivevoice/'
@@ -737,7 +737,7 @@ def _process_passivevoice(dictdb):
     _store(passivevoice, 'passive_voice', target_dir)
 
 
-def _process_chunk(dictdb):
+def process_chunk(dictdb):
 
     chunker = FeatureFactory().make('ColumnChunk', dictdb)
     target_dir = 'datasets/csvs/column_chunks/'
@@ -746,7 +746,7 @@ def _process_chunk(dictdb):
     _store(chunks, 'chunks', target_dir)
 
 
-def _process_predmorph(dictdb):
+def process_predmorph(dictdb):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
     target_dir = 'datasets/csvs/column_predmorph/'
@@ -755,7 +755,7 @@ def _process_predmorph(dictdb):
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
 
-def _process_shifter(dictdb, columns, shifts):
+def process_shifter(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
     target_dir = 'datasets/csvs/column_shifts/'
@@ -764,7 +764,7 @@ def _process_shifter(dictdb, columns, shifts):
     _store_columns(shifted, columns, target_dir)
 
 
-def _process_shifter_ctx_p(dictdb, columns, shifts):
+def process_shifter_ctx_p(dictdb, columns, shifts):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
     target_dir = 'datasets/csvs/column_shifts_ctx_p/'
@@ -773,7 +773,7 @@ def _process_shifter_ctx_p(dictdb, columns, shifts):
     _store_columns(shifted, columns, target_dir)
 
 
-def _process_predicate_dist(dictdb):
+def process_predicate_dist(dictdb):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().run()
@@ -783,7 +783,8 @@ def _process_predicate_dist(dictdb):
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_t(dictdb):
+
+def process_t(dictdb):
 
     column_t = FeatureFactory().make('ColumnT', dictdb)
     d = column_t.run()
@@ -793,7 +794,7 @@ def _process_t(dictdb):
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_iob(dictdb):
+def process_iob(dictdb):
 
     column_iob = FeatureFactory().make('ColumnIOB', dictdb)
     d = column_iob.run()
@@ -803,7 +804,7 @@ def _process_iob(dictdb):
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_predicate_marker(dictdb):
+def process_predmarker(dictdb):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
     d = column_t.run()
@@ -834,9 +835,9 @@ if __name__ == '__main__':
 
     # columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
     # shifts = [i for i in range(-3, 4)] 
-    # _process_shifter(db, columns, shifts)
-    # _process_shifter_ctx_p(db, columns, shifts)
-    _process_chunk(db)
-    # _process_t(db)
-    # _process_predicate_marker(db)
-    # _process_iob(db)
+    # process_shifter(db, columns, shifts)
+    # process_shifter_ctx_p(db, columns, shifts)
+    process_chunk(db)
+    # process_t(db)
+    # process_iob(db)
+    # process_iob(db)

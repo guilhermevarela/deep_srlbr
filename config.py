@@ -9,6 +9,7 @@ import tensorflow as tf
 #INPUTS AND DATASETS
 INPUT_DIR = 'datasets/binaries/'
 SCHEMA_DIR = 'datasets/schemas/'
+
 BASELINE_DIR = 'datasets/baseline/'
 
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
