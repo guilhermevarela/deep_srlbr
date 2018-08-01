@@ -300,9 +300,10 @@ class PropbankEncoder(object):
             base_col = self.columns_mapper[col]
 
             # Defines metadata
+
             if base_col in schema_dict:
                 colitem = schema_dict[base_col]
-                domain = colitem.get('domain', None) # numerical values
+                domain = colitem.get('domain', None) # numerical values                
 
                 config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
 
@@ -310,6 +311,7 @@ class PropbankEncoder(object):
             else:
                 config_dict = dflt_dict
                 config_dict['name'] = col
+                domain = None
 
 
             # Lexicon for each column unk is not present

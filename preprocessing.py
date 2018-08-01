@@ -80,10 +80,12 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50')
             column_df = maker_fnc(gs_dict)
         else:
             column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
-
+    
         dfgs = pd.concat((dfgs, column_df), axis=1)
-
+    
+    import code; code.interact(local=dict(globals(), **locals()))
     propbank_encoder = PropbankEncoder(dfgs.to_dict(),  schema_dict, language_model=language_model, dbname=encoder_name)
+    # import code; code.interact(local=dict(globals(), **locals()))
     propbank_encoder.persist('datasets/binaries/', filename=encoder_name)
     return propbank_encoder
 
