@@ -329,6 +329,11 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
+        
+        # filter columns        
+        for col in self.columns_config:
+            if col not in self.columns:                
+                del self.columns_config[col]
 
     def _subcol(self, col):
         re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
