@@ -322,26 +322,27 @@ def make_feature_list(columns_dict, columns_config):
     '''
     feature_dict = {}
     supported_types = ('choice', 'int', 'text')
-    for clabel, cvalues in columns_dict.items():
+    for label_, value_ in columns_dict.items():
         # makes approximate comparison
-        search_label = clabel.split('_')[0]
-        config_dict = columns_config[search_label]
+        # label_ = label_.split('_')[0]
+
+        config_dict = columns_config[label_]
 
         if config_dict['type'] in ('bool', 'int'):
             # the representation is an integer list
-            feature_dict[clabel] = tf.train.FeatureList(
+            feature_dict[label_] = tf.train.FeatureList(
                 feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-                         for value in cvalues])
+                         for value in value_])
         elif config_dict['type'] in ('choice',):
             # the representation is an integer list or list
-            feature_dict[clabel] = tf.train.FeatureList(
+            feature_dict[label_] = tf.train.FeatureList(
                 feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=sublist))
-                         for sublist in cvalues])
+                         for sublist in value_])
         elif config_dict['type'] in ('text',):
             # the representation is float array
-            feature_dict[clabel] = tf.train.FeatureList(
+            feature_dict[label_] = tf.train.FeatureList(
                 feature=[tf.train.Feature(float_list=tf.train.FloatList(value=sublist))
-                         for sublist in cvalues])
+                         for sublist in value_])
         else:
             _params = (supported_types, config_dict['type'])
             _msg = 'type must be in {:} and got {:}'
@@ -350,7 +351,7 @@ def make_feature_list(columns_dict, columns_config):
 
 
 def tfrecords_builder(propbank_iter, dataset_type,
-                      colconfig_dict, suffix='glo50'):
+                      column_config_dict, suffix='glo50'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
@@ -386,8 +387,8 @@ def tfrecords_builder(propbank_iter, dataset_type,
         for index, d in propbank_iter:
             if d['P'] != prev_p:
                 if not refresh:
-                    context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[seqlen]))}
-                    feature_lists_dict = make_feature_list(feature_list_dict, colconfig_dict)
+                    context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[seqlen]))}                    
+                    feature_lists_dict = make_feature_list(feature_list_dict, column_config_dict)
 
                     ex = tf.train.SequenceExample(
                         context=tf.train.Features(feature=context),
@@ -414,7 +415,7 @@ def tfrecords_builder(propbank_iter, dataset_type,
 
         # write the one last example
         context = {'L': tf.train.Feature(int64_list=tf.train.Int64List(value=[seqlen]))}
-        feature_lists_dict = make_feature_list(feature_list_dict, colconfig_dict)
+        feature_lists_dict = make_feature_list(feature_list_dict, column_config_dict)
 
         ex = tf.train.SequenceExample(
             context=tf.train.Features(feature=context),
