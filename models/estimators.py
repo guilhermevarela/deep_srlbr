@@ -15,9 +15,12 @@ from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.dblstm import DBLSTM
 
-FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
-                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+# FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
+#                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
+#                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+
+FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
 
 TARGET_LABEL = 'T'
 
