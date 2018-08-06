@@ -196,8 +196,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
-    print(batch_size, target_label, target_size, feature_size)
-
+    # print(batch_size, target_label, target_size, feature_size)    
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
         evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params)
@@ -248,6 +247,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         try:
             while not coord.should_stop():
                 X_batch, T_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
+                
 
                 loss, _, Yish, error = session.run(
                     [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],

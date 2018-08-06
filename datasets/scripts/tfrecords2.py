@@ -256,8 +256,11 @@ def _process(context_features, sequence_features,
     # Fetch only context variable the length of the proposition
     L = context_features['L']
 
-    print('processing:{:}'.format(sequence_features.keys()))
-    for key in TF_SEQUENCE_FEATURES_V2:
+    # print('processing:{:}'.format(sequence_features.keys()))
+    labels_list = list(input_labels)
+    labels_list.append(output_label)
+    labels_list.append('INDEX')
+    for key in labels_list:
 
         dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
 
@@ -266,10 +269,10 @@ def _process(context_features, sequence_features,
         if key in input_labels:
             sequence_inputs.append(dense_tensor1)
         elif key in [output_label]:
-            print('target is', output_label)
+            # print('target is', output_label)
             T = dense_tensor1
         elif key in ['INDEX']:
-            print('descriptors: {:}'.format(key))
+            # print('descriptors: {:}'.format(key))
             sequence_descriptors.append(dense_tensor1)
 
     X = tf.concat(sequence_inputs, 1)
@@ -289,7 +292,7 @@ def _read_and_decode(filename_queue):
             sequence_features.: features that are held variable thru sequence ex: word_idx
 
     '''
-    print(TF_SEQUENCE_FEATURES_V2)
+    # print(TF_SEQUENCE_FEATURES_V2)
     reader= tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
 
