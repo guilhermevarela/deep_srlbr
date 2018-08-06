@@ -15,9 +15,12 @@ from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.dblstm import DBLSTM
 
-FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
-                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-                  'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+# FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
+#                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
+#                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
+
+FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
 
 TARGET_LABEL = 'T'
 
@@ -191,22 +194,21 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
     labels_list = input_labels + [target_label]
 
-    X_train, T_train, L_train, D_train = get_train(input_labels, target_label, embeddings)
-    X_valid, T_valid, L_valid, D_valid = get_valid(input_labels, target_label, embeddings)
+    X_train, T_train, L_train, I_train = get_train(input_labels, target_label, embeddings)
+    X_valid, T_valid, L_valid, I_valid = get_valid(input_labels, target_label, embeddings)
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
-    print(batch_size, target_label, target_size, feature_size)
-
+    # print(batch_size, target_label, target_size, feature_size)    
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor('train', index, Y, L_train, TARGET, params)
+        evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params)
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
         index = I_valid[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, TARGET, params)
+        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_label, params)
 
         return evaluator.f1
 
@@ -248,6 +250,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         try:
             while not coord.should_stop():
                 X_batch, T_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
+                
 
                 loss, _, Yish, error = session.run(
                     [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],

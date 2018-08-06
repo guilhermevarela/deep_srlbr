@@ -9,6 +9,9 @@ import tensorflow as tf
 #INPUTS AND DATASETS
 INPUT_DIR = 'datasets/binaries/'
 SCHEMA_DIR = 'datasets/schemas/'
+
+BASELINE_DIR = 'datasets/baseline/'
+
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 DATASET_TRAIN_PATH = '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
 DATASET_VALID_PATH = '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
@@ -95,7 +98,7 @@ SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',
     'txt', 'txt',  'txt', 'txt',  'int',  
     'txt', 'hot']
 
-DEFAULT_INPUT_SEQUENCE_FEATURES= ['ID', 'LEMMA', 'MARKER', 'PRED_1', 'CTX_P-1', 'CTX_P+1']
-DEFAULT_OUTPUT_SEQUENCE_TARGET= 'T'
+DEFAULT_INPUT_SEQUENCE_FEATURES = ['ID', 'LEMMA', 'MARKER', 'PRED_1', 'CTX_P-1', 'CTX_P+1']
+DEFAULT_OUTPUT_SEQUENCE_TARGET = 'T'
 
-META= dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))
+META = dict(zip(SEQUENCE_FEATURES, SEQUENCE_FEATURES_TYPES))

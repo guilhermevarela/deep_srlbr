@@ -9,8 +9,10 @@ import re
 import yaml
 import numpy as np
 import pandas as pd
-import sys
+import sys, os
 import pickle
+import glob
+
 root_path = re.sub('/models', '', sys.path[0])
 sys.path.append(root_path)
 
@@ -20,7 +22,7 @@ from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
 # import data_propbankbr as br
 
 
-SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
+
 
 
 class _EncoderIterator(object):
@@ -298,9 +300,10 @@ class PropbankEncoder(object):
             base_col = self.columns_mapper[col]
 
             # Defines metadata
+
             if base_col in schema_dict:
                 colitem = schema_dict[base_col]
-                domain = colitem.get('domain', None) # numerical values
+                domain = colitem.get('domain', None) # numerical values                
 
                 config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
 
@@ -308,6 +311,7 @@ class PropbankEncoder(object):
             else:
                 config_dict = dflt_dict
                 config_dict['name'] = col
+                domain = None
 
 
             # Lexicon for each column unk is not present
@@ -325,6 +329,11 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
+        
+        # filter columns        
+        for col in self.columns_config:
+            if col not in self.columns:                
+                del self.columns_config[col]
 
     def _subcol(self, col):
         re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
@@ -376,54 +385,3 @@ class PropbankEncoder(object):
             return [1 if i == x else 0 for i in range(sz)]
         else:
             raise Exception('Unhandled exception')
-
-
-if __name__ == '__main__':
-    # Getting to the schema
-    with open(SCHEMA_PATH, mode='r') as f:
-        schema_dict = yaml.load(f)
-
-    dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
-    column_files = [
-        'datasets/csvs/column_chunks/chunks.csv',
-        'datasets/csvs/column_predmarker/predicate_marker.csv',
-        'datasets/csvs/column_shifts_ctx_p/form.csv',
-        'datasets/csvs/column_shifts_ctx_p/gpos.csv',
-        'datasets/csvs/column_shifts_ctx_p/lemma.csv',
-        'datasets/csvs/column_t/t.csv',
-        'datasets/csvs/column_iob/iob.csv'
-    ]
-
-
-    for col_f in column_files:
-        _df = pd.read_csv(col_f, index_col=0, encoding='utf-8')
-        dfgs = pd.concat((dfgs, _df), axis=1)
-
-    #In order to use glove uncheck
-    dbname = 'deep_glo50'
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='glove_s50', dbname=dbname)
-    propbank_encoder.persist('datasets/binaries/', filename=dbname)
-
-    # dbname = 'deep_wan50'    
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='wang2vec_s50', dbname=dbname)
-    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
-
-    # dbname = 'deep_wrd50'
-    # propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model='word2vec_s50', dbname=dbname)
-    # propbank_encoder.persist('datasets/binaries/', filename=dbname)
-
-
-    # propbank_encoder.persist('../datasets/binaries/', filename=dbname)
-    
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_glo50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wan50.pickle')
-    # propbank_encoder = PropbankEncoder.recover('../datasets/binaries/deep_wrd50.pickle')
-    # filter_columns = ['P', 'GPOS', 'FORM']
-    # for t, d in propbank_encoder.iterator('test', filter_columns=filter_columns, encoding='EMB'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
-
-    # for t, d in propbank_encoder.iterator('train', filter_columns=filter_columns, encoding='CAT'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}\tFORM:{:}'.format(t, d['P'], d['GPOS'], d['FORM']))
-
-    # for t, d in propbank_encoder.iterator('valid', filter_columns=filter_columns, encoding='HOT'):
-    #     print('t:{:}\tP:{:}\tGPOS:{:}'.format(t, d['P'], d['GPOS']))
