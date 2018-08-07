@@ -1,0 +1,60 @@
+ARG:
+  category: target
+  domain: ['*)', (A1*), (V*), (A0*, '*']
+  type: choice
+CHUNK: {category: target, type: int}
+CTREE:
+  category: feature
+  domain: [(NP*), '*)', (FCL(CU(NP*, (VP*), (ADJP*))), (NP*, '*']
+  type: choice
+DTREE:
+  category: feature
+  domain: [0, 2, 5, 7]
+  name: DTREE
+  type: choice
+FORM:
+  category: feature
+  domain: [iraniano, envolvimento, ., grupo, negaram, o, O, e, governo]
+  name: FORM
+  type: text
+FUNC:
+  category: feature
+  domain: [ACC, N<, STA, CO, PU, SUBJ, '>N', CJT]
+  name: FUNC
+  type: choice
+GPOS:
+  category: feature
+  domain: [N, ART, ADJ, PU, CONJ-C, V-FIN]
+  name: GPOS
+  type: choice
+HEAD:
+  category: target
+  domain: [A1, A0, '-']
+  type: choice
+ID: {category: feature, type: int}
+INDEX: {category: meta, type: int}
+IOB:
+  category: target
+  domain: [B-V, I-A0, O, B-A0, B-A1]
+  type: choice
+LEMMA:
+  category: feature
+  domain: [iraniano, envolvimento, grupo, o, negar, e, governo, '-']
+  type: text
+MARKER: {category: feature, type: int}
+MORF:
+  category: feature
+  domain: ['-', PS/MQP|3P|IND, M|S]
+  type: choice
+P: {category: meta, type: int}
+PRED:
+  category: feature
+  domain: [negar, '-']
+  type: text
+P_S: {category: meta, type: int}
+S: {category: meta, type: int}
+T:
+  category: target
+  domain: [A1, A0, '*', V]
+  type: choice
+Y: {category: target, type: choice}
