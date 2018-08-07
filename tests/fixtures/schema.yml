@@ -57,4 +57,3 @@ T:
   category: target
   domain: [A1, A0, '*', V]
   type: choice
-Y: {category: target, type: choice}

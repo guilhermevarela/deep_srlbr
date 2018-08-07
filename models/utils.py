@@ -34,16 +34,19 @@ def fetch_corpus(db_name):
     return pd.read_csv(path)
 
 def fetch_word2vec(natural_language_embedding_file, verbose=True):
-    print('Fetching word2vec...')
+    if verbose:
+        print('Fetching word2vec...')
     try:        
         embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)        
         word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")           
     except FileNotFoundError:
-        print('natural_language_feature: {:} not found .. reverting to \'glove_s50\' instead'.format(natural_language_embedding_file))
+        if verbose:
+            print('natural_language_feature: {:} not found .. reverting to \'glove_s50\' instead'.format(natural_language_embedding_file))
         natural_language_embedding_file='glove_s50'
         embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)        
         word2vec  = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")          
     finally:
+        if verbose:
             print('Fetching word2vec... done')  
 
     return word2vec
@@ -60,16 +63,19 @@ def fetch_corpus_exceptions(corpus_exception_file, verbose=True):
         returns:
             features : list<str>  with the features names
     '''
-    print('Fetching {:}...'.format(corpus_exception_file))
+    if verbose:
+        print('Fetching {:}...'.format(corpus_exception_file))
+    
     corpus_exceptions_path = '{:}{:}'.format(CORPUS_EXCEPTIONS_DIR, corpus_exception_file)
     df = pd.read_csv(corpus_exceptions_path, sep='\t')
-    print('Fetching {:}...done'.format(corpus_exception_file))  
+    if verbose:
+        print('Fetching {:}...done'.format(corpus_exception_file))  
 
     return set(df['TOKEN'].values)
 
 
 
-def preprocess(lexicon, word2vec):  
+def preprocess(lexicon, word2vec, verbose=True):  
     '''
         1. for NER entities within exception file
              replace by the tag organization, person, location
@@ -77,7 +83,7 @@ def preprocess(lexicon, word2vec):
         3. include time i.e 20h30, 9h in number embeddings '0'
         4. include ordinals 2º 2ª in number embeddings '0'
         5. include tel._38-4048 in numeber embeddings '0'
-    
+
     New Word embedding size = embedding size + one-hot enconding of 2   
     '''
     # define outputs
@@ -85,9 +91,9 @@ def preprocess(lexicon, word2vec):
     lexicon2token = dict(zip(lexicon, ['unk']*total_words))
 
     # fetch exceptions list
-    pers = fetch_corpus_exceptions('corpus-word-missing-pers.txt')
-    locs = fetch_corpus_exceptions('corpus-word-missing-locs.txt')
-    orgs = fetch_corpus_exceptions('corpus-word-missing-orgs.txt')
+    pers = fetch_corpus_exceptions('corpus-word-missing-pers.txt', verbose=verbose)
+    locs = fetch_corpus_exceptions('corpus-word-missing-locs.txt', verbose=verbose)
+    orgs = fetch_corpus_exceptions('corpus-word-missing-orgs.txt', verbose=verbose)
 
 
     #define regex
@@ -124,10 +130,10 @@ def preprocess(lexicon, word2vec):
                         if word in locs:
                             lexicon2token[word] = 'local'
 
-    total_tokens = len([val for val in  lexicon2token.values() if not val in ('unk')])
-
-    print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_tokens,
-     total_words, 100*float(total_words-total_tokens)/ total_words))                
+    total_tokens = len([val for val in lexicon2token.values() if not val in ('unk')])
+    if verbose:
+        print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_tokens,
+            total_words, 100*float(total_words-total_tokens)/ total_words))                
 
     return lexicon2token
 

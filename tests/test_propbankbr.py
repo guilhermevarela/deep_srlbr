@@ -50,7 +50,7 @@ def _get_schema():
     return schema_dict
 
 
-class PropbankTest(unittest.TestCase):
+class PropbankBaseCase(unittest.TestCase):
 
     # @patch('models.utils.fetch_word2vec', return_value=_get_word2vec())
     def setUp(self):
@@ -59,23 +59,105 @@ class PropbankTest(unittest.TestCase):
         self.word2vec = _get_word2vec()
         models.utils.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
         self.propbank_encoder = \
-            PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50')
-        
+            PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50', verbose=False)
+
+        self.fixtures_list = []
+
+    def tearDown(self):
+        if self.fixtures_list:
+            for fix_path in self.fixtures_list:
+                try:
+                    os.remove(fix_path)
+                except Exception:
+                    pass
+
+class PropbankTestRecover(PropbankBaseCase):
 
     def test_recover(self):
         self.propbank_encoder.persist(FIX_DIR, 'deep_glo50')
         propbank_encoder = PropbankEncoder.recover(PICKLE_PATH)
-        self.assertEqual(self.propbank_encoder, propbank_encoder)
+
+        self.assertEqual(self.propbank_encoder.__dict__, propbank_encoder.__dict__)
+
+
+class PropbankTestPersist(PropbankBaseCase):
 
     def test_persist(self):
-
         self.propbank_encoder.persist(FIX_DIR, 'mock_glo50')
-
         fixture_path = '{:}mock_glo50.pickle'.format(FIX_DIR)
         propbank_encoder = PropbankEncoder.recover(fixture_path)
-        self.assertEqual(self.propbank_encoder, propbank_encoder)
-        try:
-            import code; code.interact(local=dict(globals(), **locals()))
-            os.remove(fixture_path)
-        except Exception:
-            pass
+
+        self.assertEqual(self.propbank_encoder.__dict__, propbank_encoder.__dict__)
+        self.fixtures_list.append(fixture_path)
+
+
+class PropbankTestWords(PropbankBaseCase):
+
+    def test_words(self):
+        words_test = self.schema_dict['LEMMA']['domain']
+        words_test += self.schema_dict['FORM']['domain']
+        words_test_set = set(words_test)
+        self.assertEqual(self.propbank_encoder.words, words_test_set)
+
+
+class PropbankTestIdx2Lex(PropbankBaseCase):
+
+    def test_idx2lex(self):
+        for column, meta_dict in self.schema_dict.items():
+            if meta_dict['type'] == 'choice':
+                with self.subTest(msg='Checking {:}'.format(column)):
+                    self._helper_choice(column)
+
+            elif meta_dict['type'] == 'text':
+                with self.subTest(msg='Checking {:}'.format(column)):
+                    self._helper_text(column)
+
+
+    def _helper_choice(self, choice_column):
+        domain_ = self.schema_dict[choice_column]['domain']
+        test_dict = {i:d for i, d in enumerate(domain_)}
+
+        self.assertEqual(test_dict,
+                         self.propbank_encoder.idx2lex[choice_column])
+
+    def _helper_text(self, text_column):
+        domain_ = self.schema_dict[text_column]['domain']
+        test_dict = {i:d for i, d in enumerate(domain_)}
+
+        self.assertEqual(test_dict,
+                         self.propbank_encoder.idx2lex[text_column])
+
+class PropbankTestLex2Idx(PropbankBaseCase):
+
+    def test_lex2idx(self):
+        for column, meta_dict in self.schema_dict.items():
+            if meta_dict['type'] in ('choice', 'text'):
+                keys_ = self.propbank_encoder.idx2lex[column].keys()
+                values_ = self.propbank_encoder.idx2lex[column].values()
+                test_dict = dict(zip(values_, keys_))
+                self.assertEqual(test_dict,
+                                 self.propbank_encoder.lex2idx[column])
+
+
+
+
+
+# class PropbankTestEmbeddings(PropbankBaseCase):
+#     def setUp(self):
+#         super().setUp()
+
+#         self.embeddings_test = [self.word2vec['unk'].tolist()]
+#         for w_, v_ in self.word2vec.items():
+#             if w_ != 'unk':
+#                 self.embeddings_test.append(v_)
+
+#     def test_embeddings(self):
+#         print(self.propbank_encoder.embeddings)
+#         print(self.embeddings_test)
+#         self.assertEqual(self.propbank_encoder.embeddings,  self.embeddings_test)
+
+#     def test_embeddings_model(self):
+#         self.assertEqual(self.propbank_encoder.embeddings_model,  'glove')
+    
+#     def test_embeddings_sz(self):
+#         self.assertEqual(self.propbank_encoder.embeddings_sz,  50)

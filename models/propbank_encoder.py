@@ -98,8 +98,7 @@ class PropbankEncoder(object):
         self.columns_config = {}
         self.columns = set([])
 
-        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)
-
+        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)    
 
     @classmethod
     def recover(cls, file_path):
@@ -232,12 +231,12 @@ class PropbankEncoder(object):
 
     def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = models.utils.fetch_word2vec(language_model, verbose=verbose) 
+        word2vec = models.utils.fetch_word2vec(language_model, verbose=verbose)
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = models.utils.preprocess(list(self.words), word2vec)
+        self.lex2tok = models.utils.preprocess(list(self.words), word2vec, verbose=verbose)
         if verbose:
             words = self.lex2tok.keys()
             self.tokens = set(self.lex2tok.values())
