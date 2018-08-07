@@ -19,7 +19,7 @@ sys.path.append(root_path)
 import config
 from collections import OrderedDict, defaultdict
 # import models.utils import fetch_word2vec, preprocess
-import models.utils as utl
+import models.utils
 
 
 
@@ -232,12 +232,12 @@ class PropbankEncoder(object):
 
     def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = utl.fetch_word2vec(language_model, verbose=verbose) #<-- HOW TO MOCK ?-->
+        word2vec = models.utils.fetch_word2vec(language_model, verbose=verbose) 
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = utl.preprocess(list(self.words), word2vec)
+        self.lex2tok = models.utils.preprocess(list(self.words), word2vec)
         if verbose:
             words = self.lex2tok.keys()
             self.tokens = set(self.lex2tok.values())
