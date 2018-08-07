@@ -135,8 +135,8 @@ if __name__ == '__main__':
         raise ValueError('Language model {:} some avalable options are {:}'.format(language_model, language_model_list))
     else:
         model_, sz_ = language_model.split('_s')
+    print(model_, sz_)
 
-
-    encoder_name = 'deep_{:}'.format(get_model(model_), sz_)
+    encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
     propbank_encoder = make_propbank_encoder(encoder_name=encoder_name, language_model='glove_s50')
     make_tfrecords(encoder_name='deep_glo50') 

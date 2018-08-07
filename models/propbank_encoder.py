@@ -18,8 +18,8 @@ sys.path.append(root_path)
 
 import config
 from collections import OrderedDict, defaultdict
-from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
-# import data_propbankbr as br
+# import models.utils import fetch_word2vec, preprocess
+import models.utils as utl
 
 
 
@@ -98,7 +98,7 @@ class PropbankEncoder(object):
         self.columns_config = {}
         self.columns = set([])
 
-        self._process(db_dict, schema_dict, dbname, language_model, verbose)
+        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)
 
 
     @classmethod
@@ -215,31 +215,29 @@ class PropbankEncoder(object):
                 lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
                 ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
 
-        return {
-                x:self._decode_with_idx(x,[column], encoding)
+        return {x:self._decode_with_idx(x,[column], encoding)
                 for x, p in self.db['P'].items()
-                if p > lb and p <= ub
-                }
+                if p > lb and p <= ub}
 
 
-    def _process(self, db_dict, schema_dict, dbname, language_model, verbose):
+    def _initialize(self, db_dict, schema_dict, dbname, language_model, verbose):
         # Defines domains for each column, defines tokens for text columns
-        self._process_lexicons(db_dict, schema_dict)
+        self._initialize_lexicons(db_dict, schema_dict)
 
         # MAPS textual columns to the language model
-        self._process_embeddings(language_model, verbose)
+        self._initialize_embeddings(language_model, verbose)
 
         # Builds db dictionary
-        self._process_db(db_dict, dbname)
+        self._initialize_db(db_dict, dbname)
 
-    def _process_embeddings(self, language_model, verbose):
+    def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = fetch_word2vec(language_model, verbose=verbose)
+        word2vec = utl.fetch_word2vec(language_model, verbose=verbose) #<-- HOW TO MOCK ?-->
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = preprocess(list(self.words), word2vec)
+        self.lex2tok = utl.preprocess(list(self.words), word2vec)
         if verbose:
             words = self.lex2tok.keys()
             self.tokens = set(self.lex2tok.values())
@@ -259,7 +257,7 @@ class PropbankEncoder(object):
                 self.embeddings.append(word2vec[tok].tolist())
                 i += 1
 
-    def _process_db(self, db_dict, dbname):
+    def _initialize_db(self, db_dict, dbname):
         self.dbname = dbname
 
         for col in list(self.columns):
@@ -284,7 +282,7 @@ class PropbankEncoder(object):
                 self.db[col] = OrderedDict(db_dict[col])
 
 
-    def _process_lexicons(self, db_dict, schema_dict):
+    def _initialize_lexicons(self, db_dict, schema_dict):
         '''
             Define columns and metadata about columns
         '''
@@ -329,10 +327,10 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
-        
-        # filter columns        
+
+        # filter columns
         for col in self.columns_config:
-            if col not in self.columns:                
+            if col not in self.columns:
                 del self.columns_config[col]
 
     def _subcol(self, col):
