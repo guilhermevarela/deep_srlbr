@@ -252,6 +252,7 @@ class PropbankEncoder(object):
         i = 1
         for tok in sorted(list(self.tokens)):
             if not tok in self.tok2idx:
+                # print(tok, i)
                 self.tok2idx[tok] = i
                 self.idx2tok[i] = tok
                 self.embeddings.append(word2vec[tok].tolist())

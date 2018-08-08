@@ -138,6 +138,7 @@ class PropbankTestLex2Idx(PropbankBaseCase):
                 self.assertEqual(test_dict,
                                  self.propbank_encoder.lex2idx[column])
 
+
 class PropbankTestLex2Tok(PropbankBaseCase):
 
     def setUp(self):
@@ -155,25 +156,22 @@ class PropbankTestTokens(PropbankTestLex2Tok):
     def test(self):
         self.assertEqual(self.propbank_encoder.tokens, set(self.lex2tok.values()))
 
-# class PropbankTestEmbeddings(PropbankBaseCase):
-#     def setUp(self):
-#         super(PropbankTestEmbeddings, self).setUp()
 
-#         zip_list = [(key_, val_) for key_, val_ in self.word2vec]
-#         sorted(zip_list, lambda x: x[0])
+class PropbankTestEmbeddings(PropbankBaseCase):
+    def setUp(self):
+        super(PropbankTestEmbeddings, self).setUp()
 
-#         self.embeddings_test = [self.word2vec['unk'].tolist()]
-#         for w_, v_ in zip_list:
-#             if w_ != 'unk':
-#                 self.embeddings_test.append(v_.tolist())
+        tokens = list(self.word2vec.keys())
+        self.embeddings_test = [self.word2vec['unk'].tolist()]
+        for tok_ in sorted(tokens):
+            if tok_ != 'unk':
+                self.embeddings_test.append(self.word2vec[tok_].tolist())
 
-#     def test_embeddings(self):
-#         print(self.propbank_encoder.embeddings)
-#         print(self.embeddings_test)
-#         self.assertEqual(self.propbank_encoder.embeddings,  self.embeddings_test)
+    def test_embeddings(self):
+        self.assertEqual(self.propbank_encoder.embeddings, self.embeddings_test)
 
-#     def test_embeddings_model(self):
-#         self.assertEqual(self.propbank_encoder.embeddings_model,  'glove')
-    
+    def test_embeddings_model(self):
+        self.assertEqual(self.propbank_encoder.embeddings_model, 'glove')
+
     def test_embeddings_sz(self):
         self.assertEqual(self.propbank_encoder.embeddings_sz,  50)
