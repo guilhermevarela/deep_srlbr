@@ -746,7 +746,6 @@ class PropbankTestColumnDimensionsHOT(PropbankBaseCase):
         else:
             dims_mock_ = 1
 
-
         msg = self.assert_msg.format(column_label, dims_mock_, dims_test_)
         self.assertEqual(dims_test_, dims_mock_, msg)
 
@@ -754,36 +753,68 @@ class PropbankTestColumnDimensionsHOT(PropbankBaseCase):
 class PropbankTestIteratorIDX(PropbankBaseCase):
     def setUp(self):
         super(PropbankTestIteratorIDX, self).setUp()
-        self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `IDX`) .: should be {:} got {:}'
-        self.iterator = self.propbank_encoder.iterator('train',['ID', 'FORM', 'ARG'], 'IDX')
+        _params = ('train', ['ID', 'FORM', 'ARG'], 'IDX')
+        self.iterator = self.propbank_encoder.iterator(*_params)
+        self.base_message = 'got {:} should be {:}'
 
     def test(self):
         for index, column_dict in self.iterator:
             for column_label, column_value in column_dict.items():
-                msg_ = 'index: {:}\tlabel:`{:}`'.format(index, column_label)
+                msg_ = 'index: {:}     label:`{:}`'.format(index, column_label)
                 with self.subTest(message=msg_):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('FORM', 'ARG'):
                         domain_list = self.schema_dict[column_label]['domain']
                         mock_value = domain_list.index(mock_value)
-                    msg_ = 'got `{:}` should be `{:}'.format(column_value, mock_value)
-                    self.assertEqual(column_value, mock_value, )
+
+                    msg_ = self.base_message.format(column_value, mock_value)
+                    self.assertEqual(column_value, mock_value, msg_)
 
 
 class PropbankTestIteratorCAT(PropbankBaseCase):
     def setUp(self):
         super(PropbankTestIteratorCAT, self).setUp()
-        self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `IDX`) .: should be {:} got {:}'
-        self.iterator = self.propbank_encoder.iterator('train', ['ID', 'FORM', 'ARG'], 'CAT')
+        _params = ('train', ['ID', 'FORM', 'ARG'], 'CAT')
+        self.iterator = self.propbank_encoder.iterator(*_params)
+        self.base_message = 'got `{:}` should be `{:}`'
 
     def test(self):
         for index, column_dict in self.iterator:
             for column_label, column_value in column_dict.items():
-                msg_ = 'index: {:}\tlabel:`{:}`'.format(index, column_label)
+                msg_ = 'index: {:}     label:`{:}`'.format(index, column_label)
                 with self.subTest(message=msg_):
-                    mock_value = self.gs_dict[column_label][index]                    
-                    msg_ = 'got `{:}` should be `{:}'.format(column_value, mock_value)
+                    mock_value = self.gs_dict[column_label][index]
+
+                    msg_ = self.base_message.format(column_value, mock_value)
                     self.assertEqual(column_value, mock_value, msg_)
+
+
+class PropbankTestIteratorEMB(PropbankBaseCase):
+    def setUp(self):
+        super(PropbankTestIteratorEMB, self).setUp()
+        _params = ('train', ['ID', 'FORM', 'ARG'], 'EMB')
+        self.iterator = self.propbank_encoder.iterator(*_params)
+        self.base_message = 'got {:} should be {:}'
+
+    def test(self):
+        for index, column_dict in self.iterator:
+            for column_label, column_value in column_dict.items():
+                msg_ = 'index: {:}  label:`{:}`'.format(index, column_label)
+                with self.subTest(message=msg_):
+                    mock_value = self.gs_dict[column_label][index]
+                    if column_label in ('ARG'):
+                        domain_list = self.schema_dict[column_label]['domain']
+                        i = domain_list.index(mock_value)
+                        sz = len(domain_list)
+                        mock_value = [1 if i == j else 0 for j in range(sz)]
+                    elif column_label in ('FORM',):
+                        mock_value = self.word2vec[mock_value.lower()]
+                        mock_value = mock_value.tolist()
+
+                    msg_ = self.base_message.format(column_value, mock_value)
+                    self.assertEqual(column_value, mock_value, msg_)
+
+
 
 if __name__ == '__main__':
     unittest.main()
