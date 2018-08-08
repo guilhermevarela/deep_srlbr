@@ -533,6 +533,136 @@ class PropbankTestColumnHOT(PropbankBaseCase):
         return mock_dict
 
 
+class PropbankTestColumnDimensionsIDX(PropbankBaseCase):
+    def setUp(self):
+        super(PropbankTestColumnDimensionsIDX, self).setUp()
+        self.assert_msg = 'propbank_encoder#column_dims(`{:}`) .: should be {:} got {:}'
+
+    # Numerical data
+    def test_column_dimensions_id(self):
+        column_label = 'ID'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_s(self):
+        column_label = 'S'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_p(self):
+        column_label = 'P'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_form(self):
+        column_label = 'FORM'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_lemma(self):
+        column_label = 'LEMMA'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_gpos(self):
+        column_label = 'GPOS'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_morf(self):
+        column_label = 'MORF'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_dtree(self):
+        column_label = 'DTREE'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_func(self):
+        column_label = 'FUNC'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_pred(self):
+        column_label = 'PRED'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_arg(self):
+        column_label = 'ARG'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_iob(self):
+        column_label = 'IOB'
+        self._assert_column_eq(column_label)
+
+    def test_column_dimensions_t(self):
+        column_label = 'T'
+        self._assert_column_eq(column_label)
+
+    def _assert_column_eq(self, column_label):
+        dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'IDX')
+        dims_mock_ = 1
+
+        msg = self.assert_msg.format(column_label, dims_mock_, dims_test_)
+        self.assertEqual(dims_test_, dims_mock_, msg)
+
+
+# class PropbankTestGetDimIDX(PropbankBaseCase):
+#     def setUp(self):
+#         super(PropbankTestGetDimIDX, self).setUp()
+#         self.assert_msg = 'propbank_encoder#column_dims(`{:}`) .: should be {:} got {:}'
+
+#     # Numerical data
+#     def test_column_dimensions_id(self):
+#         column_label = 'ID'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_s(self):
+#         column_label = 'S'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_p(self):
+#         column_label = 'P'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_form(self):
+#         column_label = 'FORM'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_lemma(self):
+#         column_label = 'LEMMA'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_gpos(self):
+#         column_label = 'GPOS'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_morf(self):
+#         column_label = 'MORF'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_dtree(self):
+#         column_label = 'DTREE'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_func(self):
+#         column_label = 'FUNC'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_pred(self):
+#         column_label = 'PRED'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_arg(self):
+#         column_label = 'ARG'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_iob(self):
+#         column_label = 'IOB'
+#         self._assert_column_eq(column_label)
+
+#     def test_column_dimensions_t(self):
+#         column_label = 'T'
+#         self._assert_column_eq(column_label)
+
+#     def _assert_column_eq(self, column_label):
+#         dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'IDX')
+#         dims_mock_ = 1
+
+#         msg = self.assert_msg.format(column_label, dims_mock_, dims_test_)
+#         self.assertEqual(dims_test_, dims_mock_, msg)
 
 if __name__ == '__main__':
     unittest.main()

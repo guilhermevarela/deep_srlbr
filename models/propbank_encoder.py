@@ -131,26 +131,26 @@ class PropbankEncoder(object):
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
-        if not(ds_type in ['train', 'valid', 'test']):
-            errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-            raise ValueError(errmessage)
-        else:
-            if ds_type in ['train']:
-                lb = 0
-                ub = config.DATASET_TRAIN_SIZE
-            elif ds_type in ['valid']:
-                lb = config.DATASET_TRAIN_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-            else:
-                lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        # if not(ds_type in ['train', 'valid', 'test']):
+        #     errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+        #     raise ValueError(errmessage)
+        # else:
+        #     if ds_type in ['train']:
+        #         lb = 0
+        #         ub = config.DATASET_TRAIN_SIZE
+        #     elif ds_type in ['valid']:
+        #         lb = config.DATASET_TRAIN_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #     else:
+        #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
 
+        lb, ub = models.utils.get_db_bounds(ds_type)
 
-
-            interval = [idx for idx, p in self.db['P'].items()
+        interval = [idx for idx, p in self.db['P'].items()
                         if p > lb and p <= ub]
-            low = min(interval)
-            high = max(interval)
+        low = min(interval)
+        high = max(interval)
 
         if filter_columns:
             for col in filter_columns:
