@@ -237,9 +237,10 @@ class PropbankEncoder(object):
 
 
         self.lex2tok = models.utils.preprocess(list(self.words), word2vec, verbose=verbose)
+
+        words = self.lex2tok.keys()
+        self.tokens = set(self.lex2tok.values())
         if verbose:
-            words = self.lex2tok.keys()
-            self.tokens = set(self.lex2tok.values())
             print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(words), len(self.tokens)))
 
 

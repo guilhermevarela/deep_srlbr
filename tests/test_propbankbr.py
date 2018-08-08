@@ -138,18 +138,34 @@ class PropbankTestLex2Idx(PropbankBaseCase):
                 self.assertEqual(test_dict,
                                  self.propbank_encoder.lex2idx[column])
 
+class PropbankTestLex2Tok(PropbankBaseCase):
+
+    def setUp(self):
+        super(PropbankTestLex2Tok, self).setUp()
+        lexicon_list = self.schema_dict['FORM']['domain'] 
+        lexicon_list += self.schema_dict['LEMMA']['domain']
+        sorted(lexicon_list)
+        self.lex2tok = {lex: lex.lower() for lex in list(set(lexicon_list))}
+
+    def test(self):
+        self.assertEqual(self.propbank_encoder.lex2tok, self.lex2tok)
 
 
-
+class PropbankTestTokens(PropbankTestLex2Tok):
+    def test(self):
+        self.assertEqual(self.propbank_encoder.tokens, set(self.lex2tok.values()))
 
 # class PropbankTestEmbeddings(PropbankBaseCase):
 #     def setUp(self):
-#         super().setUp()
+#         super(PropbankTestEmbeddings, self).setUp()
+
+#         zip_list = [(key_, val_) for key_, val_ in self.word2vec]
+#         sorted(zip_list, lambda x: x[0])
 
 #         self.embeddings_test = [self.word2vec['unk'].tolist()]
-#         for w_, v_ in self.word2vec.items():
+#         for w_, v_ in zip_list:
 #             if w_ != 'unk':
-#                 self.embeddings_test.append(v_)
+#                 self.embeddings_test.append(v_.tolist())
 
 #     def test_embeddings(self):
 #         print(self.propbank_encoder.embeddings)
@@ -159,5 +175,5 @@ class PropbankTestLex2Idx(PropbankBaseCase):
 #     def test_embeddings_model(self):
 #         self.assertEqual(self.propbank_encoder.embeddings_model,  'glove')
     
-#     def test_embeddings_sz(self):
-#         self.assertEqual(self.propbank_encoder.embeddings_sz,  50)
+    def test_embeddings_sz(self):
+        self.assertEqual(self.propbank_encoder.embeddings_sz,  50)
