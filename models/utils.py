@@ -162,6 +162,7 @@ def get_index(columns_list, columns_dims_dict, column_name):
 def get_dims(labels_list, labels_dim_dict):
     return sum([labels_dim_dict[label] for label in labels_list])
 
+
 def get_binary(ds_type, embeddings):
     if ds_type not in ('train', 'test', 'valid', 'deep'):
         raise ValueError('Invalid dataset label {:}'.format(ds_type))
@@ -170,3 +171,35 @@ def get_binary(ds_type, embeddings):
     ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
     dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings, ext)
     return '{:}{:}'.format(INPUT_DIR, dbname)
+
+
+def get_db_bounds(ds_type):
+    '''Returns upper and lower bound proposition for dataset
+
+    Dataset breakdowns are done by partioning of the propositions
+
+    Arguments:
+        ds_type {str} -- Dataset type this must be `train`, `valid`, `test`
+
+    Retuns:
+        bounds {tuple({int}, {int})} -- Tuple with lower and upper proposition
+            for ds_type
+
+    Raises:
+        ValueError -- [description]
+    '''
+    if not(ds_type in ['train', 'valid', 'test']):
+        _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
+        _msg = _msg.format(ds_type)
+        raise ValueError(_msg)
+    else:
+        if ds_type in ['train']:
+            lb = 0
+            ub = config.DATASET_TRAIN_SIZE
+        elif ds_type in ['valid']:
+            lb = config.DATASET_TRAIN_SIZE
+            ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        else:
+            lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+            ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+    return (lb, ub)

@@ -199,20 +199,21 @@ class PropbankEncoder(object):
         }
 
     def column(self, ds_type, column, encoding):
-        if not(ds_type in ['train', 'valid', 'test']):
-            _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
-            _msg = _msg.format(ds_type)
-            raise ValueError(_msg)
-        else:
-            if ds_type in ['train']:
-                lb = 0
-                ub = config.DATASET_TRAIN_SIZE
-            elif ds_type in ['valid']:
-                lb = config.DATASET_TRAIN_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-            else:
-                lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        # if not(ds_type in ['train', 'valid', 'test']):
+        #     _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
+        #     _msg = _msg.format(ds_type)
+        #     raise ValueError(_msg)
+        # else:
+        #     if ds_type in ['train']:
+        #         lb = 0
+        #         ub = config.DATASET_TRAIN_SIZE
+        #     elif ds_type in ['valid']:
+        #         lb = config.DATASET_TRAIN_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #     else:
+        #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        lb, ub = models.utils.get_db_bounds(ds_type)
 
         return {x:self._decode_with_idx(x,[column], encoding)
                 for x, p in self.db['P'].items()

@@ -24,40 +24,48 @@ FIX_DIR = '{:}fixtures/'.format(TESTS_DIR)
 PICKLE_PATH = '{:}deep_glo50.pickle'.format(FIX_DIR)
 
 
-def _get_word2vec():
-    path_ = '{:}word2vec.json'.format(FIX_DIR)
-    with open(path_, mode='r') as f:
-        json_dict = json.load(f)
+def test_maker_eq(test, mock, msg):
+    '''Returns a maker
 
-    return {w: np.array(v) for w, v in json_dict.items()}
+    [description]
+
+    Arguments:
+        test {<comparable>} -- value to test for equality (implements __eq__)
+        mock {<comparable>} -- value to compare to (implements __eq__)
+        msg {str} -- message
+
+    Returns:
+        [type] -- [description]
+    '''
+    def test(self):
+        self.assertEqual(test, mock, msg)
+    return test
 
 
-def _get_gs():
-    path_ = '{:}gs.json'.format(FIX_DIR)
-    with open(path_, mode='r') as f:
-        gs_json = json.load(f)
+def test_binder_eq(obj, test_list, mock_list, name_list):
+    '''Binds a test to an object
 
-    return {
-        keycol_: {int(key_): val_ for key_, val_ in innerdict_.items()}
-        for keycol_, innerdict_ in gs_json.items()}
+    This method attaches a test to the class
 
-
-def _get_schema():
-    schema_path = '{:}schema.yml'.format(FIX_DIR)
-    with open(schema_path, mode='r') as f:
-            schema_dict = yaml.load(f)
-
-    return schema_dict
+    Arguments:
+        obj {[type]} -- [description]
+        test_list {list} -- [description]
+        mock_list {[type]} -- [description]
+        name_list {[type]} -- [description]
+    '''
+    zip_list = zip(name_list, test_list, mock_list)
+    for name_, test_, mock_ in zip_list:
+        fnc = test_maker_eq(test_, mock_, name_)
+        setattr(obj, 'test_{:}'.format(name_), fnc)
 
 
 class PropbankBaseCase(unittest.TestCase):
 
-    # @patch('models.utils.fetch_word2vec', return_value=_get_word2vec())
+    # @patch('models.utils.fetch_word2vec', return_value=_initialize_word2vec())
     def setUp(self):
-        self.gs_dict = _get_gs()
-        self.schema_dict = _get_schema()
-        self.word2vec = _get_word2vec()
+        self._initilize()
         models.utils.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
+        models.utils.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
         self.propbank_encoder = \
             PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50', verbose=False)
 
@@ -70,6 +78,35 @@ class PropbankBaseCase(unittest.TestCase):
                     os.remove(fix_path)
                 except Exception:
                     pass
+
+    def _initilize(self):
+        self._initialize_gs()
+        self._initialize_schema()
+        self._initialize_word2vec()
+
+    def _initialize_word2vec(self):
+        path_ = '{:}word2vec.json'.format(FIX_DIR)
+        with open(path_, mode='r') as f:
+            json_dict = json.load(f)
+
+        self.word2vec = {w: np.array(v) for w, v in json_dict.items()}
+
+    def _initialize_gs(self):
+        path_ = '{:}gs.json'.format(FIX_DIR)
+        with open(path_, mode='r') as f:
+            gs_json = json.load(f)
+
+        self.gs_dict = {
+            keycol_: {int(key_): val_ for key_, val_ in innerdict_.items()}
+            for keycol_, innerdict_ in gs_json.items()}
+
+    def _initialize_schema(self):
+        schema_path = '{:}schema.yml'.format(FIX_DIR)
+        with open(schema_path, mode='r') as f:
+                schema_dict = yaml.load(f)
+
+        self.schema_dict = schema_dict
+
 
 class PropbankTestRecover(PropbankBaseCase):
 
@@ -102,15 +139,14 @@ class PropbankTestWords(PropbankBaseCase):
 
 class PropbankTestIdx2Lex(PropbankBaseCase):
 
-    def test_idx2lex(self):
+    def test(self):
         for column, meta_dict in self.schema_dict.items():
-            if meta_dict['type'] == 'choice':
-                with self.subTest(msg='Checking {:}'.format(column)):
-                    self._helper_choice(column)
+            if meta_dict['type'] in ('choice', 'text'):
+                mock_ = meta_dict['domain']
+                test_values_ = self.propbank_encoder.idx2lex[column].values()
 
-            elif meta_dict['type'] == 'text':
                 with self.subTest(msg='Checking {:}'.format(column)):
-                    self._helper_text(column)
+                    self.assertEqual(list(test_values_), list(mock_))
 
 
     def _helper_choice(self, choice_column):
@@ -174,4 +210,329 @@ class PropbankTestEmbeddings(PropbankBaseCase):
         self.assertEqual(self.propbank_encoder.embeddings_model, 'glove')
 
     def test_embeddings_sz(self):
-        self.assertEqual(self.propbank_encoder.embeddings_sz,  50)
+        self.assertEqual(self.propbank_encoder.embeddings_sz, 50)
+
+
+class PropbankTestColumnCAT(PropbankBaseCase):
+
+    def setUp(self):
+        super(PropbankTestColumnCAT, self).setUp()
+        self.assert_msg = 'Checking label `{:}` for column function index encoding'
+
+    def test_column_id(self):
+        column_label = 'ID'
+        self._assert_column_eq(column_label)
+
+    def test_column_s(self):
+        column_label = 'S'
+        self._assert_column_eq(column_label)
+
+    def test_column_p(self):
+        column_label = 'P'
+        self._assert_column_eq(column_label)
+
+    def test_column_form(self):
+        column_label = 'FORM'
+        self._assert_column_eq(column_label)
+
+    def test_column_lemma(self):
+        column_label = 'LEMMA'
+        self._assert_column_eq(column_label)
+
+    def test_column_gpos(self):
+        column_label = 'GPOS'
+        self._assert_column_eq(column_label)
+
+    def test_column_morf(self):
+        column_label = 'MORF'
+        self._assert_column_eq(column_label)
+
+    def test_column_dtree(self):
+        column_label = 'DTREE'
+        self._assert_column_eq(column_label)
+
+    def test_column_func(self):
+        column_label = 'FUNC'
+        self._assert_column_eq(column_label)
+
+    def test_column_pred(self):
+        column_label = 'PRED'
+        self._assert_column_eq(column_label)
+
+    def test_column_arg(self):
+        column_label = 'ARG'
+        self._assert_column_eq(column_label)
+
+    def test_column_iob(self):
+        column_label = 'IOB'
+        self._assert_column_eq(column_label)
+
+    def test_column_t(self):
+        column_label = 'T'
+        self._assert_column_eq(column_label)        
+
+    def _assert_column_eq(self, column_label):
+        msg = self.assert_msg.format(column_label)
+
+        test_dict = self.propbank_encoder.column('train', column_label, 'CAT')
+        mock_dict = self.gs_dict[column_label]
+
+        self.assertEqual(test_dict, mock_dict, msg)
+
+
+class PropbankTestColumnEMB(PropbankBaseCase):
+
+    def setUp(self):
+        super(PropbankTestColumnEMB, self).setUp()
+        self.assert_msg = 'Checking label `{:}` for column function `EMB` encoding'
+
+    def test_column_id(self):
+        column_label = 'ID'
+        self._assert_column_eq(column_label)
+
+    def test_column_s(self):
+        column_label = 'S'
+        self._assert_column_eq(column_label)
+
+    def test_column_p(self):
+        column_label = 'P'
+        self._assert_column_eq(column_label)
+
+    def test_column_form(self):
+        column_label = 'FORM'
+        self._assert_column_eq(column_label)
+
+    def test_column_lemma(self):
+        column_label = 'LEMMA'
+        self._assert_column_eq(column_label)
+
+    def test_column_gpos(self):
+        column_label = 'GPOS'
+        self._assert_column_eq(column_label)
+
+    def test_column_morf(self):
+        column_label = 'MORF'
+        self._assert_column_eq(column_label)
+
+    def test_column_dtree(self):
+        column_label = 'DTREE'
+        self._assert_column_eq(column_label)
+
+    def test_column_func(self):
+        column_label = 'FUNC'
+        self._assert_column_eq(column_label)
+
+    def test_column_pred(self):
+        column_label = 'PRED'
+        self._assert_column_eq(column_label)
+
+    def test_column_arg(self):
+        column_label = 'ARG'
+        self._assert_column_eq(column_label)
+
+    def test_column_iob(self):
+        column_label = 'IOB'
+        self._assert_column_eq(column_label)
+
+    def test_column_t(self):
+        column_label = 'T'
+        self._assert_column_eq(column_label)
+
+    def _assert_column_eq(self, column_label):
+        msg = self.assert_msg.format(column_label)
+
+        test_dict = self.propbank_encoder.column('train', column_label, 'EMB')
+        mock_dict = self._get_mocked_dict(column_label)
+
+        self.assertEqual(test_dict, mock_dict, msg)
+
+    def _get_mocked_dict(self, column_label):
+        mock_dict = self.gs_dict[column_label]
+        column_type = self.schema_dict[column_label]['type']
+
+        if column_type in ('choice'):
+            domain_ = self.schema_dict[column_label]['domain']
+            domain_list = list(domain_)
+            domain_sz = len(domain_)
+            lex2list_dict = {
+                key: [1 if i == j else 0 for j in range(domain_sz)]
+                for i, key in enumerate(domain_list)                
+            }
+            mock_dict = {key_: lex2list_dict[lex_]
+                for key_, lex_ in mock_dict.items()
+            }
+        elif column_type in ('text',):
+            domain_ = self.schema_dict[column_label]['domain']
+            domain_list = list(domain_)
+            domain_sz = len(domain_)
+            mock_dict = {
+                i: self.word2vec[key.lower()].tolist()
+                for i, key in mock_dict.items()
+            }
+
+        return mock_dict
+
+class PropbankTestColumnIDX(PropbankBaseCase):
+
+    def setUp(self):
+        super(PropbankTestColumnIDX, self).setUp()
+        self.assert_msg = 'Checking label `{:}` for column function index encoding'
+
+    def test_column_id(self):
+        column_label = 'ID'
+        self._assert_column_eq(column_label)
+
+    def test_column_s(self):
+        column_label = 'S'
+        self._assert_column_eq(column_label)
+
+    def test_column_p(self):
+        column_label = 'P'
+        self._assert_column_eq(column_label)
+
+    def test_column_form(self):
+        column_label = 'FORM'
+        self._assert_column_eq(column_label)
+
+    def test_column_lemma(self):
+        column_label = 'LEMMA'
+        self._assert_column_eq(column_label)
+
+    def test_column_gpos(self):
+        column_label = 'GPOS'
+        self._assert_column_eq(column_label)
+
+    def test_column_morf(self):
+        column_label = 'MORF'
+        self._assert_column_eq(column_label)
+
+    def test_column_dtree(self):
+        column_label = 'DTREE'
+        self._assert_column_eq(column_label)
+
+    def test_column_func(self):
+        column_label = 'FUNC'
+        self._assert_column_eq(column_label)
+
+    def test_column_pred(self):
+        column_label = 'PRED'
+        self._assert_column_eq(column_label)
+
+    def test_column_arg(self):
+        column_label = 'ARG'
+        self._assert_column_eq(column_label)
+
+    def test_column_iob(self):
+        column_label = 'IOB'
+        self._assert_column_eq(column_label)
+
+    def test_column_t(self):
+        column_label = 'T'
+        self._assert_column_eq(column_label)
+
+    def _assert_column_eq(self, column_label):
+        msg = self.assert_msg.format(column_label)
+
+        test_dict = self.propbank_encoder.column('train', column_label, 'IDX')
+        mock_dict = self._get_mocked_dict(column_label)
+
+        self.assertEqual(test_dict, mock_dict, msg)
+
+    def _get_mocked_dict(self, column_label):
+        mock_dict = self.gs_dict[column_label]
+        column_type = self.schema_dict[column_label]['type']
+
+        if column_type in ('choice', 'text'):
+            domain_ = self.schema_dict[column_label]['domain']
+            domain_list = list(domain_)
+            mock_dict = {key_: domain_list.index(lex_)
+                for key_, lex_ in mock_dict.items()
+            }
+        
+        return mock_dict
+
+
+class PropbankTestColumnHOT(PropbankBaseCase):
+
+    def setUp(self):
+        super(PropbankTestColumnHOT, self).setUp()
+        self.assert_msg = 'Checking label `{:}` for column function index encoding'
+
+    def test_column_id(self):
+        column_label = 'ID'
+        self._assert_column_eq(column_label)
+
+    def test_column_s(self):
+        column_label = 'S'
+        self._assert_column_eq(column_label)
+
+    def test_column_p(self):
+        column_label = 'P'
+        self._assert_column_eq(column_label)
+
+    def test_column_form(self):
+        column_label = 'FORM'
+        self._assert_column_eq(column_label)
+
+    def test_column_lemma(self):
+        column_label = 'LEMMA'
+        self._assert_column_eq(column_label)
+
+    def test_column_gpos(self):
+        column_label = 'GPOS'
+        self._assert_column_eq(column_label)
+
+    def test_column_morf(self):
+        column_label = 'MORF'
+        self._assert_column_eq(column_label)
+
+    def test_column_dtree(self):
+        column_label = 'DTREE'
+        self._assert_column_eq(column_label)
+
+    def test_column_func(self):
+        column_label = 'FUNC'
+        self._assert_column_eq(column_label)
+
+    def test_column_pred(self):
+        column_label = 'PRED'
+        self._assert_column_eq(column_label)
+
+    def test_column_arg(self):
+        column_label = 'ARG'
+        self._assert_column_eq(column_label)
+
+    def test_column_iob(self):
+        column_label = 'IOB'
+        self._assert_column_eq(column_label)
+
+    def test_column_t(self):
+        column_label = 'T'
+        self._assert_column_eq(column_label)
+
+    def _assert_column_eq(self, column_label):
+        msg = self.assert_msg.format(column_label)
+
+        test_dict = self.propbank_encoder.column('train', column_label, 'HOT')
+        mock_dict = self._get_mocked_dict(column_label)
+
+        self.assertEqual(test_dict, mock_dict, msg)
+
+    def _get_mocked_dict(self, column_label):
+        mock_dict = self.gs_dict[column_label]
+        column_type = self.schema_dict[column_label]['type']
+
+        if column_type in ('choice', 'text'):
+            domain_ = self.schema_dict[column_label]['domain']
+            domain_list = list(domain_)
+            domain_sz = len(domain_)
+            mock_dict = {
+                key_: [1 if i == domain_list.index(lex_) else 0 for i in range(domain_sz)]
+                for key_, lex_ in mock_dict.items()}
+
+        return mock_dict
+
+
+
+if __name__ == '__main__':
+    unittest.main()
