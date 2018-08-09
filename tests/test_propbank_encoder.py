@@ -1,4 +1,4 @@
-'''Tests conll read file
+'''Tests PropbankEncoder
 
     Created on July 3, 2018
 
@@ -59,7 +59,7 @@ def test_binder_eq(obj, test_list, mock_list, name_list):
         setattr(obj, 'test_{:}'.format(name_), fnc)
 
 
-class PropbankBaseCase(unittest.TestCase):
+class PropbankEncoderBaseCase(unittest.TestCase):
 
     # @patch('models.utils.fetch_word2vec', return_value=_initialize_word2vec())
     def setUp(self):
@@ -108,7 +108,7 @@ class PropbankBaseCase(unittest.TestCase):
         self.schema_dict = schema_dict
 
 
-class PropbankTestRecover(PropbankBaseCase):
+class PropbankTestRecover(PropbankEncoderBaseCase):
 
     def test_recover(self):
         self.propbank_encoder.persist(FIX_DIR, 'deep_glo50')
@@ -117,7 +117,7 @@ class PropbankTestRecover(PropbankBaseCase):
         self.assertEqual(self.propbank_encoder.__dict__, propbank_encoder.__dict__)
 
 
-class PropbankTestPersist(PropbankBaseCase):
+class PropbankTestPersist(PropbankEncoderBaseCase):
 
     def test_persist(self):
         self.propbank_encoder.persist(FIX_DIR, 'mock_glo50')
@@ -128,7 +128,7 @@ class PropbankTestPersist(PropbankBaseCase):
         self.fixtures_list.append(fixture_path)
 
 
-class PropbankTestWords(PropbankBaseCase):
+class PropbankTestWords(PropbankEncoderBaseCase):
 
     def test_words(self):
         words_test = self.schema_dict['LEMMA']['domain']
@@ -137,7 +137,7 @@ class PropbankTestWords(PropbankBaseCase):
         self.assertEqual(self.propbank_encoder.words, words_test_set)
 
 
-class PropbankTestIdx2Lex(PropbankBaseCase):
+class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
 
     def test(self):
         for column, meta_dict in self.schema_dict.items():
@@ -163,7 +163,7 @@ class PropbankTestIdx2Lex(PropbankBaseCase):
         self.assertEqual(test_dict,
                          self.propbank_encoder.idx2lex[text_column])
 
-class PropbankTestLex2Idx(PropbankBaseCase):
+class PropbankTestLex2Idx(PropbankEncoderBaseCase):
 
     def test_lex2idx(self):
         for column, meta_dict in self.schema_dict.items():
@@ -175,7 +175,7 @@ class PropbankTestLex2Idx(PropbankBaseCase):
                                  self.propbank_encoder.lex2idx[column])
 
 
-class PropbankTestLex2Tok(PropbankBaseCase):
+class PropbankTestLex2Tok(PropbankEncoderBaseCase):
 
     def setUp(self):
         super(PropbankTestLex2Tok, self).setUp()
@@ -193,7 +193,7 @@ class PropbankTestTokens(PropbankTestLex2Tok):
         self.assertEqual(self.propbank_encoder.tokens, set(self.lex2tok.values()))
 
 
-class PropbankTestEmbeddings(PropbankBaseCase):
+class PropbankTestEmbeddings(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestEmbeddings, self).setUp()
 
@@ -212,7 +212,7 @@ class PropbankTestEmbeddings(PropbankBaseCase):
     def test_embeddings_sz(self):
         self.assertEqual(self.propbank_encoder.embeddings_sz, 50)
 
-class PropbankTestColumnIDX(PropbankBaseCase):
+class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
     def setUp(self):
         super(PropbankTestColumnIDX, self).setUp()
@@ -292,7 +292,7 @@ class PropbankTestColumnIDX(PropbankBaseCase):
         return mock_dict
 
 
-class PropbankTestColumnCAT(PropbankBaseCase):
+class PropbankTestColumnCAT(PropbankEncoderBaseCase):
 
     def setUp(self):
         super(PropbankTestColumnCAT, self).setUp()
@@ -359,7 +359,7 @@ class PropbankTestColumnCAT(PropbankBaseCase):
         self.assertEqual(test_dict, mock_dict, msg)
 
 
-class PropbankTestColumnEMB(PropbankBaseCase):
+class PropbankTestColumnEMB(PropbankEncoderBaseCase):
 
     def setUp(self):
         super(PropbankTestColumnEMB, self).setUp()
@@ -452,7 +452,7 @@ class PropbankTestColumnEMB(PropbankBaseCase):
         return mock_dict
 
 
-class PropbankTestColumnHOT(PropbankBaseCase):
+class PropbankTestColumnHOT(PropbankEncoderBaseCase):
 
     def setUp(self):
         super(PropbankTestColumnHOT, self).setUp()
@@ -535,7 +535,7 @@ class PropbankTestColumnHOT(PropbankBaseCase):
 
 
 
-class PropbankTestColumnDimensionsCAT(PropbankBaseCase):
+class PropbankTestColumnDimensionsCAT(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestColumnDimensionsCAT, self).setUp()
         self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `CAT`) .: should be {:} got {:}'
@@ -601,7 +601,7 @@ class PropbankTestColumnDimensionsCAT(PropbankBaseCase):
         self.assertEqual(dims_test_, dims_mock_, msg)
 
 
-class PropbankTestColumnDimensionsEMB(PropbankBaseCase):
+class PropbankTestColumnDimensionsEMB(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestColumnDimensionsEMB, self).setUp()
         self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `EMB`) .: should be {:} got {:}'
@@ -677,7 +677,7 @@ class PropbankTestColumnDimensionsEMB(PropbankBaseCase):
         self.assertEqual(dims_test_, dims_mock_, msg)
 
 
-class PropbankTestColumnDimensionsHOT(PropbankBaseCase):
+class PropbankTestColumnDimensionsHOT(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestColumnDimensionsHOT, self).setUp()
         self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `HOT`) .: should be {:} got {:}'
@@ -750,7 +750,7 @@ class PropbankTestColumnDimensionsHOT(PropbankBaseCase):
         self.assertEqual(dims_test_, dims_mock_, msg)
 
 
-class PropbankTestIteratorIDX(PropbankBaseCase):
+class PropbankTestIteratorIDX(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestIteratorIDX, self).setUp()
         _params = ('train', ['ID', 'FORM', 'ARG'], 'IDX')
@@ -771,7 +771,7 @@ class PropbankTestIteratorIDX(PropbankBaseCase):
                     self.assertEqual(column_value, mock_value, msg_)
 
 
-class PropbankTestIteratorCAT(PropbankBaseCase):
+class PropbankTestIteratorCAT(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestIteratorCAT, self).setUp()
         _params = ('train', ['ID', 'FORM', 'ARG'], 'CAT')
@@ -789,7 +789,7 @@ class PropbankTestIteratorCAT(PropbankBaseCase):
                     self.assertEqual(column_value, mock_value, msg_)
 
 
-class PropbankTestIteratorEMB(PropbankBaseCase):
+class PropbankTestIteratorEMB(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestIteratorEMB, self).setUp()
         _params = ('train', ['ID', 'FORM', 'ARG'], 'EMB')
