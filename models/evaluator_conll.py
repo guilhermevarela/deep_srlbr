@@ -36,7 +36,7 @@ class EvaluatorConll(object):
         '''
             args:
             returns:
-        '''             
+        '''
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
@@ -71,7 +71,6 @@ class EvaluatorConll(object):
             self._head2arg()
         elif target_column in ('T',):
             self._t2arg()
-
 
         self.evaluate(prefix, self.props_dict, hparams)
 
@@ -123,7 +122,6 @@ class EvaluatorConll(object):
         with open(target_path, 'w+') as f:
             f.write(self.txt)
 
-
     def evaluate_fromconllfile(self, target_path):
         '''
             Opens up a conll file and parses it
@@ -133,7 +131,7 @@ class EvaluatorConll(object):
         '''
         self._refresh()
 
-        with open(target_path, 'r') as f: 
+        with open(target_path, 'r') as f:
             self.txt = f.read()
         f.close()
 
@@ -142,7 +140,6 @@ class EvaluatorConll(object):
     def _refresh(self):
         self.num_propositions = -1
         self.num_sentences = -1
-        self.perc_propositions = -1
         self.txt = ''
         self.err = ''
         self.f1 = -1
