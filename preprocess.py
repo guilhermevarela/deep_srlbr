@@ -54,7 +54,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
 
 
     # Getting to the schema
-    with open(SCHEMA_PATH, mode='r') as f:        
+    with open(SCHEMA_PATH, mode='r') as f:
         schema_dict = yaml.load(f)
 
     dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
@@ -86,8 +86,14 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
             column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
-
-    propbank_encoder = PropbankEncoder(dfgs.to_dict(), schema_dict, language_model=language_model, dbname=encoder_name)
+    propbank_encoder = PropbankEncoder(
+        dfgs.to_dict(),
+        schema_dict,
+        language_model=language_model,
+        dbname=encoder_name
+    )
+    if not os.path.isdir(config.INPUT_DIR):
+        os.makedirs(config.INPUT_DIR)
     propbank_encoder.persist('datasets/binaries/', filename=encoder_name)
     return propbank_encoder
 
@@ -104,6 +110,7 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None):
          iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
          tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix)
 
+
 def get_model(mname):
     if mname == 'wang2vec':
         return 'wan'
@@ -116,27 +123,53 @@ def get_model(mname):
 
     return mname[:3]
 
+
+def get_filename(file_path):
+    '''Extracts filename from full path
+
+    Arguments:
+        file_path {str} -- sys path
+    '''
+    return f.split('/')[-1].replace('.txt', '')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='''Preprocess Deep SRL system features and embeddings''')
 
-    parser.add_argument('language_model', type=str, nargs='+', default='glove_s50',
-                        help='''language model for embeddings, more info: \n http://nilc.icmc.usp.br/embeddings''')
+    parser.add_argument('language_model',
+                        type=str, nargs='+', default='glove_s50',
+                        help='''language model for embeddings, more info:
+                             http://nilc.icmc.usp.br/embeddings''')
 
     args = parser.parse_args()
     language_model = args.language_model[0]
     lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
-    
-    if not os.path.isfile(lmpath):    
-        glob_regex = '{:}*.txt'.format(config.LANGUAGE_MODEL_DIR)
-        language_model_list = [
-            f.split('/')[-1].replace('.txt','')
-            for f in glob.glob(glob_regex)]
-        raise ValueError('Language model {:} some avalable options are {:}'.format(language_model, language_model_list))
+
+    if not os.path.isfile(lmpath):
+        if not os.path.isdir(config.LANGUAGE_MODEL_DIR):
+            os.makedirs(config.LANGUAGE_MODEL_DIR)
+            msg_ = '''{:}:created.
+                    Download embeddings
+                    http://nilc.icmc.usp.br/embeddings.'''.\
+                format(config.LANGUAGE_MODEL_DIR)
+            raise ValueError(msg_)
+        else:
+            glob_regex = '{:}*.txt'.format(config.LANGUAGE_MODEL_DIR)
+            language_model_list = [
+                get_filename(f) for f in glob.glob(glob_regex)]
+
+            if language_model_list:
+                raise ValueError('''{:}: not found.
+                                 Some avalable options are {:}'''.
+                                 format(language_model, language_model_list))
     else:
         model_, sz_ = language_model.split('_s')
-    print(model_, sz_)
+
 
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
-    propbank_encoder = make_propbank_encoder(encoder_name=encoder_name, language_model='glove_s50')
+    propbank_encoder = make_propbank_encoder(
+        encoder_name=encoder_name,
+        language_model='glove_s50'
+    )
     make_tfrecords(encoder_name='deep_glo50') 
