@@ -27,7 +27,7 @@ from collections import OrderedDict
 import models.utils
 import datasets as br
 
-PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
+PEARL_SRLEVAL_PATH ='./srlconll-1.1/bin/srl-eval.pl'
 
 
 class EvaluatorConll(object):
@@ -237,7 +237,7 @@ class EvaluatorConll(object):
         hparam_string = self._make_hparam_string(**hparams)
         target_dir = '{:}{:}/'.format(self.target_dir, hparam_string)
         if not os.path.isdir(target_dir):
-            os.mkdir(target_dir)
+            os.mkdir(target_dir, 0o777) # Octal for read / write permissions
         return target_dir
 
     def _get_goldindex_list(self, ds_type):
@@ -255,6 +255,7 @@ class EvaluatorConll(object):
         return [i for i in range(lb, ub + 1)]
 
     def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
+
         index = [item
                  for i, sublist in enumerate(index_tensor.tolist())
                  for j, item in enumerate(sublist) if j < len_tensor[i]]

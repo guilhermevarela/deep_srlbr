@@ -21,21 +21,29 @@ FIX_EVALUATOR_MOCK_DIR = '{:}mocks/'.format(FIX_EVALUATOR_DIR)
 FIX_PROPBANK_DIR = '{:}propbank_encoder/'.format(FIX_DIR)
 FIX_PROPBANK_PATH = '{:}deep_glo50.pickle'.format(FIX_PROPBANK_DIR)
 
-FIX_TMP_PATH = '{:}lr1.00e-03_hs32x32_ctx-p1/'.format(FIX_EVALUATOR_DIR)
+FIX_TMP_DIR = '{:}lr1.00e-03_hs32x32_ctx-p1/'.format(FIX_EVALUATOR_DIR)
 
-def dict2npy(adict, depth, width, length):
-    '''
+
+def dict2npy(target_dict):
+    '''Converts a prop_dict into numpy arrays
 
     Helper function to convert, dict_keys and dict_values to numpy
-    '''
-    def to_npy(alist):
-        tensor = np.zeros((depth, width, length), np.float32)
-        for i, j in enumerate(x):
-            tensot[0, i, j] = 1
 
-    return to_npy(
-        list(adict.keys()),
-        list(adict.values()))
+
+    Arguments:
+        target_dict {dict} -- A proposition target dictionary
+
+    Returns:
+        [type] -- [description]
+    '''
+    npy_index = np.array(list(target_dict.keys()))
+    npy_index = np.expand_dims(npy_index, axis=1) # column array
+    npy_predictions = np.array(
+        [ary_ for _, ary_ in target_dict.items()]
+    )
+    # Add batch_size of one
+    npy_predictions = np.expand_dims(npy_predictions, axis=1) # column array
+    return npy_index, npy_predictions
 
 
 class EvaluatorConllBaseCase(unittest.TestCase):
@@ -52,8 +60,8 @@ class EvaluatorConllBaseCase(unittest.TestCase):
 
     def tearDown(self):
         try:
-            if os.path.isdir(FIX_TMP_PATH):
-                os.remove(FIX_TMP_PATH)
+            if os.path.isdir(FIX_TMP_DIR):
+                os.remove(FIX_TMP_DIR)
         except Exception:
             pass
 
@@ -102,10 +110,38 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
             self.hparams = {}
             # evaluate_tensor(self, prefix, index_tensor, predictions_tensor, len_tensor, target_column, hparams):
 
-        def test(self):
-            predictions_ = list(self.pe.column('train', 'ARG', 'IDX').values())
+        def test_arguments(self):
+            target_dict = self.pe.column('train', 'ARG', 'IDX')
+            depth = len(target_dict)
+            width = self.pe.column_dimensions('ARG', 'HOT')  # target dimensions
+
+            npy_index, npy_predictions = dict2npy(target_dict)
+
             self.evaluator.evaluate_tensor(
-                self.prefix, self.index, predictions_,
-                self.batch_size , 'ARG', {})
+                self.prefix, npy_index, npy_predictions, [width] * depth, 'ARG', {})
 
             self.assertEqual(self.evaluator.f1, 100.0)
+
+        def test_iob(self):
+            target_dict = self.pe.column('train', 'IOB', 'IDX')
+            depth = len(target_dict)
+            width = self.pe.column_dimensions('IOB', 'HOT')  # target dimensions
+
+            npy_index, npy_predictions = dict2npy(target_dict)
+
+            self.evaluator.evaluate_tensor(
+                self.prefix, npy_index, npy_predictions, [width] * depth, 'IOB', {})
+
+            self.assertEqual(self.evaluator.f1, 100.0)
+
+        def test_iob(self):
+            target_dict = self.pe.column('train', 'IOB', 'IDX')
+            depth = len(target_dict)
+            width = self.pe.column_dimensions('IOB', 'HOT')  # target dimensions
+
+            npy_index, npy_predictions = dict2npy(target_dict)
+
+            self.evaluator.evaluate_tensor(
+                self.prefix, npy_index, npy_predictions, [width] * depth, 'IOB', {})
+
+            self.assertEqual(self.evaluator.f1, 100.0)            
