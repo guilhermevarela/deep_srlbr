@@ -18,8 +18,8 @@ sys.path.append(root_path)
 
 import config
 from collections import OrderedDict, defaultdict
-from models.utils import fetch_word2vec, fetch_corpus_exceptions, preprocess
-# import data_propbankbr as br
+# import models.utils import fetch_word2vec, preprocess
+import models.utils
 
 
 
@@ -98,8 +98,7 @@ class PropbankEncoder(object):
         self.columns_config = {}
         self.columns = set([])
 
-        self._process(db_dict, schema_dict, dbname, language_model, verbose)
-
+        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)    
 
     @classmethod
     def recover(cls, file_path):
@@ -132,26 +131,26 @@ class PropbankEncoder(object):
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
-        if not(ds_type in ['train', 'valid', 'test']):
-            errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-            raise ValueError(errmessage)
-        else:
-            if ds_type in ['train']:
-                lb = 0
-                ub = config.DATASET_TRAIN_SIZE
-            elif ds_type in ['valid']:
-                lb = config.DATASET_TRAIN_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-            else:
-                lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        # if not(ds_type in ['train', 'valid', 'test']):
+        #     errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+        #     raise ValueError(errmessage)
+        # else:
+        #     if ds_type in ['train']:
+        #         lb = 0
+        #         ub = config.DATASET_TRAIN_SIZE
+        #     elif ds_type in ['valid']:
+        #         lb = config.DATASET_TRAIN_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #     else:
+        #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
 
+        lb, ub = models.utils.get_db_bounds(ds_type)
 
-
-            interval = [idx for idx, p in self.db['P'].items()
+        interval = [idx for idx, p in self.db['P'].items()
                         if p > lb and p <= ub]
-            low = min(interval)
-            high = max(interval)
+        low = min(interval)
+        high = max(interval)
 
         if filter_columns:
             for col in filter_columns:
@@ -200,49 +199,49 @@ class PropbankEncoder(object):
         }
 
     def column(self, ds_type, column, encoding):
-        if not(ds_type in ['train', 'valid', 'test']):
-            _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
-            _msg = _msg.format(ds_type)
-            raise ValueError(_msg)
-        else:
-            if ds_type in ['train']:
-                lb = 0
-                ub = config.DATASET_TRAIN_SIZE
-            elif ds_type in ['valid']:
-                lb = config.DATASET_TRAIN_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-            else:
-                lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-                ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        # if not(ds_type in ['train', 'valid', 'test']):
+        #     _msg = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''
+        #     _msg = _msg.format(ds_type)
+        #     raise ValueError(_msg)
+        # else:
+        #     if ds_type in ['train']:
+        #         lb = 0
+        #         ub = config.DATASET_TRAIN_SIZE
+        #     elif ds_type in ['valid']:
+        #         lb = config.DATASET_TRAIN_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #     else:
+        #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
+        lb, ub = models.utils.get_db_bounds(ds_type)
 
-        return {
-                x:self._decode_with_idx(x,[column], encoding)
+        return {x:self._decode_with_idx(x,[column], encoding)
                 for x, p in self.db['P'].items()
-                if p > lb and p <= ub
-                }
+                if p > lb and p <= ub}
 
 
-    def _process(self, db_dict, schema_dict, dbname, language_model, verbose):
+    def _initialize(self, db_dict, schema_dict, dbname, language_model, verbose):
         # Defines domains for each column, defines tokens for text columns
-        self._process_lexicons(db_dict, schema_dict)
+        self._initialize_lexicons(db_dict, schema_dict)
 
         # MAPS textual columns to the language model
-        self._process_embeddings(language_model, verbose)
+        self._initialize_embeddings(language_model, verbose)
 
         # Builds db dictionary
-        self._process_db(db_dict, dbname)
+        self._initialize_db(db_dict, dbname)
 
-    def _process_embeddings(self, language_model, verbose):
+    def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = fetch_word2vec(language_model, verbose=verbose)
+        word2vec = models.utils.fetch_word2vec(language_model, verbose=verbose)
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = preprocess(list(self.words), word2vec)
+        self.lex2tok = models.utils.preprocess(list(self.words), word2vec, verbose=verbose)
+
+        words = self.lex2tok.keys()
+        self.tokens = set(self.lex2tok.values())
         if verbose:
-            words = self.lex2tok.keys()
-            self.tokens = set(self.lex2tok.values())
             print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(words), len(self.tokens)))
 
 
@@ -254,12 +253,13 @@ class PropbankEncoder(object):
         i = 1
         for tok in sorted(list(self.tokens)):
             if not tok in self.tok2idx:
+                # print(tok, i)
                 self.tok2idx[tok] = i
                 self.idx2tok[i] = tok
                 self.embeddings.append(word2vec[tok].tolist())
                 i += 1
 
-    def _process_db(self, db_dict, dbname):
+    def _initialize_db(self, db_dict, dbname):
         self.dbname = dbname
 
         for col in list(self.columns):
@@ -284,7 +284,7 @@ class PropbankEncoder(object):
                 self.db[col] = OrderedDict(db_dict[col])
 
 
-    def _process_lexicons(self, db_dict, schema_dict):
+    def _initialize_lexicons(self, db_dict, schema_dict):
         '''
             Define columns and metadata about columns
         '''
@@ -329,10 +329,10 @@ class PropbankEncoder(object):
                 config_dict['dims'] = len(domain)
 
             self.columns_config[col] = config_dict
-        
-        # filter columns        
+
+        # filter columns
         for col in self.columns_config:
-            if col not in self.columns:                
+            if col not in self.columns:
                 del self.columns_config[col]
 
     def _subcol(self, col):

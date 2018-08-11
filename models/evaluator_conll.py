@@ -23,10 +23,11 @@ import pickle
 import re
 
 from collections import OrderedDict
-from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
+# from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
+import models.utils
 import datasets as br
 
-PEARL_SRLEVAL_PATH='./srlconll-1.1/bin/srl-eval.pl'
+PEARL_SRLEVAL_PATH ='./srlconll-1.1/bin/srl-eval.pl'
 
 
 class EvaluatorConll(object):
@@ -35,7 +36,7 @@ class EvaluatorConll(object):
         '''
             args:
             returns:
-        '''             
+        '''
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
@@ -71,11 +72,9 @@ class EvaluatorConll(object):
         elif target_column in ('T',):
             self._t2arg()
 
-
         self.evaluate(prefix, self.props_dict, hparams)
 
-
-    def evaluate(self, prefix, props, hparams):
+    def evaluate(self, filename, props, hparams):
         '''
             Evaluates the conll scripts returning total precision, recall and F1
                 if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
@@ -94,14 +93,14 @@ class EvaluatorConll(object):
         self._refresh()
 
         #Generate GOLD standard labels
-        indexes = sorted(list(props.keys()))
+        indexes = sorted(list(props.keys()))        
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] for i in indexes}
 
         #Stores GOLD standard labels
-        gold_path = self._store(prefix, 'gold', self.db, self.idx2lex, gold_props, hparams)
+        gold_path = self._store(filename, 'gold', self.db, self.idx2lex, gold_props, hparams)
 
         #Stores evaluation labels
-        eval_path = self._store(prefix, 'eval', self.db, self.idx2lex, props, hparams)
+        eval_path = self._store(filename, 'eval', self.db, self.idx2lex, props, hparams)
 
         #Runs official conll 2005 shared task script
         pipe = subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -119,10 +118,9 @@ class EvaluatorConll(object):
 
         #Stores target_dir/<hparams>/prefix
         target_dir = self._get_dir(hparams)
-        target_path = '{:}/conll-{:}.txt'.format(target_dir, prefix)
+        target_path = '{:}/{:}.conll'.format(target_dir, filename)
         with open(target_path, 'w+') as f:
             f.write(self.txt)
-
 
     def evaluate_fromconllfile(self, target_path):
         '''
@@ -133,7 +131,7 @@ class EvaluatorConll(object):
         '''
         self._refresh()
 
-        with open(target_path, 'r') as f: 
+        with open(target_path, 'r') as f:
             self.txt = f.read()
         f.close()
 
@@ -142,7 +140,6 @@ class EvaluatorConll(object):
     def _refresh(self):
         self.num_propositions = -1
         self.num_sentences = -1
-        self.perc_propositions = -1
         self.txt = ''
         self.err = ''
         self.f1 = -1
@@ -240,23 +237,25 @@ class EvaluatorConll(object):
         hparam_string = self._make_hparam_string(**hparams)
         target_dir = '{:}{:}/'.format(self.target_dir, hparam_string)
         if not os.path.isdir(target_dir):
-            os.mkdir(target_dir)
+            os.mkdir(target_dir, 0o777) # Octal for read / write permissions
         return target_dir
 
     def _get_goldindex_list(self, ds_type):
-        if ds_type in ['train']:
-            gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
-        elif ds_type in ['valid']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
-        elif ds_type in ['test']:
-            gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
-                                                DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
-        else:
-            raise ValueError('{:} unknown dataset type'.format(ds_type))
-        return gold_index_list
+        # if ds_type in ['train']:
+        #     gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
+        # elif ds_type in ['valid']:
+        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
+        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
+        # elif ds_type in ['test']:
+        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
+        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
+        # else:
+        #     raise ValueError('{:} unknown dataset type'.format(ds_type))
+        lb, ub = models.utils.get_db_bounds(ds_type)
+        return [i for i in range(lb, ub + 1)]
 
     def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
+
         index = [item
                  for i, sublist in enumerate(index_tensor.tolist())
                  for j, item in enumerate(sublist) if j < len_tensor[i]]
