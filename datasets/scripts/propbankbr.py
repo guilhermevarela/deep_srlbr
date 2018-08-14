@@ -23,18 +23,37 @@ TARGET_PATH='../datasets/csvs/'
 # TARGET_PATH='datasets/csvs/'
 
 #MAPS the filename and output fields to be harvested
-CONST_HEADER=[
-    'ID','FORM','LEMMA','GPOS','MORF', 'IGN1', 'IGN2', 
-    'CTREE','IGN3', 'PRED','ARG0','ARG1','ARG2','ARG3',
-    'ARG4','ARG5','ARG6'
+CONST_HEADER = [
+    'ID', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'IGN1', 'IGN2',
+    'CTREE', 'IGN3', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3',
+    'ARG4', 'ARG5', 'ARG6'
 ]
-DEP_HEADER=[
-    'ID','FORM','LEMMA','GPOS','MORF', 'DTREE', 'FUNC', 
-    'IGN1', 'IS_PRED', 'PRED','ARG0','ARG1','ARG2','ARG3',
-    'ARG4','ARG5','ARG6'
+DEP_HEADER = [
+    'ID', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'DTREE', 'FUNC', 
+    'IGN1', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3',
+    'ARG4', 'ARG5', 'ARG6'
 ]
-
-MAPPER = {
+MAPPER_V1_0 = {
+    'mappings': {
+        'ID': 0,
+        'FORM': 1,
+        'LEMMA': 2,
+        'GPOS': 3,
+        'MORF': 4,
+        'SENTENCE': 5,
+        'CLAUSE': 7,
+        'DTREE': 8,
+        'PRED': 9,
+        'ARG0': 10,
+        'ARG1': 11,
+        'ARG2': 12,
+        'ARG3': 13,
+        'ARG4': 14,
+        'ARG5': 15,
+        'ARG6': 16,
+    }
+}
+MAPPER_V1_1 = {
     'CONST': {
         'filename': 'PropBankBr_v1.1_Const.conll.txt',
         'mappings': {
@@ -76,24 +95,6 @@ MAPPER = {
     }
 }
 
-def propbankbr_lazyload(dataset_name='zhou'):
-    dataset_path= TARGET_PATH + '/{}.csv'.format(dataset_name)  
-    if os.path.isfile(dataset_path):
-        df= pd.read_csv(dataset_path)       
-    else:
-        df= propbankbr_parser2()
-        propbankbr_persist(df, split=True, dataset_name=dataset_name)         
-    return df 
-        
-def propbankbr_persist(df, split=True, dataset_name='zhou'):
-    df.to_csv('{}{}.csv'.format(TARGET_PATH ,dataset_name))
-    if split: 
-        dftrain, dfvalid, dftest=propbankbr_split(df)
-        dftrain.to_csv( TARGET_PATH + '/{}_train.csv'.format(dataset_name))
-        dfvalid.to_csv( TARGET_PATH + '/{}_valid.csv'.format(dataset_name))
-        dftest.to_csv(  TARGET_PATH + '/{}_test.csv'.format(dataset_name))
-    
-
 
 def propbankbr_split(df, testN=263, validN=569):
     '''
@@ -101,19 +102,19 @@ def propbankbr_split(df, testN=263, validN=569):
             |development data|= trainN + validationN 
             |test data|= testN
 
-    ''' 
+    '''
     P = max(df['P']) # gets the preposition
     Stest = min(df.loc[df['P']> P-testN,'S']) # from proposition gets the sentence  
-    dftest= df[df['S']>=Stest]
+    dftest = df[df['S']>=Stest]
 
     Svalid = min(df.loc[df['P']> P-(testN+validN),'S']) # from proposition gets the sentence    
-    dfvalid= df[((df['S']>=Svalid) & (df['S']<Stest))]
+    dfvalid = df[((df['S']>=Svalid) & (df['S']<Stest))]
 
-    dftrain= df[df['S']<Svalid]
+    dftrain = df[df['S']<Svalid]
     return dftrain, dfvalid, dftest
 
 
-def propbankbr_parser():
+def propbankbr_synthactic11():
     '''
     Users arguments as of CONLL 2005 (FLATTENED ARGUMENT) <--> SYNTHATIC TREE
 
@@ -150,7 +151,7 @@ def propbankbr_parser():
 
     return df
 
-def propbankbr_parser2():
+def propbankbr_dependency_1_1():
     '''
     Users arguments as of CONLL 2005 (ONLY THE ARGUMENT SETTING AT THE ROOT OF THE TREE) <--> DTREE
 
@@ -175,7 +176,7 @@ def propbankbr_parser2():
     df_dep = _dep_read()
 
     # preprocess
-    # df_dep2 = df_dep[['FUNC', 'DTREE', 'S', 'P', 'P_S' ]]
+    
     df_const2 = df_const['CTREE']
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
         'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
@@ -188,6 +189,38 @@ def propbankbr_parser2():
     df['GPOS'] = df['GPOS'].str.upper()
 
     return df
+
+def propbankbr_parser_1_0():
+    pass
+
+def propbankbr_parser(version, synthactic=True):
+    '''Parses file returning a pandas DataFrame
+
+    handles multiple versions of a dataset
+
+    Arguments:
+        version {str} -- containing the db version
+        synthactic {bool} -- if true returns the arguments
+            of synthactic tree else dependency argumets (version 1.1 only)
+
+    Returns:
+         dataframe {pd.DataFrame}
+
+    Raises:
+        ValueError -- version must be either 1.0 or 1.1
+    '''
+    if version not in ('1.0','1.1',):
+        raise ValueError('version {:} not supported')
+    else:
+        if version in ('1.1',):
+            if synthactic:
+                df = propbankbr_synthactic11()
+            else:
+                df = propbankbr_dependency_1_1()
+        else:
+            df = propbankbr_parser_1_0()
+    return df
+
 
 def propbankbr_argument_stats(df):
     '''
@@ -263,8 +296,8 @@ def _dep_read():
         'ARG6'  : 7o Papel Semântico do regente do argumento na árvore de dependência, conforme notação PropBank
     '''
     #malformed file prevents effective use of pd.read_csv
-    filename=PROPBANKBR_PATH + MAPPER['DEP']['filename']
-    mappings=MAPPER['DEP']['mappings']
+    filename=PROPBANKBR_PATH + MAPPER_V1_1['DEP']['filename']
+    mappings=MAPPER_V1_1['DEP']['mappings']
     mappings_inv= {v:k for k,v in mappings.items()}
     
     sentences=get_signature(mappings)
