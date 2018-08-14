@@ -16,41 +16,47 @@ import os.path
 #import networkx as nx
 #import matplotlib.pyplot as plt
 from collections import defaultdict, deque
-PROPBANKBR_PATH='../datasets/txts/conll/'
-# PROPBANKBR_PATH='../datasets/conll/'
-TARGET_PATH='../datasets/csvs/'
-# PROPBANKBR_PATH='datasets/conll/'
-# TARGET_PATH='datasets/csvs/'
 
-#MAPS the filename and output fields to be harvested
+PROPBANKBR_PATH = '../datasets/txts/conll/'
+# PROPBANKBR_PATH = 'datasets/txts/conll/'
+
+TARGET_PATH = '../datasets/csvs/'
+
+# MAPS the filename and output fields to be harvested
+
 CONST_HEADER = [
     'ID', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'IGN1', 'IGN2',
     'CTREE', 'IGN3', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3',
     'ARG4', 'ARG5', 'ARG6'
 ]
 DEP_HEADER = [
-    'ID', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'DTREE', 'FUNC', 
+    'ID', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'DTREE', 'FUNC',
     'IGN1', 'IS_PRED', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3',
     'ARG4', 'ARG5', 'ARG6'
 ]
+
+HEADER = [
+    'ID', 'S', 'P', 'P_S', 'FORM', 'LEMMA', 'GPOS', 'MORF', 'CTREE', 'PRED',
+    'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG5', 'ARG6'
+]
 MAPPER_V1_0 = {
+    'filename': ['PropBankBr_v1.0_Develop.conll.txt',
+                 'PropBankBr_v1.0_Test.conll.txt'],
     'mappings': {
         'ID': 0,
         'FORM': 1,
         'LEMMA': 2,
         'GPOS': 3,
         'MORF': 4,
-        'SENTENCE': 5,
-        'CLAUSE': 7,
-        'DTREE': 8,
-        'PRED': 9,
-        'ARG0': 10,
-        'ARG1': 11,
-        'ARG2': 12,
-        'ARG3': 13,
-        'ARG4': 14,
-        'ARG5': 15,
-        'ARG6': 16,
+        'CTREE': 7,
+        'PRED': 8,
+        'ARG0': 9,
+        'ARG1': 10,
+        'ARG2': 11,
+        'ARG3': 12,
+        'ARG4': 13,
+        'ARG5': 14,
+        'ARG6': 15,
     }
 }
 MAPPER_V1_1 = {
@@ -114,7 +120,7 @@ def propbankbr_split(df, testN=263, validN=569):
     return dftrain, dfvalid, dftest
 
 
-def propbankbr_synthactic11():
+def propbankbr_synthactic_1_1():
     '''
     Users arguments as of CONLL 2005 (FLATTENED ARGUMENT) <--> SYNTHATIC TREE
 
@@ -176,7 +182,6 @@ def propbankbr_dependency_1_1():
     df_dep = _dep_read()
 
     # preprocess
-    
     df_const2 = df_const['CTREE']
     usecols = ['ID', 'S', 'P', 'P_S',  'FORM', 'LEMMA', 'GPOS', 'MORF',
         'DTREE', 'FUNC', 'CTREE', 'PRED', 'ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4',
@@ -191,9 +196,61 @@ def propbankbr_dependency_1_1():
     return df
 
 def propbankbr_parser_1_0():
-    pass
+    '''Parses the file creating a dataset
 
-def propbankbr_parser(version, synthactic=True):
+    PropBankBr parser
+
+    Returns:
+        df {pd.DataFrame} -- pandas dataframe
+    '''
+    rows_list = []
+    # Computes the sentences
+    sentence_list = []
+    sentence_count = 1
+
+    # Computes if the predicate has been seen
+    predicate_sentence_count = 0
+    predicate_sentence_list = []
+
+    predicate_count = 0
+    predicate_list = []
+    mapping_dict = MAPPER_V1_0['mappings']
+    column_labels = list(MAPPER_V1_0['mappings'].keys())
+    column_ids = list(MAPPER_V1_0['mappings'].values())
+
+    for filename in MAPPER_V1_0['filename']:
+        file_path = '{:}{:}'.format(PROPBANKBR_PATH, filename)
+        with open(file_path, mode='r') as f:
+            for line_ in f.readlines():
+                data_ = re.sub('\n', '', line_).split('\t')
+                if len(data_) > 1:
+                    row_ = [
+                             trim(data_[column_]) if column_ < len(data_) else None
+                             for column_ in list(column_ids)]
+
+                    predicate_sentence_count = \
+                        predicate_sentence_count + 1\
+                        if row_[column_labels.index('PRED')] != '-' else predicate_sentence_count
+
+                    predicate_sentence_list.append(predicate_sentence_count)
+                    predicate_list.append(predicate_count + predicate_sentence_count)
+                    sentence_list.append(sentence_count)
+                    rows_list.append(row_)
+                else:
+                    sentence_count += 1
+                    predicate_count += predicate_sentence_count
+                    predicate_sentence_count = 0 
+
+    df = pd.DataFrame(data=rows_list, columns=column_labels)
+
+    df['S'] = sentence_list
+    df['P_S'] = predicate_sentence_list
+    df['P'] = predicate_list
+    df = df[HEADER]
+    return df
+
+
+def propbankbr_parser(version='1.1', synthactic=True):
     '''Parses file returning a pandas DataFrame
 
     handles multiple versions of a dataset
@@ -214,7 +271,7 @@ def propbankbr_parser(version, synthactic=True):
     else:
         if version in ('1.1',):
             if synthactic:
-                df = propbankbr_synthactic11()
+                df = propbankbr_synthactic_1_1()
             else:
                 df = propbankbr_dependency_1_1()
         else:
@@ -545,29 +602,31 @@ def trim(val):
     return val
 
 if __name__== '__main__':
-    dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')    
+    # dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')    
 
-    propositions = list(dfgs['P'].values)
-    arguments = list(dfgs['ARG'].values)
+    # propositions = list(dfgs['P'].values)
+    # arguments = list(dfgs['ARG'].values)
 
-    FORM = list(dfgs['FORM'].values)
-    ARG = list(dfgs['ARG'].values)
-    ID = list(dfgs['ID'].values)
-    P = list(dfgs['P'].values)
-    PRED = list(dfgs['PRED'].values)
+    # FORM = list(dfgs['FORM'].values)
+    # ARG = list(dfgs['ARG'].values)
+    # ID = list(dfgs['ID'].values)
+    # P = list(dfgs['P'].values)
+    # PRED = list(dfgs['PRED'].values)
 
-    Dtree = list(dfgs['DTREE'].values)
-    Ctree = list(dfgs['CTREE'].values)
+    # Dtree = list(dfgs['DTREE'].values)
+    # Ctree = list(dfgs['CTREE'].values)
 
 
-    arg2t = propbankbr_arg2t(propositions, arguments)
-    t2arg = propbankbr_t2arg(propositions, arg2t)
+    # arg2t = propbankbr_arg2t(propositions, arguments)
+    # t2arg = propbankbr_t2arg(propositions, arg2t)
 
-    arg2iob = propbankbr_arg2iob(propositions, arguments)
-    iob2arg = propbankbr_iob2arg(propositions, arg2iob)
-    # import code; code.interact(local=dict(globals(), **locals()))
-    with open('test_arguments.csv', mode='w') as f:
-        f.write('INDEX\tARG\tARG2T\tARG2IOB\tT2ARG\tIOB2ARG\n')
-        for i, arg in enumerate(arguments):
-            line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, arg, arg2t[i], arg2iob[i], t2arg[i], iob2arg[i])
-            f.write(line)
+    # arg2iob = propbankbr_arg2iob(propositions, arguments)
+    # iob2arg = propbankbr_iob2arg(propositions, arg2iob)
+    # # import code; code.interact(local=dict(globals(), **locals()))
+    # with open('test_arguments.csv', mode='w') as f:
+    #     f.write('INDEX\tARG\tARG2T\tARG2IOB\tT2ARG\tIOB2ARG\n')
+    #     for i, arg in enumerate(arguments):
+    #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, arg, arg2t[i], arg2iob[i], t2arg[i], iob2arg[i])
+    #         f.write(line)
+    df = propbankbr_parser_1_0()
+    print(df.head())
