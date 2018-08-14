@@ -142,6 +142,11 @@ if __name__ == '__main__':
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
+    parser.add_argument('version',
+                        type=str, nargs=1, choice=('1.0', '1.1'),
+                        help='''language model for embeddings, more info:
+                             http://nilc.icmc.usp.br/embeddings''')
+
     args = parser.parse_args()
     language_model = args.language_model[0]
     lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
@@ -150,7 +155,7 @@ if __name__ == '__main__':
         if not os.path.isdir(config.LANGUAGE_MODEL_DIR):
             os.makedirs(config.LANGUAGE_MODEL_DIR)
             msg_ = '''{:}:created.
-                    Download embeddings
+                    Download cd embeddings
                     http://nilc.icmc.usp.br/embeddings.'''.\
                 format(config.LANGUAGE_MODEL_DIR)
             raise ValueError(msg_)

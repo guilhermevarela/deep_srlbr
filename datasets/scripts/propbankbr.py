@@ -34,44 +34,44 @@ DEP_HEADER=[
     'ARG4','ARG5','ARG6'
 ]
 
-MAPPER= {
-    'CONST': { 
+MAPPER = {
+    'CONST': {
         'filename': 'PropBankBr_v1.1_Const.conll.txt',
         'mappings': {
-            'ID':0,
-            'FORM':1,
-            'LEMMA':2,
-            'GPOS':3,
-            'MORF':4,
-            'CTREE':7,
-            'PRED':9,
-            'ARG0':10,
-            'ARG1':11,
-            'ARG2':12,
-            'ARG3':13,
-            'ARG4':14,
-            'ARG5':15,
-            'ARG6':16,
+            'ID': 0,
+            'FORM': 1,
+            'LEMMA': 2,
+            'GPOS': 3,
+            'MORF': 4,
+            'CTREE': 7,
+            'PRED': 9,
+            'ARG0': 10,
+            'ARG1': 11,
+            'ARG2': 12,
+            'ARG3': 13,
+            'ARG4': 14,
+            'ARG5': 15,
+            'ARG6': 16,
         }
-    }, 
-    'DEP': { 
+    },
+    'DEP': {
         'filename': 'PropBankBr_v1.1_Dep.conll.txt',
         'mappings': {
-            'ID':0,
-            'FORM':1,
-            'LEMMA':2,
-            'GPOS':3,
-            'MORF':4,
-            'DTREE':5,
-            'FUNC':6,
-            'PRED':8,
-            'ARG0':9,
-            'ARG1':10,
-            'ARG2':11,
-            'ARG3':12,
-            'ARG4':13,
-            'ARG5':14,
-            'ARG6':15,
+            'ID': 0,
+            'FORM': 1,
+            'LEMMA': 2,
+            'GPOS': 3,
+            'MORF': 4,
+            'DTREE': 5,
+            'FUNC': 6,
+            'PRED': 8,
+            'ARG0': 9,
+            'ARG1': 10,
+            'ARG2': 11,
+            'ARG3': 12,
+            'ARG4': 13,
+            'ARG5': 14,
+            'ARG6': 15,
         }
     }
 }
