@@ -252,6 +252,6 @@ if __name__ == '__main__':
         prev_prop_ = prop_
         prev_form_ = form_
         first = False
-    
+
     baseline_list += baseline_rules(verb_id, cverb_id, ispassive_voice, negation_list, pred_list, chunk_stack)
     evaluate(gold_list, baseline_list, verbose=True)
