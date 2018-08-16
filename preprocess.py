@@ -124,7 +124,7 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.
     suffix = encoder_name.split('_')[-1]
     column_filters = None
 
-    config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml    
+    config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
     for ds_type in ('test', 'valid', 'train'):
          iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
          tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
@@ -200,4 +200,4 @@ if __name__ == '__main__':
         language_model='glove_s50',
         version=version
     )
-    make_tfrecords(encoder_name='deep_glo50') 
+    make_tfrecords(encoder_name='deep_glo50', version=version) 
