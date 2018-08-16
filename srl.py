@@ -65,10 +65,15 @@ if __name__ == '__main__':
                         help='''Target representations\n''')
 
     parser.add_argument('-kfold', action='store_true',
-                        help='''if present performs kfold optimization with 25 folds. Default: False''')
+                        help='''if present performs kfold
+                                optimization with 25 folds. Default: False''')
 
+    parser.add_argument('-version', type=str, dest='version',
+                        nargs=1, choices=('1.0', '1.1',), default='1.0',
+                        help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
+
     input_labels = FEATURE_LABELS
     # print(args)
     if isinstance(args.ctx_p, list) and args.ctx_p[0] > 1:
@@ -81,6 +86,7 @@ if __name__ == '__main__':
     target_label = args.target
     embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
     learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
+    version = args.version[0] if isinstance(args.version, list) else args.version
 
     if args.kfold:
         # print(input_labels)
@@ -93,7 +99,8 @@ if __name__ == '__main__':
 
         estimate_kfold(input_labels=input_labels, target_label=args.target,
                        hidden_layers=args.depth, embeddings=embeddings,
-                       epochs=args.epochs, lr=learning_rate, fold=25)
+                       epochs=args.epochs, lr=learning_rate, fold=25,
+                       version=version)
     else:
         # print(input_labels)
         # print(args.target)
@@ -106,4 +113,5 @@ if __name__ == '__main__':
 
         estimate(input_labels=input_labels, target_label=args.target,
                  hidden_layers=args.depth, embeddings=embeddings,
-                 epochs=args.epochs, lr=learning_rate, batch_size=args.batch_size)
+                 epochs=args.epochs, lr=learning_rate,
+                 batch_size=args.batch_size, version=version)

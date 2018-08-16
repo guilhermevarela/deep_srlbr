@@ -70,7 +70,7 @@ def get_tfrecord(ds_type, embeddings, version='1.0'):
 
 
 def get_size(ds_type, version='1.0'):
-    ub, lb = get_db_bounds(ds_type, version=version)
+    lb, ub = get_db_bounds(ds_type, version=version)
     return ub - lb
 
 

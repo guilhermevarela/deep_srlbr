@@ -180,7 +180,8 @@ def baseline_rules(verb_id, cverb_id, ispassive_voice, negation_list, pred_list,
 if __name__ == '__main__':
     from collections import deque
 
-    encoder_path = '{:}{:}.pickle'.format(config.INPUT_DIR, 'deep_glo50')
+    version = '1.0'
+    encoder_path = '{:}{:}/{:}.pickle'.format(config.INPUT_DIR, version, 'deep_glo50')
     propbank_encoder = PropbankEncoder.recover(encoder_path)
 
 

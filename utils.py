@@ -172,18 +172,16 @@ def get_db_bounds(ds_type, version='1.0'):
     else:
         size_dict = config.DATASET_PROPOSITION_DICT[version]
 
-
     lb = 1
     ub = size_dict['train']
-
-    if ds_type  == 'train':
+    if ds_type == 'train':
         return (lb, ub)
     else:
+      lb = ub
+      ub += size_dict['valid']
+      if ds_type == 'valid':
+        return (lb, ub)
+      else:
         lb = ub
-        ub += size_dict['valid']
-        if ds_type  == 'valid':
-            return (lb, ub)
-        elif ds_type  == 'test':
-            lb = ub
-            ub += size_dict['test']
+        ub += size_dict['test']
         return (lb, ub)

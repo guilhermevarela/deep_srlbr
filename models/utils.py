@@ -163,14 +163,14 @@ def get_dims(labels_list, labels_dim_dict):
     return sum([labels_dim_dict[label] for label in labels_list])
 
 
-def get_binary(ds_type, embeddings):
+def get_binary(ds_type, embeddings, version='1.0'):
     if ds_type not in ('train', 'test', 'valid', 'deep'):
         raise ValueError('Invalid dataset label {:}'.format(ds_type))
 
     prefix = '' if ds_type in ('deep') else 'db'
     ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
     dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings, ext)
-    return '{:}{:}'.format(INPUT_DIR, dbname)
+    return '{:}{:}/{:}'.format(INPUT_DIR, version, dbname)
 
 
 def get_db_bounds(ds_type, version='1.0'):
