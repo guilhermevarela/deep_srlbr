@@ -30,7 +30,18 @@ DATASET_VALID_SIZE = 569
 DATASET_TEST_SIZE = 263
 
 
-
+DATASET_PROPOSITION_DICT = {
+    '1.0': {
+        'train': 5296,
+        'valid': 239,
+        'test': 239,
+    },
+    '1.1': {
+        'train': 5099,
+        'valid': 569,
+        'test': 263,
+    }
+}
 SEQUENCE_FEATURES = [ 'INDEX', 'ID', 'S', 'P', 'P_S',
     'LEMMA', 'GPOS', 'MORF',  'DTREE',     'FUNC', 
     'CTREE', 'PRED',  'ARG', 'CTX_P-3', 'CTX_P-2', 

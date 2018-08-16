@@ -18,8 +18,9 @@ sys.path.append(root_path)
 
 import config
 from collections import OrderedDict, defaultdict
-# import models.utils import fetch_word2vec, preprocess
-import models.utils
+# import model_utils import fetch_word2vec, preprocess
+import models.utils as model_utils
+import utils
 
 
 
@@ -61,7 +62,7 @@ class PropbankEncoder(object):
     '''
 
 
-    def __init__(self, db_dict, schema_dict, language_model='glove_s50', dbname='dbpt', verbose=True):
+    def __init__(self, db_dict, schema_dict, language_model='glove_s50', dbname='dbpt', version='1.0', verbose=True):
         '''Initializer processes raw dataset extracting the numerical representations
 
         Provides a wrapper around the database
@@ -97,7 +98,7 @@ class PropbankEncoder(object):
         self.columns_mapper = {}
         self.columns_config = {}
         self.columns = set([])
-
+        self.version = version
         self._initialize(db_dict, schema_dict, dbname, language_model, verbose)    
 
     @classmethod
@@ -145,10 +146,13 @@ class PropbankEncoder(object):
         #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
         #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
 
-        lb, ub = models.utils.get_db_bounds(ds_type)
+        lb, ub = utils.get_db_bounds(ds_type, version=self.version)
+
+        # interval = [idx for idx, p in self.db['P'].items()
+        #                 if p > lb and p <= ub]
 
         interval = [idx for idx, p in self.db['P'].items()
-                        if p > lb and p <= ub]
+                        if p >= lb and p < ub]
         low = min(interval)
         high = max(interval)
 
@@ -213,7 +217,7 @@ class PropbankEncoder(object):
         #     else:
         #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
         #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
-        lb, ub = models.utils.get_db_bounds(ds_type)
+        lb, ub = utils.get_db_bounds(ds_type)
 
         return {x:self._decode_with_idx(x,[column], encoding)
                 for x, p in self.db['P'].items()
@@ -232,12 +236,12 @@ class PropbankEncoder(object):
 
     def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = models.utils.fetch_word2vec(language_model, verbose=verbose)
+        word2vec = model_utils.fetch_word2vec(language_model, verbose=verbose)
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = models.utils.preprocess(list(self.words), word2vec, verbose=verbose)
+        self.lex2tok = model_utils.preprocess(list(self.words), word2vec, verbose=verbose)
 
         words = self.lex2tok.keys()
         self.tokens = set(self.lex2tok.values())

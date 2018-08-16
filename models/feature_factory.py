@@ -720,10 +720,14 @@ class ColumnDepTreeParser(object):
 
 
 def _predicatedict(db):
+    # d = {
+    #     db['P'][time]: time
+    #     for time, arg in db['ARG'].items() 
+    #         if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+    # }
     d = {
         db['P'][time]: time
-        for time, arg in db['ARG'].items() 
-            if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+        for time, arg in db['ARG'].items() if (db['PRED'][time] != '-')
     }
     return d
 
@@ -799,7 +803,7 @@ def process_iob(dictdb, version='1.0'):
     column_iob = FeatureFactory().make('ColumnIOB', dictdb)
     d = column_iob.run()
 
-    target_dir = 'datasets/csvs/{:}/column_iob/'
+    target_dir = 'datasets/csvs/{:}/column_iob/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'iob')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
@@ -809,7 +813,7 @@ def process_predmarker(dictdb, version='1.0'):
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/{:}/column_predmarker/'
+    target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 

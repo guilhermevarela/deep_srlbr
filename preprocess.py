@@ -24,7 +24,7 @@ FEATURE_MAKER_DICT = {
     'chunks.csv': {'marker_fnc': lambda x, y: fac.process_chunk(x, version=y), 'column': 'chunk features'},
     'predicate_marker.csv': {'marker_fnc': lambda x, y: fac.process_predmarker(x, version=y), 'column': 'predicate marker feature'},
     'form.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, version=y), 'column': 'form predicate context features'},
-    'gpos.csv': {'marker_fn': lambda x, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, version=y), 'column': 'gpos predicate context features'},
+    'gpos.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, version=y), 'column': 'gpos predicate context features'},
     'lemma.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['LEMMA'], SHIFTS, version=y), 'column': 'lemma predicate context features'},
     't.csv': {'marker_fnc': lambda x, y: fac.process_t(x, version=y), 'column': 'chunk label class'},
     'iob.csv': {'marker_fnc': lambda x, y: fac.process_iob(x, version=y), 'column': 'iob class'}
@@ -48,7 +48,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
     prefix_target_dir = 'datasets/csvs/{:}/'.format(version)
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
     file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
-
+    bin_dir = 'datasets/binaries/{:}/'.format(version)
     if not os.path.isfile(file_path):
         glob_regex = '{:}*'.format(prefix_dir)
         options_list = [
@@ -102,17 +102,24 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
         dfgs.to_dict(),
         schema_dict,
         language_model=language_model,
-        dbname=encoder_name
+        dbname=encoder_name,
+        version=version
     )
-    if not os.path.isdir(config.INPUT_DIR):
-        os.makedirs(config.INPUT_DIR)
-    propbank_encoder.persist('datasets/binaries/', filename=encoder_name)
+    if not os.path.isdir(bin_dir):
+        os.makedirs(bin_dir)
+    propbank_encoder.persist(bin_dir, filename=encoder_name)
     return propbank_encoder
 
 
-def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None):
+def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.0'):
+    bin_dir = 'datasets/binaries/{:}/'.format(version)
+
+    if not os.path.isdir(bin_dir):
+        os.makedirs(bin_dir)
+
     if propbank_encoder is None:
-        propbank_encoder = PropbankEncoder.recover('datasets/binaries/{:}.pickle'.format(encoder_name))
+        bin_path = '{:}{:}.pickle'.format(bin_dir, encoder_name)
+        propbank_encoder = PropbankEncoder.recover(bin_path)
 
     suffix = encoder_name.split('_')[-1]
     column_filters = None
@@ -120,7 +127,7 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None):
     config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml    
     for ds_type in ('test', 'valid', 'train'):
          iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
-         tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix)
+         tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
 
 
 def get_model(mname):
@@ -154,13 +161,14 @@ if __name__ == '__main__':
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
-    parser.add_argument('-version', type=str,
-                        dest='version', nargs=1, choices=('1.0', '1.1',),
+    parser.add_argument('-version', type=str, dest='version',
+                        nargs=1, choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
     language_model = args.language_model[0]
-    version = args.version[0]
+    version = args.version[0] if isinstance(args.version, list) else args.version
+
     print(language_model, version)
     lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
 
@@ -189,6 +197,7 @@ if __name__ == '__main__':
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
-        language_model='glove_s50'
+        language_model='glove_s50',
+        version=version
     )
     make_tfrecords(encoder_name='deep_glo50') 

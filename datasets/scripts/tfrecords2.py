@@ -354,7 +354,7 @@ def make_feature_list(columns_dict, columns_config):
 
 
 def tfrecords_builder(propbank_iter, dataset_type,
-                      column_config_dict, suffix='glo50'):
+                      column_config_dict, suffix='glo50', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
