@@ -15,6 +15,7 @@
 '''
 import sys
 sys.path.append('../datasets/')
+sys.path.append('..')
 import os
 import subprocess
 import string
@@ -24,7 +25,8 @@ import re
 
 from collections import OrderedDict
 # from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
-import models.utils
+# import models.utils
+import utils
 import datasets as br
 
 PEARL_SRLEVAL_PATH ='./srlconll-1.1/bin/srl-eval.pl'
@@ -240,7 +242,7 @@ class EvaluatorConll(object):
             os.mkdir(target_dir, 0o777) # Octal for read / write permissions
         return target_dir
 
-    def _get_goldindex_list(self, ds_type):
+    def _get_goldindex_list(self, ds_type, version='1.0'):
         # if ds_type in ['train']:
         #     gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
         # elif ds_type in ['valid']:
@@ -251,8 +253,9 @@ class EvaluatorConll(object):
         #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
         # else:
         #     raise ValueError('{:} unknown dataset type'.format(ds_type))
-        lb, ub = models.utils.get_db_bounds(ds_type)
-        return [i for i in range(lb, ub + 1)]
+        lb, ub = utils.get_db_bounds(ds_type, version='1.0')
+        # return [i for i in range(lb, ub + 1)]
+        return [i for i in range(lb, ub)]
 
     def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
 

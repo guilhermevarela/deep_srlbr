@@ -30,21 +30,24 @@ DATASET_VALID_SIZE = 569
 DATASET_TEST_SIZE = 263
 
 
-SEQUENCE_FEATURES=      [ 'INDEX', 'ID', 'S', 'P', 'P_S', 
+DATASET_PROPOSITION_DICT = {
+    '1.0': {
+        'train': 5296,
+        'valid': 239,
+        'test': 239,
+    },
+    '1.1': {
+        'train': 5099,
+        'valid': 569,
+        'test': 263,
+    }
+}
+SEQUENCE_FEATURES = [ 'INDEX', 'ID', 'S', 'P', 'P_S',
     'LEMMA', 'GPOS', 'MORF',  'DTREE',     'FUNC', 
     'CTREE', 'PRED',  'ARG', 'CTX_P-3', 'CTX_P-2', 
     'CTX_P-1', 'CTX_P+1', 'CTX_P+2', 'CTX_P+3',  'MARKER', 
     'PRED_1', 'T']
 
-# CATEGORICAL_FEATURES = [
-#     'ID', 'MARKER', 'GPOS', 'P', 'INDEX',
-#     'T', 'ARG', 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1'
-# ]
-
-# EMBEDDED_FEATURES = [
-#  'FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-#  'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1'
-#  ]
 
 CATEGORICAL_FEATURES = sorted([
     'ARG', 'GPOS', 'HEAD', 'ID', 'INDEX',
@@ -57,38 +60,6 @@ EMBEDDED_FEATURES = sorted([
     'FORM_CTX_P+2', 'FORM_CTX_P+3', 'FORM_CTX_P-2', 'FORM_CTX_P-3',
     'LEMMA', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 'LEMMA_CTX_P-1'
 ])
-
-
-# 
-# SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
-# 'FORM_CTX_P-3', 'FORM_CTX_P-2', 'FORM_CTX_P-1', 
-# 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'FORM_CTX_P+2', 'FORM_CTX_P+3',
-# 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
-# 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1', 
-# 'ID', 'LEMMA', 'MARKER', 'T', 'INDEX', 'P']
-# SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
-# 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-# 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
-# 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'MARKER', 'T', 'INDEX', 'P']
-# SEQUENCE_FEATURES_V2 = ['FORM', 'GPOS',
-# 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-# 'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 
-# 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1',
-# 'ID', 'LEMMA', 'MARKER', 'ARG', 'INDEX', 'P', 'T']
-
-# TF_SEQUENCE_FEATURES_V2 = {
-#     key: tf.VarLenFeature(tf.int64)
-#     for key in ['ID', 'MARKER', 'GPOS', 'P','INDEX', 'T', 'ARG', 'HEAD']
-#  }.update({
-#     key: tf.VarLenFeature(tf.float32)
-#     for key in ['FORM', 'LEMMA', 'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1', 'LEMMA_CTX_P-1', 'LEMMA_CTX_P+0', 'LEMMA_CTX_P+1']
-# }).update({
-#     key: tf.VarLenFeature(tf.int64)
-#     for key in ['GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
-# })
-
-
 
 
 SEQUENCE_FEATURES_TYPES=['int', 'int', 'int', 'int', 'int',  

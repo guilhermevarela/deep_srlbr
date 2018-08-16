@@ -27,6 +27,7 @@ import numpy as np
 
 import tensorflow as tf
 from collections import defaultdict
+from utils import get_db_bounds
 
 TF_SEQUENCE_FEATURES = {
     key: tf.VarLenFeature(tf.int64)
@@ -47,38 +48,34 @@ TF_SEQUENCE_FEATURES_V2.update({
 })
 
 
-def get_test(input_labels, output_label, embeddings='glo50'):
-    return tfrecords_extract('test', input_labels, output_label, embeddings)
+def get_test(input_labels, output_label, embeddings='glo50', version='1.0'):
+    return tfrecords_extract('test', input_labels, output_label, embeddings, version=version)
 
 
-def get_valid(input_labels, output_label, embeddings='glo50'):
-    return tfrecords_extract('valid', input_labels, output_label, embeddings)
+def get_valid(input_labels, output_label, embeddings='glo50', version='1.0'):
+    return tfrecords_extract('valid', input_labels, output_label, embeddings, version=version)
 
 
-def get_train(input_labels, output_label, embeddings='glo50'):
-    return tfrecords_extract('train', input_labels, output_label, embeddings)
+def get_train(input_labels, output_label, embeddings='glo50', version='1.0'):
+    return tfrecords_extract('train', input_labels, output_label, embeddings, version=version)
 
 
-def get_tfrecord(ds_type, embeddings):
+def get_tfrecord(ds_type, embeddings, version='1.0'):
     if embeddings:
-        _preffix = '{:}/db{:}_{:}.tfrecords'
-        return _preffix.format(conf.INPUT_DIR, ds_type, embeddings)
+        _preffix = '{:}/{:}/db{:}_{:}.tfrecords'
+        return _preffix.format(conf.INPUT_DIR, version, ds_type, embeddings)
     else:
         _preffix = '{:}/db{:}.tfrecords'
-        return _preffix.format(conf.INPUT_DIR, ds_type)
+        return _preffix.format(conf.INPUT_DIR, version, ds_type)
 
 
-def get_size(ds_type):
-    if ds_type in ['train']:
-        dataset_size = conf.DATASET_TRAIN_SIZE
-    elif ds_type in ['test']:
-        dataset_size = conf.DATASET_TEST_SIZE
-    elif ds_type in ['valid']:
-        dataset_size = conf.DATASET_VALID_SIZE
-    return dataset_size
+def get_size(ds_type, version='1.0'):
+    lb, ub = get_db_bounds(ds_type, version=version)
+    return ub - lb
 
 
-def tfrecords_extract(ds_type, input_labels, output_label, embeddings):
+def tfrecords_extract(ds_type, input_labels,
+                      output_label, embeddings, version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
 
     Acts as a wrapper for the function tsr2npy
@@ -99,19 +96,22 @@ def tfrecords_extract(ds_type, input_labels, output_label, embeddings):
     Raises:
         ValueError -- validation for database type 
     '''
-    if not(ds_type in ['train', 'valid', 'test']):
-        buff = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-        raise ValueError(buff)
-    else:
-        dataset_path = get_tfrecord(ds_type, embeddings)
-        dataset_size = get_size(ds_type)
+    # if not(ds_type in ['train', 'valid', 'test']):
+    #     buff = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
+    #     raise ValueError(buff)
+    # else:
+    dataset_path = get_tfrecord(ds_type, embeddings, version=version)
+    dataset_size = get_size(ds_type, version=version)
+
+    msg_success = 'tfrecords_extract:'
+    msg_success += 'done converting {:} set to numpy'.format(ds_type)
 
     inputs, targets, lengths, others = tsr2npy(
         dataset_path,
         dataset_size,
         input_labels,
         output_label,
-        msg='input_{:}: done converting {:} set to numpy'.format(ds_type, ds_type)
+        msg=msg_success
     )
 
     return inputs, targets, lengths, others
@@ -354,22 +354,23 @@ def make_feature_list(columns_dict, columns_config):
 
 
 def tfrecords_builder(propbank_iter, dataset_type,
-                      column_config_dict, suffix='glo50'):
+                      column_config_dict, suffix='glo50', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
             https://planspace.org/20170323-tfrecords_for_humans/
     '''
-    if not(dataset_type in ['train', 'valid', 'test']):
-        buff = 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
-        raise ValueError(buff)
-    else:
-        if dataset_type in ['train']:
-            total_propositions = conf.DATASET_TRAIN_SIZE
-        if dataset_type in ['valid']:
-            total_propositions = conf.DATASET_VALID_SIZE
-        if dataset_type in ['test']:
-            total_propositions = conf.DATASET_TEST_SIZE
+    # if not(dataset_type in ['train', 'valid', 'test']):
+    #     buff = 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
+    #     raise ValueError(buff)
+    # else:
+    #     if dataset_type in ['train']:
+    #         total_propositions = conf.DATASET_TRAIN_SIZE
+    #     if dataset_type in ['valid']:
+    #         total_propositions = conf.DATASET_VALID_SIZE
+    #     if dataset_type in ['test']:
+    #         total_propositions = conf.DATASET_TEST_SIZE
+    total_propositions = get_size(dataset_type, version=version)
 
     def message_print(num_records, num_propositions):
         _msg = 'Processing {:}\tfrecords:{:5d}\tpropositions:{:5d}\tcomplete:{:0.2f}%\r'
@@ -379,7 +380,9 @@ def tfrecords_builder(propbank_iter, dataset_type,
         sys.stdout.flush()
 
     file_path = conf.INPUT_DIR
+    file_path += '{:}/'.format(version)
     file_path += 'db{:}_{:}.tfrecords'.format(dataset_type, suffix)
+
     with open(file_path, 'w+') as f:
         writer = tf.python_io.TFRecordWriter(f.name)
         seqlen = 1

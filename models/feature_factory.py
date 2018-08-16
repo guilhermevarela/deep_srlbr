@@ -720,96 +720,100 @@ class ColumnDepTreeParser(object):
 
 
 def _predicatedict(db):
+    # d = {
+    #     db['P'][time]: time
+    #     for time, arg in db['ARG'].items() 
+    #         if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+    # }
     d = {
         db['P'][time]: time
-        for time, arg in db['ARG'].items() 
-            if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+        for time, arg in db['ARG'].items() if (db['PRED'][time] != '-')
     }
     return d
 
 
-def process_passivevoice(dictdb):
+def process_passivevoice(dictdb, version='1.0'):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
-    target_dir = 'datasets/csvs/column_passivevoice/'
+    target_dir = 'datasets/csvs/{:}/column_passivevoice/'.format(version)
     passivevoice = pvoice_marker.run()
 
     _store(passivevoice, 'passive_voice', target_dir)
 
 
-def process_chunk(dictdb):
+def process_chunk(dictdb, version='1.0'):
 
     chunker = FeatureFactory().make('ColumnChunk', dictdb)
-    target_dir = 'datasets/csvs/column_chunks/'
+    target_dir = 'datasets/csvs/{:}/column_chunks/'.format(version)
     chunks = chunker.run()
 
     _store(chunks, 'chunks', target_dir)
 
 
-def process_predmorph(dictdb):
+def process_predmorph(dictdb, version='1.0'):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
-    target_dir = 'datasets/csvs/column_predmorph/'
+    target_dir = 'datasets/csvs/{:}/column_predmorph/'.format(version)
     predmorph = morpher.run()
 
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
 
-def process_shifter(dictdb, columns, shifts):
+def process_shifter(dictdb, columns, shifts, version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    target_dir = 'datasets/csvs/column_shifts/'
+    target_dir = 'datasets/csvs/{:}/column_shifts/'.format(version)
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def process_shifter_ctx_p(dictdb, columns, shifts):
+def process_shifter_ctx_p(dictdb, columns, shifts, version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
-    target_dir = 'datasets/csvs/column_shifts_ctx_p/'
+    target_dir = 'datasets/csvs/{:}/column_shifts_ctx_p/'.format(version)
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def process_predicate_dist(dictdb):
+def process_predicate_dist(dictdb, version='1.0'):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().run()
 
-    target_dir = 'datasets/csvs/column_preddist/'
+    target_dir = 'datasets/csvs/{:}/column_preddist/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
 
-def process_t(dictdb):
+def process_t(dictdb, version='1.0'):
 
     column_t = FeatureFactory().make('ColumnT', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/column_t/'
+    target_dir = 'datasets/csvs/{:}/column_t/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 't')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def process_iob(dictdb):
+def process_iob(dictdb, version='1.0'):
 
     column_iob = FeatureFactory().make('ColumnIOB', dictdb)
     d = column_iob.run()
 
-    target_dir = 'datasets/csvs/column_iob/'
+    target_dir = 'datasets/csvs/{:}/column_iob/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'iob')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def process_predmarker(dictdb):
+def process_predmarker(dictdb, version='1.0'):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/column_predmarker/'
+    target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 

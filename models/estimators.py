@@ -164,7 +164,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-             epochs=100, lr=5 * 1e-3, batch_size=250, **kwargs):
+             epochs=100, lr=5 * 1e-3, batch_size=250,
+             version='1.0', **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -187,15 +188,25 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             on each iteration (default: {250})
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
-
-    propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
+    propbank_path = get_binary('deep', embeddings, version=version)
+    propbank_encoder = PropbankEncoder.recover(propbank_path)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
-    datasets_list = [get_binary('train', embeddings)]
+    dataset_path = get_binary('train', embeddings, version=version)
+    datasets_list = [dataset_path]
 
-    labels_list = input_labels + [target_label]
+    X_train, T_train, L_train, I_train = get_train(
+        input_labels,
+        target_label,
+        embeddings,
+        version=version
+    )
 
-    X_train, T_train, L_train, I_train = get_train(input_labels, target_label, embeddings)
-    X_valid, T_valid, L_valid, I_valid = get_valid(input_labels, target_label, embeddings)
+    X_valid, T_valid, L_valid, I_valid = get_valid(
+        input_labels,
+        target_label,
+        embeddings,
+        version=version
+    )
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
@@ -249,8 +260,13 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
         try:
             while not coord.should_stop():
-                X_batch, T_batch, L_batch, I_batch = session.run([inputs, targets, sequence_length, descriptors])
-                
+                X_batch, T_batch, L_batch, I_batch = session.run([
+                    inputs,
+                    targets,
+                    sequence_length,
+                    descriptors
+                ])
+
 
                 loss, _, Yish, error = session.run(
                     [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
