@@ -199,8 +199,8 @@ def main():
 
     BATCH_SIZE = 250
     NUM_EPOCHS = 1000
-    HIDDEN_SIZE = [16] * 4
-    lr = 1 * 1e-3
+    HIDDEN_SIZE = [18] * 4
+    lr = 5 * 1e-3
     TARGET_SIZE = dims_dict[TARGET]
     print(BATCH_SIZE, TARGET, TARGET_SIZE, FEATURE_SIZE)
 
