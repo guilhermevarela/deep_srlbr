@@ -35,7 +35,7 @@ if __name__ == '__main__':
             Propbank Br built according to the Propbank guidelines. Uses Conll 2005 Shared Task pearl evaluator
             under the hood.''')
 
-    parser.add_argument('depth', type=int, nargs='+', default=[16] * 4,
+    parser.add_argument('-depth', type=int, nargs='+', default=[16] * 4,
                         help='''Set of integers corresponding
                         the deep layer sizes. default: 16 16 16 16\n''')
 

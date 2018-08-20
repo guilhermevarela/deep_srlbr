@@ -28,3 +28,7 @@
 
 # Pycharm
 *.idea
+
+#cProfile
+*.cprof
+*.dot
