@@ -4,11 +4,13 @@
 '''
 CONLL_DIR = 'datasets/txts/conll/'
 TRAIN_PATH = CONLL_DIR + 'PropBankBr_v1.0_Develop.conll.txt'
+PEARL_SRLEVAL_PATH = 'srlconll-1.1/bin/srl-eval.pl'
+
 
 def evaluate(gold_list, eval_list, verbose=True):
     prefix_dir = config.BASELINE_DIR
-    gold_path = '{:}valid_gold.props'.format(prefix_dir)
-    eval_path = '{:}valid_eval.props'.format(prefix_dir)
+    gold_path = '{:}train_gold.props'.format(prefix_dir)
+    eval_path = '{:}train_eval.props'.format(prefix_dir)
     conll_path = '{:}eval.conll'.format(prefix_dir)
     with open(gold_path, mode='w') as f:
         for tuple_ in gold_list:
@@ -23,8 +25,9 @@ def evaluate(gold_list, eval_list, verbose=True):
                 f.write('\n')
             else:
                 f.write('{:}\t{:}\n'.format(*tuple_))
-    perl_cmd = ['perl', PEARL_SRLEVAL_PATH, gold_path, eval_path]
-    pipe = Popen(perl_cmd, stdout=PIPE, stderr=PIPE)
+
+    cmd_list = ['perl', PEARL_SRLEVAL_PATH, gold_path, eval_path]
+    pipe = Popen(cmd_list, stdout=PIPE, stderr=PIPE)
 
     txt, err = pipe.communicate()
     txt = txt.decode('UTF-8')
@@ -46,4 +49,9 @@ def evaluate(gold_list, eval_list, verbose=True):
     return f1
 
 if __name__ == '__main__'
-    pass
+    with open(TRAIN_PATH, mode='r') as f:
+        for line in f.readlines():
+            if len(line) > 1:  # Lines with scape newline \n character
+                features_list = line.split('\t')
+                import code; code.interact(local=dict(globals(), **locals()))
+                # first rule if it's the predicate mark as a verb
