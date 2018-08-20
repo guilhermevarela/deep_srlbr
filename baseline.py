@@ -186,7 +186,7 @@ if __name__ == '__main__':
 
 
     columns_ = ['INDEX', 'ID', 'P', 'FORM', 'LEMMA', 'GPOS', 'PRED', 'CTREE','ARG']
-    iter_ = propbank_encoder.iterator('valid', filter_columns=columns_, encoding='CAT')
+    iter_ = propbank_encoder.iterator('test', filter_columns=columns_, encoding='CAT')
     first = True
 
     prev_tag_ = '*'
