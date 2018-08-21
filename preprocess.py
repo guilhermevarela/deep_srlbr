@@ -126,8 +126,8 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.
 
     config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
     for ds_type in ('test', 'valid', 'train'):
-         iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
-         tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
+        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
+        tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
 
 
 def get_model(mname):
