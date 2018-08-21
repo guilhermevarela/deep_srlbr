@@ -200,4 +200,4 @@ if __name__ == '__main__':
         language_model='glove_s50',
         version=version
     )
-    make_tfrecords(encoder_name='deep_glo50', version=version) 
+    make_tfrecords(encoder_name=encoder_name, version=version) 
