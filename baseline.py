@@ -5,11 +5,12 @@ from collections import namedtuple
 from models.propbank_encoder import PropbankEncoder
 import config
 
-PEARL_SRLEVAL_PATH = 'srlconll-1.1/bin/srl-eval.pl'
+PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
+PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
 Chunk = namedtuple('Chunk', ('role', 'init', 'finish'))
 
-
 def evaluate(gold_list, eval_list, verbose=True):
+
     prefix_dir = config.BASELINE_DIR
     gold_path = '{:}valid_gold.props'.format(prefix_dir)
     eval_path = '{:}valid_eval.props'.format(prefix_dir)
@@ -28,7 +29,7 @@ def evaluate(gold_list, eval_list, verbose=True):
             else:
                 f.write('{:}\t{:}\n'.format(*tuple_))
 
-    pipe = Popen(['perl', PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=PIPE, stderr=PIPE)
+    pipe = Popen(['perl', PEARL_SRL05_PATH, gold_path, eval_path], stdout=PIPE, stderr=PIPE)
 
     txt, err = pipe.communicate()
     txt = txt.decode('UTF-8')
@@ -186,7 +187,7 @@ if __name__ == '__main__':
 
 
     columns_ = ['INDEX', 'ID', 'P', 'FORM', 'LEMMA', 'GPOS', 'PRED', 'CTREE','ARG']
-    iter_ = propbank_encoder.iterator('valid', filter_columns=columns_, encoding='CAT')
+    iter_ = propbank_encoder.iterator('test', filter_columns=columns_, encoding='CAT')
     first = True
 
     prev_tag_ = '*'

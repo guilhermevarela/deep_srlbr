@@ -1,0 +1,100 @@
+CHANGES -- CoNLL-2004 Shared Task Official Release (20040518)
+
+#-----------------------------------------------------------
+
+With respect to 20040301 release:
+
+  * The correct props for the test are now included in the release.
+
+
+#-----------------------------------------------------------
+
+With respect to 20040212 release:
+
+  * The test set has been included in the release, distributed into
+    four separate files: words, synt, ne and targets. 
+
+
+  * Arguments of type "AM" (without extra label) have been removed
+    from data. They corresponded to annotation errors, since this
+    category is no longer considered in PropBank. Only 3 arguments
+    were labeled as AM: 
+    
+    From props.train: 
+	 - Prop "take": lines 184262 to 184264 (6th column) 
+	 - Prop "accept": lines 199790 to 199800 (2nd column) 
+
+    From props.dev: 
+	 - Prop "catch": lines 5919 to 5924 (2nd column)
+
+
+#-----------------------------------------------------------
+
+With respect to 20040122 pre-release:
+
+  * We have moved to a new version of PropBank, the February 2004
+    PropBank release. The new release has increased coverage and
+    gained consistency. A substantial number of new propositions is
+    now available. This update of the data has no influence in the
+    Shared Task specification. You may want to consult the CHANGES.PB
+    file included in this release, reporting changes of PropBank from
+    the previous version to the current one. 
+
+
+#-----------------------------------------------------------
+
+With respect to 20040115 pre-release:
+
+  * A few props which were wrong have been removed from data:
+    From props.train : 
+        - view at line 11599
+        - begin at line 18623
+        - give at line 32599
+        - lend at line 113243  
+        - conserve at line 124444  
+    From props.dev : 
+        - dare at line 31823
+        - position at line 36660
+
+    The "senses" files have consequently been updated, removing the
+    verb sense of each verb removed. 
+
+
+  * A few contiguous phrases were formatted as discontiguous with C tags.
+    Such phrases have been joined. The list of phrases is 
+    In props.train : 
+        - use at line 2331 : A2 had 4 phrases, now 3
+        - view at line 40289 : AM-MNR had 2 phrases, now 1
+        - spend at line 73709 : A3 had 2 phrases, now 1
+        - say at line 170617 : A1 had 2 phrases, now 1
+    In props.dev : 
+        - retire at line 22552 : A1 had 2 phrases, now 1 
+        - watch at line 23161 : A1 had 2 phrases, now 1 
+        - assert at line 30147 : A1 had 2 phrases, now 1 
+
+#-----------------------------------------------------------
+
+With respect to 20031223 pre-release: 
+
+  * Verb senses are excluded from the input (they were given in column
+    #6, together with target verbs). Now the verb senses are provided
+    as an official resource --they correspond to manually annotated
+    tags. Verbs senses will only be provided for train and development
+    sets, not for the test set. 
+
+  * Two types of argument have different labels:
+     Verb realizations are now labeled "V" (they were as "R").
+     Referencing arguments are now labeled as "R-" (they were as "L-"). 
+
+  * There is a substantial number of new propositions in the data,
+    including props which have non-disambiguated verb, props containing
+    references, and props which realize many times an argument through
+    coordination.
+
+#-----------------------------------------------------------
+
+
+
+
+
+

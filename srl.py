@@ -35,30 +35,35 @@ if __name__ == '__main__':
             Propbank Br built according to the Propbank guidelines. Uses Conll 2005 Shared Task pearl evaluator
             under the hood.''')
 
-    parser.add_argument('-depth', type=int, nargs='+', default=[16] * 4,
+    parser.add_argument('depth', type=int, nargs='+', default=[16] * 4,
                         help='''Set of integers corresponding
                         the deep layer sizes. default: 16 16 16 16\n''')
 
     parser.add_argument('-embeddings', dest='embeddings', nargs=1,
                         default='glo50', choices=['glo50', 'wan50', 'wrd50'],
                         help='''Embedding abbrev.
-                        and size examples: glo50, wan50. Default: glo50 \n''')
+                                and size examples: glo50, wan50.
+                                Default: glo50 \n''')
 
     parser.add_argument('-ctx_p', dest='ctx_p', type=int, nargs=1,
                         default=1, choices=[1, 2, 3],
-                        help='''Size of sliding window around predicate. Default: 1\n''')
+                        help='''Size of sliding window around predicate.
+                                Default: 1\n''')
 
     parser.add_argument('-lr', dest='lr', type=float, nargs=1,
                         default=5 * 1e-3,
-                        help='''Learning rate of the model. Default: 0.005\n''')
+                        help='''Learning rate of the model.
+                                Default: 0.005\n''')
 
     parser.add_argument('-batch_size', dest='batch_size', type=int, nargs=1,
                         default=250,
-                        help='''Batch size. default: 250 \n''')
+                        help='''Batch size.
+                                Default: 250 \n''')
 
     parser.add_argument('-epochs', dest='epochs', type=int, nargs=1,
                         default=1000,
-                        help='''Number of times to repeat training set during training. Default: 1000\n''')
+                        help='''Number of times to repeat training set during training.
+                                Default: 1000\n''')
 
     parser.add_argument('-target', dest='target', nargs=1,
                         default='T', choices=['T', 'IOB', 'HEAD'],
@@ -66,7 +71,8 @@ if __name__ == '__main__':
 
     parser.add_argument('-kfold', action='store_true',
                         help='''if present performs kfold
-                                optimization with 25 folds. Default: False''')
+                                optimization with 25 folds.
+                                Default: False''')
 
     parser.add_argument('-version', type=str, dest='version',
                         nargs=1, choices=('1.0', '1.1',), default='1.0',
@@ -83,7 +89,7 @@ if __name__ == '__main__':
             input_labels.append('FORM_CTX_P-3')
             input_labels.append('FORM_CTX_P+3')
 
-    target_label = args.target
+    target_label = args.target[0] if isinstance(args.target, list) else args.target
     embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
     learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
     version = args.version[0] if isinstance(args.version, list) else args.version

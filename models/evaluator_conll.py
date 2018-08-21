@@ -27,9 +27,12 @@ from collections import OrderedDict
 # from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
 # import models.utils
 import utils
+
 import datasets as br
 
-PEARL_SRLEVAL_PATH ='./srlconll-1.1/bin/srl-eval.pl'
+PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
+PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
+
 
 
 class EvaluatorConll(object):
@@ -105,10 +108,14 @@ class EvaluatorConll(object):
         eval_path = self._store(filename, 'eval', self.db, self.idx2lex, props, hparams)
 
         #Runs official conll 2005 shared task script
-        pipe = subprocess.Popen(['perl',PEARL_SRLEVAL_PATH, gold_path, eval_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        perl_cmd = ['perl',PEARL_SRL05_PATH, gold_path, eval_path]
+        #Resets state
+        pipe = subprocess.Popen(perl_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
         #out is a byte with each line separated by \n
-        #ers is stderr      
+        #ers is stderr
         txt, err = pipe.communicate()
+
         self.txt = txt.decode('UTF-8')
         self.err = err.decode('UTF-8')
 

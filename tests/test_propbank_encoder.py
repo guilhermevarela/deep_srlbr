@@ -163,6 +163,7 @@ class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
         self.assertEqual(test_dict,
                          self.propbank_encoder.idx2lex[text_column])
 
+
 class PropbankTestLex2Idx(PropbankEncoderBaseCase):
 
     def test_lex2idx(self):
