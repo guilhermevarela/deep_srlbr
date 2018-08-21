@@ -35,7 +35,7 @@ if __name__ == '__main__':
             Propbank Br built according to the Propbank guidelines. Uses Conll 2005 Shared Task pearl evaluator
             under the hood.''')
 
-    parser.add_argument('-depth', type=int, nargs='+', default=[16] * 4,
+    parser.add_argument('depth', type=int, nargs='+', default=[16] * 4,
                         help='''Set of integers corresponding
                         the deep layer sizes. default: 16 16 16 16\n''')
 
@@ -89,7 +89,7 @@ if __name__ == '__main__':
             input_labels.append('FORM_CTX_P-3')
             input_labels.append('FORM_CTX_P+3')
 
-    target_label = args.target
+    target_label = args.target[0] if isinstance(args.target, list) else args.target
     embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
     learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
     version = args.version[0] if isinstance(args.version, list) else args.version

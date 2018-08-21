@@ -125,7 +125,7 @@ def chunk_stack_process(feature_list, chunk_stack):
                 break
 
 
-def find_chunk0(chunk_stack, ub):
+def find_chunk0(chunk_stack, ub, exclude_list=[]):
     ''' Finds the candidate for argument 0
 
     look-up chunk stack for NP that `first before target verb`
@@ -138,8 +138,9 @@ def find_chunk0(chunk_stack, ub):
         ck {Chunk{namedtuple}} -- an instance of chunk
     '''
     for ck_ in reversed(chunk_stack):
-        if ck_.role == 'NP' and ck_.finish < ub:
-            return ck_
+        if ck_ not in exclude_list:
+            if ck_.role == 'NP' and ck_.finish < ub:
+                return ck_
     return None
 
 
@@ -189,7 +190,7 @@ def update_chunk(eval_list,prop_len,  prop_ind, ck, label):
             eval_list[t] = tuple(eval_labels)
 
 
-def find_chunk1(chunk_stack, lb):
+def find_chunk1(chunk_stack, lb, exclude_list):
     ''' Finds the candidate for argument 1
 
     look-up chunk stack for NP that `first after target verb`
@@ -202,9 +203,11 @@ def find_chunk1(chunk_stack, lb):
         ck {Chunk{namedtuple}} -- an instance of chunk
     '''
     for ck_ in chunk_stack:
-        if ck_.role == 'NP' and ck_.init > lb:
-            return ck_
+        if ck_ not in exclude_list:
+            if ck_.role == 'NP' and ck_.init > lb:
+                return ck_
     return None
+
 
 if __name__ == '__main__':
     prop_ind = 0
@@ -248,15 +251,19 @@ if __name__ == '__main__':
             else:
                 n_chunks = len(chunk_stack)
                 prop_len = time
-
+                chunk0_list = []
+                chunk1_list = []
                 for prop_ind_, prop_time_ in predicate_dict.items():
                     # arg 0: look-up chunk stack `first before target verb` NP
-                    ck = find_chunk0(chunk_stack, prop_time_)
+                    ck = find_chunk0(chunk_stack, prop_time_, chunk0_list)
+
                     update_chunk(eval_list, prop_len, prop_ind_, ck, 'A0')
+                    chunk0_list.append(ck)
 
                     # arg 1: look-up chunk stack `first after target verb` NP
-                    ck = find_chunk1(chunk_stack, prop_time_)
+                    ck = find_chunk1(chunk_stack, prop_time_, chunk1_list)
                     update_chunk(eval_list, prop_len, prop_ind_, ck, 'A1')
+                    chunk1_list.append(ck)
 
                 predicate_dict = {}
                 prop_ind = 0
