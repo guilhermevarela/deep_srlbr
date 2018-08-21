@@ -1,10 +1,23 @@
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
 -	*
 -	*
+=======
+-	(AM-CAU*
 -	*
+-	*)
+-	(A0*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 desconhecer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	(A1*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(AM-LOC*)
 -	(A0*
@@ -31,24 +44,29 @@ desconhecer	(V*)
 
 -	*
 -	*
--	(A0*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	(AM-TMP*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 -	*
 -	*)
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	(A0*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
+-	(AM-ADV*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	*
 -	(AM-MNR*)
@@ -66,16 +84,22 @@ apontar	(V*)
 sonhar	(V*)
 -	(A1*
 -	*
+-	*)
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
+=======
+-	(AM-MNR*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
 -	*
 -	*
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -93,15 +117,25 @@ sonhar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
+=======
+-	(A1*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	(A1*)
 chegar	(V*)
 -	(A2*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
+-	*)
 -	*
+-	(AM-ADV*
 -	*
 -	*
 -	*
@@ -109,15 +143,20 @@ chegar	(V*)
 -	*
 
 passar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(C-V*)
 -	(A1*
+=======
+-	(A1*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*)
--	*
 -	*
 -	*
 -	*
@@ -135,6 +174,14 @@ passar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	(A1*
+-	*
+-	*)
+realizar	(V*)
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	(V*)
@@ -163,12 +210,18 @@ realizar	(C-V*)
 -	*
 trazer	(V*)
 -	(A1*
+-	*)
+-	(AM-TMP*
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-TMP*)
 -	*
 -	(A1*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 
 -	*
@@ -179,10 +232,16 @@ trazer	(V*)
 -	*
 -	*
 -	*
--	(A0*)
+-	(A1*)
 vir	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
 -	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*)
 -	*
 -	*
 -	*)
@@ -197,7 +256,6 @@ vir	(V*)
 -	*
 -	*
 -	*
--	*)
 -	*
 
 -	(AM-ADV*)
@@ -222,15 +280,19 @@ suspeitar	(V*)
 -	*)
 -	*
 
--	*
--	*
--	*
--	*
 -	(A1*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 morrer	(AM-TMP*
+=======
+-	*
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
+-	*
+morrer	(V*)
+-	(A1*)
 -	*
 
 -	(A1*)
@@ -276,6 +338,15 @@ subir	(V*)
 -	(A0*
 -	*)
 pedir	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	(A1*)
+-	(A2*
+-	*
+-	*
+-	*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A1*
 -	*
 -	*
@@ -291,10 +362,13 @@ pedir	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	*
 
@@ -372,8 +446,12 @@ garantir	(V*)
 -	(A1*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 produzir	*)
+=======
+produzir	(V*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A0*
 -	*
 -	*
@@ -395,18 +473,17 @@ produzir	*)
 ter	(V*)
 -	(A1*)
 -	*
--	(AM-TMP*
 -	*
 -	*
--	*)
+-	*
+-	*
 -	*
 -	*
 -	*
 -	*
 
+-	*
 -	(A1*
--	*
--	*
 -	*
 -	*
 -	*
@@ -417,12 +494,25 @@ ter	(V*)
 explicar	(V*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-DIS*
 -	*
 -	*)
 -	*
 -	*
 -	(AM-ADV*)
+=======
+-	(A2*
+-	*
+-	*
+-	*)
+-	*
+-	*
+-	*
+fixar	(V*)
+-	(AM-LOC*)
+-	(AM-PNC*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 fixar	(V*)
 -	(AM-MNR*
@@ -489,8 +579,14 @@ ter	(V*)
 -	*)
 -	*
 
+-	(AM-PNC*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -502,14 +598,22 @@ ter	(V*)
 -	*)
 -	*
 -	*
-reajustar	(V*)
--	(A1*
+reajustar	*
 -	*
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 -	(AM-TMP*
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -531,22 +635,24 @@ reajustar	(V*)
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 dizer	(V*)
 -	*
 
 -	*
 beneficiar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	(AM-CAU*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
+=======
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -554,19 +660,32 @@ beneficiar	(V*)
 -	*
 -	*
 -	*)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*)
+-	*
 
 -	*
--	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-TMP*
 -	*)
+=======
+-	*
+-	*
+-	(AM-TMP*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 demorar	(V*)
 -	(AM-TMP*
 -	*
 -	*
 -	*
 -	*)
--	(A1*
--	*
+-	(AM-CAU*
 -	*
 -	*)
 -	(AM-TMP*
@@ -586,17 +705,28 @@ demorar	(V*)
 -	*
 receber	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
 -	(AM-MNR*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 -	*
 
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
+-	*
+
 -	(A0*
+-	*
 -	*
 -	*
 -	*)
@@ -610,6 +740,10 @@ ter	(V*)
 -	(A1*
 -	*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -627,15 +761,14 @@ ter	(V*)
 -	*
 -	*
 -	*
+-	(AM-PNC*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
+-	*)
 -	*
 
 -	*
@@ -647,17 +780,31 @@ ter	(V*)
 -	*
 -	*
 -	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+dizer	(V*)
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*
 -	(A0*)
 dizer	(V*)
 -	(A0*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*)
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -685,6 +832,11 @@ ter	(V*)
 -	(A0*)
 atribuir	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -722,8 +874,8 @@ pensar	(V*)
 -	*
 
 -	*
--	*
--	*
+-	(A0*
+-	*)
 -	*
 -	*
 receber	(V*)
@@ -757,10 +909,10 @@ ver	(V*)
 -	*
 -	*
 -	*
+-	(A0*)
 -	*
--	*
--	*
--	*
+-	(A1*
+-	*)
 esperar	(V*)
 -	*
 
@@ -772,8 +924,7 @@ aproximar	(V*)
 
 -	(A0*)
 precisar	(V*)
--	(A1*
--	*
+-	(A3*
 -	*
 -	*
 -	*
@@ -781,11 +932,12 @@ precisar	(V*)
 -	*
 -	*
 -	*
+-	*
 
 -	*
 -	(A0*)
 ir	(V*)
--	(A1*
+-	(AM-TMP*
 -	*)
 
 -	(A0*
@@ -797,9 +949,16 @@ ir	(V*)
 -	*
 -	*)
 fazer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
 -	*)
 -	(AM-LOC*
+=======
+-	*
+-	*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -821,7 +980,8 @@ fazer	(V*)
 -	*
 -	*
 -	*
--	*)
+-	*
+-	*
 -	*
 
 -	(A0*
@@ -860,6 +1020,7 @@ atacar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*)
 -	(AM-ADV*)
 -	(AM-NEG*)
@@ -868,6 +1029,24 @@ ter	(V*)
 -	*
 -	*)
 -	*
+=======
+-	*
+-	*
+-	(AM-NEG*)
+ter	(V*)
+-	(A1*)
+-	(A2*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	(A2*
 -	*
 -	*
 -	*
@@ -878,19 +1057,18 @@ ter	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 
 -	*
 -	*
 -	(A1*
+=======
+
+-	(A1*
+-	*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -898,7 +1076,11 @@ ter	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*)
+=======
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 ficar	(V*)
 -	(A2*
@@ -907,6 +1089,11 @@ ficar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -1012,8 +1199,12 @@ fazer	(V*)
 -	(A1*
 -	*
 -	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
 -	*)
 -	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 
 -	(A0*
 -	*
@@ -1055,8 +1246,12 @@ levantar	(V*)
 -	*
 -	*
 -	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
 -	*)
 -	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 confirmar	(V*)
 -	(AM-LOC*
 -	*
@@ -1084,7 +1279,7 @@ comprovar	(V*)
 
 -	(A0*)
 acusar	(V*)
--	(A1*
+-	(A2*
 -	*
 -	*)
 
@@ -1092,8 +1287,16 @@ acusar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
+=======
+-	*)
+-	*
+-	*
+comparecer	(V*)
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 comparecer	(V*)
 -	(AM-TMP*)
@@ -1139,7 +1342,7 @@ condenar	(V*)
 -	(A1*)
 -	*
 punir	(V*)
--	(A2*
+-	(AM-PRD*
 -	*
 -	*)
 -	*
@@ -1157,7 +1360,7 @@ punir	(V*)
 -	*
 -	*
 -	*
--	*
+-	(AM-TMP*)
 cumprir	(V*)
 -	(A1*
 -	*
@@ -1186,13 +1389,13 @@ anunciar	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 
 -	(A0*
@@ -1212,13 +1415,20 @@ ficar	(V*)
 -	*
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
 -	*)
 começar	(V*)
 -	(AM-TMP*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
+começar	(V*)
+-	(AM-TMP*
 -	*
+-	*)
+-	(AM-LOC*
 -	*
 -	*
 -	*
@@ -1288,13 +1498,17 @@ faltar	(V*)
 -	*
 -	*)
 
--	*
--	*
+-	(A0*
+-	*)
 -	*
 -	*
 viver	(V*)
 -	(A1*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(AM-TMP*
 -	*
@@ -1313,6 +1527,12 @@ viver	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -1329,6 +1549,11 @@ viver	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -1340,6 +1565,11 @@ viver	(V*)
 -	*)
 -	*
 dizer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(A1*
 -	*
@@ -1353,6 +1583,9 @@ dizer	(V*)
 -	*
 -	*
 
+-	(A0*
+-	*
+-	*)
 -	*
 -	*
 -	*
@@ -1364,23 +1597,26 @@ dizer	(V*)
 -	*
 -	*
 -	*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
+-	*)
 -	*
 -	*
 -	*
 -	*
 -	*
 faltar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(C-V*)
+=======
+-	(A1*)
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(AM-PNC*
 -	*
@@ -1421,6 +1657,11 @@ renovar	(V*)
 -	(A1*
 -	*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	(AM-TMP*
@@ -1431,9 +1672,17 @@ renovar	(V*)
 
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	(A1*)
+acontecer	(V*)
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A1*
 acontecer	*)
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -1495,6 +1744,11 @@ começar	(V*)
 -	*
 -	*)
 -	(AM-TMP*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -1539,17 +1793,20 @@ ganhar	(V*)
 
 -	(AM-TMP*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
+-	(AM-TMP*
 -	*
--	*
--	*
--	*
--	*
+-	*)
 -	*
 -	(A0*)
 disputar	(V*)
@@ -1559,9 +1816,12 @@ disputar	(V*)
 -	(AM-ADV*
 -	*
 -	*
--	*)
 -	*
 
+-	(AM-TMP*
+-	*)
+-	*
+-	(AM-LOC*
 -	*
 -	*
 -	*
@@ -1570,11 +1830,7 @@ disputar	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
+-	*)
 -	*
 -	(A0*)
 -	*
@@ -1582,7 +1838,11 @@ disputar	(V*)
 -	*
 -	*
 terminar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
+=======
+-	(AM-MNR*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -1590,6 +1850,11 @@ terminar	(V*)
 -	(A0*)
 multar	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -1603,6 +1868,7 @@ multar	(V*)
 -	*
 -	*)
 autuar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-TMP*
 -	*)
 -	(A2*
@@ -1612,12 +1878,28 @@ autuar	(V*)
 -	*
 -	(AM-LOC*
 -	*)
+=======
+-	(A1*
+-	*
+-	*)
+-	(AM-LOC*
+-	*
+-	*
+-	*
+-	*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 
 -	(A0*)
 -	(AM-NEG*)
 apresentar	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -1633,13 +1915,19 @@ apresentar	(V*)
 -	(A0*)
 descumprir	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
--	*
--	*
--	*
+=======
 -	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 
 -	*
@@ -1649,6 +1937,7 @@ descumprir	(V*)
 -	*
 -	*
 -	*
+-	(A0*
 -	*)
 -	*
 chegar	(V*)
@@ -1658,8 +1947,6 @@ chegar	(V*)
 -	*)
 -	*
 
--	(AM-DIS*
--	*)
 -	*
 -	(A1*
 -	*
@@ -1667,6 +1954,8 @@ chegar	(V*)
 -	*)
 -	*
 -	(AM-DIS*)
+-	*
+-	(AM-ADV*)
 -	*
 aplicar	(V*)
 -	(A1*
@@ -1676,19 +1965,26 @@ aplicar	(V*)
 -	*
 -	*
 -	*
--	*
--	*
+-	*)
+-	(AM-TMP*
 -	*
 -	*
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
 produzir	*
 -	*)
 -	(AM-LOC*
+=======
 -	*
--	*)
+produzir	*
+-	*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
 
 -	(A0*
 -	*)
@@ -1740,7 +2036,12 @@ tomar	(V*)
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
+=======
+-	*)
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -1760,6 +2061,12 @@ fazer	(V*)
 -	(A0*)
 aconselhar	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
+-	(AM-PNC*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -1800,8 +2107,8 @@ conversar	(V*)
 -	*
 -	*
 -	*
-reverter	(V*)
--	(A1*
+reverter	(A1*
+-	*
 -	*)
 -	*
 
@@ -1827,6 +2134,7 @@ perder	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-NEG*)
 -	*
 -	*
@@ -1834,6 +2142,17 @@ fazer	(V*)
 -	(A1*
 -	*)
 -	(AM-MNR*
+=======
+-	*
+-	*
+-	*
+fazer	(V*)
+-	(C-V*
+-	*)
+-	(AM-ADV*
+-	*)
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -1856,8 +2175,13 @@ fazer	(V*)
 -	*
 -	*
 -	*
+-	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-NEG*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 criticar	(V*)
 -	*
@@ -1870,25 +2194,31 @@ criticar	(V*)
 cumprir	(V*)
 -	(A1*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*)
 -	*
 -	*
 
+-	(AM-TMP*
 -	*
--	*
--	*
+-	*)
 -	*
 -	(A0*)
 preferir	(V*)
--	(A1*
+-	(C-V*)
 -	*
--	*)
+-	*
 -	*
 
 -	*
@@ -1973,23 +2303,23 @@ simpatizar	(V*)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*)
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 
 -	(AM-LOC*
@@ -2030,9 +2360,20 @@ simpatizar	(V*)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	(A0*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 ganhar	(V*)
 -	(AM-PRD*
+=======
+ganhar	*
+-	*
+-	*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -2043,7 +2384,6 @@ ganhar	(V*)
 -	*
 -	*
 -	*
--	*)
 -	*
 
 -	(A0*
@@ -2075,14 +2415,19 @@ haver	(V*)
 -	*
 -	(A1*
 -	*
--	*
--	*
--	*
--	*
+-	(AM-PRD*
 -	*
 -	*)
 -	*
 -	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*
+-	*)
+-	*
+-	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 
 -	*
 -	*
@@ -2095,10 +2440,14 @@ haver	(V*)
 -	*
 -	*
 -	*
--	(A0*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(AM-REC*)
 separar	(V*)
 -	*
@@ -2108,6 +2457,13 @@ separar	(V*)
 ocorrer	(V*)
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	(A1*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(A1*
 -	*
@@ -2119,9 +2475,9 @@ ocorrer	(V*)
 -	*)
 -	*
 
--	(AM-ADV*
 -	*
--	*)
+-	*
+-	(A1*)
 -	*
 -	(A1*)
 -	*
@@ -2142,9 +2498,15 @@ colocar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
 -	*)
 -	(AM-ADV*)
+=======
+-	*
+-	(A1*)
+-	(AM-MNR*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 chegar	(V*)
 -	(AM-LOC*
 -	*
@@ -2162,11 +2524,17 @@ chegar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-DIS*)
 -	*
-dar	(V*)
--	(A1*
+=======
 -	*
+-	*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+dar	(V*)
+-	(A1*)
+-	(A2*
 -	*
 -	*)
 -	*
@@ -2174,6 +2542,16 @@ dar	(V*)
 -	*
 -	*
 -	*
+-	(AM-PRD*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -2182,17 +2560,7 @@ dar	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
+-	*)
 -	*
 
 -	*
@@ -2229,6 +2597,7 @@ dar	(V*)
 -	*
 -	*
 -	*
+-	(AM-PNC*
 -	*
 -	*
 -	*
@@ -2256,7 +2625,7 @@ expulsar	(V*)
 -	*
 -	*
 -	*
--	*
+-	(A0*)
 adotar	(V*)
 -	(A1*
 -	*
@@ -2302,9 +2671,9 @@ forçar	(V*)
 -	*
 reduzir	(V*)
 -	(A1*
--	*
--	*
--	*
+-	*)
+-	(A2*)
+-	(AM-TMP*
 -	*)
 -	*
 
@@ -2421,22 +2790,23 @@ vetar	(V*)
 
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
 -	(A0*)
+=======
+-	(A1*)
+-	(AM-TMP*)
+-	(A1*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 estar	(V*)
 -	(A1*
 -	*
+-	*)
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -2447,24 +2817,36 @@ estar	(V*)
 -	*
 -	*)
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
 
+-	(AM-TMP*
+-	*
+-	*)
+-	*
+-	(A0*)
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
+-	*)
+-	*
+-	(AM-ADV*
 -	*
 -	*
 -	*
--	*
--	*
--	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	(AM-LOC*
--	*
--	*
--	*
--	*
+=======
+-	*)
+-	(A0*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -2472,7 +2854,11 @@ estar	(V*)
 -	*)
 -	*
 investir	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*
+=======
+-	(AM-ADV*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -2521,7 +2907,11 @@ firmar	(V*)
 -	*
 -	(A1*)
 valer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-LOC*
+=======
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -2534,6 +2924,7 @@ valer	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 crescer	(V*)
 -	(A4*
@@ -2541,12 +2932,16 @@ crescer	(V*)
 -	*
 -	*
 -	*
+=======
+-	(A1*
+-	*)
+crescer	(V*)
+-	(A3*
 -	*
 -	*
--	*
--	*
--	*
--	*
+-	*)
+-	(A4*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -2554,11 +2949,22 @@ crescer	(V*)
 -	*
 -	*
 -	*)
+-	(AM-TMP*
 -	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*
+-	*)
+-	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 
+-	(AM-TMP*
 -	*
--	*
--	*
+-	*)
 -	*
 -	*
 -	*
@@ -2591,7 +2997,6 @@ elevar	(V*)
 -	*
 -	*)
 divulgar	(V*)
--	(AM-TMP*)
 -	(A1*
 -	*
 -	*
@@ -2629,6 +3034,15 @@ divulgar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*)
+-	*
+
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -2649,6 +3063,12 @@ divulgar	(V*)
 -	*
 demonstrar	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+demonstrar	(V*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A1*
 -	*
 -	*
@@ -2743,35 +3163,51 @@ estar	(V*)
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A1*
 -	*)
 -	*
 escolher	(V*)
 -	*
 -	*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
+-	*)
+-	(AM-TMP*
 -	*
 -	*
--	*
--	*
--	*
--	*
+-	*)
 -	*
 
 -	*
+-	(V*)
+-	(A2*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
+=======
+-	*)
+-	(A1*
 -	*
 -	*
 -	*
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -2812,6 +3248,11 @@ estar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	(AM-TMP*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(A0*
 -	*)
 treinar	(V*)
@@ -2824,8 +3265,13 @@ treinar	(V*)
 -	*
 -	*)
 subir	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(C-V*)
 -	(AM-MNR*
+=======
+-	(A2*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
@@ -2836,7 +3282,7 @@ subir	(V*)
 -	(A0*)
 -	(AM-NEG*)
 falar	(V*)
--	(A1*
+-	(A3*
 -	*
 -	*)
 -	*
@@ -2882,18 +3328,24 @@ ganhar	(V*)
 -	*
 -	*)
 trabalhar	(V*)
--	(A1*
+-	(AM-TMP*
 -	*
--	*
--	*
+-	*)
+-	(AM-MNR*
 -	*
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
+=======
+-	(AM-DIS*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
+-	*)
 -	*
+-	(A0*
 -	*
 -	*
 -	*
@@ -2902,9 +3354,15 @@ trabalhar	(V*)
 -	*
 -	(A1*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 vir	(V*)
 -	(C-V*)
 -	(A2*
+=======
+vir	*
+-	(AM-MNR*)
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -2956,6 +3414,13 @@ vir	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+compensar	(V*)
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 compensar	(V*)
@@ -2980,6 +3445,7 @@ haver	(V*)
 -	(A0*
 -	*)
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -2993,6 +3459,13 @@ haver	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 
 -	*
 -	*
@@ -3004,13 +3477,20 @@ haver	(V*)
 -	*
 -	*
 substituir	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*)
 -	*
 -	*
 -	*
 -	*
+=======
+-	(A0*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
+-	(V*)
+-	(AM-ADV*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -3057,22 +3537,35 @@ ter	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-NEG*)
 -	*
 -	*
 jogar	(V*)
 -	*
 -	*
+=======
+-	(A1*
+-	*)
+-	*
+jogar	(V*)
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
+-	*)
 -	*
 
 -	(AM-DIS*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A0*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 avaliar	(V*)
@@ -3128,11 +3621,24 @@ proibir	(V*)
 -	*)
 estar	(V*)
 -	(A2*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
 -	(AM-TMP*
+=======
+-	*)
+-	(A1*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*)
+-	(AM-PRD*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*)
 -	*
 -	*)
 -	*
@@ -3142,14 +3648,19 @@ estar	(V*)
 -	*
 -	*
 -	*
+
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 -	*
 
 -	*
 -	*
 -	*
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3173,6 +3684,7 @@ iniciar	(V*)
 
 -	(AM-DIS*
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -3199,12 +3711,12 @@ inspirar	(V*)
 -	(AM-DIS*)
 -	*
 
+-	(A1*
+-	*
+-	*
+-	*
+-	*)
 -	(A0*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -3242,8 +3754,12 @@ ficar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
+=======
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 
 -	(A1*
@@ -3254,12 +3770,12 @@ ficar	(V*)
 -	*
 -	*
 dizer	(V*)
+-	(A2*
+-	*
+-	*
+-	*)
+-	*
 -	(A0*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*)
@@ -3285,9 +3801,14 @@ afirmar	(V*)
 -	*
 
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 achar	(V*)
 -	(AM-MNR*)
+=======
+achar	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	(AM-LOC*
 -	*
 -	*)
@@ -3296,6 +3817,11 @@ achar	(V*)
 encontrar	(V*)
 -	(A1*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3346,10 +3872,10 @@ sequestrar	(V*)
 -	*
 -	*
 -	*
+-	*)
 -	*
 -	*
--	*
--	*
+-	(A0*
 -	*)
 -	*
 
@@ -3374,9 +3900,15 @@ confundir	(V*)
 -	(A1*)
 -	*
 receber	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*
 -	*
 -	*
+=======
+-	(AM-MNR*
+-	*)
+-	(AM-LOC*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3394,9 +3926,14 @@ receber	(V*)
 -	*
 receber	(V*)
 -	(AM-TMP*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
+-	*)
+-	(A1*
 -	*
 -	*
 -	*)
@@ -3404,6 +3941,8 @@ receber	(V*)
 -	*
 -	*
 -	*
+-	*)
+-	(A0*
 -	*
 -	*
 -	*
@@ -3413,25 +3952,46 @@ receber	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
+=======
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 morrer	(V*)
 -	(AM-TMP*
+=======
+morrer	*
 -	*
--	*)
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
 -	*
 
 -	(A1*
 -	*)
 -	*
 realizar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	(A0*
 -	*
 -	*)
 -	*
+=======
+-	(A0*
+-	*
+-	*
+-	*
+-	*
+-	*)
+-	*
+-	*
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	(AM-PRD*)
@@ -3445,12 +4005,20 @@ realizar	(V*)
 
 -	(A1*)
 bater	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*)
+=======
+-	(AM-EXT*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	(AM-MNR*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 
 -	*
@@ -3488,7 +4056,7 @@ ficar	(V*)
 -	*
 -	(A0*)
 contar	(V*)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
@@ -3530,6 +4098,11 @@ ficar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
+-	(AM-CAU*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3540,8 +4113,12 @@ ficar	(V*)
 -	*
 -	*
 -	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
 -	*)
 -	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 
 -	*
 -	*
@@ -3557,7 +4134,8 @@ ficar	(V*)
 -	*
 -	*
 derrotar	(V*)
--	(AM-TMP*
+-	(C-V*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -3567,7 +4145,7 @@ derrotar	(V*)
 -	*
 -	*
 -	*
--	*
+-	*)
 -	*
 -	*
 -	*
@@ -3598,18 +4176,18 @@ marcar	(V*)
 -	*)
 -	*
 
--	(A1*
--	*
+-	(A0*
 -	*
 -	*
 -	*
 -	*
 -	*)
+-	*
 participar	(V*)
--	(A1*
+-	(A2*
 -	*
--	*
--	*
+-	*)
+-	(C-AM-PRD*
 -	*
 -	*
 -	*
@@ -3621,6 +4199,7 @@ participar	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-DIS*
 -	*
 -	*
@@ -3634,6 +4213,20 @@ estar	(V*)
 -	*
 -	*
 -	*
+=======
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	(AM-REC*)
+estar	(V*)
+-	(A2*
+-	*)
+-	(V*)
+-	(A2*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3664,7 +4257,11 @@ afirmar	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-PRD*
+=======
+-	(AM-PNC*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	*
 -	(A0*
@@ -3684,7 +4281,7 @@ representar	(V*)
 -	*
 
 gostar	(V*)
--	(A1*
+-	(A3*
 -	*
 -	*)
 -	*
@@ -3747,11 +4344,19 @@ fazer	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*)
 -	*
 -	*
 encaixar	(V*)
 -	(AM-MNR*
+=======
+-	(A1*
+-	*)
+-	(V*)
+encaixar	(C-V*)
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3771,8 +4376,8 @@ ter	(V*)
 -	*
 -	*
 -	*
--	*
--	*
+-	(A0*
+-	*)
 -	*
 denunciar	(V*)
 -	(AM-MNR*)
@@ -3816,15 +4421,15 @@ mudar	(V*)
 -	*
 -	*
 -	*
+-	(A0*
 -	*
+-	*)
 -	*
--	*
--	*
--	*
+-	(AM-TMP*)
 -	*
 depender	(V*)
+-	(C-V*)
 -	(A1*
--	*
 -	*
 -	*)
 -	*
@@ -3866,8 +4471,8 @@ desestimular	(V*)
 -	(A1*
 -	*
 -	*
--	*
--	*
+-	*)
+-	(AM-TMP*
 -	*
 -	*
 -	*)
@@ -3876,11 +4481,19 @@ desestimular	(V*)
 -	(A0*)
 -	*
 oferecer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A3*
 -	*)
 -	*
 -	(AM-CAU*
 -	*
+=======
+-	(A2*
+-	*)
+-	*
+-	(AM-DIS*)
+-	(AM-CAU*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -3975,6 +4588,11 @@ chegar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 
 -	*
@@ -3998,10 +4616,10 @@ sair	(V*)
 -	*
 -	*
 -	*
+-	(AM-PRD*
 -	*
 -	*
--	*
--	*
+-	*)
 -	*
 -	(A0*)
 fazer	(V*)
@@ -4009,22 +4627,22 @@ fazer	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 
 -	*
@@ -4054,11 +4672,15 @@ fazer	(V*)
 -	*
 -	(A1*)
 pagar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A3*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
--	*)
+-	*
+-	*
 -	*
 
 -	*
@@ -4104,21 +4726,21 @@ pôr	(V*)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 
 -	*
@@ -4196,7 +4818,11 @@ dirigir	(V*)
 -	*
 
 -	(A1*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-ADV*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 estar	(V*)
 -	(A2*
 -	*
@@ -4210,6 +4836,7 @@ estar	(V*)
 -	*
 -	*
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -4307,17 +4934,22 @@ resistir	(V*)
 -	*
 -	(A1*)
 pagar	(V*)
--	(A2*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
+-	(A3*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 
@@ -4349,11 +4981,16 @@ pagar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	(A0*)
 filmar	(V*)
 -	(A2*
 -	*)
+=======
+-	(A0*)
+filmar	(V*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(A1*
 -	*
@@ -4361,6 +4998,7 @@ filmar	(V*)
 -	*)
 -	*
 -	*
+-	*)
 -	*
 
 -	*
@@ -4373,17 +5011,22 @@ filmar	(V*)
 -	*
 fazer	(V*)
 -	(A1*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	(A2*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*
 -	*
 -	*
@@ -4395,11 +5038,22 @@ fazer	(V*)
 -	*
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-ADV*
 -	*
 -	*)
 -	*
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	(A0*
+-	*
+-	*
+-	*
+-	*
+-	*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -4412,11 +5066,11 @@ fazer	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*)
 -	*
--	*
--	*
--	*
--	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 confirmar	(V*)
 -	*
 -	(A1*
@@ -4428,12 +5082,19 @@ confirmar	(V*)
 -	*
 
 ver	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-MNR*
 -	*
 -	*)
 -	(A1*
+=======
+-	*
+-	(AM-TMP*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
+-	*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -4460,8 +5121,13 @@ ver	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
 -	*)
+=======
+-	*
+-	(A0*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 jogar	(V*)
 -	*
 -	*
@@ -4472,16 +5138,25 @@ jogar	(V*)
 -	*
 
 vencer	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-MNR*
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
+-	(V*)
+-	(A4*
 -	*)
 -	*
 
 -	(AM-ADV*)
 bastar	(V*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*
+=======
+-	(AM-PNC*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -4510,7 +5185,11 @@ bastar	(V*)
 -	*
 -	(A0*
 -	*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-DIS*)
+=======
+-	(AM-ADV*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 chegar	(V*)
 -	(A1*
@@ -4518,23 +5197,27 @@ chegar	(V*)
 -	*)
 -	*
 
--	(A0*
+-	(A1*
 -	*)
 ancorar	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-MNR*
+=======
+-	(A2*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*)
 -	*
 -	*
 -	*
--	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*)
+-	*
+-	*
 -	*
 
 -	*
@@ -4556,7 +5239,12 @@ tornar	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*
+=======
+-	(A1*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	(A1*)
 haver	(V*)
@@ -4574,8 +5262,13 @@ haver	(V*)
 querer	(V*)
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(V*)
 -	(AM-MNR*
+=======
+-	(AM-CAU*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -4588,9 +5281,15 @@ querer	(V*)
 -	*)
 -	*
 ir	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A2*
 -	*
 -	*
+=======
+-	(C-V*
+-	*)
+-	(A0*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -4598,16 +5297,20 @@ ir	(V*)
 -	*)
 -	*
 
+-	(AM-ADV*
 -	*
--	*
--	*
+-	*)
 -	(A0*
 -	*
 -	*)
 dispensar	(V*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-ADV*)
 -	*
+=======
+-	(AM-MNR*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -4627,6 +5330,8 @@ dispensar	(V*)
 -	*
 -	(AM-PNC*
 -	*
+-	(AM-CAU*
+-	*
 -	*
 -	*
 -	*
@@ -4640,22 +5345,29 @@ dispensar	(V*)
 -	(A0*
 -	*)
 saber	(V*)
--	(A1*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*)
+=======
+-	*
+
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 
 -	*
@@ -4666,12 +5378,17 @@ saber	(V*)
 -	*
 -	*
 -	*
+-	(A0*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A0*
 -	*
 -	*)
 -	*
+=======
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 defender	(V*)
@@ -4687,38 +5404,48 @@ chegar	(V*)
 -	*
 -	(AM-DIS*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(AM-DIS*
+=======
 -	*
--	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	*
+-	*
 -	*
 -	*
 
--	(A0*
+-	(AM-PRD*
 -	*)
 discordar	(V*)
--	(A1*
--	*
--	*)
--	*
-
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	(A0*)
-jogar	(V*)
 -	(A2*
 -	*
 -	*)
 -	*
 
 -	(A0*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+-	*
+-	(A0*)
+=======
+-	*)
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+jogar	(V*)
+-	(A2*
+-	*
+-	*)
+-	*
+
+-	(A1*
 -	*)
 estar	(V*)
 -	(A1*
@@ -4730,10 +5457,17 @@ estar	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*
 -	(A0*)
 apreciar	(V*)
 -	(A1*)
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	(A0*)
+apreciar	(V*)
+-	(A1*
 -	*
 -	*
 -	*
@@ -4742,20 +5476,22 @@ apreciar	(V*)
 -	*
 -	*
 -	*
--	*
+-	*)
 -	*
 
 -	(A0*
 -	*)
--	(AM-NEG*)
+-	*
 existir	(V*)
--	(A1*
 -	*
 -	*
 -	*
--	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	*)
 -	(AM-EXT*)
+=======
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
@@ -4767,16 +5503,24 @@ existir	(V*)
 -	*
 -	*
 -	*
-
 -	*
 -	*
 -	(AM-DIS*)
 -	*
+
 -	*
 -	(A1*
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+-	*
+-	*
+-	(A1*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*)
 -	(AM-ADV*)
 engatinhar	(V*)
@@ -4849,6 +5593,7 @@ querer	(V*)
 -	*
 -	*
 -	*
+-	*)
 -	*
 -	*
 -	*
@@ -4878,13 +5623,24 @@ dizer	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*
+-	*
+-	*
+=======
+-	(AM-PNC*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*)
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 formar	*
+=======
+formar	(V*)
+-	(AM-PRD*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	(A2*
 -	*
@@ -4894,33 +5650,51 @@ formar	*
 -	*
 -	(A0*)
 ter	(V*)
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A1*)
 -	*
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 
 -	*
 -	(A0*)
 ter	(V*)
 -	(A1*)
 -	*
+=======
+-	*
+-	*
+
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
+-	*
+-	(A0*)
+ter	(V*)
 -	*
 -	*
 -	*
+-	*
+-	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+
+=======
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*
 
 -	*
+-	(A1*
+-	*)
 -	*
 -	*
--	*
--	*
--	*
+-	(A1*)
 -	*
 pensar	(V*)
 -	(A1*
@@ -4973,8 +5747,8 @@ abastecer	(V*)
 -	*
 -	*
 
--	(A1*
 -	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -5024,7 +5798,11 @@ enfrentar	(V*)
 -	*)
 -	*
 
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
 -	(A0*
+=======
+-	(A2*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 -	*)
@@ -5085,6 +5863,11 @@ estimular	(V*)
 -	*
 -	*
 -	*
+<<<<<<< HEAD:lr5.00e-03_hs32x16_ctx-p1/valid-eval.props
+=======
+-	*
+-	*
+>>>>>>> 0de3b98b7097f06bee09496d3b4d80166d50e941:lr5.00e-03_hs32_ctx-p1/valid-eval.props
 -	*
 -	*
 
@@ -5104,7 +5887,7 @@ estimular	(V*)
 -	*
 -	*
 promover	(V*)
--	(A1*
+-	(AM-ADV*
 -	*
 -	*
 -	*)

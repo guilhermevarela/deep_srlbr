@@ -261,8 +261,10 @@ def _process(context_features, sequence_features,
     labels_list.append(output_label)
     labels_list.append('INDEX')
     for key in labels_list:
-
-        dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
+        try:
+            dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
+        except TypeError as t:
+            import code; code.interact(local=dict(globals(), **locals()))
 
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
 
