@@ -103,7 +103,7 @@ if __name__ == '__main__':
         # print(learning_rate)
         # print(args.batch_size)
 
-        estimate_kfold(input_labels=input_labels, target_label=args.target,
+        estimate_kfold(input_labels=input_labels, target_label=target_label,
                        hidden_layers=args.depth, embeddings=embeddings,
                        epochs=args.epochs, lr=learning_rate, fold=25,
                        version=version)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         # print(args.batch_size)
         # print(args.ctx_p)
 
-        estimate(input_labels=input_labels, target_label=args.target,
+        estimate(input_labels=input_labels, target_label=target_label,
                  hidden_layers=args.depth, embeddings=embeddings,
                  epochs=args.epochs, lr=learning_rate,
                  batch_size=args.batch_size, version=version)
