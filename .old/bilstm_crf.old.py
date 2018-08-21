@@ -215,7 +215,7 @@ if __name__== '__main__':
 	print(hidden_size, embeddings_name, embeddings_size, ctx_p, lr, batch_size, num_epochs)
 
 
-	input_sequence_features= ['ID', 'LEMMA', 'M_R', 'PRED', 'GPOS']  
+	input_sequence_features= ['ID', 'LEMMA', 'MARKER', 'PRED', 'GPOS']  
 	if ctx_p > 0:
 		input_sequence_features+=['CTX_P{:+d}'.format(i) 
 			for i in range(-ctx_p,ctx_p+1) if i !=0 ]

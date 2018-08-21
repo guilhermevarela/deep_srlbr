@@ -4,23 +4,24 @@
     Feature engineering module
     * Converts linguist and end-to-end features into objects
 '''
-import sys
-sys.path.append('datasets')
+
+import sys, os
+sys.path.append(os.getcwd())
 from collections import OrderedDict, defaultdict, deque
 
-import data_propbankbr as br
+import datasets as br
 import pandas as pd
 import yaml
 import networkx as nx
 import matplotlib.pyplot as plt
-
+import re
 
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -31,6 +32,101 @@ class FeatureFactory(object):
             return eval(klass)(dict_db)
         else:
             raise ValueError('klass must be in {:}'.format(FeatureFactory.klasses()))
+
+
+class ColumnChunk(object):
+    '''
+        Creates 4 chunk columns
+
+        returns:
+            chunk_id
+            chunk_start
+            chunk_end
+            chunk_tag
+            chunk_candidate_id
+
+        Usage:
+            See below (main)
+    '''
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        # Output lists
+        id_list = []
+        start_list = []
+        finish_list = []
+        len_list = []
+
+        # Control lists
+        proplen_list = []
+
+        # Control variables
+        chunk_id = 0
+        chunk_start = 0
+        proplen = 0
+
+        propstart = 0
+        prevarg = ''
+        prevprop = -1
+        for idx, arg in self.db['ARG'].items():
+            prop = self.db['P'][idx]
+            proplen += 1
+            if prevprop != prop:
+                chunk_id += 1
+                chunk_start = idx - propstart
+
+            else:  # same proposition
+                # new colored chunk or blank chunk
+                if (re.search(r'\)', prevarg) and arg == '*') or\
+                   (re.search(r'\(', arg)):
+                    chunk_id += 1
+                    chunk_start = idx - propstart
+
+            prevarg = arg
+            prevprop = prop
+            id_list.append(chunk_id)
+            start_list.append(chunk_start)
+            if chunk_start == idx - propstart and (idx - propstart) > 0:
+                chunk_len = len(start_list) - len(finish_list) - 1
+                finish_list += [chunk_start] * chunk_len
+                len_list += [chunk_len] * chunk_len
+
+            if idx + 1 < len(self.db['P']) and \
+               self.db['P'][idx + 1] != prop:
+
+                prevarg = ''
+                chunk_len = len(start_list) - len(finish_list)
+                finish_list += [proplen] * chunk_len
+                len_list += [chunk_len] * chunk_len
+
+                proplen_list += [proplen] * proplen
+                proplen = 0
+                propstart = idx + 1
+
+        chunk_len = len(start_list) - len(finish_list)
+        finish_list += [proplen] * chunk_len
+        len_list += [chunk_len] * chunk_len
+        proplen_list += [proplen] * proplen
+
+        candidate_id_list = [
+            int(s * proplen_list[i] - (s * (s + 1) / 2) + finish_list[i] - 1)
+            for i, s in enumerate(start_list)]
+
+        keys = self.db['ARG'].keys()
+        self.chunk_dict = defaultdict(OrderedDict)
+        self.chunk_dict['CHUNK_ID'] = self._list2dict(keys, id_list)
+        self.chunk_dict['CHUNK_START'] = self._list2dict(keys, start_list)
+        self.chunk_dict['CHUNK_FINISH'] = self._list2dict(keys, finish_list)
+        self.chunk_dict['CHUNK_CANDIDATE_ID'] = self._list2dict(keys, candidate_id_list)
+        self.chunk_dict['CHUNK_LEN'] = self._list2dict(keys, len_list)
+        return self.chunk_dict
+
+
+    def _list2dict(self, _dict_keys, _list):
+        tuple_list = zip(list(_dict_keys), _list)
+        tuple_list = sorted(tuple_list, key=lambda x: x[0])
+        return OrderedDict(tuple_list)
 
 
 class ColumnShifter(object):
@@ -371,14 +467,14 @@ class ColumnPredMarker(object):
                 preddist .: dict<PRED_DIST, OrderedDict<int, int>>
         '''
         # defines output data structure
-        self.predmarker = {'PRED_MARKER': OrderedDict({})}
+        self.predmarker = {'MARKER': OrderedDict({})}
 
         # Finds predicate position
         predicate_d = _predicatedict(self.db)
         for time, proposition in self.db['P'].items():
             predicate_time = predicate_d[proposition]
 
-            self.predmarker['PRED_MARKER'][time] = 0 if predicate_time - time > 0 else 1
+            self.predmarker['MARKER'][time] = 0 if predicate_time - time > 0 else 1
 
         return self.predmarker
 
@@ -624,86 +720,100 @@ class ColumnDepTreeParser(object):
 
 
 def _predicatedict(db):
+    # d = {
+    #     db['P'][time]: time
+    #     for time, arg in db['ARG'].items() 
+    #         if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+    # }
     d = {
         db['P'][time]: time
-        for time, arg in db['ARG'].items() 
-            if (db['PRED'][time] != '-') and (arg in ('(V*)', '(C-V*)'))
+        for time, arg in db['ARG'].items() if (db['PRED'][time] != '-')
     }
     return d
 
 
-def _process_passivevoice(dictdb):
+def process_passivevoice(dictdb, version='1.0'):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
-    target_dir = 'datasets/csvs/column_passivevoice/'
+    target_dir = 'datasets/csvs/{:}/column_passivevoice/'.format(version)
     passivevoice = pvoice_marker.run()
 
     _store(passivevoice, 'passive_voice', target_dir)
 
 
-def _process_predmorph(dictdb):
+def process_chunk(dictdb, version='1.0'):
+
+    chunker = FeatureFactory().make('ColumnChunk', dictdb)
+    target_dir = 'datasets/csvs/{:}/column_chunks/'.format(version)
+    chunks = chunker.run()
+
+    _store(chunks, 'chunks', target_dir)
+
+
+def process_predmorph(dictdb, version='1.0'):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
-    target_dir = 'datasets/csvs/column_predmorph/'
+    target_dir = 'datasets/csvs/{:}/column_predmorph/'.format(version)
     predmorph = morpher.run()
 
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
 
-def _process_shifter(dictdb, columns, shifts):
+def process_shifter(dictdb, columns, shifts, version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    target_dir = 'datasets/csvs/column_shifts/'
+    target_dir = 'datasets/csvs/{:}/column_shifts/'.format(version)
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def _process_shifter_ctx_p(dictdb, columns, shifts):
+def process_shifter_ctx_p(dictdb, columns, shifts, version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
-    target_dir = 'datasets/csvs/column_shifts_ctx_p/'
+    target_dir = 'datasets/csvs/{:}/column_shifts_ctx_p/'.format(version)
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def _process_predicate_dist(dictdb):
+def process_predicate_dist(dictdb, version='1.0'):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().run()
 
-    target_dir = 'datasets/csvs/column_preddist/'
+    target_dir = 'datasets/csvs/{:}/column_preddist/'
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_t(dictdb):
+
+def process_t(dictdb, version='1.0'):
 
     column_t = FeatureFactory().make('ColumnT', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/column_t/'
+    target_dir = 'datasets/csvs/{:}/column_t/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 't')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_iob(dictdb):
+def process_iob(dictdb, version='1.0'):
 
     column_iob = FeatureFactory().make('ColumnIOB', dictdb)
     d = column_iob.run()
 
-    target_dir = 'datasets/csvs/column_iob/'
+    target_dir = 'datasets/csvs/{:}/column_iob/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'iob')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _process_predicate_marker(dictdb):
+def process_predmarker(dictdb, version='1.0'):
 
     column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/column_predmarker/'
+    target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
@@ -727,10 +837,11 @@ if __name__ == '__main__':
     gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
     db = gsdf.to_dict()
 
-    columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
-    shifts = [i for i in range(-3, 4)] 
-    # _process_shifter(db, columns, shifts)
-    _process_shifter_ctx_p(db, columns, shifts)
-    # _process_t(db)
-    # _process_predicate_marker(db)
-    # _process_iob(db)
+    # columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
+    # shifts = [i for i in range(-3, 4)] 
+    # process_shifter(db, columns, shifts)
+    # process_shifter_ctx_p(db, columns, shifts)
+    process_chunk(db)
+    # process_t(db)
+    # process_iob(db)
+    # process_iob(db)

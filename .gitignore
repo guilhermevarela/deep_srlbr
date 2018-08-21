@@ -10,7 +10,8 @@
 **/binaries
 
 # PEARL 
-/srlconll-1.1
+srlconll04/
+srlconll05/
 
 
 
@@ -25,3 +26,10 @@
 
 # Jupyter notebook
 *.ipynb_checkpoints
+
+# Pycharm
+*.idea
+
+#cProfile
+*.cprof
+*.dot
