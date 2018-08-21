@@ -71,12 +71,33 @@ def invalid(txt):
     return re.sub('\n', '', txt)
 
 
+def chunk_stack_process(feature_list, chunk_stack):
+    time = feature_list[0]
+    ctree = feature_list[7]
+
+    for role_ in re.findall('\(([A-Z]*)', ctree):
+        chunk_stack.append(Chunk(role=role_, init=time, finish=None))
+
+    closes = range(ctree.count(')'))
+    c = 0
+    if closes > 0:
+        for ck_ in reversed(chunk_stack):
+            if c < closes and ck_.finish is None:
+                ck_.finish = time
+                c += 1
+            if c == closes:
+                break
+
+def get_arg0(chunk_stack):
+    for ck_ in reversed(chunk_stack):
+        pass
+
 if __name__ == '__main__':
     prop_ind = 0
     sent_ind = 0
     gold_list = []
     eval_list = []
-    chunk_list = deque(list)
+    chunk_stack = deque(list)
     with open(TRAIN_PATH, mode='r') as f:
         for i, line in enumerate(f.readlines()):
             if len(line) > 1:  # Lines with scape newline \n character
