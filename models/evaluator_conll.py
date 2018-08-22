@@ -15,11 +15,12 @@
 '''
 import sys
 import os
-import subprocess
+from subprocess import PIPE, Popen
 import string
 import pandas as pd
 import pickle
 import re
+import tempfile
 
 from collections import OrderedDict
 
@@ -33,13 +34,159 @@ PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
 PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
 
 
+def to_conll(atuple):
+    txt = '{:}'.format(atuple[0])
+    txt += '\t{:}' * (len(atuple) - 1)
+    txt += '\n'
+
+    return txt.format(*atuple[1:])
+
+
+def evaluate(gold_list, eval_list,
+             verbose=True, script_version='05', file_dir=None,
+             file_name='tmp'):
+    '''[summary]
+
+    [description]
+
+    Arguments:
+        gold_list {[type]} -- [description]
+        eval_list {[type]} -- [description]
+
+    Keyword Arguments:
+        verbose {bool} -- [description] (default: {True})
+        script_version {str} -- [description] (default: {'05'})
+        file_dir {[type]} -- [description] (default: {None})
+        name {str} -- [description] (default: {'tmp'})
+
+    Returns:
+        [type] -- [description]
+    '''
+    # Solves directory
+    if file_dir is None:
+        file_dir = tempfile.gettempdir()
+
+    # Solves script version
+    if script_version not in ('04', '05',):
+        msg = 'script version {:}'.format(script_version)
+        msg += 'invalid only `04` and `05` allowed'
+        raise ValueError(msg)
+
+    else:
+        if script_version == '04':
+            script_path = PEARL_SRL04_PATH
+        else:
+            script_path = PEARL_SRL05_PATH
+
+    # file_dir = config.BASELINE_DIR
+    gold_path = '{:}{:}-gold.props'.format(file_dir, file_name)
+    eval_path = '{:}{:}-eval.props'.format(file_dir, file_name)
+    conll_path = '{:}{:}.conll'.format(file_dir, file_name)
+
+    with open(gold_path, mode='w') as f:
+        for gold_ in gold_list:
+            if gold_ is None:
+                f.write('\n')
+            else:
+                f.write(to_conll(gold_))
+
+    with open(eval_path, mode='w') as f:
+        for gold_ in eval_list:
+            if gold_ is None:
+                f.write('\n')
+            else:
+                f.write(to_conll(gold_))
+
+    cmd_list = ['perl', script_path, gold_path, eval_path]
+    pipe = Popen(cmd_list, stdout=PIPE, stderr=PIPE)
+
+    txt, err = pipe.communicate()
+    txt = txt.decode('UTF-8')
+    err = err.decode('UTF-8')
+
+    if verbose:
+        print(txt)
+        with open(conll_path, mode='w') as f:
+            f.write(txt)
+
+    # overall is a summary from the list
+    # is the seventh line
+    lines_list = txt.split('\n')
+
+    # get the numbers from the row
+    overall_list = re.findall(r'[-+]?[0-9]*\.?[0-9]+.', lines_list[6])
+    f1 = float(overall_list[-1])
+
+    return f1
+
+
+def _props_file2zip_list(file_path):
+    '''Opens a props file and returns as a zipped list
+
+    Arguments:
+        file_path {str} -- String representing a props file full path
+
+    '''
+    zip_list = []
+
+    def trim(txt):
+        return str(txt).rstrip().lstrip()
+
+    def invalid(txt):
+        return re.sub('\n', '', txt)
+
+    with open(file_path, mode='r') as f:
+        for line in f.readlines():
+            if len(line) > 1:
+                line_list = [trim(val)
+                             for val in invalid(line).split('\t')]
+                zip_list.append(tuple(line_list))
+            else:
+                zip_list.append(None)
+    return zip_list
+
+
+def _filter_list(zip_list, keep_list):
+    '''Keeps only tags in keep list
+
+    Erase all tags not in keep_list 
+    * A0, A1, AM-NEG, V
+
+    Arguments:
+        zip_list {list{tuple}} -- zip_list is a list that each item is 
+            a list.
+
+    '''
+    filter_list = []
+    first = True
+    for tuple_ in zip_list:
+        if tuple_ is not None:
+            if first:
+                open_labels_ = [False] * (len(tuple_) - 1)
+                first = False
+            list_ = list(tuple_)
+            for column_, value_ in enumerate(list_[1:]):
+                if any([val_ in value_ for val_ in keep_list]):
+                    list_[column_ + 1] = value_
+
+                    open_labels_[column_] = ')' not in value_
+                elif value_ == '*)' and open_labels_[column_]:
+                    list_[column_ + 1] = value_
+                    open_labels_[column_] = False
+                else:
+                    list_[column_ + 1] = '*'
+            tuple_ = tuple(list_)
+        else:
+            first = True
+
+        filter_list.append(tuple_)
+
+    return filter_list
+
+
 class EvaluatorConll(object):
 
     def __init__(self, db, idx2lex, target_dir='./'):
-        '''
-            args:
-            returns:
-        '''
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
@@ -47,23 +194,55 @@ class EvaluatorConll(object):
         self.props_dict = {}
         self._refresh()
 
+    @staticmethod
+    def evaluate_frompropositions(gold_path, predicted_path,
+                                  file_name, verbose=True, keep_list=None):
+        '''Wraps pearl calls to CoNLL Shared Task 2005 script
+
+            Evaluates the conll scripts returning total precision, recall and F1
+            *accepts a filter list for restricting arguments
+            *saves a temporary file and deletes it
+
+        Arguments:
+            gold_path {str} -- a string representing a valid path
+            predicted_path {str} -- [description]
+
+        Keyword Arguments:
+            filter_list {list} -- Arguments to keep on final file (default: None)
+                                ex: filter_list=['A0', 'A1']
+                                if None keeps all
+        '''
+        gold_list = _props_file2zip_list(gold_path)
+        eval_list = _props_file2zip_list(predicted_path)
+
+        # filter        
+        if keep_list is not None:
+            gold_list = _filter_list(gold_list, keep_list)
+            eval_list = _filter_list(eval_list, keep_list)
+
+        f1 = evaluate(gold_list, eval_list,
+                      verbose=True, script_version='05', file_dir=None,
+                      file_name=file_name)
+
+        return f1
+
     def evaluate_tensor(self, prefix,
                         index_tensor, predictions_tensor, len_tensor,
                         target_column, hparams):
-        '''
-            Evaluates the conll scripts returning total precision, recall and F1
-                if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
+        ''''Wraps pearl calls to CoNLL Shared Task 2005 script
 
-            args:
-                index_tensor        .:
-                predictions_tensor  .:
-                len_tensor          .:
+        Evaluates the conll scripts returning total precision, recall and F1
+        if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
 
-            returns:
-                prec                .: float<> precision
-                rec                 .: float<> recall 
-                f1                  .: float<> F1 score
+        Arguments:
+            prefix {[type]} -- [description]
+            index_tensor {[type]} -- [description]
+            predictions_tensor {[type]} -- [description]
+            len_tensor {[type]} -- [description]
+            target_column {[type]} -- [description]
+            hparams {[type]} -- [description]
         '''
+        
         if target_column not in self.target_columns:
            raise ValueError('target_column must be in {:} got target_column {:}'.format(self.target_columns, target_column))
 
@@ -79,37 +258,40 @@ class EvaluatorConll(object):
         self.evaluate(prefix, self.props_dict, hparams)
 
     def evaluate(self, filename, props, hparams):
-        '''
-            Evaluates the conll scripts returning total precision, recall and F1
-                if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
+        '''Wraps pearl calls to CoNLL Shared Task 2005 script
 
-            args:
-                prefix            .: list<string>
-                props             .: list<string>
-                hparams           .: list<string> 
+        Evaluates the conll scripts returning total precision, recall and F1
+        if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
 
-            returns:
-                prec            .: float<> precision
-                rec       .: float<> recall 
-                f1        .: float<> F1 score
+        Arguments:
+            filename {str} -- [description]
+            props {dict} -- List keys are token index and values are the arguments.
+            hparams {list} -- list of hyper parameters
         '''
-        #Resets state
+
+        # Resets state
         self._refresh()
 
-        #Generate GOLD standard labels
-        indexes = sorted(list(props.keys()))        
-        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]] for i in indexes}
+        # Generate GOLD standard labels
+        indexes = sorted(list(props.keys()))
+        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
+                      for i in indexes}
+        # Stores GOLD standard labels
+        arg_list = [filename, 'gold', self.db,
+                    self.idx2lex, gold_props, hparams]
+        gold_path = self._store(*arg_list)
 
-        #Stores GOLD standard labels
-        gold_path = self._store(filename, 'gold', self.db, self.idx2lex, gold_props, hparams)
+        # Stores evaluation labels
+        arg_list = [filename, 'eval', self.db,
+                    self.idx2lex, props, hparams]
 
-        #Stores evaluation labels
-        eval_path = self._store(filename, 'eval', self.db, self.idx2lex, props, hparams)
+        eval_path = self._store(*arg_list)
 
-        #Runs official conll 2005 shared task script
-        perl_cmd = ['perl',PEARL_SRL05_PATH, gold_path, eval_path]
-        #Resets state
-        pipe = subprocess.Popen(perl_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Runs official conll 2005 shared task script
+        perl_cmd = ['perl', PEARL_SRL05_PATH, gold_path, eval_path]
+
+        # Resets state
+        pipe = Popen(perl_cmd, stdout=PIPE, stderr=PIPE)
 
         #out is a byte with each line separated by \n
         #ers is stderr
@@ -143,7 +325,7 @@ class EvaluatorConll(object):
             self.txt = f.read()
         f.close()
 
-        self._parse(self.txt)
+        self._parse(self.txt)    
 
     def _refresh(self):
         self.num_propositions = -1
@@ -273,8 +455,8 @@ class EvaluatorConll(object):
                   for i, sublist in enumerate(predictions_tensor.tolist())
                   for j, item in enumerate(sublist) if j < len_tensor[i]]
 
-        _zip_list = sorted(zip(index, values), key=lambda x: x[0])
-        self.props_dict = OrderedDict(_zip_list)
+        zip_list = sorted(zip(index, values), key=lambda x: x[0])
+        self.props_dict = OrderedDict(zip_list)
 
         return self.props_dict
 
@@ -294,17 +476,20 @@ class EvaluatorConll(object):
     def _iob2arg(self):
         propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
 
+        prop_list = propositions.values()
+        arg_list = self.props_dict.values()
 
-        ARG = br.propbankbr_iob2arg(propositions.values(), self.props_dict.values())
-        self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), ARG), key=lambda x: x[0]))
+        ARG = br.propbankbr_iob2arg(prop_list, arg_list)
+        zip_list = zip(self.props_dict.keys(), ARG)
+        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
 
         return self.props_dict
 
     def _head2arg(self):
-        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
-        head = ['*' if head_ == '-' else '({:}*)'.format(head_)
-                for _, head_ in self.props_dict.items()]
+        head_list = ['*' if head_ == '-' else '({:}*)'.format(head_)
+                     for _, head_ in self.props_dict.items()]
 
-        self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), head), key=lambda x: x[0]))
+        zip_list = zip(self.props_dict.keys(), head_list)
+        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
 
         return self.props_dict
