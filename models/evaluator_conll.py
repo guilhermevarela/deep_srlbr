@@ -204,19 +204,20 @@ class EvaluatorConll(object):
             if (i == 2):
                 self.perc_propositions = float(line.split(':')[-1])
             if (i == 6):
-                self.precision, self.recall, self.f1 = map(float, line.split()[-3:])
+                p, r, f = map(float, line.split()[-3:])
+                self.precision, self.recall, self.f1 = p, r, f
                 break
 
     def _store(self, ds_type, prediction_type, db, lexicons, props, hparams):
         '''
-            Stores props and stats into target_dir 
+            Stores props and stats into target_dir
         '''
-        # hparam_string = self._make_hparam_string(**hparams)
-        # target_dir += '/{:}/'.format(hparam_string)
-        # if not os.path.isdir(target_dir):
-        #     os.mkdir(target_dir)
         target_dir = self._get_dir(hparams)
-        target_path = '{:}/{:}-{:}.props'.format(target_dir, ds_type, prediction_type)
+        target_path = '{:}/{:}-{:}.props'.format(
+            target_dir,
+            ds_type,
+            prediction_type
+        )
 
         p = db['P'][min(props)]
         with open(target_path, mode='w+') as f:
@@ -229,15 +230,22 @@ class EvaluatorConll(object):
         f.close()
         return target_path
 
-    def _make_hparam_string(self, learning_rate=1 * 1e-3, hidden_size=[32, 32], ctx_p=1, embeddings_id='', **kwargs):
+    def _make_hparam_string(self, learning_rate=1 * 1e-3,
+                            hidden_size=[32, 32], ctx_p=1, embeddings_id='',
+                            **kwargs):
         '''
             Makes a directory name from hyper params
             args:
             returns:
 
-        '''        
-        hs = re.sub(r', ','x', re.sub(r'\[|\]', '', str(hidden_size)))
-        hparam_string= 'lr{:.2e}_hs{:}_ctx-p{:d}'.format(float(learning_rate), hs, int(ctx_p))
+        '''
+        # hidden size hparameter
+        hs = re.sub(r'\[|\]', '', str(hidden_size))
+        hs = re.sub(r', ', 'x', hs)
+
+        hparam_args = (float(learning_rate), hs, int(ctx_p))
+        hparam_string = 'lr{:.2e}_hs{:}_ctx-p{:d}'
+        hparam_string = hparam_string.format(*hparam_args)
         if embeddings_id:
             hparam_string += '_{:}'.format(embeddings_id)
         return hparam_string
@@ -245,26 +253,18 @@ class EvaluatorConll(object):
     def _get_dir(self, hparams):
         hparam_string = self._make_hparam_string(**hparams)
         target_dir = '{:}{:}/'.format(self.target_dir, hparam_string)
+        # Octal for read / write permissions
         if not os.path.isdir(target_dir):
-            os.mkdir(target_dir, 0o777) # Octal for read / write permissions
+            os.mkdir(target_dir, 0o777)
         return target_dir
 
     def _get_goldindex_list(self, ds_type, version='1.0'):
-        # if ds_type in ['train']:
-        #     gold_index_list = [s for s in range(0, DATASET_TRAIN_SIZE)]
-        # elif ds_type in ['valid']:
-        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE,
-        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE)]
-        # elif ds_type in ['test']:
-        #     gold_index_list = [s for s in range(DATASET_TRAIN_SIZE + DATASET_VALID_SIZE,
-        #                                         DATASET_TRAIN_SIZE + DATASET_VALID_SIZE + DATASET_TEST_SIZE)]
-        # else:
-        #     raise ValueError('{:} unknown dataset type'.format(ds_type))
         lb, ub = utils.get_db_bounds(ds_type, version='1.0')
-        # return [i for i in range(lb, ub + 1)]
+
         return [i for i in range(lb, ub)]
 
-    def _tensor2dict(self, index_tensor, predictions_tensor, len_tensor, target_column):
+    def _tensor2dict(self, index_tensor,
+                     predictions_tensor, len_tensor, target_column):
 
         index = [item
                  for i, sublist in enumerate(index_tensor.tolist())
@@ -282,9 +282,13 @@ class EvaluatorConll(object):
     def _t2arg(self):
         propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
 
+        prop_list = propositions.values()
+        arg_list = self.props_dict.values()
 
-        ARG = br.propbankbr_t2arg(propositions.values(), self.props_dict.values())
-        self.props_dict = OrderedDict(sorted(zip(self.props_dict.keys(), ARG), key=lambda x: x[0]))
+        ARG = br.propbankbr_t2arg(prop_list, arg_list)
+
+        zip_list = zip(self.props_dict.keys(), ARG)
+        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
 
         return self.props_dict
 
