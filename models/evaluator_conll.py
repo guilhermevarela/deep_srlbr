@@ -14,8 +14,6 @@
 
 '''
 import sys
-sys.path.append('../datasets/')
-sys.path.append('..')
 import os
 import subprocess
 import string
@@ -24,15 +22,15 @@ import pickle
 import re
 
 from collections import OrderedDict
-# from config import DATASET_TRAIN_SIZE, DATASET_VALID_SIZE, DATASET_TEST_SIZE
-# import models.utils
-import utils
 
+sys.path.append('../datasets/')
+sys.path.append('..')
+import utils
 import datasets as br
+
 
 PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
 PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
-
 
 
 class EvaluatorConll(object):
@@ -49,8 +47,9 @@ class EvaluatorConll(object):
         self.props_dict = {}
         self._refresh()
 
-
-    def evaluate_tensor(self, prefix, index_tensor, predictions_tensor, len_tensor, target_column, hparams):
+    def evaluate_tensor(self, prefix,
+                        index_tensor, predictions_tensor, len_tensor,
+                        target_column, hparams):
         '''
             Evaluates the conll scripts returning total precision, recall and F1
                 if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
