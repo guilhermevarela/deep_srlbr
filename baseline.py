@@ -8,6 +8,7 @@ from subprocess import Popen, PIPE
 from collections import namedtuple
 
 import config
+from models.evaluator_conll import evaluate
 CONLL_DIR = 'datasets/txts/conll/'
 DEVELOP_PATH = CONLL_DIR + 'PropBankBr_v1.0_Develop.conll.txt'
 TEST_PATH = CONLL_DIR + 'PropBankBr_v1.0_Test.conll.txt'
@@ -15,84 +16,6 @@ PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
 PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
 
 Chunk = namedtuple('Chunk', ('role', 'init', 'finish'))
-
-
-def to_conll(atuple):
-    txt = '{:}'.format(atuple[0])
-    txt += '\t{:}' * (len(atuple) - 1)
-    txt += '\n'
-
-    return txt.format(*atuple[1:])
-
-
-def evaluate(gold_list, eval_list, verbose=True, script_version='05'):
-    '''[summary]
-
-    Runs the CoNLL script
-
-    Arguments:
-        gold_list {[type]} -- [description]
-        eval_list {[type]} -- [description]
-
-    Keyword Arguments:
-        verbose {bool} -- Prints to file and on screen (default: {True})
-        script_version {str} -- CoNLL script version (default: {'05'})
-
-    Returns:
-        [type] -- [description]
-    '''
-    if script_version not in ('04', '05',):
-        msg = 'script version {:}'.format(script_version)
-        msg += 'invalid only `04` and `05` allowed'
-        raise ValueError(msg)
-
-    else:
-        if script_version == '04':
-            script_path = PEARL_SRL04_PATH
-        else:
-            script_path = PEARL_SRL05_PATH
-
-
-    prefix_dir = config.BASELINE_DIR
-    gold_path = '{:}train_gold.props'.format(prefix_dir)
-    eval_path = '{:}train_eval.props'.format(prefix_dir)
-    conll_path = '{:}eval.conll'.format(prefix_dir)
-
-    with open(gold_path, mode='w') as f:
-        for tuple_ in gold_list:
-            if tuple_ is None:
-                f.write('\n')
-            else:
-                f.write(to_conll(tuple_))
-
-    with open(eval_path, mode='w') as f:
-        for tuple_ in eval_list:
-            if tuple_ is None:
-                f.write('\n')
-            else:
-                f.write(to_conll(tuple_))
-
-    cmd_list = ['perl', script_path, gold_path, eval_path]
-    pipe = Popen(cmd_list, stdout=PIPE, stderr=PIPE)
-
-    txt, err = pipe.communicate()
-    txt = txt.decode('UTF-8')
-    err = err.decode('UTF-8')
-
-    if verbose:
-        print(txt)
-        with open(conll_path, mode='w') as f:
-            f.write(txt)
-
-    # overall is a summary from the list
-    # is the seventh line
-    lines_list = txt.split('\n')
-
-    # get the numbers from the row
-    overall_list = re.findall(r'[-+]?[0-9]*\.?[0-9]+.', lines_list[6])
-    f1 = float(overall_list[-1])
-
-    return f1
 
 
 def trim(txt):
@@ -274,7 +197,7 @@ def find_chunk_clause(chunk_stack, time):
     return search_ck
 
 
-def main(file_list):
+def main(file_list, dataset):
     gold_list = []
     eval_list = []
     for file_path in file_list:
@@ -338,7 +261,9 @@ def main(file_list):
                     open_labels = []
                     feature_backlog = []
 
-    evaluate(gold_list, eval_list, verbose=True)
+    file_name = 'baseline_{:}'.format(dataset)
+    evaluate(gold_list, eval_list,
+             verbose=True, file_dir=config.BASELINE_DIR, file_name=file_name)
 
 
 if __name__ == '__main__':
@@ -361,4 +286,4 @@ if __name__ == '__main__':
     if dataset in ('test', 'global'):
         file_list.append(TEST_PATH)
 
-    main(file_list)
+    main(file_list, dataset)
