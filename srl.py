@@ -40,7 +40,7 @@ if __name__ == '__main__':
                         the deep layer sizes. default: 16 16 16 16\n''')
 
     parser.add_argument('-embeddings', dest='embeddings', nargs=1,
-                        default='glo50', choices=['glo50', 'wan50', 'wrd50'],
+                        default='glo50', choices=['glo50', 'wan50', 'wan100', 'wan300', 'wrd50'],
                         help='''Embedding abbrev.
                                 and size examples: glo50, wan50.
                                 Default: glo50 \n''')
