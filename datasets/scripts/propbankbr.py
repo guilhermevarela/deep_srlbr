@@ -4,7 +4,8 @@
     Performs dataset build according to refs/1421593_2016_completo
     1. Merges PropBankBr_v1.1_Const.conll.txt and PropBankBr_v1.1_Dep.conll.txt as specified on 1421593_2016_completo
     2. Parses new merged dataset into train (development, validation) and test, so it can be benchmarked by conll scripts 
-
+    
+    Update CoNLL 2004 Shared Task 
 
 '''
 import sys 
@@ -591,6 +592,71 @@ def propbankbr_iob2arg(propositions, arguments):
         new_tags[-1] += ')'
     return new_tags
 
+
+def propbankbr_arg2se(propositions, arguments):
+    '''Converts CoNLL 2005 Shared Task tags to CoNLL 2004 Shared Task
+
+    Flat tree to start and end format ex: 
+
+            CoNLL 2004 ST       CoNLL 2005 ST
+   The         (A0*    (A0*       (A0*    (A0*
+   $              *       *          *       *
+   1.4            *       *          *       *
+   billion        *       *          *       *
+   robot          *       *          *       *
+   spacecraft     *A0)    *A0)       *)      *)
+   faces        (V*V)     *        (V*)      *
+   a           (A1*       *       (A1*       *
+   six-year       *       *          *       *
+   journey        *       *          *       *
+   to             *       *          *       *
+   explore        *     (V*V)        *     (V*)
+   Jupiter        *    (A1*          *    (A1*
+   and            *       *          *       *
+   its            *       *          *       *
+   16             *       *          *       *
+   known          *       *          *       *
+   moons          *A1)    *A1)       *)      *)
+   .              *       *          *       *
+
+    Arguments:
+        propositions {list{int}} -- integer
+        arguments {list{str}} -- target
+    '''
+    se_list = []
+    last_prop = -1
+    matcher_open = re.compile(r'\(([A-Z0-9\-]*?)\*$')
+    matcher_enclosed = re.compile(r'\(([A-Z0-9\-]*?)\*\)$')
+    for prop, arg_tuple in zip(propositions, arguments):
+        if last_prop != prop:
+            open_arg_list = [''] * (len(arg_tuple) - 1)
+            last_prop = prop
+        arg_list = list(arg_tuple)
+        se_i_list = arg_list[:1]
+        # For each propositon
+        for i_, arg_ in enumerate(arg_list[1:]):
+            # open and close argument
+            if arg_ == '*':
+                se_arg_ = '*'
+            else:
+                matched = matcher_enclosed.match(arg_)
+                if matched:
+
+                    se_arg_ = matched.groups()[0]
+                    se_arg_ = '({}*{})'.format(se_arg_, se_arg_)
+                else:
+                    matched = matcher_open.match(arg_)
+                    if matched:
+                        se_arg_ = arg_
+                        open_arg_list[i_] = matched.groups()[0]
+                    elif arg_ == '*)' and open_arg_list[i_] != '':
+                        se_arg_ = '*{})'.format(open_arg_list[i_])
+                    else:
+                        msg_ = 'invalid argument {} on prop {}'.format(arg_, prop)
+                        raise ValueError(msg_)
+            se_i_list.append(se_arg_)
+        se_list.append(tuple(se_i_list))
+    return se_list
 
 def get_signature(mappings): 
     return {k:[] for k in mappings}
