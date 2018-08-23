@@ -64,7 +64,7 @@ def evaluate(gold_list, eval_list,
     '''
     # Solves directory
     if file_dir is None:
-        file_dir = tempfile.gettempdir()
+        file_dir = tempfile.gettempdir() + '/'
 
     # Solves script version
     if script_version not in ('04', '05',):
@@ -78,7 +78,6 @@ def evaluate(gold_list, eval_list,
         else:
             script_path = PEARL_SRL05_PATH
 
-    # file_dir = config.BASELINE_DIR
     gold_path = '{:}{:}-gold.props'.format(file_dir, file_name)
     eval_path = '{:}{:}-eval.props'.format(file_dir, file_name)
     conll_path = '{:}{:}.conll'.format(file_dir, file_name)
@@ -106,6 +105,7 @@ def evaluate(gold_list, eval_list,
 
     if verbose:
         print(txt)
+        print(conll_path)
         with open(conll_path, mode='w') as f:
             f.write(txt)
 
@@ -196,32 +196,41 @@ class EvaluatorConll(object):
 
     @staticmethod
     def evaluate_frompropositions(gold_path, predicted_path,
-                                  file_name, verbose=True, keep_list=None):
+                                  file_name, verbose=True, keep_list=None,
+                                  script_version='05'):
         '''Wraps pearl calls to CoNLL Shared Task 2005 script
 
             Evaluates the conll scripts returning total precision, recall and F1
             *accepts a filter list for restricting arguments
             *saves a temporary file and deletes it
-
         Arguments:
-            gold_path {str} -- a string representing a valid path
-            predicted_path {str} -- [description]
-
+            gold_path {[type]} -- [description]
+            predicted_path {[type]} -- [description]
+            file_name {[type]} -- [description]
+        
         Keyword Arguments:
-            filter_list {list} -- Arguments to keep on final file (default: None)
-                                ex: filter_list=['A0', 'A1']
-                                if None keeps all
+            verbose {bool} -- [description] (default: {True})
+            keep_list {[type]} -- [description] (default: {None})
+            script_version {str} -- [description] (default: {'05'})
+
+        Returns:
+            [type] -- [description]
         '''
         gold_list = _props_file2zip_list(gold_path)
         eval_list = _props_file2zip_list(predicted_path)
 
-        # filter        
+        # filter
         if keep_list is not None:
             gold_list = _filter_list(gold_list, keep_list)
             eval_list = _filter_list(eval_list, keep_list)
 
+        # converts CoNLL 2005 ST to CoNLL 2004 ST
+        if script_version == '04':
+            gold_list = br.propbankbr_arg2se(gold_list)
+            eval_list = br.propbankbr_arg2se(eval_list)
+
         f1 = evaluate(gold_list, eval_list,
-                      verbose=True, script_version='05', file_dir=None,
+                      verbose=True, script_version=script_version, file_dir=None,
                       file_name=file_name)
 
         return f1
