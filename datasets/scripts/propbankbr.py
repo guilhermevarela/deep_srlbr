@@ -630,35 +630,36 @@ def propbankbr_arg2se(arguments):
     for arg_tuple in arguments:
         if arg_tuple is None:
             refresh = True
+            se_list.append(None)
         else:
             if refresh:
                 open_arg_list = [''] * (len(arg_tuple) - 1)
                 refresh = False
-        arg_list = list(arg_tuple)
-        se_i_list = arg_list[:1]
-        # For each propositon
-        for i_, arg_ in enumerate(arg_list[1:]):
-            # open and close argument
-            if arg_ == '*':
-                se_arg_ = '*'
-            else:
-                matched = matcher_enclosed.match(arg_)
-                if matched:
-
-                    se_arg_ = matched.groups()[0]
-                    se_arg_ = '({}*{})'.format(se_arg_, se_arg_)
+            arg_list = list(arg_tuple)
+            se_i_list = arg_list[:1]
+            # For each propositon
+            for i_, arg_ in enumerate(arg_list[1:]):
+                # open and close argument
+                if arg_ == '*':
+                    se_arg_ = '*'
                 else:
-                    matched = matcher_open.match(arg_)
+                    matched = matcher_enclosed.match(arg_)
                     if matched:
-                        se_arg_ = arg_
-                        open_arg_list[i_] = matched.groups()[0]
-                    elif arg_ == '*)' and open_arg_list[i_] != '':
-                        se_arg_ = '*{})'.format(open_arg_list[i_])
+
+                        se_arg_ = matched.groups()[0]
+                        se_arg_ = '({}*{})'.format(se_arg_, se_arg_)
                     else:
-                        msg_ = 'invalid argument {} on prop {}'.format(arg_, prop)
-                        raise ValueError(msg_)
-            se_i_list.append(se_arg_)
-        se_list.append(tuple(se_i_list))
+                        matched = matcher_open.match(arg_)
+                        if matched:
+                            se_arg_ = arg_
+                            open_arg_list[i_] = matched.groups()[0]
+                        elif arg_ == '*)' and open_arg_list[i_] != '':
+                            se_arg_ = '*{})'.format(open_arg_list[i_])
+                        else:
+                            msg_ = 'invalid argument {} on prop {}'.format(arg_, prop)
+                            raise ValueError(msg_)
+                se_i_list.append(se_arg_)
+            se_list.append(tuple(se_i_list))
     return se_list
 
 def get_signature(mappings): 

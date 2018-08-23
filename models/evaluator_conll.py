@@ -64,7 +64,7 @@ def evaluate(gold_list, eval_list,
     '''
     # Solves directory
     if file_dir is None:
-        file_dir = tempfile.gettempdir()
+        file_dir = tempfile.gettempdir() + '/'
 
     # Solves script version
     if script_version not in ('04', '05',):
@@ -105,6 +105,7 @@ def evaluate(gold_list, eval_list,
 
     if verbose:
         print(txt)
+        print(conll_path)
         with open(conll_path, mode='w') as f:
             f.write(txt)
 
