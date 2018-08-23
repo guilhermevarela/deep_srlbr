@@ -593,7 +593,7 @@ def propbankbr_iob2arg(propositions, arguments):
     return new_tags
 
 
-def propbankbr_arg2se(propositions, arguments):
+def propbankbr_arg2se(arguments):
     '''Converts CoNLL 2005 Shared Task tags to CoNLL 2004 Shared Task
 
     Flat tree to start and end format ex: 
@@ -624,13 +624,16 @@ def propbankbr_arg2se(propositions, arguments):
         arguments {list{str}} -- target
     '''
     se_list = []
-    last_prop = -1
     matcher_open = re.compile(r'\(([A-Z0-9\-]*?)\*$')
     matcher_enclosed = re.compile(r'\(([A-Z0-9\-]*?)\*\)$')
-    for prop, arg_tuple in zip(propositions, arguments):
-        if last_prop != prop:
-            open_arg_list = [''] * (len(arg_tuple) - 1)
-            last_prop = prop
+    refresh = True
+    for arg_tuple in arguments:
+        if arg_tuple is None:
+            refresh = True
+        else:
+            if refresh:
+                open_arg_list = [''] * (len(arg_tuple) - 1)
+                refresh = False
         arg_list = list(arg_tuple)
         se_i_list = arg_list[:1]
         # For each propositon
