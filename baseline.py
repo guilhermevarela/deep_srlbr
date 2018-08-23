@@ -206,6 +206,7 @@ def main(file_list, dataset):
         predicate_dict = {}
         open_labels = []
         feature_backlog = []
+        passive_voice = [] 
         with open(file_path, mode='r') as f:
             for i, line in enumerate(f.readlines()):
                 if len(line) > 1:  # Lines with scape newline \n character
@@ -216,6 +217,9 @@ def main(file_list, dataset):
                     num_props = len(srl_list)
                     time = int(feature_list[0])
                     open_labels = open_labels if len(open_labels) > 0 \
+                        else [False] * num_props
+
+                    passive_voice = passive_voice if len(passive_voice) > 0 \
                         else [False] * num_props
 
                     chunk_stack_process(feature_list, chunk_stack)
@@ -230,6 +234,12 @@ def main(file_list, dataset):
                     if feature_list[-1] != '-':
                         eval_line[prop_ind + 1] = '(V*)'
                         predicate_dict[prop_ind] = time
+
+                        # Passive voice
+                        if feature_list[3] == 'V-PCP':
+                            if len(feature_backlog) > 0:
+                                if feature_backlog[-1][2] in ('ser', 'estar',):
+                                    passive_voice[prop_ind] = True
                         prop_ind += 1
 
                     eval_list.append(tuple(eval_line))
@@ -237,21 +247,23 @@ def main(file_list, dataset):
                 else:
                     prop_len = time
                     for prop_ind_, prop_time_ in predicate_dict.items():
+
                         ck_clause_ = find_chunk_clause(chunk_stack, prop_time_)
                         update_neg(feature_backlog, eval_list,
                                    prop_len, prop_ind_, ck_clause_)
-
                         # arg 0: look-up chunk stack:
                         # `first before target verb` NP
                         ck = find_chunk0(chunk_stack, prop_time_)
+                        arg = 'A1' if passive_voice[prop_ind_] else 'A0'
                         update_argument(eval_list,
-                                        prop_len, prop_ind_, ck, 'A0')
+                                        prop_len, prop_ind_, ck, arg)
 
                         # arg 1: look-up chunk stack
                         # `first after target verb` NP
                         ck = find_chunk1(chunk_stack, prop_time_)
+                        arg = 'A0' if passive_voice[prop_ind_] else 'A1'
                         update_argument(eval_list, prop_len,
-                                        prop_ind_, ck, 'A1')
+                                        prop_ind_, ck, arg)
 
                     predicate_dict = {}
                     prop_ind = 0
@@ -260,6 +272,7 @@ def main(file_list, dataset):
                     chunk_stack = []
                     open_labels = []
                     feature_backlog = []
+                    passive_voice = []
 
     file_name = 'baseline_{:}'.format(dataset)
     evaluate(gold_list, eval_list,
