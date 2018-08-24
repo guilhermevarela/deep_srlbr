@@ -93,6 +93,7 @@ if __name__ == '__main__':
     embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
     learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
     version = args.version[0] if isinstance(args.version, list) else args.version
+    epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
 
     if args.kfold:
         # print(input_labels)
@@ -105,7 +106,7 @@ if __name__ == '__main__':
 
         estimate_kfold(input_labels=input_labels, target_label=target_label,
                        hidden_layers=args.depth, embeddings=embeddings,
-                       epochs=args.epochs, lr=learning_rate, fold=25,
+                       epochs=epochs, lr=learning_rate, fold=25,
                        version=version)
     else:
         # print(input_labels)
@@ -119,5 +120,5 @@ if __name__ == '__main__':
 
         estimate(input_labels=input_labels, target_label=target_label,
                  hidden_layers=args.depth, embeddings=embeddings,
-                 epochs=args.epochs, lr=learning_rate,
+                 epochs=epochs, lr=learning_rate,
                  batch_size=args.batch_size, version=version)

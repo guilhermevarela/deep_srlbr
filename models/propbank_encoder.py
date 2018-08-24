@@ -254,7 +254,7 @@ class PropbankEncoder(object):
             elif colconfig['type'] in ('choice', 'text'):
                 if colconfig['category'] == 'target' and self.segment_only:
                     self.db[col] = OrderedDict({
-                        idx: self.lex2idx[col].get(re.sub('C-', '', word, 0))
+                        idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
                         for idx, word in db_dict[col].items()
                     })
                 else:
