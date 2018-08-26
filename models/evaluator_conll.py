@@ -283,7 +283,6 @@ class EvaluatorConll(object):
 
         # Generate GOLD standard labels
         indexes = sorted(list(props.keys()))
-        import code; code.interact(local=dict(globals(), **locals()))
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
                       for i in indexes}
         # Stores GOLD standard labels

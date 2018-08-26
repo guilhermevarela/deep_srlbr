@@ -300,7 +300,7 @@ class PropbankEncoder(object):
             if config_dict['type'] in ('text') or \
                 (config_dict['category'] in ('feature') and config_dict['type'] in ('choice')):
                 # features might be absent ( in case of leading and lagging )
-                sorted(domain).insert(0, 'unk')
+                sorted(domain).insert(0, 'unk')  # FIX ME: ??? 
 
                 if config_dict['type'] in ('text'):
                     self.words = self.words.union(set(domain))
@@ -308,8 +308,12 @@ class PropbankEncoder(object):
             if domain:
                 # remove C-* arguments from domain
                 if config_dict['category'] == 'target' and self.segment_only:
-                    domain = set([re.sub('C-', '', t) for t in domain])
+                    domain = set([
+                        re.sub('C-', '', t) for t in domain
+                        if 'A5' not in t or 'AM-MED' not in t
+                    ])
 
+                domain = sorted(list(domain))
                 self.lex2idx[col] = dict(zip(domain, range(len(domain))))
                 self.idx2lex[col] = dict(zip(range(len(domain)), domain))
                 config_dict['dims'] = len(domain)
