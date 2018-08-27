@@ -106,7 +106,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         eps = 100
         best_validation_rate = -1
         try:
-            while not coord.should_stop() or eps < 1e-3:
+            while not coord.should_stop() or eps < 1e-2:
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
                 if  step % fold == i:
@@ -261,7 +261,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         best_validation_rate = -1
         eps = 100
         try:
-            while not coord.should_stop() or eps < 1e-3:
+            while not coord.should_stop() or eps < 1e-2:
                 X_batch, T_batch, L_batch, I_batch = session.run([
                     inputs,
                     targets,
