@@ -60,29 +60,34 @@ class PropbankEncoder(object):
         IDX     .:  raw indexes
 
     '''
-
-
-    def __init__(self, db_dict, schema_dict, language_model='glove_s50', dbname='dbpt', version='1.0', verbose=True):
+    def __init__(self, db_dict, schema_dict,
+                 language_model='glove_s50', dbname='dbpt', filter_br=True,
+                 version='1.0', verbose=True):
         '''Initializer processes raw dataset extracting the numerical representations
 
         Provides a wrapper around the database
 
         Arguments:
-            db_dict {dict<str, dict<int, object>>} -- nested dictionary representing
+            db_dict {dict<str, dict<int, object>>} -- 
+                nested dictionary representing
                 database, outer_keys: columns, inner_keys: indexes.
-            schema_dict {dict<str, dict><>} -- dictionary representaiton from schema
+            schema_dict {dict<str, dict><>} -- 
+                dictionary representaiton from schema
                 database, outer_keys: columns, inner_keys: meta data
 
-
         Keyword Arguments:
-            language_model {str} -- embeddings to be used (default: {'glove_s50'})
+            language_model {str} -- embeddings to be used
+                (default: {'glove_s50'})
             dbname {str} -- default dbname (default: {'dbpt'})
+            filter_br {bool} -- If True replaces
+                non continous arguments with referenced
+                arguemnts (default: {True})
             verbose {bool} -- display operations (default: {True})
         '''
-
+        self.filter_br = filter_br
         self.lex2idx = {}
         self.idx2lex = {}
-        self.tokens = set({}) # words after embedding model
+        self.tokens = set({})  # words after embedding model
         self.words = set({})  # raw words that come within datasets
         self.lex2tok = defaultdict(OrderedDict)
         self.tok2idx = defaultdict(OrderedDict)
@@ -90,7 +95,6 @@ class PropbankEncoder(object):
         self.embeddings = np.array([])
         self.embeddings_model = ''
         self.embeddings_sz = 0
-
 
         self.db = defaultdict(OrderedDict)
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX')
@@ -132,24 +136,7 @@ class PropbankEncoder(object):
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
-        # if not(ds_type in ['train', 'valid', 'test']):
-        #     errmessage = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-        #     raise ValueError(errmessage)
-        # else:
-        #     if ds_type in ['train']:
-        #         lb = 0
-        #         ub = config.DATASET_TRAIN_SIZE
-        #     elif ds_type in ['valid']:
-        #         lb = config.DATASET_TRAIN_SIZE
-        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-        #     else:
-        #         lb = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
-        #         ub = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE + config.DATASET_TEST_SIZE
-
         lb, ub = utils.get_db_bounds(ds_type, version=self.version)
-
-        # interval = [idx for idx, p in self.db['P'].items()
-        #                 if p > lb and p <= ub]
 
         interval = [idx for idx, p in self.db['P'].items()
                         if p >= lb and p < ub]
@@ -265,9 +252,15 @@ class PropbankEncoder(object):
                 else:
                     self.db[col] = OrderedDict(db_dict[col])
             elif colconfig['type'] in ('choice', 'text'):
-                self.db[col] = OrderedDict({
-                    idx: self.lex2idx[col].get(word, 0) for idx, word in db_dict[col].items() 
-                })
+                if colconfig['category'] == 'target' and self.filter_br:
+                    self.db[col] = OrderedDict({
+                        idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
+                        for idx, word in db_dict[col].items()
+                    })
+                else:
+                    self.db[col] = OrderedDict({
+                        idx: self.lex2idx[col].get(word, 0) for idx, word in db_dict[col].items() 
+                    })
 
             else:
                 #Boolean values, numerical values come here
@@ -279,7 +272,6 @@ class PropbankEncoder(object):
             Define columns and metadata about columns
         '''
         # Computes a dictionary that maps one column to a base column
-
         self.columns = self.columns.union(db_dict.keys()).union(set(['INDEX']))
         self.columns_mapper = {col: self._subcol(col)
                                for col in self.columns}
@@ -308,12 +300,20 @@ class PropbankEncoder(object):
             if config_dict['type'] in ('text') or \
                 (config_dict['category'] in ('feature') and config_dict['type'] in ('choice')):
                 # features might be absent ( in case of leading and lagging )
-                sorted(domain).insert(0, 'unk')
+                sorted(domain).insert(0, 'unk')  # FIX ME: ??? 
 
                 if config_dict['type'] in ('text'):
                     self.words = self.words.union(set(domain))
 
             if domain:
+                # remove C-* arguments from domain
+                if config_dict['category'] == 'target' and self.filter_br:
+                    domain = set([
+                        re.sub('C-', '', t) for t in domain
+                        if 'A5' not in t or 'AM-MED' not in t
+                    ])
+
+                domain = sorted(list(domain))
                 self.lex2idx[col] = dict(zip(domain, range(len(domain))))
                 self.idx2lex[col] = dict(zip(range(len(domain)), domain))
                 config_dict['dims'] = len(domain)
