@@ -106,7 +106,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         eps = 100
         best_validation_rate = -1
         try:
-            while not coord.should_stop() or eps < 1e-2:
+            while not (coord.should_stop() or eps < 1e-3):
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
 
                 if  step % fold == i:
@@ -136,7 +136,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                           '\tavg. error {:.6f}'.format(total_error / 24),
                           '\tf1-train {:.6f}'.format(evaluator.f1))
 
-                    eps = total_error / 24
+                    eps = float(total_error) / 24
                     total_loss = 0.0
                     total_error = 0.0
 
@@ -261,7 +261,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         best_validation_rate = -1
         eps = 100
         try:
-            while not coord.should_stop() or eps < 1e-2:
+            while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run([
                     inputs,
                     targets,
@@ -291,7 +291,6 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                     )
                     f1_valid = valid_eval(Y_valid)
 
-                    eps = total_error / 25
                     if f1_valid is not None and f1_train is not None:
                         print('Iter={:5d}'.format(step),
                               '\tavg. cost {:.6f}'.format(total_loss / 25),
@@ -302,6 +301,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                         print('Iter={:5d}'.format(step),
                               '\tavg. cost {:.6f}'.format(total_loss / 25),
                               '\tavg. error {:.6f}'.format(total_error / 25))
+                    eps = float(total_error) / 25
                     total_loss = 0.0
                     total_error = 0.0
 

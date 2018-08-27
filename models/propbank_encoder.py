@@ -61,7 +61,7 @@ class PropbankEncoder(object):
 
     '''
     def __init__(self, db_dict, schema_dict,
-                 language_model='glove_s50', dbname='dbpt', segment_only=True,
+                 language_model='glove_s50', dbname='dbpt', filter_br=True,
                  version='1.0', verbose=True):
         '''Initializer processes raw dataset extracting the numerical representations
 
@@ -79,12 +79,12 @@ class PropbankEncoder(object):
             language_model {str} -- embeddings to be used
                 (default: {'glove_s50'})
             dbname {str} -- default dbname (default: {'dbpt'})
-            segment_only {bool} -- If True replaces
+            filter_br {bool} -- If True replaces
                 non continous arguments with referenced
                 arguemnts (default: {True})
             verbose {bool} -- display operations (default: {True})
         '''
-        self.segment_only = segment_only
+        self.filter_br = filter_br
         self.lex2idx = {}
         self.idx2lex = {}
         self.tokens = set({})  # words after embedding model
@@ -252,7 +252,7 @@ class PropbankEncoder(object):
                 else:
                     self.db[col] = OrderedDict(db_dict[col])
             elif colconfig['type'] in ('choice', 'text'):
-                if colconfig['category'] == 'target' and self.segment_only:
+                if colconfig['category'] == 'target' and self.filter_br:
                     self.db[col] = OrderedDict({
                         idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
                         for idx, word in db_dict[col].items()
@@ -307,7 +307,7 @@ class PropbankEncoder(object):
 
             if domain:
                 # remove C-* arguments from domain
-                if config_dict['category'] == 'target' and self.segment_only:
+                if config_dict['category'] == 'target' and self.filter_br:
                     domain = set([
                         re.sub('C-', '', t) for t in domain
                         if 'A5' not in t or 'AM-MED' not in t
