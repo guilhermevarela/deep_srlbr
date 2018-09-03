@@ -39,21 +39,3 @@ class PropBankBrTestCase(unittest.TestCase):
 
     def test_enclosed_a1(self):
         self.assertEqual(self.se_gold[7][1], '(A1*A1)')
-
-# class PropBankBrArg2SE(PropBankBrTestCase):
-#     def setUp(self):
-#         # super(PropBankBrTestCase, self).setUp()
-#         self.se_gold = br.propbankbr_arg2se(self.prop_list,
-#                                             self.gold_list)
-
-#     def test_open_a0(self):
-#         self.assertEqual(self.se_gold[0][0], '(A0*')
-
-#     def test_close_a0(self):
-#         self.assertEqual(self.se_gold[0][5], '*A0)')
-
-#     def test_verb(self):
-#         self.assertEqual(self.se_gold[0][6], '(V*V)')
-
-#     def test_enclosed_a1(self):
-#         self.assertEqual(self.se_gold[0][7], '(A1*A1)')
