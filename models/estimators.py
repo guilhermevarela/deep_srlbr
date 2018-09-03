@@ -25,8 +25,9 @@ HIDDEN_LAYERS = [16] * 4
 
 
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
-                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-                   epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1, **kwargs):
+                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50', 
+                   version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1, 
+                   **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -45,13 +46,21 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         hidden_layers {list<int>} -- sets the number and
             sizes for hidden layers (default: {`[16, 16, 16, 16]`})
         embeddings {str} -- There are three available models
-            `glo50`,`wrd50`, `wan50` (default: {'wan50'})
+            `glo50`,`wrd50`, `wan50` (default: {'wan50'}) 
         epochs {int} -- Number of iterations (default: {100})
         lr {float} -- The learning rate (default: {5 * 1e-3})
         kfold {int} -- The number of partitions from
             on each iteration (default: {250})
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
+    target_dir = snapshot_hparam_string(embeddings=embeddings, target_label=target_label,
+                                        is_batch=False, learning_rate=lr, version=version,
+                                        hidden_layers=hidden_layers, ctx_p=ctx_p)
+
+    target_dir = 'outputs{:}'.format(target_dir)
+    target_dir = snapshot_persist(target_dir, input_labels=input_labels, target_label=target_label,
+                                  embeddings=embeddings, epochs=epochs, lr=lr, kfold=25, ctx_p=ctx_p,
+                                  version=version)
 
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
@@ -66,7 +75,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     batch_size = int(dataset_size / fold)
     print(batch_size, target_label, target_size, feature_size)
 
-    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex)
+    evaluator = EvaluatorConll(propbank_encoder.db,
+                               propbank_encoder.idx2lex, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
