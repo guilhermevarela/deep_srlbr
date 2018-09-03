@@ -9,15 +9,12 @@
 import tensorflow as tf
 import config
 import numpy as np
-from .utils import get_dims, get_index, get_binary
+from .utils import get_dims, get_index, get_binary, snapshot_hparam_string, snapshot_persist
 from datasets import get_valid, get_test, input_fn, get_train
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.dblstm import DBLSTM
 
-# FEATURE_LABELS = ['ID', 'FORM', 'LEMMA', 'MARKER', 'GPOS',
-#                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1',
-#                   'GPOS_CTX_P-1', 'GPOS_CTX_P+0', 'GPOS_CTX_P+1']
 
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
@@ -29,7 +26,7 @@ HIDDEN_LAYERS = [16] * 4
 
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-                   epochs=100, lr=5 * 1e-3, fold=25, **kwargs):
+                   epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -166,7 +163,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-             epochs=100, lr=5 * 1e-3, batch_size=250,
+             epochs=100, lr=5 * 1e-3, batch_size=250, ctx_p=1,
              version='1.0', **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
@@ -190,6 +187,15 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             on each iteration (default: {250})
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
+    target_dir = snapshot_hparam_string(embeddings=embeddings, target_label=target_label,
+                                        is_batch=True, learning_rate=lr, version=version,
+                                        hidden_layers=hidden_layers, ctx_p=ctx_p)
+
+    target_dir = 'outputs{:}'.format(target_dir)
+    target_dir = snapshot_persist(target_dir, input_labels=input_labels, target_label=target_label,
+                                  embeddings=embeddings, epochs=epochs, lr=lr, batch_size=batch_size, ctx_p=ctx_p,
+                                  version=version)
+
     propbank_path = get_binary('deep', embeddings, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
@@ -225,7 +231,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
         return evaluator.f1
 
-    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex)
+    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,

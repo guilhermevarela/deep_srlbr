@@ -10,3 +10,4 @@ if __name__ == '__main__':
         gold_path, predicted_path, 'random-test',
         verbose=True, script_version=script_version,
         keep_list=['A0', 'A1', 'AM-NEG'])
+    

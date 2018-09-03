@@ -82,7 +82,8 @@ if __name__ == '__main__':
 
     input_labels = FEATURE_LABELS
     # print(args)
-    if isinstance(args.ctx_p, list) and args.ctx_p[0] > 1:
+    ctx_p = args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
+    if ctx_p > 1:
         input_labels.append('FORM_CTX_P-2')
         input_labels.append('FORM_CTX_P+2')
         if args.ctx_p[0] == 3:
@@ -107,7 +108,7 @@ if __name__ == '__main__':
         estimate_kfold(input_labels=input_labels, target_label=target_label,
                        hidden_layers=args.depth, embeddings=embeddings,
                        epochs=epochs, lr=learning_rate, fold=25,
-                       version=version)
+                       version=version, ctx_p=ctx_p)
     else:
         # print(input_labels)
         # print(args.target)
@@ -120,5 +121,5 @@ if __name__ == '__main__':
 
         estimate(input_labels=input_labels, target_label=target_label,
                  hidden_layers=args.depth, embeddings=embeddings,
-                 epochs=epochs, lr=learning_rate,
+                 epochs=epochs, lr=learning_rate, ctx_p=ctx_p,
                  batch_size=args.batch_size, version=version)
