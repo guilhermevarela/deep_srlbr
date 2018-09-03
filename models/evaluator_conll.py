@@ -186,7 +186,7 @@ def _filter_list(zip_list, keep_list):
 
 class EvaluatorConll(object):
 
-    def __init__(self, db, idx2lex, target_dir='./'):
+    def __init__(self, db, idx2lex, target_dir=None):
         self.db = db
         self.idx2lex = idx2lex
         self.target_dir = target_dir
@@ -237,8 +237,8 @@ class EvaluatorConll(object):
 
     def evaluate_tensor(self, prefix,
                         index_tensor, predictions_tensor, len_tensor,
-                        target_column, hparams):
-        ''''Wraps pearl calls to CoNLL Shared Task 2005 script
+                        target_column, hparams, script_version='04'):
+        ''''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
         Evaluates the conll scripts returning total precision, recall and F1
         if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
@@ -250,10 +250,18 @@ class EvaluatorConll(object):
             len_tensor {[type]} -- [description]
             target_column {[type]} -- [description]
             hparams {[type]} -- [description]
+
+        Keyword Arguments:
+            script_version {str} --  `04` for CoNLL 2004 (default: '04')
         '''
-        
+        if script_version not in ('04', '05'):
+            msg_ = 'script_version: {:} must be in (`04`,`05`)'
+            raise ValueError(msg_.format(script_version))
+
         if target_column not in self.target_columns:
-           raise ValueError('target_column must be in {:} got target_column {:}'.format(self.target_columns, target_column))
+            msg_ = 'target_column must be in {:} got target_column {:}'
+            msg_ = msg_.format(self.target_columns, target_column)
+            raise ValueError(msg_)
 
         self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
 
@@ -264,10 +272,11 @@ class EvaluatorConll(object):
         elif target_column in ('T',):
             self._t2arg()
 
-        self.evaluate(prefix, self.props_dict, hparams)
+        self.evaluate(prefix, self.props_dict,
+                      hparams, script_version=script_version)
 
-    def evaluate(self, filename, props, hparams):
-        '''Wraps pearl calls to CoNLL Shared Task 2005 script
+    def evaluate(self, filename, props, hparams, script_version='04'):
+        '''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
         Evaluates the conll scripts returning total precision, recall and F1
         if self.target_dir is set will also save conll-<prefix>.txt@self.target_dir/<hparams>/
@@ -277,27 +286,45 @@ class EvaluatorConll(object):
             props {dict} -- List keys are token index and values are the arguments.
             hparams {list} -- list of hyper parameters
         '''
+        if script_version not in ('04', '05'):
+            msg_ = 'script_version: {:} must be in (`04`,`05`)'
+            raise ValueError(msg_.format(script_version))
 
         # Resets state
         self._refresh()
 
         # Generate GOLD standard labels
         indexes = sorted(list(props.keys()))
+
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
                       for i in indexes}
+
+        if script_version == '04':            
+            gold_props = self._arg2start_end(gold_props)
+
         # Stores GOLD standard labels
         arg_list = [filename, 'gold', self.db,
                     self.idx2lex, gold_props, hparams]
         gold_path = self._store(*arg_list)
 
+        if script_version == '04':
+            eval_props = self._arg2start_end(props)
+        else:
+            eval_props = props
+
         # Stores evaluation labels
         arg_list = [filename, 'eval', self.db,
-                    self.idx2lex, props, hparams]
+                    self.idx2lex, eval_props, hparams]
 
         eval_path = self._store(*arg_list)
 
         # Runs official conll 2005 shared task script
-        perl_cmd = ['perl', PEARL_SRL05_PATH, gold_path, eval_path]
+        if script_version  == '05':
+            perl_path = PEARL_SRL05_PATH
+        elif script_version == '04':
+            perl_path = PEARL_SRL04_PATH
+
+        perl_cmd = ['perl', perl_path, gold_path, eval_path]
 
         # Resets state
         pipe = Popen(perl_cmd, stdout=PIPE, stderr=PIPE)
@@ -316,7 +343,10 @@ class EvaluatorConll(object):
         self._parse(self.txt)
 
         #Stores target_dir/<hparams>/prefix
-        target_dir = self._get_dir(hparams)
+        if self.target_dir is None:
+            target_dir = self._get_dir(hparams)
+        else:
+            target_dir = self.target_dir
         target_path = '{:}/{:}.conll'.format(target_dir, filename)
         with open(target_path, 'w+') as f:
             f.write(self.txt)
@@ -402,7 +432,11 @@ class EvaluatorConll(object):
         '''
             Stores props and stats into target_dir
         '''
-        target_dir = self._get_dir(hparams)
+        if self.target_dir is None:
+            target_dir = self._get_dir(hparams)
+        else:
+            target_dir = self.target_dir
+
         target_path = '{:}/{:}-{:}.props'.format(
             target_dir,
             ds_type,
@@ -442,7 +476,7 @@ class EvaluatorConll(object):
 
     def _get_dir(self, hparams):
         hparam_string = self._make_hparam_string(**hparams)
-        target_dir = '{:}{:}/'.format(self.target_dir, hparam_string)
+        target_dir = '{:}{:}/'.format('./', hparam_string)
         # Octal for read / write permissions
         if not os.path.isdir(target_dir):
             os.mkdir(target_dir, 0o777)
@@ -502,3 +536,36 @@ class EvaluatorConll(object):
         self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
 
         return self.props_dict
+
+    def _arg2start_end(self, arg_dict):
+        '''Converts flat tree format (`05`) to Start End format (`04`)
+
+        Converts a proposition dict (index: arg) in CoNLL 2005 format 
+        to CoNLL 2004.
+
+        Keyword Arguments:
+            prop_dict {[type]} -- [description] (default: {None})
+        '''
+        propositions = {idx: self.db['P'][idx] for idx in arg_dict}
+
+        # br.propbankbr_arg2se(arg_list) expects a list or tuples
+        # first element of the tuple is `PRED`
+        # second elemnt of the tuple is `ARG`
+        # propositions are separated by None
+        arg_list = []
+        prev_prop = None
+        for idx, prop in propositions.items():
+            if prop != prev_prop and prev_prop is not None:
+                arg_list.append(None)
+            pred_ = self.idx2lex['PRED'][self.db['PRED'][idx]]
+            arg_list.append((pred_, arg_dict[idx]))
+            prev_prop = prop
+
+        SE = br.propbankbr_arg2se(arg_list)
+        se_list = [se[1] for se in SE if se is not None]
+        # Converts SE into dictonary of propositions
+        # zip_list = [arg_list, se_list]
+
+        zip_list = zip(arg_dict.keys(), se_list)
+        se_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
+        return se_dict

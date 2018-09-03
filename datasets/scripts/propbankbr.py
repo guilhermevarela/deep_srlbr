@@ -627,9 +627,13 @@ def propbankbr_arg2se(arguments):
     matcher_open = re.compile(r'\(([A-Z0-9\-]*?)\*$')
     matcher_enclosed = re.compile(r'\(([A-Z0-9\-]*?)\*\)$')
     refresh = True
-    for arg_tuple in arguments:
+    index = 0
+    sentence_count = 1
+
+    for  arg_tuple in arguments:
         if arg_tuple is None:
             refresh = True
+            sentence_count += 1
             se_list.append(None)
         else:
             if refresh:
@@ -638,7 +642,7 @@ def propbankbr_arg2se(arguments):
             arg_list = list(arg_tuple)
             se_i_list = arg_list[:1]
             # For each propositon
-            for i_, arg_ in enumerate(arg_list[1:]):
+            for j_, arg_ in enumerate(arg_list[1:]):
                 # open and close argument
                 if arg_ == '*':
                     se_arg_ = '*'
@@ -652,14 +656,15 @@ def propbankbr_arg2se(arguments):
                         matched = matcher_open.match(arg_)
                         if matched:
                             se_arg_ = arg_
-                            open_arg_list[i_] = matched.groups()[0]
-                        elif arg_ == '*)' and open_arg_list[i_] != '':
-                            se_arg_ = '*{})'.format(open_arg_list[i_])
+                            open_arg_list[j_] = matched.groups()[0]
+                        elif arg_ == '*)' and open_arg_list[j_] != '':
+                            se_arg_ = '*{})'.format(open_arg_list[j_])
                         else:
-                            msg_ = 'invalid argument {} on prop {}'.format(arg_, prop)
+                            msg_ = 'invalid argument {:s} index {:d} on proposition {:d}'.format(arg_, index, j_)
                             raise ValueError(msg_)
                 se_i_list.append(se_arg_)
             se_list.append(tuple(se_i_list))
+            index += 1
     return se_list
 
 def get_signature(mappings): 
