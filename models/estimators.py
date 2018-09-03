@@ -218,20 +218,20 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
-    # print(batch_size, target_label, target_size, feature_size)    
+    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
+
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params)
+        evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params, script_version='04')
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
         index = I_valid[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_label, params)
+        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_label, params, script_version='04')
 
         return evaluator.f1
 
-    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,

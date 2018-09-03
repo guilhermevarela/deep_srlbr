@@ -253,22 +253,22 @@ def snapshot_hparam_string(embeddings='glo50', target_label='T',
             if key == 'embeddings':
                 param_list[1] = value
 
-            if key == 'target_label':
-                param_list[2] = value
-
-            if key == 'is_batch':
-                param_list[3] = 'batch' if value else 'kfold'
-
-            if key == 'learning_rate':
-                param_list[4] = 'lr_{:.2e}'.format(value)
-
             if key == 'hidden_layers':
                 hidden_list_ = [str(s) for s in value]
-                param_list[5] = 'x'.join(hidden_list_)
-                param_list[5] = 'hs_{:}'.format(param_list[5])
+                param_list[2] = 'x'.join(hidden_list_)
+                param_list[2] = 'hs_{:}'.format(param_list[2])
 
             if key == 'ctx_p':
-                param_list[6] = 'ctxp_{:d}'.format(value)
+                param_list[3] = 'ctxp_{:d}'.format(value)
+
+            if key == 'target_label':
+                param_list[4] = value
+
+            if key == 'is_batch':
+                param_list[5] = 'batch' if value else 'kfold'
+
+            if key == 'learning_rate':
+                param_list[6] = 'lr_{:.2e}'.format(value)
 
     snapshot_dir = ''
     for param_ in param_list:

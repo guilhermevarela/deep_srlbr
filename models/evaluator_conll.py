@@ -299,20 +299,32 @@ class EvaluatorConll(object):
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
                       for i in indexes}
 
+        if script_version == '04':            
+            gold_props = self._arg2start_end(gold_props)
 
         # Stores GOLD standard labels
         arg_list = [filename, 'gold', self.db,
                     self.idx2lex, gold_props, hparams]
         gold_path = self._store(*arg_list)
 
+        if script_version == '04':
+            eval_props = self._arg2start_end(props)
+        else:
+            eval_props = props
+
         # Stores evaluation labels
         arg_list = [filename, 'eval', self.db,
-                    self.idx2lex, props, hparams]
+                    self.idx2lex, eval_props, hparams]
 
         eval_path = self._store(*arg_list)
 
-        # Runs official conll 2005 shared task script        
-        perl_cmd = ['perl', PEARL_SRL05_PATH, gold_path, eval_path]
+        # Runs official conll 2005 shared task script
+        if script_version  == '05':
+            perl_path = PEARL_SRL05_PATH
+        elif script_version == '04':
+            perl_path = PEARL_SRL04_PATH
+
+        perl_cmd = ['perl', perl_path, gold_path, eval_path]
 
         # Resets state
         pipe = Popen(perl_cmd, stdout=PIPE, stderr=PIPE)
@@ -331,7 +343,10 @@ class EvaluatorConll(object):
         self._parse(self.txt)
 
         #Stores target_dir/<hparams>/prefix
-        target_dir = self._get_dir(hparams)
+        if self.target_dir is None:
+            target_dir = self._get_dir(hparams)
+        else:
+            target_dir = self.target_dir
         target_path = '{:}/{:}.conll'.format(target_dir, filename)
         with open(target_path, 'w+') as f:
             f.write(self.txt)
@@ -421,7 +436,7 @@ class EvaluatorConll(object):
             target_dir = self._get_dir(hparams)
         else:
             target_dir = self.target_dir
-                
+
         target_path = '{:}/{:}-{:}.props'.format(
             target_dir,
             ds_type,
@@ -522,13 +537,35 @@ class EvaluatorConll(object):
 
         return self.props_dict
 
-    def _arg2start_end(self, prop_dict=None):
+    def _arg2start_end(self, arg_dict):
         '''Converts flat tree format (`05`) to Start End format (`04`)
-        
+
         Converts a proposition dict (index: arg) in CoNLL 2005 format 
-        to CoNLL 2004.  
-        
+        to CoNLL 2004.
+
         Keyword Arguments:
             prop_dict {[type]} -- [description] (default: {None})
         '''
-        pass
+        propositions = {idx: self.db['P'][idx] for idx in arg_dict}
+
+        # br.propbankbr_arg2se(arg_list) expects a list or tuples
+        # first element of the tuple is `PRED`
+        # second elemnt of the tuple is `ARG`
+        # propositions are separated by None
+        arg_list = []
+        prev_prop = None
+        for idx, prop in propositions.items():
+            if prop != prev_prop and prev_prop is not None:
+                arg_list.append(None)
+            pred_ = self.idx2lex['PRED'][self.db['PRED'][idx]]
+            arg_list.append((pred_, arg_dict[idx]))
+            prev_prop = prop
+
+        SE = br.propbankbr_arg2se(arg_list)
+        se_list = [se[1] for se in SE if se is not None]
+        # Converts SE into dictonary of propositions
+        # zip_list = [arg_list, se_list]
+
+        zip_list = zip(arg_dict.keys(), se_list)
+        se_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
+        return se_dict
