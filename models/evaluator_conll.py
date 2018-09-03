@@ -299,7 +299,7 @@ class EvaluatorConll(object):
         gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
                       for i in indexes}
 
-        if script_version == '04':            
+        if script_version == '04':
             gold_props = self._arg2start_end(gold_props)
 
         # Stores GOLD standard labels

@@ -146,11 +146,12 @@ class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
                 test_values_ = self.propbank_encoder.idx2lex[column].values()
 
                 with self.subTest(msg='Checking {:}'.format(column)):
-                    self.assertEqual(list(test_values_), list(mock_))
+                    # import code; code.interact(local=dict(globals(), **locals()))
+                    self.assertEqual(list(test_values_), sorted(mock_))
 
 
     def _helper_choice(self, choice_column):
-        domain_ = self.schema_dict[choice_column]['domain']
+        domain_ = self.schema_dict[choice_column]['domain']        
         test_dict = {i:d for i, d in enumerate(domain_)}
 
         self.assertEqual(test_dict,
@@ -212,6 +213,7 @@ class PropbankTestEmbeddings(PropbankEncoderBaseCase):
 
     def test_embeddings_sz(self):
         self.assertEqual(self.propbank_encoder.embeddings_sz, 50)
+
 
 class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
@@ -276,7 +278,7 @@ class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
         test_dict = self.propbank_encoder.column('train', column_label, 'IDX')
         mock_dict = self._get_mocked_dict(column_label)
-
+        # import code; code.interact(local=dict(globals(), **locals()))
         self.assertEqual(test_dict, mock_dict, msg)
 
     def _get_mocked_dict(self, column_label):
@@ -285,7 +287,7 @@ class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
         if column_type in ('choice', 'text'):
             domain_ = self.schema_dict[column_label]['domain']
-            domain_list = list(domain_)
+            domain_list = sorted(list(domain_))
             mock_dict = {key_: domain_list.index(lex_)
                 for key_, lex_ in mock_dict.items()
             }
@@ -349,7 +351,7 @@ class PropbankTestColumnCAT(PropbankEncoderBaseCase):
 
     def test_column_t(self):
         column_label = 'T'
-        self._assert_column_eq(column_label)        
+        self._assert_column_eq(column_label)
 
     def _assert_column_eq(self, column_label):
         msg = self.assert_msg.format(column_label)
@@ -436,7 +438,7 @@ class PropbankTestColumnEMB(PropbankEncoderBaseCase):
             domain_sz = len(domain_)
             lex2list_dict = {
                 key: [1 if i == j else 0 for j in range(domain_sz)]
-                for i, key in enumerate(domain_list)                
+                for i, key in enumerate(sorted(domain_list)) 
             }
             mock_dict = {key_: lex2list_dict[lex_]
                 for key_, lex_ in mock_dict.items()
@@ -525,7 +527,7 @@ class PropbankTestColumnHOT(PropbankEncoderBaseCase):
 
         if column_type in ('choice', 'text'):
             domain_ = self.schema_dict[column_label]['domain']
-            domain_list = list(domain_)
+            domain_list = sorted(list(domain_))
             domain_sz = len(domain_)
             mock_dict = {
                 key_: [1 if i == domain_list.index(lex_) else 0 for i in range(domain_sz)]
@@ -766,7 +768,7 @@ class PropbankTestIteratorIDX(PropbankEncoderBaseCase):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('FORM', 'ARG'):
                         domain_list = self.schema_dict[column_label]['domain']
-                        mock_value = domain_list.index(mock_value)
+                        mock_value = sorted(domain_list).index(mock_value)
 
                     msg_ = self.base_message.format(column_value, mock_value)
                     self.assertEqual(column_value, mock_value, msg_)
@@ -804,7 +806,7 @@ class PropbankTestIteratorEMB(PropbankEncoderBaseCase):
                 with self.subTest(message=msg_):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('ARG'):
-                        domain_list = self.schema_dict[column_label]['domain']
+                        domain_list = sorted(self.schema_dict[column_label]['domain'])
                         i = domain_list.index(mock_value)
                         sz = len(domain_list)
                         mock_value = [1 if i == j else 0 for j in range(sz)]
