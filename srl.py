@@ -21,7 +21,7 @@
 
 import argparse
 
-from models import estimate, estimate_kfold
+from models import estimate, estimate_kfold, estimate_recover
 from models import PropbankEncoder
 
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
@@ -31,95 +31,111 @@ FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
 if __name__ == '__main__':
     #Parse descriptors
     parser = argparse.ArgumentParser(
-        description='''This script uses tensorflow for multiclass classification of Semantic Roles using 
-            Propbank Br built according to the Propbank guidelines. Uses Conll 2005 Shared Task pearl evaluator
+        description='''This script uses tensorflow for multiclass
+            classification of Semantic Roles using Propbank Br
+            built according to the Propbank guidelines.
+            Uses CoNLL 2004 or 2005 Shared Task pearl evaluator
             under the hood.''')
 
-    parser.add_argument('depth', type=int, nargs='+', default=[16] * 4,
+    parser.add_argument('depth', type=int, nargs='*', default=[16] * 4,
                         help='''Set of integers corresponding
                         the deep layer sizes. default: 16 16 16 16\n''')
 
-    parser.add_argument('-embeddings', dest='embeddings', nargs=1,
-                        default='glo50', choices=['glo50', 'wan50', 'wan100', 'wan300', 'wrd50'],
-                        help='''Embedding abbrev.
-                                and size examples: glo50, wan50.
-                                Default: glo50 \n''')
+    parser.add_argument('--batch_size', dest='batch_size',
+                        type=int, nargs=1, default=250,
+                        help='''Batch size.
+                                Default: 250 \n''')
 
-    parser.add_argument('-ctx_p', dest='ctx_p', type=int, nargs=1,
+    parser.add_argument('--ctx_p', dest='ctx_p', type=int, nargs=1,
                         default=1, choices=[1, 2, 3],
                         help='''Size of sliding window around predicate.
                                 Default: 1\n''')
 
-    parser.add_argument('-lr', dest='lr', type=float, nargs=1,
-                        default=5 * 1e-3,
-                        help='''Learning rate of the model.
-                                Default: 0.005\n''')
+    parser.add_argument('--ckpt_dir', dest='ckpt_dir', type=str, nargs=1,
+                        default='',
+                        help='''Checkpoint directory -- with previous
+                                computed model. If this parameter is provided
+                                will ignore others and load model with
+                                previously set parameters.\n''')
 
-    parser.add_argument('-batch_size', dest='batch_size', type=int, nargs=1,
-                        default=250,
-                        help='''Batch size.
-                                Default: 250 \n''')
+    parser.add_argument('--embeddings', dest='embeddings', nargs=1,
+                        default='glo50', choices=('glo50', 'wan50',
+                                                  'wan100', 'wan300', 'wrd50'),
+                        help='''Embedding abbrev.
+                                and size examples: glo50, wan50.
+                                Default: glo50 \n''')
 
-    parser.add_argument('-epochs', dest='epochs', type=int, nargs=1,
+    parser.add_argument('--epochs', dest='epochs', type=int, nargs=1,
                         default=1000,
                         help='''Number of times to repeat training set during training.
                                 Default: 1000\n''')
 
-    parser.add_argument('-target', dest='target', nargs=1,
-                        default='T', choices=['T', 'IOB', 'HEAD'],
-                        help='''Target representations\n''')
-
-    parser.add_argument('-kfold', action='store_true',
+    parser.add_argument('--kfold', action='store_true',
                         help='''if present performs kfold
                                 optimization with 25 folds.
                                 Default: False''')
 
-    parser.add_argument('-version', type=str, dest='version',
+    parser.add_argument('--lr', dest='lr', type=float, nargs=1,
+                        default=5 * 1e-3,
+                        help='''Learning rate of the model.
+                                Default: 0.005\n''')
+
+    parser.add_argument('--target', dest='target', nargs=1,
+                        default='T', choices=['T', 'IOB', 'HEAD'],
+                        help='''Target representations\n''')
+
+    parser.add_argument('--version', type=str, dest='version',
                         nargs=1, choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
 
-    input_labels = FEATURE_LABELS
-    # print(args)
-    ctx_p = args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
-    if ctx_p > 1:
-        input_labels.append('FORM_CTX_P-2')
-        input_labels.append('FORM_CTX_P+2')
-        if args.ctx_p[0] == 3:
-            input_labels.append('FORM_CTX_P-3')
-            input_labels.append('FORM_CTX_P+3')
-
-    target_label = args.target[0] if isinstance(args.target, list) else args.target
-    embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
-    learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
-    version = args.version[0] if isinstance(args.version, list) else args.version
-    epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
-
-    if args.kfold:
-        # print(input_labels)
-        # print(args.target)
-        # print(args.depth)
-        # print(embeddings)
-        # print(args.epochs)
-        # print(learning_rate)
-        # print(args.batch_size)
-
-        estimate_kfold(input_labels=input_labels, target_label=target_label,
-                       hidden_layers=args.depth, embeddings=embeddings,
-                       epochs=epochs, lr=learning_rate, fold=25,
-                       version=version, ctx_p=ctx_p)
+    ckpt_dir = args.ckpt_dir[0] if isinstance(args.ckpt_dir, list) else args.ckpt_dir
+    if len(ckpt_dir) > 0:
+        if ckpt_dir[-1] != '/':
+            ckpt_dir += '/'
+        estimate_recover(ckpt_dir)
     else:
-        # print(input_labels)
-        # print(args.target)
-        # print(args.depth)
-        # print(embeddings)
-        # print(args.epochs)
-        # print(learning_rate)
-        # print(args.batch_size)
-        # print(args.ctx_p)
+        input_labels = FEATURE_LABELS
+        # print(args)
+        ctx_p = args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
+        if ctx_p > 1:
+            input_labels.append('FORM_CTX_P-2')
+            input_labels.append('FORM_CTX_P+2')
+            if args.ctx_p[0] == 3:
+                input_labels.append('FORM_CTX_P-3')
+                input_labels.append('FORM_CTX_P+3')
 
-        estimate(input_labels=input_labels, target_label=target_label,
-                 hidden_layers=args.depth, embeddings=embeddings,
-                 epochs=epochs, lr=learning_rate, ctx_p=ctx_p,
-                 batch_size=args.batch_size, version=version)
+        target_label = args.target[0] if isinstance(args.target, list) else args.target
+        embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
+        learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
+        version = args.version[0] if isinstance(args.version, list) else args.version
+        epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
+        batch_size = args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
+        if args.kfold:
+            # print(input_labels)
+            # print(args.target)
+            # print(args.depth)
+            # print(embeddings)
+            # print(args.epochs)
+            # print(learning_rate)
+            # print(args.batch_size)
+
+            print(args.depth)
+            estimate_kfold(input_labels=input_labels, target_label=target_label,
+                           hidden_layers=args.depth, embeddings=embeddings,
+                           epochs=epochs, lr=learning_rate, fold=25,
+                           version=version, ctx_p=ctx_p)
+        else:
+            # print(input_labels)
+            # print(args.target)
+            # print(args.depth)
+            # print(embeddings)
+            # print(args.epochs)
+            # print(learning_rate)
+            # print(args.batch_size)
+            # print(args.ctx_p)
+            estimate(input_labels=input_labels, target_label=target_label,
+                     hidden_layers=args.depth, embeddings=embeddings,
+                     epochs=epochs, lr=learning_rate, ctx_p=ctx_p,
+                     batch_size=args.batch_size, version=version)

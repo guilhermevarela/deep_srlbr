@@ -24,6 +24,7 @@ import string
 import datetime
 import os
 
+import json
 import pandas as pd
 import config
 
@@ -278,11 +279,11 @@ def snapshot_hparam_string(embeddings='glo50', target_label='T',
 
     return snapshot_dir
 
-
-def snapshot_persist(target_dir, input_labels=None, target_label=None,
-                    hidden_layers=None, embeddings=None,
-                    epochs=None, lr=None, batch_size=None,
-                    kfold=None, version='1.0', **kwargs):
+def snapshot_persist(target_dir,  **kwargs):
+# def snapshot_persist(target_dir, input_labels=None, target_label=None,
+#                     hidden_layers=None, embeddings=None,
+#                     epochs=None, lr=None, batch_size=None,
+#                     kfold=None, version='1.0', **kwargs):
     '''Saves the parameters for a given model 
     
     Creates a directory it one doesnot exist
@@ -312,60 +313,35 @@ def snapshot_persist(target_dir, input_labels=None, target_label=None,
     if not os.path.isdir(target_dir):
         os.makedirs(target_dir)
 
-    target_path = '{:}params.txt'.format(target_dir)
+    target_path = '{:}params.json'.format(target_dir)
+
+
+    KEYS = {'input_labels', 'target_label',
+            'hidden_layers', 'embeddings', 'epochs',
+            'lr', 'batch_size', 'kfold', 'version'}
+
+    # Clear exclusve parameters
+    if 'kfold' in kwargs:
+        keys_set = KEYS - {'batch_size'}
+    else:
+        keys_set = KEYS - {'kfold'}
+
+    if keys_set < kwargs.keys():  # issubset
+        keys_list = sorted(list(keys_set))
+    else:
+        raise KeyError('Missing items: {:}'.format(keys_set - kwargs.keys()))
+
+    params_dict = {key: kwargs[key] for key in keys_list}
+
     with open(target_path, mode='w') as f:
-        if input_labels is not None:
-            line_ = 'input_labels:\t'
-            line_ += ','.join(input_labels)
-            line_ += '\n'
-            f.write(line_)
-
-        if target_label is not None:
-            line_ = 'target_label:\t'
-            line_ += ','.join(target_label)
-            line_ += '\n'
-            f.write(line_)
-
-        if hidden_layers is not None:
-            line_ = 'hidden_layers:\t'
-            line_ += 'x'.join([str(h) for h in hidden_layers])
-            line_ += '\n'
-            f.write(line_)
-
-        if embeddings is not None:
-            line_ = 'embeddings:\t'
-            line_ += embeddings
-            line_ += '\n'
-            f.write(line_)
-
-        if epochs is not None:
-            line_ = 'epochs:\t'
-            line_ += '{:d}'.format(epochs)
-            line_ += '\n'
-            f.write(line_)
-
-        if lr is not None:
-            line_ = 'learning_rate:\t'
-            line_ += '{:.2e}'.format(lr)
-            line_ += '\n'
-            f.write(line_)
-
-        if batch_size is not None:
-            line_ = 'batch_size:\t'
-            line_ += '{:d}'.format(batch_size)
-            line_ += '\n'
-            f.write(line_)
-
-        if kfold is not None:
-            line_ = 'kfold:\t'
-            line_ += str(True)
-            line_ += '\n'
-            f.write(line_)
-
-        if version is not None:
-            line_ = 'version:\t'
-            line_ += version
-            line_ += '\n'
-            f.write(line_)
+        json.dump(params_dict, f)
 
     return target_dir
+
+
+def snapshot_recover(target_dir):
+    target_path = '{:}params.json'.format(target_dir)
+    with open(target_path, mode='r') as f:
+        params_dict = json.load(f)
+
+    return params_dict

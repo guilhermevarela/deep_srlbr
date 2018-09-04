@@ -6,10 +6,16 @@
     Runs training and prediction in order to estimate the parameters
 
 '''
-import tensorflow as tf
-import config
+import os
+
+
 import numpy as np
-from .utils import get_dims, get_index, get_binary, snapshot_hparam_string, snapshot_persist
+import tensorflow as tf
+
+import config
+
+from .utils import get_dims, get_binary
+from .utils import snapshot_hparam_string, snapshot_persist, snapshot_recover
 from datasets import get_valid, get_test, input_fn, get_train
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
@@ -25,9 +31,9 @@ HIDDEN_LAYERS = [16] * 4
 
 
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
-                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50', 
-                   version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1, 
-                   **kwargs):
+                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
+                   version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
+                   ckpt_dir=None, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -46,22 +52,32 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         hidden_layers {list<int>} -- sets the number and
             sizes for hidden layers (default: {`[16, 16, 16, 16]`})
         embeddings {str} -- There are three available models
-            `glo50`,`wrd50`, `wan50` (default: {'wan50'}) 
+            `glo50`,`wrd50`, `wan50` (default: {'wan50'})
         epochs {int} -- Number of iterations (default: {100})
         lr {float} -- The learning rate (default: {5 * 1e-3})
         kfold {int} -- The number of partitions from
-            on each iteration (default: {250})
+            on each iteration (default: 250)
+        ckpt_dir {str} -- ckpt_dir is the  (default: None)
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
-    target_dir = snapshot_hparam_string(embeddings=embeddings, target_label=target_label,
-                                        is_batch=False, learning_rate=lr, version=version,
-                                        hidden_layers=hidden_layers, ctx_p=ctx_p)
+    if ckpt_dir is None:
+        target_dir = snapshot_hparam_string(embeddings=embeddings,
+                                            target_label=target_label,
+                                            is_batch=False, ctx_p=ctx_p,
+                                            learning_rate=lr, version=version,
+                                            hidden_layers=hidden_layers)
 
-    target_dir = 'outputs{:}'.format(target_dir)
-    target_dir = snapshot_persist(target_dir, input_labels=input_labels, target_label=target_label,
-                                  embeddings=embeddings, epochs=epochs, lr=lr, kfold=25, ctx_p=ctx_p,
-                                  version=version)
+        target_dir = 'outputs{:}'.format(target_dir)
+        target_dir = snapshot_persist(target_dir,
+                                      input_labels=input_labels, lr=lr,
+                                      hidden_layers=hidden_layers, ctx_p=ctx_p,
+                                      target_label=target_label, kfold=25,
+                                      embeddings=embeddings,
+                                      epochs=epochs, version=version)
+    else:
+        target_dir = ckpt_dir
 
+    save_path = '{:}model.ckpt'.format(target_dir)
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
     datasets_list = [get_binary('train', embeddings)]
@@ -105,13 +121,21 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         session.run(init_op)
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord)
+        saver = tf.train.Saver()
         # Training control variables
+        if ckpt_dir:
+            # restores previously trained parameters
+            saver.restore(session, save_path)
+            conll_path = '{:}valid.conll'.format(ckpt_dir)
+            evaluator.evaluate_fromconllfile(conll_path)
+            best_validation_rate = evaluator.f1  # prevents files to be loaded
+        else:
+            best_validation_rate = -1
         step = 0
         i = 0
         total_loss = 0.0
         total_error = 0.0
         eps = 100
-        best_validation_rate = -1
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
@@ -149,6 +173,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                     if best_validation_rate < evaluator.f1:
                         best_validation_rate = evaluator.f1
+                        saver.save(session, save_path)
 
                     if evaluator.f1 > 95:
                         Yish = session.run(
@@ -171,10 +196,46 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             coord.join(threads)
 
 
+def estimate_recover(ckpt_dir):
+    '''Loads pre computed models and runs
+
+    Runs estimate model under directory cktp_dir 
+    from last state.
+
+    Arguments:
+        ckpt_dir {str} -- directory with checkpoint files
+
+    Raises:
+        ValueError -- ckpt_dir must be a directory
+        os.FileNotFoundError -- ckpt_dir must contain 
+                    valid checkpoint files and params.json
+    '''
+
+    if not os.path.isdir(ckpt_dir):
+        raise ValueError('ckpt_dir `{:}` is not a directory.'.format(ckpt_dir))
+    else:
+        params_path = '{:}params.json'.format(ckpt_dir)
+        if not os.path.isfile(params_path):
+            err_ = 'params.json not in `{:}`'.format(params_path)
+            raise ValueError(err_)
+        else:
+            ckpt_path = '{:}checkpoint'.format(ckpt_dir)
+            if not os.path.isfile(ckpt_path):
+                err_ = 'checkpoint not in `{:}`'.format(ckpt_path)
+                raise ValueError(err_)
+            else:
+                params_dict = snapshot_recover(ckpt_dir)
+                params_dict['ckpt_dir'] = ckpt_dir
+                if 'kfold' in params_dict:
+                    estimate_kfold(**params_dict)
+                elif 'batch_size' in params_dict:
+                    estimate(**params_dict)
+
+
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
              epochs=100, lr=5 * 1e-3, batch_size=250, ctx_p=1,
-             version='1.0', **kwargs):
+             version='1.0', ckpt_dir=None, **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -195,17 +256,29 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         lr {float} -- The learning rate (default: {5 * 1e-3})
         batch_size {int} -- The number of examples consumed 
             on each iteration (default: {250})
+        ckpt_dir {str} -- ckpt_dir is the  (default: None)
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
-    target_dir = snapshot_hparam_string(embeddings=embeddings, target_label=target_label,
-                                        is_batch=True, learning_rate=lr, version=version,
-                                        hidden_layers=hidden_layers, ctx_p=ctx_p)
 
-    target_dir = 'outputs{:}'.format(target_dir)
-    target_dir = snapshot_persist(target_dir, input_labels=input_labels, target_label=target_label,
-                                  embeddings=embeddings, epochs=epochs, lr=lr, batch_size=batch_size, ctx_p=ctx_p,
-                                  version=version)
+    if ckpt_dir is None:
+        target_dir = snapshot_hparam_string(embeddings=embeddings,
+                                            target_label=target_label,
+                                            learning_rate=lr, is_batch=True,
+                                            hidden_layers=hidden_layers,
+                                            version=version, ctx_p=ctx_p)
 
+        target_dir = 'outputs{:}'.format(target_dir)
+
+        target_dir = snapshot_persist(target_dir, input_labels=input_labels,
+                                      target_label=target_label, ctx_p=ctx_p,
+                                      embeddings=embeddings, epochs=epochs,
+                                      hidden_layers=hidden_layers,
+                                      lr=lr, batch_size=batch_size,
+                                      version=version)
+    else:
+        target_dir = ckpt_dir
+
+    save_path = '{:}model.ckpt'.format(target_dir)
     propbank_path = get_binary('deep', embeddings, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
     dims_dict = propbank_encoder.columns_dimensions('EMB')
@@ -270,11 +343,20 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         session.run(init_op)
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord)
+        saver = tf.train.Saver()
+        if ckpt_dir:
+            saver.restore(session, save_path)
+            conll_path = '{:}best-valid.conll'.format(ckpt_dir)
+            evaluator.evaluate_fromconllfile(conll_path)
+            best_validation_rate = evaluator.f1
+        else:
+            best_validation_rate = -1
+
         # Training control variables
         step = 1
         total_loss = 0.0
         total_error = 0.0
-        best_validation_rate = -1
+
         eps = 100
         try:
             while not (coord.should_stop() or eps < 1e-3):
@@ -322,8 +404,10 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                     total_error = 0.0
 
                     if f1_valid and best_validation_rate < f1_valid:
+
                         best_validation_rate = f1_valid
                         f1_valid = valid_eval(Y_valid, 'best-valid')
+                        saver.save(session, save_path)
 
                 step += 1
 

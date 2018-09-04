@@ -161,7 +161,7 @@ if __name__ == '__main__':
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
-    parser.add_argument('-version', type=str, dest='version',
+    parser.add_argument('--version', type=str, dest='version',
                         nargs=1, choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 

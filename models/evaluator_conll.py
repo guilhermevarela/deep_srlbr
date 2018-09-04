@@ -364,7 +364,8 @@ class EvaluatorConll(object):
             self.txt = f.read()
         f.close()
 
-        self._parse(self.txt)    
+        self._parse(self.txt)
+        
 
     def _refresh(self):
         self.num_propositions = -1
