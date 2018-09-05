@@ -318,7 +318,8 @@ def snapshot_persist(target_dir,  **kwargs):
 
     KEYS = {'input_labels', 'target_label',
             'hidden_layers', 'embeddings', 'epochs',
-            'lr', 'batch_size', 'kfold', 'version'}
+            'lr', 'batch_size', 'kfold', 'version',
+            'ru'}
 
     # Clear exclusve parameters
     if 'kfold' in kwargs:

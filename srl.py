@@ -80,6 +80,11 @@ if __name__ == '__main__':
                         help='''Learning rate of the model.
                                 Default: 0.005\n''')
 
+    parser.add_argument('--ru', dest='ru', type=str, nargs=1,
+                        default='BasicLSTM', choices=('BasicLSTM', 'GRU'),
+                        help='''Recurrent unit -- according to tensorflow.
+                                Default: `BasicLSTM`\n''')
+
     parser.add_argument('--target', dest='target', nargs=1,
                         default='T', choices=['T', 'IOB', 'HEAD'],
                         help='''Target representations\n''')
@@ -112,6 +117,7 @@ if __name__ == '__main__':
         version = args.version[0] if isinstance(args.version, list) else args.version
         epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
         batch_size = args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
+        ru = args.ru[0] if isinstance(args.ru, list) else args.ru
         if args.kfold:
             # print(input_labels)
             # print(args.target)
@@ -124,7 +130,7 @@ if __name__ == '__main__':
             print(args.depth)
             estimate_kfold(input_labels=input_labels, target_label=target_label,
                            hidden_layers=args.depth, embeddings=embeddings,
-                           epochs=epochs, lr=learning_rate, fold=25,
+                           epochs=epochs, lr=learning_rate, fold=25, ru=ru,
                            version=version, ctx_p=ctx_p)
         else:
             # print(input_labels)
@@ -137,5 +143,5 @@ if __name__ == '__main__':
             # print(args.ctx_p)
             estimate(input_labels=input_labels, target_label=target_label,
                      hidden_layers=args.depth, embeddings=embeddings,
-                     epochs=epochs, lr=learning_rate, ctx_p=ctx_p,
+                     epochs=epochs, lr=learning_rate, ctx_p=ctx_p, ru=ru,
                      batch_size=args.batch_size, version=version)

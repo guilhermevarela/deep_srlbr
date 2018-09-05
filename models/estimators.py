@@ -19,7 +19,9 @@ from .utils import snapshot_hparam_string, snapshot_persist, snapshot_recover
 from datasets import get_valid, get_test, input_fn, get_train
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
-from models.dblstm import DBLSTM
+from models.optimizers import Optmizer
+
+
 
 
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
@@ -33,7 +35,7 @@ HIDDEN_LAYERS = [16] * 4
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
-                   ckpt_dir=None, **kwargs):
+                   ckpt_dir=None,  ru='BasicLSTM', **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -72,7 +74,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                                       input_labels=input_labels, lr=lr,
                                       hidden_layers=hidden_layers, ctx_p=ctx_p,
                                       target_label=target_label, kfold=25,
-                                      embeddings=embeddings,
+                                      embeddings=embeddings, ru=ru,
                                       epochs=epochs, version=version)
     else:
         target_dir = ckpt_dir
@@ -96,7 +98,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_size': target_size
+        'target_size': target_size,
+        'ru': ru
     }
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
@@ -110,7 +113,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             datasets_list, batch_size, epochs,
             input_labels, target_label, shuffle=True)
 
-    dblstm = DBLSTM(X, T, seqlens, **params)
+    deep_srl = Optmizer(X, T, seqlens, **params)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -145,7 +148,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                 else:
                     loss, _, Yish, error = session.run(
-                        [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                        [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                         feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
                     )
 
@@ -154,7 +157,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                 if (step + 1) % fold == 0:
                     Yish = session.run(
-                        dblstm.prediction,
+                        deep_srl.predict,
                         feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
                     )
 
@@ -177,7 +180,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                     if evaluator.f1 > 95:
                         Yish = session.run(
-                            dblstm.prediction,
+                            deep_srl.predict,
                             feed_dict={X: X_test, T: Y_test, seqlens: L_test}
                         )
 
@@ -235,7 +238,7 @@ def estimate_recover(ckpt_dir):
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
              epochs=100, lr=5 * 1e-3, batch_size=250, ctx_p=1,
-             version='1.0', ckpt_dir=None, **kwargs):
+             version='1.0', ckpt_dir=None, ru='BasicLSTM', **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -272,7 +275,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         target_dir = snapshot_persist(target_dir, input_labels=input_labels,
                                       target_label=target_label, ctx_p=ctx_p,
                                       embeddings=embeddings, epochs=epochs,
-                                      hidden_layers=hidden_layers,
+                                      hidden_layers=hidden_layers, ru=ru,
                                       lr=lr, batch_size=batch_size,
                                       version=version)
     else:
@@ -318,7 +321,8 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_size': target_size
+        'target_size': target_size,
+        'ru': ru
     }
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
@@ -332,8 +336,8 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             datasets_list, batch_size, epochs,
             input_labels, target_label, shuffle=True)
 
-    dblstm = DBLSTM(X, T, seqlens, **params)
-
+    # deep_srl = DBLSTM(X, T, seqlens, **params)
+    deep_srl = Optmizer(X, T, seqlens, **params)
     init_op = tf.group(
         tf.global_variables_initializer(),
         tf.local_variables_initializer()
@@ -369,7 +373,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
 
                 loss, _, Yish, error = session.run(
-                    [dblstm.cost, dblstm.optimize, dblstm.prediction, dblstm.error],
+                    [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, seqlens: L_batch}
                 )
 
@@ -378,13 +382,13 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                 if (step) % 25 == 0:
 
                     Y_train = session.run(
-                        dblstm.prediction,
+                        deep_srl.predict,
                         feed_dict={X: X_train, T: T_train, seqlens: L_train}
                     )
                     f1_train = train_eval(Y_train)
 
                     Y_valid = session.run(
-                        dblstm.prediction,
+                        deep_srl.predict,
                         feed_dict={X: X_valid, T: T_valid, seqlens: L_valid}
                     )
                     f1_valid = valid_eval(Y_valid)
