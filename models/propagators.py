@@ -9,7 +9,7 @@ from models.properties import lazy_property
 
 
 def get_unit(sz, ru='BasicLSTM'):
-    if ru not in ('BasicLSTM', 'GRU'):        
+    if ru not in ('BasicLSTM', 'GRU'):
         raise ValueError('recurrent_unit {:} must be in {:}'.format (ru, ('BasicLSTM', 'GRU')))
 
     if ru == 'BasicLSTM':
