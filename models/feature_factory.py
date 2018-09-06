@@ -4,24 +4,25 @@
     Feature engineering module
     * Converts linguist and end-to-end features into objects
 '''
-
-import sys, os
-sys.path.append(os.getcwd())
-from collections import OrderedDict, defaultdict, deque
-
-import datasets as br
-import pandas as pd
-import yaml
-import networkx as nx
-import matplotlib.pyplot as plt
 import re
+import sys
+import os
+import yaml
+from collections import OrderedDict, defaultdict, deque
+sys.path.append(os.getcwd())
+import pandas as pd
+import networkx as nx
+# import matplotlib.pyplot as plt
+
+import datasets.scripts.propbankbr as br
+from utils.chunk import chunk_dict_maker
 
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnChunk', 'ColumnCtreeChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -127,6 +128,36 @@ class ColumnChunk(object):
         tuple_list = zip(list(_dict_keys), _list)
         tuple_list = sorted(tuple_list, key=lambda x: x[0])
         return OrderedDict(tuple_list)
+
+
+class ColumnCtreeChunk(object):
+    '''
+        Computes the flatten ctree chunk version
+
+        Usage:
+            See below (main)
+    '''
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the chunk from tree of constintuintd
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        id_list = list(self.db['P'].keys())
+        id_dict = OrderedDict(zip(id_list, id_list))
+        prop_dict = self.db['P']
+        ctree_dict = self.db['CTREE']
+
+        chunk_dict = chunk_dict_maker(id_dict, prop_dict, ctree_dict)
+
+        self.ctree_chunk_dict = {}
+        for prop, ck_dict in chunk_dict.items():
+            self.ctree_chunk_dict.update(ck_dict)
+        return self.ctree_chunk_dict
 
 
 class ColumnShifter(object):
@@ -750,6 +781,16 @@ def process_chunk(dictdb, version='1.0'):
     _store(chunks, 'chunks', target_dir)
 
 
+def process_ctreechunk(dictdb, version='1.0'):
+    column_cck = FeatureFactory().make('ColumnCtreeChunk', dictdb)
+    d = column_cck.run()
+    target_dir = 'datasets/csvs/{:}/column_ctree_chunks/'.format(version)
+    filename = '{:}{:}.csv'.format(target_dir, 'ctree_chunk')
+
+    d = dict([('SHALLOW_CHUNKS', d)])
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
 def process_predmorph(dictdb, version='1.0'):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
@@ -834,14 +875,15 @@ def _store(d, target_name, target_dir):
         df.to_csv(filename, sep=',', encoding='utf-8', index=True)
 
 if __name__ == '__main__':
-    gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
+    gsdf = pd.read_csv('datasets/csvs/1.0/gs.csv', index_col=0, sep=',', encoding='utf-8')
     db = gsdf.to_dict()
 
     # columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
     # shifts = [i for i in range(-3, 4)] 
     # process_shifter(db, columns, shifts)
     # process_shifter_ctx_p(db, columns, shifts)
-    process_chunk(db)
+    # process_chunk(db)
+    process_ctreechunk(db)
     # process_t(db)
     # process_iob(db)
     # process_iob(db)

@@ -1,0 +1,15 @@
+ID,FORM,CTREE
+1,A,(FCL(NP*
+2,falta,*
+3,de,(PP*
+4,um,(NP*
+5,programa,*)))
+6,poderia,(VP*
+7,dar,*)
+8,a,(NP*
+9,impressão,*
+10,de,(PP*
+11,não,(ICL(ADVP*)
+12,ter,(VP*)
+13,metas,(NP*))))
+14,.,*)

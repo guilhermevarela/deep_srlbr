@@ -46,6 +46,11 @@ if __name__ == '__main__':
                         help='''Batch size.
                                 Default: 250 \n''')
 
+    parser.add_argument('--chunks', action='store_true',
+                        help='''if present use gold standard shallow chunks
+                                extracted from the Tree of Constituents.
+                                Default: False''')
+
     parser.add_argument('--ctx_p', dest='ctx_p', type=int, nargs=1,
                         default=1, choices=[1, 2, 3],
                         help='''Size of sliding window around predicate.
@@ -110,6 +115,9 @@ if __name__ == '__main__':
             if args.ctx_p[0] == 3:
                 input_labels.append('FORM_CTX_P-3')
                 input_labels.append('FORM_CTX_P+3')
+        use_chunks = args.chunks
+        if use_chunks:
+            input_labels.append('SHALLOW_CHUNKS')
 
         target_label = args.target[0] if isinstance(args.target, list) else args.target
         embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
@@ -118,6 +126,7 @@ if __name__ == '__main__':
         epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
         batch_size = args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
         ru = args.ru[0] if isinstance(args.ru, list) else args.ru
+        
         if args.kfold:
             # print(input_labels)
             # print(args.target)
@@ -131,7 +140,7 @@ if __name__ == '__main__':
             estimate_kfold(input_labels=input_labels, target_label=target_label,
                            hidden_layers=args.depth, embeddings=embeddings,
                            epochs=epochs, lr=learning_rate, fold=25, ru=ru,
-                           version=version, ctx_p=ctx_p)
+                           version=version, ctx_p=ctx_p, chunks=use_chunks)
         else:
             # print(input_labels)
             # print(args.target)
@@ -144,4 +153,5 @@ if __name__ == '__main__':
             estimate(input_labels=input_labels, target_label=target_label,
                      hidden_layers=args.depth, embeddings=embeddings,
                      epochs=epochs, lr=learning_rate, ctx_p=ctx_p, ru=ru,
-                     batch_size=args.batch_size, version=version)
+                     batch_size=args.batch_size, version=version,
+                     chunks=use_chunks)

@@ -3523,6 +3523,10 @@ PRED:
 MARKER: {category: feature, type: int}
 P_S: {category: meta, type: int}
 S: {category: meta, type: int}
+SHALLOW_CHUNKS:
+  category: feature
+  domain: ['B-ADJP', 'B-ADVP', 'B-NP', 'B-PP', 'B-VP', 'I-ADJP', 'I-ADVP', 'I-NP', 'I-PP', 'I-VP', 'O']
+  type: choice
 T:
   category: target
   domain: ['*', A0, A1, A2, A3, A4, A5, AM-ADV, AM-CAU, AM-DIR, AM-DIS, AM-EXT, AM-LOC,

@@ -12,22 +12,16 @@ Created on Jan 25, 2018
     2018-02-26: added input_labels to input_with_embeddings_fn
     2018-03-02: added input_validation and input_train
 '''
+from collections import defaultdict
 import sys
-ROOT_DIR = '/'.join(sys.path[0].split('/')[:-2]) # UGLY PROBLEM FIXES TO LOCAL ROOT --> import config
-sys.path.append(ROOT_DIR)
-sys.path.append('./models/')
+import os
+sys.path.append(os.getcwd())
+
+import numpy as np
+import tensorflow as tf
 
 import config as conf
-import numpy as np
-
-
-#Uncomment if launched from /datasets
-# from propbank_encoder import PropbankEncoder
-# from models import PropbankEncoder
-
-import tensorflow as tf
-from collections import defaultdict
-from utils import get_db_bounds
+from utils.info import get_db_bounds
 
 TF_SEQUENCE_FEATURES = {
     key: tf.VarLenFeature(tf.int64)
@@ -96,10 +90,6 @@ def tfrecords_extract(ds_type, input_labels,
     Raises:
         ValueError -- validation for database type 
     '''
-    # if not(ds_type in ['train', 'valid', 'test']):
-    #     buff = 'ds_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(ds_type)
-    #     raise ValueError(buff)
-    # else:
     dataset_path = get_tfrecord(ds_type, embeddings, version=version)
     dataset_size = get_size(ds_type, version=version)
 
@@ -207,7 +197,15 @@ def input_fn(filenames, batch_size, num_epochs,
         num_epochs=num_epochs,
         shuffle=shuffle
     )
-    context_features, sequence_features = _read_and_decode(filename_queue)
+    if isinstance(output_label, str):
+        sequence_labels = input_labels + [output_label]
+    else:
+        # presume list
+        sequence_labels = input_labels + output_label
+
+    context_features, sequence_features = _read_and_decode(
+        filename_queue,
+        sequence_labels=sequence_labels)
 
     X, T, L, D = _process(
         context_features,
@@ -261,10 +259,7 @@ def _process(context_features, sequence_features,
     labels_list.append(output_label)
     labels_list.append('INDEX')
     for key in labels_list:
-        try:
-            dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
-        except TypeError as t:
-            import code; code.interact(local=dict(globals(), **locals()))
+        dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
 
         dense_tensor1 = tf.cast(dense_tensor, tf.float32)
 
@@ -282,7 +277,7 @@ def _process(context_features, sequence_features,
     return X, T, L, D
 
 
-def _read_and_decode(filename_queue):
+def _read_and_decode(filename_queue, sequence_labels=TF_SEQUENCE_FEATURES_V2):
     '''
         Decodes a serialized .tfrecords containing sequences
         args
@@ -328,11 +323,9 @@ def make_feature_list(columns_dict, columns_config):
     feature_dict = {}
     supported_types = ('choice', 'int', 'text')
     for label_, value_ in columns_dict.items():
-        # makes approximate comparison
-        # label_ = label_.split('_')[0]
+        # makes approximate comparison        
 
         config_dict = columns_config[label_]
-
         if config_dict['type'] in ('bool', 'int'):
             # the representation is an integer list
             feature_dict[label_] = tf.train.FeatureList(

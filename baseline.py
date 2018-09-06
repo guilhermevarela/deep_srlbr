@@ -4,18 +4,19 @@
 '''
 import argparse
 import re
-from subprocess import Popen, PIPE
-from collections import namedtuple
+
 
 import config
 from models.evaluator_conll import evaluate
+from utils.chunk import chunk_stack_process
+
 CONLL_DIR = 'datasets/txts/conll/'
 DEVELOP_PATH = CONLL_DIR + 'PropBankBr_v1.0_Develop.conll.txt'
 TEST_PATH = CONLL_DIR + 'PropBankBr_v1.0_Test.conll.txt'
 PEARL_SRL04_PATH = 'srlconll04/srl-eval.pl'
 PEARL_SRL05_PATH = 'srlconll05/bin/srl-eval.pl'
 
-Chunk = namedtuple('Chunk', ('role', 'init', 'finish'))
+
 
 
 def trim(txt):
@@ -25,29 +26,6 @@ def trim(txt):
 def invalid(txt):
     return re.sub('\n', '', txt)
 
-
-def chunk_stack_process(feature_list, chunk_stack):
-    time = int(feature_list[0])
-    ctree = feature_list[7]
-
-    for role_ in re.findall('\(([A-Z]*)', ctree):
-        chunk_stack.append(Chunk(role=role_, init=time, finish=None))
-
-    finished_chunks = ctree.count(')')
-    c = 0
-    if finished_chunks > 0:
-        stack_len = len(chunk_stack)
-        for i_, ck_ in enumerate(reversed(chunk_stack)):
-            j_ = stack_len - (i_ + 1)
-            if c < finished_chunks and ck_.finish is None:
-                chunk_stack[j_] = Chunk(
-                    role=ck_.role,
-                    init=ck_.init,
-                    finish=time
-                )
-                c += 1
-            if c == finished_chunks:
-                break
 
 
 def find_chunk0(chunk_stack, ub):
@@ -222,7 +200,9 @@ def main(file_list, dataset, script_version='04'):
                     passive_voice = passive_voice if len(passive_voice) > 0 \
                         else [False] * num_props
 
-                    chunk_stack_process(feature_list, chunk_stack)
+                    time_ = int(feature_list[0])
+                    ctree_ = feature_list[7]
+                    chunk_stack_process(time_, ctree_, chunk_stack)
 
                     srl_list, open_labels = filter_gold(
                         srl_list,

@@ -18,9 +18,10 @@ sys.path.append(root_path)
 
 import config
 from collections import OrderedDict, defaultdict
-# import model_utils import fetch_word2vec, preprocess
-import models.utils as model_utils
+# import cps import fetch_word2vec, preprocess
+# import models.utils as cps
 import utils
+from utils import corpus as cps
 
 
 
@@ -190,6 +191,7 @@ class PropbankEncoder(object):
         }
 
     def column(self, ds_type, column, encoding):
+        # import code; code.interact(local=dict(globals(), **locals()))
         lb, ub = utils.get_db_bounds(ds_type)
 
         return {x:self._decode_with_idx(x,[column], encoding)
@@ -209,12 +211,12 @@ class PropbankEncoder(object):
 
     def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = model_utils.fetch_word2vec(language_model, verbose=verbose)
+        word2vec = cps.fetch_word2vec(language_model, verbose=verbose)
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
 
-        self.lex2tok = model_utils.preprocess(list(self.words), word2vec, verbose=verbose)
+        self.lex2tok = cps.preprocess(list(self.words), word2vec, verbose=verbose)
 
         words = self.lex2tok.keys()
         self.tokens = set(self.lex2tok.values())
@@ -279,6 +281,8 @@ class PropbankEncoder(object):
         # Creates descriptors about the data
         dflt_dict =  {'name':'dflt', 'category':'feature', 'type':'int', 'dims': None}
         for col in list(self.columns):
+            # if col == 'SHALLOW_CHUNKS':
+            #     import code; code.interact(local=dict(globals(), **locals()))
             base_col = self.columns_mapper[col]
 
             # Defines metadata

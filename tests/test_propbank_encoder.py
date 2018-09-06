@@ -16,7 +16,8 @@ import numpy as np
 sys.path.insert(0, os.getcwd()) # import top-level modules
 import config
 from models.propbank_encoder import PropbankEncoder
-import models.utils
+# import cps
+import utils.corpus as cps
 
 TESTS_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
 ROOT_DIR = os.getcwd()
@@ -61,11 +62,11 @@ def test_binder_eq(obj, test_list, mock_list, name_list):
 
 class PropbankEncoderBaseCase(unittest.TestCase):
 
-    # @patch('models.utils.fetch_word2vec', return_value=_initialize_word2vec())
+    # @patch('cps.fetch_word2vec', return_value=_initialize_word2vec())
     def setUp(self):
         self._initilize()
-        models.utils.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
-        models.utils.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
+        cps.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
+        cps.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
         self.propbank_encoder = \
             PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50', verbose=False)
 

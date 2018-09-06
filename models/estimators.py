@@ -14,8 +14,8 @@ import tensorflow as tf
 
 import config
 
-from .utils import get_dims, get_binary
-from .utils import snapshot_hparam_string, snapshot_persist, snapshot_recover
+from utils.info import get_dims, get_binary
+from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_recover
 from datasets import get_valid, get_test, input_fn, get_train
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
@@ -35,7 +35,7 @@ HIDDEN_LAYERS = [16] * 4
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
-                   ckpt_dir=None,  ru='BasicLSTM', **kwargs):
+                   ckpt_dir=None,  ru='BasicLSTM', chunks=False, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -60,6 +60,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         kfold {int} -- The number of partitions from
             on each iteration (default: 250)
         ckpt_dir {str} -- ckpt_dir is the  (default: None)
+        chunks {bool} -- If true use gold standard chunks  (default: False)
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
     if ckpt_dir is None:
@@ -75,7 +76,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                                       hidden_layers=hidden_layers, ctx_p=ctx_p,
                                       target_label=target_label, kfold=25,
                                       embeddings=embeddings, ru=ru,
-                                      epochs=epochs, version=version)
+                                      epochs=epochs, chunks=chunks,
+                                      version=version)
     else:
         target_dir = ckpt_dir
 
@@ -238,7 +240,8 @@ def estimate_recover(ckpt_dir):
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
              epochs=100, lr=5 * 1e-3, batch_size=250, ctx_p=1,
-             version='1.0', ckpt_dir=None, ru='BasicLSTM', **kwargs):
+             version='1.0', ckpt_dir=None, ru='BasicLSTM', chunks=False,
+             **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -257,9 +260,10 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
             `glo50`,`wrd50`, `wan50` (default: {'wan50'})
         epochs {int} -- Number of iterations (default: {100})
         lr {float} -- The learning rate (default: {5 * 1e-3})
-        batch_size {int} -- The number of examples consumed 
+        batch_size {int} -- The number of examples consumed
             on each iteration (default: {250})
         ckpt_dir {str} -- ckpt_dir is the  (default: None)
+        chunks {bool} -- If true use gold standard chunks  (default: False)
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
 
@@ -277,7 +281,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                                       embeddings=embeddings, epochs=epochs,
                                       hidden_layers=hidden_layers, ru=ru,
                                       lr=lr, batch_size=batch_size,
-                                      version=version)
+                                      chunks=chunks, version=version)
     else:
         target_dir = ckpt_dir
 

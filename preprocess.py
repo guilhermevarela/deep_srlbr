@@ -22,6 +22,7 @@ SHIFTS = (-3, -2, -1, 0, 1, 2, 3)
 
 FEATURE_MAKER_DICT = {
     'chunks.csv': {'marker_fnc': lambda x, y: fac.process_chunk(x, version=y), 'column': 'chunk features'},
+    'ctree_chunk.csv': {'marker_fnc': lambda x, y: fac.process_ctreechunk(x, version=y), 'column': 'shallow chunk features'},
     'predicate_marker.csv': {'marker_fnc': lambda x, y: fac.process_predmarker(x, version=y), 'column': 'predicate marker feature'},
     'form.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, version=y), 'column': 'form predicate context features'},
     'gpos.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, version=y), 'column': 'gpos predicate context features'},
@@ -68,6 +69,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
 
     column_files = [
         'column_chunks/chunks.csv',
+        'column_ctree_chunks/ctree_chunk.csv',
         'column_predmarker/predicate_marker.csv',
         'column_shifts_ctx_p/form.csv',
         'column_shifts_ctx_p/gpos.csv',
@@ -195,9 +197,9 @@ if __name__ == '__main__':
 
 
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
-    propbank_encoder = make_propbank_encoder(
-        encoder_name=encoder_name,
-        language_model='glove_s50',
-        version=version
-    )
+    # propbank_encoder = make_propbank_encoder(
+    #     encoder_name=encoder_name,
+    #     language_model='glove_s50',
+    #     version=version
+    # )
     make_tfrecords(encoder_name=encoder_name, version=version) 
