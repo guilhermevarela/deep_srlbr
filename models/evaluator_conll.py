@@ -75,6 +75,8 @@ def evaluate(gold_list, eval_list,
     else:
         if script_version == '04':
             script_path = PEARL_SRL04_PATH
+            gold_list = br.propbankbr_arg2se(gold_list)
+            eval_list = br.propbankbr_arg2se(eval_list)
         else:
             script_path = PEARL_SRL05_PATH
 

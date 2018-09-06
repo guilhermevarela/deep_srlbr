@@ -197,7 +197,7 @@ def find_chunk_clause(chunk_stack, time):
     return search_ck
 
 
-def main(file_list, dataset):
+def main(file_list, dataset, script_version='04'):
     gold_list = []
     eval_list = []
     for file_path in file_list:
@@ -276,7 +276,8 @@ def main(file_list, dataset):
 
     file_name = 'baseline_{:}'.format(dataset)
     evaluate(gold_list, eval_list,
-             verbose=True, file_dir=config.BASELINE_DIR, file_name=file_name)
+             verbose=True, file_dir=config.BASELINE_DIR, file_name=file_name,
+             script_version=script_version)
 
 
 if __name__ == '__main__':
@@ -290,8 +291,14 @@ if __name__ == '__main__':
                         help='''String representing the database type to run
                                 the baseline SRL. Default: `global`\n''')
 
+    parser.add_argument('--script_version', type=str, nargs=1, default='04',
+                        choices=('04', '05'),
+                        help='''Use CoNLL 2004 or 2005 ST SRL eval script
+                                Default: `04`\n''')
+
     args = parser.parse_args()
     dataset = args.dataset[0] if isinstance(args.dataset, list) else args.dataset
+    script_version = args.script_version[0] if isinstance(args.script_version, list) else args.script_version
     file_list = []
     if dataset in ('develop', 'global'):
         file_list.append(DEVELOP_PATH)
@@ -299,4 +306,4 @@ if __name__ == '__main__':
     if dataset in ('test', 'global'):
         file_list.append(TEST_PATH)
 
-    main(file_list, dataset)
+    main(file_list, dataset, script_version=script_version)
