@@ -218,25 +218,37 @@ class PropbankEncoder(object):
 
         self.lex2tok = cps.preprocess(list(self.words), word2vec, verbose=verbose)
 
-        words = self.lex2tok.keys()
+        self.words = set(sorted(list(self.lex2tok.keys())))
         self.tokens = set(self.lex2tok.values())
         if verbose:
-            print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(words), len(self.tokens)))
+            print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(self.words), len(self.tokens)))
 
 
         self.tok2idx = {'unk': 0}
         self.idx2tok = {0: 'unk'}
-        self.embeddings = []
-        self.embeddings.append(word2vec['unk'].tolist())
+        self.embeddings = [word2vec['unk'].tolist()]
 
         i = 1
-        for tok in sorted(list(self.tokens)):
-            if not tok in self.tok2idx:
-                # print(tok, i)
-                self.tok2idx[tok] = i
-                self.idx2tok[i] = tok
-                self.embeddings.append(word2vec[tok].tolist())
-                i += 1
+        for word in sorted(list(self.words)):
+            token_ = self.lex2tok[word]
+            if '_' not in token_:
+                embs_ = word2vec[token_]
+            else:
+                # This token is composed of multiple tokens
+                # Make mean from the words
+                for j, tok_ in enumerate(token_.split('_')):
+                    if j == 0:
+                        embs_ = word2vec[tok_]
+                    else:
+                        embs_ = word2vec[tok_] + embs_
+
+                embs_ = embs_ / (j + 1)
+
+            self.tok2idx[token_] = i
+            self.idx2tok[i] = token_
+
+            self.embeddings.append(embs_.tolist())
+            i += 1
 
     def _initialize_db(self, db_dict, dbname):
         self.dbname = dbname
@@ -279,17 +291,18 @@ class PropbankEncoder(object):
                                for col in self.columns}
 
         # Creates descriptors about the data
-        dflt_dict =  {'name':'dflt', 'category':'feature', 'type':'int', 'dims': None}
+        dflt_dict =  {'name':'dflt',
+                      'category':'feature',
+                      'type':'int',
+                      'dims': None}
+
         for col in list(self.columns):
-            # if col == 'SHALLOW_CHUNKS':
-            #     import code; code.interact(local=dict(globals(), **locals()))
             base_col = self.columns_mapper[col]
 
             # Defines metadata
-
             if base_col in schema_dict:
                 colitem = schema_dict[base_col]
-                domain = colitem.get('domain', None) # numerical values                
+                domain = colitem.get('domain', None)
 
                 config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
 
@@ -298,7 +311,6 @@ class PropbankEncoder(object):
                 config_dict = dflt_dict
                 config_dict['name'] = col
                 domain = None
-
 
             # Lexicon for each column unk is not present
             if config_dict['type'] in ('text') or \

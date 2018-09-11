@@ -197,9 +197,9 @@ if __name__ == '__main__':
 
 
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
-    # propbank_encoder = make_propbank_encoder(
-    #     encoder_name=encoder_name,
-    #     language_model='glove_s50',
-    #     version=version
-    # )
+    propbank_encoder = make_propbank_encoder(
+        encoder_name=encoder_name,
+        language_model='glove_s50',
+        version=version
+    )
     make_tfrecords(encoder_name=encoder_name, version=version) 

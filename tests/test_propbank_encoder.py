@@ -131,7 +131,7 @@ class PropbankTestPersist(PropbankEncoderBaseCase):
 
 class PropbankTestWords(PropbankEncoderBaseCase):
 
-    def test_words(self):
+    def test_words(self):        
         words_test = self.schema_dict['LEMMA']['domain']
         words_test += self.schema_dict['FORM']['domain']
         words_test_set = set(words_test)
@@ -200,13 +200,18 @@ class PropbankTestEmbeddings(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestEmbeddings, self).setUp()
 
-        tokens = list(self.word2vec.keys())
+        words_test = self.schema_dict['LEMMA']['domain']
+        words_test += self.schema_dict['FORM']['domain']
+        words_test_set = set(words_test)
+
+
         self.embeddings_test = [self.word2vec['unk'].tolist()]
-        for tok_ in sorted(tokens):
+        for word_ in sorted(list(words_test_set)):
+            tok_ = word_.lower()
             if tok_ != 'unk':
                 self.embeddings_test.append(self.word2vec[tok_].tolist())
 
-    def test_embeddings(self):
+    def test_embeddings(self):        
         self.assertEqual(self.propbank_encoder.embeddings, self.embeddings_test)
 
     def test_embeddings_model(self):
