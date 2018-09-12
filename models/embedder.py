@@ -22,20 +22,48 @@ class Embedder(object):
 
             W2V {np.array} -- Pre Trained word embeddings
 
-            seqlen {list} -- list of batch size having max time 
+            seqlen {list} -- list of batch size having max time
 
             indices {list} -- list with the indices from features to embedd
 
         Keyword Arguments:
             trainable {bool} -- if false will hold (default: {True})
         '''
+
         self.X = X
-        self.W2V = W2V
+        self.vocab_sz, self.embeddings_sz = W2V.shape
         self.seqlen = seqlen
         self.indices = indices
         self.trainable = trainable
 
-        self.slice
+        with tf.variable_scope('embedding_op'):
+            self.W2V = tf.Variable(W2V, trainable=trainable)
+            self.slice
+            self.lookup
+
+    @lazy_property
+    def lookup(self):
+        def lookup_init():
+            begin_ = (0, 0, 0)
+            shape_ = (0, tf.gather(self.seqlen, 0), 1)
+            slice_ids = tf.slice(self.X, begin_, shape_)
+            return tf.nn.embedding_lookup(self.W2V, slice_ids)
+
+        def lookup_step(a, i):
+            begin_ = (i, 0, 0)
+            shape_ = (0, tf.gather(self.seqlen, i), 1)
+            slice_ids = tf.slice(self.X, begin_, shape_)
+            return tf.nn.embedding_lookup(self.W2V, slice_ids)
+
+        with tf.variable_scope('lookup'):
+            batch, time, features = self.X.get_shape()
+            self.rng = tf.range(batch, delta=1)
+            self.Xe = tf.scan(
+                lambda a, i: lookup_step(a, i),
+                self.rng,
+                initializer=lookup_init()
+            )
+        return self.Xe
 
     @lazy_property
     def slice(self):

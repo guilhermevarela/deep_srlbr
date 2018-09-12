@@ -30,7 +30,8 @@ class EmbedderBaseTestCase(unittest.TestCase):
     def setUp(self):
         cps.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
         self.pe = PropbankEncoder.recover(FIX_PROPBANK_PATH)
-        self.w2v = self.pe.embeddings
+        self.w2v = [np.array(emb_) for emb_ in self.pe.embeddings]
+        self.w2v = np.array(self.w2v)
 
         # All model features to be embedded
         self.feature_list = ['ID', 'FORM', 'FORM_CTX_P-1',
@@ -96,3 +97,70 @@ class EmbedderSliceTest(EmbedderBaseTestCase):
 
         assert_array_equal(self.X_s, X_s)
         assert_array_equal(self.X_c, X_c)
+
+
+class EmbedderW2VTest(EmbedderBaseTestCase):
+
+    def test(self):
+        # Presets
+        X = tf.placeholder(dtype=np.int32, shape=self.X.shape, name='X')
+        # builds the computation graph
+        self.embedder = Embedder(X, self.w2v, self.seqlen, self.indices)
+
+        init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+
+        with tf.Session() as sess:
+            sess.run(init_op)
+            w2v = sess.run(
+                self.embedder.W2V,
+                feed_dict={X: self.X}
+            )
+
+        assert_array_equal(self.w2v, w2v)
+
+
+class EmbedderLookupTest(EmbedderBaseTestCase):
+    def setUp(self):
+        super(EmbedderLookupTest, self).setUp()
+
+        text_features = [f
+                         for i, f in enumerate(self.feature_list)
+                         if i in self.indices]
+
+        feature_iter = self.pe.iterator(
+            'train',
+            filter_columns=text_features,
+            encoding='EMB'
+        )
+        X_list = []
+        for idx, dict_ in feature_iter:
+            for _, values_ in dict_.items():
+                npyval_ = np.array(values_, dtype=np.int32)
+                npyval_ = npyval_.reshape((len(values_), 1))
+                X_list.append(npyval_)
+        self.X_e = np.concatenate(X_list, axis=1)
+
+    def test(self):
+        # Presets
+        X = tf.placeholder(dtype=np.int32, shape=self.X.shape, name='X')
+
+        # builds the computation graph
+        self.embedder = Embedder(X, self.w2v, self.seqlen, self.indices)
+
+        init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+
+        with tf.Session() as sess:
+            sess.run(init_op)
+
+            X_e = sess.run(
+                self.embedder.lookup,
+                feed_dict={X: self.X}
+            )
+
+        assert_array_equal(self.X_e, X_e)
