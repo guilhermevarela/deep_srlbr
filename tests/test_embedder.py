@@ -68,7 +68,8 @@ class EmbedderBaseTestCase(unittest.TestCase):
         self.X = np.concatenate(X_list, axis=1)
         # Convert to tree dim matrix BATCH x TIME X FEATURES
         self.X = np.expand_dims(self.X, 0)
-        self.seqlen = [len(X_list)]
+
+        self.seqlen = [self.X.shape[1]]
 
         self.X_s = np.concatenate(X_s, axis=1)
 
@@ -85,10 +86,19 @@ class EmbedderSliceTest(EmbedderBaseTestCase):
 
     def test(self):
         # Presets
-        X = tf.placeholder(dtype=np.int32, shape=self.X.shape, name='X')
+        X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
 
+        W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
+
+        seqlen = tf.placeholder(dtype=tf.int32, shape=(1,), name='seqlen')
         # builds the computation graph
-        self.embedder = Embedder(X, self.w2v, self.seqlen, self.indices)
+        self.embedder = Embedder(X, W2V, seqlen, self.indices)
+
+        init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+
         with tf.Session() as sess:
             X_s, X_c = sess.run(
                 self.embedder.slice,
@@ -103,9 +113,13 @@ class EmbedderW2VTest(EmbedderBaseTestCase):
 
     def test(self):
         # Presets
-        X = tf.placeholder(dtype=np.int32, shape=self.X.shape, name='X')
+        X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
+
+        W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
+
+        seqlen = tf.placeholder(dtype=tf.int32, shape=(1,), name='seqlen')
         # builds the computation graph
-        self.embedder = Embedder(X, self.w2v, self.seqlen, self.indices)
+        self.embedder = Embedder(X, W2V, seqlen, self.indices)
 
         init_op = tf.group(
             tf.global_variables_initializer(),
@@ -141,14 +155,18 @@ class EmbedderLookupTest(EmbedderBaseTestCase):
                 npyval_ = np.array(values_, dtype=np.int32)
                 npyval_ = npyval_.reshape((len(values_), 1))
                 X_list.append(npyval_)
+
         self.X_e = np.concatenate(X_list, axis=1)
 
     def test(self):
         # Presets
-        X = tf.placeholder(dtype=np.int32, shape=self.X.shape, name='X')
+        X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
 
+        W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
+
+        L = tf.placeholder(dtype=tf.int32, shape=(1,), name='L')
         # builds the computation graph
-        self.embedder = Embedder(X, self.w2v, self.seqlen, self.indices)
+        self.embedder = Embedder(X, W2V, L, self.indices)
 
         init_op = tf.group(
             tf.global_variables_initializer(),
@@ -160,7 +178,10 @@ class EmbedderLookupTest(EmbedderBaseTestCase):
 
             X_e = sess.run(
                 self.embedder.lookup,
-                feed_dict={X: self.X}
+                feed_dict={X: self.X, L: self.seqlen}
             )
 
-        assert_array_equal(self.X_e, X_e)
+        for i, ids in enumerate(self.X_s[0, :, :]):
+            xe = np.array([self.w2v[id_] for id_ in ids])
+            xe = xe.reshape((40,))
+            assert_array_equal(xe, X_e[0, i, :])

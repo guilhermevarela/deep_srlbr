@@ -11,7 +11,7 @@ from models.properties import lazy_property
 
 
 class Embedder(object):
-    def __init__(self, X, W2V, seqlen, indices, trainable=True):
+    def __init__(self, X, W2V, L, indices, trainable=True):
         '''Embedder defines the trainable embedding layer
 
         Defines the computing graph embedding phase
@@ -20,9 +20,9 @@ class Embedder(object):
             X {tf.placeholder} -- Placeholder for inputs
                 zero padded tensor having [BATCH,MAX_TIME,FEATURE]
 
-            W2V {np.array} -- Pre Trained word embeddings
+            W2V {tf.Variable} -- Pre Trained word embeddings
 
-            seqlen {list} -- list of batch size having max time
+            L {tf.placeholder} -- list of batch size having max time
 
             indices {list} -- list with the indices from features to embedd
 
@@ -31,37 +31,42 @@ class Embedder(object):
         '''
 
         self.X = X
-        self.vocab_sz, self.embeddings_sz = W2V.shape
-        self.seqlen = seqlen
+        self.W2V = W2V
+        self.vocab_sz, self.embeddings_sz = W2V.get_shape()
+        self.batch = L.get_shape()[0]
+        self.L = L
         self.indices = indices
         self.trainable = trainable
 
+
         with tf.variable_scope('embedding_op'):
-            self.W2V = tf.Variable(W2V, trainable=trainable)
+            self.rng = tf.range(self.batch, delta=1)
             self.slice
             self.lookup
 
     @lazy_property
     def lookup(self):
-        def lookup_init():
-            begin_ = (0, 0, 0)
-            shape_ = (0, tf.gather(self.seqlen, 0), 1)
-            slice_ids = tf.slice(self.X, begin_, shape_)
-            return tf.nn.embedding_lookup(self.W2V, slice_ids)
+        def lookup_step(_, i):
+            length = tf.gather(self.L, 0)
+            features = self.Xs.get_shape()[-1]
+            new_shape = (length, -1)
 
-        def lookup_step(a, i):
             begin_ = (i, 0, 0)
-            shape_ = (0, tf.gather(self.seqlen, i), 1)
-            slice_ids = tf.slice(self.X, begin_, shape_)
-            return tf.nn.embedding_lookup(self.W2V, slice_ids)
+            shape_ = (1, length, features)
+            slice_ids = tf.slice(self.Xs, begin_, shape_)
+            slice_ids = tf.squeeze(slice_ids, axis=0)
+
+            lookup = tf.nn.embedding_lookup(self.W2V, slice_ids)
+            lookup = tf.reshape(lookup, new_shape)
+
+            return lookup
 
         with tf.variable_scope('lookup'):
             batch, time, features = self.X.get_shape()
-            self.rng = tf.range(batch, delta=1)
             self.Xe = tf.scan(
                 lambda a, i: lookup_step(a, i),
                 self.rng,
-                initializer=lookup_init()
+                initializer=lookup_step(0, 0)
             )
         return self.Xe
 
