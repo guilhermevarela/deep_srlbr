@@ -82,7 +82,7 @@ class EmbedderBaseTestCase(unittest.TestCase):
         self.X_c = np.expand_dims(self.X_c, 0)
 
 
-class EmbedderSliceTest(EmbedderBaseTestCase):
+class EmbedderSliceTestCase(EmbedderBaseTestCase):
 
     def test(self):
         # Presets
@@ -101,7 +101,7 @@ class EmbedderSliceTest(EmbedderBaseTestCase):
 
         with tf.Session() as sess:
             X_s, X_c = sess.run(
-                self.embedder.slice,
+                self.embedder._slice,
                 feed_dict={X: self.X}
             )
 
@@ -109,7 +109,7 @@ class EmbedderSliceTest(EmbedderBaseTestCase):
         assert_array_equal(self.X_c, X_c)
 
 
-class EmbedderW2VTest(EmbedderBaseTestCase):
+class EmbedderW2VTestCase(EmbedderBaseTestCase):
 
     def test(self):
         # Presets
@@ -136,9 +136,9 @@ class EmbedderW2VTest(EmbedderBaseTestCase):
         assert_array_equal(self.w2v, w2v)
 
 
-class EmbedderLookupTest(EmbedderBaseTestCase):
+class EmbedderLookupTestCase(EmbedderBaseTestCase):
     def setUp(self):
-        super(EmbedderLookupTest, self).setUp()
+        super(EmbedderLookupTestCase, self).setUp()
 
         text_features = [f
                          for i, f in enumerate(self.feature_list)
@@ -149,14 +149,19 @@ class EmbedderLookupTest(EmbedderBaseTestCase):
             filter_columns=text_features,
             encoding='EMB'
         )
+
         X_list = []
         for idx, dict_ in feature_iter:
-            for _, values_ in dict_.items():
-                npyval_ = np.array(values_, dtype=np.int32)
-                npyval_ = npyval_.reshape((len(values_), 1))
-                X_list.append(npyval_)
+            idx_list = []
+            for _, v in dict_.items():
+                v_ = np.array(v, dtype=np.int32)
+                v_ = np.expand_dims(v_, axis=1)
+                idx_list.append(v_)
 
-        self.X_e = np.concatenate(X_list, axis=1)
+            X_list.append(np.concatenate(idx_list, axis=0))
+
+        self.X_e = np.transpose(np.concatenate(X_list, axis=1))
+
 
     def test(self):
         # Presets
@@ -177,11 +182,47 @@ class EmbedderLookupTest(EmbedderBaseTestCase):
             sess.run(init_op)
 
             X_e = sess.run(
-                self.embedder.lookup,
+                self.embedder._lookup,
                 feed_dict={X: self.X, L: self.seqlen}
             )
 
-        for i, ids in enumerate(self.X_s[0, :, :]):
-            xe = np.array([self.w2v[id_] for id_ in ids])
-            xe = xe.reshape((40,))
-            assert_array_equal(xe, X_e[0, i, :])
+        # for i, ids in enumerate(self.X_s[0, :, :]):
+        #     xe = np.array([self.w2v[id_] for id_ in ids])
+        #     xe = xe.reshape((40,))
+        #     assert_array_equal(xe, X_e[0, i, :])
+        # import code; code.interact(local=dict(globals(), **locals()))
+        assert_array_equal(self.X_e, X_e[0, :, :])
+
+
+# class EmbedderMergeTestCase(EmbedderLookupTestCase):
+#     def setUp(self):
+#         super(EmbedderMergeTestCase, self).setUp()
+#         self.V = np.concatenate((self.X_e, self.X_s), axis=2)
+
+#     def test(self):
+#         # Presets
+#         X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
+
+#         W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
+
+#         L = tf.placeholder(dtype=tf.int32, shape=(1,), name='L')
+#         # builds the computation graph
+#         self.embedder = Embedder(X, W2V, L, self.indices)
+
+#         init_op = tf.group(
+#             tf.global_variables_initializer(),
+#             tf.local_variables_initializer()
+#         )
+
+#         with tf.Session() as sess:
+#             sess.run(init_op)
+
+#             V = sess.run(
+#                 self.embedder._merge,
+#                 feed_dict={X: self.X, L: self.seqlen}
+#             )
+
+#         for i, ids in enumerate(self.X_s[0, :, :]):
+#             xe = np.array([self.w2v[id_] for id_ in ids])
+#             xe = xe.reshape((40,))
+#             assert_array_equal(xe, X_e[0, i, :])
