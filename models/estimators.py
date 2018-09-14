@@ -294,13 +294,15 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     dataset_path = get_binary('train', embeddings, version=version)
     datasets_list = [dataset_path]
 
+    # Get the train and valid set in memory for evaluation
     X_train, T_train, L_train, I_train = get_train(
-        input_labels, target_label, embeddings,
+        input_labels, target_label, embeddings=embeddings,
         dimensions_dict=dims_dict, version=version
     )
 
+
     X_valid, T_valid, L_valid, I_valid = get_valid(
-        input_labels, target_label, embeddings,
+        input_labels, target_label, embeddings=embeddings,
         dimensions_dict=dims_dict, version=version
     )
     feature_size = get_dims(input_labels, dims_dict)
@@ -334,7 +336,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
     with tf.name_scope('pipeline'):
-        
+
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, batch_size, epochs,
             input_labels, target_label, shuffle=True,
@@ -371,7 +373,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                 X_batch, T_batch, L_batch, I_batch = session.run([
                     inputs, targets, sequence_length, descriptors
                 ])
-                # import code; code.interact(local=dict(globals(), **locals()))
+
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],

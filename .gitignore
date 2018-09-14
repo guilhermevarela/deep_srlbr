@@ -33,3 +33,6 @@ srlconll05/
 #cProfile
 *.cprof
 *.dot
+
+#Python Anaconda Sublime IDE
+*.sublime-project
