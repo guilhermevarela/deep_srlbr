@@ -113,7 +113,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     with tf.name_scope('pipeline'):
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, batch_size, epochs,
-            input_labels, target_label, shuffle=True)
+            input_labels, target_label, shuffle=True,
+            dimensions_dict=dims_dict)
 
     deep_srl = Optmizer(X, T, seqlens, **params)
 
@@ -144,6 +145,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
+
 
                 if  step % fold == i:
                     X_valid, Y_valid, L_valid, D_valid = X_batch, Y_batch, L_batch, D_batch
@@ -293,17 +295,13 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     datasets_list = [dataset_path]
 
     X_train, T_train, L_train, I_train = get_train(
-        input_labels,
-        target_label,
-        embeddings,
-        version=version
+        input_labels, target_label, embeddings,
+        dimensions_dict=dims_dict, version=version
     )
 
     X_valid, T_valid, L_valid, I_valid = get_valid(
-        input_labels,
-        target_label,
-        embeddings,
-        version=version
+        input_labels, target_label, embeddings,
+        dimensions_dict=dims_dict, version=version
     )
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
@@ -336,9 +334,11 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
     with tf.name_scope('pipeline'):
+        
         inputs, targets, sequence_length, descriptors = input_fn(
             datasets_list, batch_size, epochs,
-            input_labels, target_label, shuffle=True)
+            input_labels, target_label, shuffle=True,
+            dimensions_dict=dims_dict)
 
     # deep_srl = DBLSTM(X, T, seqlens, **params)
     deep_srl = Optmizer(X, T, seqlens, **params)
@@ -369,12 +369,9 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run([
-                    inputs,
-                    targets,
-                    sequence_length,
-                    descriptors
+                    inputs, targets, sequence_length, descriptors
                 ])
-
+                # import code; code.interact(local=dict(globals(), **locals()))
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],

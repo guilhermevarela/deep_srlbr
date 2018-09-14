@@ -17,7 +17,6 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-import numpy as np
 import tensorflow as tf
 
 import config as conf
@@ -42,16 +41,25 @@ TF_SEQUENCE_FEATURES_V2.update({
 })
 
 
-def get_test(input_labels, output_label, embeddings='glo50', version='1.0'):
-    return tfrecords_extract('test', input_labels, output_label, embeddings, version=version)
+def get_test(input_labels, output_label, dimensions_dict={},
+             embeddings='glo50', version='1.0'):
+
+    return tfrecords_extract('test', input_labels, output_label, embeddings,
+                             dimensions_dict=dimensions_dict, version=version)
 
 
-def get_valid(input_labels, output_label, embeddings='glo50', version='1.0'):
-    return tfrecords_extract('valid', input_labels, output_label, embeddings, version=version)
+def get_valid(input_labels, output_label, dimensions_dict={},
+              embeddings='glo50', version='1.0'):
+
+    return tfrecords_extract('valid', input_labels, output_label, embeddings,
+                             dimensions_dict=dimensions_dict, version=version)
 
 
-def get_train(input_labels, output_label, embeddings='glo50', version='1.0'):
-    return tfrecords_extract('train', input_labels, output_label, embeddings, version=version)
+def get_train(input_labels, output_label, dimensions_dict={},
+              embeddings='glo50', version='1.0'):
+
+    return tfrecords_extract('train', input_labels, output_label, embeddings,
+                             dimensions_dict=dimensions_dict, version=version)
 
 
 def get_tfrecord(ds_type, embeddings, version='1.0'):
@@ -69,7 +77,8 @@ def get_size(ds_type, version='1.0'):
 
 
 def tfrecords_extract(ds_type, input_labels,
-                      output_label, embeddings, version='1.0'):
+                      output_label, embeddings, dimensions_dict={},
+                      version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
 
     Acts as a wrapper for the function tsr2npy
@@ -97,18 +106,18 @@ def tfrecords_extract(ds_type, input_labels,
     msg_success += 'done converting {:} set to numpy'.format(ds_type)
 
     inputs, targets, lengths, others = tsr2npy(
-        dataset_path,
-        dataset_size,
-        input_labels,
-        output_label,
-        msg=msg_success
+        dataset_path, dataset_size, input_labels,
+        output_label, msg=msg_success,
+        dimensions_dict=dimensions_dict
     )
 
     return inputs, targets, lengths, others
 
 
 def tsr2npy(dataset_path, dataset_size,
-            input_labels, output_label, msg='tensor2numpy: done'):
+            input_labels, output_label,
+            dimensions_dict={},
+            msg='tensor2numpy: done'):
     '''Converts .tfrecords binary format to numpy.array
 
 
@@ -134,7 +143,8 @@ def tsr2npy(dataset_path, dataset_size,
     with tf.name_scope('pipeline'):
         X, T, L, D = input_fn(
             [dataset_path], dataset_size, 1,
-            input_labels, output_label, shuffle=False
+            input_labels, output_label, shuffle=False,
+            dimensions_dict=dimensions_dict
         )
 
     init_op = tf.group(
@@ -165,10 +175,9 @@ def tsr2npy(dataset_path, dataset_size,
 
 # https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
 def input_fn(filenames, batch_size, num_epochs,
-             input_labels, output_label, shuffle=True):
-    '''[summary]
-
-    [description]
+             input_labels, output_label, shuffle=True,
+             dimensions_dict={}):
+    '''Provides I/O from protobufs to numpy arrays    
 
     Arguments:
         filenames {list<str>} -- list containing tfrecord file names
@@ -181,6 +190,7 @@ def input_fn(filenames, batch_size, num_epochs,
     Keyword Arguments:
         shuffle {bool} -- If true will shuffle the proposition for 
             each epoch (default: {True})
+        dim_dict {dict} -- provides the dimensions for each feature
 
     Returns:
         X_batch {numpy.array} -- a 3D array size
@@ -192,6 +202,7 @@ def input_fn(filenames, batch_size, num_epochs,
         D_batch  {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
             index of tokens
     '''
+
     filename_queue = tf.train.string_input_producer(
         filenames,
         num_epochs=num_epochs,
@@ -205,13 +216,15 @@ def input_fn(filenames, batch_size, num_epochs,
 
     context_features, sequence_features = _read_and_decode(
         filename_queue,
-        sequence_labels=sequence_labels)
+        sequence_labels=sequence_labels,
+        dimensions_dict=dimensions_dict)
 
-    X, T, L, D = _process(
+    X, T, L, D = _protobuf_process(
         context_features,
         sequence_features,
         input_labels,
-        output_label
+        output_label,
+        dimensions_dict=dimensions_dict
     )
 
     min_after_dequeue = 10000
@@ -227,8 +240,9 @@ def input_fn(filenames, batch_size, num_epochs,
     return X_batch, T_batch, L_batch, D_batch
 
 
-def _process(context_features, sequence_features,
-             input_labels, output_label):
+def _protobuf_process(
+        context_features, sequence_features,
+        input_labels, output_label, dimensions_dict={}):
     '''Maps context_features and sequence_features making embedding replacement as necessary
 
         args:
@@ -254,30 +268,29 @@ def _process(context_features, sequence_features,
     # Fetch only context variable the length of the proposition
     L = context_features['L']
 
-    # print('processing:{:}'.format(sequence_features.keys()))
+
     labels_list = list(input_labels)
     labels_list.append(output_label)
     labels_list.append('INDEX')
     for key in labels_list:
-        dense_tensor = tf.sparse_tensor_to_dense(sequence_features[key])
 
-        dense_tensor1 = tf.cast(dense_tensor, tf.float32)
+        v = tf.cast(sequence_features[key], tf.float32)
 
         if key in input_labels:
-            sequence_inputs.append(dense_tensor1)
+            sequence_inputs.append(v)
         elif key in [output_label]:
-            # print('target is', output_label)
-            T = dense_tensor1
+            T = v
         elif key in ['INDEX']:
-            # print('descriptors: {:}'.format(key))
-            sequence_descriptors.append(dense_tensor1)
+            sequence_descriptors.append(v)
 
     X = tf.concat(sequence_inputs, 1)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 
 
-def _read_and_decode(filename_queue, sequence_labels=TF_SEQUENCE_FEATURES_V2):
+def _read_and_decode(
+        filename_queue, sequence_labels=TF_SEQUENCE_FEATURES_V2,
+        dimensions_dict={}):
     '''
         Decodes a serialized .tfrecords containing sequences
         args
@@ -287,16 +300,32 @@ def _read_and_decode(filename_queue, sequence_labels=TF_SEQUENCE_FEATURES_V2):
             context_features.: features that are held constant thru sequence ex: time, sequence id
 
             sequence_features.: features that are held variable thru sequence ex: word_idx
-
+    ref .: https://github.com/tensorflow/tensorflow/issues/976
     '''
-    # print(TF_SEQUENCE_FEATURES_V2)
-    reader= tf.TFRecordReader()
+
+    
+    reader = tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
+
+    def make_feature(key, dtype):
+        return tf.FixedLenSequenceFeature(dimensions_dict[key], dtype)
+
+    if dimensions_dict:
+        sequence_features = {
+            key: make_feature(key, tf.int64)
+            for key in conf.CATEGORICAL_FEATURES if key in dimensions_dict
+        }
+        sequence_features.update({
+            key: make_feature(key, tf.float32)
+            for key in conf.EMBEDDED_FEATURES if key in dimensions_dict
+        })
+    else:
+        sequence_features = TF_SEQUENCE_FEATURES_V2
 
     context_features, sequence_features = tf.parse_single_sequence_example(
         serialized_example,
         context_features=TF_CONTEXT_FEATURES,
-        sequence_features=TF_SEQUENCE_FEATURES_V2
+        sequence_features=sequence_features
     )
 
     return context_features, sequence_features
@@ -355,16 +384,6 @@ def tfrecords_builder(propbank_iter, dataset_type,
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
             https://planspace.org/20170323-tfrecords_for_humans/
     '''
-    # if not(dataset_type in ['train', 'valid', 'test']):
-    #     buff = 'dataset_type must be \'train\',\'valid\' or \'test\' got \'{:}\''.format(dataset_type)
-    #     raise ValueError(buff)
-    # else:
-    #     if dataset_type in ['train']:
-    #         total_propositions = conf.DATASET_TRAIN_SIZE
-    #     if dataset_type in ['valid']:
-    #         total_propositions = conf.DATASET_VALID_SIZE
-    #     if dataset_type in ['test']:
-    #         total_propositions = conf.DATASET_TEST_SIZE
     total_propositions = get_size(dataset_type, version=version)
 
     def message_print(num_records, num_propositions):
