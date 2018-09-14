@@ -282,7 +282,7 @@ class PropbankEncoder(object):
                     self.db[col] = OrderedDict({
                         idx: self.lex2idx[col].get(cat_, 0) for idx, cat_ in db_dict[col].items()
                     })
-            elif colconfig['type'] in ('text'):
+            elif colconfig['type'] in ('text'):                    
                     self.db[col] = OrderedDict({
                         idx: self.word2idx.get(word, 0) for idx, word in db_dict[col].items()
                     })
@@ -295,76 +295,75 @@ class PropbankEncoder(object):
         '''
             Define columns and metadata about columns
         '''
+        def get_basecol(col):
+            re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
+            re_repl = r'(_CHILD)|(_PARENT)|(_GRAND_PARENT)'
+
+            base_col = re.sub(re_ctxp, '', col)
+            base_col = re.sub(re_repl, '', base_col)
+
+            return base_col
+
         # Computes a dictionary that maps one column to a base column
         self.columns = self.columns.union(db_dict.keys()).union(set(['INDEX']))
-        self.columns_mapper = {col: self._subcol(col)
-                               for col in self.columns}
+        self.columns_mapper = {col: get_basecol(col) for col in self.columns}
 
         # Creates descriptors about the data
-        dflt_dict =  {'name':'dflt',
-                      'category':'feature',
-                      'type':'int',
-                      'dims': None}
+        dflt_dict = {'category': 'feature', 'type': 'int', 'dims': None}
 
         for col in list(self.columns):
+            lexicon_list = []
+
             base_col = self.columns_mapper[col]
 
+            config_dict = dict(dflt_dict)
             # Defines metadata
             if base_col in schema_dict:
-                colitem = schema_dict[base_col]
-                domain = colitem.get('domain', None)
+                config_dict.update(schema_dict[base_col])
 
-                config_dict = {key: colitem.get(key, col) for key in ['name', 'category', 'type']}
-
-                config_dict['dims'] = len(domain) if domain else None
-            else:
-                config_dict = dflt_dict
-                config_dict['name'] = col
-                domain = None
-
-            # Lexicon for each column unk is not present
-            if (config_dict['type'] in ('text') or
-                    (config_dict['category'] in ('feature') and
-                        config_dict['type'] in ('choice'))):
+            # Lexicon for each column `unk` is not present
+            if config_dict['type'] in ('text', 'choice'):  # they are limited
+                lexicon_set = set(db_dict[base_col].values())
                 # features might be absent ( in case of leading and lagging )
-                domain = sorted(domain)
+                lexicon_list = sorted(list(lexicon_set))
                 if config_dict['type'] in ('text'):
-                    self.words = sorted(set(self.words).union(set(domain)))
+                    words_set = set(self.words)
+                    self.words = sorted(list(words_set.union(lexicon_set)))
 
-            if domain:
-                # remove C-* arguments from domain
-                if config_dict['category'] == 'target' and self.filter_br:
-                    domain = set([
-                        re.sub('C-', '', t) for t in domain
+                if config_dict['category'] in ('feature'):
+                    # missing values
+                    lexicon_list.insert(0, 'unk')
+
+                elif config_dict['category'] == 'target' and self.filter_br:
+                    lexicon_set = set([
+                        re.sub('C-', '', t) for t in lexicon_list
                         if 'A5' not in t or 'AM-MED' not in t
                     ])
-                    domain = sorted(list(domain))
+                    lexicon_list = sorted(list(lexicon_list))
 
-                if ((config_dict['category'] in 'feature') and
-                        'unk' not in domain):
-
-                    domain.insert(0, 'unk')
-
-                if config_dict:
-                    self.lex2idx[col] = dict(zip(domain, range(len(domain))))
-                    self.idx2lex[col] = dict(zip(range(len(domain)), domain))
-                    config_dict['dims'] = len(domain)
+                rng = range(len(lexicon_list))
+                lex = lexicon_list
+                self.lex2idx[col] = dict(zip(lex, rng))
+                self.idx2lex[col] = dict(zip(rng, lex))
+                config_dict['dims'] = len(lex)
 
             self.columns_config[col] = config_dict
 
-        # filter columns
+        # filter columns - remove absent columns
         for col in self.columns_config:
             if col not in self.columns:
                 del self.columns_config[col]
 
         # make a single dictonary for text
         self.words.insert(0, 'unk')
-        self.word2idx = OrderedDict(zip(self.words, range(len(self.words))))
-        self.idx2word = OrderedDict(zip(range(len(self.words)), self.words))
+        rng = range(len(self.words))
+        self.word2idx = OrderedDict(zip(self.words, rng))
+        self.idx2word = OrderedDict(zip(rng, self.words))
 
         # re-make test columns according to word2idx dict
         for col in self.columns_config:
             col_type = self.columns_config[col]['type']
+
             if col_type in ('text'):
                 self.lex2idx[col] = OrderedDict({
                     lex: self.word2idx[lex]
@@ -374,15 +373,6 @@ class PropbankEncoder(object):
                     self.word2idx[lex]: lex
                     for lex in self.lex2idx[col]
                 })
-
-
-    def _subcol(self, col):
-        re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
-        re_repl = r'(_CHILD)|(_PARENT)|(_GRAND_PARENT)'
-
-        bcol = re.sub(re_ctxp, '', col)
-        bcol = re.sub(re_repl, '', bcol)
-        return bcol
 
     def _decode_index(self, idx, columns, encoding):
         d = OrderedDict()

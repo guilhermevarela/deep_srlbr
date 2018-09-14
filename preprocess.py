@@ -61,7 +61,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
 
 
 
-    # Getting to the schema
+    # Getting to the schema    
     with open(SCHEMA_PATH, mode='r') as f:
         schema_dict = yaml.load(f)
 
@@ -100,6 +100,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
             column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
+    
     propbank_encoder = PropbankEncoder(
         dfgs.to_dict(),
         schema_dict,
@@ -195,11 +196,14 @@ if __name__ == '__main__':
     else:
         model_, sz_ = language_model.split('_s')
 
-
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
         language_model='glove_s50',
         version=version
     )
-    make_tfrecords(encoder_name=encoder_name, version=version) 
+    make_tfrecords(
+        encoder_name=encoder_name,
+        version=version,
+        propbank_encoder=propbank_encoder
+    )

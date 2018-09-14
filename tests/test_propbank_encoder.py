@@ -9,7 +9,7 @@ from unittest.mock import patch
 import os, sys
 import json
 import yaml
-
+# from collections import OrderedDict
 
 import numpy as np
 
@@ -67,6 +67,8 @@ class PropbankEncoderBaseCase(unittest.TestCase):
         self._initilize()
         cps.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
         cps.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
+
+        # import code; code.interact(local=dict(globals(), **locals()))
         self.propbank_encoder = \
             PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50', verbose=False)
 
@@ -108,9 +110,9 @@ class PropbankEncoderBaseCase(unittest.TestCase):
 
         self.schema_dict = schema_dict
 
-        lexicon_list = list(schema_dict['FORM']['domain'])
-        lexicon_list += schema_dict['LEMMA']['domain']
-        lexicon_list += schema_dict['PRED']['domain']
+        lexicon_list = list(self.gs_dict['FORM'].values())
+        lexicon_list += self.gs_dict['LEMMA'].values()
+        lexicon_list += self.gs_dict['PRED'].values()
 
         lexicon_list = sorted(list(set(lexicon_list)))
         lexicon_list.insert(0, 'unk')
@@ -154,7 +156,7 @@ class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
     def test(self):
         for column, meta_dict in self.schema_dict.items():
             if meta_dict['type'] in ('choice', 'text'):
-                mock_set = set(meta_dict['domain'])
+                mock_set = set(self.gs_dict[column].values())
                 if meta_dict['category'] in ('feature'):
                     mock_set = mock_set.union(set(['unk']))
 
@@ -166,14 +168,27 @@ class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
 
 class PropbankTestLex2Idx(PropbankEncoderBaseCase):
 
-    def test_lex2idx(self):
+    def test(self):
         for column, meta_dict in self.schema_dict.items():
             if meta_dict['type'] in ('choice', 'text'):
-                keys_ = self.propbank_encoder.idx2lex[column].keys()
-                values_ = self.propbank_encoder.idx2lex[column].values()
-                test_dict = dict(zip(values_, keys_))
-                self.assertEqual(test_dict,
-                                 self.propbank_encoder.lex2idx[column])
+                mock_list = list(set(self.gs_dict[column].values()))
+                mock_list.sort()
+
+                if meta_dict['category'] in ('feature'):
+                    mock_list.insert(0, 'unk')
+
+                if meta_dict['type'] in ('choice'):
+                    rng = range(len(mock_list))
+                    mock_dict = dict(zip(mock_list, rng))
+
+                else:
+
+                    mock_dict = {
+                        word: self.lexicon_list.index(word)
+                        for word in mock_list
+                    }
+                test_dict = dict(self.propbank_encoder.lex2idx[column])
+                self.assertEqual(mock_dict, test_dict)
 
 
 class PropbankTestLex2Tok(PropbankEncoderBaseCase):
@@ -202,7 +217,6 @@ class PropbankTestEmbeddings(PropbankEncoderBaseCase):
             tok_ = word_.lower()
             self.embeddings_mock.append(self.word2vec[tok_].tolist())
 
-        # import code; code.interact(local=dict(globals(), **locals()))
     def test_embeddings(self):
         embeddings_test = self.propbank_encoder.embeddings
         self.assertEqual(self.embeddings_mock, embeddings_test)
@@ -289,8 +303,8 @@ class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
         if column_type in ('choice', 'text'):
 
-            domain_ = self.schema_dict[column_label]['domain']
-            domain_list = sorted(domain_)
+            domain_list = list(set(self.gs_dict[column_label].values()))
+            domain_list.sort()
 
             if column_category in ('feature'):
                 domain_list.insert(0, 'unk')
@@ -448,11 +462,11 @@ class PropbankTestColumnEMB(PropbankEncoderBaseCase):
         column_category = self.schema_dict[column_label]['category']
 
         if column_type in ('choice', 'text'):
-            domain_list = sorted(self.schema_dict[column_label]['domain'])
+            domain_list = sorted(list(set(mock_dict.values())))
+
             if column_category in ('feature'):
                 domain_list.insert(0, 'unk')
 
-            domain_list = list(domain_list)
             domain_sz = len(domain_list)
             if column_type in ('choice'):
                 def make_onehot(x):
@@ -542,15 +556,15 @@ class PropbankTestColumnHOT(PropbankEncoderBaseCase):
 
     def _get_mocked_dict(self, column_label):
         mock_dict = self.gs_dict[column_label]
+
         column_type = self.schema_dict[column_label]['type']
         column_category = self.schema_dict[column_label]['category']
 
         if column_type in ('choice', 'text'):
-            domain_list = sorted(self.schema_dict[column_label]['domain'])
+            domain_list = sorted(list(set(mock_dict.values())))
             if column_category in ('feature'):
                 domain_list.insert(0, 'unk')
 
-            domain_list = list(domain_list)
             domain_sz = len(domain_list)
 
             def make_onehot(x):
@@ -639,11 +653,10 @@ class PropbankTestColumnMIX(PropbankEncoderBaseCase):
         column_category = self.schema_dict[column_label]['category']
 
         if column_type in ('choice', 'text'):
-            domain_list = sorted(self.schema_dict[column_label]['domain'])
+            domain_list = sorted(list(set(mock_dict.values())))
             if column_category in ('feature'):
                 domain_list.insert(0, 'unk')
 
-            domain_list = list(domain_list)
             domain_sz = len(domain_list)
 
             def make_onehot(x):
@@ -791,6 +804,7 @@ class PropbankTestColumnDimensionsEMB(PropbankEncoderBaseCase):
         self._assert_column_eq(column_label)
 
     def _assert_column_eq(self, column_label):
+        mock_dict = self.gs_dict[column_label]
         dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'EMB')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
@@ -799,7 +813,7 @@ class PropbankTestColumnDimensionsEMB(PropbankEncoderBaseCase):
         if column_type in ('text',):
             dims_mock_ = 50
         elif column_type in ('choice',):
-            dims_mock_ = len(meta_dict['domain'])  # unknown is a feature
+            dims_mock_ = len(set(mock_dict.values()))  # unknown is a feature
             if column_category in ('feature'):
                 dims_mock_ += 1
         else:
@@ -868,13 +882,14 @@ class PropbankTestColumnDimensionsHOT(PropbankEncoderBaseCase):
         self._assert_column_eq(column_label)
 
     def _assert_column_eq(self, column_label):
+        mock_dict = self.gs_dict[column_label]
         dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'HOT')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']
 
         if column_type in ('text', 'choice'):
-            dims_mock_ = len(meta_dict['domain'])
+            dims_mock_ = len(set(mock_dict.values()))
             if column_category in ('feature'):
                 dims_mock_ += 1
 
@@ -944,13 +959,14 @@ class PropbankTestColumnDimensionsMIX(PropbankEncoderBaseCase):
         self._assert_column_eq(column_label)
 
     def _assert_column_eq(self, column_label):
+        mock_dict = self.gs_dict[column_label]
         dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'MIX')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']
 
         if column_type in ('choice'):
-            dims_mock_ = len(meta_dict['domain'])
+            dims_mock_ = len(set(mock_dict.values()))
             if column_category in ('feature'):
                 dims_mock_ += 1
 
@@ -971,10 +987,11 @@ class PropbankTestIteratorIDX(PropbankEncoderBaseCase):
         for index, column_dict in self.iterator:
             for column_label, column_value in column_dict.items():
                 msg_ = 'index: {:} label:`{:}`'.format(index, column_label)
+
                 with self.subTest(message=msg_):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('FORM', 'ARG'):
-                        domain_list = self.schema_dict[column_label]['domain']
+                        domain_list = list(set(self.gs_dict[column_label].values()))
                         if column_label in ('FORM'):
                             mock_value = self.lexicon_list.index(mock_value)
                         else:
@@ -1016,7 +1033,7 @@ class PropbankTestIteratorEMB(PropbankEncoderBaseCase):
                 with self.subTest(message=msg_):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('ARG'):
-                        domain_list = sorted(self.schema_dict[column_label]['domain'])
+                        domain_list = sorted(list(set(self.gs_dict[column_label].values())))
                         i = domain_list.index(mock_value)
                         sz = len(domain_list)
                         mock_value = [1 if i == j else 0 for j in range(sz)]
@@ -1042,7 +1059,7 @@ class PropbankTestIteratorMIX(PropbankEncoderBaseCase):
                 with self.subTest(message=msg_):
                     mock_value = self.gs_dict[column_label][index]
                     if column_label in ('ARG'):
-                        domain_list = sorted(self.schema_dict[column_label]['domain'])
+                        domain_list = sorted(list(set(self.gs_dict[column_label].values())))
                         i = domain_list.index(mock_value)
                         sz = len(domain_list)
                         mock_value = [1 if i == j else 0 for j in range(sz)]
