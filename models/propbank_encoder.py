@@ -148,7 +148,7 @@ class PropbankEncoder(object):
         with open(filename, 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    def iterator(self, ds_type, filter_columns=['P', 'T'], encoding='EMB'):
+    def iterator(self, ds_type, filter_columns=None, encoding='EMB'):
         lb, ub = utils.get_db_bounds(ds_type, version=self.version)
 
         interval = [idx for idx, p in self.db['P'].items()

@@ -32,7 +32,8 @@ FEATURE_MAKER_DICT = {
 }
 
 
-def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50', version='1.0', verbose=True):
+def make_propbank_encoder(encoder_name='deep_glo50',
+                          language_model='glove_s50', version='1.0', verbose=True):
     ''' Creates a ProbankEncoder instance from strings.
 
     Arguments:
@@ -95,9 +96,10 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
 
             if verbose:
                 print('processing:\t{:}'.format(msg))
-            column_df = maker_fnc(gs_dict, version)
-        else:
-            column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
+            maker_fnc(gs_dict, version)
+
+
+        column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
     propbank_encoder = PropbankEncoder(
@@ -114,7 +116,9 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
     return propbank_encoder
 
 
-def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.0'):
+def make_tfrecords(encoder_name='deep_glo50',
+                   propbank_encoder=None, encoding='MIX', version='1.0'):
+
     bin_dir = 'datasets/binaries/{:}/'.format(version)
 
     if not os.path.isdir(bin_dir):
@@ -129,8 +133,8 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.
 
     config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
     for ds_type in ('test', 'valid', 'train'):
-        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
-        tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
+        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters, encoding=encoding)
+        tfrecords_builder(iterator_, ds_type, config_dict, encoding, suffix=suffix, version=version)
 
 
 def get_model(mname):
@@ -160,17 +164,25 @@ if __name__ == '__main__':
         description='''Preprocess Deep SRL system features and embeddings''')
 
     parser.add_argument('language_model',
-                        type=str, nargs='+', default='glove_s50',
+                        type=str, default='glove_s50',
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
+    parser.add_argument('--encoding', type=str, dest='encoding',
+                        choices=('HOT', 'EMB', 'MIX', 'IDX'), default='MIX',
+                        help='''Choice of feature representation based on column type --
+                        `int`, `bool`, `text`, `choice`. `MIX` will keep `text`
+                        features as index to be embedded for the input pipeline
+                        and will one-hot `choice` values.''')
+
     parser.add_argument('--version', type=str, dest='version',
-                        nargs=1, choices=('1.0', '1.1',), default='1.0',
+                        choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
-    language_model = args.language_model[0]
-    version = args.version[0] if isinstance(args.version, list) else args.version
+    language_model = args.language_model
+    encoding = args.encoding
+    version = args.version
 
     print(language_model, version)
     lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
@@ -204,6 +216,7 @@ if __name__ == '__main__':
     )
     make_tfrecords(
         encoder_name=encoder_name,
+        propbank_encoder=propbank_encoder,
+        encoding=encoding,
         version=version,
-        propbank_encoder=propbank_encoder
     )
