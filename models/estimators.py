@@ -240,10 +240,10 @@ def estimate_recover(ckpt_dir):
 
 
 def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
-             hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
-             epochs=100, lr=5 * 1e-3, batch_size=250, ctx_p=1,
-             version='1.0', ckpt_dir=None, ru='BasicLSTM', chunks=False,
-             **kwargs):
+             hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
+             embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
+             batch_size=250, ctx_p=1, version='1.0', ckpt_dir=None,
+             ru='BasicLSTM', chunks=False, **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -269,8 +269,8 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
 
-    if ckpt_dir is None:
-        target_dir = snapshot_hparam_string(embeddings=embeddings,
+    if ckpt_dir is None:        
+        target_dir = snapshot_hparam_string(embeddings_model=embeddings_model,
                                             target_label=target_label,
                                             learning_rate=lr, is_batch=True,
                                             hidden_layers=hidden_layers,
@@ -279,22 +279,23 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         target_dir = 'outputs{:}'.format(target_dir)
 
         target_dir = snapshot_persist(target_dir, input_labels=input_labels,
-                                      target_label=target_label, ctx_p=ctx_p,
-                                      embeddings=embeddings, epochs=epochs,
-                                      hidden_layers=hidden_layers, ru=ru,
+                                      target_label=target_label, epochs=epochs,
+                                      embeddings_model=embeddings_model, ru=ru,
+                                      embeddings_trainable=embeddings_trainable,
+                                      hidden_layers=hidden_layers, ctx_p=ctx_p,
                                       lr=lr, batch_size=batch_size,
                                       chunks=chunks, version=version)
     else:
         target_dir = ckpt_dir
 
     save_path = '{:}model.ckpt'.format(target_dir)
-    propbank_path = get_binary('deep', embeddings, version=version)
+    propbank_path = get_binary('deep', embeddings_model, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
     preprocess_dims_dict = propbank_encoder.columns_dimensions('MIX')
     dims_dict = propbank_encoder.columns_dimensions('EMB')
 
     config_dict = propbank_encoder.columns_config
-    dataset_path = get_binary('train', embeddings, version=version)
+    dataset_path = get_binary('train', embeddings_model, version=version)
     datasets_list = [dataset_path]
 
 
@@ -304,13 +305,13 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     X_train, T_train, L_train, I_train = get_train(
         propbank_encoder.embeddings, input_labels,
         target_label, preprocess_dims_dict, config_dict,
-        embeddings_model=embeddings, version=version
+        embeddings_model=embeddings_model, version=version
     )
 
     X_valid, T_valid, L_valid, I_valid = get_valid(
         propbank_encoder.embeddings, input_labels,
         target_label, preprocess_dims_dict, config_dict,
-        embeddings_model=embeddings, version=version
+        embeddings_model=embeddings_model, version=version
     )
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
@@ -338,11 +339,11 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
     T_shape = (None, None, target_size)
-
+    print('trainable embeddings?', embeddings_trainable)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
-    EMBS = tf.Variable(propbank_encoder.embeddings, trainable=False, name='embeddings')
+    EMBS = tf.Variable(propbank_encoder.embeddings, trainable=embeddings_trainable, name='embeddings')
 
     with tf.name_scope('pipeline'):
 
