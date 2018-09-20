@@ -503,7 +503,10 @@ class ColumnPredMarker(object):
         # Finds predicate position
         predicate_d = _predicatedict(self.db)
         for time, proposition in self.db['P'].items():
-            predicate_time = predicate_d[proposition]
+            try:
+                predicate_time = predicate_d[proposition]
+            except KeyError:
+                import code; code.interact(local=dict(globals(), **locals()))
 
             self.predmarker['MARKER'][time] = 0 if predicate_time - time > 0 else 1
 
@@ -851,8 +854,8 @@ def process_iob(dictdb, version='1.0'):
 
 def process_predmarker(dictdb, version='1.0'):
 
-    column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
-    d = column_t.run()
+    column_predmarker = FeatureFactory().make('ColumnPredMarker', dictdb)
+    d = column_predmarker.run()
 
     target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')

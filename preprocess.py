@@ -100,7 +100,6 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
             column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
-    
     propbank_encoder = PropbankEncoder(
         dfgs.to_dict(),
         schema_dict,
@@ -108,6 +107,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
         dbname=encoder_name,
         version=version
     )
+
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
     propbank_encoder.persist(bin_dir, filename=encoder_name)

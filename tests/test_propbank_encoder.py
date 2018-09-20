@@ -68,11 +68,22 @@ class PropbankEncoderBaseCase(unittest.TestCase):
         cps.fetch_word2vec = unittest.mock.Mock(return_value=self.word2vec)
         cps.get_db_bounds = unittest.mock.Mock(return_value=(1690, 1691))
 
-        # import code; code.interact(local=dict(globals(), **locals()))
+        kwargs = {'language_model':'glove_s50', 'verbose': False}
         self.propbank_encoder = \
-            PropbankEncoder(self.gs_dict, self.schema_dict, language_model='glove_s50', verbose=False)
+            PropbankEncoder(self.gs_dict, self.schema_dict, **kwargs)
 
         self.fixtures_list = []
+        self.lex2tok = {lex: lex.lower() if lex not in ('-', '.') else 'unk'
+                        for lex in self.lexicon_list}
+
+        tokens_set = set(self.lexicon_list) - set(['-', 'O', '.', 'unk'])
+        token_list = sorted(list(tokens_set), key=lambda x: x.lower())
+        token_list.insert(0, 'unk')
+        self.token_mock = token_list
+
+        self.embeddings_mock = []
+        for tok_ in self.token_mock:
+            self.embeddings_mock.append(self.word2vec[tok_].tolist())
 
     def tearDown(self):
         if self.fixtures_list:
@@ -114,7 +125,7 @@ class PropbankEncoderBaseCase(unittest.TestCase):
         lexicon_list += self.gs_dict['LEMMA'].values()
         lexicon_list += self.gs_dict['PRED'].values()
 
-        lexicon_list = sorted(list(set(lexicon_list)))
+        lexicon_list = sorted(list(set(lexicon_list)), key=lambda x: x.lower())
         lexicon_list.insert(0, 'unk')
         self.lexicon_list = lexicon_list
 
@@ -145,15 +156,20 @@ class PropbankTestPersist(PropbankEncoderBaseCase):
         self.fixtures_list.append(fixture_path)
 
 
-class PropbankTestWords(PropbankEncoderBaseCase):
+class PropbankTestProperties(PropbankEncoderBaseCase):
 
     def test_words(self):
         self.assertEqual(self.propbank_encoder.words, self.lexicon_list)
 
+    def test_tokens(self):
 
-class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
+        tokens_set = set(self.lexicon_list) - set(['-', 'O', '.', 'unk'])
+        token_list = sorted(list(tokens_set), key=lambda x: x.lower())
+        token_list.insert(0, 'unk')
 
-    def test(self):
+        self.assertEqual(self.propbank_encoder.tokens, token_list)
+
+    def test_idx2lex(self):
         for column, meta_dict in self.schema_dict.items():
             if meta_dict['type'] in ('choice', 'text'):
                 mock_set = set(self.gs_dict[column].values())
@@ -165,10 +181,7 @@ class PropbankTestIdx2Lex(PropbankEncoderBaseCase):
                 with self.subTest(msg='Checking {:}'.format(column)):
                     self.assertEqual(mock_set, test_set)
 
-
-class PropbankTestLex2Idx(PropbankEncoderBaseCase):
-
-    def test(self):
+    def test_lex2idx(self):
         for column, meta_dict in self.schema_dict.items():
             if meta_dict['type'] in ('choice', 'text'):
                 mock_list = list(set(self.gs_dict[column].values()))
@@ -190,32 +203,8 @@ class PropbankTestLex2Idx(PropbankEncoderBaseCase):
                 test_dict = dict(self.propbank_encoder.lex2idx[column])
                 self.assertEqual(mock_dict, test_dict)
 
-
-class PropbankTestLex2Tok(PropbankEncoderBaseCase):
-
-    def setUp(self):
-        super(PropbankTestLex2Tok, self).setUp()
-        self.lex2tok = {lex: lex.lower() for lex in self.lexicon_list}
-
-    def test(self):
+    def test_lex2tok(self):
         self.assertEqual(self.propbank_encoder.lex2tok, self.lex2tok)
-
-
-class PropbankTestTokens(PropbankTestLex2Tok):
-    def test(self):
-        mock_set = set(self.lex2tok.values())
-        test_set = set(self.propbank_encoder.tokens)
-        self.assertEqual(mock_set, test_set)
-
-
-class PropbankTestEmbeddings(PropbankEncoderBaseCase):
-    def setUp(self):
-        super(PropbankTestEmbeddings, self).setUp()
-
-        self.embeddings_mock = []
-        for word_ in self.lexicon_list:
-            tok_ = word_.lower()
-            self.embeddings_mock.append(self.word2vec[tok_].tolist())
 
     def test_embeddings(self):
         embeddings_test = self.propbank_encoder.embeddings
@@ -480,9 +469,13 @@ class PropbankTestColumnEMB(PropbankEncoderBaseCase):
                     for idx_, val_ in mock_dict.items()
                 }
             else:
+                def to_vec(k):
+                    if k in ('.', '-'):
+                        k = 'unk'
+                    return self.word2vec[k.lower()].tolist()
+
                 mock_dict = {
-                    i: self.word2vec[key.lower()].tolist()
-                    for i, key in mock_dict.items()
+                    i: to_vec(key) for i, key in mock_dict.items()
                 }
 
         return mock_dict
@@ -671,9 +664,12 @@ class PropbankTestColumnMIX(PropbankEncoderBaseCase):
                     for idx_, val_ in mock_dict.items()
                 }
             else:
+                def tokenize(x):
+                    t = self.lex2tok[x]
+                    return self.token_mock.index(t)
+
                 mock_dict = {
-                    idx_: self.lexicon_list.index(val_)
-                    for idx_, val_ in mock_dict.items()
+                    idx_: tokenize(val_) for idx_, val_ in mock_dict.items()
                 }
 
         return mock_dict
@@ -1038,8 +1034,13 @@ class PropbankTestIteratorEMB(PropbankEncoderBaseCase):
                         sz = len(domain_list)
                         mock_value = [1 if i == j else 0 for j in range(sz)]
                     elif column_label in ('FORM',):
-                        mock_value = self.word2vec[mock_value.lower()]
-                        mock_value = mock_value.tolist()
+
+                        def to_vec(k):
+                            if k in ('.', '-'):
+                                k = 'unk'
+                            return self.word2vec[k.lower()].tolist()
+
+                        mock_value = to_vec(mock_value)
 
                     msg_ = self.base_message.format(column_value, mock_value)
                     self.assertEqual(column_value, mock_value, msg_)
@@ -1064,7 +1065,13 @@ class PropbankTestIteratorMIX(PropbankEncoderBaseCase):
                         sz = len(domain_list)
                         mock_value = [1 if i == j else 0 for j in range(sz)]
                     elif column_label in ('FORM',):
-                        mock_value = self.lexicon_list.index(mock_value)
+
+                        def tokenize(k):
+                            if k in ('.', '-'):
+                                k = 'unk'
+                            return self.token_mock.index(k.lower())
+
+                        mock_value = tokenize(mock_value)
 
                     msg_ = self.base_message.format(column_value, mock_value)
                     self.assertEqual(column_value, mock_value, msg_)

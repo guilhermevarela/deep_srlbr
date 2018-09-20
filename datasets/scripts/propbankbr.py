@@ -207,7 +207,7 @@ def propbankbr_parser_1_0():
     rows_list = []
     # Computes the sentences
     sentence_list = []
-    sentence_count = 1
+    sentence_count = 0
 
     # Computes if the predicate has been seen
     predicate_sentence_count = 0
@@ -215,18 +215,31 @@ def propbankbr_parser_1_0():
 
     predicate_count = 0
     predicate_list = []
-    mapping_dict = MAPPER_V1_0['mappings']
     column_labels = list(MAPPER_V1_0['mappings'].keys())
     column_ids = list(MAPPER_V1_0['mappings'].values())
 
+    def to_datarow(line):
+        dstr = re.sub('\n', '', line)
+        dstr = re.sub('\t', ' ', dstr)
+        drow = dstr.split(' ')
+        if len(drow) == 1:
+            dr = None
+        else:
+            dr = [d for d in drow if d != '']
+        return dr
+
+    i = 0
     for filename in MAPPER_V1_0['filename']:
+        sentence_count += 1
+        predicate_count += predicate_sentence_count
+        predicate_sentence_count = 0
+
         file_path = '{:}{:}'.format(PROPBANKBR_PATH, filename)
         with open(file_path, mode='r') as f:
             for line_ in f.readlines():
-                data_ = re.sub('\n', '', line_).split('\t')
-                if len(data_) > 1:
-                    row_ = [
-                             trim(data_[column_]) if column_ < len(data_) else None
+                drow = to_datarow(line_)
+                if drow:
+                    row_ = [trim(drow[column_]) if column_ < len(drow) else None
                              for column_ in list(column_ids)]
 
                     predicate_sentence_count = \
@@ -237,10 +250,11 @@ def propbankbr_parser_1_0():
                     predicate_list.append(predicate_count + predicate_sentence_count)
                     sentence_list.append(sentence_count)
                     rows_list.append(row_)
+                    i += 1
                 else:
                     sentence_count += 1
                     predicate_count += predicate_sentence_count
-                    predicate_sentence_count = 0 
+                    predicate_sentence_count = 0
 
     df = pd.DataFrame(data=rows_list, columns=column_labels)
 
@@ -630,7 +644,7 @@ def propbankbr_arg2se(arguments):
     index = 0
     sentence_count = 1
 
-    for  arg_tuple in arguments:
+    for arg_tuple in arguments:
         if arg_tuple is None:
             refresh = True
             sentence_count += 1
@@ -660,11 +674,13 @@ def propbankbr_arg2se(arguments):
                         elif arg_ == '*)' and open_arg_list[j_] != '':
                             se_arg_ = '*{})'.format(open_arg_list[j_])
                         else:
-                            msg_ = 'invalid argument {:s} index {:d} on proposition {:d}'.format(arg_, index, j_)
+                            msg_ = 'invalid argument {:s} index {:d} on proposition {:d}'
+                            msg_ = msg_.format(arg_, index, j_)
                             raise ValueError(msg_)
                 se_i_list.append(se_arg_)
             se_list.append(tuple(se_i_list))
             index += 1
+
     return se_list
 
 def get_signature(mappings): 

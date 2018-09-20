@@ -64,7 +64,7 @@ def fetch_corpus_exceptions(corpus_exception_file, verbose=True):
     '''
     if verbose:
         print('Fetching {:}...'.format(corpus_exception_file))
-    
+
     corpus_exceptions_path = '{:}{:}'.format(CORPUS_EXCEPTIONS_DIR, corpus_exception_file)
     df = pd.read_csv(corpus_exceptions_path, sep='\t')
     if verbose:

@@ -51,12 +51,13 @@ class Embedder(object):
         self._slice
         self._lookup
         self._merge
+        return self.V
 
     @lazy_property
     def _merge(self):
         # TODO: force column ordering back to original size
-        V = tf.concat((self.Xe, self.Xs), axis=0)
-        return V
+        self.V = tf.concat((self.Xe, self.Xs), axis=2)
+        return self.V
 
     @lazy_property
     def _lookup(self):

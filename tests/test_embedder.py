@@ -45,8 +45,7 @@ class EmbedderBaseTestCase(unittest.TestCase):
         X_s = []  # X to slice
         X_c = []  # X complement to slice
         for i, feat_ in enumerate(self.feature_list):
-            encoding_ = 'HOT' if feat_ in ('ID', 'MARKER', 'GPOS') else 'IDX'
-            dict_ = self.pe.column('train', feat_, encoding=encoding_)
+            dict_ = self.pe.column('train', feat_, encoding='MIX')
 
             values_ = list(dict_.values())
             # This are the columns with len one
@@ -186,43 +185,36 @@ class EmbedderLookupTestCase(EmbedderBaseTestCase):
                 feed_dict={X: self.X, L: self.seqlen}
             )
 
-        # for i, ids in enumerate(self.X_s[0, :, :]):
-        #     xe = np.array([self.w2v[id_] for id_ in ids])
-        #     xe = xe.reshape((40,))
-        #     assert_array_equal(xe, X_e[0, i, :])
-        # import code; code.interact(local=dict(globals(), **locals()))
         assert_array_equal(self.X_e, X_e[0, :, :])
 
 
-# class EmbedderMergeTestCase(EmbedderLookupTestCase):
-#     def setUp(self):
-#         super(EmbedderMergeTestCase, self).setUp()
-#         self.V = np.concatenate((self.X_e, self.X_s), axis=2)
+class EmbedderEmbedTestCase(EmbedderLookupTestCase):
+    def setUp(self):
+        super(EmbedderEmbedTestCase, self).setUp()
+        self.X_e = np.expand_dims(self.X_e, 0)
+        self.V = np.concatenate((self.X_e, self.X_s), axis=2)
 
-#     def test(self):
-#         # Presets
-#         X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
+    def test(self):
+        # Presets
+        X = tf.placeholder(dtype=tf.int32, shape=self.X.shape, name='X')
 
-#         W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
+        W2V = tf.Variable(self.w2v, dtype=tf.int32, trainable=False)
 
-#         L = tf.placeholder(dtype=tf.int32, shape=(1,), name='L')
-#         # builds the computation graph
-#         self.embedder = Embedder(X, W2V, L, self.indices)
+        L = tf.placeholder(dtype=tf.int32, shape=(1,), name='L')
+        # builds the computation graph
+        self.embedder = Embedder(X, W2V, L, self.indices)
 
-#         init_op = tf.group(
-#             tf.global_variables_initializer(),
-#             tf.local_variables_initializer()
-#         )
+        init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
 
-#         with tf.Session() as sess:
-#             sess.run(init_op)
+        with tf.Session() as sess:
+            sess.run(init_op)
 
-#             V = sess.run(
-#                 self.embedder._merge,
-#                 feed_dict={X: self.X, L: self.seqlen}
-#             )
+            V = sess.run(
+                self.embedder._merge,
+                feed_dict={X: self.X, L: self.seqlen}
+            )
 
-#         for i, ids in enumerate(self.X_s[0, :, :]):
-#             xe = np.array([self.w2v[id_] for id_ in ids])
-#             xe = xe.reshape((40,))
-#             assert_array_equal(xe, X_e[0, i, :])
+        assert_array_equal(self.V, V)

@@ -564,14 +564,16 @@ class EvaluatorConll(object):
         for idx, prop in propositions.items():
             if prop != prev_prop and prev_prop is not None:
                 arg_list.append(None)
-            try:
-                pred_ = self.idx2lex['PRED'][self.db['PRED'][idx]]
-            except KeyError:
-                import code; code.interact(local=dict(globals(), **locals()))
+
+            pred_ = self.idx2lex['PRED'][self.db['PRED'][idx]]
+
             arg_list.append((pred_, arg_dict[idx]))
             prev_prop = prop
 
-        SE = br.propbankbr_arg2se(arg_list)
+        try:
+            SE = br.propbankbr_arg2se(arg_list)
+        except ValueError:
+            import code; code.interact(local=dict(globals(), **locals()))
         se_list = [se[1] for se in SE if se is not None]
         # Converts SE into dictonary of propositions
         # zip_list = [arg_list, se_list]

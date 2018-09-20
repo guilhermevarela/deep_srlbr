@@ -51,13 +51,14 @@ class PropbankEncoder(object):
         The return format will depend on requested encoding
 
         Encondings:
-        CAT     .:  (categorical) text column will be a string, 
+        CAT     .:  (categorical) text column will be a string,
                     categorical column will be the category
                     -- use case: display
 
         EMB     .:  (embedded) tokens will be embeded into the language model,
                     categorical values will be one-hot encoded
                     -- use case: tensorflow for fixed embeddings
+
         HOT     .:  (one-hot) text will be one-hot encoded,
                     categorical values will be one-hot encoded
                     -- use case: Maximal Margin Separators
@@ -112,7 +113,7 @@ class PropbankEncoder(object):
         self.columns_config = {}
         self.columns = set([])
         self.version = version
-        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)    
+        self._initialize(db_dict, schema_dict, dbname, language_model, verbose)
 
     @classmethod
     def recover(cls, file_path):
@@ -136,8 +137,11 @@ class PropbankEncoder(object):
             filename  .: string (optional) filename
     '''
         if not(filename):
-            _moniker = (file_dir, self.dbname, self.embeddings_model, self.embeddings_sz)
-            filename = '{:}{:}_{:}_s{:}.pickle'.format(*_moniker)
+
+            args_list = [file_dir, self.dbname]
+            args_list += [self.embeddings_model, self.embeddings_sz]
+            filename = '{:}{:}_{:}_s{:}.pickle'.format(*args_list)
+
         else:
             filename = '{:}{:}.pickle'.format(file_dir, filename)
 
@@ -148,29 +152,36 @@ class PropbankEncoder(object):
         lb, ub = utils.get_db_bounds(ds_type, version=self.version)
 
         interval = [idx for idx, p in self.db['P'].items()
-                        if p >= lb and p < ub]
+                    if p >= lb and p < ub]
+
         low = min(interval)
         high = max(interval)
 
         if filter_columns:
             for col in filter_columns:
-                if not col in self.db:
-                    errmessage = 'column {:} not in db columns {:}'.format(col, self.db.keys())
-                    raise ValueError(errmessage)
+                if col not in self.db:
+                    err = 'column {:} not in db columns {:}'
+                    err = err.format(col, self.db.keys())
+                    raise ValueError(err)
         else:
             filter_columns = list(self.db.keys())
 
-        if not encoding in self.encodings:
-            _errmessage = 'encoding {:} not in {:}'.format(encoding, self.encodings)
-            raise ValueError(_errmessage)
+        if encoding not in self.encodings:
+            err = 'encoding {:} not in {:}'
+            err = err.format(encoding, self.encodings)
+            raise ValueError(err)
+
         else:
-            fn = lambda x: self._decode_index(x, filter_columns, encoding)
+            def fn(x):
+                return self._decode_index(x, filter_columns, encoding)
 
         return _EncoderIterator(low, high, fn)
 
     def column_dimensions(self, column, encoding):
-        if not encoding in self.encodings:
-            raise ValueError('Supported encondings are {:} got {:}.'.format(self.encodings, encoding))
+        if encoding not in self.encodings:
+            err = 'Supported encondings are {:} got {:}.'
+            err = err.format(self.encodings, encoding)
+            raise ValueError(err)
 
         if encoding in ('IDX', 'CAT'):
             return 1
@@ -180,12 +191,14 @@ class PropbankEncoder(object):
             return 1
 
         if encoding in ('HOT'):
+
             if colconfig['type'] in ('text', 'choice'):
                 return colconfig['dims']
             else:
                 return 1
 
         if encoding in ('EMB'):
+
             if colconfig['type'] in ('text'):
                 return self.embeddings_sz
             elif colconfig['type'] in ('choice'):
@@ -194,6 +207,7 @@ class PropbankEncoder(object):
                 return 1
 
         if encoding in ('MIX'):
+
             if colconfig['type'] in ('choice'):
                 return colconfig['dims']
             else:
@@ -205,7 +219,6 @@ class PropbankEncoder(object):
         }
 
     def column(self, ds_type, column, encoding):
-        # import code; code.interact(local=dict(globals(), **locals()))
         lb, ub = utils.get_db_bounds(ds_type)
 
         return {x:self._decode_index(x,[column], encoding)
@@ -229,67 +242,73 @@ class PropbankEncoder(object):
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
-
-        self.lex2tok = cps.preprocess(list(self.words), word2vec, verbose=verbose)
-
-
-        self.tokens = sorted(list(set(self.lex2tok.values())))
+        self.lex2tok = cps.preprocess(self.words, word2vec, verbose=verbose)
         if verbose:
-            print('# UNIQUE TOKENIZED {:}, # EMBEDDED TOKENS {:}'.format(len(self.words), len(self.tokens)))
+            args_ = (len(self.words), len(set(self.lex2tok.values())))
+            print('# unique words {:}, tokens {:}'.format(*args_))
 
+        self.tokens = []
         self.embeddings = []
+        self.tok2idx = {}
+        self.idx2tok = {}
+        i = 0
         for word, idx in self.word2idx.items():
 
             token_ = self.lex2tok[word]
-            if '_' not in token_:
-                embs_ = word2vec[token_]
-            else:
-                # This token is composed of multiple tokens
-                # Make mean from the words
-                for j, tok_ in enumerate(token_.split('_')):
-                    if j == 0:
-                        embs_ = word2vec[tok_]
-                    else:
-                        embs_ = word2vec[tok_] + embs_
+            if token_ not in self.tok2idx:
+                if '_' not in token_:
+                    embs_ = word2vec[token_]
+                else:
+                    # This token is composed of multiple tokens
+                    # Make mean from the words
+                    for j, tok_ in enumerate(token_.split('_')):
+                        if j == 0:
+                            embs_ = word2vec[tok_]
+                        else:
+                            embs_ = word2vec[tok_] + embs_
 
-                embs_ = embs_ / (j + 1)
+                    embs_ = embs_ / (j + 1)
 
-            self.embeddings.append(embs_.tolist())
-
+                self.embeddings.append(embs_.tolist())
+                self.tok2idx[token_] = i
+                self.idx2tok[i] = token_
+                self.tokens.append(token_)
+                i += 1
 
     def _initialize_db(self, db_dict, dbname):
         self.dbname = dbname
-
         for col in list(self.columns):
-            base_col = self.columns_mapper[col]
             colconfig = self.columns_config.get(col, None)
-            if col in ('INDEX',) or not colconfig:
-                #Boolean values, numerical values come here
+
+            if col in ('INDEX',) or not colconfig:  # numeric / bool values
+
                 if col in ('INDEX',):
+                    keys_ = db_dict['FORM'].keys()
                     self.db[col] = OrderedDict(
-                        dict(zip(db_dict['FORM'].keys(),
-                                 db_dict['FORM'].keys()
-                    )))
+                        dict(zip(keys_, keys_))
+                    )
                 else:
                     self.db[col] = OrderedDict(db_dict[col])
+
             elif colconfig['type'] in ('choice'):
                 if colconfig['category'] == 'target' and self.filter_br:
-                    self.db[col] = OrderedDict({
-                        idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
-                        for idx, word in db_dict[col].items()
-                    })
+                        self.db[col] = OrderedDict({
+                            idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
+                            for idx, word in db_dict[col].items()
+                        })
                 else:
                     self.db[col] = OrderedDict({
-                        idx: self.lex2idx[col].get(cat_, 0) for idx, cat_ in db_dict[col].items()
+                        idx: self.lex2idx[col].get(cat_, 0)
+                        for idx, cat_ in db_dict[col].items()
                     })
-            elif colconfig['type'] in ('text'):                    
+            elif colconfig['type'] in ('text'):
                     self.db[col] = OrderedDict({
-                        idx: self.word2idx.get(word, 0) for idx, word in db_dict[col].items()
+                        idx: self.word2idx.get(word, 0)
+                        for idx, word in db_dict[col].items()
                     })
             else:
-                #Boolean values, numerical values come here
+                # Boolean values, numerical values come here
                 self.db[col] = OrderedDict(db_dict[col])
-
 
     def _initialize_lexicons(self, db_dict, schema_dict):
         '''
@@ -311,6 +330,9 @@ class PropbankEncoder(object):
         # Creates descriptors about the data
         dflt_dict = {'category': 'feature', 'type': 'int', 'dims': None}
 
+        # Words are the union of all textual columns
+        word_list = []
+        lexicons_dict = {}
         for col in list(self.columns):
             lexicon_list = []
 
@@ -324,30 +346,37 @@ class PropbankEncoder(object):
             # Lexicon for each column `unk` is not present
             if config_dict['type'] in ('text', 'choice'):  # they are limited
                 lexicon_set = set(db_dict[base_col].values())
+
                 # features might be absent ( in case of leading and lagging )
                 lexicon_list = sorted(list(lexicon_set))
+
                 if config_dict['type'] in ('text'):
-                    words_set = set(self.words)
-                    self.words = sorted(list(words_set.union(lexicon_set)))
+                    word_list += lexicon_list
 
                 if config_dict['category'] in ('feature'):
                     # missing values
                     lexicon_list.insert(0, 'unk')
 
                 elif config_dict['category'] == 'target' and self.filter_br:
+                    def filterfn(x):
+                        a = re.sub('-C-', '-', x)
+                        a = re.sub('C-', '', a)
+                        a = re.sub(' ', '', a)
+                        return a
+
                     lexicon_set = set([
-                        re.sub('C-', '', t) for t in lexicon_list
+                        filterfn(t) for t in lexicon_list
                         if 'A5' not in t or 'AM-MED' not in t
                     ])
-                    lexicon_list = sorted(list(lexicon_list))
 
-                rng = range(len(lexicon_list))
-                lex = lexicon_list
-                self.lex2idx[col] = dict(zip(lex, rng))
-                self.idx2lex[col] = dict(zip(rng, lex))
-                config_dict['dims'] = len(lex)
+                    lexicon_list = sorted(list(lexicon_set))
+
+
+
+                config_dict['dims'] = len(lexicon_list)
 
             self.columns_config[col] = config_dict
+            lexicons_dict[col] = lexicon_list
 
         # filter columns - remove absent columns
         for col in self.columns_config:
@@ -355,8 +384,11 @@ class PropbankEncoder(object):
                 del self.columns_config[col]
 
         # make a single dictonary for text
-        self.words.insert(0, 'unk')
-        rng = range(len(self.words))
+        word_list = sorted(list(set(word_list)), key= lambda x: x.lower())
+        word_list.insert(0, 'unk')
+
+        rng = range(len(word_list))
+        self.words = word_list
         self.word2idx = OrderedDict(zip(self.words, rng))
         self.idx2word = OrderedDict(zip(rng, self.words))
 
@@ -365,19 +397,32 @@ class PropbankEncoder(object):
             col_type = self.columns_config[col]['type']
 
             if col_type in ('text'):
+
                 self.lex2idx[col] = OrderedDict({
                     lex: self.word2idx[lex]
-                    for lex in self.lex2idx[col]
+                    for lex in lexicons_dict[col]
                 })
+
                 self.idx2lex[col] = OrderedDict({
                     self.word2idx[lex]: lex
-                    for lex in self.lex2idx[col]
+                    for lex in lexicons_dict[col]
+                })
+
+            elif col_type in ('choice'):
+
+                self.lex2idx[col] = OrderedDict({
+                    lex: i for i, lex in enumerate(lexicons_dict[col])
+                })
+
+                self.idx2lex[col] = OrderedDict({
+                    i: lex for i, lex in enumerate(lexicons_dict[col])
                 })
 
     def _decode_index(self, idx, columns, encoding):
         d = OrderedDict()
 
         for col in columns:
+
             val = self.db[col].get(idx, 0)
             d[col] = self._decode_value(val, col, encoding)
 
@@ -386,52 +431,84 @@ class PropbankEncoder(object):
         else:
             return d
 
-    def _decode_value(self, x, column, encoding):
-        col_type = self.columns_config[column]['type']
+    def _decode_value(self, x, col, encoding):
+        col_type = self.columns_config[col]['type']
+
         if encoding in ('IDX') or col_type in ('int', 'bool'):
+
             return x
 
         elif encoding in ('CAT'):
-            if col_type in ('choice', 'text'):
-                return self.idx2lex[column][x]
+
+            if col_type in ('choice'):
+
+                return self.idx2lex[col][x]
+
+            elif col_type in ('text'):
+
+                return self.idx2word[x]
+
             else:
+
                 return x
 
         elif encoding in ('EMB'):
 
             if col_type in ('text'):
-                return self.embeddings[x]
+
+                w = self.idx2word[x]
+                t = self.lex2tok[w]
+                i = self.tok2idx[t]
+
+                return self.embeddings[i]
+
             elif col_type in ('choice'):
-                sz = self.column_dimensions(column, encoding)
+
+                sz = self.column_dimensions(col, encoding)
+
                 return [1 if i == x else 0 for i in range(sz)]
+
             else:
                 return x
 
         elif encoding in ('HOT'):
 
-            sz = self.column_dimensions(column, encoding)
+            sz = self.column_dimensions(col, encoding)
+
             if col_type in ('text'):
 
-                lexicon = list(self.lex2idx[column].keys())
-                w = lexicon.index(self.idx2word[x])
-                return [1 if i == w else 0 for i in range(sz)]
+                w = self.idx2word[x]
+                k = self.lex2idx[col].keys()
+                j = list(k).index(w)
+
+                return [1 if i == j else 0 for i in range(sz)]
 
             elif col_type in ('choice'):
+
                 return [1 if i == x else 0 for i in range(sz)]
 
             else:
+
                 return x
 
         elif encoding in ('MIX'):
 
             if col_type in ('text'):
-                return x
+
+                w = self.idx2word[x]
+                t = self.lex2tok[w]
+                i = self.tok2idx[t]
+
+                return i
 
             elif col_type in ('choice'):
-                sz = self.column_dimensions(column, encoding)
+
+                sz = self.column_dimensions(col, encoding)
 
                 return [1 if i == x else 0 for i in range(sz)]
+
             else:
+
                 return x
 
         else:
