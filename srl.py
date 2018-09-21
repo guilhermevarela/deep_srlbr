@@ -117,7 +117,9 @@ if __name__ == '__main__':
         if use_chunks:
             input_labels.append('SHALLOW_CHUNKS')
 
-        target_label = args.target
+        # TODO: process target
+        target_labels = [args.target]
+
         embs_model = args.embs_model
         learning_rate = args.lr
         version = args.version
@@ -128,13 +130,13 @@ if __name__ == '__main__':
         if args.kfold:
 
             # raise ValueError('Kfold implementation is deprecated')
-            estimate_kfold(input_labels=input_labels, target_label=target_label,
+            estimate_kfold(input_labels=input_labels, target_labels=target_labels,
                            hidden_layers=args.depth, embeddings_model=embs_model,
                            epochs=epochs, lr=learning_rate, fold=25, ru=ru,
                            version=version, ctx_p=ctx_p, chunks=use_chunks)
         else:
 
-            estimate(input_labels=input_labels, target_label=target_label,
+            estimate(input_labels=input_labels, target_labels=target_labels,
                      hidden_layers=args.depth, embeddings_model=embs_model,
                      epochs=epochs, ru=ru, batch_size=args.batch_size,
                      version=version, ctx_p=ctx_p, lr=learning_rate,

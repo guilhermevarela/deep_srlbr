@@ -33,7 +33,7 @@ TARGET_LABEL = 'T'
 HIDDEN_LAYERS = [16] * 4
 
 
-def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
                    ckpt_dir=None,  ru='BasicLSTM', chunks=False, **kwargs):
@@ -50,7 +50,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     Keyword Arguments:
         input_labels {list<str>}-- Columns which will be 
             converted into features (default: {FEATURE_LABELS})
-        target_label {str} -- Column which will be
+        target_labels {str} -- Column which will be
             used as target (default: {`T`})
         hidden_layers {list<int>} -- sets the number and
             sizes for hidden layers (default: {`[16, 16, 16, 16]`})
@@ -66,7 +66,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     '''
     if ckpt_dir is None:
         target_dir = snapshot_hparam_string(embeddings_model=embeddings_model,
-                                            target_label=target_label,
+                                            target_labels=target_labels,
                                             is_batch=False, ctx_p=ctx_p,
                                             learning_rate=lr, version=version,
                                             hidden_layers=hidden_layers)
@@ -75,7 +75,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         target_dir = snapshot_persist(target_dir,
                                       input_labels=input_labels, lr=lr,
                                       hidden_layers=hidden_layers, ctx_p=ctx_p,
-                                      target_label=target_label, kfold=25,
+                                      target_labels=target_labels, kfold=25,
                                       embeddings_trainable=False,
                                       embeddings_model=embeddings_model, ru=ru,
                                       epochs=epochs, chunks=chunks,
@@ -91,14 +91,14 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     dataset_size = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
 
     X_test, T_test, L_test, D_test = TfStreamer.get_test(
-        input_labels, target_label, dims_dict, version=version,
+        input_labels, target_labels, dims_dict, version=version,
         embeddings_model=embeddings_model
     )
     feature_size = get_dims(input_labels, dims_dict)
-    target_size = dims_dict[target_label]
+    target_size = dims_dict[target_labels[0]]
 
     batch_size = int(dataset_size / fold)
-    print(batch_size, target_label, target_size, feature_size)
+    print(batch_size, target_labels, target_size, feature_size)
 
     evaluator = EvaluatorConll(propbank_encoder.db,
                                propbank_encoder.idx2lex, target_dir=target_dir)
@@ -116,7 +116,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
-                          input_labels, target_label, dims_dict, shuffle=True)
+                          input_labels, target_labels, dims_dict, shuffle=True)
     deep_srl = Optmizer(X, T, seqlens, **params)
 
     init_op = tf.group(
@@ -168,7 +168,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                     index = D_valid[:, :, 0].astype(np.int32)
 
-                    evaluator.evaluate_tensor('valid', index, Yish, L_valid, target_label, params)
+                    evaluator.evaluate_tensor('valid', index, Yish, L_valid, target_labels, params)
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
@@ -191,7 +191,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
                         index = D_test[:, :, 0].astype(np.int32)
 
-                        evaluator.evaluate_tensor('test', index, Yish, L_test, target_label, params)
+                        evaluator.evaluate_tensor('test', index, Yish, L_test, target_labels, params)
                 step += 1
                 i = int(step / fold) % fold
 
@@ -240,7 +240,7 @@ def estimate_recover(ckpt_dir):
                     estimate(**params_dict)
 
 
-def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
+def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
              embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
              batch_size=250, ctx_p=1, version='1.0', ckpt_dir=None,
@@ -255,7 +255,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     Keyword Arguments:
         input_labels {list<str>}-- Columns which will be 
             converted into features (default: {FEATURE_LABELS})
-        target_label {str} -- Column which will be
+        target_labels {str} -- Column which will be
             used as target (default: {`T`})
         hidden_layers {list<int>} -- sets the number and
             sizes for hidden layers (default: {`[16, 16, 16, 16]`})
@@ -272,7 +272,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
 
     if ckpt_dir is None:
         target_dir = snapshot_hparam_string(embeddings_model=embeddings_model,
-                                            target_label=target_label,
+                                            target_labels=target_labels,
                                             learning_rate=lr, is_batch=True,
                                             hidden_layers=hidden_layers,
                                             version=version, ctx_p=ctx_p)
@@ -280,7 +280,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         target_dir = 'outputs{:}'.format(target_dir)
 
         target_dir = snapshot_persist(target_dir, input_labels=input_labels,
-                                      target_label=target_label, epochs=epochs,
+                                      target_labels=target_labels, epochs=epochs,
                                       embeddings_model=embeddings_model, ru=ru,
                                       embeddings_trainable=embeddings_trainable,
                                       hidden_layers=hidden_layers, ctx_p=ctx_p,
@@ -300,29 +300,29 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     datasets_list = [dataset_path]
 
     X_train, T_train, L_train, I_train = TfStreamer.get_train(
-        input_labels, target_label, dims_dict, version=version,
+        input_labels, target_labels, dims_dict, version=version,
         embeddings_model=embeddings_model
     )
 
     X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
-        input_labels, target_label, dims_dict, version=version,
+        input_labels, target_labels, dims_dict, version=version,
         embeddings_model=embeddings_model
     )
 
     feature_size = get_dims(input_labels, dims_dict)
-    target_size = dims_dict[target_label]
+    target_size = dims_dict[target_labels[0]]
 
     evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor('train', index, Y, L_train, target_label, params, script_version='04')
+        evaluator.evaluate_tensor('train', index, Y, L_train, target_labels, params, script_version='04')
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
         index = I_valid[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_label, params, script_version='04')
+        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_labels, params, script_version='04')
 
         return evaluator.f1
 
@@ -341,7 +341,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
-                          input_labels, target_label, dims_dict, shuffle=True)
+                          input_labels, target_labels, dims_dict, shuffle=True)
 
     deep_srl = Optmizer(X, T, seqlens, **params)
 
