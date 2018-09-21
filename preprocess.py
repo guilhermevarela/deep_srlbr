@@ -169,11 +169,12 @@ if __name__ == '__main__':
                              http://nilc.icmc.usp.br/embeddings''')
 
     parser.add_argument('--encoding', type=str, dest='encoding',
-                        choices=('HOT', 'EMB', 'MIX', 'IDX'), default='MIX',
+                        choices=('HOT', 'EMB', 'MIX', 'IDX'), default='EMB',
                         help='''Choice of feature representation based on column type --
                         `int`, `bool`, `text`, `choice`. `MIX` will keep `text`
                         features as index to be embedded for the input pipeline
-                        and will one-hot `choice` values.''')
+                        and will one-hot `choice` values. `EMB` will embed `text`
+                        features and will one-hot encode `choice` features.''')
 
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',

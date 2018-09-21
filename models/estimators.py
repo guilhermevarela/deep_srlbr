@@ -16,11 +16,11 @@ import config
 
 from utils.info import get_dims, get_binary
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_recover
-from datasets import get_valid, get_test, input_fn, get_train, input_with_embeddings_fn
+
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
 from models.optimizers import Optmizer
-from models.streamers import TfStreamerWE
+from models.streamers import TfStreamer
 
 
 
@@ -34,7 +34,7 @@ HIDDEN_LAYERS = [16] * 4
 
 
 def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
-                   hidden_layers=HIDDEN_LAYERS, embeddings='wan50',
+                   hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
                    ckpt_dir=None,  ru='BasicLSTM', chunks=False, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
@@ -65,7 +65,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         **kwargs {dict<str,<key>>} -- unlisted arguments
     '''
     if ckpt_dir is None:
-        target_dir = snapshot_hparam_string(embeddings=embeddings,
+        target_dir = snapshot_hparam_string(embeddings_model=embeddings_model,
                                             target_label=target_label,
                                             is_batch=False, ctx_p=ctx_p,
                                             learning_rate=lr, version=version,
@@ -76,20 +76,24 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                                       input_labels=input_labels, lr=lr,
                                       hidden_layers=hidden_layers, ctx_p=ctx_p,
                                       target_label=target_label, kfold=25,
-                                      embeddings=embeddings, ru=ru,
+                                      embeddings_trainable=False,
+                                      embeddings_model=embeddings_model, ru=ru,
                                       epochs=epochs, chunks=chunks,
                                       version=version)
     else:
         target_dir = ckpt_dir
 
     save_path = '{:}model.ckpt'.format(target_dir)
-    propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings))
+    propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings_model))
     dims_dict = propbank_encoder.columns_dimensions('EMB')
-    datasets_list = [get_binary('train', embeddings)]
-    datasets_list.append(get_binary('valid', embeddings))
+    datasets_list = [get_binary('train', embeddings_model)]
+    datasets_list.append(get_binary('valid', embeddings_model))
     dataset_size = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
 
-    X_test, T_test, L_test, D_test = get_test(input_labels, target_label)
+    X_test, T_test, L_test, D_test = TfStreamer.get_test(
+        input_labels, target_label, dims_dict, version=version,
+        embeddings_model=embeddings_model
+    )
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
@@ -111,12 +115,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
-    with tf.name_scope('pipeline'):
-        inputs, targets, sequence_length, descriptors = input_fn(
-            datasets_list, batch_size, epochs,
-            input_labels, target_label, shuffle=True,
-            dimensions_dict=dims_dict)
-    
+    streamer = TfStreamer(datasets_list, batch_size, epochs,
+                          input_labels, target_label, dims_dict, shuffle=True)
     deep_srl = Optmizer(X, T, seqlens, **params)
 
     init_op = tf.group(
@@ -145,7 +145,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
         eps = 100
         try:
             while not (coord.should_stop() or eps < 1e-3):
-                X_batch, Y_batch, L_batch, D_batch = session.run([inputs, targets, sequence_length, descriptors])
+                X_batch, Y_batch, L_batch, D_batch = session.run(streamer.stream)
 
 
                 if  step % fold == i:
@@ -292,24 +292,23 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     save_path = '{:}model.ckpt'.format(target_dir)
     propbank_path = get_binary('deep', embeddings_model, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
-    preprocess_dims_dict = propbank_encoder.columns_dimensions('MIX')
+    # preprocess_dims_dict = propbank_encoder.columns_dimensions('MIX')
     dims_dict = propbank_encoder.columns_dimensions('EMB')
 
     config_dict = propbank_encoder.columns_config
     dataset_path = get_binary('train', embeddings_model, version=version)
     datasets_list = [dataset_path]
 
-    X_train, T_train, L_train, I_train = get_train(
-        propbank_encoder.embeddings, input_labels,
-        target_label, preprocess_dims_dict, config_dict,
-        embeddings_model=embeddings_model, version=version
+    X_train, T_train, L_train, I_train = TfStreamer.get_train(
+        input_labels, target_label, dims_dict, version=version,
+        embeddings_model=embeddings_model
     )
 
-    X_valid, T_valid, L_valid, I_valid = get_valid(
-        propbank_encoder.embeddings, input_labels,
-        target_label, preprocess_dims_dict, config_dict,
-        embeddings_model=embeddings_model, version=version
+    X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
+        input_labels, target_label, dims_dict, version=version,
+        embeddings_model=embeddings_model
     )
+
     feature_size = get_dims(input_labels, dims_dict)
     target_size = dims_dict[target_label]
 
@@ -341,12 +340,11 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
 
-    streamer = TfStreamerWE(
-        propbank_encoder.embeddings,
-        embeddings_trainable, datasets_list, batch_size, epochs, input_labels,
-        target_label, preprocess_dims_dict, config_dict, True)
+    streamer = TfStreamer(datasets_list, batch_size, epochs,
+                          input_labels, target_label, dims_dict, shuffle=True)
 
     deep_srl = Optmizer(X, T, seqlens, **params)
+
     init_op = tf.group(
         tf.global_variables_initializer(),
         tf.local_variables_initializer()
@@ -383,7 +381,7 @@ def estimate(input_labels=FEATURE_LABELS, target_label=TARGET_LABEL,
                 total_loss += loss
                 total_error += error
                 if (step) % 25 == 0:
-                    
+
                     Y_train = session.run(
                         deep_srl.predict,
                         feed_dict={X: X_train, T: T_train, seqlens: L_train}

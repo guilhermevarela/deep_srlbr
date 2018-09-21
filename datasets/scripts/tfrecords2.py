@@ -89,6 +89,21 @@ def get_train(embeddings, input_labels, output_label, dims_dict,
                              version=version)
 
 
+def get_test2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('test', input_labels, output_label,
+                              embeddings_model, dims_dict, version=version)
+
+
+def get_valid2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('valid', input_labels, output_label,
+                              embeddings_model, dims_dict, version=version)
+
+
+def get_train2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('train', input_labels, output_label,
+                              embeddings_model, dims_dict, version=version)
+
+
 def get_tfrecord(ds_type, embeddings_model, version='1.0'):
     if embeddings_model:
         _preffix = '{:}/{:}/db{:}_{:}.tfrecords'
@@ -137,11 +152,40 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_label,
 
     return inputs, targets, lengths, others
 
+def tfrecords_extract2(ds_type, input_labels, output_label,
+                       embeddings_model, dims_dict, version='1.0'):
+    '''Converts the contents of ds_type (train, valid, test) into array
+    Acts as a wrapper for the function tsr2npy
+    Arguments:
+        ds_type {str} -- train, valid, test
+        input_labels {list<str>} -- labels from the db columns 
+        output_label {str} -- target_label (T, IOB)
+        embeddings {str]} -- emebddings name (glo50, wan50, wrd50)
+    Returns:
+        inputs  {numpy.array} -- a 3D array NUM_RECORDS X MAX_TIME X FEATURE_SIZE
+        targets {numpy.array} -- a 3D array NUM_RECORDS X MAX_TIME X TARGET_SIZE
+        lengths {list<int>} -- a list holding the lengths for every proposition
+        others {numpy.array} -- a 3D array representing the indexes
+    Raises:
+        ValueError -- validation for database type 
+    '''
+    dataset_path = get_tfrecord(ds_type, embeddings_model, version=version)
+    dataset_size = get_size(ds_type, version=version)
+
+    msg_success = 'tfrecords_extract:'
+    msg_success += 'done converting {:} set to numpy'.format(ds_type)
+
+    inputs, targets, lengths, others = tsr2npy2(
+        dataset_path, dataset_size, input_labels, output_label,
+        dims_dict, msg=msg_success
+    )
+
+    return inputs, targets, lengths, others
+
 
 def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
             dimensions_dict, config_dict, msg='tensor2numpy: done'):
     '''Converts .tfrecords binary format to numpy.array
-
 
     Arguments:
         dataset_path {str} -- a str path
@@ -163,13 +207,9 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
         ValueError -- validation for database type 
     '''
     with tf.name_scope('pipeline'):
-        # def input_with_embeddings_fn(
-        # EMBS, filenames, batch_size, num_epochs, input_labels,
-        # output_label, dimensions_dict, config_dict, shuffle=True):
+
         EMBS = tf.Variable(embeddings, trainable=False, name='embeddings')
-        # def input_with_embeddings_fn(
-        # EMBS, filenames, batch_size, num_epochs, input_labels,
-        # output_label, dimensions_dict, config_dict, shuffle=True):
+
         X, T, L, D = input_with_embeddings_fn(
             EMBS, [dataset_path], dataset_size, 1, input_labels, output_label,
             dimensions_dict, config_dict, shuffle=False
@@ -201,8 +241,60 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
     return inputs, targets, times, descriptors
 
 
+def tsr2npy2(dataset_path, dataset_size, input_labels,
+             output_label, dims_dict, msg='tensor2numpy: done'):
+    '''Converts .tfrecords binary format to numpy.array
+    Arguments:
+        dataset_path {str} -- a str path
+        dataset_size {int} -- total number of propositions
+        input_labels {list<str>} -- labels from the db columns 
+        output_label {str} -- target_label (T, IOB)
+    Returns:
+        inputs  {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X FEATURE_SIZE
+        targets {numpy.array} -- a 3D array size
+            NUM_RECORDS X MAX_TIME X TARGET_SIZE
+        lengths {numpy.array} -- a 1D array size
+            lengths for every proposition
+        descriptors {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
+            index of tokens
+    Raises:
+        ValueError -- validation for database type 
+    '''
+    with tf.name_scope('pipeline'):
+        X, T, L, D = input_fn(
+            [dataset_path], dataset_size, 1, input_labels,
+            output_label, dims_dict, shuffle=False
+        )
+
+    init_op = tf.group(
+        tf.global_variables_initializer(),
+        tf.local_variables_initializer()
+    )
+
+    with tf.Session() as session:
+        session.run(init_op)
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(coord=coord)
+
+        # This first loop instanciates validation set
+        try:
+            while not coord.should_stop():
+                inputs, targets, times, descriptors = session.run([X, T, L, D])
+
+        except tf.errors.OutOfRangeError:
+            print(msg)
+
+        finally:
+            # When done, ask threads to stop
+            coord.request_stop()
+            coord.join(threads)
+
+    return inputs, targets, times, descriptors
+
+
 def input_fn(filenames, batch_size, num_epochs,
-             input_labels, output_label, dimensions_dict, shuffle=True):
+             input_labels, output_label, dims_dict={}, shuffle=True):
     '''Provides I/O from protobufs to numpy arrays
 
     https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
@@ -241,8 +333,8 @@ def input_fn(filenames, batch_size, num_epochs,
     else:
         sequence_labels = input_labels + output_label
 
-    context_features, sequence_features = _read_and_decode(
-        filename_queue, dimensions_dict, sequence_labels=sequence_labels)
+    context_features, sequence_features = _read_and_decode2(
+        filename_queue, dims_dict, sequence_labels=sequence_labels)
 
     X, T, L, D = _protobuf_process(
         context_features,
@@ -335,14 +427,48 @@ def _read_and_decode(filename_queue, dimensions_dict,
             key: make_feature(key, tf.int64)
             for key in conf.CATEGORICAL_FEATURES if key in dimensions_dict
         }
-        # sequence_features.update({
-        #     key: make_feature(key, tf.float32)
-        #     for key in conf.EMBEDDED_FEATURES if key in dimensions_dict
-        # })
         sequence_features.update({
             key: make_feature(key, tf.int64)
             for key in conf.EMBEDDED_FEATURES if key in dimensions_dict
         })
+
+    context_features, sequence_features = tf.parse_single_sequence_example(
+        serialized_example,
+        context_features=TF_CONTEXT_FEATURES,
+        sequence_features=sequence_features
+    )
+
+    return context_features, sequence_features
+
+
+def _read_and_decode2(filename_queue, dimensions_dict,
+                     sequence_labels=TF_SEQUENCE_FEATURES_V2):
+    '''
+        Decodes a serialized .tfrecords containing sequences
+        args
+            filename_queue.: list of strings containing file names which are added to queue
+
+        returns
+            context_features.: features that are held constant thru sequence ex: time, sequence id
+
+            sequence_features.: features that are held variable thru sequence ex: word_idx
+    ref .: https://github.com/tensorflow/tensorflow/issues/976
+    '''
+
+    reader = tf.TFRecordReader()
+    _, serialized_example = reader.read(filename_queue)
+
+    def make_feature(key, dtype):
+        return tf.FixedLenSequenceFeature(dimensions_dict[key], dtype)
+
+    sequence_features = {
+        key: make_feature(key, tf.int64)
+        for key in conf.CATEGORICAL_FEATURES if key in dimensions_dict
+    }
+    sequence_features.update({
+        key: make_feature(key, tf.float32)
+        for key in conf.EMBEDDED_FEATURES if key in dimensions_dict
+    })
 
     context_features, sequence_features = tf.parse_single_sequence_example(
         serialized_example,
@@ -389,11 +515,8 @@ def input_with_embeddings_fn(
         D_batch  {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
             index of tokens
     '''
-    # import code; code.interact(local=dict(globals(), **locals()))
     filename_queue = tf.train.string_input_producer(
-        filenames,
-        num_epochs=num_epochs,
-        shuffle=shuffle
+        filenames, num_epochs=num_epochs, shuffle=shuffle
     )
     if isinstance(output_label, str):
         sequence_labels = input_labels + [output_label]

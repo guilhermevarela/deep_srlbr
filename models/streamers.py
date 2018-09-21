@@ -9,7 +9,99 @@
 import tensorflow as tf
 
 from models.properties import lazy_property
-from datasets import input_with_embeddings_fn
+from datasets import input_with_embeddings_fn, input_fn
+from datasets.scripts.tfrecords2 import get_train, get_valid, get_test
+from datasets.scripts.tfrecords2 import get_train2, get_valid2, get_test2
+
+
+class TfStreamer(object):
+    '''TfStreamer performs data streaming for tensorflow's binary module
+
+    TfStramer reads batch_size examples from tfrecrods object and
+    feeds it to the computation graph
+
+    -- `bool` and `int` features are regarded as having dim = 1
+    -- `choice` features have a custom size (domain size)
+    -- `text` features have embeddings size (encoded into the binary)
+    '''
+    def __init__(self, filenames, batch_size, num_epochs,
+                 input_labels, output_label, dims_dict,
+                 shuffle):
+
+        self.filenames = filenames
+        self.batch_size = batch_size
+        self.num_epochs = num_epochs
+        self.input_labels = input_labels
+        self.output_label = output_label
+        self.dims_dict = dims_dict
+        self.shuffle = shuffle
+
+        self.stream
+
+    @lazy_property
+    def stream(self):
+        '''Performs a 1-step read on datasets_list of size batch 250
+
+        Builds the pipeline scope -- which feeds the X, T, L, I tensors
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            inputs {tensor} -- features of size [BATCH_SIZE, MAX_TIME, FEATURES]
+            targets {tensor} -- targets of size [BATCH_SIZE, MAX_TIME, CLASSES]
+            seqlens {tensor} -- seqlens true TIME of the example rank 1 tensor
+            descriptors {tensor} -- index of the example on the database rank 1 tensor
+        '''
+        with tf.name_scope('pipeline'):
+
+            self.inputs, self.targets, self.seqlens, self.descriptors = input_fn(
+                self.filenames, self.batch_size, self.num_epochs,
+                self.input_labels, self.output_label, self.dims_dict,
+                self.shuffle
+            )
+
+        return self.inputs, self.targets, self.seqlens, self.descriptors
+
+
+    # def get_test2(input_labels, output_label, embeddings='glo50', version='1.0'):
+    #     return tfrecords_extract2('test', input_labels, output_label, embeddings, version=version)
+
+
+    # def get_valid2(input_labels, output_label, embeddings='glo50', version='1.0'):
+    #     return tfrecords_extract2('valid', input_labels, output_label, embeddings, version=version)
+
+
+    # def get_train2(input_labels, output_label, embeddings='glo50', version='1.0'):
+    #     return tfrecords_extract2('train', input_labels, output_label, embeddings, version=version)
+    @classmethod
+    def get_train(cls, input_labels, output_label, dims_dict,
+                  embeddings_model='glo50', version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_train2(
+            input_labels, output_label, dims_dict, version=version,
+            embeddings_model=embeddings_model)
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_valid(cls, input_labels, output_label, dims_dict,
+                  embeddings_model='glo50', version='1.0'):
+        inputs, targets, seqlens, descriptors = get_valid2(
+            input_labels, output_label, dims_dict, version=version,
+            embeddings_model=embeddings_model)
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_test(cls, input_labels, output_label, dims_dict,
+                 embeddings_model='glo50', version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_test2(
+            input_labels, output_label, dims_dict, version=version,
+            embeddings_model=embeddings_model)
+
+        return inputs, targets, seqlens, descriptors
 
 
 class TfStreamerWE(object):
@@ -17,7 +109,8 @@ class TfStreamerWE(object):
 
     TfStramerWE applies Word Embeddings at run time for `text` features
     -- `bool` and `int` features are regarded as having dim = 1
-    -- ``
+    -- `choice` features have a custom size
+    -- `text` features that are not embedded have dim = 1
     '''
     def __init__(self, word_embeddings, trainable, datasets_list,
                  batch_size, epochs, input_labels, target_label,
@@ -60,3 +153,39 @@ class TfStreamerWE(object):
                 self.dims_dict, self.config_dict, shuffle=True)
 
         return self.inputs, self.targets, self.seqlens, self.descriptors
+
+    @classmethod
+    def get_train(cls, word_embeddings, input_labels, target_label,
+                  dims_dict, config_dict, embeddings_model='glo50',
+                  version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_train(
+            word_embeddings, input_labels, target_label, dims_dict,
+            config_dict, embeddings_model=embeddings_model,
+            version=version)
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_valid(cls, word_embeddings, input_labels, target_label,
+                  dims_dict, config_dict, embeddings_model='glo50',
+                  version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_valid(
+            word_embeddings, input_labels, target_label, dims_dict,
+            config_dict, embeddings_model=embeddings_model,
+            version=version)
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_test(cls, word_embeddings, input_labels, target_label,
+                 dims_dict, config_dict, embeddings_model='glo50',
+                 version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_test(
+            word_embeddings, input_labels, target_label, dims_dict,
+            config_dict, embeddings_model=embeddings_model,
+            version=version)
+
+        return inputs, targets, seqlens, descriptors

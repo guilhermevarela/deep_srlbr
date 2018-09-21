@@ -69,10 +69,6 @@ if __name__ == '__main__':
                                 and size examples: glo50, wan50.
                                 Default: glo50 \n''')
 
-    parser.add_argument('--embs-train', dest='embs_train', action='store_true',
-                        help='''If active performs training on word-embeddings
-                                Default: glo50 \n''')
-
     parser.add_argument('--epochs', dest='epochs', type=int, default=1000,
                         help='''Number of times to repeat training set during training.
                                 Default: 1000\n''')
@@ -123,7 +119,6 @@ if __name__ == '__main__':
 
         target_label = args.target
         embs_model = args.embs_model
-        embs_train = args.embs_train
         learning_rate = args.lr
         version = args.version
         epochs = args.epochs
@@ -132,15 +127,15 @@ if __name__ == '__main__':
 
         if args.kfold:
 
-            raise ValueError('Kfold implementation is deprecated')
-            # estimate_kfold(input_labels=input_labels, target_label=target_label,
-            #                hidden_layers=args.depth, embeddings=embeddings,
-            #                epochs=epochs, lr=learning_rate, fold=25, ru=ru,
-            #                version=version, ctx_p=ctx_p, chunks=use_chunks)
+            # raise ValueError('Kfold implementation is deprecated')
+            estimate_kfold(input_labels=input_labels, target_label=target_label,
+                           hidden_layers=args.depth, embeddings_model=embs_model,
+                           epochs=epochs, lr=learning_rate, fold=25, ru=ru,
+                           version=version, ctx_p=ctx_p, chunks=use_chunks)
         else:
 
             estimate(input_labels=input_labels, target_label=target_label,
                      hidden_layers=args.depth, embeddings_model=embs_model,
-                     embeddings_trainable=embs_train, epochs=epochs,
-                     ru=ru, batch_size=args.batch_size, version=version,
-                     ctx_p=ctx_p, lr=learning_rate, chunks=use_chunks)
+                     epochs=epochs, ru=ru, batch_size=args.batch_size,
+                     version=version, ctx_p=ctx_p, lr=learning_rate,
+                     chunks=use_chunks)
