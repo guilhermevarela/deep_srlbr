@@ -42,7 +42,7 @@ if __name__ == '__main__':
                         the deep layer sizes. default: 16 16 16 16\n''')
 
     parser.add_argument('--batch_size', dest='batch_size',
-                        type=int, nargs=1, default=250,
+                        type=int, default=250,
                         help='''Batch size.
                                 Default: 250 \n''')
 
@@ -51,27 +51,25 @@ if __name__ == '__main__':
                                 extracted from the Tree of Constituents.
                                 Default: False''')
 
-    parser.add_argument('--ctx_p', dest='ctx_p', type=int, nargs=1,
+    parser.add_argument('--ctx_p', dest='ctx_p', type=int,
                         default=1, choices=[1, 2, 3],
                         help='''Size of sliding window around predicate.
                                 Default: 1\n''')
 
-    parser.add_argument('--ckpt_dir', dest='ckpt_dir', type=str, nargs=1,
+    parser.add_argument('--ckpt_dir', dest='ckpt_dir', type=str,
                         default='',
                         help='''Checkpoint directory -- with previous
                                 computed model. If this parameter is provided
                                 will ignore others and load model with
                                 previously set parameters.\n''')
 
-    parser.add_argument('--embeddings', dest='embeddings', nargs=1,
-                        default='glo50', choices=('glo50', 'wan50',
-                                                  'wan100', 'wan300', 'wrd50'),
+    parser.add_argument('--embs-model', dest='embs_model', default='glo50',
+                        choices=('glo50', 'wan50', 'wan100', 'wan300', 'wrd50'),
                         help='''Embedding abbrev.
                                 and size examples: glo50, wan50.
                                 Default: glo50 \n''')
 
-    parser.add_argument('--epochs', dest='epochs', type=int, nargs=1,
-                        default=1000,
+    parser.add_argument('--epochs', dest='epochs', type=int, default=1000,
                         help='''Number of times to repeat training set during training.
                                 Default: 1000\n''')
 
@@ -80,35 +78,35 @@ if __name__ == '__main__':
                                 optimization with 25 folds.
                                 Default: False''')
 
-    parser.add_argument('--lr', dest='lr', type=float, nargs=1,
+    parser.add_argument('--lr', dest='lr', type=float,
                         default=5 * 1e-3,
                         help='''Learning rate of the model.
                                 Default: 0.005\n''')
 
-    parser.add_argument('--ru', dest='ru', type=str, nargs=1,
+    parser.add_argument('--ru', dest='ru', type=str,
                         default='BasicLSTM', choices=('BasicLSTM', 'GRU'),
                         help='''Recurrent unit -- according to tensorflow.
                                 Default: `BasicLSTM`\n''')
 
-    parser.add_argument('--target', dest='target', nargs=1,
-                        default='T', choices=['T', 'IOB', 'HEAD'],
+    parser.add_argument('--target', dest='target', default='T',
+                        choices=['T', 'IOB', 'HEAD'],
                         help='''Target representations\n''')
 
     parser.add_argument('--version', type=str, dest='version',
-                        nargs=1, choices=('1.0', '1.1',), default='1.0',
+                        choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
 
-    ckpt_dir = args.ckpt_dir[0] if isinstance(args.ckpt_dir, list) else args.ckpt_dir
+    ckpt_dir = args.ckpt_dir
     if len(ckpt_dir) > 0:
         if ckpt_dir[-1] != '/':
             ckpt_dir += '/'
         estimate_recover(ckpt_dir)
     else:
         input_labels = FEATURE_LABELS
-        # print(args)
-        ctx_p = args.ctx_p[0] if isinstance(args.ctx_p, list) else args.ctx_p
+
+        ctx_p = args.ctx_p
         if ctx_p > 1:
             input_labels.append('FORM_CTX_P-2')
             input_labels.append('FORM_CTX_P+2')
@@ -119,39 +117,25 @@ if __name__ == '__main__':
         if use_chunks:
             input_labels.append('SHALLOW_CHUNKS')
 
-        target_label = args.target[0] if isinstance(args.target, list) else args.target
-        embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
-        learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
-        version = args.version[0] if isinstance(args.version, list) else args.version
-        epochs = args.epochs[0] if isinstance(args.epochs, list) else args.epochs
-        batch_size = args.batch_size[0] if isinstance(args.batch_size, list) else args.batch_size
-        ru = args.ru[0] if isinstance(args.ru, list) else args.ru
-        
-        if args.kfold:
-            # print(input_labels)
-            # print(args.target)
-            # print(args.depth)
-            # print(embeddings)
-            # print(args.epochs)
-            # print(learning_rate)
-            # print(args.batch_size)
+        target_label = args.target
+        embs_model = args.embs_model
+        learning_rate = args.lr
+        version = args.version
+        epochs = args.epochs
+        batch_size = args.batch_size
+        ru = args.ru
 
-            print(args.depth)
+        if args.kfold:
+
+            # raise ValueError('Kfold implementation is deprecated')
             estimate_kfold(input_labels=input_labels, target_label=target_label,
-                           hidden_layers=args.depth, embeddings=embeddings,
+                           hidden_layers=args.depth, embeddings_model=embs_model,
                            epochs=epochs, lr=learning_rate, fold=25, ru=ru,
                            version=version, ctx_p=ctx_p, chunks=use_chunks)
         else:
-            # print(input_labels)
-            # print(args.target)
-            # print(args.depth)
-            # print(embeddings)
-            # print(args.epochs)
-            # print(learning_rate)
-            # print(args.batch_size)
-            # print(args.ctx_p)
+
             estimate(input_labels=input_labels, target_label=target_label,
-                     hidden_layers=args.depth, embeddings=embeddings,
-                     epochs=epochs, lr=learning_rate, ctx_p=ctx_p, ru=ru,
-                     batch_size=args.batch_size, version=version,
+                     hidden_layers=args.depth, embeddings_model=embs_model,
+                     epochs=epochs, ru=ru, batch_size=args.batch_size,
+                     version=version, ctx_p=ctx_p, lr=learning_rate,
                      chunks=use_chunks)

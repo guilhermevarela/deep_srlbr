@@ -64,7 +64,7 @@ def fetch_corpus_exceptions(corpus_exception_file, verbose=True):
     '''
     if verbose:
         print('Fetching {:}...'.format(corpus_exception_file))
-    
+
     corpus_exceptions_path = '{:}{:}'.format(CORPUS_EXCEPTIONS_DIR, corpus_exception_file)
     df = pd.read_csv(corpus_exceptions_path, sep='\t')
     if verbose:
@@ -98,14 +98,14 @@ def preprocess(lexicon, word2vec, verbose=True):
     re_number = re.compile(r'^\d+$')
     re_tel = re.compile(r'^tel\._')
     re_time = re.compile(r'^\d{1,2}h\d{0,2}$')
-    re_ordinals = re.compile(r'º|ª')
+    re_ordinals = re.compile(r'º|ª|primeir[ao]|segund[ao]')
 
     for word in list(lexicon):
         # some hiffenized words belong to embeddings
         # ex: super-homem, fim-de-semana, pré-qualificar, caça-níqueis
-        token = word.lower() 
-        if token in word2vec:                   
-            lexicon2token[word]= token
+        token = word.lower()
+        if token in word2vec:
+            lexicon2token[word] = token
         else:
             # if word in ['Rede_Globo', 'Hong_Kong', 'Banco_Central']:
             token = re_tel.sub('', token)
@@ -126,6 +126,17 @@ def preprocess(lexicon, word2vec, verbose=True):
                     else:
                         if word in locs:
                             lexicon2token[word] = 'local'
+                        else:
+                            tokens_list = word.split('_')
+
+                            if len(tokens_list) > 1:  # It's a composite token
+                                tokens_list = [tok_.lower()
+                                               if tok_.lower() in word2vec else 'unk'
+                                               for tok_ in tokens_list]
+
+                                known_list = [tok_ for tok_ in tokens_list if tok_ != 'unk']
+                                if len(known_list) > 0:
+                                    lexicon2token[word] = '_'.join(tokens_list)
 
     total_tokens = len([val for val in lexicon2token.values() if not val in ('unk')])
     if verbose:

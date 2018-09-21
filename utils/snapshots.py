@@ -4,7 +4,7 @@ import json
 
 from config import INPUT_DIR
 
-def snapshot_hparam_string(embeddings='glo50', target_label='T',
+def snapshot_hparam_string(embeddings_model='glo50', target_label='T',
                       is_batch=True, learning_rate=5 * 1e-3,
                       version='1.0',hidden_layers=[16] * 4, **kwargs):
     '''Makes a nested directory to record model's data
@@ -13,7 +13,7 @@ def snapshot_hparam_string(embeddings='glo50', target_label='T',
     directory structure -- the inner directory will be a timestamp
 
     Keyword Arguments:
-        embeddings {str} -- Word embeddings mneumonic (default: {'glo50'})
+        embeddings_model {str} -- Word embeddings mneumonic (default: {'glo50'})
                 `glo`, `wan` , `wrd` for GloVe, Wang2Vec and Word2Vec.
         target_label {str} -- Target label (default: {'T'})
         is_batch {bool} -- If true performs batch training (default: {True})
@@ -32,7 +32,7 @@ def snapshot_hparam_string(embeddings='glo50', target_label='T',
             if key == 'version':
                 param_list[0] = value
 
-            if key == 'embeddings':
+            if key == 'embeddings_model':
                 param_list[1] = value
 
             if key == 'hidden_layers':
@@ -97,7 +97,8 @@ def snapshot_persist(target_dir,  **kwargs):
     target_path = '{:}params.json'.format(target_dir)
 
     KEYS = {'input_labels', 'target_label',
-            'hidden_layers', 'embeddings', 'epochs',
+            'hidden_layers', 'embeddings_model',
+            'embeddings_trainable', 'epochs',
             'lr', 'batch_size', 'kfold', 'version',
             'ru', 'chunks'}
 

@@ -1,1 +1,1 @@
-{"batch_size": 250, "embeddings": "wan300", "epochs": 1000, "hidden_layers": [16, 16, 16, 16], "input_labels": ["ID", "FORM", "MARKER", "GPOS", "FORM_CTX_P-1", "FORM_CTX_P+0", "FORM_CTX_P+1"], "lr": 0.005, "target_label": "IOB", "version": "1.0"}
+{"batch_size": 250, "embeddings_model": "wan300", "epochs": 1000, "hidden_layers": [16, 16, 16, 16], "input_labels": ["ID", "FORM", "MARKER", "GPOS", "FORM_CTX_P-1", "FORM_CTX_P+0", "FORM_CTX_P+1"], "lr": 0.005, "target_label": "IOB", "version": "1.0"}
