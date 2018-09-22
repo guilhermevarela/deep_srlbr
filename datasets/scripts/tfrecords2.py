@@ -338,7 +338,8 @@ def input_fn(filenames, batch_size, num_epochs,
         context_features,
         sequence_features,
         input_labels,
-        output_labels
+        output_labels,
+        dims_dict
     )
 
     min_after_dequeue = 10000
@@ -355,7 +356,7 @@ def input_fn(filenames, batch_size, num_epochs,
 
 
 def _protobuf_process(
-        context_features, sequence_features, input_labels, output_labels):
+        context_features, sequence_features, input_labels, output_labels, dims_dict):
     '''Maps context_features and sequence_features making embedding replacement as necessary
 
         args:
@@ -378,10 +379,11 @@ def _protobuf_process(
     sequence_outputs = []
     sequence_descriptors = []
 
-
     # Fetch only context variable the length of the proposition
-    L = context_features['L']
-    # k = len(output_labels)  #Rank of the resulting array
+    L = context_features['L']    
+    # Each output has a maximum pad size
+    maxout_sz = max([dims_dict[lbl] for lbl in output_labels])
+
 
     labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
@@ -391,13 +393,21 @@ def _protobuf_process(
         if key in input_labels:
             sequence_inputs.append(v)
         elif key in output_labels:
+            # [0, 0] -- top, bottom [0, x] -- left right
+            pad_sz = maxout_sz - dims_dict[key]
+            paddings = tf.constant([[0, 0], [0, pad_sz]])
+            # fills v with the right amounts of zero in orde
+            v = tf.pad(v, paddings, 'CONSTANT')
             sequence_outputs.append(v)
         elif key in ['INDEX']:
             sequence_descriptors.append(v)
 
     X = tf.concat(sequence_inputs, 1)
     # Each target is stacked on top of each other
-    T = tf.stack(sequence_outputs)
+    if len(sequence_outputs) == 1:
+        T = sequence_outputs[0]
+    else:
+        T = tf.stack(sequence_outputs)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 

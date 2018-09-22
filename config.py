@@ -52,7 +52,7 @@ SEQUENCE_FEATURES = [ 'INDEX', 'ID', 'S', 'P', 'P_S',
 CATEGORICAL_FEATURES = sorted([
     'ARG', 'GPOS', 'HEAD', 'ID', 'INDEX',
     'GPOS_CTX_P+0', 'GPOS_CTX_P+1', 'GPOS_CTX_P-1',
-    'IOB', 'P', 'MARKER', 'T', 'SHALLOW_CHUNKS'
+    'IOB', 'P', 'MARKER', 'T', 'SHALLOW_CHUNKS', 'R'
 ])
 
 EMBEDDED_FEATURES = sorted([

@@ -114,7 +114,7 @@ def length(sequence):
 
 
 
-def identity(sequence):  
+def identity(sequence):
   '''
     Returns a mask with ones on valid tensor entries
 
@@ -129,14 +129,27 @@ def identity(sequence):
   return tf.sign(tf.reduce_max(tf.abs(sequence), 2))
 
 
-def precision(probs, targets):    
-  mask= identity(targets)
-  mask= tf.cast(targets, tf.float32)
-  prec, _= tf.metrics.precision(tf.argmax(probs, 2), tf.argmax(targets,2), weights=tf.argmax(mask,2))
-  return prec
+def precision(P, T):
+    mask = identity(T)
+    mask = tf.cast(T, tf.float32)
+    Pf = tf.argmax(P, 2)
+    Tf = tf.argmax(T, 2)
+    Mf = tf.argmax(mask, 2)
+    prec, _ = tf.metrics.precision(Pf, Mf, weights=Tf)
 
-def recall(probs, targets):    
-  mask= identity(targets)
-  mask= tf.cast(targets, tf.float32)
-  rec, _= tf.metrics.recall(tf.argmax(probs, 2), tf.argmax(targets,2) , weights=tf.argmax(mask,2))
-  return rec 
+    return prec
+
+
+def recall(P, T):
+    mask = identity(T)
+    mask = tf.cast(T, tf.float32)
+    Pf = tf.argmax(P, 2)
+    Tf = tf.argmax(T, 2)
+    Mf = tf.argmax(mask, 2)
+    rec, _ = tf.metrics.precision(Pf, Mf, weights=Tf)
+
+
+def f1_score(P, T):
+    PREC = precision(P, T)
+    REC = recall(P, T)
+    return PREC * REC * 2 / (PREC + REC)

@@ -16,6 +16,7 @@ import config
 
 from utils.info import get_dims, get_binary
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_recover
+# from utils.ml import f1_score
 
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
@@ -95,22 +96,22 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         embeddings_model=embeddings_model
     )
     feature_size = get_dims(input_labels, dims_dict)
-    target_size = dims_dict[target_labels[0]]
+    target_sz_list = dims_dict[target_labels[0]]
 
     batch_size = int(dataset_size / fold)
-    print(batch_size, target_labels, target_size, feature_size)
+    print(batch_size, target_labels, target_sz_list, feature_size)
 
     evaluator = EvaluatorConll(propbank_encoder.db,
                                propbank_encoder.idx2lex, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_size': target_size,
+        'target_sz_list': target_sz_list,
         'ru': ru
     }
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
-    T_shape = (None, None, target_size)
+    T_shape = (None, None, target_sz_list)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
@@ -292,7 +293,6 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     save_path = '{:}model.ckpt'.format(target_dir)
     propbank_path = get_binary('deep', embeddings_model, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
-    # preprocess_dims_dict = propbank_encoder.columns_dimensions('MIX')
     dims_dict = propbank_encoder.columns_dimensions('EMB')
 
     config_dict = propbank_encoder.columns_config
@@ -309,15 +309,15 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         embeddings_model=embeddings_model
     )
 
-    # feature_size = get_dims(input_labels, dims_dict)
-    # target_size = dims_dict[target_labels[0]]
+    feature_size = get_dims(input_labels, dims_dict)
+    target_sz_list = dims_dict[target_labels[0]]
 
     evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
         evaluator.evaluate_tensor('train', index, Y, L_train, target_labels, params, script_version='04')
- 
+
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
@@ -326,17 +326,20 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
         return evaluator.f1
 
-    target_size = [dims_dict[lbl] for lbl in output_labels]
+    target_sz_list = [dims_dict[lbl] for lbl in target_labels]
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_size': target_size,
+        'target_sz_list': target_sz_list,
         'ru': ru
     }
     # BUILDING the execution graph
     X_shape = get_xshape(input_labels, dims_dict)
-    T_shape = get_tshape(output_labels, dims_dict)
+    T_shape = get_tshape(target_labels, dims_dict)
     print('trainable embeddings?', embeddings_trainable)
+    print('X_shape', X_shape)
+    print('T_shape', T_shape)
+
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
@@ -368,13 +371,11 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         step = 1
         total_loss = 0.0
         total_error = 0.0
-
         eps = 100
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run(streamer.stream)
-                
-                import code; code.interact(local=dict(globals(), **locals()))
+
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, seqlens: L_batch}
@@ -389,6 +390,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                         feed_dict={X: X_train, T: T_train, seqlens: L_train}
                     )
                     f1_train = train_eval(Y_train)
+
 
                     Y_valid = session.run(
                         deep_srl.predict,
@@ -411,10 +413,10 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                     total_error = 0.0
 
                     if f1_valid and best_validation_rate < f1_valid:
-
                         best_validation_rate = f1_valid
                         f1_valid = valid_eval(Y_valid, 'best-valid')
                         saver.save(session, save_path)
+
 
                 step += 1
 
@@ -431,9 +433,9 @@ def get_xshape(input_labels, dims_dict):
     # axis 0 --> examples
     # axis 1 --> max time
     # axis 2 --> feature size
-    base_shape = [None, None]
+    xshape = [None, None]
     feature_sz = sum([dims_dict[lbl] for lbl in input_labels])
-    xshape = base_shape.append()
+    xshape.append(feature_sz)
     return xshape
 
 def get_tshape(output_labels, dims_dict):

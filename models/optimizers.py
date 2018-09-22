@@ -16,7 +16,7 @@ from models.predictors import CRFPredictor
 
 class Optmizer(object):
     def __init__(self, X, T, seqlens,
-                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_size=60,
+                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sz_list=[60],
                  ru='BasicLSTM'):
         '''Sets the computation graph parameters
 
@@ -43,7 +43,7 @@ class Optmizer(object):
         Keyword Arguments:
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
-            target_size {int} -- Parameter holding the layer sizes (default: {60})
+            target_sz_list {int} -- Parameter holding the layer sizes (default: {60})
         '''
         self.optmizer = 'DBLSTM'
         self.X = X
@@ -52,9 +52,10 @@ class Optmizer(object):
 
         self.learning_rate = learning_rate
         self.hidden_size = hidden_size
-        self.target_size = target_size
+        self.target_sz_list = target_sz_list
 
-        self.propagator = InterleavedPropagator(X, seqlens, hidden_size, target_size, ru=ru)
+        self.propagator = InterleavedPropagator(
+            X, seqlens, hidden_size, ru=ru)
         self.predictor = CRFPredictor(self.propagator.propagate, T, seqlens)
 
         self.propagate
@@ -74,11 +75,13 @@ class Optmizer(object):
     @delegate_property
     def cost(self):
         pass
+
     # def cost(self):
     #     return self.predictor.cost
     @delegate_property
     def predict(self):
         pass
+
     # def predict(self):
     #     return self.predictor.predict
 
@@ -95,7 +98,8 @@ class Optmizer(object):
             [type] -- [description]
         '''
         with tf.variable_scope('optimize'):
-            optimum = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost)
+            kwargs = {'learning_rate': self.learning_rate}
+            optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
         return optimum
 
 

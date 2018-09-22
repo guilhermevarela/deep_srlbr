@@ -114,6 +114,7 @@ if __name__ == '__main__':
             if args.ctx_p[0] == 3:
                 input_labels.append('FORM_CTX_P-3')
                 input_labels.append('FORM_CTX_P+3')
+
         use_chunks = args.chunks
         if use_chunks:
             input_labels.append('SHALLOW_CHUNKS')

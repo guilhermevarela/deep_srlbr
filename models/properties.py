@@ -50,6 +50,7 @@ def delegate_property(function):
     @delegate_property          
     def foo(self)           <===>     def foo(self)
         pass                            returns self.delegate.foo()
+
     Decorators:
         functools.wraps
 
@@ -71,8 +72,12 @@ def delegate_property(function):
             # Non default attributes
             lookup_attributes = self.__dict__.keys() - object.__dict__.keys()
             for attr_ in list(lookup_attributes):
+                # Get attribute -- this is a delegate candidate
                 delegate_ = getattr(self, attr_)
+                # if delegate object is an implementor of the function
                 if hasattr(delegate_, function.__name__):
+                    # Creates the lazy property pointing to 
+                    # the delate implamentation
                     setattr(self, attribute, getattr(delegate_, function.__name__))
                     break
         return getattr(self, attribute)
