@@ -309,15 +309,15 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         embeddings_model=embeddings_model
     )
 
-    feature_size = get_dims(input_labels, dims_dict)
-    target_size = dims_dict[target_labels[0]]
+    # feature_size = get_dims(input_labels, dims_dict)
+    # target_size = dims_dict[target_labels[0]]
 
     evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
         evaluator.evaluate_tensor('train', index, Y, L_train, target_labels, params, script_version='04')
-
+ 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
@@ -326,6 +326,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
         return evaluator.f1
 
+    target_size = [dims_dict[lbl] for lbl in output_labels]
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
@@ -333,8 +334,8 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         'ru': ru
     }
     # BUILDING the execution graph
-    X_shape = (None, None, feature_size)
-    T_shape = (None, None, target_size)
+    X_shape = get_xshape(input_labels, dims_dict)
+    T_shape = get_tshape(output_labels, dims_dict)
     print('trainable embeddings?', embeddings_trainable)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
@@ -372,7 +373,8 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run(streamer.stream)
-
+                
+                import code; code.interact(local=dict(globals(), **locals()))
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, seqlens: L_batch}
@@ -424,3 +426,22 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             # When done, ask threads to stop
             coord.request_stop()
             coord.join(threads)
+
+def get_xshape(input_labels, dims_dict):
+    # axis 0 --> examples
+    # axis 1 --> max time
+    # axis 2 --> feature size
+    base_shape = [None, None]
+    feature_sz = sum([dims_dict[lbl] for lbl in input_labels])
+    xshape = base_shape.append()
+    return xshape
+
+def get_tshape(output_labels, dims_dict):
+    # axis 0 --> examples
+    # axis 1 --> max time
+    # axis 2 --> first target
+    # axis 3 --> second target
+    base_shape = [None, None]
+    target_dims = [dims_dict[lbl] for lbl in output_labels]
+    tshape = base_shape + target_dims
+    return tshape

@@ -49,10 +49,12 @@ MARKER:
 P_S: 
     category: meta
     type: int
+R: 
+    category: target
+    type: choice
 S: 
     category: meta
     type: int
-
 SHALLOW_CHUNKS:
   category: feature
   type: choice

@@ -22,7 +22,7 @@ class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnChunk', 'ColumnCtreeChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnArgumentRecognition', 'ColumnChunk', 'ColumnCtreeChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -430,6 +430,38 @@ class ColumnIOB(object):
         )}
 
         return self.iob
+
+
+class ColumnArgumentRecognition(object):
+    '''
+        Computes the outputs from the recognition task
+
+        Ex:
+            IOB:    B-A0 I-A0 I-A0 B-V B-A1 I-A1 O O
+              R:     B    I    I    B   B    I   O O
+    '''
+
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        arg_list = [self.db['P'].values(), self.db['ARG'].values()]
+        IOB = br.propbankbr_arg2iob(*arg_list)
+        # First character on IOB is the RECON
+        R = [(k, IOB[i][0]) for i, k in enumerate(self.db['ARG'])]
+
+        self.r = {'R': OrderedDict(
+            sorted(R, key=lambda x: x[0])
+        )}
+
+        return self.r
 
 
 class ColumnPassiveVoice(object):
@@ -860,6 +892,16 @@ def process_predmarker(dictdb, version='1.0'):
     target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def process_argrecon(dictdb, version='1.0'):
+
+    column_argrecon = FeatureFactory().make('ColumnArgumentRecognition', dictdb)
+    d = column_argrecon.run()
+
+    target_dir = 'datasets/csvs/{:}/column_argrecon/'.format(version)
+    filename = '{:}{:}.csv'.format(target_dir, 'argrecon')
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')    
 
 
 def _store_columns(columns_dict, columns, target_dir):

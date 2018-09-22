@@ -381,7 +381,7 @@ def _protobuf_process(
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
-    k = len(output_labels)  #Rank of the resulting array
+    # k = len(output_labels)  #Rank of the resulting array
 
     labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
@@ -396,7 +396,8 @@ def _protobuf_process(
             sequence_descriptors.append(v)
 
     X = tf.concat(sequence_inputs, 1)
-    T = tf.concat(sequence_outputs, k - 1)
+    # Each target is stacked on top of each other
+    T = tf.stack(sequence_outputs)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 
