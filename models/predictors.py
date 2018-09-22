@@ -11,14 +11,14 @@ from models.properties import lazy_property
 
 class Predictor(object):
 
-    def __init__(self, V, T, seqlens):
+    def __init__(self, V, T, seqlens, i=0):
         self.predictor = 'CRF'
 
         self.V = V
         self.T = T
         self.Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
         self.seqlens = seqlens
-
+        self.i = i
         self.score
         self.cost
         self.predict
@@ -36,7 +36,8 @@ class Predictor(object):
 class CRFPredictor(Predictor):
     @lazy_property
     def score(self):
-        with tf.variable_scope('score'):
+        scope_id = 'score{:}'.format(self.i)
+        with tf.variable_scope(scope_id):
             Wo = tf.Variable(tf.random_normal(self.wo_shape, name='Wo'))
             bo = tf.Variable(tf.random_normal(self.bo_shape, name='bo'))
 
@@ -61,7 +62,8 @@ class CRFPredictor(Predictor):
             cost {tf.float64} -- A scalar holding the average log_likelihood 
             of the loss by estimatiof
         '''
-        with tf.variable_scope('cost'):
+        scope_id = 'cost{:}'.format(self.i)
+        with tf.variable_scope(scope_id):
             args = (self.S, self.Tflat, self.seqlens)
             log_likelihood, self.transition_params = crf_log_likelihood(*args)
 
@@ -79,7 +81,8 @@ class CRFPredictor(Predictor):
         Returns:
             [type] -- [description]
         '''
-        with tf.variable_scope('prediction'):
+        scope_id = 'prediction{:}'.format(self.i)
+        with tf.variable_scope(scope_id):
             # Compute the viterbi sequence and score.
             args = (self.S, self.transition_params, self.seqlens)
             viterbi_sequence, viterbi_score = crf_decode(*args)

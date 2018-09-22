@@ -20,7 +20,7 @@ from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_r
 
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
-from models.optimizers import Optmizer
+from models.optimizers import Optmizer, OptmizerDualT
 from models.streamers import TfStreamer
 
 
@@ -347,7 +347,13 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     streamer = TfStreamer(datasets_list, batch_size, epochs,
                           input_labels, target_labels, dims_dict, shuffle=True)
 
-    deep_srl = Optmizer(X, T, seqlens, **params)
+    if len(target_labels) == 1:
+        deep_srl = Optmizer(X, T, seqlens, **params)
+    elif len(target_labels) == 2:
+        deep_srl = OptmizerDualT(X, T, seqlens, **params)
+    else:
+        err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
+        raise ValueError(err)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -375,6 +381,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run(streamer.stream)
+
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
@@ -429,6 +436,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             coord.request_stop()
             coord.join(threads)
 
+
 def get_xshape(input_labels, dims_dict):
     # axis 0 --> examples
     # axis 1 --> max time
@@ -438,12 +446,22 @@ def get_xshape(input_labels, dims_dict):
     xshape.append(feature_sz)
     return xshape
 
+
 def get_tshape(output_labels, dims_dict):
     # axis 0 --> examples
     # axis 1 --> max time
-    # axis 2 --> first target
-    # axis 3 --> second target
     base_shape = [None, None]
-    target_dims = [dims_dict[lbl] for lbl in output_labels]
-    tshape = base_shape + target_dims
+    k = len(output_labels)
+    if k == 1:
+        # axis 2 --> target size
+        m = dims_dict[output_labels[0]]
+        tshape = base_shape + [m]
+    elif k == 2:
+        # axis 2 --> max target size
+        # axis 3 --> number of targets
+        m = max([dims_dict[lbl] for lbl in output_labels])
+        tshape = base_shape + [m, k]
+    else:
+        err = 'len(target_labels) <= 2 got {:}'.format(k)
+        raise ValueError(err)
     return tshape

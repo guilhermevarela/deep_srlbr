@@ -407,7 +407,7 @@ def _protobuf_process(
     if len(sequence_outputs) == 1:
         T = sequence_outputs[0]
     else:
-        T = tf.stack(sequence_outputs)
+        T = tf.stack(sequence_outputs, axis=2)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 
