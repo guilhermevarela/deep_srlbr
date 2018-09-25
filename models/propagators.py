@@ -24,15 +24,13 @@ def get_unit(sz, ru='BasicLSTM'):
 
 class Propagator(object):
 
-    def __init__(self, V, seqlens, hidden_size, target_size,
-                 ru='BasicLSTMCell'):
+    def __init__(self, V, seqlens, hidden_sz_list, ru='BasicLSTMCell'):
         self.ru = ru
         self.propagator = 'interleaved'
 
-        self.hidden_size = hidden_size
+        self.hidden_sz_list = hidden_sz_list
         self.V = V
         self.seqlens = seqlens
-        self.target_size = target_size
 
         self.propagate
 
@@ -56,10 +54,10 @@ class InterleavedPropagator(Propagator):
             score {tf.Variable} -- a 3D float tensor in which
                 * batch_size -- fixed sample size from examples
                 * max_time -- maximum time from batch_size examples (default: None)
-                * target_size -- ouputs dimension
+                * target_sz_list -- ouputs dimension
         '''
         with tf.variable_scope('fw0'):
-            self.cell_fw = get_unit(self.hidden_size[0], self.ru)
+            self.cell_fw = get_unit(self.hidden_sz_list[0], self.ru)
 
             outputs_fw, states = tf.nn.dynamic_rnn(
                 cell=self.cell_fw,
@@ -70,7 +68,7 @@ class InterleavedPropagator(Propagator):
             )
 
         with tf.variable_scope('bw0'):
-            self.cell_bw = get_unit(self.hidden_size[0], self.ru)
+            self.cell_bw = get_unit(self.hidden_sz_list[0], self.ru)
 
             inputs_bw = tf.reverse_sequence(
                 outputs_fw,
@@ -95,7 +93,7 @@ class InterleavedPropagator(Propagator):
 
         h = outputs_bw
         h_1 = outputs_fw
-        for i, sz in enumerate(self.hidden_size[1:]):
+        for i, sz in enumerate(self.hidden_sz_list[1:]):
 
             with tf.variable_scope('fw{:}'.format(i + 1)):
                 inputs_fw = tf.concat((h, h_1), axis=2)
@@ -135,18 +133,10 @@ class InterleavedPropagator(Propagator):
             h = outputs_bw
             h_1 = outputs_fw
 
-        with tf.variable_scope('score'):
-            Wo_shape = (2 * self.hidden_size[-1], self.target_size)
-            bo_shape = (self.target_size,)
+        self.V = tf.concat((h, h_1), axis=2)
 
-            Wo = tf.Variable(tf.random_normal(Wo_shape, name='Wo'))
-            bo = tf.Variable(tf.random_normal(bo_shape, name='bo'))
+        return self.V
 
-            outputs = tf.concat((h, h_1), axis=2)
-
-            # Stacking is cleaner and faster - but it's hard to use for multiple pipelines
-            self.score = tf.scan(
-                lambda a, x: tf.matmul(x, Wo),
-                outputs, initializer=tf.matmul(outputs[0], Wo)) + bo
-
-        return self.score
+    @lazy_property
+    def output_shape(self):
+        return [None, None] + [2 * self.hidden_sz_list[-1]]

@@ -243,7 +243,7 @@ class EvaluatorConll(object):
 
     def evaluate_tensor(self, prefix,
                         index_tensor, predictions_tensor, len_tensor,
-                        target_column, hparams, script_version='04'):
+                        target_labels, hparams, script_version='04'):
         ''''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
         Evaluates the conll scripts returning total precision, recall and F1
@@ -254,7 +254,7 @@ class EvaluatorConll(object):
             index_tensor {[type]} -- [description]
             predictions_tensor {[type]} -- [description]
             len_tensor {[type]} -- [description]
-            target_column {[type]} -- [description]
+            target_labels {[type]} -- [description]
             hparams {[type]} -- [description]
 
         Keyword Arguments:
@@ -264,18 +264,19 @@ class EvaluatorConll(object):
             msg_ = 'script_version: {:} must be in (`04`,`05`)'
             raise ValueError(msg_.format(script_version))
 
-        if target_column not in self.target_columns:
-            msg_ = 'target_column must be in {:} got target_column {:}'
-            msg_ = msg_.format(self.target_columns, target_column)
-            raise ValueError(msg_)
+        for col in target_labels:
+            if col not in self.target_columns:
+                msg_ = 'target_column must be in {:} got target_column {:}'
+                msg_ = msg_.format(self.target_columns, col)
+                raise ValueError(msg_)
 
-        self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_column)
+        self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_labels)
 
-        if target_column in ('IOB',):
+        if target_labels[0] in ('IOB',):
             self._iob2arg()
-        elif target_column in ('HEAD',):
+        elif target_labels[0] in ('HEAD',):
             self._head2arg()
-        elif target_column in ('T',):
+        elif target_labels[0] in ('T',):
             self._t2arg()
 
         self.evaluate(prefix, self.props_dict,
@@ -495,13 +496,14 @@ class EvaluatorConll(object):
         return [i for i in range(lb, ub)]
 
     def _tensor2dict(self, index_tensor,
-                     predictions_tensor, len_tensor, target_column):
+                     predictions_tensor, len_tensor, target_labels):
 
+        target_label = target_labels[0]
         index = [item
                  for i, sublist in enumerate(index_tensor.tolist())
                  for j, item in enumerate(sublist) if j < len_tensor[i]]
 
-        values = [self.idx2lex[target_column][int(item)]
+        values = [self.idx2lex[target_label][int(item)]
                   for i, sublist in enumerate(predictions_tensor.tolist())
                   for j, item in enumerate(sublist) if j < len_tensor[i]]
 

@@ -21,6 +21,7 @@ SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
 SHIFTS = (-3, -2, -1, 0, 1, 2, 3)
 
 FEATURE_MAKER_DICT = {
+    'argrecon.csv': {'marker_fnc': lambda x, y: fac.process_argrecon(x, version=y), 'column': 'argument recognition'},
     'chunks.csv': {'marker_fnc': lambda x, y: fac.process_chunk(x, version=y), 'column': 'chunk features'},
     'ctree_chunk.csv': {'marker_fnc': lambda x, y: fac.process_ctreechunk(x, version=y), 'column': 'shallow chunk features'},
     'predicate_marker.csv': {'marker_fnc': lambda x, y: fac.process_predmarker(x, version=y), 'column': 'predicate marker feature'},
@@ -69,6 +70,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
     dfgs = pd.read_csv(gs_path, index_col=0, sep=',', encoding='utf-8')
 
     column_files = [
+        'column_argrecon/argrecon.csv',
         'column_chunks/chunks.csv',
         'column_ctree_chunks/ctree_chunk.csv',
         'column_predmarker/predicate_marker.csv',

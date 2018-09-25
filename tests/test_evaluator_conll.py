@@ -118,7 +118,8 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
             npy_index, npy_predictions = dict2npy(target_dict)
 
             self.evaluator.evaluate_tensor(
-                self.prefix, npy_index, npy_predictions, [width] * depth, 'ARG', {})
+                self.prefix, npy_index, npy_predictions,
+                [width] * depth, ['ARG'], {})
 
             self.assertEqual(self.evaluator.f1, 100.0)
 
@@ -130,7 +131,8 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
             npy_index, npy_predictions = dict2npy(target_dict)
 
             self.evaluator.evaluate_tensor(
-                self.prefix, npy_index, npy_predictions, [width] * depth, 'IOB', {})
+                self.prefix, npy_index, npy_predictions,
+                [width] * depth, ['IOB'], {})
 
             self.assertEqual(self.evaluator.f1, 100.0)
 
@@ -142,6 +144,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
             npy_index, npy_predictions = dict2npy(target_dict)
 
             self.evaluator.evaluate_tensor(
-                self.prefix, npy_index, npy_predictions, [width] * depth, 'IOB', {})
+                self.prefix, npy_index, npy_predictions,
+                [width] * depth, ['IOB'], {})
 
             self.assertEqual(self.evaluator.f1, 100.0)            

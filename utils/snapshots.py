@@ -4,7 +4,7 @@ import json
 
 from config import INPUT_DIR
 
-def snapshot_hparam_string(embeddings_model='glo50', target_label='T',
+def snapshot_hparam_string(embeddings_model='glo50', target_labels='T',
                       is_batch=True, learning_rate=5 * 1e-3,
                       version='1.0',hidden_layers=[16] * 4, **kwargs):
     '''Makes a nested directory to record model's data
@@ -15,7 +15,7 @@ def snapshot_hparam_string(embeddings_model='glo50', target_label='T',
     Keyword Arguments:
         embeddings_model {str} -- Word embeddings mneumonic (default: {'glo50'})
                 `glo`, `wan` , `wrd` for GloVe, Wang2Vec and Word2Vec.
-        target_label {str} -- Target label (default: {'T'})
+        target_labels {str} -- Target label (default: {'T'})
         is_batch {bool} -- If true performs batch training (default: {True})
         learning_rate {float} -- Model's  learning rate (default: {5 * 1e-3})
         hidden_layers {list{int}} -- list of integers (default: {[16] * 4})
@@ -43,8 +43,8 @@ def snapshot_hparam_string(embeddings_model='glo50', target_label='T',
             if key == 'ctx_p':
                 param_list[3] = 'ctxp_{:d}'.format(value)
 
-            if key == 'target_label':
-                param_list[4] = value
+            if key == 'target_labels':
+                param_list[4] = '_'.join(target_labels)
 
             if key == 'is_batch':
                 param_list[5] = 'batch' if value else 'kfold'
@@ -61,7 +61,7 @@ def snapshot_hparam_string(embeddings_model='glo50', target_label='T',
     return snapshot_dir
 
 def snapshot_persist(target_dir,  **kwargs):
-# def snapshot_persist(target_dir, input_labels=None, target_label=None,
+# def snapshot_persist(target_dir, input_labels=None, target_labels=None,
 #                     hidden_layers=None, embeddings=None,
 #                     epochs=None, lr=None, batch_size=None,
 #                     kfold=None, version='1.0', **kwargs):
@@ -76,7 +76,7 @@ def snapshot_persist(target_dir,  **kwargs):
 
     Keyword Arguments:
         input_labels {[type]} -- [description] (default: {None})
-        target_label {[type]} -- [description] (default: {None})
+        target_labels {[type]} -- [description] (default: {None})
         hidden_layers {[type]} -- [description] (default: {None})
         embeddings {[type]} -- [description] (default: {None})
         epochs {[type]} -- [description] (default: {None})
@@ -96,7 +96,7 @@ def snapshot_persist(target_dir,  **kwargs):
 
     target_path = '{:}params.json'.format(target_dir)
 
-    KEYS = {'input_labels', 'target_label',
+    KEYS = {'input_labels', 'target_labels',
             'hidden_layers', 'embeddings_model',
             'embeddings_trainable', 'epochs',
             'lr', 'batch_size', 'kfold', 'version',

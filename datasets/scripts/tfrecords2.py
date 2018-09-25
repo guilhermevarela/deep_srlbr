@@ -65,42 +65,42 @@ TF_SEQUENCE_FEATURES_V2.update({
 })
 
 
-def get_test(embeddings, input_labels, output_label, dims_dict,
+def get_test(embeddings, input_labels, output_labels, dims_dict,
              config_dict, embeddings_model='glo50', version='1.0'):
 
-    return tfrecords_extract('test', embeddings, input_labels, output_label,
+    return tfrecords_extract('test', embeddings, input_labels, output_labels,
                              dims_dict, config_dict, embeddings_model,
                              version=version)
 
 
-def get_valid(embeddings, input_labels, output_label, dims_dict,
+def get_valid(embeddings, input_labels, output_labels, dims_dict,
               config_dict, embeddings_model='glo50', version='1.0'):
 
-    return tfrecords_extract('valid', embeddings, input_labels, output_label,
+    return tfrecords_extract('valid', embeddings, input_labels, output_labels,
                              dims_dict, config_dict, embeddings_model,
                              version=version)
 
 
-def get_train(embeddings, input_labels, output_label, dims_dict,
+def get_train(embeddings, input_labels, output_labels, dims_dict,
               config_dict, embeddings_model='glo50', version='1.0'):
 
-    return tfrecords_extract('train', embeddings, input_labels, output_label,
+    return tfrecords_extract('train', embeddings, input_labels, output_labels,
                              dims_dict, config_dict, embeddings_model,
                              version=version)
 
 
-def get_test2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
-    return tfrecords_extract2('test', input_labels, output_label,
+def get_test2(input_labels, output_labels, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('test', input_labels, output_labels,
                               embeddings_model, dims_dict, version=version)
 
 
-def get_valid2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
-    return tfrecords_extract2('valid', input_labels, output_label,
+def get_valid2(input_labels, output_labels, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('valid', input_labels, output_labels,
                               embeddings_model, dims_dict, version=version)
 
 
-def get_train2(input_labels, output_label, dims_dict, embeddings_model='glo50', version='1.0'):
-    return tfrecords_extract2('train', input_labels, output_label,
+def get_train2(input_labels, output_labels, dims_dict, embeddings_model='glo50', version='1.0'):
+    return tfrecords_extract2('train', input_labels, output_labels,
                               embeddings_model, dims_dict, version=version)
 
 
@@ -118,7 +118,7 @@ def get_size(ds_type, version='1.0'):
     return ub - lb
 
 
-def tfrecords_extract(ds_type, embeddings, input_labels, output_label,
+def tfrecords_extract(ds_type, embeddings, input_labels, output_labels,
                       dimensions_dict, config_dict, embeddings_model, version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
 
@@ -127,7 +127,7 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_label,
     Arguments:
         ds_type {str} -- train, valid, test
         input_labels {list<str>} -- labels from the db columns
-        output_label {str} -- target_label (T, IOB)
+        output_labels {str} -- target_label (T, IOB)
         embeddings {str]} -- emebddings name (glo50, wan50, wrd50)
 
     Returns:
@@ -146,20 +146,20 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_label,
     msg_success += 'done converting {:} set to numpy'.format(ds_type)
 
     inputs, targets, lengths, others = tsr2npy(
-        dataset_path, embeddings, dataset_size, input_labels, output_label,
+        dataset_path, embeddings, dataset_size, input_labels, output_labels,
         dimensions_dict, config_dict, msg=msg_success,
     )
 
     return inputs, targets, lengths, others
 
-def tfrecords_extract2(ds_type, input_labels, output_label,
+def tfrecords_extract2(ds_type, input_labels, output_labels,
                        embeddings_model, dims_dict, version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
     Acts as a wrapper for the function tsr2npy
     Arguments:
         ds_type {str} -- train, valid, test
         input_labels {list<str>} -- labels from the db columns 
-        output_label {str} -- target_label (T, IOB)
+        output_labels {str} -- target_label (T, IOB)
         embeddings {str]} -- emebddings name (glo50, wan50, wrd50)
     Returns:
         inputs  {numpy.array} -- a 3D array NUM_RECORDS X MAX_TIME X FEATURE_SIZE
@@ -176,14 +176,14 @@ def tfrecords_extract2(ds_type, input_labels, output_label,
     msg_success += 'done converting {:} set to numpy'.format(ds_type)
 
     inputs, targets, lengths, others = tsr2npy2(
-        dataset_path, dataset_size, input_labels, output_label,
+        dataset_path, dataset_size, input_labels, output_labels,
         dims_dict, msg=msg_success
     )
 
     return inputs, targets, lengths, others
 
 
-def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
+def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_labels,
             dimensions_dict, config_dict, msg='tensor2numpy: done'):
     '''Converts .tfrecords binary format to numpy.array
 
@@ -191,7 +191,7 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
         dataset_path {str} -- a str path
         dataset_size {int} -- total number of propositions
         input_labels {list<str>} -- labels from the db columns
-        output_label {str} -- target_label (T, IOB)
+        output_labels {str} -- target_label (T, IOB)
 
     Returns:
         inputs  {numpy.array} -- a 3D array size
@@ -211,7 +211,7 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
         EMBS = tf.Variable(embeddings, trainable=False, name='embeddings')
 
         X, T, L, D = input_with_embeddings_fn(
-            EMBS, [dataset_path], dataset_size, 1, input_labels, output_label,
+            EMBS, [dataset_path], dataset_size, 1, input_labels, output_labels,
             dimensions_dict, config_dict, shuffle=False
         )
 
@@ -242,13 +242,13 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_label,
 
 
 def tsr2npy2(dataset_path, dataset_size, input_labels,
-             output_label, dims_dict, msg='tensor2numpy: done'):
+             output_labels, dims_dict, msg='tensor2numpy: done'):
     '''Converts .tfrecords binary format to numpy.array
     Arguments:
         dataset_path {str} -- a str path
         dataset_size {int} -- total number of propositions
         input_labels {list<str>} -- labels from the db columns 
-        output_label {str} -- target_label (T, IOB)
+        output_labels {str} -- target_label (T, IOB)
     Returns:
         inputs  {numpy.array} -- a 3D array size
             NUM_RECORDS X MAX_TIME X FEATURE_SIZE
@@ -264,7 +264,7 @@ def tsr2npy2(dataset_path, dataset_size, input_labels,
     with tf.name_scope('pipeline'):
         X, T, L, D = input_fn(
             [dataset_path], dataset_size, 1, input_labels,
-            output_label, dims_dict, shuffle=False
+            output_labels, dims_dict, shuffle=False
         )
 
     init_op = tf.group(
@@ -294,7 +294,7 @@ def tsr2npy2(dataset_path, dataset_size, input_labels,
 
 
 def input_fn(filenames, batch_size, num_epochs,
-             input_labels, output_label, dims_dict={}, shuffle=True):
+             input_labels, output_labels, dims_dict={}, shuffle=True):
     '''Provides I/O from protobufs to numpy arrays
 
     https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
@@ -305,7 +305,7 @@ def input_fn(filenames, batch_size, num_epochs,
         num_epochs {int} -- integer representing the total number 
             of iterations on filenames.
         input_labels {[type]} -- list containing the feature fields from .csv file
-        output_label {[type]} -- column
+        output_labels {[type]} -- column
 
     Keyword Arguments:
         shuffle {bool} -- If true will shuffle the proposition for 
@@ -328,10 +328,8 @@ def input_fn(filenames, batch_size, num_epochs,
         num_epochs=num_epochs,
         shuffle=shuffle
     )
-    if isinstance(output_label, str):
-        sequence_labels = input_labels + [output_label]
-    else:
-        sequence_labels = input_labels + output_label
+
+    sequence_labels = input_labels + output_labels
 
     context_features, sequence_features = _read_and_decode2(
         filename_queue, dims_dict, sequence_labels=sequence_labels)
@@ -340,7 +338,8 @@ def input_fn(filenames, batch_size, num_epochs,
         context_features,
         sequence_features,
         input_labels,
-        output_label
+        output_labels,
+        dims_dict
     )
 
     min_after_dequeue = 10000
@@ -357,7 +356,7 @@ def input_fn(filenames, batch_size, num_epochs,
 
 
 def _protobuf_process(
-        context_features, sequence_features, input_labels, output_label):
+        context_features, sequence_features, input_labels, output_labels, dims_dict):
     '''Maps context_features and sequence_features making embedding replacement as necessary
 
         args:
@@ -377,27 +376,38 @@ def _protobuf_process(
                 (before it was hard coded and alll features from .csv where used)
     '''
     sequence_inputs = []
+    sequence_outputs = []
     sequence_descriptors = []
 
-
     # Fetch only context variable the length of the proposition
-    L = context_features['L']
+    L = context_features['L']    
+    # Each output has a maximum pad size
+    maxout_sz = max([dims_dict[lbl] for lbl in output_labels])
 
 
-    labels_list = list(input_labels)
-    labels_list.append(output_label)
+    labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
     for key in labels_list:
         v = tf.cast(sequence_features[key], tf.float32)
 
         if key in input_labels:
             sequence_inputs.append(v)
-        elif key in [output_label]:
-            T = v
+        elif key in output_labels:
+            # [0, 0] -- top, bottom [0, x] -- left right
+            pad_sz = maxout_sz - dims_dict[key]
+            paddings = tf.constant([[0, 0], [0, pad_sz]])
+            # fills v with the right amounts of zero in orde
+            v = tf.pad(v, paddings, 'CONSTANT')
+            sequence_outputs.append(v)
         elif key in ['INDEX']:
             sequence_descriptors.append(v)
 
     X = tf.concat(sequence_inputs, 1)
+    # Each target is stacked on top of each other
+    if len(sequence_outputs) == 1:
+        T = sequence_outputs[0]
+    else:
+        T = tf.stack(sequence_outputs, axis=2)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 
@@ -487,7 +497,7 @@ def read_sequence_example(file_path):
 
 def input_with_embeddings_fn(
     EMBS, filenames, batch_size, num_epochs, input_labels,
-    output_label, dimensions_dict, config_dict, shuffle=True):
+    output_labels, dimensions_dict, config_dict, shuffle=True):
     '''Provides I/O from protobufs to numpy arrays
 
     https://www.tensorflow.org/api_guides/python/reading_data#Preloaded_data
@@ -498,7 +508,7 @@ def input_with_embeddings_fn(
         num_epochs {int} -- integer representing the total number 
             of iterations on filenames.
         input_labels {[type]} -- list containing the feature fields from .csv file
-        output_label {[type]} -- column
+        output_labels {[type]} -- column
 
     Keyword Arguments:
         shuffle {bool} -- If true will shuffle the proposition for 
@@ -518,10 +528,7 @@ def input_with_embeddings_fn(
     filename_queue = tf.train.string_input_producer(
         filenames, num_epochs=num_epochs, shuffle=shuffle
     )
-    if isinstance(output_label, str):
-        sequence_labels = input_labels + [output_label]
-    else:
-        sequence_labels = input_labels + output_label
+    sequence_labels = list(input_labels + output_labels)
 
     context_features, sequence_features = _read_and_decode(
         filename_queue, dimensions_dict, sequence_labels=sequence_labels)
@@ -531,7 +538,7 @@ def input_with_embeddings_fn(
         context_features,
         sequence_features,
         input_labels,
-        output_label,
+        output_labels,
         config_dict
     )
 
@@ -550,7 +557,7 @@ def input_with_embeddings_fn(
 
 
 def _protobuf_with_embeddings_process(
-        EMBS, context_features, sequence_features, input_labels, output_label, config_dict):
+        EMBS, context_features, sequence_features, input_labels, output_labels, config_dict):
     '''Maps context_features and sequence_features making embedding replacement as necessary
         
         https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
@@ -573,14 +580,14 @@ def _protobuf_with_embeddings_process(
     '''
     sequence_inputs = []
     sequence_descriptors = []
+    sequence_outputs = []
 
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
+    k = len(sequence_labels)
 
-
-    labels_list = list(input_labels)
-    labels_list.append(output_label)
+    labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
     for key in labels_list:
         ind = sequence_features[key]
@@ -593,12 +600,13 @@ def _protobuf_with_embeddings_process(
 
         if key in input_labels:
             sequence_inputs.append(ind)
-        elif key in [output_label]:
-            T = ind
+        elif key in output_labels:
+            sequence_outputs.append(ind)
         elif key in ['INDEX']:
             sequence_descriptors.append(ind)
 
     X = tf.concat(sequence_inputs, 1)
+    T = tf.concat(sequence_outputs, 1)
     D = tf.concat(sequence_descriptors, 1)
     return X, T, L, D
 

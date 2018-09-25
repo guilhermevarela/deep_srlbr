@@ -15,8 +15,8 @@ from models.predictors import CRFPredictor
 
 
 class Optmizer(object):
-    def __init__(self, X, T, seqlens,
-                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_size=60,
+    def __init__(self, X, T, L,
+                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sizes=[60],
                  ru='BasicLSTM'):
         '''Sets the computation graph parameters
 
@@ -36,26 +36,26 @@ class Optmizer(object):
                 * max_time -- maximum time from batch_size examples (default: None)
                 * features -- features dimension
 
-            seqlens {list<int>} -- a python list of integers carrying the sizes of 
+            L {list<int>} -- a python list of integers carrying the sizes of 
                 each proposition
 
 
         Keyword Arguments:
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
-            target_size {int} -- Parameter holding the layer sizes (default: {60})
+            target_sizes {int} -- Parameter holding the layer sizes (default: {60})
         '''
         self.optmizer = 'DBLSTM'
         self.X = X
         self.T = T
-        self.seqlens = seqlens
+        self.L = L
 
         self.learning_rate = learning_rate
         self.hidden_size = hidden_size
-        self.target_size = target_size
+        self.target_sizes = target_sizes
 
-        self.propagator = InterleavedPropagator(X, seqlens, hidden_size, target_size, ru=ru)
-        self.predictor = CRFPredictor(self.propagator.propagate, T, seqlens)
+        self.propagator = InterleavedPropagator(X, L, hidden_size, ru=ru)
+        self.predictor = CRFPredictor(self.propagator.propagate, T, L)
 
         self.propagate
         self.cost
@@ -74,11 +74,13 @@ class Optmizer(object):
     @delegate_property
     def cost(self):
         pass
+
     # def cost(self):
     #     return self.predictor.cost
     @delegate_property
     def predict(self):
         pass
+
     # def predict(self):
     #     return self.predictor.predict
 
@@ -95,7 +97,8 @@ class Optmizer(object):
             [type] -- [description]
         '''
         with tf.variable_scope('optimize'):
-            optimum = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(self.cost)
+            kwargs = {'learning_rate': self.learning_rate}
+            optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
         return optimum
 
 
@@ -119,5 +122,133 @@ class Optmizer(object):
 
         # Average over actual sequence lengths.
         mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
-        mistakes /= tf.cast(self.seqlens, tf.float32)
+        mistakes /= tf.cast(self.L, tf.float32)
+        return tf.reduce_mean(mistakes)
+
+
+class OptmizerDualLabel(object):
+    def __init__(self, X, T, L,
+                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sizes=[60],
+                 ru='BasicLSTM'):
+        '''Sets the computation graph parameters
+
+        Responsable for building computation graph -- expects dual targets T
+
+        refs:
+            https://www.tensorflow.org/programmers_guide/graphs
+
+        Arguments:
+            X {object<tf.placeholder>} -- A 3D float tensor in which the dimensions are
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * features -- features dimension
+
+            T {object<tf.placeholder>}  -- A 3D float tensor in which the dimensions are
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * features -- features dimension
+
+            L {list<int>} -- a python list of integers carrying the sizes of 
+                each proposition
+
+
+        Keyword Arguments:
+            learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
+            hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
+            target_sizes {int} -- Parameter holding the layer sizes (default: {60})
+        '''
+        self.optmizer = 'DBLSTM'
+        self.X = X
+
+        T0, T1 = tf.split(T, 2, axis=3)
+
+        # Remove extra-axis
+        T0 = tf.squeeze(T0, axis=3)
+        T1 = tf.squeeze(T1, axis=3)
+
+        # Remove paddings
+        shape0 = (-1, -1, target_sizes[0])
+        self.T0 = tf.slice(T0, begin=[0, 0, 0], size=shape0)
+
+        shape1 = (-1, -1, target_sizes[1])
+        self.T1 = tf.slice(T1, begin=[0, 0, 0], size=shape1)
+
+        self.L = L
+
+        self.learning_rate = learning_rate
+        self.hidden_size = hidden_size
+        self.target_sizes = target_sizes
+
+        self.propagator = InterleavedPropagator(X, L, hidden_size, ru=ru)
+
+        self.predictor_0 = CRFPredictor(self.propagator.propagate, self.T0, L, i=0)
+        self.predictor_1 = CRFPredictor(self.propagator.propagate, self.T1, L, i=1)
+
+        self.propagate
+        self.cost
+        self.optimize
+        self.predict
+        self.error
+
+    # Delegates to Propagator
+    @delegate_property
+    def propagate(self):
+        pass
+
+    # Delegates to predictor
+    # @delegate_property
+    @lazy_property
+    def cost(self):
+        return self.predictor_0.cost + self.predictor_1.cost
+
+    # @delegate_property
+    @lazy_property
+    def predict(self):
+        Y0 = self.predictor_0.predict
+        Y1 = self.predictor_1.predict
+        return (Y0, Y1)
+
+    @lazy_property
+    def optimize(self):
+        '''Optimize
+
+        [description]
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            [type] -- [description]
+        '''
+        with tf.variable_scope('optimize'):
+            kwargs = {'learning_rate': self.learning_rate}
+            optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
+        return optimum
+
+    @lazy_property
+    def error(self):
+        errors = self._error(self.predictor_0.predict, self.T0)
+        errors += self._error(self.predictor_1.predict, self.T1)
+        return errors
+
+    def _error(self, Y, T):
+        '''Computes the prediction errors
+
+        Compares target tags to predicted tags
+
+        Decorators:
+            lazy_property
+
+        Returns:
+            error {float} -- percentage of wrong tokens
+        '''
+        mistakes = tf.not_equal(Y, tf.cast(tf.argmax(T, 2), tf.int32))
+        mistakes = tf.cast(mistakes, tf.float32)
+        mask = tf.sign(tf.reduce_max(tf.abs(T), reduction_indices=2))
+        mask = tf.cast(mask, tf.float32)
+        mistakes *= mask
+
+        # Average over actual sequence lengths.
+        mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
+        mistakes /= tf.cast(self.L, tf.float32)
         return tf.reduce_mean(mistakes)

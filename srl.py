@@ -88,9 +88,10 @@ if __name__ == '__main__':
                         help='''Recurrent unit -- according to tensorflow.
                                 Default: `BasicLSTM`\n''')
 
-    parser.add_argument('--target', dest='target', default='T',
-                        choices=['T', 'IOB', 'HEAD'],
-                        help='''Target representations\n''')
+    parser.add_argument('--targets', dest='targets', default=['T'], nargs='+',
+                        choices=['T', 'R', 'IOB', 'HEAD'],
+                        help='''Target representations.
+                        Up to two values are allowed\n''')
 
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',
@@ -113,11 +114,14 @@ if __name__ == '__main__':
             if args.ctx_p[0] == 3:
                 input_labels.append('FORM_CTX_P-3')
                 input_labels.append('FORM_CTX_P+3')
+
         use_chunks = args.chunks
         if use_chunks:
             input_labels.append('SHALLOW_CHUNKS')
 
-        target_label = args.target
+        # TODO: process target
+        target_labels = args.targets
+
         embs_model = args.embs_model
         learning_rate = args.lr
         version = args.version
@@ -126,15 +130,13 @@ if __name__ == '__main__':
         ru = args.ru
 
         if args.kfold:
-
-            # raise ValueError('Kfold implementation is deprecated')
-            estimate_kfold(input_labels=input_labels, target_label=target_label,
+            estimate_kfold(input_labels=input_labels, target_labels=target_labels,
                            hidden_layers=args.depth, embeddings_model=embs_model,
                            epochs=epochs, lr=learning_rate, fold=25, ru=ru,
                            version=version, ctx_p=ctx_p, chunks=use_chunks)
         else:
 
-            estimate(input_labels=input_labels, target_label=target_label,
+            estimate(input_labels=input_labels, target_labels=target_labels,
                      hidden_layers=args.depth, embeddings_model=embs_model,
                      epochs=epochs, ru=ru, batch_size=args.batch_size,
                      version=version, ctx_p=ctx_p, lr=learning_rate,
