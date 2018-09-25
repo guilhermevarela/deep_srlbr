@@ -15,8 +15,8 @@ from models.predictors import CRFPredictor
 
 
 class Optmizer(object):
-    def __init__(self, X, T, seqlens,
-                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sz_list=[60],
+    def __init__(self, X, T, L,
+                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sizes=[60],
                  ru='BasicLSTM'):
         '''Sets the computation graph parameters
 
@@ -36,27 +36,26 @@ class Optmizer(object):
                 * max_time -- maximum time from batch_size examples (default: None)
                 * features -- features dimension
 
-            seqlens {list<int>} -- a python list of integers carrying the sizes of 
+            L {list<int>} -- a python list of integers carrying the sizes of 
                 each proposition
 
 
         Keyword Arguments:
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
-            target_sz_list {int} -- Parameter holding the layer sizes (default: {60})
+            target_sizes {int} -- Parameter holding the layer sizes (default: {60})
         '''
         self.optmizer = 'DBLSTM'
         self.X = X
         self.T = T
-        self.seqlens = seqlens
+        self.L = L
 
         self.learning_rate = learning_rate
         self.hidden_size = hidden_size
-        self.target_sz_list = target_sz_list
+        self.target_sizes = target_sizes
 
-        self.propagator = InterleavedPropagator(
-            X, seqlens, hidden_size, ru=ru)
-        self.predictor = CRFPredictor(self.propagator.propagate, T, seqlens)
+        self.propagator = InterleavedPropagator(X, L, hidden_size, ru=ru)
+        self.predictor = CRFPredictor(self.propagator.propagate, T, L)
 
         self.propagate
         self.cost
@@ -123,13 +122,13 @@ class Optmizer(object):
 
         # Average over actual sequence lengths.
         mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
-        mistakes /= tf.cast(self.seqlens, tf.float32)
+        mistakes /= tf.cast(self.L, tf.float32)
         return tf.reduce_mean(mistakes)
 
 
-class OptmizerDualT(object):
-    def __init__(self, X, T, seqlens,
-                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sz_list=[60],
+class OptmizerDualLabel(object):
+    def __init__(self, X, T, L,
+                 learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sizes=[60],
                  ru='BasicLSTM'):
         '''Sets the computation graph parameters
 
@@ -149,27 +148,18 @@ class OptmizerDualT(object):
                 * max_time -- maximum time from batch_size examples (default: None)
                 * features -- features dimension
 
-            seqlens {list<int>} -- a python list of integers carrying the sizes of 
+            L {list<int>} -- a python list of integers carrying the sizes of 
                 each proposition
 
 
         Keyword Arguments:
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
-            target_sz_list {int} -- Parameter holding the layer sizes (default: {60})
+            target_sizes {int} -- Parameter holding the layer sizes (default: {60})
         '''
         self.optmizer = 'DBLSTM'
         self.X = X
 
-        # Process T0 & T1
-        # try:
-        #     m = int(T.get_shape()[0]) #  examples
-        # except TypeError:
-        #     m = None
-        # try:            
-        #     k = int(T.get_shape()[1]) #  max time
-        # except TypeError:
-        #     k = None
         T0, T1 = tf.split(T, 2, axis=3)
 
         # Remove extra-axis
@@ -177,22 +167,22 @@ class OptmizerDualT(object):
         T1 = tf.squeeze(T1, axis=3)
 
         # Remove paddings
-        shape0 = (-1, -1, target_sz_list[0])
+        shape0 = (-1, -1, target_sizes[0])
         self.T0 = tf.slice(T0, begin=[0, 0, 0], size=shape0)
 
-        shape1 = (-1, -1, target_sz_list[1])
+        shape1 = (-1, -1, target_sizes[1])
         self.T1 = tf.slice(T1, begin=[0, 0, 0], size=shape1)
 
-        self.seqlens = seqlens
+        self.L = L
 
         self.learning_rate = learning_rate
         self.hidden_size = hidden_size
-        self.target_sz_list = target_sz_list
+        self.target_sizes = target_sizes
 
-        self.propagator = InterleavedPropagator(X, seqlens, hidden_size, ru=ru)
+        self.propagator = InterleavedPropagator(X, L, hidden_size, ru=ru)
 
-        self.predictor_0 = CRFPredictor(self.propagator.propagate, self.T0, seqlens, i=0)
-        self.predictor_1 = CRFPredictor(self.propagator.propagate, self.T1, seqlens, i=1)
+        self.predictor_0 = CRFPredictor(self.propagator.propagate, self.T0, L, i=0)
+        self.predictor_1 = CRFPredictor(self.propagator.propagate, self.T1, L, i=1)
 
         self.propagate
         self.cost
@@ -204,14 +194,12 @@ class OptmizerDualT(object):
     @delegate_property
     def propagate(self):
         pass
-    # def propagate(self):
-    #     return self.propagator.propagate
 
     # Delegates to predictor
     # @delegate_property
     @lazy_property
     def cost(self):
-        return self.predictor_0.cost + self.predictor_1.cost 
+        return self.predictor_0.cost + self.predictor_1.cost
 
     # @delegate_property
     @lazy_property
@@ -262,5 +250,5 @@ class OptmizerDualT(object):
 
         # Average over actual sequence lengths.
         mistakes = tf.reduce_sum(mistakes, reduction_indices=1)
-        mistakes /= tf.cast(self.seqlens, tf.float32)
+        mistakes /= tf.cast(self.L, tf.float32)
         return tf.reduce_mean(mistakes)

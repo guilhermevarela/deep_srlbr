@@ -20,7 +20,7 @@ from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_r
 
 from models.propbank_encoder import PropbankEncoder
 from models.evaluator_conll import EvaluatorConll
-from models.optimizers import Optmizer, OptmizerDualT
+from models.optimizers import Optmizer, OptmizerDualLabel
 from models.streamers import TfStreamer
 
 
@@ -96,29 +96,29 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         embeddings_model=embeddings_model
     )
     feature_size = get_dims(input_labels, dims_dict)
-    target_sz_list = dims_dict[target_labels[0]]
+    target_sizes = dims_dict[target_labels[0]]
 
     batch_size = int(dataset_size / fold)
-    print(batch_size, target_labels, target_sz_list, feature_size)
+    print(batch_size, target_labels, target_sizes, feature_size)
 
     evaluator = EvaluatorConll(propbank_encoder.db,
                                propbank_encoder.idx2lex, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_sz_list': target_sz_list,
+        'target_sizes': target_sizes,
         'ru': ru
     }
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
-    T_shape = (None, None, target_sz_list)
+    T_shape = (None, None, target_sizes)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
-    seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
+    L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
                           input_labels, target_labels, dims_dict, shuffle=True)
-    deep_srl = Optmizer(X, T, seqlens, **params)
+    deep_srl = Optmizer(X, T, L, **params)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -155,7 +155,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                 else:
                     loss, _, Yish, error = session.run(
                         [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
-                        feed_dict={X: X_batch, T: Y_batch, seqlens: L_batch}
+                        feed_dict={X: X_batch, T: Y_batch, L: L_batch}
                     )
 
                     total_loss += loss
@@ -164,7 +164,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                 if (step + 1) % fold == 0:
                     Yish = session.run(
                         deep_srl.predict,
-                        feed_dict={X: X_valid, T: Y_valid, seqlens: L_valid}
+                        feed_dict={X: X_valid, T: Y_valid, L: L_valid}
                     )
 
                     index = D_valid[:, :, 0].astype(np.int32)
@@ -187,7 +187,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                     if evaluator.f1 > 95:
                         Yish = session.run(
                             deep_srl.predict,
-                            feed_dict={X: X_test, T: Y_test, seqlens: L_test}
+                            feed_dict={X: X_test, T: Y_test, L: L_test}
                         )
 
                         index = D_test[:, :, 0].astype(np.int32)
@@ -310,27 +310,37 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     )
 
     feature_size = get_dims(input_labels, dims_dict)
-    target_sz_list = dims_dict[target_labels[0]]
+    target_sizes = dims_dict[target_labels[0]]
 
     evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor('train', index, Y, L_train, target_labels, params, script_version='04')
+        if len(target_labels) == 2:
+            Y = Y[1]
+            labels = target_labels[1:]
+        else:
+            labels = target_labels
+        evaluator.evaluate_tensor('train', index, Y, L_train, labels, params, script_version='04')
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
         index = I_valid[:, :, 0].astype(np.int32)
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, target_labels, params, script_version='04')
+        if len(target_labels) == 2:
+            Y = Y[1]
+            labels = target_labels[1:]
+        else:
+            labels = target_labels
+        evaluator.evaluate_tensor(prefix, index, Y, L_valid, labels, params, script_version='04')
 
         return evaluator.f1
 
-    target_sz_list = [dims_dict[lbl] for lbl in target_labels]
+    target_sizes = [dims_dict[lbl] for lbl in target_labels]
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_sz_list': target_sz_list,
+        'target_sizes': target_sizes,
         'ru': ru
     }
     # BUILDING the execution graph
@@ -342,15 +352,15 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
-    seqlens = tf.placeholder(tf.int32, shape=(None,), name='seqlens')
+    L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
                           input_labels, target_labels, dims_dict, shuffle=True)
 
     if len(target_labels) == 1:
-        deep_srl = Optmizer(X, T, seqlens, **params)
+        deep_srl = Optmizer(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = OptmizerDualT(X, T, seqlens, **params)
+        deep_srl = OptmizerDualLabel(X, T, L, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -385,7 +395,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
-                    feed_dict={X: X_batch, T: T_batch, seqlens: L_batch}
+                    feed_dict={X: X_batch, T: T_batch, L: L_batch}
                 )
 
                 total_loss += loss
@@ -394,14 +404,14 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                     Y_train = session.run(
                         deep_srl.predict,
-                        feed_dict={X: X_train, T: T_train, seqlens: L_train}
-                    )
+                        feed_dict={X: X_train, T: T_train, L: L_train}
+                    )                    
                     f1_train = train_eval(Y_train)
 
 
                     Y_valid = session.run(
                         deep_srl.predict,
-                        feed_dict={X: X_valid, T: T_valid, seqlens: L_valid}
+                        feed_dict={X: X_valid, T: T_valid, L: L_valid}
                     )
                     f1_valid = valid_eval(Y_valid)
 
