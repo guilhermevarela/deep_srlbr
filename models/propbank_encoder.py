@@ -243,10 +243,12 @@ class PropbankEncoder(object):
         zip_list = sorted(zip(index, values), key=lambda x: x[0])
         target_dict = OrderedDict(zip_list)
 
+
         if script_version is not None:
             return self.to_script(target_labels, target_dict, script_version)
         else:
             return target_dict
+
 
     def to_script(self, target_labels, target_dict={}, script_version='04'):
 
@@ -271,7 +273,7 @@ class PropbankEncoder(object):
 
         proposition_dict = {idx: self.db['P'][idx] for idx in target_dict}
         p_list = proposition_dict.values()
-        target_list = target_dict.values()
+        target_list = list(target_dict.values())
 
         # Normalize into script_version = '05'
         if target_labels[0] in ('HEAD',):
@@ -283,16 +285,21 @@ class PropbankEncoder(object):
 
         elif target_labels[0] in ('T',):
             arg_list = br.propbankbr_t2arg(p_list, target_list)
+        else:
+            # Incoming target is 'ARG' format
+            arg_list = target_list
 
+        # Convert from version `05` to `04`
         if script_version in ('04',):
             # Expects to receve a zip_list
             pred_list = pred_dict.values()
             zip_list = zip(pred_list, arg_list)
             arg_list = br.propbankbr_arg2se(zip_list)
             # `detuple` arguments <--> arg 05 standards
-            _, arg_list = zip(*arg_list)
+            arg_list = [t_[1] for t_ in arg_list if t_ is not None]
 
         script_dict = OrderedDict()
+        script_dict['P'] = proposition_dict
         script_dict['PRED'] = pred_dict
         script_dict['ARG'] = OrderedDict(
             [(k, arg_list[i]) for i, k in enumerate(target_dict)]

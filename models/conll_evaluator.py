@@ -190,13 +190,17 @@ def _filter_list(zip_list, keep_list):
     return filter_list
 
 
-class EvaluatorConll(object):
+class ConllEvaluator(object):
 
-    def __init__(self, db, idx2lex, target_dir=None):
-        self.db = db
-        self.idx2lex = idx2lex
+    def __init__(self, propbank_encoder, target_dir=None):
+        self.decoder_fn = propbank_encoder.decode_npyarray
+        self.to_script_fn = propbank_encoder.to_script
+
         self.target_dir = target_dir
-        self.target_columns = ('ARG', 'HEAD', 'T', 'IOB')
+        self.target_columns = tuple([n_
+            for n_, d_ in propbank_encoder.columns_config.items()
+            if d_['category'] == 'target'])
+
         self.props_dict = {}
         self._refresh()
 
@@ -241,8 +245,7 @@ class EvaluatorConll(object):
 
         return f1
 
-    def evaluate_tensor(self, prefix,
-                        index_tensor, predictions_tensor, len_tensor,
+    def  evaluate_npyarray(self, prefix, I, T, L,
                         target_labels, hparams, script_version='04'):
         ''''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
@@ -269,20 +272,14 @@ class EvaluatorConll(object):
                 msg_ = 'target_column must be in {:} got target_column {:}'
                 msg_ = msg_.format(self.target_columns, col)
                 raise ValueError(msg_)
+        # Converts npyarray --> dict of string 
+        # & converts to ARG adds PRED column ('to_script')
+        script_dict = self.decoder_fn(T, I, L, target_labels, script_version)
 
-        self.props_dict = self._tensor2dict(index_tensor, predictions_tensor, len_tensor, target_labels)
-
-        if target_labels[0] in ('IOB',):
-            self._iob2arg()
-        elif target_labels[0] in ('HEAD',):
-            self._head2arg()
-        elif target_labels[0] in ('T',):
-            self._t2arg()
-
-        self.evaluate(prefix, self.props_dict,
+        self.evaluate(prefix, script_dict,
                       hparams, script_version=script_version)
 
-    def evaluate(self, filename, props, hparams, script_version='04'):
+    def evaluate(self, filename, script_dict, hparams, script_version='04'):
         '''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
         Evaluates the conll scripts returning total precision, recall and F1
@@ -300,29 +297,18 @@ class EvaluatorConll(object):
         # Resets state
         self._refresh()
 
-        # Generate GOLD standard labels
-        indexes = sorted(list(props.keys()))
 
-        gold_props = {i: self.idx2lex['ARG'][self.db['ARG'][i]]
-                      for i in indexes}
+        gold_dict = self.to_script_fn(['ARG'], {}, script_version)
+        gold_dict = OrderedDict({f: OrderedDict({
+                k: gold_dict[f][k] for k in script_dict[f]})
+                for f, d in gold_dict.items()})
 
-        if script_version == '04':
-            gold_props = self._arg2start_end(gold_props)
 
-        # Stores GOLD standard labels
-        arg_list = [filename, 'gold', self.db,
-                    self.idx2lex, gold_props, hparams]
+        arg_list = [filename, 'gold', gold_dict, hparams]
         gold_path = self._store(*arg_list)
 
-        if script_version == '04':
-            eval_props = self._arg2start_end(props)
-        else:
-            eval_props = props
-
         # Stores evaluation labels
-        arg_list = [filename, 'eval', self.db,
-                    self.idx2lex, eval_props, hparams]
-
+        arg_list = [filename, 'eval', script_dict, hparams]
         eval_path = self._store(*arg_list)
 
         # Runs official conll 2005 shared task script
@@ -339,7 +325,7 @@ class EvaluatorConll(object):
         #out is a byte with each line separated by \n
         #ers is stderr
         txt, err = pipe.communicate()
-
+        
         self.txt = txt.decode('UTF-8')
         self.err = err.decode('UTF-8')
 
@@ -372,7 +358,7 @@ class EvaluatorConll(object):
         f.close()
 
         self._parse(self.txt)
-        
+
 
     def _refresh(self):
         self.num_propositions = -1
@@ -436,7 +422,7 @@ class EvaluatorConll(object):
                 self.precision, self.recall, self.f1 = p, r, f
                 break
 
-    def _store(self, ds_type, prediction_type, db, lexicons, props, hparams):
+    def _store(self, ds_type, prediction_type, script_dict, hparams):
         '''
             Stores props and stats into target_dir
         '''
@@ -451,13 +437,15 @@ class EvaluatorConll(object):
             prediction_type
         )
 
-        p = db['P'][min(props)]
+        p_1 = min(script_dict['P'].values())
         with open(target_path, mode='w+') as f:
-            for idx, prop in props.items():
-                if db['P'][idx] != p:
+            for idx, p in script_dict['P'].items():
+                if p != p_1:
                     f.write('\n')
-                    p = db['P'][idx]
-                f.write('{:}\t{:}\n'.format(lexicons['PRED'][db['PRED'][idx]], prop))
+                pred = script_dict['PRED'][idx]
+                arg = script_dict['ARG'][idx]
+                f.write('{:}\t{:}\n'.format(pred, arg))
+                p_1 = p
 
         f.close()
         return target_path
@@ -489,97 +477,3 @@ class EvaluatorConll(object):
         if not os.path.isdir(target_dir):
             os.mkdir(target_dir, 0o777)
         return target_dir
-
-    def _get_goldindex_list(self, ds_type, version='1.0'):
-        lb, ub = utils.get_db_bounds(ds_type, version='1.0')
-
-        return [i for i in range(lb, ub)]
-
-    def _tensor2dict(self, index_tensor,
-                     predictions_tensor, len_tensor, target_labels):
-
-        target_label = target_labels[0]
-        index = [item
-                 for i, sublist in enumerate(index_tensor.tolist())
-                 for j, item in enumerate(sublist) if j < len_tensor[i]]
-
-        values = [self.idx2lex[target_label][int(item)]
-                  for i, sublist in enumerate(predictions_tensor.tolist())
-                  for j, item in enumerate(sublist) if j < len_tensor[i]]
-
-        zip_list = sorted(zip(index, values), key=lambda x: x[0])
-        self.props_dict = OrderedDict(zip_list)
-
-        return self.props_dict
-
-    def _t2arg(self):
-        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
-
-        prop_list = propositions.values()
-        arg_list = self.props_dict.values()
-
-        ARG = br.propbankbr_t2arg(prop_list, arg_list)
-
-        zip_list = zip(self.props_dict.keys(), ARG)
-        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
-
-        return self.props_dict
-
-    def _iob2arg(self):
-        propositions = {idx: self.db['P'][idx] for idx in self.props_dict}
-
-        prop_list = propositions.values()
-        arg_list = self.props_dict.values()
-
-        ARG = br.propbankbr_iob2arg(prop_list, arg_list)
-        zip_list = zip(self.props_dict.keys(), ARG)
-        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
-
-        return self.props_dict
-
-    def _head2arg(self):
-        head_list = ['*' if head_ == '-' else '({:}*)'.format(head_)
-                     for _, head_ in self.props_dict.items()]
-
-        zip_list = zip(self.props_dict.keys(), head_list)
-        self.props_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
-
-        return self.props_dict
-
-    def _arg2start_end(self, arg_dict):
-        '''Converts flat tree format (`05`) to Start End format (`04`)
-
-        Converts a proposition dict (index: arg) in CoNLL 2005 format 
-        to CoNLL 2004.
-
-        Keyword Arguments:
-            prop_dict {[type]} -- [description] (default: {None})
-        '''
-        propositions = {idx: self.db['P'][idx] for idx in arg_dict}
-
-        # br.propbankbr_arg2se(arg_list) expects a list or tuples
-        # first element of the tuple is `PRED`
-        # second elemnt of the tuple is `ARG`
-        # propositions are separated by None
-        arg_list = []
-        prev_prop = None
-        for idx, prop in propositions.items():
-            if prop != prev_prop and prev_prop is not None:
-                arg_list.append(None)
-
-            pred_ = self.idx2lex['PRED'][self.db['PRED'][idx]]
-
-            arg_list.append((pred_, arg_dict[idx]))
-            prev_prop = prop
-
-        try:
-            SE = br.propbankbr_arg2se(arg_list)
-        except ValueError:
-            import code; code.interact(local=dict(globals(), **locals()))
-        se_list = [se[1] for se in SE if se is not None]
-        # Converts SE into dictonary of propositions
-        # zip_list = [arg_list, se_list]
-
-        zip_list = zip(arg_dict.keys(), se_list)
-        se_dict = OrderedDict(sorted(zip_list, key=lambda x: x[0]))
-        return se_dict

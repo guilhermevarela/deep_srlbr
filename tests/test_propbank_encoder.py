@@ -220,53 +220,53 @@ class PropbankTestProperties(PropbankEncoderBaseCase):
         self.assertEqual(embeddings_sz, 50)
 
 
-# class PropbankTestDecodeNPYArray(PropbankEncoderBaseCase):
-#     def setUp(self):
-#         from numpy import array, expand_dims, transpose
-#         super(PropbankTestDecodeNPYArray, self).setUp()
-#         self.target_labels = ['IOB']
-#         self.index_labels = ['INDEX']
-#         col_list = self.target_labels + self.index_labels
-#         it = self.propbank_encoder.iterator(
-#             'train',
-#             filter_columns=col_list,
-#             encoding='EMB'
-#         )
+class PropbankTestDecodeNPYArray(PropbankEncoderBaseCase):
+    def setUp(self):
+        from numpy import array, expand_dims, transpose
+        super(PropbankTestDecodeNPYArray, self).setUp()
+        self.target_labels = ['IOB']
+        self.index_labels = ['INDEX']
+        col_list = self.target_labels + self.index_labels
+        it = self.propbank_encoder.iterator(
+            'train',
+            filter_columns=col_list,
+            encoding='EMB'
+        )
 
-#         targets_list = []
-#         id_list = []
-#         for idx_, dict_ in it:
-#             # feat might be a list of lists
-#             # or a value
-#             for key_, list_or_value in dict_.items():
-#                 try:    # is list?
-#                     item_ = list_or_value.index(1)  # max <--> tf.reduce_max
-#                 except AttributeError:
-#                     item_ = list_or_value   # is a value
+        targets_list = []
+        id_list = []
+        for idx_, dict_ in it:
+            # feat might be a list of lists
+            # or a value
+            for key_, list_or_value in dict_.items():
+                try:    # is list?
+                    item_ = list_or_value.index(1)  # max <--> tf.reduce_max
+                except AttributeError:
+                    item_ = list_or_value   # is a value
 
-#                 if key_ in self.target_labels:
-#                     targets_list.append(item_)
-#                 else:
-#                     id_list.append(item_)
+                if key_ in self.target_labels:
+                    targets_list.append(item_)
+                else:
+                    id_list.append(item_)
 
-#         # outputs from tensorflow will have
-#         # [BATCH_SIZE, MAX_TIME] the values will be the class_ids
-#         self.T = expand_dims(array(targets_list), axis=0)
+        # outputs from tensorflow will have
+        # [BATCH_SIZE, MAX_TIME] the values will be the class_ids
+        self.T = expand_dims(array(targets_list), axis=0)
 
-#         self.n = len(id_list)
-#         self.Id = expand_dims(array(id_list), axis=0)
+        self.n = len(id_list)
+        self.Id = expand_dims(array(id_list), axis=0)
 
-#         lookup_dict = self.propbank_encoder.idx2lex['IOB']
-#         key_dict = self.propbank_encoder.db['IOB']
-#         self.iob_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
+        lookup_dict = self.propbank_encoder.idx2lex['IOB']
+        key_dict = self.propbank_encoder.db['IOB']
+        self.iob_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
 
-#     def test_decode_npyarray(self):
-#         decode_args = (self.T, self.Id, [self.n], self.target_labels)
-#         decoded_dict = dict(
-#             self.propbank_encoder.decode_npyarray(*decode_args))
-#         err = '`decoded_dict` has to be equal `iob_dict`'
+    def test_decode_npyarray(self):
+        decode_args = (self.T, self.Id, [self.n], self.target_labels)
+        decoded_dict = dict(
+            self.propbank_encoder.decode_npyarray(*decode_args))
+        err = '`decoded_dict` has to be equal `iob_dict`'
 
-#         self.assertEqual(decoded_dict, self.iob_dict, err)
+        self.assertEqual(decoded_dict, self.iob_dict, err)
 
 
 class PropbankTestToScript(PropbankEncoderBaseCase):
@@ -276,38 +276,39 @@ class PropbankTestToScript(PropbankEncoderBaseCase):
 
         super(PropbankTestToScript, self).setUp()
 
-        lookup_dict = self.propbank_encoder.idx2word
-        key_dict = self.propbank_encoder.db['PRED']
-        self.pred_dict = OrderedDict(
-            {k: lookup_dict[v] for k, v in key_dict.items()})
+        self.prop_dict = self.propbank_encoder.column('train', 'P', 'CAT')
 
-        def make_dict(label):
-            lookup_d = self.propbank_encoder.idx2lex[label]
-            key_d = self.propbank_encoder.db[label]
+        self.pred_dict = self.propbank_encoder.column('train', 'PRED', 'CAT')
 
-            return {k: lookup_d[v] for k, v in key_d.items()}
+        self.arg05_dict = self.propbank_encoder.column('train', 'ARG', 'CAT')
+
+        self.iob_dict = self.propbank_encoder.column('train', 'IOB', 'CAT')
+
+        self.t_dict = self.propbank_encoder.column('train', 'T', 'CAT')
+
+        self.mock05_dict = OrderedDict({
+            'P': OrderedDict(self.prop_dict),
+            'PRED': OrderedDict(self.pred_dict),
+            'ARG': OrderedDict(self.arg05_dict)
+        })
 
         def make_arg04(self):
-            arg_dict = make_dict('ARG')
             pred_values = self.pred_dict.values()
-            arg_values = arg_dict.values()
+            arg_values = self.arg05_dict.values()
             zip_list = propbankbr_arg2se(zip(pred_values, arg_values))
 
             return OrderedDict(
-                {k: zip_list[i][1] for i, k in enumerate(arg_dict)}
+                {k: zip_list[i][1] for i, k in enumerate(self.arg05_dict)}
             )
 
-        self.iob_dict = OrderedDict({'PRED':self.pred_dict,
-                                     'IOB': make_dict('IOB')})
+        self.arg04_dict = make_arg04(self)
 
-        # self.t_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
-        self.t_dict = OrderedDict({'PRED': self.pred_dict, 'T': make_dict('T')})
+        self.mock04_dict = OrderedDict({
+            'P': OrderedDict(self.prop_dict),
+            'PRED': OrderedDict(self.pred_dict),
+            'ARG': self.arg04_dict
 
-        # self.arg_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
-        self.arg04_dict = OrderedDict({'PRED': self.pred_dict, 'ARG': make_arg04(self)})
-
-        self.arg05_dict = OrderedDict({'PRED': self.pred_dict, 'ARG': make_dict('ARG')})
-
+        })
 
     def test_script_version(self):
         with self.assertRaises(ValueError):
@@ -322,24 +323,25 @@ class PropbankTestToScript(PropbankEncoderBaseCase):
         script_dict = self.propbank_encoder.to_script(['IOB'], **kwargs)
         err = '`script_dict` has to be equal `iob_dict`'
 
-        self.assertEqual(script_dict, self.arg05_dict, err)
+        self.assertEqual(script_dict, self.mock05_dict, err)
 
     def test_T_to_ARG_04(self):
         kwargs = {'script_version': '04'}
         script_dict = self.propbank_encoder.to_script(['T'], **kwargs)
         err = '`script_dict` has to be equal `t_dict`'
-        
-        self.assertEqual(script_dict, self.arg04_dict, err)
+
+        self.assertEqual(script_dict, self.mock04_dict, err)
 
     def test_T_to_ARG_05(self):
+
         kwargs = {
-            'target_dict': self.t_dict['T'],
+            'target_dict': self.t_dict,
             'script_version': '05'}
 
         script_dict = self.propbank_encoder.to_script(['T'], **kwargs)
         err = '`script_dict` has to be equal `t_dict`'
 
-        self.assertEqual(script_dict, self.arg05_dict, err)
+        self.assertEqual(script_dict, self.mock05_dict, err)
 
 class PropbankTestColumnIDX(PropbankEncoderBaseCase):
 
