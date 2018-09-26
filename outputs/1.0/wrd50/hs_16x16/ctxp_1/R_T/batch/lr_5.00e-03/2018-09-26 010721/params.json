@@ -1,0 +1,1 @@
+{"batch_size": 250, "chunks": false, "embeddings_model": "wrd50", "embeddings_trainable": false, "epochs": 250, "hidden_layers": [16, 16], "input_labels": ["ID", "FORM", "MARKER", "GPOS", "FORM_CTX_P-1", "FORM_CTX_P+0", "FORM_CTX_P+1"], "lr": 0.005, "ru": "GRU", "target_labels": ["R", "T"], "version": "1.0"}

@@ -221,10 +221,28 @@ class PropbankEncoder(object):
     def column(self, ds_type, column, encoding):
         lb, ub = utils.get_db_bounds(ds_type)
 
-        return {x:self._decode_index(x,[column], encoding)
+        return {x: self._decode_index(x, [column], encoding)
                 for x, p in self.db['P'].items()
                 if p > lb and p <= ub}
 
+    def decode_npyarray(self, T, I, seq_list, target_labels):
+        target_label = target_labels[0]
+        index = [item
+                 for i, sublist in enumerate(I.tolist())
+                 for j, item in enumerate(sublist) if j < seq_list[i]]
+
+        values = [self.idx2lex[target_label][int(item)]
+                  for i, sublist in enumerate(T.tolist())
+                  for j, item in enumerate(sublist) if j < seq_list[i]]
+
+        zip_list = sorted(zip(index, values), key=lambda x: x[0])
+        target_dict = OrderedDict(zip_list)
+
+        return target_dict
+
+    def to_script(self, target_labels, target_dict={}, script_version='04'):
+        # target_label = target_labels[0]
+        pass
 
     def _initialize(self, db_dict, schema_dict, dbname, language_model, verbose):
         # Defines domains for each column, defines tokens for text columns
