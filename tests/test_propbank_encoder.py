@@ -272,11 +272,14 @@ class PropbankTestProperties(PropbankEncoderBaseCase):
 class PropbankTestToScript(PropbankEncoderBaseCase):
     def setUp(self):
         from datasets.scripts.propbankbr import propbankbr_arg2se
+        from collections import OrderedDict
+
         super(PropbankTestToScript, self).setUp()
 
         lookup_dict = self.propbank_encoder.idx2word
         key_dict = self.propbank_encoder.db['PRED']
-        self.pred_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
+        self.pred_dict = OrderedDict(
+            {k: lookup_dict[v] for k, v in key_dict.items()})
 
         def make_dict(label):
             lookup_d = self.propbank_encoder.idx2lex[label]
@@ -289,19 +292,21 @@ class PropbankTestToScript(PropbankEncoderBaseCase):
             pred_values = self.pred_dict.values()
             arg_values = arg_dict.values()
             zip_list = propbankbr_arg2se(zip(pred_values, arg_values))
-            return {'PRED': self.pred_dict,
-                    'ARG': {k: zip_list[i][1] for i, k in enumerate(arg_dict)}
-                    }
 
-        self.iob_dict = {'PRED': self.pred_dict, 'IOB': make_dict('IOB')}
+            return OrderedDict(
+                {k: zip_list[i][1] for i, k in enumerate(arg_dict)}
+            )
+
+        self.iob_dict = OrderedDict({'PRED':self.pred_dict,
+                                     'IOB': make_dict('IOB')})
 
         # self.t_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
-        self.t_dict = {'PRED': self.pred_dict, 'T': make_dict('T')}
+        self.t_dict = OrderedDict({'PRED': self.pred_dict, 'T': make_dict('T')})
 
         # self.arg_dict = {k: lookup_dict[v] for k, v in key_dict.items()}
-        self.arg04_dict = {'PRED': self.pred_dict, 'ARG': make_arg04(self)}
+        self.arg04_dict = OrderedDict({'PRED': self.pred_dict, 'ARG': make_arg04(self)})
 
-        self.arg05_dict = {'PRED': self.pred_dict, 'ARG': make_dict('ARG')}
+        self.arg05_dict = OrderedDict({'PRED': self.pred_dict, 'ARG': make_dict('ARG')})
 
 
     def test_script_version(self):
@@ -313,28 +318,25 @@ class PropbankTestToScript(PropbankEncoderBaseCase):
             self.propbank_encoder.to_script(['ing3'])
 
     def test_IOB_to_ARG_05(self):
-        args = ['IOB']
         kwargs = {'script_version': '05'}
-        script_dict = self.propbank_encoder.to_script(*args, **kwargs)
+        script_dict = self.propbank_encoder.to_script(['IOB'], **kwargs)
         err = '`script_dict` has to be equal `iob_dict`'
 
         self.assertEqual(script_dict, self.arg05_dict, err)
 
     def test_T_to_ARG_04(self):
-        args = ['T']
         kwargs = {'script_version': '04'}
-        script_dict = self.propbank_encoder.to_script(*args, **kwargs)
+        script_dict = self.propbank_encoder.to_script(['T'], **kwargs)
         err = '`script_dict` has to be equal `t_dict`'
-
+        
         self.assertEqual(script_dict, self.arg04_dict, err)
 
     def test_T_to_ARG_05(self):
-        args = ['T']
         kwargs = {
             'target_dict': self.t_dict['T'],
             'script_version': '05'}
 
-        script_dict = self.propbank_encoder.to_script(*args, **kwargs)
+        script_dict = self.propbank_encoder.to_script(['T'], **kwargs)
         err = '`script_dict` has to be equal `t_dict`'
 
         self.assertEqual(script_dict, self.arg05_dict, err)

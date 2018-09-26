@@ -9,18 +9,21 @@ import re
 import yaml
 import numpy as np
 import pandas as pd
-import sys, os
+import sys
+import os
 import pickle
 import glob
 
 root_path = re.sub('/models', '', sys.path[0])
 sys.path.append(root_path)
-
-import config
 from collections import OrderedDict, defaultdict
+
 # import cps import fetch_word2vec, preprocess
 # import models.utils as cps
+import datasets.scripts.propbankbr as br
+import config
 import utils
+
 from utils import corpus as cps
 
 
@@ -225,7 +228,9 @@ class PropbankEncoder(object):
                 for x, p in self.db['P'].items()
                 if p > lb and p <= ub}
 
-    def decode_npyarray(self, T, I, seq_list, target_labels):
+    def decode_npyarray(self, T, I, seq_list, target_labels,
+                        script_version=None):
+
         target_label = target_labels[0]
         index = [item
                  for i, sublist in enumerate(I.tolist())
@@ -238,11 +243,63 @@ class PropbankEncoder(object):
         zip_list = sorted(zip(index, values), key=lambda x: x[0])
         target_dict = OrderedDict(zip_list)
 
-        return target_dict
+        if script_version is not None:
+            return self.to_script(target_labels, target_dict, script_version)
+        else:
+            return target_dict
 
     def to_script(self, target_labels, target_dict={}, script_version='04'):
-        # target_label = target_labels[0]
-        pass
+
+        if script_version not in ('04', '05'):
+            err = 'script_version should be in {:} got {:}'
+            err = err.format(('04', '05'), script_version)
+            raise ValueError(err)
+
+        if not set(target_labels) < self.columns:
+            err = '`{:}` not in {:}'.format(target_labels, self.columns)
+            raise KeyError(err)
+
+        if not target_dict:
+            lbl = target_labels[0]
+            target_dict = OrderedDict(
+                {k: self._decode_value(v, lbl, 'CAT')
+                 for k, v in self.db[lbl].items()})
+
+        pred_dict = OrderedDict([
+            (k, self._decode_index(k, ['PRED'], 'CAT'))
+            for k, v in target_dict.items()])
+
+        proposition_dict = {idx: self.db['P'][idx] for idx in target_dict}
+        p_list = proposition_dict.values()
+        target_list = target_dict.values()
+
+        # Normalize into script_version = '05'
+        if target_labels[0] in ('HEAD',):
+            arg_list = ['*' if head_ == '-' else '({:}*)'.format(head_)
+                        for head_ in target_list]
+
+        elif target_labels[0] in ('IOB',):
+            arg_list = br.propbankbr_iob2arg(p_list, target_list)
+
+        elif target_labels[0] in ('T',):
+            arg_list = br.propbankbr_t2arg(p_list, target_list)
+
+        if script_version in ('04',):
+            # Expects to receve a zip_list
+            pred_list = pred_dict.values()
+            zip_list = zip(pred_list, arg_list)
+            arg_list = br.propbankbr_arg2se(zip_list)
+            # `detuple` arguments <--> arg 05 standards
+            _, arg_list = zip(*arg_list)
+
+        script_dict = OrderedDict()
+        script_dict['PRED'] = pred_dict
+        script_dict['ARG'] = OrderedDict(
+            [(k, arg_list[i]) for i, k in enumerate(target_dict)]
+        )
+
+        return script_dict
+
 
     def _initialize(self, db_dict, schema_dict, dbname, language_model, verbose):
         # Defines domains for each column, defines tokens for text columns
