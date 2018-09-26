@@ -591,7 +591,7 @@ def propbankbr_iob2arg(propositions, arguments):
             ccl = 0
             if tag == 'O':
                 new_tag = '*'
-            elif tag[:2] in ('I-', 'B-') :
+            elif tag[:2] in ('I-', 'B-'):
                 new_tag = re.sub(r'I-|B-', '(', tag) + '*'
                 cop += 1
             else:

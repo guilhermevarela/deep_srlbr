@@ -19,7 +19,7 @@ from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_r
 # from utils.ml import f1_score
 
 from models.propbank_encoder import PropbankEncoder
-from models.evaluator_conll import EvaluatorConll
+from models.conll_evaluator import ConllEvaluator
 from models.optimizers import Optmizer, OptmizerDualLabel
 from models.streamers import TfStreamer
 
@@ -101,8 +101,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     batch_size = int(dataset_size / fold)
     print(batch_size, target_labels, target_sizes, feature_size)
 
-    evaluator = EvaluatorConll(propbank_encoder.db,
-                               propbank_encoder.idx2lex, target_dir=target_dir)
+    evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
@@ -169,7 +168,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                     index = D_valid[:, :, 0].astype(np.int32)
 
-                    evaluator.evaluate_tensor('valid', index, Yish, L_valid, target_labels, params)
+                    evaluator. evaluate_npyarray('valid', index, Yish, L_valid, target_labels, params)
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
@@ -192,7 +191,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                         index = D_test[:, :, 0].astype(np.int32)
 
-                        evaluator.evaluate_tensor('test', index, Yish, L_test, target_labels, params)
+                        evaluator. evaluate_npyarray('test', index, Yish, L_test, target_labels, params)
                 step += 1
                 i = int(step / fold) % fold
 
@@ -312,7 +311,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     feature_size = get_dims(input_labels, dims_dict)
     target_sizes = dims_dict[target_labels[0]]
 
-    evaluator = EvaluatorConll(propbank_encoder.db, propbank_encoder.idx2lex, target_dir=target_dir)
+    evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
 
     def train_eval(Y):
         index = I_train[:, :, 0].astype(np.int32)
@@ -321,7 +320,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             labels = target_labels[1:]
         else:
             labels = target_labels
-        evaluator.evaluate_tensor('train', index, Y, L_train, labels, params, script_version='04')
+        evaluator. evaluate_npyarray('train', index, Y, L_train, labels, params, script_version='04')
 
         return evaluator.f1
 
@@ -332,7 +331,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             labels = target_labels[1:]
         else:
             labels = target_labels
-        evaluator.evaluate_tensor(prefix, index, Y, L_valid, labels, params, script_version='04')
+        evaluator. evaluate_npyarray(prefix, index, Y, L_valid, labels, params, script_version='04')
 
         return evaluator.f1
 

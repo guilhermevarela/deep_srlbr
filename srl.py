@@ -111,7 +111,7 @@ if __name__ == '__main__':
         if ctx_p > 1:
             input_labels.append('FORM_CTX_P-2')
             input_labels.append('FORM_CTX_P+2')
-            if args.ctx_p[0] == 3:
+            if args.ctx_p == 3:
                 input_labels.append('FORM_CTX_P-3')
                 input_labels.append('FORM_CTX_P+3')
 

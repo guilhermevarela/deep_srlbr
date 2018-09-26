@@ -1,4 +1,4 @@
-'''Tests EvaluatorConll
+'''Tests ConllEvaluator
 
     Created on July 8, 2018
 
@@ -7,10 +7,12 @@
 import unittest
 import os, sys
 sys.path.insert(0, os.getcwd())
+from collections import OrderedDict
 
 import numpy as np
 
-from models.evaluator_conll import EvaluatorConll
+from datasets.scripts.propbankbr import propbankbr_arg2se
+from models.conll_evaluator import ConllEvaluator
 from models.propbank_encoder import PropbankEncoder
 
 
@@ -50,13 +52,39 @@ class EvaluatorConllBaseCase(unittest.TestCase):
     def setUp(self):
         self.pe = PropbankEncoder.recover(FIX_PROPBANK_PATH)
 
-        self.evaluator = EvaluatorConll(
-            self.pe.db,
-            self.pe.idx2lex,
+        self.evaluator = ConllEvaluator(
+            self.pe,
             target_dir=FIX_EVALUATOR_DIR)
 
         params_ = ('train', 'ARG', 'CAT')
-        self.gs_props = self.pe.column(*params_)
+        self.gs_dict = OrderedDict(self.pe.column(*params_))
+
+        params_ = ('train', 'P', 'CAT')
+        self.prop_dict = self.pe.column(*params_)
+
+        params_ = ('train', 'PRED', 'CAT')
+        self.pred_dict = self.pe.column(*params_)
+
+        self.mock05_dict = OrderedDict({})
+        self.mock05_dict['P'] = OrderedDict(self.prop_dict)
+        self.mock05_dict['PRED'] = OrderedDict(self.pred_dict)
+        self.mock05_dict['ARG'] = OrderedDict(self.gs_dict)
+
+
+        def make_arg04(self):
+            pred_values = self.pred_dict.values()
+            arg_values = self.gs_dict.values()
+            zip_list = propbankbr_arg2se(zip(pred_values, arg_values))
+
+            return OrderedDict(
+                {k: zip_list[i][1] for i, k in enumerate(self.gs_dict)}
+            )
+
+        self.arg04_dict = make_arg04(self)
+        self.mock04_dict = OrderedDict({})
+        self.mock04_dict['P'] = OrderedDict(self.prop_dict)
+        self.mock04_dict['PRED'] = OrderedDict(self.pred_dict)
+        self.mock04_dict['ARG'] = self.arg04_dict
 
     def tearDown(self):
         try:
@@ -69,24 +97,31 @@ class EvaluatorConllBaseCase(unittest.TestCase):
 class EvaluatorConllF1(EvaluatorConllBaseCase):
 
     def test_100(self):
-        self.evaluator.evaluate('test', self.gs_props, {})
+        self.evaluator.evaluate('test', self.mock04_dict, {})
         self.assertEqual(self.evaluator.f1, 100.0)
 
     def test_50(self):
-        props_50 = {}
-        for i, key in enumerate(self.gs_props):
+        props_50 = OrderedDict({})
+        for i, key in enumerate(self.arg04_dict):
             if i == 2:
-                props_50[key] = '*)'
+                props_50[key] = '*A0)'
             elif i > 2 and i < 6:
                 props_50[key] = '*'
             else:
-                props_50[key] = self.gs_props[key]
-        self.evaluator.evaluate('test', props_50, {})
+                props_50[key] = self.arg04_dict[key]
+
+        mock04_dict = self.mock04_dict.copy()
+        mock04_dict['ARG'] = props_50
+
+        self.evaluator.evaluate('test', mock04_dict, {})
         self.assertEqual(self.evaluator.f1, 50.0)
 
     def test_00(self):
-        props_00 = {key: '*' for key in self.gs_props}
-        self.evaluator.evaluate('test', props_00, {})
+        props_00 = OrderedDict({key: '*' for key in self.gs_dict})
+        mock04_dict = self.mock04_dict.copy()
+        mock04_dict['ARG'] = props_00
+
+        self.evaluator.evaluate('test', mock04_dict, {})
         self.assertEqual(self.evaluator.f1, 0.0)
 
 
@@ -105,10 +140,10 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
         def setUp(self):
             super(EvaluatorConllTensor, self).setUp()
             self.prefix = 'test'
-            self.index = np.array(list(self.gs_props.keys()))
+            self.index = np.array(list(self.gs_dict.keys()))
             self.batch_size = 1
             self.hparams = {}
-            # evaluate_tensor(self, prefix, index_tensor, predictions_tensor, len_tensor, target_column, hparams):
+            #  evaluate_npyarray(self, prefix, index_tensor, predictions_tensor, len_tensor, target_column, hparams):
 
         def test_arguments(self):
             target_dict = self.pe.column('train', 'ARG', 'IDX')
@@ -117,7 +152,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
 
             npy_index, npy_predictions = dict2npy(target_dict)
 
-            self.evaluator.evaluate_tensor(
+            self.evaluator. evaluate_npyarray(
                 self.prefix, npy_index, npy_predictions,
                 [width] * depth, ['ARG'], {})
 
@@ -130,7 +165,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
 
             npy_index, npy_predictions = dict2npy(target_dict)
 
-            self.evaluator.evaluate_tensor(
+            self.evaluator. evaluate_npyarray(
                 self.prefix, npy_index, npy_predictions,
                 [width] * depth, ['IOB'], {})
 
@@ -143,7 +178,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
 
             npy_index, npy_predictions = dict2npy(target_dict)
 
-            self.evaluator.evaluate_tensor(
+            self.evaluator. evaluate_npyarray(
                 self.prefix, npy_index, npy_predictions,
                 [width] * depth, ['IOB'], {})
 
