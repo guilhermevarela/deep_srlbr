@@ -493,6 +493,7 @@ def read_sequence_example(file_path):
     reader = tf.python_io.tf_record_iterator(file_path)
     for sequence_example_string in reader:
         ex = tf.train.SequenceExample().FromString(sequence_example_string)
+        return ex
 
 
 def input_with_embeddings_fn(
@@ -667,7 +668,7 @@ def make_feature_list(columns_dict, columns_config, encoding):
 
 
 def tfrecords_builder(propbank_iter, dataset_type, column_config_dict,
-                      encoding='MIX', suffix='glo50', version='1.0'):
+                      encoding='EMB', suffix='glo50', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto

@@ -26,7 +26,7 @@ from config import *
 
 from data_tfrecords import input_with_embeddings_fn, tfrecords_extract
 from models.propbank import Propbank
-from models.evaluator_conll import EvaluatorConll
+from models.conll_evaluator import ConllEvaluator
 
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 from data_propbankbr import propbankbr_t2arg
@@ -192,7 +192,7 @@ if __name__== '__main__':
 	print('{:}_size:{:}'.format(target, hotencode2sz[target]))
 
 	calculator_train=Evaluator(propbank.feature('train', 'T', True))
-	evaluator_train= EvaluatorConll(
+	evaluator_train= ConllEvaluator(
 		'train', 
 		propbank.feature('train', 'S', True),
 		propbank.feature('train', 'P', True),
@@ -210,7 +210,7 @@ if __name__== '__main__':
 	)
 
 	calculator_valid=Evaluator(propbank.feature('valid', 'T', True))	
-	evaluator_valid= EvaluatorConll(
+	evaluator_valid= ConllEvaluator(
 		'valid', 
 		propbank.feature('valid', 'S', True),
 		propbank.feature('valid', 'P', True),

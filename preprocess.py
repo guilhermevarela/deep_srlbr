@@ -119,7 +119,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
 
 def make_tfrecords(encoder_name='deep_glo50',
-                   propbank_encoder=None, encoding='MIX', version='1.0'):
+                   propbank_encoder=None, encoding='EMB', version='1.0'):
 
     bin_dir = 'datasets/binaries/{:}/'.format(version)
 
@@ -214,7 +214,7 @@ if __name__ == '__main__':
     encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
-        language_model='glove_s50',
+        language_model=language_model,
         version=version
     )
     make_tfrecords(
