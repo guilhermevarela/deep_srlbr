@@ -1,0 +1,7 @@
+input_labels:	ID,FORM,MARKER,GPOS,FORM_CTX_P-1,FORM_CTX_P+0,FORM_CTX_P+1
+target_label:	T
+embeddings:	wan300
+epochs:	1000
+learning_rate:	5.00e-03
+batch_size:	250
+version:	1.0
