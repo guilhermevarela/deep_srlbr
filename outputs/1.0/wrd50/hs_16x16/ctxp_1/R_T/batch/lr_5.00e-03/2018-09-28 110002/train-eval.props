@@ -525,11 +525,11 @@ vender	(V*V)
 -	*A1)
 -	*
 vender	(V*V)
--	(A2*
+-	(AM-LOC*
+-	*AM-LOC)
+-	(A3*
 -	*
--	*
--	*
--	*A2)
+-	*A3)
 -	*
 
 -	(A1*
@@ -780,10 +780,10 @@ ter	(V*V)
 destinar	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
 -	*A2)
+-	(A1*
+-	*
+-	*A1)
 -	*
 
 -	*
@@ -950,15 +950,15 @@ mandar	(V*V)
 -	*
 -	*
 aumentar	(V*V)
--	(AM-PNC*
+-	(A4*
+-	*
+-	*
+-	*A4)
+-	(A1*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*AM-PNC)
+-	*A1)
 -	*
 
 -	(A0*
@@ -1098,7 +1098,7 @@ jogar	(V*V)
 -	*
 -	(A1*A1)
 estar	(V*V)
--	(AM-MNR*AM-MNR)
+-	(A2*A2)
 -	*
 
 -	(A0*A0)
@@ -1169,7 +1169,7 @@ estar	(V*V)
 -	(AM-DIS*AM-DIS)
 -	*
 -	*
--	(AM-LOC*AM-LOC)
+-	(A2*A2)
 -	(A0*
 -	*A0)
 achar	(V*V)
@@ -1310,7 +1310,9 @@ liberar	(V*V)
 -	*A0)
 -	*
 entrar	(V*V)
--	(A2*
+-	(AM-MNR*AM-MNR)
+-	(V*V)
+-	(A1*
 -	*
 -	*
 -	*
@@ -1318,9 +1320,7 @@ entrar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*A2)
+-	*A1)
 -	*
 
 -	*
@@ -1441,8 +1441,8 @@ distribuir	(V*V)
 -	*
 -	*
 -	*
--	*
 -	*AM-LOC)
+-	(AM-TMP*AM-TMP)
 -	*
 
 -	(A0*A0)
@@ -1624,9 +1624,9 @@ dizer	(V*V)
 aproximar	(V*V)
 -	(A2*
 -	*
--	*
--	*
 -	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -1875,13 +1875,13 @@ estar	(V*V)
 -	*
 -	(A1*A1)
 vir	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
@@ -1971,8 +1971,13 @@ estar	(V*V)
 
 começar	(V*V)
 -	(AM-TMP*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*AM-TMP)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
@@ -1980,12 +1985,7 @@ começar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*A2)
+-	*A1)
 -	(AM-TMP*
 -	*
 -	*
@@ -2050,11 +2050,11 @@ reconduzir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	*
@@ -2460,10 +2460,10 @@ independer	(V*V)
 -	*A1)
 sofrer	(V*V)
 -	(A2*
--	*
--	*
--	*
 -	*A2)
+-	(AM-PRD*
+-	*
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -2533,11 +2533,11 @@ ter	(V*V)
 -	*
 chamar	(V*V)
 -	(A2*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-PNC*
+-	*
+-	*
+-	*AM-PNC)
 -	*
 
 -	*
@@ -2573,8 +2573,8 @@ chamar	(V*V)
 -	*
 -	*
 oferecer	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-PRD*
+-	*AM-PRD)
 -	*
 
 dizer	(V*V)
@@ -2729,7 +2729,7 @@ treinar	(V*V)
 -	*
 -	*
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	(AM-REC*AM-REC)
 poupar	(V*V)
 -	(AM-TMP*
@@ -2979,9 +2979,9 @@ comprar	(V*V)
 -	*
 -	*
 -	*A1)
-ter	(V*V)
+ter	(V*
+-	*V)
 -	(A2*
--	*
 -	*
 -	*
 -	*
@@ -3722,7 +3722,7 @@ valorizar	(V*V)
 -	*
 -	*
 -	*
--	(AM-LOC*AM-LOC)
+-	(A2*A2)
 estar	(V*V)
 -	(A1*
 -	*
@@ -3839,7 +3839,7 @@ menosprezar	(V*V)
 -	*
 -	*
 -	*
--	(A2*A2)
+-	(A0*A0)
 documentar	(V*V)
 -	(A1*
 -	*A1)
@@ -4017,8 +4017,8 @@ coordenar	(V*V)
 -	*
 -	*AM-TMP)
 -	*
--	(A2*
--	*A2)
+-	(A0*
+-	*A0)
 -	*
 -	*
 -	*
@@ -4063,7 +4063,7 @@ mudar	(V*V)
 -	*A0)
 -	(V*
 referir	*V)
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 -	(A1*
 -	*
 -	*
@@ -4456,7 +4456,7 @@ desempenhar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(AM-ADV*AM-ADV)
 -	*
 
 -	(AM-ADV*
@@ -4744,12 +4744,12 @@ usar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -5149,9 +5149,9 @@ bater	(V*V)
 -	*
 -	(A1*A1)
 fazer	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -5387,13 +5387,13 @@ colocar	(V*V)
 passar	(V*V)
 -	(A1*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
 -	(AM-PNC*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -5543,8 +5543,8 @@ ajudar	(V*V)
 -	*
 manter	(V*V)
 -	(A1*
--	*
 -	*A1)
+-	(A2*A2)
 -	*
 
 -	*
@@ -5979,11 +5979,11 @@ matar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -6172,8 +6172,8 @@ prestar	(V*V)
 -	(A0*A0)
 -	*
 fazer	(V*V)
--	(A1*
--	*A1)
+-	(A3*
+-	*A3)
 -	*
 -	*
 -	*
@@ -6282,10 +6282,10 @@ preparar	(V*V)
 -	*
 -	(A0*A0)
 trazer	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	(A1*
 -	*
 -	*
@@ -6365,7 +6365,7 @@ ter	(V*V)
 -	*A1)
 -	*
 projetar	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
@@ -6382,7 +6382,7 @@ projetar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
@@ -6410,11 +6410,11 @@ manter	(V*V)
 -	*
 
 sair	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 
 -	(A0*
 -	*
@@ -6638,7 +6638,7 @@ ocorrer	(V*V)
 -	(A0*A0)
 -	(AM-ADV*AM-ADV)
 descartar	(V*V)
--	(AM-EXT*AM-EXT)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*
@@ -6785,10 +6785,10 @@ distribuir	(V*V)
 -	*
 -	(A0*A0)
 operar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	(AM-DIS*AM-DIS)
@@ -6983,9 +6983,9 @@ ocorrer	(V*V)
 -	*AM-ADV)
 -	*
 vir	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -7198,8 +7198,8 @@ afirmar	(V*V)
 -	*
 -	*
 chocar	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 
 -	(A0*
 -	*A0)
@@ -7256,12 +7256,12 @@ qualificar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -7377,7 +7377,7 @@ provocar	(V*V)
 
 -	*
 falar	(V*V)
--	(A1*A1)
+-	(AM-EXT*AM-EXT)
 -	*
 -	*
 -	*
@@ -7538,7 +7538,7 @@ visualizar	(V*V)
 -	*
 -	*
 permanecer	(V*V)
--	(A1*A1)
+-	(A3*A3)
 -	*
 -	*
 -	*
@@ -7683,10 +7683,10 @@ envergar	(V*V)
 -	*
 -	*
 -	*
-confrontar	(V*
--	*V)
+confrontar	(V*V)
+-	(AM-REC*AM-REC)
 -	*
--	(AM-MNR*AM-MNR)
+-	(AM-DIS*AM-DIS)
 -	*
 -	(A2*
 -	*
@@ -8781,12 +8781,12 @@ fazer	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 
 -	*
@@ -9406,9 +9406,9 @@ passar	(V*V)
 alugar	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -9677,8 +9677,8 @@ cortejar	(V*V)
 -	*
 -	(A0*A0)
 ver	(V*V)
--	(A2*
--	*A2)
+-	(AM-LOC*
+-	*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -9687,7 +9687,7 @@ ver	(V*V)
 
 -	*
 assinar	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
@@ -9695,11 +9695,11 @@ assinar	(V*V)
 -	*
 -	*
 -	*
+-	*A3)
+-	(A4*
 -	*
 -	*
--	*
--	*
--	*A2)
+-	*A4)
 -	*
 -	*
 -	*
@@ -9981,19 +9981,19 @@ aplicar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(A3*
+-	(A2*
 -	*
 -	*
+-	*A2)
+-	(AM-PRD*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*A3)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -10051,10 +10051,10 @@ garantir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 -	*
 -	*
@@ -10189,7 +10189,7 @@ dizer	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	(AM-ADV*AM-ADV)
+-	(AM-EXT*AM-EXT)
 sustentar	(V*V)
 -	(A1*
 -	*A1)
@@ -10418,10 +10418,10 @@ abrir	(V*
 -	*
 -	*A1)
 -	*
--	(AM-LOC*
+-	(AM-PNC*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-PNC)
 -	*
 -	(AM-PNC*
 -	*
@@ -10617,15 +10617,15 @@ evoluir	(V*V)
 -	*A1)
 -	*
 evoluir	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-DIS*AM-DIS)
 -	*
 
 -	*
 haver	(V*V)
 -	*
--	(AM-PRD*
+-	(AM-ADV*
 -	*
--	*AM-PRD)
+-	*AM-ADV)
 -	*
 -	(A1*
 -	*
@@ -10732,7 +10732,7 @@ passar	(V*V)
 -	*
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(AM-TMP*AM-TMP)
 gostar	(V*V)
 -	(A1*
 -	*A1)
@@ -10797,11 +10797,11 @@ perder	(V*V)
 -	*
 -	(A1*A1)
 dedicar	(V*V)
--	(A3*
+-	(AM-EXT*
+-	*AM-EXT)
+-	(A2*
 -	*
--	*
--	*
--	*A3)
+-	*A2)
 -	*
 
 -	*
@@ -11120,19 +11120,19 @@ mudar	(V*V)
 
 -	(AM-CAU*
 -	*
--	*
--	*
--	*
 -	*AM-CAU)
+-	(AM-PRD*
+-	*
+-	*AM-PRD)
 -	*
 -	*
 -	(A1*A1)
 cuidar	(V*V)
--	(A2*
+-	(A0*
 -	*
 -	*
 -	*
--	*A2)
+-	*A0)
 -	*
 
 -	(A1*
@@ -11498,20 +11498,20 @@ dirigir	(V*
 -	*
 -	*A0)
 almoçar	(V*V)
+-	(AM-CAU*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-CAU)
 -	(AM-LOC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -11641,17 +11641,15 @@ proteger	(V*V)
 -	*
 -	*
 -	*
--	(A2*
--	*A2)
+-	(A2*A2)
+-	(A1*A1)
 refletir	(V*V)
 -	(A1*
 -	*
 -	*A1)
 -	*
 -	*
--	*
--	(AM-PRD*
--	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -11660,7 +11658,9 @@ refletir	(V*V)
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*
+-	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -11922,9 +11922,9 @@ mostrar	(V*V)
 -	(AM-NEG*AM-NEG)
 -	*
 -	*
-pôr	(V*V)
--	(A2*
--	*A2)
+pôr	(V*
+-	*
+-	*V)
 -	*
 -	*
 -	*
@@ -12297,10 +12297,10 @@ entrar	(V*V)
 manter	(V*V)
 -	(A1*
 -	*A1)
--	(AM-PRD*
+-	(AM-CAU*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-CAU)
 -	*
 -	*
 -	*
@@ -12411,7 +12411,17 @@ render	(V*V)
 -	*
 -	*A2)
 -	*
--	(AM-PRD*
+-	(AM-DIS*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-DIS)
+-	(A1*
 -	*
 -	*
 -	*
@@ -12448,17 +12458,7 @@ render	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-PRD)
+-	*A1)
 -	*
 
 -	*
@@ -12630,11 +12630,11 @@ emitir	(V*V)
 treinar	(V*V)
 -	(AM-TMP*AM-TMP)
 
--	(A1*
+-	(A2*
 -	*
 -	*
 -	*
--	*A1)
+-	*A2)
 treinar	(V*V)
 -	(AM-TMP*
 -	*
@@ -12806,10 +12806,10 @@ procurar	(V*V)
 -	*A1)
 -	*
 
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 -	*
 -	(A1*A1)
@@ -12947,7 +12947,7 @@ contar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(A2*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -12955,7 +12955,7 @@ contar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -13404,7 +13404,7 @@ escrever	(V*V)
 -	*AM-TMP)
 -	*
 chegar	(V*V)
--	(A1*A1)
+-	(A0*A0)
 -	(AM-LOC*
 -	*
 -	*AM-LOC)
@@ -13480,7 +13480,7 @@ dispor	(V*V)
 -	*
 -	*A0)
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 vencer	(V*V)
 -	(A1*
 -	*
@@ -13588,11 +13588,11 @@ ter	(V*V)
 caber	(V*V)
 -	(A1*
 -	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A0*
+-	*
+-	*
+-	*A0)
 -	*
 
 -	*
@@ -13867,12 +13867,12 @@ partir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	(A0*
@@ -14030,12 +14030,12 @@ estar	(V*V)
 -	*
 ficar	(V*V)
 -	(A2*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-LOC*
+-	*
+-	*
+-	*
+-	*AM-LOC)
 -	*
 
 -	*
@@ -14437,9 +14437,9 @@ realizar	(V*V)
 -	(A0*A0)
 dar	(V*
 -	*V)
--	(AM-MNR*
+-	(AM-LOC*
 -	*
--	*AM-MNR)
+-	*AM-LOC)
 -	*
 
 -	*
@@ -14733,7 +14733,7 @@ sustentar	(V*V)
 -	(A1*A1)
 -	*
 virar	(V*V)
--	(AM-MNR*AM-MNR)
+-	(A2*A2)
 -	*
 -	*
 -	*
@@ -15093,8 +15093,8 @@ compor	(V*V)
 -	(A1*A1)
 -	*
 
--	(AM-TMP*
--	*AM-TMP)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 evitar	(V*V)
 -	(A1*
@@ -15158,9 +15158,9 @@ permitir	(V*V)
 -	(A0*
 -	*A0)
 acompanhar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -15653,7 +15653,7 @@ haver	(V*V)
 -	(A1*A1)
 -	*
 pegar	(V*V)
--	(A2*A2)
+-	(AM-MNR*AM-MNR)
 -	*
 
 -	*
@@ -15776,7 +15776,7 @@ ofender	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 ter	(V*V)
 -	(A1*
 -	*
@@ -15892,7 +15892,7 @@ começar	(V*V)
 -	*AM-LOC)
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 tornar	(V*
 -	*V)
 -	(A2*A2)
@@ -15932,14 +15932,14 @@ tornar	(V*
 -	*
 estimular	(V*V)
 -	(A1*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(A2*
--	*
--	*
--	*
--	*
--	*
--	*A2)
 -	*
 
 -	(A0*
@@ -15974,8 +15974,8 @@ converter	(V*V)
 
 -	(A0*
 -	*A0)
--	(AM-TMP*
--	*AM-TMP)
+-	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 antecipar	(V*V)
 -	(A1*
 -	*
@@ -16002,7 +16002,7 @@ matar	(V*V)
 -	*A1)
 -	*
 
--	(AM-MNR*AM-MNR)
+-	(AM-LOC*AM-LOC)
 reforçar	(V*V)
 -	(A1*
 -	*A1)
@@ -16065,15 +16065,15 @@ reforçar	(V*V)
 -	*A0)
 deparar	(V*
 -	*V)
--	(AM-ADV*AM-ADV)
--	(AM-PNC*
+-	(AM-TMP*AM-TMP)
+-	(AM-MNR*
+-	*AM-MNR)
+-	(A1*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*AM-PNC)
+-	*A1)
 -	*
 -	*
 -	*
@@ -16322,7 +16322,7 @@ avançar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(AM-TMP*AM-TMP)
 -	*
 calibrar	(V*V)
 -	(A1*
@@ -16393,9 +16393,9 @@ saber	(V*V)
 -	*
 -	*A0)
 ter	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -16450,8 +16450,8 @@ dizer	(V*V)
 -	(AM-NEG*AM-NEG)
 haver	(V*V)
 -	(A1*A1)
--	(AM-PNC*
--	*AM-PNC)
+-	(AM-DIR*
+-	*AM-DIR)
 -	*
 -	*
 -	*
@@ -16700,25 +16700,25 @@ inaugurar	(V*V)
 -	*
 -	(A1*A1)
 estar	(V*V)
+-	(A2*
+-	*A2)
+-	*
 -	(AM-MNR*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*AM-MNR)
--	*
--	(AM-PRD*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-PRD)
 -	*
 -	(AM-DIS*
 -	*
 -	*AM-DIS)
 
 estar	(V*V)
--	(AM-DIS*AM-DIS)
+-	(A2*A2)
 -	(A1*
 -	*
 -	*
@@ -16741,18 +16741,18 @@ esquecer	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-LOC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-LOC)
 -	*
 
 -	*
@@ -17251,13 +17251,11 @@ conferir	(V*V)
 -	*
 pensar	(V*V)
 -	*
--	(AM-PNC*
+-	(A3*
 -	*
--	*AM-PNC)
+-	*A3)
 -	*
--	(A2*
--	*
--	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -17289,7 +17287,9 @@ pensar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*
+-	*
+-	*A1)
 -	*
 
 -	*
@@ -17359,10 +17359,10 @@ permitir	(V*V)
 -	*
 incorporar	(V*V)
 -	*
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 -	(A1*
 -	*
@@ -17470,10 +17470,10 @@ dispor	(V*V)
 -	*
 -	*
 investir	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	*
@@ -17607,7 +17607,7 @@ sentir	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-DIS*AM-DIS)
+-	(A0*A0)
 -	*
 -	*
 -	*
@@ -17780,7 +17780,7 @@ procurar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-PNC*
 -	*
 -	*
 -	*
@@ -17793,7 +17793,7 @@ procurar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PNC)
 -	*
 
 -	(A1*
@@ -17941,12 +17941,12 @@ preparar	(V*V)
 -	*
 -	*A3)
 -	*
--	(AM-MNR*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A3)
 -	*
 
 -	(AM-NEG*AM-NEG)
@@ -18127,8 +18127,8 @@ imaginar	(V*V)
 -	*
 -	*
 chegar	(V*V)
--	(A1*
--	*A1)
+-	(A0*
+-	*A0)
 -	*
 
 sentir	(V*V)
@@ -18291,8 +18291,8 @@ reunir	*V)
 -	*
 -	*
 -	*
--	*A1)
 -	*
+-	*A1)
 -	(AM-TMP*
 -	*
 -	*
@@ -18678,10 +18678,10 @@ cumprir	(V*V)
 impedir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(AM-PRD*
 -	*
+-	*AM-PRD)
 -	*
--	*AM-LOC)
 -	*
 -	*
 -	*
@@ -18787,9 +18787,9 @@ pertencer	(V*V)
 -	*
 -	(A0*A0)
 ajudar	(V*V)
+-	(A2*
+-	*A2)
 -	(A1*
--	*
--	*
 -	*
 -	*
 -	*A1)
@@ -18823,9 +18823,9 @@ ajudar	(V*V)
 -	(A0*A0)
 -	*
 chegar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -19164,8 +19164,8 @@ abrir	(V*V)
 -	*
 -	*
 -	*
--	*A1)
 -	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -19344,16 +19344,16 @@ voltar	(V*V)
 -	*A1)
 -	*
 dar	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 ir	(V*V)
--	(A2*
+-	(A4*
 -	*
 -	*
--	*A2)
+-	*A4)
 -	*
 -	*
 -	*
@@ -19382,9 +19382,9 @@ ir	(V*V)
 -	*
 -	*A1)
 servir	(V*V)
+-	(A3*
+-	*A3)
 -	(A2*
--	*
--	*
 -	*
 -	*
 -	*
@@ -19449,12 +19449,12 @@ comprar	(V*V)
 -	*
 -	*
 -	*A1)
--	(A2*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -19818,9 +19818,9 @@ financiar	(V*V)
 -	*AM-MNR)
 -	*
 
--	(AM-PNC*
+-	(A2*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 -	(A0*
 -	*
@@ -19921,10 +19921,10 @@ dizer	(V*V)
 -	*A0)
 -	(AM-DIS*AM-DIS)
 gastar	(V*V)
--	(AM-EXT*
+-	(AM-EXT*AM-EXT)
+-	(A3*
 -	*
--	*
--	*AM-EXT)
+-	*A3)
 -	(AM-PNC*
 -	*
 -	*
@@ -20181,7 +20181,7 @@ provocar	(V*V)
 -	*A2)
 -	*
 
--	(A1*A1)
+-	(A0*A0)
 ganhar	(V*V)
 -	(A1*
 -	*
@@ -20198,18 +20198,18 @@ perder	(V*V)
 -	*
 -	*
 -	*AM-EXT)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
+-	(AM-TMP*
+-	*
+-	*
+-	*AM-TMP)
 -	(AM-LOC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*AM-LOC)
@@ -20264,10 +20264,10 @@ determinar	(V*V)
 abrir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(A3*
 -	*
 -	*
--	*AM-MNR)
+-	*A3)
 -	*
 
 -	*
@@ -20357,8 +20357,8 @@ ter	(V*V)
 -	*
 -	*
 
--	(AM-PRD*
--	*AM-PRD)
+-	(AM-CAU*
+-	*AM-CAU)
 -	*
 -	(A0*
 -	*
@@ -20486,7 +20486,7 @@ apoiar	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	(AM-ADV*AM-ADV)
+-	(AM-MNR*AM-MNR)
 entender	(V*V)
 -	*
 
@@ -20642,8 +20642,8 @@ revelar	(V*V)
 -	*AM-MNR)
 -	*
 esbarrar	(V*V)
--	(A2*
--	*A2)
+-	(AM-LOC*
+-	*AM-LOC)
 -	*
 
 -	*
@@ -20667,6 +20667,7 @@ ocorrer	(V*V)
 -	*
 -	*
 -	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -20674,8 +20675,7 @@ ocorrer	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
+-	*A1)
 -	*
 
 -	*
@@ -21092,9 +21092,9 @@ criar	(V*V)
 -	*A1)
 -	*
 converter	(V*V)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -21469,11 +21469,11 @@ ganhar	(V*V)
 -	*AM-ADV)
 -	*
 -	*
-dar	(V*V)
+dar	(V*
+-	*
+-	*
+-	*V)
 -	(A1*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -21505,22 +21505,22 @@ dar	(V*V)
 listar	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(A1*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A1)
 -	*
 
 -	*
@@ -21579,10 +21579,10 @@ fazer	(V*V)
 -	(AM-TMP*AM-TMP)
 -	*
 
--	(AM-PNC*
+-	(AM-MNR*
 -	*
 -	*
--	*AM-PNC)
+-	*AM-MNR)
 -	*
 ir	(V*V)
 -	(A4*
@@ -21681,7 +21681,7 @@ iniciar	(V*V)
 confirmar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
@@ -21694,7 +21694,7 @@ confirmar	(V*V)
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(AM-ADV*AM-ADV)
@@ -21728,7 +21728,7 @@ estar	(V*V)
 -	*
 -	*
 -	(A1*A1)
--	(AM-ADV*AM-ADV)
+-	(AM-TMP*AM-TMP)
 estar	(V*V)
 -	(A2*
 -	*
@@ -21748,14 +21748,14 @@ apresentar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A3)
 -	*
 
 -	(AM-TMP*
@@ -21887,8 +21887,8 @@ abandonar	(V*V)
 -	*
 -	*
 -	*
--	(AM-REC*AM-REC)
-tornar	(V*V)
+-	(V*
+tornar	*V)
 -	(A2*
 -	*
 -	*A2)
@@ -21933,16 +21933,16 @@ perder	(V*V)
 -	(A1*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-PRD*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-PRD)
 -	*
 
 -	*
@@ -22097,8 +22097,8 @@ responder	(V*V)
 -	(A0*A0)
 -	(A1*A1)
 chamar	(V*V)
--	(A4*
--	*A4)
+-	(A2*
+-	*A2)
 -	(AM-CAU*
 -	*
 -	*
@@ -22221,7 +22221,7 @@ criticar	(V*V)
 -	*
 -	(A1*A1)
 vir	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-LOC*AM-LOC)
 -	*
 -	*
 -	*
@@ -22348,14 +22348,14 @@ acreditar	(V*V)
 -	(A0*A0)
 tomar	(V*V)
 -	(A1*A1)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 
 haver	(V*V)
@@ -22485,14 +22485,14 @@ combinar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -22522,11 +22522,11 @@ telefonar	(V*V)
 -	(A2*A2)
 adiantar	(V*V)
 -	(A1*A1)
--	(AM-PRD*
+-	(AM-MNR*
+-	*AM-MNR)
+-	(A1*
 -	*
--	*
--	*
--	*AM-PRD)
+-	*A1)
 -	*
 
 -	*
@@ -22866,16 +22866,16 @@ fazer	(V*V)
 -	*
 -	*
 -	*AM-TMP)
--	(AM-PNC*
--	*
--	*AM-PNC)
--	(AM-LOC*
+-	(A3*
 -	*
 -	*
 -	*
+-	*A3)
+-	(AM-PRD*
 -	*
 -	*
--	*AM-LOC)
+-	*
+-	*AM-PRD)
 -	*
 -	*
 -	*
@@ -23147,7 +23147,7 @@ esperar	(V*V)
 -	*
 -	(A0*
 -	*A0)
--	*
+-	(AM-TMP*AM-TMP)
 -	(A1*A1)
 ajeitar	(V*V)
 -	*
@@ -23448,8 +23448,8 @@ achar	(V*V)
 precisar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-PRD*
+-	*AM-PRD)
 -	*
 -	(AM-CAU*
 -	*
@@ -24583,9 +24583,9 @@ contemplar	(V*V)
 -	*
 tornar	(V*V)
 -	(A2*A2)
--	(AM-LOC*
+-	(AM-CAU*
 -	*
--	*AM-LOC)
+-	*AM-CAU)
 -	(A1*
 -	*
 -	*
@@ -24913,14 +24913,14 @@ controlar	(V*V)
 cumprir	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	(A0*
@@ -25055,8 +25055,8 @@ compor	(V*V)
 -	*
 -	*
 -	*
--	*AM-PNC)
 -	*
+-	*AM-PNC)
 -	*
 -	*
 -	*
@@ -25100,13 +25100,13 @@ compor	(V*V)
 ficar	(V*V)
 -	(A2*
 -	*A2)
+-	(AM-PRD*
+-	*
+-	*
+-	*
+-	*
+-	*AM-PRD)
 -	(AM-CAU*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -25153,9 +25153,9 @@ ficar	(V*V)
 -	(A0*A0)
 -	(AM-NEG*AM-NEG)
 chutar	(V*V)
--	(AM-LOC*
+-	(AM-DIR*
 -	*
--	*AM-LOC)
+-	*AM-DIR)
 -	*
 
 -	(AM-DIS*
@@ -25240,7 +25240,7 @@ alternar	(V*V)
 -	*
 -	*A1)
 variar	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -25248,7 +25248,7 @@ variar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(AM-TMP*AM-TMP)
@@ -25323,10 +25323,10 @@ estourar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
 -	*AM-LOC)
+-	(AM-MNR*
+-	*
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -25388,14 +25388,14 @@ ganhar	(V*V)
 -	*
 -	(AM-REC*AM-REC)
 preparar	(V*V)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	*
@@ -25547,7 +25547,7 @@ estar	(V*V)
 -	*A1)
 -	*
 
--	*
+-	(AM-TMP*AM-TMP)
 -	*
 -	*
 -	(A0*A0)
@@ -25647,7 +25647,7 @@ praticar	(V*V)
 -	*
 obter	(V*V)
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 -	*
 -	(A1*
 -	*
@@ -25761,12 +25761,12 @@ incluir	(V*V)
 nortear	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -25897,11 +25897,11 @@ construir	(V*V)
 -	*
 -	*
 -	*AM-LOC)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	(AM-ADV*
@@ -25943,9 +25943,9 @@ receber	(V*V)
 -	*
 jogar	(V*V)
 -	(AM-MNR*AM-MNR)
--	(A0*
+-	(A3*
 -	*
--	*A0)
+-	*A3)
 -	*
 -	*
 -	*
@@ -26104,13 +26104,13 @@ desgravar	(V*V)
 -	*
 -	*
 impor	(V*V)
--	(A1*
+-	(A0*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A1)
+-	*A0)
 -	*
 
 -	(AM-TMP*
@@ -26164,7 +26164,7 @@ estimar	(V*V)
 -	*
 -	*AM-MNR)
 -	*
--	(AM-MNR*
+-	(A1*
 -	*
 -	*
 -	*
@@ -26192,7 +26192,7 @@ estimar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A1)
 -	*
 
 -	(A0*A0)
@@ -26735,9 +26735,9 @@ representar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(A3*
 -	*
--	*AM-PNC)
+-	*A3)
 -	*
 
 -	*
@@ -26899,8 +26899,8 @@ manter	(V*V)
 -	(A0*A0)
 -	(AM-NEG*AM-NEG)
 substituir	(V*V)
--	(A1*
--	*A1)
+-	(A2*
+-	*A2)
 -	*
 -	*
 -	*
@@ -27028,7 +27028,7 @@ condenar	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -27037,7 +27037,7 @@ condenar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -27338,7 +27338,7 @@ morar	(V*V)
 -	(AM-TMP*
 -	*
 -	*AM-TMP)
--	(AM-LOC*AM-LOC)
+-	(A1*A1)
 -	*
 -	*
 -	*
@@ -27377,7 +27377,7 @@ dizer	(V*V)
 -	(A0*A0)
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(AM-TMP*AM-TMP)
 ver	(V*V)
 -	(A1*
 -	*
@@ -27524,7 +27524,7 @@ realizar	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -27534,7 +27534,7 @@ realizar	(V*V)
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 
 -	(A0*
@@ -27562,10 +27562,10 @@ padecer	(V*V)
 -	*
 -	*
 -	*
--	*AM-ADV)
--	(A0*
 -	*
--	*A0)
+-	*
+-	*
+-	*AM-ADV)
 -	*
 consumar	(V*V)
 -	(A1*
@@ -27770,7 +27770,7 @@ haver	(V*V)
 -	*
 namorar	(V*V)
 -	*
--	(AM-MNR*
+-	(AM-DIS*
 -	*
 -	*
 -	*
@@ -27778,7 +27778,7 @@ namorar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-DIS)
 -	*
 
 -	*
@@ -27853,8 +27853,8 @@ dar	(V*V)
 -	*
 fazer	(V*V)
 -	(A1*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-CAU*
+-	*AM-CAU)
 -	*
 
 -	*
@@ -28149,8 +28149,8 @@ soltar	(V*V)
 -	*
 -	(AM-NEG*AM-NEG)
 aguentar	(V*V)
+-	(AM-NEG*AM-NEG)
 -	(A2*
--	*
 -	*
 -	*
 -	*
@@ -28902,10 +28902,10 @@ ter	(V*V)
 -	*A0)
 abrir	(V*V)
 -	(A1*A1)
--	(A2*
+-	(A3*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	(AM-TMP*AM-TMP)
 -	*
 
@@ -29292,9 +29292,9 @@ chegar	(V*V)
 -	(A1*A1)
 -	*
 considerar	(V*V)
--	(A2*
--	*
--	*A2)
+-	(A2*A2)
+-	(AM-LOC*
+-	*AM-LOC)
 -	*
 
 -	(A0*
@@ -29418,10 +29418,10 @@ permitir	(V*V)
 -	*
 -	*
 negociar	(V*V)
+-	(AM-LOC*
+-	*
+-	*AM-LOC)
 -	(A2*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -29499,8 +29499,8 @@ reduzir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(A2*
--	*A2)
+-	(A4*
+-	*A4)
 -	*
 
 -	*
@@ -29550,7 +29550,7 @@ basear	(V*V)
 -	*A2)
 -	*
 
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 -	*
 -	(A1*
 -	*A1)
@@ -29649,8 +29649,8 @@ fazer	(V*V)
 -	*A1)
 -	*
 encontrar	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(AM-CAU*
 -	*
 -	*
@@ -29839,7 +29839,7 @@ apoiar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(AM-TMP*AM-TMP)
 -	(AM-NEG*AM-NEG)
 estar	(V*V)
 -	(A2*
@@ -30239,8 +30239,8 @@ pedir	(V*V)
 -	*
 -	*A0)
 -	*
-checar	(V*
--	*V)
+checar	(V*V)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -30330,8 +30330,8 @@ participar	(V*V)
 -	*AM-TMP)
 -	*
 ir	(V*V)
--	(A1*
--	*A1)
+-	(A4*
+-	*A4)
 -	*
 -	*
 -	*
@@ -30370,7 +30370,7 @@ visitar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -30384,7 +30384,7 @@ visitar	(V*V)
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 
 -	*
@@ -31121,14 +31121,14 @@ negociar	(V*V)
 trocar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(A2*
+-	*
+-	*A2)
+-	(AM-TMP*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -31692,8 +31692,8 @@ entrar	(V*V)
 -	*
 -	*
 consultar	(V*V)
+-	(AM-TMP*AM-TMP)
 -	(AM-MNR*
--	*
 -	*
 -	*
 -	*
@@ -31745,7 +31745,7 @@ analisar	(V*V)
 -	*
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	*
 -	*
 fazer	(V*V)
@@ -31811,7 +31811,7 @@ ocorrer	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(A2*A2)
 passar	(V*V)
 -	(A1*
 -	*A1)
@@ -32143,11 +32143,11 @@ disputar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*A2)
 -	*
 
 -	(A1*A1)
@@ -32402,13 +32402,13 @@ mudar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-CAU*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-CAU)
 
 -	(AM-CAU*
 -	*
@@ -32473,25 +32473,25 @@ acatar	(V*V)
 -	*
 -	(AM-REC*AM-REC)
 submeter	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(AM-PRD*
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*AM-PRD)
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	(A0*A0)
 protagonizar	(V*V)
@@ -32747,9 +32747,9 @@ ganhar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-TMP*
 -	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 
 -	(A0*
@@ -32906,7 +32906,7 @@ resultar	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(A1*A1)
 tratar	(V*V)
 -	(A0*
 -	*
@@ -33169,10 +33169,10 @@ prender	(V*V)
 -	*A1)
 -	*
 
--	(A0*
 -	*
 -	*
--	*A0)
+-	*
+-	*
 -	*
 -	*
 -	*
@@ -33417,10 +33417,10 @@ conquistar	(V*V)
 -	*
 derrotar	(V*V)
 -	(A1*A1)
--	(AM-EXT*
+-	(A2*
 -	*
 -	*
--	*AM-EXT)
+-	*A2)
 -	*
 -	(AM-LOC*
 -	*
@@ -33483,14 +33483,14 @@ marcar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -33551,10 +33551,10 @@ fixar	(V*V)
 -	*A0)
 -	(A1*A1)
 adaptar	(V*V)
--	(AM-MNR*
+-	(AM-MNR*AM-MNR)
+-	(A2*
 -	*
--	*
--	*AM-MNR)
+-	*A2)
 -	*
 -	*
 -	*
@@ -33826,8 +33826,8 @@ passar	(V*V)
 passar	(V*V)
 -	(A1*
 -	*
+-	*
 -	*A1)
--	(AM-TMP*AM-TMP)
 -	(AM-LOC*
 -	*
 -	*
@@ -34028,12 +34028,12 @@ repassar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	(A0*A0)
@@ -34554,8 +34554,8 @@ assinar	(V*V)
 -	*
 
 -	(A0*A0)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-DIS*
+-	*AM-DIS)
 restringir	(V*V)
 -	(A1*
 -	*
@@ -34684,9 +34684,9 @@ oferecer	(V*V)
 -	*
 -	(A1*A1)
 ficar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	*
@@ -34798,7 +34798,7 @@ abrir	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	(A2*A2)
 manter	(V*V)
 -	(AM-LOC*
 -	*
@@ -34833,7 +34833,7 @@ preocupar	(V*V)
 -	*
 -	*AM-TMP)
 -	*
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -34845,7 +34845,7 @@ preocupar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -34867,7 +34867,6 @@ fazer	(V*V)
 -	(A1*
 -	*A1)
 -	*
--	(AM-MNR*
 -	*
 -	*
 -	*
@@ -34879,7 +34878,8 @@ fazer	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*
+-	*
 -	*
 
 -	*
@@ -34982,8 +34982,8 @@ preferir	(V*V)
 -	*
 -	*
 descrever	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -35033,9 +35033,9 @@ deixar	(V*V)
 -	*
 -	(A1*A1)
 estar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 -	*
 -	*
@@ -35164,8 +35164,8 @@ conclamar	(V*V)
 colocar	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
--	*A2)
+-	(V*
+-	*V)
 -	*
 
 -	(A1*
@@ -35221,8 +35221,8 @@ quebrar	(V*V)
 -	(A1*
 -	*A1)
 estar	(V*V)
+-	(AM-DIS*AM-DIS)
 -	(A2*
--	*
 -	*
 -	*
 -	*
@@ -35314,22 +35314,22 @@ prever	(V*V)
 -	(A1*
 -	*
 -	*A1)
+-	(A3*
+-	*
+-	*
+-	*A3)
+-	*
 -	(A2*
+-	*
+-	*
 -	*
 -	*
 -	*A2)
 -	*
--	(A2*
+-	(AM-PNC*
 -	*
 -	*
--	*
--	*
--	*A2)
--	*
--	(AM-PRD*
--	*
--	*
--	*AM-PRD)
+-	*AM-PNC)
 -	*
 
 -	(A0*
@@ -35468,7 +35468,7 @@ citar	(V*V)
 -	*A0)
 -	*
 atuar	(V*V)
--	(A1*A1)
+-	(AM-EXT*AM-EXT)
 -	(A2*
 -	*
 -	*
@@ -35525,11 +35525,11 @@ reabilitar	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(A1*A1)
 virar	(V*V)
--	(A1*
+-	(A2*
 -	*
--	*A1)
+-	*A2)
 -	*
 -	*
 -	*
@@ -35676,10 +35676,10 @@ esperar	(V*V)
 -	(A2*
 -	*
 -	*
--	*
--	*
--	*
 -	*A2)
+-	(A1*
+-	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -35978,10 +35978,10 @@ investir	(V*V)
 concentrar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 dizer	(V*V)
@@ -36109,8 +36109,8 @@ entender	(V*V)
 -	*
 -	*
 -	*
--	*A1)
 -	*
+-	*A1)
 
 -	*
 -	*
@@ -36552,9 +36552,9 @@ morar	(V*V)
 -	*
 -	*
 retornar	(V*V)
--	(A1*
+-	(A4*
 -	*
--	*A1)
+-	*A4)
 -	*
 
 -	(AM-DIS*
@@ -36770,7 +36770,7 @@ desinterditar	(V*V)
 -	*
 -	*
 -	(A1*A1)
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	*
 -	*
 -	*
@@ -37051,10 +37051,10 @@ explicar	(V*V)
 ir	(V*V)
 -	(A4*
 -	*
--	*
--	*
--	*
 -	*A4)
+-	(AM-DIR*
+-	*
+-	*AM-DIR)
 -	*
 
 -	(A0*
@@ -37067,9 +37067,9 @@ fazer	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-EXT*
 -	*
--	*AM-MNR)
+-	*AM-EXT)
 -	*
 
 -	(A0*A0)
@@ -37175,9 +37175,9 @@ haver	(V*V)
 -	(A1*A1)
 -	(A0*A0)
 fazer	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	(A2*
 -	*
@@ -37313,7 +37313,7 @@ escrever	(V*V)
 -	*A0)
 -	*
 reclamar	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
@@ -37323,7 +37323,7 @@ reclamar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 
 -	*
@@ -37885,10 +37885,10 @@ revelar	(V*V)
 -	*A1)
 -	*
 incrementar	(V*V)
--	(AM-EXT*
--	*
--	*
--	*AM-EXT)
+-	(A3*
+-	*A3)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(AM-TMP*
 -	*
 -	*
@@ -37972,7 +37972,7 @@ recuperar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(AM-TMP*AM-TMP)
 -	*
 registrar	(V*V)
 -	(A1*
@@ -38012,10 +38012,10 @@ movimentar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
 -	*AM-LOC)
 -	(A1*
--	*
--	*
 -	*
 -	*A1)
 -	*
@@ -38122,32 +38122,32 @@ dizer	(V*V)
 ir	(V*V)
 -	(A4*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A4)
--	(AM-PNC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-PNC)
 -	*
 
 -	*
@@ -38809,9 +38809,9 @@ dizer	(V*V)
 -	(A0*
 -	*A0)
 fazer	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -39013,14 +39013,14 @@ conspirar	(V*V)
 -	*
 -	*AM-LOC)
 -	*
--	(AM-CAU*
+-	(AM-ADV*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-CAU)
+-	*AM-ADV)
 -	*
 -	*
 -	*
@@ -39282,7 +39282,7 @@ fazer	(V*V)
 -	*A1)
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-DIS*AM-DIS)
 -	(AM-NEG*AM-NEG)
 -	(A2*A2)
 pedir	(V*V)
@@ -39352,9 +39352,9 @@ cometer	(V*V)
 -	*
 -	(AM-NEG*AM-NEG)
 servir	(V*V)
--	(A1*
+-	(A2*
 -	*
--	*A1)
+-	*A2)
 -	*
 
 -	*
@@ -39406,9 +39406,9 @@ estar	(V*V)
 -	(AM-ADV*AM-ADV)
 -	*
 ir	(V*V)
--	(A4*A4)
+-	(A4*
+-	*A4)
 -	(AM-TMP*
--	*
 -	*AM-TMP)
 -	*
 
@@ -39759,12 +39759,12 @@ voltar	(V*V)
 -	(AM-MNR*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-MNR)
+-	(AM-PNC*
+-	*
+-	*
+-	*
+-	*AM-PNC)
 -	*
 -	*
 
@@ -39792,7 +39792,7 @@ atribuir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
@@ -39802,7 +39802,7 @@ atribuir	(V*V)
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	*
@@ -40124,15 +40124,15 @@ transformar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
 -	(AM-TMP*
 -	*
 -	*
@@ -40180,15 +40180,15 @@ contar	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	(A0*A0)
 tratar	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 
 -	(A0*A0)
@@ -40262,12 +40262,12 @@ sair	(V*V)
 -	*
 -	*
 -	*
--	(AM-MNR*AM-MNR)
+-	(AM-TMP*AM-TMP)
 -	*
 deixar	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(AM-CAU*
 -	*
 -	*
 -	*
@@ -40278,7 +40278,7 @@ deixar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-CAU)
 -	*
 
 -	*
@@ -40450,8 +40450,8 @@ estar	(V*V)
 -	*
 -	*
 -	*A1)
-virar	(V*
--	*V)
+virar	(V*V)
+-	(A2*A2)
 -	(AM-TMP*
 -	*
 -	*AM-TMP)
@@ -40494,11 +40494,11 @@ levar	(V*V)
 -	*
 -	*
 -	*
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -40578,7 +40578,7 @@ haver	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-TMP*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -40590,7 +40590,7 @@ haver	(V*V)
 -	*
 -	*
 -	*
--	*AM-TMP)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -40747,9 +40747,9 @@ reciclar	(V*V)
 -	*A1)
 -	(AM-ADV*AM-ADV)
 ocorrer	(V*V)
--	(A2*
+-	(AM-CAU*
 -	*
--	*A2)
+-	*AM-CAU)
 -	*
 
 -	*
@@ -41138,17 +41138,17 @@ ocorrer	(V*V)
 -	*
 desaparecer	(V*V)
 -	*
--	(AM-CAU*
+-	(A1*
+-	*
+-	*
+-	*A1)
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*AM-CAU)
+-	*A2)
 -	*
 
 -	(A0*
@@ -41222,9 +41222,9 @@ contabilizar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 -	*
 -	*
@@ -41257,10 +41257,10 @@ contabilizar	(V*V)
 -	*
 ganhar	(V*V)
 -	(A1*
--	*
--	*
--	*
 -	*A1)
+-	*
+-	*
+-	*
 -	*
 
 -	(A1*
@@ -41277,7 +41277,10 @@ tramitar	(V*V)
 -	*A1)
 -	*
 cotar	(V*V)
--	(AM-MNR*
+-	(A2*
+-	*
+-	*A2)
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -41286,10 +41289,7 @@ cotar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	(A1*
@@ -41599,9 +41599,9 @@ partir	(V*V)
 -	*
 -	(A0*A0)
 ir	(V*V)
--	(AM-MNR*
+-	(A4*
 -	*
--	*AM-MNR)
+-	*A4)
 -	*
 -	*
 -	*
@@ -41628,7 +41628,7 @@ ir	(V*V)
 -	(V*
 dizer	*V)
 -	(A1*A1)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -41636,7 +41636,7 @@ dizer	*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -42085,10 +42085,10 @@ atingir	(V*V)
 -	*
 -	*
 -	*
--	*A1)
--	(AM-PRD*
 -	*
--	*AM-PRD)
+-	*
+-	*
+-	*A1)
 -	*
 
 -	(AM-TMP*
@@ -42147,8 +42147,8 @@ baixar	(V*V)
 -	(A1*A1)
 -	*
 apresentar	(V*V)
--	(A2*
--	*A2)
+-	(AM-PNC*
+-	*AM-PNC)
 -	*
 
 -	*
@@ -42209,9 +42209,9 @@ chegar	(V*V)
 -	(AM-LOC*
 -	*AM-LOC)
 -	*
--	(AM-DIS*
+-	(AM-DIR*
 -	*
--	*AM-DIS)
+-	*AM-DIR)
 -	*
 
 -	*
@@ -42225,8 +42225,8 @@ chegar	(V*V)
 -	*
 -	*
 vir	(V*V)
--	(A2*
--	*A2)
+-	(A3*
+-	*A3)
 -	*
 
 -	(A0*
@@ -42488,13 +42488,13 @@ cumprir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 -	(AM-PRD*
 -	*
@@ -42551,14 +42551,14 @@ corresponder	(V*V)
 receber	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(A4*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A4)
 -	*
 
 -	*
@@ -42762,9 +42762,9 @@ descartar	(V*V)
 encontrar	(V*
 -	*V)
 -	(AM-TMP*
--	*
--	*
 -	*AM-TMP)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	(AM-MNR*
 -	*
@@ -43027,13 +43027,13 @@ inviabilizar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-CAU*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-CAU)
 -	*
 -	*
 -	*
@@ -43209,7 +43209,7 @@ dar	(V*
 -	*
 -	*A0)
 -	*
--	(AM-MNR*AM-MNR)
+-	(AM-TMP*AM-TMP)
 anunciar	(V*V)
 -	(A1*
 -	*
@@ -43785,10 +43785,10 @@ estar	(V*V)
 -	*
 
 ficar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 -	(AM-LOC*
 -	*AM-LOC)
@@ -44141,12 +44141,12 @@ usar	(V*V)
 -	(AM-MNR*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-MNR)
+-	(AM-ADV*
+-	*
+-	*
+-	*
+-	*AM-ADV)
 -	*
 -	*
 -	*
@@ -44182,7 +44182,7 @@ usar	(V*V)
 -	*AM-MNR)
 -	*
 
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 usar	(V*V)
 -	(A1*
 -	*A1)
@@ -44351,10 +44351,10 @@ estar	(V*V)
 -	*
 funcionar	(V*V)
 -	(AM-TMP*AM-TMP)
--	(A1*
+-	(AM-EXT*
 -	*
 -	*
--	*A1)
+-	*AM-EXT)
 -	*
 -	(AM-MNR*
 -	*
@@ -44391,8 +44391,8 @@ atrasar	(V*V)
 -	(AM-TMP*
 -	*
 -	*AM-TMP)
--	(AM-PNC*
--	*AM-PNC)
+-	(A2*
+-	*A2)
 -	*
 -	*
 -	*
@@ -44572,8 +44572,8 @@ usar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 -	*
 
 -	(A1*
@@ -44633,7 +44633,7 @@ atravessar	(V*V)
 -	*
 -	*
 chegar	(V*V)
--	(A2*
+-	(A4*
 -	*
 -	*
 -	*
@@ -44642,7 +44642,7 @@ chegar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*A4)
 -	*
 
 -	(AM-PRD*
@@ -44917,12 +44917,12 @@ ensinar	(V*V)
 fazer	(V*V)
 -	(AM-MNR*AM-MNR)
 -	*
--	(AM-LOC*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-TMP)
 -	*
 
 -	(A0*
@@ -45129,16 +45129,16 @@ manter	(V*V)
 -	*
 -	*
 -	*A0)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 chegar	(V*V)
 -	(AM-TMP*AM-TMP)
 -	(AM-LOC*
 -	*
--	*
--	*
--	*
--	*
 -	*AM-LOC)
+-	(AM-MNR*
+-	*
+-	*
+-	*AM-MNR)
 -	*
 
 -	(A0*
@@ -45526,8 +45526,8 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	(A1*
--	*A1)
+-	(A1*A1)
+-	(A0*A0)
 esperar	(V*V)
 -	(A2*
 -	*
@@ -45634,7 +45634,7 @@ acrescentar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(A0*A0)
 -	*
 -	*
 -	*
@@ -45725,11 +45725,11 @@ oferecer	(V*V)
 dividir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(AM-TMP*
@@ -45930,12 +45930,12 @@ bater	(V*V)
 -	*
 -	*AM-TMP)
 -	*
--	(AM-MNR*
+-	(AM-ADV*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-ADV)
 -	*
 
 -	*
@@ -46117,9 +46117,9 @@ criar	(V*V)
 -	*
 -	(AM-REC*AM-REC)
 servir	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -46352,7 +46352,7 @@ compor	(V*V)
 -	*
 -	*A1)
 começar	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 
 parecer	(V*V)
 -	(A1*
@@ -46433,10 +46433,10 @@ indicar	(V*V)
 ocupar	(V*V)
 -	(A1*
 -	*
--	*A1)
--	(AM-LOC*
 -	*
--	*AM-LOC)
+-	*
+-	*
+-	*A1)
 -	*
 
 -	(A0*
@@ -46713,12 +46713,12 @@ preservar	(V*V)
 -	*
 -	(A1*A1)
 ficar	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
+-	*A2)
+-	(AM-ADV*
 -	*
--	*
--	*
--	*AM-MNR)
+-	*AM-ADV)
 -	*
 
 -	(A0*
@@ -47412,9 +47412,9 @@ acontecer	(V*V)
 -	*
 -	*
 abrir	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	(A0*
@@ -47642,8 +47642,8 @@ reduzir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(A4*
+-	*A4)
 -	*
 -	*
 -	*
@@ -47748,8 +47748,8 @@ ter	(V*V)
 -	*
 
 -	(A0*A0)
--	(V*
-submeter	*V)
+-	(AM-REC*AM-REC)
+submeter	(V*V)
 -	(A2*
 -	*A2)
 -	*
@@ -47989,9 +47989,9 @@ descobrir	(V*V)
 -	*
 -	*
 -	*
--	*AM-TMP)
 -	*
--	(AM-TMP*
+-	*
+-	*
 -	*
 -	*AM-TMP)
 -	*
@@ -48018,9 +48018,9 @@ descobrir	(V*V)
 -	(AM-TMP*AM-TMP)
 -	(AM-REC*AM-REC)
 separar	(V*V)
--	(A3*
+-	(A2*
 -	*
--	*A3)
+-	*A2)
 -	*
 -	(AM-TMP*
 -	*
@@ -48212,8 +48212,8 @@ fazer	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(A2*
--	*A2)
+-	(A3*
+-	*A3)
 -	*
 -	*
 
@@ -48336,9 +48336,9 @@ descansar	(V*V)
 -	*
 -	(A0*A0)
 repetir	(V*V)
--	(A2*
--	*A2)
 -	(A1*
+-	*
+-	*
 -	*
 -	*
 -	*
@@ -48564,11 +48564,11 @@ ter	(V*V)
 -	*A1)
 -	*
 rotular	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -48624,8 +48624,8 @@ promover	(V*V)
 -	(AM-LOC*
 -	*AM-LOC)
 -	*
--	*
--	*
+-	(A2*
+-	*A2)
 -	*
 incluir	(V*V)
 -	(A1*
@@ -48783,8 +48783,8 @@ expor	(V*V)
 -	*
 -	*
 reservar	(V*V)
--	(A2*
--	*A2)
+-	*
+-	*
 -	*
 
 -	*
@@ -48915,9 +48915,9 @@ facilitar	(V*V)
 -	*A0)
 -	*
 fazer	(V*V)
--	(AM-MNR*
+-	(AM-LOC*
 -	*
--	*AM-MNR)
+-	*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -49519,12 +49519,12 @@ assistir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -49540,7 +49540,7 @@ responder	(V*V)
 -	*
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 estar	(V*V)
 -	(A2*A2)
 -	*
@@ -49597,7 +49597,7 @@ atrapalhar	(V*V)
 -	(A0*
 -	*A0)
 aguardar	(V*V)
--	(AM-EXT*AM-EXT)
+-	(AM-ADV*AM-ADV)
 -	*
 -	(AM-PNC*
 -	*
@@ -49706,13 +49706,13 @@ suicidar	*V)
 -	(AM-LOC*
 -	*AM-LOC)
 -	*
+-	(AM-LOC*
+-	*
+-	*
+-	*
+-	*
+-	*AM-LOC)
 -	(AM-MNR*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*AM-MNR)
 -	*
@@ -49938,8 +49938,8 @@ ver	(V*V)
 -	(A0*
 -	*A0)
 encontrar	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-TMP*
+-	*AM-TMP)
 -	*
 
 -	(A0*A0)
@@ -50316,10 +50316,10 @@ fazer	(V*V)
 correr	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(AM-CAU*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-CAU)
 -	*
 
 -	(AM-ADV*
@@ -50356,7 +50356,7 @@ fazer	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(AM-TMP*AM-TMP)
 disputar	(V*V)
 -	(A1*
 -	*A1)
@@ -50674,9 +50674,9 @@ receber	(V*V)
 -	*
 -	*
 negociar	(V*V)
--	(A1*
+-	(A2*
 -	*
--	*A1)
+-	*A2)
 -	*
 
 -	*
@@ -50735,8 +50735,8 @@ ressalvar	(V*V)
 conhecer	(V*V)
 -	(A1*
 -	*A1)
--	(AM-PRD*
--	*AM-PRD)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -50841,9 +50841,9 @@ saber	(V*V)
 -	*A0)
 -	*
 ganhar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 
@@ -50973,10 +50973,10 @@ aceitar	(V*V)
 -	(A0*A0)
 contrariar	(V*V)
 -	(A1*
--	*A1)
--	(A2*
 -	*
--	*A2)
+-	*
+-	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -51698,8 +51698,8 @@ ter	(V*V)
 -	(A1*A1)
 substituir	(V*V)
 -	(A2*
--	*
 -	*A2)
+-	*
 -	*
 
 -	(A1*
@@ -51947,13 +51947,13 @@ ir	(V*
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 
 -	*
@@ -52207,20 +52207,20 @@ estar	(V*V)
 -	*
 -	*A1)
 sair	(V*V)
+-	(A3*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A3)
 -	(A4*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -52358,10 +52358,10 @@ funcionar	(V*V)
 -	(AM-NEG*AM-NEG)
 ter	(V*V)
 -	(A1*A1)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -52433,9 +52433,9 @@ modificar	(V*V)
 -	*A1)
 -	*
 
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 estar	(V*V)
 -	(A1*
@@ -52505,9 +52505,9 @@ submeter	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -52547,10 +52547,10 @@ dizer	(V*V)
 -	*
 -	(A0*
 -	*A0)
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	*
--	(AM-REC*AM-REC)
-manifestar	(V*V)
+-	(V*
+manifestar	*V)
 -	(AM-TMP*
 -	*
 -	*
@@ -52700,8 +52700,8 @@ apresentar	(V*V)
 -	*
 -	*
 -	*
--	*
 -	*A1)
+-	*
 -	*
 -	*
 -	*
@@ -52832,9 +52832,9 @@ percorrer	(V*V)
 -	*
 -	*
 desembarcar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -52856,9 +52856,9 @@ trocar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(AM-NEG*AM-NEG)
@@ -53147,8 +53147,8 @@ crescer	(V*V)
 -	*
 -	*
 estar	(V*V)
--	(A2*
--	*A2)
+-	(A2*A2)
+-	(AM-TMP*AM-TMP)
 -	*
 
 -	(A0*A0)
@@ -53201,12 +53201,12 @@ levar	(V*
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-PNC*
--	*
--	*
--	*
--	*AM-PNC)
 -	*
 
 -	*
@@ -53270,7 +53270,7 @@ visitar	(V*V)
 -	*
 -	(AM-DIS*AM-DIS)
 -	(AM-NEG*AM-NEG)
--	(A2*A2)
+-	(AM-REC*AM-REC)
 interessar	(V*V)
 -	(A0*
 -	*
@@ -53543,8 +53543,8 @@ produzir	(V*V)
 -	(A0*
 -	*A0)
 -	*
-pagar	(V*
--	*V)
+pagar	(V*V)
+-	(AM-EXT*AM-EXT)
 -	(A3*
 -	*
 -	*
@@ -53601,7 +53601,7 @@ recuar	(V*V)
 -	*
 -	(A2*A2)
 incluir	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -53644,9 +53644,9 @@ mostrar	(V*V)
 -	*
 
 estar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(A1*
@@ -53816,9 +53816,9 @@ inalar	(V*V)
 -	(A1*
 -	*A1)
 passar	(V*V)
--	(AM-LOC*
+-	(A4*
 -	*
--	*AM-LOC)
+-	*A4)
 -	*
 -	*
 
@@ -54129,8 +54129,8 @@ ajudar	(V*V)
 -	*
 -	*
 -	*
-atrair	(V*
--	*V)
+atrair	(V*V)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -54390,8 +54390,8 @@ socorrer	(V*V)
 -	*
 -	*
 -	*
-escrever	(V*
--	*V)
+escrever	(V*V)
+-	(AM-ADV*AM-ADV)
 -	*
 -	*
 -	*
@@ -54483,9 +54483,9 @@ pagar	(V*V)
 reduzir	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(A4*
 -	*
--	*A2)
+-	*A4)
 -	*
 
 -	(A0*
@@ -54592,7 +54592,7 @@ entrar	(V*V)
 -	*A0)
 -	*
 esperar	(V*V)
--	(AM-EXT*AM-EXT)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*
@@ -54888,9 +54888,9 @@ prevenir	(V*V)
 -	*
 -	*
 -	*A0)
-receber	(V*
--	*V)
+receber	(V*V)
 -	(A1*
+-	*
 -	*A1)
 -	(AM-TMP*
 -	*
@@ -55247,13 +55247,13 @@ jurar	(V*V)
 pagar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*AM-MNR)
+-	(AM-EXT*AM-EXT)
 -	*
--	(A2*
+-	(AM-DIS*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-DIS)
 -	*
 
 -	(A1*
@@ -55425,10 +55425,10 @@ ajudar	(V*V)
 -	*
 -	*
 fechar	(V*V)
--	(A2*
+-	(AM-EXT*
 -	*
 -	*
--	*A2)
+-	*AM-EXT)
 -	(A1*
 -	*
 -	*
@@ -55443,10 +55443,10 @@ fechar	(V*V)
 elevar	(V*V)
 -	(A3*
 -	*
--	*
--	*
--	*
 -	*A3)
+-	(A4*
+-	*
+-	*A4)
 -	(A1*
 -	*
 -	*
@@ -55496,9 +55496,9 @@ elevar	(V*V)
 -	*
 fazer	(V*
 -	*V)
--	(A2*A2)
--	(V*V)
--	(A1*A1)
+-	(A1*
+-	*
+-	*A1)
 -	(AM-PNC*
 -	*
 -	*
@@ -55814,13 +55814,13 @@ passar	(V*V)
 -	*
 -	*
 -	*A1)
-ir	(V*
--	*V)
--	(AM-CAU*
+ir	(V*V)
+-	(AM-EXT*AM-EXT)
+-	(A4*
 -	*
 -	*
 -	*
--	*AM-CAU)
+-	*A4)
 -	*
 
 -	(A0*
@@ -55919,9 +55919,9 @@ cair	(V*V)
 oferecer	(V*V)
 -	(A1*
 -	*A1)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 
@@ -55969,8 +55969,8 @@ acontecer	(V*V)
 -	(A1*
 -	*A1)
 voltar	(V*V)
--	(AM-LOC*
--	*AM-LOC)
+-	(A4*
+-	*A4)
 -	*
 
 -	(A0*
@@ -56027,8 +56027,8 @@ fazer	(V*V)
 
 -	*
 vir	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-LOC*AM-LOC)
+-	(AM-PNC*AM-PNC)
 -	*
 -	*
 
@@ -56271,11 +56271,11 @@ viajar	(V*V)
 -	*
 -	(AM-LOC*AM-LOC)
 permanecer	(V*V)
--	(A4*
+-	(AM-TMP*
 -	*
 -	*
 -	*
--	*A4)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -56316,9 +56316,9 @@ revelar	(V*V)
 -	*A1)
 -	*
 
--	(AM-ADV*
--	*
--	*AM-ADV)
+-	(AM-ADV*AM-ADV)
+-	(AM-CAU*
+-	*AM-CAU)
 -	(A1*
 -	*
 -	*
@@ -56339,7 +56339,7 @@ parecer	(V*V)
 -	*
 -	*A0)
 continuar	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-LOC*AM-LOC)
 -	*
 -	(AM-DIS*
 -	*
@@ -56399,11 +56399,11 @@ tomar	(V*
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(AM-PRD*
@@ -56501,10 +56501,10 @@ anular	(V*V)
 -	*A1)
 -	*
 preencher	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 
 -	(AM-DIS*AM-DIS)
@@ -56520,11 +56520,11 @@ anular	(V*V)
 -	*A1)
 crescer	(V*V)
 -	(A2*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(A4*
+-	*
+-	*
+-	*A4)
 -	*
 -	*
 -	*
@@ -56575,10 +56575,7 @@ ter	(V*V)
 -	*
 pôr	(V*
 -	*V)
--	(A2*
--	*
--	*A2)
--	(AM-PNC*
+-	(A1*
 -	*
 -	*
 -	*
@@ -56591,7 +56588,10 @@ pôr	(V*
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*
+-	*
+-	*
+-	*A1)
 -	*
 
 -	*
@@ -56756,8 +56756,8 @@ analisar	(V*V)
 -	*A1)
 -	*
 
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 -	*
 estar	(V*V)
 -	(A1*
@@ -56788,19 +56788,19 @@ estar	(V*V)
 -	*
 receber	(V*V)
 -	(A0*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A0)
+-	(A4*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A4)
+-	*
 -	(AM-DIS*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -57176,8 +57176,8 @@ realizar	(V*V)
 -	*
 -	*
 -	*
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 -	*
 -	*
 -	*
@@ -57244,8 +57244,8 @@ permanecer	(V*V)
 -	*
 -	*
 fazer	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 -	*
 -	(AM-ADV*
 -	*
@@ -57422,8 +57422,8 @@ pensar	(V*V)
 -	*
 -	*
 -	*
--	*A1)
 -	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -57606,19 +57606,19 @@ publicar	(V*V)
 -	(AM-TMP*AM-TMP)
 -	*
 
+-	(AM-DIS*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-DIS)
+-	*
 -	(AM-MNR*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*
 -	*AM-MNR)
 -	*
@@ -57839,8 +57839,8 @@ observar	(V*V)
 -	*
 -	*
 -	*
+-	(AM-LOC*AM-LOC)
 -	(A0*
--	*
 -	*A0)
 almoçar	(V*V)
 -	*
@@ -57895,8 +57895,8 @@ ver	(V*V)
 -	*
 -	(A0*
 -	*A0)
-render	(V*
--	*V)
+render	(V*V)
+-	(AM-REC*AM-REC)
 -	(AM-MNR*
 -	*
 -	*
@@ -58088,7 +58088,7 @@ ficar	(V*V)
 -	*
 -	*
 -	*A0)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 ter	(V*V)
 -	(A1*
 -	*
@@ -58207,8 +58207,8 @@ dizer	(V*V)
 -	*A1)
 -	*
 
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 -	*
 -	(A0*A0)
 -	*
@@ -58259,9 +58259,9 @@ renegociar	(V*V)
 -	*A0)
 -	(AM-DIS*AM-DIS)
 chegar	(V*V)
--	(A2*
+-	(A1*
 -	*
--	*A2)
+-	*A1)
 -	*
 -	(AM-ADV*
 -	*
@@ -58316,8 +58316,8 @@ alcançar	(V*V)
 -	*
 -	*A1)
 registrar	(V*V)
--	(A2*
--	*A2)
+-	(A3*
+-	*A3)
 
 -	(A1*
 -	*A1)
@@ -58676,9 +58676,9 @@ vender	(V*V)
 -	*A2)
 -	*
 negociar	(V*V)
--	(A2*
+-	(AM-EXT*
 -	*
--	*A2)
+-	*AM-EXT)
 -	*
 
 -	(AM-DIS*
@@ -58687,8 +58687,8 @@ negociar	(V*V)
 -	(A0*
 -	*A0)
 -	*
-comprar	(V*
--	*V)
+comprar	(V*V)
+-	(A1*A1)
 -	(AM-TMP*
 -	*
 -	*
@@ -58719,7 +58719,7 @@ comprar	(V*
 -	(A1*
 -	*A1)
 cair	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
@@ -58730,7 +58730,7 @@ cair	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
@@ -59018,12 +59018,12 @@ dizer	(V*V)
 -	*A1)
 -	(V*
 caracterizar	*V)
--	(A0*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*A0)
+-	*A2)
 -	*
 -	*
 -	*
@@ -59197,7 +59197,9 @@ renunciar	(V*V)
 -	*AM-CAU)
 -	*
 acrescentar	(V*V)
--	(AM-EXT*AM-EXT)
+-	(A0*A0)
+-	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -59212,9 +59214,7 @@ acrescentar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
+-	*A1)
 -	*
 
 -	*
@@ -59283,7 +59283,7 @@ tratar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -59293,7 +59293,7 @@ tratar	(V*V)
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -59394,7 +59394,7 @@ ter	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-DIS*
+-	(AM-CAU*
 -	*
 -	*
 -	*
@@ -59407,7 +59407,7 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	*AM-DIS)
+-	*AM-CAU)
 -	*
 
 -	*
@@ -59866,10 +59866,10 @@ compensar	(V*V)
 -	(A0*A0)
 pegar	(V*V)
 -	(A1*A1)
--	(AM-TMP*
+-	(AM-TMP*AM-TMP)
+-	(AM-MNR*
 -	*
--	*
--	*AM-TMP)
+-	*AM-MNR)
 
 -	(A1*
 -	*
@@ -59949,9 +59949,9 @@ desprezar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(AM-PRD*
 -	*
--	*AM-LOC)
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -60087,9 +60087,9 @@ abrir	(V*V)
 -	(A0*
 -	*A0)
 continuar	(V*V)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 
 -	(A0*
@@ -60133,7 +60133,7 @@ ir	(V*V)
 -	*
 -	*
 -	*
--	(AM-LOC*AM-LOC)
+-	(A2*A2)
 estar	(V*V)
 -	(A1*
 -	*
@@ -60339,14 +60339,14 @@ despencar	(V*V)
 diminuir	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-MNR*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-MNR)
 -	*
 
 -	(AM-TMP*
@@ -60769,9 +60769,9 @@ atrair	(V*V)
 -	*
 -	(A0*A0)
 ir	(V*V)
--	(A2*
+-	(A4*
 -	*
--	*A2)
+-	*A4)
 -	*
 
 -	(A0*
@@ -60956,19 +60956,19 @@ ir	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A3)
+-	*
+-	(A4*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A4)
 -	*
 
 -	(AM-LOC*
@@ -61025,14 +61025,14 @@ estabelecer	(V*V)
 -	(A0*
 -	*A0)
 passar	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-LOC*
+-	*AM-LOC)
 -	(AM-TMP*
 -	*
 -	*
 -	*AM-TMP)
 -	*
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -61048,7 +61048,7 @@ passar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -61229,11 +61229,11 @@ ter	(V*V)
 -	*
 
 -	*
--	(AM-DIS*
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*AM-DIS)
+-	*AM-MNR)
 -	*
 -	(A1*
 -	*A1)
@@ -61295,10 +61295,10 @@ passar	(V*
 -	*
 -	*
 carregar	(V*V)
--	(A0*
--	*
--	*A0)
 -	(AM-LOC*
+-	*
+-	*
+-	*
 -	*
 -	*AM-LOC)
 -	*
@@ -61361,8 +61361,8 @@ dizer	(V*V)
 -	*
 -	*
 -	*
--	*
 -	*A1)
+-	*
 -	*
 -	*
 estar	(V*V)
@@ -61711,12 +61711,12 @@ voar	(V*V)
 -	*
 -	*A2)
 -	*
--	(AM-LOC*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A3)
 -	*
 
 -	*
@@ -61805,13 +61805,13 @@ incluir	(V*V)
 -	*
 -	*AM-ADV)
 -	*
--	(A0*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A0)
+-	*A1)
 -	(AM-NEG*AM-NEG)
 existir	(V*V)
 -	(AM-MNR*AM-MNR)
@@ -62501,11 +62501,11 @@ começar	(V*V)
 ter	(V*V)
 -	(A1*
 -	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-LOC*
--	*
--	*
--	*AM-LOC)
 -	*
 -	*
 -	*
@@ -62655,14 +62655,14 @@ comunicar	(V*V)
 encarar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -62741,8 +62741,8 @@ dar	(V*V)
 -	*
 -	*
 -	*
-aproveitar	(V*
--	*V)
+aproveitar	(V*V)
+-	(AM-MNR*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -62907,14 +62907,14 @@ determinar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -62973,9 +62973,9 @@ partir	(V*V)
 afirmar	(V*V)
 -	(A1*A1)
 -	*
--	(AM-PRD*
+-	(AM-MNR*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 -	(AM-LOC*
 -	*
@@ -62999,9 +62999,9 @@ vender	(V*V)
 -	*
 -	*
 -	*A1)
--	(A4*
+-	(A3*
 -	*
--	*A4)
+-	*A3)
 -	*
 
 -	(AM-LOC*
@@ -63083,8 +63083,8 @@ chegar	(V*V)
 -	*
 -	*
 -	*
--	*
 -	(AM-ADV*
+-	*
 -	*
 -	*
 -	*
@@ -63198,12 +63198,12 @@ marcar	(V*V)
 -	*
 -	*A2)
 -	*
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	(AM-TMP*AM-TMP)
@@ -63644,7 +63644,7 @@ esconder	(V*V)
 -	*
 -	*A1)
 
--	(A0*A0)
+-	(A1*A1)
 servir	(V*V)
 -	(A2*
 -	*
@@ -63900,8 +63900,8 @@ gostar	(V*V)
 -	*
 
 fazer	(V*V)
--	(AM-PRD*
--	*AM-PRD)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 
 -	(AM-PNC*
@@ -63914,9 +63914,9 @@ fazer	(V*V)
 -	(A0*A0)
 -	(A1*A1)
 cumprimentar	(V*V)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -64043,8 +64043,8 @@ revelar	(V*V)
 -	*
 -	*A0)
 chegar	(V*V)
--	(A2*
--	*A2)
+-	(AM-LOC*
+-	*AM-LOC)
 -	(AM-TMP*
 -	*
 -	*
@@ -64615,11 +64615,11 @@ aparecer	(V*V)
 -	*
 -	*A1)
 -	*
--	(V*
-custar	*V)
--	(A1*
--	*A1)
+-	(A3*A3)
+custar	(V*V)
 -	(A2*
+-	*
+-	*
 -	*
 -	*A2)
 -	*
@@ -64627,8 +64627,8 @@ custar	*V)
 -	(AM-DIS*AM-DIS)
 -	*
 -	*
--	(V*
-proteger	*V)
+-	(AM-REC*AM-REC)
+proteger	(V*V)
 -	(A2*
 -	*
 -	*
@@ -64749,11 +64749,11 @@ apontar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -64914,10 +64914,10 @@ sair	(V*V)
 -	*AM-PNC)
 -	*
 
-ir	(V*
--	*V)
--	(A1*
--	*A1)
+ir	(V*V)
+-	(A4*
+-	*
+-	*A4)
 -	(AM-LOC*
 -	*
 -	*AM-LOC)
@@ -65257,9 +65257,9 @@ fumar	(V*V)
 -	*
 perder	(V*V)
 -	(A1*
--	*
--	*
 -	*A1)
+-	(AM-EXT*
+-	*AM-EXT)
 -	*
 
 baixar	(V*V)
@@ -65316,8 +65316,8 @@ comprar	(V*V)
 -	*
 -	*
 -	*
--	(A0*
--	*A0)
+-	(A0*A0)
+-	(A2*A2)
 dar	(V*
 -	*V)
 -	(A1*
@@ -65368,12 +65368,12 @@ conformar	*V)
 -	*A1)
 -	*
 
--	(A1*A1)
+-	*
 perder	(V*V)
+-	(A1*
+-	*
+-	*A1)
 -	(AM-TMP*
--	*
--	*
--	*
 -	*
 -	*AM-TMP)
 -	*
@@ -65530,8 +65530,8 @@ discutir	(V*V)
 -	*
 -	*
 -	(A0*A0)
-usar	(V*
--	*V)
+usar	(V*V)
+-	(A1*A1)
 -	*
 -	*
 -	*
@@ -65577,8 +65577,8 @@ usar	(V*
 escovar	(V*V)
 -	(A1*
 -	*A1)
+-	(AM-MNR*AM-MNR)
 -	(AM-LOC*
--	*
 -	*
 -	*AM-LOC)
 -	*
@@ -65603,9 +65603,9 @@ escovar	(V*V)
 -	*
 aceitar	(V*V)
 -	(A1*A1)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -66116,8 +66116,8 @@ tirar	(V*V)
 -	*
 -	*A1)
 assustar	(V*V)
--	(A0*
 -	*
+-	(A0*
 -	*
 -	*A0)
 -	*
@@ -66348,7 +66348,7 @@ possuir	(V*V)
 -	(A0*A0)
 conquistar	(V*V)
 -	(A1*A1)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 
 -	*
 -	*
@@ -66555,13 +66555,13 @@ acreditar	(V*V)
 -	*A1)
 estar	(V*V)
 -	*
--	(A2*
+-	(A2*A2)
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
--	*
--	*A2)
+-	*AM-PRD)
 -	*
 -	*
 
@@ -66569,12 +66569,12 @@ estar	(V*V)
 estar	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(A1*
+-	*
+-	*
+-	*
+-	*A1)
 -	*
 
 -	(A0*A0)
@@ -66718,10 +66718,10 @@ estar	(V*V)
 -	*
 
 subir	(V*V)
+-	(A4*
+-	*
+-	*A4)
 -	(AM-MNR*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -66775,13 +66775,13 @@ responder	(V*V)
 -	(A1*A1)
 -	*
 escalar	(V*V)
--	(AM-MNR*
+-	(AM-PNC*
+-	*AM-PNC)
+-	(AM-PRD*
 -	*
 -	*
 -	*
--	*
--	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -66838,8 +66838,8 @@ lançar	(V*V)
 tornar	(V*V)
 -	(AM-TMP*
 -	*AM-TMP)
+-	(A2*A2)
 -	(AM-LOC*
--	*
 -	*
 -	*
 -	*AM-LOC)
@@ -66852,9 +66852,9 @@ tornar	(V*V)
 -	(A1*
 -	*A1)
 estar	(V*V)
+-	(A2*
+-	*A2)
 -	(AM-MNR*
--	*
--	*
 -	*
 -	*
 -	*
@@ -66927,10 +66927,10 @@ apaixonar	*V)
 -	*
 -	*A0)
 apostar	(V*V)
--	(A1*
+-	(A2*
 -	*
 -	*
--	*A1)
+-	*A2)
 -	*
 -	*
 -	*
@@ -67145,7 +67145,7 @@ dedicar	(V*V)
 -	*
 
 -	*
--	*
+-	(A1*A1)
 -	(A0*A0)
 -	(V*
 sentir	*V)
@@ -67178,7 +67178,7 @@ ter	(V*V)
 -	*
 -	(V*
 sentir	*V)
--	(AM-EXT*AM-EXT)
+-	(A1*A1)
 -	*
 
 -	(A1*A1)
@@ -67256,8 +67256,8 @@ fazer	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-PNC*
--	*AM-PNC)
+-	(A3*
+-	*A3)
 -	*
 
 -	(AM-TMP*AM-TMP)
@@ -67293,8 +67293,8 @@ estar	(V*V)
 -	*
 -	*
 -	*
--	(AM-PNC*
--	*AM-PNC)
+-	*
+-	(AM-LOC*AM-LOC)
 -	(A0*A0)
 viver	(V*V)
 -	*
@@ -67417,7 +67417,7 @@ esperar	(V*V)
 -	*
 -	*
 voltar	(V*V)
--	(AM-LOC*AM-LOC)
+-	(A4*A4)
 -	*
 -	*
 -	*
@@ -67486,8 +67486,8 @@ dizer	(V*V)
 -	*
 -	*
 ficar	(V*V)
--	(A2*
--	*A2)
+-	(A2*A2)
+-	(AM-LOC*AM-LOC)
 -	*
 -	*
 -	*
@@ -67524,21 +67524,21 @@ existir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-TMP*
+-	(AM-LOC*
 -	*
--	*AM-TMP)
+-	*AM-LOC)
 -	*
 
 -	(AM-TMP*AM-TMP)
 -	(A1*
 -	*A1)
-estar	(V*
--	*V)
+estar	(V*V)
+-	(A2*A2)
+-	(AM-PRD*
+-	*
+-	*
+-	*AM-PRD)
 -	(AM-LOC*
--	*
--	*
--	*
--	*
 -	*
 -	*AM-LOC)
 -	*
@@ -67897,8 +67897,8 @@ ficar	(V*V)
 -	*
 -	*
 passar	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	*
 
@@ -68072,9 +68072,9 @@ pulverizar	(V*V)
 -	(A0*
 -	*A0)
 lembrar	(V*V)
--	(A0*
--	*A0)
--	(AM-LOC*
+-	(A2*
+-	*A2)
+-	(A1*
 -	*
 -	*
 -	*
@@ -68098,7 +68098,7 @@ lembrar	(V*V)
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A1)
 -	*
 
 -	*
@@ -68239,13 +68239,13 @@ esfaquear	(V*V)
 chegar	(V*V)
 -	(AM-PRD*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-PRD)
+-	(A4*
+-	*
+-	*
+-	*
+-	*
+-	*A4)
 -	(AM-TMP*
 -	*
 -	*
@@ -68267,18 +68267,18 @@ preparar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-PNC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*AM-PNC)
 -	*
 
 -	*
@@ -68398,10 +68398,10 @@ tratar	(V*
 -	*
 -	(A1*A1)
 estrear	(V*V)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -68525,8 +68525,8 @@ liderar	(V*V)
 -	*A1)
 -	*
 dizer	(V*V)
+-	(A0*A0)
 -	(A2*
--	*
 -	*A2)
 -	*
 
@@ -68747,7 +68747,7 @@ dizer	(V*V)
 -	*
 -	*
 pagar	(V*V)
--	(A2*A2)
+-	(A3*A3)
 
 -	(A0*
 -	*
@@ -69012,8 +69012,8 @@ cantar	(V*V)
 -	*
 -	(A1*A1)
 registrar	(V*V)
--	(AM-LOC*
--	*AM-LOC)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 
 -	*
@@ -69093,13 +69093,13 @@ avançar	(V*V)
 -	*
 -	*AM-LOC)
 -	*
--	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*
+-	*
 -	*
 
 -	*
@@ -69136,7 +69136,7 @@ avançar	(V*V)
 -	*
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(A1*A1)
 acontecer	(V*V)
 -	(AM-LOC*
 -	*
@@ -69149,11 +69149,11 @@ acontecer	(V*V)
 -	*
 -	*A1)
 cair	(V*V)
+-	(A2*
+-	*
+-	*
+-	*A2)
 -	(A3*
--	*
--	*
--	*
--	*
 -	*
 -	*
 -	*A3)
@@ -69194,11 +69194,11 @@ passar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
 -	*A3)
 -	(A4*
+-	*
+-	*
+-	*
 -	*
 -	*
 -	*A4)
@@ -69872,13 +69872,13 @@ pretender	(V*V)
 deixar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*AM-LOC)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
+-	(AM-PNC*AM-PNC)
 -	*
 -	(AM-TMP*
 -	*
@@ -70268,18 +70268,18 @@ dar	(V*
 -	*A0)
 -	*
 recorrer	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
--	*A2)
--	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*
+-	*
+-	*A1)
 -	*
 
 -	*
@@ -70645,12 +70645,12 @@ enfrentar	(V*V)
 -	*
 -	(A0*A0)
 ter	(V*V)
--	(A1*
+-	(AM-ADV*
 -	*
 -	*
 -	*
 -	*
--	*A1)
+-	*AM-ADV)
 -	(AM-PNC*
 -	*
 -	*
@@ -70931,8 +70931,8 @@ concentrar	(V*V)
 -	*
 
 -	(AM-ADV*AM-ADV)
-abstrair	(V*
--	*V)
+abstrair	(V*V)
+-	(A0*A0)
 -	(A1*
 -	*
 -	*
@@ -71145,7 +71145,7 @@ ter	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-MNR*
+-	(AM-DIS*
 -	*
 -	*
 -	*
@@ -71158,7 +71158,7 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-DIS)
 -	*
 
 -	*
@@ -71471,8 +71471,8 @@ dizer	(V*V)
 -	*
 -	*
 ir	(V*V)
--	(A2*
--	*A2)
+-	(A4*
+-	*A4)
 -	*
 -	*
 -	*
@@ -71500,8 +71500,8 @@ ir	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
+-	(AM-DIS*
+-	*AM-DIS)
 -	*
 -	(A0*
 -	*
@@ -71633,8 +71633,8 @@ tocar	(V*V)
 -	(A1*A1)
 -	(A0*A0)
 prever	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-PRD*
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -71718,9 +71718,9 @@ mostrar	(V*V)
 -	*A1)
 -	*
 descrever	(V*V)
--	(AM-MNR*
--	*
--	*AM-MNR)
+-	(AM-MNR*AM-MNR)
+-	(A0*
+-	*A0)
 -	*
 
 -	*
@@ -71839,7 +71839,7 @@ fazer	(V*V)
 ver	(V*V)
 -	(AM-MNR*AM-MNR)
 -	*
--	(A0*
+-	(AM-LOC*
 -	*
 -	*
 -	*
@@ -71850,7 +71850,7 @@ ver	(V*V)
 -	*
 -	*
 -	*
--	*A0)
+-	*AM-LOC)
 -	*
 
 -	(A0*A0)
@@ -71953,8 +71953,8 @@ visar	(V*V)
 -	*
 -	*A0)
 receber	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(A1*
 -	*A1)
 -	*
@@ -72104,11 +72104,11 @@ fechar	(V*V)
 -	*
 -	*
 -	*AM-TMP)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -72280,9 +72280,9 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	(A1*
--	*A1)
+-	(A1*A1)
 -	(A0*
+-	*
 -	*
 -	*A0)
 defender	(V*V)
@@ -72577,15 +72577,15 @@ citar	(V*V)
 -	*A1)
 -	*
 
--	(AM-TMP*
+-	(AM-CAU*
 -	*
 -	*
 -	*
--	*AM-TMP)
+-	*AM-CAU)
 -	*
 chegar	(V*V)
--	(A4*
--	*A4)
+-	(A1*
+-	*A1)
 -	(A0*
 -	*
 -	*
@@ -73136,9 +73136,9 @@ trabalhar	(V*V)
 -	*A1)
 -	*
 tomar	(V*V)
+-	(AM-PNC*
+-	*AM-PNC)
 -	(A0*
--	*
--	*
 -	*
 -	*
 -	*
@@ -73387,9 +73387,9 @@ preferir	(V*V)
 -	*
 -	*A0)
 ter	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -73526,7 +73526,7 @@ julgar	(V*V)
 -	*
 
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 preferir	(V*V)
 -	(A1*
 -	*
@@ -73614,10 +73614,10 @@ depender	(V*V)
 -	*
 -	(A0*A0)
 ter	(V*V)
--	(A1*A1)
--	(A2*
+-	(A1*
 -	*
--	*A2)
+-	*
+-	*A1)
 -	*
 -	*
 -	*
@@ -73895,8 +73895,8 @@ jogar	(V*V)
 -	*
 -	(A1*A1)
 ficar	(V*V)
--	(A2*A2)
--	(V*V)
+-	(A2*
+-	*A2)
 -	(AM-LOC*
 -	*
 -	*AM-LOC)
@@ -74070,14 +74070,14 @@ responder	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(A2*
--	*
--	*
--	*
--	*
--	*
--	*A2)
 -	*
 -	*
 -	*
@@ -74150,7 +74150,7 @@ esclarecer	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	(A3*A3)
 -	(A0*
 -	*A0)
 gastar	(V*V)
@@ -74320,7 +74320,7 @@ raciocinar	(V*V)
 -	*A0)
 -	(AM-ADV*AM-ADV)
 ter	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-PRD*AM-PRD)
 -	(A1*
 -	*
 -	*
@@ -74517,9 +74517,9 @@ dar	(V*V)
 -	*
 -	*
 renegociar	(V*V)
--	(A2*
+-	(A1*
 -	*
--	*A2)
+-	*A1)
 -	*
 -	*
 -	*
@@ -75039,7 +75039,7 @@ apontar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -75050,7 +75050,7 @@ apontar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A1*
@@ -75189,7 +75189,7 @@ lembrar	(V*V)
 
 -	*
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	*
 atuar	(V*V)
 -	(A2*
@@ -75207,11 +75207,11 @@ entrar	(V*V)
 -	(AM-MNR*
 -	*AM-MNR)
 -	*
--	(AM-ADV*
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*AM-ADV)
+-	*AM-MNR)
 -	*
 
 -	*
@@ -75298,13 +75298,13 @@ negociar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 
 -	(A0*
 -	*
@@ -75623,10 +75623,10 @@ discutir	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(AM-PRD*
 -	*
 -	*
--	*AM-PNC)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -75664,7 +75664,7 @@ observar	(V*V)
 -	*
 
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	*
 falar	(V*V)
 -	(A1*
@@ -75722,7 +75722,7 @@ oferecer	(V*V)
 -	*
 -	*
 -	*AM-TMP)
--	(AM-REC*AM-REC)
+-	(A1*A1)
 apresentar	(V*V)
 -	(AM-LOC*
 -	*
@@ -75845,8 +75845,8 @@ questionar	(V*V)
 -	*
 -	*
 adotar	(V*V)
--	(A0*
--	*A0)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(AM-LOC*
 -	*
 -	*
@@ -76036,7 +76036,7 @@ dizer	(V*V)
 -	*
 -	*
 -	*A0)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 entrar	(V*V)
 -	(A1*
 -	*
@@ -76096,14 +76096,14 @@ vir	(V*V)
 -	*
 -	*
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 -	*
 trabalhar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	(A0*A0)
@@ -76149,7 +76149,7 @@ escrever	(V*V)
 -	*
 -	*
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 -	*
 torturar	(V*V)
 -	(A0*
@@ -76381,14 +76381,14 @@ esboçar	(V*V)
 estar	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-MNR*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-MNR)
 -	*
 -	(AM-PNC*
 -	*
@@ -76431,7 +76431,7 @@ acompanhar	(V*V)
 -	(A0*
 -	*A0)
 lembrar	(V*V)
--	(AM-ADV*AM-ADV)
+-	(AM-EXT*AM-EXT)
 -	(A1*
 -	*
 -	*
@@ -76504,8 +76504,8 @@ participar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 -	(AM-TMP*
 -	*
 -	*
@@ -76530,27 +76530,27 @@ participar	(V*V)
 -	*A1)
 -	*
 escolher	(V*V)
--	(A2*
+-	(A4*
+-	*
+-	*
+-	*
+-	*
+-	*A4)
+-	(A0*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
+-	*A0)
+-	(AM-CAU*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*A2)
+-	*AM-CAU)
 -	*
 
 -	*
@@ -76608,10 +76608,10 @@ mostrar	(V*V)
 seguir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-PRD*
+-	(AM-TMP*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -76789,13 +76789,13 @@ encomendar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-CAU*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-CAU)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -76862,8 +76862,8 @@ devorar	(V*V)
 -	*A1)
 -	*
 
--	(A2*A2)
--	*
+-	(A1*
+-	*A1)
 custar	(V*V)
 -	(A2*
 -	*
@@ -76902,8 +76902,8 @@ dar	(V*
 -	*
 -	*
 -	*
+-	(AM-TMP*AM-TMP)
 -	(A0*
--	*
 -	*A0)
 -	(AM-REC*AM-REC)
 preparar	(V*V)
@@ -76961,15 +76961,15 @@ reduzir	(V*V)
 -	*
 -	*
 destacar	(V*V)
--	(A2*
+-	(AM-MNR*
+-	*
+-	*AM-MNR)
+-	(AM-LOC*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*A2)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -77334,15 +77334,15 @@ infringir	(V*V)
 -	*
 -	(A0*A0)
 proibir	(V*V)
--	(A2*
+-	(A2*A2)
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*A2)
+-	*A1)
 -	*
 
 -	*
@@ -77454,10 +77454,10 @@ vencer	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-TMP*
+-	(AM-EXT*
 -	*
 -	*
--	*AM-TMP)
+-	*AM-EXT)
 -	*
 
 -	(A0*A0)
@@ -77506,7 +77506,7 @@ perder	(V*V)
 -	*AM-EXT)
 -	*
 
--	(AM-DIS*AM-DIS)
+-	(AM-ADV*AM-ADV)
 -	*
 -	(AM-TMP*AM-TMP)
 -	*
@@ -77548,8 +77548,8 @@ levar	(V*V)
 -	*
 -	*A2)
 -	*
--	*
--	*
+-	(AM-TMP*
+-	*AM-TMP)
 -	*
 -	*
 -	*
@@ -77619,17 +77619,17 @@ encetar	(V*V)
 -	(A0*A0)
 impor	(V*V)
 -	(A1*A1)
--	(AM-MNR*
+-	(A2*
+-	*
+-	*A2)
+-	(AM-ADV*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*AM-MNR)
+-	*AM-ADV)
 -	*
 
 -	*
@@ -77803,7 +77803,7 @@ deixar	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	*
+-	(A1*A1)
 -	*
 cair	(V*V)
 -	(A2*
@@ -77933,10 +77933,10 @@ prever	(V*V)
 -	(A0*
 -	*A0)
 enviar	(V*V)
+-	(A2*
+-	*
+-	*A2)
 -	(A1*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -77997,7 +77997,7 @@ determinar	(V*V)
 -	*
 -	(A1*
 -	*A1)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	*
 rever	(V*V)
 -	*
@@ -78087,9 +78087,9 @@ dar	(V*V)
 conquistar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(AM-PRD*
 -	*
--	*AM-LOC)
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -78280,7 +78280,7 @@ ter	(V*V)
 achar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*AM-MNR)
+-	(A2*A2)
 -	*
 
 -	*
@@ -78343,7 +78343,7 @@ limitar	(V*V)
 -	*
 -	*
 pagar	(V*V)
--	(A1*A1)
+-	(A3*A3)
 -	*
 -	*
 -	*
@@ -78381,10 +78381,10 @@ dizer	(V*V)
 cobrar	(V*V)
 -	(A1*
 -	*A1)
--	(A4*
+-	(AM-PNC*
 -	*
 -	*
--	*A4)
+-	*AM-PNC)
 -	*
 -	*
 -	*
@@ -78964,19 +78964,14 @@ estar	(V*V)
 -	*A0)
 -	*
 trabalhar	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
--	(A2*
--	*
--	*
--	*
--	*
--	*
+-	(A1*
 -	*
 -	*
 -	*
@@ -78984,7 +78979,12 @@ trabalhar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A1)
 -	*
 
 -	(A0*
@@ -79043,14 +79043,14 @@ anunciar	(V*V)
 -	(A1*A1)
 -	(AM-ADV*AM-ADV)
 aparecer	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(AM-TMP*
 -	*
 -	*
@@ -79120,7 +79120,7 @@ vencer	(V*V)
 -	*
 -	*A1)
 aparecer	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -79136,7 +79136,7 @@ aparecer	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -79335,7 +79335,7 @@ acrescentar	(V*V)
 -	*
 -	*
 pedir	(V*V)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
@@ -79343,7 +79343,7 @@ pedir	(V*V)
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	*
@@ -79609,9 +79609,9 @@ decidir	(V*V)
 julgar	(V*V)
 -	(A0*
 -	*
--	*
--	*
 -	*A0)
+-	(AM-LOC*
+-	*AM-LOC)
 -	*
 
 -	(A0*
@@ -79759,9 +79759,9 @@ entrar	(V*V)
 -	*
 -	*
 -	*
+-	*
 -	*AM-TMP)
 -	(AM-PNC*
--	*
 -	*
 -	*
 -	*
@@ -79812,9 +79812,9 @@ entrar	(V*V)
 -	*
 -	*
 disputar	(V*V)
--	(AM-PNC*
+-	(A2*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 -	(AM-LOC*
 -	*
@@ -79828,13 +79828,13 @@ disputar	(V*V)
 -	*
 -	(A1*
 -	*A1)
--	(AM-TMP*
+-	(AM-PRD*
 -	*
 -	*
 -	*
--	*AM-TMP)
--	(A1*
--	*A1)
+-	*
+-	*
+-	*AM-PRD)
 -	*
 -	*
 -	*
@@ -79901,10 +79901,10 @@ ler	(V*V)
 -	*
 -	(A0*A0)
 chegar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -80002,9 +80002,9 @@ marcar	(V*V)
 -	*
 evoluir	(V*V)
 -	(AM-MNR*AM-MNR)
--	(A1*
+-	(AM-LOC*
 -	*
--	*A1)
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -80027,17 +80027,17 @@ evoluir	(V*V)
 -	*
 -	*A0)
 baixar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(AM-TMP*AM-TMP)
--	(A1*
+-	(AM-LOC*
 -	*
 -	*
 -	*
--	*A1)
+-	*AM-LOC)
 -	(AM-PNC*
 -	*
 -	*
@@ -80154,8 +80154,8 @@ existir	(V*V)
 -	*
 
 -	*
+-	(AM-ADV*AM-ADV)
 -	(A1*
--	*
 -	*
 -	*
 -	*
@@ -80164,10 +80164,10 @@ existir	(V*V)
 -	*A1)
 -	*
 interessar	(V*V)
--	(A1*
--	*
--	*A1)
 -	(A0*
+-	*
+-	*
+-	*
 -	*
 -	*
 -	*
@@ -80230,10 +80230,10 @@ ficar	(V*V)
 recair	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-PRD*
+-	*
+-	*AM-PRD)
 -	*
 -	(AM-ADV*
 -	*
@@ -80711,9 +80711,9 @@ dar	(V*
 -	*
 -	*A0)
 continuar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	*
@@ -81207,11 +81207,11 @@ viabilizar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
 -	*A1)
--	(AM-LOC*
--	*
--	*
--	*AM-LOC)
 -	*
 -	*
 -	*
@@ -81814,8 +81814,8 @@ receber	(V*V)
 -	*
 -	*
 -	*
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 -	*
 sortear	(V*V)
 -	(A2*
@@ -81925,9 +81925,9 @@ ir	(V*V)
 
 -	(A0*A0)
 trazer	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	(A1*
 -	*
 -	*A1)
@@ -82126,9 +82126,9 @@ frequentar	(V*V)
 
 -	*
 ir	(V*V)
--	(AM-DIR*
+-	(A4*
 -	*
--	*AM-DIR)
+-	*A4)
 -	*
 -	(A0*A0)
 -	*
@@ -82582,7 +82582,7 @@ entrar	(V*
 -	*
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-DIS*AM-DIS)
 -	(A0*
 -	*
 -	*
@@ -82642,8 +82642,8 @@ temer	(V*V)
 -	*
 -	*
 -	*
--	*A1)
 -	*
+-	*A1)
 
 -	*
 -	*
@@ -82822,16 +82822,16 @@ enfraquecer	(V*V)
 -	*
 -	*
 -	(A0*A0)
-abrir	(V*
--	*V)
--	(A2*
+abrir	(V*V)
+-	(A1*A1)
+-	(A3*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
@@ -82981,14 +82981,14 @@ aprovar	(V*V)
 -	*AM-LOC)
 -	*
 
--	(A1*A1)
+-	(A0*A0)
 depender	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 -	*
 -	*
@@ -83229,9 +83229,9 @@ consubstanciar	(V*V)
 -	*
 tornar	(V*
 -	*V)
--	(AM-EXT*
+-	(A2*
 -	*
--	*AM-EXT)
+-	*A2)
 -	(A1*
 -	*
 -	*
@@ -83372,9 +83372,9 @@ aprovar	(V*V)
 -	*
 -	(AM-NEG*AM-NEG)
 caber	(V*V)
--	(A1*A1)
--	(A2*
--	*A2)
+-	(A0*
+-	*
+-	*A0)
 -	*
 
 caber	(V*V)
@@ -83528,8 +83528,8 @@ precisar	(V*V)
 -	*
 
 ter	(V*V)
--	(AM-MNR*AM-MNR)
--	(V*V)
+-	(AM-LOC*
+-	*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -83565,9 +83565,9 @@ ouvir	(V*V)
 -	*
 -	*
 falar	(V*V)
--	(A2*
--	*
--	*A2)
+-	(AM-EXT*AM-EXT)
+-	(A1*
+-	*A1)
 -	*
 
 -	(AM-NEG*AM-NEG)
@@ -83747,10 +83747,10 @@ colocar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-MNR*
+-	*
+-	*AM-MNR)
 -	*
 
 -	(AM-LOC*
@@ -83910,17 +83910,17 @@ orgulhar	*V)
 -	*
 dizer	(V*V)
 -	(A1*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A3*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A3)
 -	*
 
 falar	(V*V)
@@ -83955,10 +83955,10 @@ saudar	(V*V)
 -	(A1*
 -	*
 -	*
--	*A1)
--	(A2*
 -	*
--	*A2)
+-	*
+-	*
+-	*A1)
 -	*
 
 -	(A0*A0)
@@ -84156,8 +84156,8 @@ superar	(V*V)
 -	*A1)
 -	*
 fazer	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 
 -	*
@@ -84254,9 +84254,9 @@ exigir	(V*V)
 omitir	(V*V)
 -	(A1*
 -	*
+-	*
+-	*
 -	*A1)
--	(AM-LOC*
--	*AM-LOC)
 -	*
 
 -	(A2*
@@ -84873,8 +84873,8 @@ ter	(V*V)
 -	*
 -	(A0*A0)
 pagar	(V*V)
--	(A2*
--	*A2)
+-	(A3*
+-	*A3)
 -	*
 -	*
 -	*
@@ -84996,11 +84996,11 @@ calcular	(V*V)
 -	(AM-DIS*AM-DIS)
 -	*
 pagar	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	(AM-DIS*
@@ -85100,9 +85100,9 @@ conhecer	(V*V)
 -	*
 -	(AM-MNR*AM-MNR)
 agir	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	(A1*
@@ -85188,7 +85188,7 @@ obrigar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
@@ -85199,7 +85199,7 @@ obrigar	(V*V)
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	*
@@ -85537,9 +85537,9 @@ tornar	(V*V)
 -	*AM-TMP)
 -	*
 cair	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(A0*
@@ -85686,8 +85686,8 @@ ter	(V*V)
 -	*
 trabalhar	(V*V)
 -	(AM-MNR*
--	*
 -	*AM-MNR)
+-	(AM-TMP*AM-TMP)
 -	*
 
 -	(AM-LOC*
@@ -85795,8 +85795,8 @@ dar	(V*V)
 -	(A1*A1)
 -	(A0*A0)
 ter	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-PRD*
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -85872,8 +85872,8 @@ esperar	(V*V)
 -	*
 -	*
 -	*A0)
--	(V*
-atritar	*V)
+-	(AM-REC*AM-REC)
+atritar	(V*V)
 -	(AM-CAU*
 -	*
 -	*
@@ -86117,8 +86117,8 @@ repetir	(V*V)
 -	*
 -	*
 -	*
--	(A0*
--	*A0)
+-	(A0*A0)
+-	*
 -	*
 -	*
 -	*
@@ -86410,7 +86410,7 @@ reverter	(V*V)
 -	*
 -	*A0)
 falar	(V*V)
--	(AM-MNR*
+-	(A1*
 -	*
 -	*
 -	*
@@ -86439,7 +86439,7 @@ falar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A1)
 -	*
 
 -	*
@@ -86672,10 +86672,10 @@ atingir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	(A0*
@@ -86779,8 +86779,8 @@ representar	(V*V)
 -	*
 
 ter	(V*V)
--	(A2*
--	*A2)
+-	(AM-LOC*
+-	*AM-LOC)
 -	(A1*
 -	*A1)
 -	*
@@ -87112,13 +87112,13 @@ impor	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(AM-PRD*
@@ -87128,8 +87128,8 @@ impor	(V*V)
 -	*
 -	*AM-PRD)
 -	*
--	*
 -	(AM-PRD*
+-	*
 -	*
 -	*
 -	*AM-PRD)
@@ -87139,21 +87139,21 @@ impor	(V*V)
 ver	(V*V)
 -	(A1*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
 -	*
 
 -	(A0*A0)
 atuar	(V*V)
--	(A0*
--	*A0)
 -	(A1*
+-	*
+-	*
 -	*A1)
 -	(A2*
 -	*
@@ -87278,8 +87278,8 @@ discutir	(V*V)
 -	*
 -	*
 -	*
--	(V*
-lembrar	*V)
+-	(AM-REC*AM-REC)
+lembrar	(V*V)
 -	(A1*
 -	*
 -	*A1)
@@ -87289,7 +87289,7 @@ lembrar	*V)
 -	*
 
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 ter	(V*V)
 -	(A1*
 -	*
@@ -87395,9 +87395,9 @@ falar	(V*V)
 -	*
 -	*A1)
 -	*
--	(A1*
+-	(AM-DIS*
+-	*AM-DIS)
 -	*
--	*A1)
 vir	(V*V)
 -	(A2*
 -	*
@@ -87538,9 +87538,9 @@ distribuir	(V*V)
 -	(A2*
 -	*
 -	*A2)
--	(AM-TMP*
+-	(AM-MNR*
 -	*
--	*AM-TMP)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -87687,7 +87687,9 @@ ir	(V*
 -	*
 -	*
 -	*AM-TMP)
--	(A3*
+-	(AM-LOC*
+-	*AM-LOC)
+-	(A2*
 -	*
 -	*
 -	*
@@ -87703,9 +87705,7 @@ ir	(V*
 -	*
 -	*
 -	*
--	*
--	*
--	*A3)
+-	*A2)
 -	*
 
 -	(A1*
@@ -87724,10 +87724,10 @@ matar	(V*V)
 -	(A2*
 -	*A2)
 -	(AM-LOC*
--	*
--	*
--	*
 -	*AM-LOC)
+-	(AM-TMP*
+-	*
+-	*AM-TMP)
 -	*
 
 -	*
@@ -87889,12 +87889,12 @@ chegar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
+-	*
+-	*
 -	*AM-TMP)
 -	(AM-LOC*
--	*
--	*
--	*
--	*
 -	*
 -	*AM-LOC)
 -	*
@@ -87910,8 +87910,8 @@ chegar	(V*V)
 -	*AM-MNR)
 -	*
 
+-	(AM-LOC*AM-LOC)
 -	(A1*
--	*
 -	*
 -	*A1)
 estar	(V*V)
@@ -87962,9 +87962,9 @@ anteceder	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 imaginar	(V*V)
@@ -88228,9 +88228,9 @@ falar	(V*V)
 colocar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 -	*
 -	*
@@ -88251,7 +88251,7 @@ colocar	(V*V)
 -	*
 dizer	(V*V)
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 -	*
 
 -	*
@@ -88273,7 +88273,7 @@ sorrir	(V*V)
 -	(A1*
 -	*A1)
 -	*
--	(AM-MNR*AM-MNR)
+-	(AM-ADV*AM-ADV)
 começar	(V*V)
 -	*
 
@@ -88394,8 +88394,8 @@ dizer	(V*V)
 -	*A0)
 -	*
 
--	(AM-CAU*
--	*AM-CAU)
+-	(AM-PRD*
+-	*AM-PRD)
 -	(A1*A1)
 -	(AM-ADV*AM-ADV)
 estar	(V*V)
@@ -88438,9 +88438,9 @@ juntar	(V*V)
 -	*
 -	*A0)
 chegar	(V*V)
--	(A4*
+-	(AM-PNC*
 -	*
--	*A4)
+-	*AM-PNC)
 -	*
 
 -	(A0*A0)
@@ -88851,8 +88851,8 @@ desvincular	(V*V)
 -	*
 -	*AM-DIS)
 -	*
--	(A0*
--	*A0)
+-	(AM-EXT*
+-	*AM-EXT)
 adiantar	(V*V)
 -	(A1*
 -	*
@@ -89045,15 +89045,15 @@ esclarecer	(V*V)
 -	*
 -	*
 pagar	(V*V)
--	(A2*
+-	(A3*
+-	*
+-	*
+-	*A3)
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*A2)
+-	*AM-MNR)
 -	(AM-LOC*
 -	*
 -	*
@@ -89119,7 +89119,7 @@ estar	(V*V)
 -	*A2)
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	*
 -	(A0*A0)
 radicalizar	(V*V)
@@ -89150,7 +89150,7 @@ radicalizar	(V*V)
 -	(A1*A1)
 -	(A0*A0)
 ter	(V*V)
--	(A2*
+-	(AM-PRD*
 -	*
 -	*
 -	*
@@ -89158,7 +89158,7 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-PRD)
 -	*
 
 -	(A2*
@@ -89174,8 +89174,8 @@ ter	(V*V)
 -	*
 fazer	(V*V)
 -	*
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-LOC*
+-	*AM-LOC)
 -	*
 -	(A1*
 -	*
@@ -89236,13 +89236,13 @@ ter	(V*V)
 -	(A0*
 -	*A0)
 -	*
--	(AM-MNR*AM-MNR)
-dar	(V*
+-	(A2*A2)
+dar	(V*V)
+-	(A1*A1)
+-	(V*V)
+-	(A3*
 -	*
--	*V)
--	(A2*
--	*
--	*A2)
+-	*A3)
 -	*
 
 -	(AM-ADV*
@@ -89392,8 +89392,8 @@ dizer	(V*V)
 
 -	(AM-DIS*AM-DIS)
 -	*
--	(A0*
--	*A0)
+-	(A2*A2)
+-	(A0*A0)
 achar	(V*V)
 -	(A1*
 -	*
@@ -89443,8 +89443,8 @@ receber	(V*V)
 -	*A0)
 -	(AM-REC*AM-REC)
 manter	(V*V)
--	(A2*
--	*A2)
+-	(A1*
+-	*A1)
 -	*
 -	*
 -	*
@@ -89762,7 +89762,7 @@ tornar	*V)
 -	*A2)
 -	*
 
--	(AM-MNR*
+-	(AM-ADV*
 -	*
 -	*
 -	*
@@ -89782,7 +89782,7 @@ tornar	*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-ADV)
 -	*
 -	(A1*
 -	*A1)
@@ -89838,9 +89838,9 @@ ocorrer	(V*V)
 -	*A1)
 -	*
 fazer	(V*V)
--	(AM-MNR*
+-	(A0*
 -	*
--	*AM-MNR)
+-	*A0)
 -	*
 -	(AM-TMP*
 -	*
@@ -90193,7 +90193,7 @@ levantar	(V*V)
 -	*
 -	*
 liberar	(V*V)
--	(AM-ADV*AM-ADV)
+-	(AM-TMP*AM-TMP)
 -	(AM-PNC*
 -	*
 -	*
@@ -90315,8 +90315,7 @@ pretender	(V*V)
 -	*
 dar	(V*V)
 -	(A1*A1)
--	(V*V)
--	(A1*
+-	(A2*
 -	*
 -	*
 -	*
@@ -90334,7 +90333,8 @@ dar	(V*V)
 -	*
 -	*
 -	*
--	*A1)
+-	*
+-	*A2)
 -	*
 
 -	*
@@ -90562,7 +90562,7 @@ proibir	(V*V)
 -	*
 -	(V*
 tornar	*V)
--	(A1*A1)
+-	(A2*A2)
 -	(AM-TMP*
 -	*
 -	*AM-TMP)
@@ -90961,12 +90961,12 @@ interpretar	(V*V)
 -	(A1*A1)
 dizer	(V*
 -	*V)
--	(AM-MNR*
+-	(A2*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 -	*
 fazer	(V*V)
 -	(A1*A1)
@@ -90994,10 +90994,10 @@ fazer	(V*V)
 -	*
 -	*
 respeitar	(V*V)
--	(A0*
+-	(A0*A0)
+-	(A1*
 -	*
--	*
--	*A0)
+-	*A1)
 -	*
 -	*
 -	*
@@ -91062,13 +91062,13 @@ julgar	(V*V)
 -	*
 -	(A0*A0)
 depender	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 -	*
 -	*
@@ -91083,7 +91083,7 @@ depender	(V*V)
 variar	(V*V)
 -	(A2*A2)
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 -	*
 -	(AM-ADV*
 -	*
@@ -91220,8 +91220,8 @@ estar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
 -	*
+-	*A2)
 -	*
 -	*
 -	*
@@ -91258,15 +91258,15 @@ estar	(V*V)
 -	*
 -	(A1*A1)
 existir	(V*V)
--	(A1*
+-	(A2*A2)
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*
--	*A1)
+-	*AM-TMP)
 -	*
 -	*
 -	*
@@ -91319,7 +91319,7 @@ existir	(V*V)
 -	(A1*A1)
 proclamar	(V*V)
 -	(AM-TMP*AM-TMP)
--	(A1*A1)
+-	(A2*A2)
 -	*
 -	*
 -	*
@@ -91361,7 +91361,7 @@ proclamar	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(AM-NEG*AM-NEG)
 -	*
 -	*
 -	*
@@ -91496,7 +91496,7 @@ selecionar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	*
 -	*
 abrir	(V*V)
@@ -91559,13 +91559,13 @@ receber	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
 -	*
+-	*A2)
 -	*
 -	*
--	*AM-PNC)
 -	*
 -	*
 -	*
@@ -91615,8 +91615,8 @@ receber	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
-levar	(V*V)
+-	(V*
+levar	*V)
 -	(A0*
 -	*
 -	*
@@ -91714,9 +91714,9 @@ ficar	(V*V)
 -	*
 -	(A0*A0)
 soprar	(V*V)
--	(AM-MNR*
+-	(AM-DIR*
 -	*
--	*AM-MNR)
+-	*AM-DIR)
 -	*
 
 -	(A0*
@@ -91892,13 +91892,13 @@ apurar	*
 -	*
 -	*
 -	*
+-	(V*V)
+-	(A1*
+-	*A1)
 -	*
 -	*
 -	*
 -	*
--	*
--	(A0*
--	*A0)
 -	*
 -	*
 abrir	*
@@ -92018,14 +92018,14 @@ trabalhar	(V*V)
 -	(A1*
 -	*A1)
 variar	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
+-	*A3)
+-	(A4*
 -	*
 -	*
--	*
--	*
--	*A2)
+-	*A4)
 -	*
 
 -	(A1*
@@ -92181,10 +92181,10 @@ aderir	(V*V)
 -	*
 -	*A1)
 vir	(V*V)
+-	(AM-LOC*
+-	*
+-	*AM-LOC)
 -	(AM-PNC*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -92265,8 +92265,8 @@ comandar	(V*V)
 -	*AM-LOC)
 -	*
 
-estar	(V*
--	*V)
+estar	(V*V)
+-	(A2*A2)
 -	(A1*
 -	*
 -	*
@@ -92325,7 +92325,7 @@ dizer	(V*V)
 -	*
 -	*
 -	*
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 abandonar	(V*V)
 -	(A1*A1)
 -	*
@@ -92858,8 +92858,8 @@ ter	(V*V)
 -	(A1*A1)
 -	*
 revelar	(V*V)
--	(AM-LOC*
--	*AM-LOC)
+-	(AM-LOC*AM-LOC)
+-	(AM-TMP*AM-TMP)
 -	*
 -	*
 -	*
@@ -93345,7 +93345,7 @@ considerar	(V*V)
 -	*
 -	*A0)
 defender	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -93390,10 +93390,10 @@ cometer	(V*V)
 -	*A0)
 -	*
 ir	(V*V)
+-	(A4*
+-	*
+-	*A4)
 -	(AM-MNR*
--	*
--	*
--	*
 -	*
 -	*AM-MNR)
 -	*
@@ -93504,8 +93504,8 @@ haver	(V*V)
 -	*A0)
 levar	(V*V)
 -	(A1*A1)
--	(A2*
 -	*
+-	(A2*
 -	*
 -	*
 -	*
@@ -93543,9 +93543,9 @@ conhecer	(V*V)
 -	*A1)
 -	*
 
--	(AM-CAU*
+-	(AM-MNR*
 -	*
--	*AM-CAU)
+-	*AM-MNR)
 -	*
 afiar	(V*V)
 -	(A1*A1)
@@ -93735,14 +93735,14 @@ estar	(V*V)
 dizer	(V*V)
 -	(A0*A0)
 -	*
--	(AM-PRD*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-TMP)
 -	*
 -	(AM-LOC*
 -	*
@@ -93955,7 +93955,7 @@ vir	(V*V)
 -	*
 -	*A0)
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 reforçar	(V*V)
 -	(A1*
 -	*
@@ -94004,8 +94004,8 @@ explicar	(V*V)
 -	*A1)
 -	*
 
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 -	*
 chamar	(V*V)
 -	(A2*
@@ -94153,9 +94153,9 @@ construir	(V*V)
 -	*
 -	(A0*A0)
 chegar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 tratar	(V*
@@ -94217,13 +94217,13 @@ tratar	(V*
 -	*
 rebelar	(V*
 -	*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	(AM-TMP*
 -	*
 -	*
@@ -94385,7 +94385,7 @@ inviabilizar	(V*V)
 -	*
 -	*
 estabilizar	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	(A1*
 -	*
 -	*A1)
@@ -94624,9 +94624,9 @@ apresentar	(V*V)
 -	*
 -	(A0*A0)
 -	*
--	(A0*
+-	(A2*
 -	*
--	*A0)
+-	*A2)
 -	*
 -	*
 -	*
@@ -94812,8 +94812,8 @@ disparar	(V*V)
 -	*
 fazer	(V*V)
 -	(A1*A1)
--	(AM-LOC*
--	*AM-LOC)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -94964,8 +94964,8 @@ ter	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	(V*
-dar	*V)
+-	(A2*A2)
+dar	(V*V)
 -	(A1*
 -	*
 -	*
@@ -95096,9 +95096,9 @@ revelar	(V*V)
 -	*
 
 -	*
--	(AM-TMP*AM-TMP)
--	(A1*
--	*A1)
+-	(AM-TMP*
+-	*
+-	*AM-TMP)
 gostar	(V*V)
 -	(AM-EXT*AM-EXT)
 -	(A1*
@@ -95142,9 +95142,9 @@ gostar	(V*V)
 -	*
 jogar	(V*V)
 -	(A1*A1)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -95278,8 +95278,8 @@ preferir	(V*V)
 -	*
 -	*
 jogar	(V*V)
--	(A1*
--	*A1)
+-	(AM-MNR*
+-	*AM-MNR)
 -	(AM-LOC*
 -	*
 -	*AM-LOC)
@@ -95549,7 +95549,7 @@ administrar	(V*V)
 -	*
 -	*
 
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 -	*
 -	(A0*
 -	*
@@ -95601,10 +95601,10 @@ conseguir	(V*V)
 negociar	(V*V)
 -	(A2*
 -	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-PRD*
+-	*
+-	*AM-PRD)
 -	*
 -	(AM-MNR*
 -	*
@@ -95640,15 +95640,15 @@ negociar	(V*V)
 -	*
 trocar	(V*V)
 -	(A1*A1)
--	(A2*
+-	(A3*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
 -	*
--	(A1*
--	*A1)
+-	(A1*A1)
+-	(A0*A0)
 chamar	(V*V)
 -	(A2*
 -	*
@@ -95697,14 +95697,14 @@ chamar	(V*V)
 -	*
 -	*
 entrar	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 
 -	(A0*
@@ -96024,11 +96024,11 @@ firmar	(V*V)
 -	(A1*
 -	*A1)
 -	*
--	(AM-PRD*
+-	(AM-LOC*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-LOC)
 -	*
 
 -	*
@@ -96330,11 +96330,11 @@ diluir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	*
@@ -96479,8 +96479,8 @@ depender	(V*V)
 -	*
 -	(A1*A1)
 acompanhar	(V*V)
--	(A0*
--	*A0)
+-	(A2*
+-	*A2)
 -	*
 
 -	(A0*
@@ -96671,10 +96671,10 @@ incensar	(V*V)
 destronar	(V*V)
 -	(AM-TMP*AM-TMP)
 -	*
--	(AM-MNR*
+-	(AM-TMP*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 -	*
 
@@ -97605,7 +97605,7 @@ acatar	(V*V)
 -	*
 -	*
 -	(A1*A1)
--	(A2*A2)
+-	(A3*A3)
 oferecer	(V*V)
 -	(A0*
 -	*
@@ -98210,10 +98210,10 @@ entrar	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-CAU*
+-	(AM-PRD*
 -	*
 -	*
--	*AM-CAU)
+-	*AM-PRD)
 -	*
 -	*
 -	*
@@ -98348,7 +98348,7 @@ informar	(V*V)
 -	*
 -	*
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-MNR*AM-MNR)
 acabar	(V*V)
 -	(A1*
 -	*
@@ -98422,13 +98422,13 @@ ficar	(V*V)
 -	(AM-ADV*AM-ADV)
 chegar	(V*V)
 -	(AM-MNR*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-MNR)
+-	(AM-CAU*
+-	*
+-	*
+-	*
+-	*
+-	*AM-CAU)
 -	*
 -	*
 -	*
@@ -98973,7 +98973,7 @@ virar	(V*V)
 -	*
 -	*A0)
 continuar	(V*V)
--	(A2*A2)
+-	(AM-MNR*AM-MNR)
 -	*
 
 -	(A1*
@@ -99081,12 +99081,12 @@ ter	(V*V)
 criticar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -99336,14 +99336,14 @@ estar	(V*V)
 -	*
 -	(A0*A0)
 negociar	(V*V)
--	(A1*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A1)
+-	*A2)
 -	*
 -	*
 -	*
@@ -99462,7 +99462,7 @@ disputar	(V*V)
 -	*
 -	*A1)
 repercutir	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	(AM-LOC*
 -	*
 -	*
@@ -99539,7 +99539,7 @@ começar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-LOC*AM-LOC)
+-	(AM-MNR*AM-MNR)
 -	*
 -	*
 -	*
@@ -99762,8 +99762,8 @@ matar	(V*V)
 -	(A1*A1)
 -	(AM-NEG*AM-NEG)
 estar	(V*V)
--	(AM-LOC*
--	*AM-LOC)
+-	(A2*
+-	*A2)
 -	*
 
 -	(A0*
@@ -99959,8 +99959,8 @@ dizer	(V*V)
 -	(AM-TMP*AM-TMP)
 embutir	(V*V)
 -	*
--	(AM-ADV*
--	*AM-ADV)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	(A1*
 -	*
@@ -100840,7 +100840,7 @@ insinuar	(V*V)
 -	*
 -	*
 fazer	(V*V)
--	(AM-DIS*AM-DIS)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*
@@ -101140,8 +101140,8 @@ atenuar	(V*V)
 -	*
 
 atuar	(V*V)
--	(A2*
--	*A2)
+-	(AM-MNR*
+-	*AM-MNR)
 -	*
 -	(A0*
 -	*A0)
@@ -101466,8 +101466,8 @@ ler	(V*V)
 -	*
 -	*
 vir	(V*V)
--	(A2*
--	*A2)
+-	(A4*
+-	*A4)
 -	*
 -	*
 -	*
@@ -101573,8 +101573,8 @@ viver	(V*V)
 -	*
 -	(AM-TMP*
 -	*AM-TMP)
--	(A2*A2)
-sentir	(V*V)
+-	(V*
+sentir	*V)
 -	(A1*
 -	*
 -	*
@@ -101588,11 +101588,11 @@ sentir	(V*V)
 -	(A1*A1)
 ver	(V*V)
 -	*
--	(AM-CAU*
+-	(AM-ADV*
 -	*
 -	*
 -	*
--	*AM-CAU)
+-	*AM-ADV)
 -	*
 -	(AM-MNR*
 -	*
@@ -101770,14 +101770,14 @@ sentir	(V*V)
 -	*A1)
 -	*
 prolongar	(V*V)
--	(AM-TMP*
+-	(A4*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-TMP)
+-	*A4)
 -	*
 
 -	(AM-ADV*
@@ -101794,9 +101794,9 @@ coligar	(V*
 -	*
 -	*
 -	*A2)
--	(A1*
+-	(A0*
 -	*
--	*A1)
+-	*A0)
 -	*
 
 -	(A0*
@@ -101818,12 +101818,12 @@ calcar	(V*V)
 -	(AM-EXT*
 -	*
 -	*AM-EXT)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(A0*
@@ -102010,15 +102010,15 @@ impedir	(V*V)
 -	*
 -	*
 mexer	(V*V)
+-	(AM-TMP*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-TMP)
 -	(AM-MNR*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-MNR)
 -	*
 -	*
@@ -102073,7 +102073,7 @@ fixar	(V*V)
 -	*A1)
 -	*
 ligar	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	(A1*
 -	*
 -	*
@@ -102213,8 +102213,8 @@ sobreviver	(V*V)
 -	*
 -	*
 -	*
--	(AM-LOC*
--	*AM-LOC)
+-	(AM-LOC*AM-LOC)
+-	(AM-EXT*AM-EXT)
 -	(A0*A0)
 esperar	(V*V)
 -	*
@@ -102222,7 +102222,7 @@ esperar	(V*V)
 -	(A0*A0)
 -	(AM-REC*AM-REC)
 lançar	(V*V)
--	(A2*A2)
+-	(AM-PRD*AM-PRD)
 -	(AM-TMP*
 -	*AM-TMP)
 
@@ -102241,12 +102241,12 @@ dizer	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(AM-PRD*
+-	*
+-	*
+-	*
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -102748,18 +102748,18 @@ morrer	(V*V)
 -	*A1)
 -	(AM-NEG*AM-NEG)
 estar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(A0*
 -	*A0)
 ganhar	(V*V)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -102963,12 +102963,12 @@ haver	(V*V)
 -	*
 -	*A1)
 -	*
--	(AM-PRD*
+-	(AM-CAU*
 -	*
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-CAU)
 -	*
 
 -	(A0*A0)
@@ -103719,8 +103719,8 @@ depender	(V*V)
 
 -	(A0*
 -	*A0)
-considerar	(V*
--	*V)
+considerar	(V*V)
+-	(A2*A2)
 -	(A1*
 -	*
 -	*
@@ -103949,7 +103949,7 @@ fazer	(V*V)
 -	*
 -	*AM-LOC)
 -	*
--	(AM-MNR*AM-MNR)
+-	(A0*A0)
 -	*
 -	*
 -	*
@@ -103983,9 +103983,9 @@ promover	(V*V)
 -	*A0)
 passar	(V*V)
 -	(AM-MNR*
--	*
 -	*AM-MNR)
 -	(A1*
+-	*
 -	*
 -	*
 -	*
@@ -104029,7 +104029,7 @@ passar	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	(AM-REC*AM-REC)
 fixar	(V*V)
 -	(A2*
 -	*
@@ -104102,9 +104102,9 @@ arrastar	(V*V)
 -	*
 -	*
 chegar	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	*
 
 -	*
@@ -104324,13 +104324,13 @@ abrir	(V*V)
 -	(A0*A0)
 -	*
 convidar	(V*V)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 -	*
 -	*
@@ -105014,7 +105014,7 @@ sair	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*AM-MNR)
+-	(AM-TMP*AM-TMP)
 -	*
 -	*
 -	*
@@ -105041,7 +105041,7 @@ chamar	(V*V)
 
 -	(A0*A0)
 morar	(V*V)
--	(AM-ADV*AM-ADV)
+-	(AM-MNR*AM-MNR)
 -	(A1*
 -	*
 -	*A1)
@@ -105074,7 +105074,7 @@ acontecer	(V*V)
 -	*A1)
 -	*
 encontrar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -105082,9 +105082,9 @@ encontrar	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*
+-	*AM-MNR)
 -	(AM-CAU*
--	*
 -	*
 -	*
 -	*
@@ -105588,8 +105588,8 @@ comprar	(V*V)
 construir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-LOC*
+-	*AM-LOC)
 -	*
 -	*
 -	*
@@ -105632,9 +105632,9 @@ construir	(V*V)
 -	*
 -	*
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-ADV*AM-ADV)
 ter	(V*V)
--	(A2*
+-	(AM-PNC*
 -	*
 -	*
 -	*
@@ -105645,7 +105645,7 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-PNC)
 -	*
 
 -	*
@@ -106019,7 +106019,7 @@ extrapolar	(V*V)
 -	*
 -	*
 -	*
--	(A2*A2)
+-	(AM-PRD*AM-PRD)
 -	(A0*
 -	*
 -	*A0)
@@ -106246,7 +106246,7 @@ sentir	(V*V)
 -	*
 -	*
 estar	(V*V)
--	(AM-MNR*AM-MNR)
+-	(A2*A2)
 -	*
 -	*
 -	*
@@ -106363,7 +106363,7 @@ dizer	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	*
 apontar	(V*V)
 -	*
@@ -106400,8 +106400,8 @@ dizer	(V*V)
 -	*
 
 estar	(V*V)
+-	(AM-MNR*AM-MNR)
 -	(A2*
--	*
 -	*
 -	*
 -	*
@@ -106939,8 +106939,8 @@ dizer	(V*V)
 -	(AM-NEG*AM-NEG)
 fazer	(V*V)
 -	(A1*A1)
--	(AM-PNC*
--	*AM-PNC)
+-	(A3*
+-	*A3)
 
 -	(A0*
 -	*
@@ -107135,8 +107135,8 @@ proibir	(V*V)
 -	*
 -	*A0)
 ter	(V*V)
--	(AM-MNR*
--	*AM-MNR)
+-	(A2*
+-	*A2)
 -	(A1*
 -	*
 -	*
@@ -107291,8 +107291,8 @@ ver	(V*V)
 -	(A1*A1)
 -	(AM-ADV*AM-ADV)
 sair	(V*V)
+-	(A1*A1)
 -	(A2*
--	*
 -	*
 -	*A2)
 -	*
@@ -107331,7 +107331,9 @@ receber	(V*V)
 -	(A1*A1)
 -	(A0*A0)
 conceder	(V*V)
--	(AM-MNR*
+-	(AM-TMP*
+-	*AM-TMP)
+-	(A2*
 -	*
 -	*
 -	*
@@ -107344,9 +107346,7 @@ conceder	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -107551,10 +107551,10 @@ encerrar	(V*V)
 -	*
 -	*A1)
 custar	(V*V)
+-	(A3*
+-	*
+-	*A3)
 -	(A2*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -107579,14 +107579,14 @@ receber	(V*V)
 -	*
 -	*
 -	*A1)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 
 achar	(V*V)
@@ -107747,8 +107747,8 @@ dar	(V*V)
 tratar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-PRD*
--	*AM-PRD)
+-	(A2*
+-	*A2)
 -	*
 
 -	*
@@ -108295,7 +108295,7 @@ estar	(V*V)
 -	(AM-ADV*AM-ADV)
 tatuar	(V*V)
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-EXT*AM-EXT)
 -	*
 -	(A1*
 -	*A1)
@@ -108423,11 +108423,11 @@ colocar	(V*V)
 -	*
 -	(AM-TMP*AM-TMP)
 -	*
--	(A3*
+-	(A2*
 -	*
 -	*
 -	*
--	*A3)
+-	*A2)
 -	*
 
 -	(A0*
@@ -108525,11 +108525,11 @@ votar	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-ADV*
+-	(AM-CAU*
 -	*
 -	*
 -	*
--	*AM-ADV)
+-	*AM-CAU)
 -	*
 -	*
 -	*
@@ -108615,12 +108615,12 @@ chamar	(V*
 -	*A2)
 -	*
 
--	(A0*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
--	*A0)
+-	*A1)
 -	*
 compor	(V*V)
 -	(A2*
@@ -108843,10 +108843,10 @@ nomear	(V*V)
 -	*A2)
 -	*
 
--	(AM-LOC*
+-	(A3*
 -	*
 -	*
--	*AM-LOC)
+-	*A3)
 -	(A0*A0)
 criar	(V*V)
 -	(A1*
@@ -109426,9 +109426,9 @@ fazer	(V*V)
 -	*
 -	(AM-REC*AM-REC)
 completar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -109476,13 +109476,13 @@ fazer	(V*V)
 -	*
 -	(A0*A0)
 dar	(V*V)
--	(A2*
+-	(A1*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A1)
 -	*
 
 -	(AM-TMP*AM-TMP)
@@ -109550,8 +109550,8 @@ capturar	(V*V)
 -	*
 -	*
 -	*
-apor	(V*
--	*V)
+apor	(V*V)
+-	(A2*A2)
 -	(A1*
 -	*
 -	*A1)
@@ -109593,7 +109593,7 @@ sugerir	(V*V)
 -	(A0*A0)
 -	(AM-REC*AM-REC)
 adequar	(V*V)
--	(AM-ADV*AM-ADV)
+-	(AM-MNR*AM-MNR)
 -	(A2*
 -	*
 -	*A2)
@@ -109615,7 +109615,7 @@ adequar	(V*V)
 -	(A1*A1)
 nascer	(V*V)
 -	*
--	(A1*A1)
+-	(A3*A3)
 -	*
 -	*
 -	*
@@ -109905,8 +109905,8 @@ abranger	(V*V)
 -	*
 -	*
 utilizar	(V*V)
--	(AM-EXT*
--	*AM-EXT)
+-	(AM-EXT*AM-EXT)
+-	(A1*A1)
 -	(AM-PNC*
 -	*
 -	*
@@ -110026,7 +110026,7 @@ enfrentar	(V*V)
 -	*
 
 -	*
--	(A0*A0)
+-	(A1*A1)
 recorrer	(V*V)
 -	(AM-TMP*
 -	*
@@ -110086,8 +110086,8 @@ notar	(V*V)
 -	(A0*
 -	*
 -	*A0)
--	(V*
-inscrever	*V)
+-	(AM-REC*AM-REC)
+inscrever	(V*V)
 -	(A2*
 -	*
 -	*
@@ -110199,7 +110199,7 @@ receber	(V*V)
 -	*
 -	*
 ter	(V*V)
--	(AM-DIS*AM-DIS)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*
@@ -111131,7 +111131,7 @@ demonstrar	(V*V)
 -	*A1)
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	*
 -	(A0*
 -	*
@@ -111440,14 +111440,14 @@ gastar	(V*V)
 -	*
 -	*
 -	*AM-TMP)
--	(A1*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*A1)
+-	*A3)
 -	*
 -	*
 -	*
@@ -111774,10 +111774,10 @@ preferir	(V*V)
 -	*
 -	*
 viajar	(V*V)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -111876,9 +111876,9 @@ gritar	(V*V)
 votar	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(AM-ADV*
 -	*
--	*AM-MNR)
+-	*AM-ADV)
 -	*
 
 estar	(V*V)
@@ -111939,11 +111939,11 @@ achar	(V*V)
 -	(A0*
 -	*A0)
 pagar	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 -	*
 -	*
@@ -112168,8 +112168,8 @@ estremecer	(V*V)
 -	*
 -	*
 -	*
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 parecer	(V*V)
 -	(A1*
 -	*
@@ -112287,10 +112287,10 @@ contemplar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -112834,7 +112834,7 @@ estar	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(AM-TMP*AM-TMP)
 estar	(V*V)
 -	(A2*
 -	*
@@ -113034,9 +113034,9 @@ estimular	(V*V)
 -	*
 -	*
 trazer	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
--	*A2)
+-	*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -113104,8 +113104,8 @@ firmar	(V*V)
 -	*
 
 -	(AM-TMP*AM-TMP)
--	(A0*
--	*A0)
+-	(A0*A0)
+-	(A2*A2)
 pedir	(V*V)
 -	(A1*A1)
 -	*
@@ -113253,7 +113253,7 @@ aguardar	(V*V)
 
 -	*
 -	*
--	(AM-LOC*AM-LOC)
+-	(AM-MNR*AM-MNR)
 -	(A0*A0)
 receber	(V*V)
 -	(A1*
@@ -113373,7 +113373,7 @@ ter	(V*V)
 -	*A0)
 entrar	(V*
 -	*V)
--	(A1*A1)
+-	(A0*A0)
 
 -	(A0*
 -	*
@@ -113458,9 +113458,9 @@ abraçar	(V*V)
 -	*
 -	*
 -	*
+-	*
+-	*
 -	(A1*
--	*
--	*
 -	*
 -	*A1)
 -	*
@@ -113899,7 +113899,7 @@ reeleger	(V*V)
 -	*
 -	*
 -	*AM-TMP)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -113910,7 +113910,7 @@ reeleger	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -114142,13 +114142,13 @@ inventar	(V*V)
 -	*
 -	*
 executar	(V*V)
--	(A1*
--	*A1)
--	(A2*
+-	*
+-	*
+-	(AM-MNR*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 
 -	(A0*
@@ -114355,7 +114355,7 @@ entrar	(V*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(A2*A2)
 -	(AM-TMP*AM-TMP)
 incluir	(V*V)
 -	(AM-DIS*AM-DIS)
@@ -114473,12 +114473,12 @@ aliar	(V*V)
 -	(A1*A1)
 -	*
 mandar	(V*V)
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -114503,7 +114503,7 @@ detestar	(V*V)
 -	*A1)
 -	*
 
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	*
 trabalhar	(V*V)
 -	(A3*
@@ -114987,10 +114987,10 @@ resgatar	(V*V)
 
 -	(A1*A1)
 ir	(V*V)
--	(A3*
+-	(A4*
 -	*
 -	*
--	*A3)
+-	*A4)
 
 -	(A0*
 -	*
@@ -115235,12 +115235,12 @@ dizer	(V*V)
 assistir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
 -	*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -115597,7 +115597,7 @@ dizer	(V*V)
 -	*
 -	*
 utilizar	(V*V)
--	(AM-EXT*AM-EXT)
+-	(AM-DIS*AM-DIS)
 -	(AM-PNC*
 -	*
 -	*
@@ -115696,7 +115696,7 @@ existir	(V*V)
 -	*
 -	(AM-DIS*AM-DIS)
 -	*
--	(AM-DIS*AM-DIS)
+-	(AM-NEG*AM-NEG)
 pensar	(V*V)
 -	(A1*
 -	*
@@ -115853,7 +115853,7 @@ impedir	(V*V)
 -	*A0)
 -	(AM-NEG*AM-NEG)
 exibir	(V*V)
--	(AM-DIS*AM-DIS)
+-	(AM-TMP*AM-TMP)
 -	(A1*
 -	*
 -	*
@@ -115881,10 +115881,10 @@ exibir	(V*V)
 -	*
 -	(AM-TMP*
 -	*AM-TMP)
--	(A0*
+-	(A1*
 -	*
 -	*
--	*A0)
+-	*A1)
 -	*
 ir	(V*
 -	*
@@ -116098,8 +116098,8 @@ ter	(V*V)
 -	*
 -	*
 -	(A0*
--	*
 -	*A0)
+-	(A2*A2)
 fazer	(V*V)
 -	(A1*A1)
 -	*
@@ -116535,10 +116535,10 @@ enviar	(V*V)
 -	*
 -	*
 -	*
--	*
 -	*A2)
+-	(AM-PNC*AM-PNC)
 -	*
--	(AM-MNR*AM-MNR)
+-	(AM-LOC*AM-LOC)
 -	*
 -	*
 -	*
@@ -117101,7 +117101,7 @@ impedir	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	*
 pedir	(V*V)
 -	(A2*
 -	*
@@ -117664,10 +117664,10 @@ apreender	(V*V)
 -	(AM-ADV*AM-ADV)
 -	*
 condenar	(V*V)
+-	(AM-LOC*
+-	*
+-	*AM-LOC)
 -	(A2*
--	*
--	*
--	*
 -	*
 -	*
 -	*
@@ -118105,11 +118105,11 @@ apresentar	(V*V)
 -	*
 dar	(V*V)
 -	*
--	(V*V)
--	(A2*
--	*
--	*A2)
 -	(A1*
+-	*
+-	*
+-	*
+-	*
 -	*
 -	*
 -	*
@@ -118160,14 +118160,14 @@ combinar	(V*V)
 -	*
 -	*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
 -	*
 
 -	*
@@ -118397,10 +118397,10 @@ amarrar	(V*V)
 -	*A0)
 -	(AM-REC*AM-REC)
 preparar	(V*V)
--	(AM-PNC*
+-	(A2*
 -	*
 -	*
--	*AM-PNC)
+-	*A2)
 -	*
 
 -	*
@@ -118509,13 +118509,13 @@ passar	(V*V)
 -	(A0*
 -	*A0)
 -	*
--	(AM-MNR*
+-	(AM-PRD*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-PRD)
 -	*
 -	(AM-TMP*
 -	*AM-TMP)
@@ -118531,7 +118531,7 @@ ressuscitar	(V*V)
 
 -	(A1*A1)
 -	*
--	(A1*A1)
+-	(AM-PRD*AM-PRD)
 -	*
 estar	(V*V)
 -	(A2*
@@ -118656,10 +118656,10 @@ ver	(V*V)
 reduzir	(V*V)
 -	(A1*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 -	*
 -	*
@@ -119266,7 +119266,7 @@ oferecer	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
@@ -119274,7 +119274,7 @@ oferecer	(V*V)
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 -	*
@@ -119291,10 +119291,10 @@ oferecer	(V*V)
 -	*
 -	(A1*A1)
 começar	(V*V)
--	(AM-LOC*
+-	(AM-MNR*
 -	*
 -	*
--	*AM-LOC)
+-	*AM-MNR)
 -	*
 
 -	*
@@ -119926,17 +119926,17 @@ rebolar	(V*V)
 -	*
 vigiar	(V*V)
 -	(AM-MNR*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-MNR)
+-	(A0*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*A0)
 -	*
 
 -	*
@@ -121276,9 +121276,9 @@ viajar	(V*V)
 -	*A1)
 -	*
 lançar	(V*V)
--	(AM-LOC*
+-	(A2*
 -	*
--	*AM-LOC)
+-	*A2)
 -	*
 
 -	(A1*
@@ -121382,10 +121382,10 @@ dar	(V*V)
 -	*
 dizer	(V*V)
 -	(A3*
--	*
--	*
--	*
 -	*A3)
+-	(AM-MNR*
+-	*
+-	*AM-MNR)
 -	*
 
 -	(A0*A0)
@@ -121765,7 +121765,7 @@ relacionar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-ADV*AM-ADV)
+-	(AM-DIS*AM-DIS)
 -	*
 discutir	(V*V)
 -	*
@@ -122272,20 +122272,20 @@ eliminar	(V*V)
 -	*
 
 -	*
--	(A0*
--	*A0)
+-	(A1*
+-	*A1)
 -	(AM-TMP*AM-TMP)
 -	(AM-NEG*AM-NEG)
 fazer	(V*V)
 -	(AM-ADV*AM-ADV)
 -	(V*V)
 -	*
--	(AM-CAU*
+-	(AM-ADV*
 -	*
 -	*
 -	*
 -	*
--	*AM-CAU)
+-	*AM-ADV)
 -	*
 -	*
 -	*
@@ -122367,8 +122367,8 @@ dizer	(V*V)
 -	*
 -	(AM-LOC*
 -	*
--	*
 -	*AM-LOC)
+-	(AM-DIS*AM-DIS)
 -	*
 ver	(V*V)
 -	(A1*
@@ -122874,9 +122874,9 @@ esperar	(V*V)
 -	*
 -	*A1)
 -	(AM-TMP*AM-TMP)
--	(A2*
+-	(AM-PRD*
 -	*
--	*A2)
+-	*AM-PRD)
 -	*
 
 -	*
@@ -123052,13 +123052,13 @@ gostar	(V*V)
 -	*
 -	(A0*A0)
 ir	(V*V)
--	(AM-MNR*
+-	(AM-TMP*
 -	*
 -	*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*AM-TMP)
 -	*
 
 -	*
@@ -123164,7 +123164,7 @@ andar	(V*V)
 -	*AM-TMP)
 -	*
 fazer	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*
@@ -123234,7 +123234,7 @@ praticar	(V*V)
 -	*
 -	*
 -	*
--	(A1*A1)
+-	(AM-REC*AM-REC)
 soltar	(V*V)
 -	*
 
@@ -123312,12 +123312,12 @@ dominar	(V*V)
 -	*
 -	*
 -	*
-viajar	(V*
+viajar	(V*V)
+-	(AM-MNR*
+-	*AM-MNR)
+-	(A1*
 -	*
--	*V)
--	(A0*
--	*
--	*A0)
+-	*A1)
 -	*
 -	*
 -	*
@@ -123455,7 +123455,7 @@ almoçar	(V*V)
 -	*
 -	*
 achar	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-LOC*AM-LOC)
 -	(A1*
 -	*
 -	*
@@ -123492,7 +123492,7 @@ encontrar	(V*V)
 -	*
 -	*
 -	*
--	(AM-NEG*AM-NEG)
+-	(AM-TMP*AM-TMP)
 -	(AM-REC*AM-REC)
 conhecer	(V*V)
 -	*
@@ -123790,9 +123790,9 @@ comprar	(V*V)
 -	*
 -	*
 trabalhar	(V*V)
--	(A4*
+-	(A3*
 -	*
--	*A4)
+-	*A3)
 -	*
 -	*
 -	*
@@ -124256,11 +124256,11 @@ morrer	(V*V)
 -	*
 -	*A1)
 morrer	(V*V)
--	(A2*
+-	(AM-LOC*
 -	*
 -	*
 -	*
--	*A2)
+-	*AM-LOC)
 -	(AM-TMP*AM-TMP)
 -	(AM-LOC*
 -	*AM-LOC)
@@ -124272,12 +124272,12 @@ dirigir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-MNR*
 -	*
+-	*AM-MNR)
+-	(AM-LOC*
 -	*
--	*
--	*
--	*AM-PRD)
+-	*AM-LOC)
 -	*
 -	(AM-LOC*
 -	*
@@ -124762,9 +124762,9 @@ fazer	(V*V)
 -	(A0*A0)
 -	(AM-TMP*AM-TMP)
 apostar	(V*V)
--	(A1*
+-	(A2*
 -	*
--	*A1)
+-	*A2)
 -	*
 
 -	*
@@ -124818,10 +124818,10 @@ lutar	(V*V)
 -	(AM-TMP*AM-TMP)
 mostrar	(V*V)
 -	(A1*A1)
--	(A2*
+-	(AM-MNR*
 -	*
 -	*
--	*A2)
+-	*AM-MNR)
 -	*
 -	*
 -	*
@@ -124938,7 +124938,7 @@ apontar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
@@ -124955,7 +124955,7 @@ apontar	(V*V)
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	(AM-MNR*
@@ -125023,11 +125023,11 @@ investigar	(V*V)
 -	*
 -	(A0*A0)
 ir	(V*V)
--	(A2*
+-	(A4*
 -	*
 -	*
 -	*
--	*A2)
+-	*A4)
 -	*
 -	*
 -	*
@@ -125370,7 +125370,7 @@ queixar	*V)
 -	*
 -	*
 -	*
--	(A0*A0)
+-	(A1*A1)
 variar	(V*V)
 -	(A3*
 -	*
@@ -125562,11 +125562,11 @@ investir	(V*V)
 -	(A1*
 -	*
 -	*A1)
--	(AM-MNR*
+-	(A2*
 -	*
 -	*
 -	*
--	*AM-MNR)
+-	*A2)
 -	*
 
 -	*
@@ -125653,7 +125653,7 @@ refletir	(V*V)
 -	(A1*A1)
 -	*
 acontecer	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	(A2*
 -	*
 -	*A2)
@@ -125711,7 +125711,7 @@ recuar	(V*V)
 -	*A1)
 estar	(V*V)
 -	(AM-ADV*AM-ADV)
--	(A1*A1)
+-	(A2*A2)
 -	(AM-TMP*
 -	*
 -	*
@@ -126053,9 +126053,9 @@ esvair	*V)
 ter	(V*V)
 -	(A2*
 -	*
--	*
--	*
 -	*A2)
+-	(AM-DIS*
+-	*AM-DIS)
 -	*
 -	*
 -	*
@@ -126188,8 +126188,8 @@ parecer	(V*V)
 -	*
 -	*
 -	(A0*A0)
--	(V*
-dar	*V)
+-	(A2*A2)
+dar	(V*V)
 -	(A1*
 -	*
 -	*A1)
@@ -126357,12 +126357,12 @@ vender	(V*V)
 -	*
 
 sair	(V*V)
--	(A2*
+-	(A3*
 -	*
 -	*
 -	*
 -	*
--	*A2)
+-	*A3)
 -	*
 
 contar	(V*V)
@@ -126720,7 +126720,7 @@ demonstrar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-PRD*
+-	(AM-MNR*
 -	*
 -	*
 -	*
@@ -126728,7 +126728,7 @@ demonstrar	(V*V)
 -	*
 -	*
 -	*
--	*AM-PRD)
+-	*AM-MNR)
 -	*
 
 -	*
@@ -126811,7 +126811,7 @@ saber	(V*V)
 -	*
 
 -	*
--	(AM-TMP*AM-TMP)
+-	(AM-CAU*AM-CAU)
 -	(A0*A0)
 amar	(V*V)
 -	(AM-EXT*AM-EXT)
@@ -126849,7 +126849,7 @@ prever	(V*V)
 -	*
 projetar	(V*V)
 -	*
--	(AM-PNC*
+-	(AM-ADV*
 -	*
 -	*
 -	*
@@ -126858,7 +126858,7 @@ projetar	(V*V)
 -	*
 -	*
 -	*
--	*AM-PNC)
+-	*AM-ADV)
 -	*
 -	(A1*
 -	*
@@ -127237,8 +127237,8 @@ mostrar	(V*V)
 -	*
 -	*
 vir	(V*V)
--	(AM-PNC*
--	*AM-PNC)
+-	(A4*
+-	*A4)
 -	*
 
 -	*
@@ -127474,8 +127474,8 @@ vencer	(V*V)
 -	*
 -	*A0)
 colocar	(V*V)
--	(AM-LOC*
--	*AM-LOC)
+-	(A2*
+-	*A2)
 -	(A1*
 -	*
 -	*
@@ -127981,10 +127981,10 @@ fazer	(V*V)
 vir	(V*V)
 -	(A4*
 -	*
--	*
--	*
--	*
 -	*A4)
+-	(AM-PNC*
+-	*
+-	*AM-PNC)
 -	*
 -	*
 -	*
@@ -128081,8 +128081,8 @@ dizer	(V*V)
 -	*
 -	*
 -	*
--	(A1*
 -	*
+-	(A1*
 -	*
 -	*A1)
 -	*
@@ -128242,8 +128242,8 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	(AM-LOC*
--	*AM-LOC)
+-	(A4*
+-	*A4)
 -	(A0*
 -	*
 -	*
@@ -128412,8 +128412,8 @@ reclamar	(V*V)
 -	(A0*A0)
 -	*
 adiar	(V*V)
--	(AM-TMP*
--	*AM-TMP)
+-	(A2*
+-	*A2)
 -	(A1*
 -	*
 -	*
@@ -128640,13 +128640,13 @@ realçar	(V*V)
 ter	(V*V)
 -	(A1*
 -	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A1)
+-	(A2*
+-	*
+-	*
+-	*
+-	*
+-	*A2)
 -	*
 
 -	*
@@ -128666,7 +128666,7 @@ tocar	(V*V)
 -	*
 -	*AM-LOC)
 -	*
--	(AM-TMP*
+-	(AM-LOC*
 -	*
 -	*
 -	*
@@ -128680,7 +128680,7 @@ tocar	(V*V)
 -	*
 -	*
 -	*
--	*AM-TMP)
+-	*AM-LOC)
 -	*
 
 -	*
@@ -128758,7 +128758,7 @@ negligenciar	(V*V)
 -	*
 -	*
 dizer	(V*V)
--	(A1*A1)
+-	(A0*A0)
 -	(A2*
 -	*
 -	*A2)
@@ -129446,14 +129446,14 @@ destacar	(V*V)
 -	(A1*A1)
 morrer	(V*V)
 -	(AM-LOC*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*AM-LOC)
+-	(AM-MNR*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-MNR)
 
 -	(A1*
 -	*
@@ -129961,9 +129961,9 @@ fazer	(V*V)
 -	(A0*
 -	*A0)
 -	*
--	(AM-DIS*
--	*
--	*AM-DIS)
+-	(AM-ADV*AM-ADV)
+-	(AM-PNC*
+-	*AM-PNC)
 -	*
 fazer	(V*V)
 -	(A1*
@@ -130202,7 +130202,7 @@ manter	(V*V)
 -	*A2)
 -	*
 multar	(V*V)
--	(A0*
+-	(A3*
 -	*
 -	*
 -	*
@@ -130210,7 +130210,7 @@ multar	(V*V)
 -	*
 -	*
 -	*
--	*A0)
+-	*A3)
 -	*
 
 -	*
@@ -130413,8 +130413,8 @@ ter	(V*V)
 -	*A1)
 -	*
 
--	(AM-TMP*
--	*AM-TMP)
+-	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 deixar	(V*V)
 -	*
 -	(A1*A1)
@@ -131226,7 +131226,7 @@ dominar	(V*V)
 -	*
 -	*A0)
 prejudicar	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-ADV*AM-ADV)
 -	(A1*
 -	*
 -	*A1)
@@ -131335,7 +131335,7 @@ narrar	(V*V)
 -	*
 -	(A0*A0)
 banir	(V*V)
--	(AM-MNR*AM-MNR)
+-	(AM-EXT*AM-EXT)
 -	(A1*
 -	*
 -	*
@@ -131584,13 +131584,13 @@ ter	(V*V)
 -	*
 -	*
 -	*
--	*
+-	(A1*A1)
 -	*
 -	*
 -	*
 ter	(V*V)
--	(AM-PNC*
--	*AM-PNC)
+-	(A2*
+-	*A2)
 -	*
 -	*
 -	*
@@ -131628,9 +131628,9 @@ ter	(V*V)
 -	(A0*
 -	*A0)
 -	*
-deixar	(V*V)
--	(AM-EXT*
--	*AM-EXT)
+deixar	(V*
+-	*V)
+-	(AM-DIS*AM-DIS)
 -	(A1*
 -	*
 -	*
@@ -131784,8 +131784,8 @@ fumar	(V*V)
 -	*
 -	*
 -	*A1)
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-TMP*
+-	*AM-TMP)
 -	*
 -	*
 -	*
@@ -131799,9 +131799,9 @@ fumar	(V*V)
 -	(A0*A0)
 prender	(V*V)
 -	(A1*A1)
--	(AM-PRD*
+-	(AM-CAU*
 -	*
--	*AM-PRD)
+-	*AM-CAU)
 
 -	*
 -	*
@@ -131891,15 +131891,15 @@ entregar	(V*V)
 -	(A1*
 -	*A1)
 -	(A2*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
--	*
 -	*A2)
+-	(AM-CAU*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*
+-	*AM-CAU)
 -	*
 
 -	(A0*A0)
@@ -132729,8 +132729,8 @@ associar	(V*V)
 precisar	(V*V)
 -	(AM-TMP*AM-TMP)
 -	*
--	(AM-MNR*
--	*AM-MNR)
+-	(AM-PRD*
+-	*AM-PRD)
 -	*
 
 -	(A0*
@@ -133530,7 +133530,7 @@ haver	(V*V)
 -	*
 -	*
 negociar	(V*V)
--	(AM-TMP*AM-TMP)
+-	(AM-MNR*AM-MNR)
 -	(A1*
 -	*
 -	*A1)
