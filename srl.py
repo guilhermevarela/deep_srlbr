@@ -84,7 +84,7 @@ if __name__ == '__main__':
                                 Default: 0.005\n''')
 
     parser.add_argument('--ru', dest='ru', type=str,
-                        default='BasicLSTM', choices=('BasicLSTM', 'GRU'),
+                        default='BasicLSTM', choices=('BasicLSTM', 'GRU', 'LSTM'),
                         help='''Recurrent unit -- according to tensorflow.
                                 Default: `BasicLSTM`\n''')
 

@@ -9,8 +9,9 @@ from models.properties import lazy_property
 
 
 def get_unit(sz, ru='BasicLSTM'):
-    if ru not in ('BasicLSTM', 'GRU'):
-        raise ValueError('recurrent_unit {:} must be in {:}'.format (ru, ('BasicLSTM', 'GRU')))
+    ru_types = ('BasicLSTM', 'GRU', 'LSTM')
+    if ru not in ru_types:
+        raise ValueError('recurrent_unit {:} must be in {:}'.format (ru, ru_types))
 
     if ru == 'BasicLSTM':
         rnn_cell = tf.nn.rnn_cell.BasicLSTMCell(sz,
@@ -19,6 +20,11 @@ def get_unit(sz, ru='BasicLSTM'):
     if ru == 'GRU':
         rnn_cell = tf.nn.rnn_cell.GRUCell(sz)
 
+    if ru == 'LSTM':
+        rnn_cell = tf.nn.rnn_cell.LSTMCell(sz,
+                                use_peepholes=False,
+                                forget_bias=1.0,
+                                state_is_tuple=True)
     return rnn_cell
 
 
