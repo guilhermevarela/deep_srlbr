@@ -5,7 +5,14 @@
     * Gradient descend
 '''
 import tensorflow as tf
-from tensorflow.contrib.crf import crf_log_likelihood, crf_decode
+from tensorflow.contrib.crf import crf_log_likelihood
+try:  # tensorflow 1.10
+    from tensorflow.contrib.crf import crf_decode
+except ImportError:
+    # tensorflow 1.2.1
+    from tensorflow.contrib.crf import viterbi_decode
+    crf_decode = viterbi_decode
+
 from models.properties import lazy_property
 
 
