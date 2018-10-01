@@ -37,7 +37,7 @@ HIDDEN_LAYERS = [16] * 4
 def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
-                   ckpt_dir=None,  ru='BasicLSTM', chunks=False, **kwargs):
+                   ckpt_dir=None,  ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -73,14 +73,15 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                                             hidden_layers=hidden_layers)
 
         target_dir = 'outputs{:}'.format(target_dir)
-        target_dir = snapshot_persist(target_dir,
-                                      input_labels=input_labels, lr=lr,
-                                      hidden_layers=hidden_layers, ctx_p=ctx_p,
-                                      target_labels=target_labels, kfold=25,
-                                      embeddings_trainable=False,
-                                      embeddings_model=embeddings_model, ru=ru,
-                                      epochs=epochs, chunks=chunks,
-                                      version=version)
+        target_dir = snapshot_persist(
+            target_dir,
+            input_labels=input_labels, lr=lr,
+            hidden_layers=hidden_layers, ctx_p=ctx_p,
+            target_labels=target_labels, kfold=25,
+            embeddings_trainable=False,
+            embeddings_model=embeddings_model, ru=ru,
+            epochs=epochs, chunks=chunks, r_depth=r_depth,
+            version=version)
     else:
         target_dir = ckpt_dir
 
@@ -244,7 +245,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
              embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
              batch_size=250, ctx_p=1, version='1.0', ckpt_dir=None,
-             ru='BasicLSTM', chunks=False, **kwargs):
+             ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
     '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
@@ -279,13 +280,14 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
         target_dir = 'outputs{:}'.format(target_dir)
 
-        target_dir = snapshot_persist(target_dir, input_labels=input_labels,
-                                      target_labels=target_labels, epochs=epochs,
-                                      embeddings_model=embeddings_model, ru=ru,
-                                      embeddings_trainable=embeddings_trainable,
-                                      hidden_layers=hidden_layers, ctx_p=ctx_p,
-                                      lr=lr, batch_size=batch_size,
-                                      chunks=chunks, version=version)
+        target_dir = snapshot_persist(
+            target_dir, input_labels=input_labels,
+            target_labels=target_labels, epochs=epochs,
+            embeddings_model=embeddings_model, ru=ru,
+            embeddings_trainable=embeddings_trainable,
+            hidden_layers=hidden_layers, ctx_p=ctx_p,
+            lr=lr, batch_size=batch_size, r_depth=r_depth,
+            chunks=chunks, version=version)
     else:
         target_dir = ckpt_dir
 
@@ -359,7 +361,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     if len(target_labels) == 1:
         deep_srl = Optmizer(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = OptmizerDualLabel(X, T, L, **params)
+        deep_srl = OptmizerDualLabel(X, T, L, r_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -396,6 +398,8 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, L: L_batch}
                 )
+                if (step) % 250 == 0:
+                    import code; code.interact(local=dict(globals(), **locals()))
 
                 total_loss += loss
                 total_error += error

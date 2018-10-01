@@ -127,7 +127,7 @@ class Optmizer(object):
 
 
 class OptmizerDualLabel(object):
-    def __init__(self, X, T, L,
+    def __init__(self, X, T, L, r_depth=-1,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], target_sizes=[60],
                  ru='BasicLSTM'):
         '''Sets the computation graph parameters
@@ -159,19 +159,20 @@ class OptmizerDualLabel(object):
         '''
         self.optmizer = 'DBLSTM'
         self.X = X
+        self.r_depth = r_depth
 
-        T0, T1 = tf.split(T, 2, axis=3)
+        R, C = tf.split(T, 2, axis=3)
 
         # Remove extra-axis
-        T0 = tf.squeeze(T0, axis=3)
-        T1 = tf.squeeze(T1, axis=3)
+        R = tf.squeeze(R, axis=3)
+        C = tf.squeeze(C, axis=3)
 
         # Remove paddings
         shape0 = (-1, -1, target_sizes[0])
-        self.T0 = tf.slice(T0, begin=[0, 0, 0], size=shape0)
+        self.R = tf.slice(R, begin=[0, 0, 0], size=shape0)
 
         shape1 = (-1, -1, target_sizes[1])
-        self.T1 = tf.slice(T1, begin=[0, 0, 0], size=shape1)
+        self.C = tf.slice(C, begin=[0, 0, 0], size=shape1)
 
         self.L = L
 
@@ -179,10 +180,32 @@ class OptmizerDualLabel(object):
         self.hidden_size = hidden_size
         self.target_sizes = target_sizes
 
-        self.propagator = InterleavedPropagator(X, L, hidden_size, ru=ru)
+        if r_depth == -1 or r_depth == len(hidden_size):
+            self.propagator_0 = InterleavedPropagator(X, L, hidden_size, ru=ru)
 
-        self.predictor_0 = CRFPredictor(self.propagator.propagate, self.T0, L, i=0)
-        self.predictor_1 = CRFPredictor(self.propagator.propagate, self.T1, L, i=1)
+            self.predictor_0 = CRFPredictor(self.propagator_0.propagate, self.R, L, i=0)
+            self.predictor_1 = CRFPredictor(self.propagator_0.propagate, self.C, L, i=1)
+
+        elif r_depth == 1:
+            # up branch --> Handles recognition task
+            # [BATCH, MAX_TIME, TARGET_IOB] this tensor is zero padded from 3rd position
+            self.predictor_0 = CRFPredictor(self.X, self.R, L, i=0)
+
+            # down branch --> Handles classification
+            # [BATCH, MAX_TIME, 2*hidden_size[:1]] this tensor is zero padded from 3rd position
+            self.propagator_0 = InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru)
+
+            # merge the represenations
+            # print(self.predictor_0.get_shape())
+            # print(self.propagator_0.get_shape())
+            self.Xhat = tf.concat((self.propagator_0.propagate, tf.cast(self.predictor_0.predict, tf.float32)), axis=2)
+
+            # joint propagator
+            self.propagator_1 = InterleavedPropagator(self.Xhat, L, hidden_size[r_depth:], ru=ru)
+            self.predictor_1 = CRFPredictor(self.propagator_1, self.C, L, i=1)
+
+        else:
+            raise NotImplementedError('This combination of parameters is not implemented')
 
         self.propagate
         self.cost
@@ -191,9 +214,13 @@ class OptmizerDualLabel(object):
         self.error
 
     # Delegates to Propagator
-    @delegate_property
+    # @delegate_property
+    @lazy_property
     def propagate(self):
-        pass
+        if self.r_depth == -1 or self.r_depth == len(self.hidden_size):
+            return self.propagator_0.propagate
+        else:
+            return self.propagator_1.propagate
 
     # Delegates to predictor
     # @delegate_property
@@ -227,8 +254,8 @@ class OptmizerDualLabel(object):
 
     @lazy_property
     def error(self):
-        errors = self._error(self.predictor_0.predict, self.T0)
-        errors += self._error(self.predictor_1.predict, self.T1)
+        errors = self._error(self.predictor_0.predict, self.R)
+        errors += self._error(self.predictor_1.predict, self.C)
         return errors
 
     def _error(self, Y, T):

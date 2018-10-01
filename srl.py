@@ -93,6 +93,12 @@ if __name__ == '__main__':
                         help='''Target representations.
                         Up to two values are allowed\n''')
 
+    parser.add_argument('--r-depth', dest='r_depth', default=-1,
+                        help='''Position of the R target. Use 1 for the first layer
+                        and -1 or len(depth) for last layer. This feature
+                        is inactive unless R is provided as a target.
+                        Default: 1\n''')
+
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
@@ -128,16 +134,17 @@ if __name__ == '__main__':
         epochs = args.epochs
         batch_size = args.batch_size
         ru = args.ru
+        r_depth = int(args.r_depth)
 
         if args.kfold:
             estimate_kfold(input_labels=input_labels, target_labels=target_labels,
                            hidden_layers=args.depth, embeddings_model=embs_model,
                            epochs=epochs, lr=learning_rate, fold=25, ru=ru,
-                           version=version, ctx_p=ctx_p, chunks=use_chunks)
+                           version=version, ctx_p=ctx_p, chunks=use_chunks, r_depth=r_depth)
         else:
 
             estimate(input_labels=input_labels, target_labels=target_labels,
                      hidden_layers=args.depth, embeddings_model=embs_model,
                      epochs=epochs, ru=ru, batch_size=args.batch_size,
                      version=version, ctx_p=ctx_p, lr=learning_rate,
-                     chunks=use_chunks)
+                     chunks=use_chunks, r_depth=r_depth)
