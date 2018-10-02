@@ -97,21 +97,21 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         embeddings_model=embeddings_model
     )
     feature_size = get_dims(input_labels, dims_dict)
-    target_sizes = dims_dict[target_labels[0]]
+    targets_size = dims_dict[target_labels[0]]
 
     batch_size = int(dataset_size / fold)
-    print(batch_size, target_labels, target_sizes, feature_size)
+    print(batch_size, target_labels, targets_size, feature_size)
 
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_sizes': target_sizes,
+        'targets_size': targets_size,
         'ru': ru
     }
     # BUILDING the execution graph
     X_shape = (None, None, feature_size)
-    T_shape = (None, None, target_sizes)
+    T_shape = (None, None, targets_size)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     L = tf.placeholder(tf.int32, shape=(None,), name='L')
@@ -311,7 +311,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     )
 
     feature_size = get_dims(input_labels, dims_dict)
-    target_sizes = dims_dict[target_labels[0]]
+    targets_size = dims_dict[target_labels[0]]
 
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
 
@@ -337,11 +337,11 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
         return evaluator.f1
 
-    target_sizes = [dims_dict[lbl] for lbl in target_labels]
+    targets_size = [dims_dict[lbl] for lbl in target_labels]
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
-        'target_sizes': target_sizes,
+        'targets_size': targets_size,
         'ru': ru
     }
     # BUILDING the execution graph
