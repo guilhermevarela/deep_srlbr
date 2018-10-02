@@ -22,7 +22,7 @@ def get_unit(sz, ru='BasicLSTM'):
 
     if ru == 'LSTM':
         rnn_cell = tf.nn.rnn_cell.LSTMCell(sz,
-                                use_peepholes=False,
+                                use_peepholes=True,
                                 forget_bias=1.0,
                                 state_is_tuple=True)
     return rnn_cell
