@@ -30,15 +30,18 @@ def get_unit(sz, ru='BasicLSTM'):
 
 class Propagator(object):
 
-    def __init__(self, V, seqlens, hidden_sz_list, ru='BasicLSTMCell'):
+    def __init__(self, V, L, hidden_sz_list, ru='BasicLSTMCell', i=0):
+        scope_id = 'DB{:}{:}'.format(ru, i)
+
+        self.V = V
+        self.L = L
+
         self.ru = ru
-        self.propagator = 'interleaved'
+        self.i = i
 
         self.hidden_sz_list = hidden_sz_list
-        self.V = V
-        self.seqlens = seqlens
-
-        self.propagate
+        with tf.variable_scope(scope_id):
+            self.propagate
 
     def propagate(self):
         raise NotImplementedError('Propagator must implement propagate')
@@ -68,7 +71,7 @@ class InterleavedPropagator(Propagator):
             outputs_fw, states = tf.nn.dynamic_rnn(
                 cell=self.cell_fw,
                 inputs=self.V,
-                sequence_length=self.seqlens,
+                sequence_length=self.L,
                 dtype=tf.float32,
                 time_major=False
             )
@@ -78,7 +81,7 @@ class InterleavedPropagator(Propagator):
 
             inputs_bw = tf.reverse_sequence(
                 outputs_fw,
-                self.seqlens,
+                self.L,
                 batch_axis=0,
                 seq_axis=1
             )
@@ -86,13 +89,13 @@ class InterleavedPropagator(Propagator):
             outputs_bw, states = tf.nn.dynamic_rnn(
                 cell=self.cell_bw,
                 inputs=inputs_bw,
-                sequence_length=self.seqlens,
+                sequence_length=self.L,
                 dtype=tf.float32,
                 time_major=False
             )
             outputs_bw = tf.reverse_sequence(
                 outputs_bw,
-                self.seqlens,
+                self.L,
                 batch_axis=0,
                 seq_axis=1
             )
@@ -108,7 +111,7 @@ class InterleavedPropagator(Propagator):
                 outputs_fw, states = tf.nn.dynamic_rnn(
                     cell=self.cell_fw,
                     inputs=inputs_fw,
-                    sequence_length=self.seqlens,
+                    sequence_length=self.L,
                     dtype=tf.float32,
                     time_major=False)
 
@@ -116,7 +119,7 @@ class InterleavedPropagator(Propagator):
                 inputs_bw = tf.concat((outputs_fw, h), axis=2)
                 inputs_bw = tf.reverse_sequence(
                     inputs_bw,
-                    self.seqlens,
+                    self.L,
                     batch_axis=0,
                     seq_axis=1
                 )
@@ -125,13 +128,13 @@ class InterleavedPropagator(Propagator):
                 outputs_bw, states = tf.nn.dynamic_rnn(
                     cell=self.cell_bw,
                     inputs=inputs_bw,
-                    sequence_length=self.seqlens,
+                    sequence_length=self.L,
                     dtype=tf.float32,
                     time_major=False)
 
                 outputs_bw = tf.reverse_sequence(
                     outputs_bw,
-                    self.seqlens,
+                    self.L,
                     batch_axis=0,
                     seq_axis=1
                 )

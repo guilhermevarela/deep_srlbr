@@ -398,8 +398,6 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                     [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, L: L_batch}
                 )
-                if (step) % 250 == 0:
-                    import code; code.interact(local=dict(globals(), **locals()))
 
                 total_loss += loss
                 total_error += error
