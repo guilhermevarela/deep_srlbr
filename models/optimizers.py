@@ -297,7 +297,7 @@ class OptmizerDualLabel(object):
                 CRFPredictor(self.concat_op, self.Y, self.L, i='Y')
             )
 
-        elif r_depth == 1 and len(hidden_size) > 1: # TYPE ???
+        elif r_depth == 1 and len(hidden_size) > 1: # TYPE C
             self.predictors.append(
                 CRFPredictor(X, self.R, L, i='R')
             )
@@ -311,7 +311,7 @@ class OptmizerDualLabel(object):
                 CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
             )
 
-        elif r_depth >= 2 and r_depth == len(hidden_size): # TYPE C
+        elif r_depth >= 2 and r_depth == len(hidden_size): # TYPE D
             self.propagators.append(
                 InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru, i='down')
             )
@@ -324,7 +324,7 @@ class OptmizerDualLabel(object):
             self.predictors.append(
                 CRFPredictor(self.concat_op, self.Y, L, i='Y')
             )
-        elif r_depth >= 2 and r_depth < len(hidden_size): # TYPE D
+        elif r_depth >= 2 and r_depth < len(hidden_size): # TYPE E
             self.propagators.append(
                 InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru, i='down')
             )
@@ -340,26 +340,26 @@ class OptmizerDualLabel(object):
             self.predictors.append(
                 CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
             )
-        elif r_depth == 1:
+        # elif r_depth == 1:
             # up branch --> Handles recognition task
             # [BATCH, MAX_TIME, TARGET_IOB] this tensor is zero padded from 3rd position
-            self.predictor_0 = CRFPredictor(self.X, self.R, L, i=0)
+            # self.predictor_0 = CRFPredictor(self.X, self.R, L, i=0)
 
             # down branch --> Handles classification
             # [BATCH, MAX_TIME, 2*hidden_size[:1]] this tensor is zero padded from 3rd position
-            self.propagator_0 = InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru,  i=0)
+            # self.propagator_0 = InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru,  i=0)
             # merge the represenations
             # print(self.predictor_0.get_shape())
             # print(self.propagator_0.get_shape())
-            self.Rflat = self.predictor_0.predict
-            self.Rhat = tf.one_hot(self.Rflat, 3, on_value=1, off_value=0)
+            # self.Rflat = self.predictor_0.predict
+            # self.Rhat = tf.one_hot(self.Rflat, 3, on_value=1, off_value=0)
             # Non zero features over 
             # self.mask = tf.boolean_mask(self.Rhat, self.Rflat)
-            self.Xhat = tf.concat((self.propagator_0.propagate, tf.cast(self.Rhat, tf.float32)), axis=2)
+            # self.Xhat = tf.concat((self.propagator_0.propagate, tf.cast(self.Rhat, tf.float32)), axis=2)
 
             # joint propagator
-            self.propagator_1 = InterleavedPropagator(self.Xhat, L, hidden_size[r_depth:], ru=ru, i=1)
-            self.predictor_1 = CRFPredictor(self.propagator_1.propagate, self.Y, L, i=1)
+            # self.propagator_1 = InterleavedPropagator(self.Xhat, L, hidden_size[r_depth:], ru=ru, i=1)
+            # self.predictor_1 = CRFPredictor(self.propagator_1.propagate, self.Y, L, i=1)
 
         else:
             raise NotImplementedError('This combination of parameters is not implemented')
