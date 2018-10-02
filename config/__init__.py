@@ -5,24 +5,34 @@ Created on Mar 14, 2018
     Defines project wide constants
 
 '''
-import tensorflow as tf
+# import tensorflow as tf
 #INPUTS AND DATASETS
+import yaml
+
+
+def get_config(embs_model):
+    cnf_path = 'config/{}.yaml'.format(embs_model)
+    cnf_dict = {}
+    with open(cnf_path, mode='r') as f:
+        cnf_dict = yaml.load(f)
+    return cnf_dict
+
+
+def set_config(cnf_dict, embs_model):
+    cnf_path = 'config/{}.yaml'.format(embs_model)
+    with open(cnf_path, mode='w') as f:
+        yaml.dump(cnf_dict, f)
+
+    return cnf_dict
+
+
 INPUT_DIR = 'datasets/binaries/'
 SCHEMA_DIR = 'datasets/schemas/'
 
 BASELINE_DIR = 'datasets/baseline/'
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
-DATASET_TRAIN_PATH = '{:}dbtrain_pt.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_PATH = '{:}dbvalid_pt.tfrecords'.format(INPUT_DIR)
-DATASET_TEST_PATH = '{:}dbtest_pt.tfrecords'.format(INPUT_DIR)
 
-DATASET_TRAIN_V2_PATH = '{:}dbtrain_pt_v2.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_V2_PATH = '{:}dbvalid_pt_v2.tfrecords'.format(INPUT_DIR)
-DATASET_TEST_V2_PATH = '{:}dbtest_pt_v2.tfrecords'.format(INPUT_DIR)
-
-DATASET_TRAIN_GLO50_PATH = '{:}dbtrain_glo50.tfrecords'.format(INPUT_DIR)
-DATASET_VALID_GLO50_PATH = '{:}dbvalid_glo50.tfrecords'.format(INPUT_DIR)
-DATASET_TEST_GLO50_PATH = '{:}dbtest_glo50.tfrecords'.format(INPUT_DIR)
+DATA_ENCODING = 'EMB'
 
 DATASET_SIZE = 5931
 DATASET_TRAIN_SIZE = 5099

@@ -119,9 +119,14 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
 
 def make_tfrecords(encoder_name='deep_glo50',
-                   propbank_encoder=None, encoding='EMB', version='1.0'):
+                   propbank_encoder=None,
+                   version='1.0'):
 
+    # PREPARE WRITE DIRECTORIES
+    embs_model = encoder_name.split('_')[-1]
     bin_dir = 'datasets/binaries/{:}/'.format(version)
+    if version in ('1.0'):
+        bin_dir += '{:}/'.format(embs_model)
 
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
@@ -130,13 +135,14 @@ def make_tfrecords(encoder_name='deep_glo50',
         bin_path = '{:}{:}.pickle'.format(bin_dir, encoder_name)
         propbank_encoder = PropbankEncoder.recover(bin_path)
 
-    suffix = encoder_name.split('_')[-1]
-    column_filters = None
+    cnf_dict = propbank_encoder.to_config(config.DATA_ENCODING)
+    config.set_config(cnf_dict, embs_model)
 
-    config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
+    column_filters = None
     for ds_type in ('test', 'valid', 'train'):
-        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters, encoding=encoding)
-        tfrecords_builder(iterator_, ds_type, config_dict, encoding, suffix=suffix, version=version)
+        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters, encoding=config.DATA_ENCODING)
+        # tfrecords_builder(iterator_, ds_type, config_dict, encoding, suffix=suffix, version=version)
+        tfrecords_builder(iterator_, ds_type, embs_model, version=version)
 
 
 def get_model(mname):
@@ -170,21 +176,21 @@ if __name__ == '__main__':
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
-    parser.add_argument('--encoding', type=str, dest='encoding',
-                        choices=('HOT', 'EMB', 'MIX', 'IDX'), default='EMB',
-                        help='''Choice of feature representation based on column type --
-                        `int`, `bool`, `text`, `choice`. `MIX` will keep `text`
-                        features as index to be embedded for the input pipeline
-                        and will one-hot `choice` values. `EMB` will embed `text`
-                        features and will one-hot encode `choice` features.''')
+    # This argument now is an environment variable in config module
+    # parser.add_argument('--encoding', type=str, dest='encoding',
+    #                     choices=('HOT', 'EMB', 'MIX', 'IDX'), default='EMB',
+    #                     help='''Choice of feature representation based on column type --
+    #                     `int`, `bool`, `text`, `choice`. `MIX` will keep `text`
+    #                     features as index to be embedded for the input pipeline
+    #                     and will one-hot `choice` values. `EMB` will embed `text`
+    #                     features and will one-hot encode `choice` features.''')
 
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
-    language_model = args.language_model
-    encoding = args.encoding
+    language_model = args.language_model    
     version = args.version
 
     print(language_model, version)
@@ -217,9 +223,9 @@ if __name__ == '__main__':
         language_model=language_model,
         version=version
     )
+
     make_tfrecords(
         encoder_name=encoder_name,
         propbank_encoder=propbank_encoder,
-        encoding=encoding,
         version=version,
     )

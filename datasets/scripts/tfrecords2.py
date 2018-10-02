@@ -612,7 +612,8 @@ def _protobuf_with_embeddings_process(
     return X, T, L, D
 
 
-def make_feature_list(columns_dict, columns_config, encoding):
+# def make_feature_list(columns_dict, columns_config, encoding):
+def make_feature_list(column_dict, embs_model):
     '''Returns a SequenceExample for the given inputs and labels.
 
     args:
@@ -627,48 +628,53 @@ def make_feature_list(columns_dict, columns_config, encoding):
     '''
     feature_dict = {}
     supported_types = ('choice', 'int', 'text')
+    cnf_dict = conf.get_config(embs_model)
+    encoding = conf.DATA_ENCODING
+    try:
+        def kwargs_int64(value):
+            d = {}
+            if isinstance(value, collections.Iterable):
+                d['int64_list'] = tf.train.Int64List(value=value)
+            else:
+                d['int64_list'] = tf.train.Int64List(value=[value])
+            return d
 
-    def kwargs_int64(value):
-        d = {}
-        if isinstance(value, collections.Iterable):
-            d['int64_list'] = tf.train.Int64List(value=value)
-        else:
-            d['int64_list'] = tf.train.Int64List(value=[value])
-        return d
+        def kwargs_float(value):
+            d = {}
+            d['float_list'] = tf.train.FloatList(value=value)
+            return d
 
-    def kwargs_float(value):
-        d = {}
-        d['float_list'] = tf.train.FloatList(value=value)
-        return d
+        def kwargs_list(label_value, label_type):
+            d = {}
 
-    def kwargs_list(label_value, label_type):
-        d = {}
+            if label_type in ('bool', 'int', 'choice') or (encoding not in ('EMB',)):
+                d['feature'] = [tf.train.Feature(**kwargs_int64(v)) for v in value]
 
-        if label_type in ('bool', 'int', 'choice') or (encoding not in ('EMB',)):
-            d['feature'] = [tf.train.Feature(**kwargs_int64(v)) for v in value]
+            elif label_type in ('text',) and encoding in ('EMB',):
+                d['feature'] = [tf.train.Feature(**kwargs_float(v)) for v in value]
 
-        elif label_type in ('text',) and encoding in ('EMB',):
-            d['feature'] = [tf.train.Feature(**kwargs_float(v)) for v in value]
+            else:
+                params_ = (supported_types, label_type)
+                err_ = 'type must be in {:} and got {:}'.format(*params_)
+                raise ValueError(err_)
+            return d
 
-        else:
-            params_ = (supported_types, label_type)
-            err_ = 'type must be in {:} and got {:}'.format(*params_)
-            raise ValueError(err_)
-        return d
+        for label, value in column_dict.items():
 
-    for label, value in columns_dict.items():
+            label_type = cnf_dict[label]['type']
 
-        label_type = columns_config[label]['type']
+            kwargs = kwargs_list(value, label_type)
 
-        kwargs = kwargs_list(value, label_type)
-
-        feature_dict[label] = tf.train.FeatureList(**kwargs)
+            feature_dict[label] = tf.train.FeatureList(**kwargs)
+    except TypeError as exc:
+        import code; code.interact(local=dict(globals(), **locals()))
 
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, column_config_dict,
-                      encoding='EMB', suffix='glo50', version='1.0'):
+# def tfrecords_builder(propbank_iter, dataset_type, column_config_dict,
+#                       encoding='EMB', suffix='glo50', version='1.0'):
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
@@ -699,7 +705,8 @@ def tfrecords_builder(propbank_iter, dataset_type, column_config_dict,
 
     def kwargs_sequence(feature_dict):
         d = {}
-        f = make_feature_list(feature_dict, column_config_dict, encoding)
+        # f = make_feature_list(feature_dict, column_config_dict, encoding)
+        f = make_feature_list(feature_dict, embs_model)
         d['feature_list'] = f
         return d
 
@@ -714,7 +721,7 @@ def tfrecords_builder(propbank_iter, dataset_type, column_config_dict,
 
     file_path = conf.INPUT_DIR
     file_path += '{:}/'.format(version)
-    file_path += 'db{:}_{:}.tfrecords'.format(dataset_type, suffix)
+    file_path += 'db{:}_{:}.tfrecords'.format(dataset_type, embs_model)
     feature_list_dict = defaultdict(list)
 
     with open(file_path, 'w+') as f:

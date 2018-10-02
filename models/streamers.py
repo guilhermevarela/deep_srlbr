@@ -76,6 +76,7 @@ class TfStreamer(object):
     @classmethod
     def get_valid(cls, input_labels, output_labels, dims_dict,
                   embeddings_model='glo50', version='1.0'):
+
         inputs, targets, seqlens, descriptors = get_valid2(
             input_labels, output_labels, dims_dict, version=version,
             embeddings_model=embeddings_model)
