@@ -52,40 +52,47 @@ TF_CONTEXT_FEATURES = {
 }
 
 
-def get_test(embeddings, input_labels, output_labels, embeddings_model='glo50', version='1.0'):
+def get_test(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
 
     return tfrecords_extract('test', embeddings, input_labels, output_labels,
                              embeddings_model, version=version)
 
 
-def get_valid(embeddings, input_labels, output_labels, embeddings_model='glo50', version='1.0'):
+def get_valid(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
 
     return tfrecords_extract('valid', embeddings, input_labels, output_labels,
                              embeddings_model, version=version)
 
 
-def get_train(embeddings, input_labels, output_labels, embeddings_model='glo50', version='1.0'):
+
+def get_train(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
 
     return tfrecords_extract('train', embeddings, input_labels, output_labels,
                              embeddings_model, version=version)
 
+
 def get_test2(input_labels, output_labels, embeddings_model, version='1.0'):
+
     return tfrecords_extract2('test', input_labels, output_labels,
                               embeddings_model, version=version)
 
 
 def get_valid2(input_labels, output_labels, embeddings_model, version='1.0'):
+
     return tfrecords_extract2('valid', input_labels, output_labels,
                               embeddings_model, version=version)
 
 
 def get_train2(input_labels, output_labels, embeddings_model, version='1.0'):
+
     return tfrecords_extract2('train', input_labels, output_labels,
                               embeddings_model, version=version)
 
 
 def get_size(ds_type, version='1.0'):
+
     lb, ub = get_db_bounds(ds_type, version=version)
+
     return ub - lb
 
 

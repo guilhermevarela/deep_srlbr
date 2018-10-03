@@ -20,7 +20,7 @@ from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_r
 
 from models.propbank_encoder import PropbankEncoder
 from models.conll_evaluator import ConllEvaluator
-from models.optimizers import Optmizer, OptmizerDualLabel
+from models.labelers import Labeler, DualLabeler
 from models.streamers import TfStreamer
 
 
@@ -125,9 +125,9 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                           input_labels, target_labels, shuffle=True)
 
     if len(target_labels) == 1:
-        deep_srl = Optmizer(X, T, L, **params)
+        deep_srl = Labeler(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = OptmizerDualLabel(X, T, L, r_depth, **params)
+        deep_srl = DualLabeler(X, T, L, r_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -166,7 +166,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                 else:
                     loss, _, Yish, error = session.run(
-                        [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
+                        [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],
                         feed_dict={X: X_batch, T: Y_batch, L: L_batch}
                     )
 
@@ -378,9 +378,9 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                           input_labels, target_labels, shuffle=True)
 
     if len(target_labels) == 1:
-        deep_srl = Optmizer(X, T, L, **params)
+        deep_srl = Labeler(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = OptmizerDualLabel(X, T, L, r_depth, **params)
+        deep_srl = DualLabeler(X, T, L, r_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -414,7 +414,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
 
                 loss, _, Yish, error = session.run(
-                    [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
+                    [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, L: L_batch}
                 )
 

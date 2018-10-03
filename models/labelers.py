@@ -14,7 +14,7 @@ from models.propagators import InterleavedPropagator
 from models.predictors import CRFPredictor
 
 
-class Optmizer(object):
+class Labeler(object):
     def __init__(self, X, T, L,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  ru='BasicLSTM'):
@@ -59,7 +59,7 @@ class Optmizer(object):
 
         self.propagate
         self.cost
-        self.optimize
+        self.label
         self.predict
         self.error
 
@@ -85,7 +85,7 @@ class Optmizer(object):
     #     return self.predictor.predict
 
     @lazy_property
-    def optimize(self):
+    def label(self):
         '''Optimize
 
         [description]
@@ -96,10 +96,10 @@ class Optmizer(object):
         Returns:
             [type] -- [description]
         '''
-        with tf.variable_scope('optimize'):
+        with tf.variable_scope('label'):
             kwargs = {'learning_rate': self.learning_rate}
-            optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
-        return optimum
+            opt = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
+        return opt
 
 
     @lazy_property
@@ -126,7 +126,7 @@ class Optmizer(object):
         return tf.reduce_mean(mistakes)
 
 
-class OptmizerDualLabel(object):
+class DualLabeler(object):
     def __init__(self, X, T, L, r_depth=-1,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  ru='BasicLSTM'):
@@ -347,7 +347,7 @@ class OptmizerDualLabel(object):
 
         self.propagate
         self.cost
-        self.optimize
+        self.label
         self.predict
         self.error
 
@@ -374,7 +374,7 @@ class OptmizerDualLabel(object):
         return (Rh, Yh)
 
     @lazy_property
-    def optimize(self):
+    def label(self):
         '''Optimize
 
         [description]
@@ -385,7 +385,7 @@ class OptmizerDualLabel(object):
         Returns:
             [type] -- [description]
         '''
-        with tf.variable_scope('optimize'):
+        with tf.variable_scope('label'):
             kwargs = {'learning_rate': self.learning_rate}
             optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
         return optimum

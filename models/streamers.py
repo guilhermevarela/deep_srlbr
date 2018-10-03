@@ -119,7 +119,7 @@ class TfStreamerWE(object):
 
         inputs, targets, seqlens, descriptors = get_train(
             word_embeddings, input_labels, target_label,
-            embeddings_model=embeddings_model, version=version
+            embeddings_model, version=version
         )
 
         return inputs, targets, seqlens, descriptors
@@ -130,7 +130,7 @@ class TfStreamerWE(object):
 
         inputs, targets, seqlens, descriptors = get_valid(
             word_embeddings, input_labels, target_label,
-            embeddings_model=embeddings_model, version=version
+            embeddings_model, version=version
         )
 
         return inputs, targets, seqlens, descriptors
@@ -141,7 +141,7 @@ class TfStreamerWE(object):
 
         inputs, targets, seqlens, descriptors = get_test(
             word_embeddings, input_labels, target_label,
-            embeddings_model=embeddings_model, version=version
+            embeddings_model, version=version
         )
 
         return inputs, targets, seqlens, descriptors
