@@ -10,10 +10,9 @@ try:  # tensorflow 1.10
     from tensorflow.contrib.crf import crf_decode
 except ImportError:
     # tensorflow 1.2.1
-    from tensorflow.contrib.crf import viterbi_decode
-    crf_decode = viterbi_decode
+    from models.lib.crf import crf_decode
 
-from models.properties import lazy_property
+from models.lib.properties import lazy_property
 
 
 class Predictor(object):
