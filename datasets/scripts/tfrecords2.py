@@ -674,9 +674,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='
         )
         return ex
 
-    file_path = conf.INPUT_DIR
-    file_path += '{:}/'.format(version)
-    file_path += 'db{:}_{:}.tfrecords'.format(dataset_type, embs_model)
+    file_path = get_binary(dataset_type, embs_model, version=version)
     feature_list_dict = defaultdict(list)
 
     with open(file_path, 'w+') as f:

@@ -15,6 +15,7 @@ import config
 import models.feature_factory as fac
 from models.propbank_encoder import PropbankEncoder
 from datasets import tfrecords_builder
+from utils.info import get_binary
 
 SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
 
@@ -51,7 +52,6 @@ def make_propbank_encoder(encoder_name='deep_glo50',
     prefix_target_dir = 'datasets/csvs/{:}/'.format(version)
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
     file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
-    bin_dir = 'datasets/binaries/{:}/'.format(version)
     if not os.path.isfile(file_path):
         glob_regex = '{:}*'.format(prefix_dir)
         options_list = [
@@ -111,9 +111,14 @@ def make_propbank_encoder(encoder_name='deep_glo50',
         dbname=encoder_name,
         version=version
     )
+    model_, sz_ = language_model.split('_s')
+    embs_model = '{:}{:}'.format(get_model(model_), sz_)
 
+    bin_path = get_binary('deep', embs_model, version=version)
+    bin_dir = '/'.join(bin_path.split('/')[:-1]) + '/'
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
+
     propbank_encoder.persist(bin_dir, filename=encoder_name)
     return propbank_encoder
 
@@ -190,7 +195,7 @@ if __name__ == '__main__':
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
-    language_model = args.language_model    
+    language_model = args.language_model
     version = args.version
 
     print(language_model, version)
