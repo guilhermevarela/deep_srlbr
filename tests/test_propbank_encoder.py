@@ -858,7 +858,7 @@ class PropbankTestColumnDimensionsCAT(PropbankEncoderBaseCase):
         self._assert_column_eq(column_label)
 
     def _assert_column_eq(self, column_label):
-        dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'CAT')
+        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'CAT')
         dims_mock_ = 1
 
         msg = self.assert_msg.format(column_label, dims_mock_, dims_test_)
@@ -925,7 +925,7 @@ class PropbankTestColumnDimensionsEMB(PropbankEncoderBaseCase):
 
     def _assert_column_eq(self, column_label):
         mock_dict = self.gs_dict[column_label]
-        dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'EMB')
+        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'EMB')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']
@@ -1003,7 +1003,7 @@ class PropbankTestColumnDimensionsHOT(PropbankEncoderBaseCase):
 
     def _assert_column_eq(self, column_label):
         mock_dict = self.gs_dict[column_label]
-        dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'HOT')
+        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'HOT')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']
@@ -1080,7 +1080,7 @@ class PropbankTestColumnDimensionsMIX(PropbankEncoderBaseCase):
 
     def _assert_column_eq(self, column_label):
         mock_dict = self.gs_dict[column_label]
-        dims_test_ = self.propbank_encoder.column_dimensions(column_label, 'MIX')
+        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'MIX')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']

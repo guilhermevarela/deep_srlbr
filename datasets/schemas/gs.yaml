@@ -55,6 +55,7 @@ R:
 S: 
     category: meta
     type: int
+
 SHALLOW_CHUNKS:
   category: feature
   type: choice
