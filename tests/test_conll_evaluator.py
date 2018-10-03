@@ -148,7 +148,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
         def test_arguments(self):
             target_dict = self.pe.column('train', 'ARG', 'IDX')
             depth = len(target_dict)
-            width = self.pe.column_dimensions('ARG', 'HOT')  # target dimensions
+            width = self.pe.column_sizes('ARG', 'HOT')  # target dimensions
 
             npy_index, npy_predictions = dict2npy(target_dict)
 
@@ -161,7 +161,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
         def test_iob(self):
             target_dict = self.pe.column('train', 'IOB', 'IDX')
             depth = len(target_dict)
-            width = self.pe.column_dimensions('IOB', 'HOT')  # target dimensions
+            width = self.pe.column_sizes('IOB', 'HOT')  # target dimensions
 
             npy_index, npy_predictions = dict2npy(target_dict)
 
@@ -174,7 +174,7 @@ class EvaluatorConllTensor(EvaluatorConllBaseCase):
         def test_iob(self):
             target_dict = self.pe.column('train', 'IOB', 'IDX')
             depth = len(target_dict)
-            width = self.pe.column_dimensions('IOB', 'HOT')  # target dimensions
+            width = self.pe.column_sizes('IOB', 'HOT')  # target dimensions
 
             npy_index, npy_predictions = dict2npy(target_dict)
 

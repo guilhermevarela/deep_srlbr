@@ -25,15 +25,13 @@ class TfStreamer(object):
     -- `text` features have embeddings size (encoded into the binary)
     '''
     def __init__(self, filenames, batch_size, num_epochs,
-                 input_labels, output_labels, dims_dict,
-                 shuffle):
+                 input_labels, output_labels, shuffle):
 
         self.filenames = filenames
         self.batch_size = batch_size
         self.num_epochs = num_epochs
         self.input_labels = input_labels
         self.output_labels = output_labels
-        self.dims_dict = dims_dict
         self.shuffle = shuffle
 
         self.stream
@@ -57,38 +55,38 @@ class TfStreamer(object):
 
             self.inputs, self.targets, self.seqlens, self.descriptors = input_fn(
                 self.filenames, self.batch_size, self.num_epochs,
-                self.input_labels, self.output_labels, self.dims_dict,
-                self.shuffle
+                self.input_labels, self.output_labels, self.shuffle
             )
 
         return self.inputs, self.targets, self.seqlens, self.descriptors
 
     @classmethod
-    def get_train(cls, input_labels, output_labels, dims_dict,
+    def get_train(cls, input_labels, output_labels,
                   embeddings_model='glo50', version='1.0'):
 
         inputs, targets, seqlens, descriptors = get_train2(
-            input_labels, output_labels, dims_dict, version=version,
-            embeddings_model=embeddings_model)
+            input_labels, output_labels, embeddings_model,
+            version=version)
 
         return inputs, targets, seqlens, descriptors
 
     @classmethod
-    def get_valid(cls, input_labels, output_labels, dims_dict,
+    def get_valid(cls, input_labels, output_labels,
                   embeddings_model='glo50', version='1.0'):
+
         inputs, targets, seqlens, descriptors = get_valid2(
-            input_labels, output_labels, dims_dict, version=version,
-            embeddings_model=embeddings_model)
+            input_labels, output_labels, embeddings_model,
+            version=version)
 
         return inputs, targets, seqlens, descriptors
 
     @classmethod
-    def get_test(cls, input_labels, output_labels, dims_dict,
+    def get_test(cls, input_labels, output_labels,
                  embeddings_model='glo50', version='1.0'):
 
         inputs, targets, seqlens, descriptors = get_test2(
-            input_labels, output_labels, dims_dict, version=version,
-            embeddings_model=embeddings_model)
+            input_labels, output_labels, embeddings_model,
+            version=version)
 
         return inputs, targets, seqlens, descriptors
 
@@ -103,7 +101,7 @@ class TfStreamerWE(object):
     '''
     def __init__(self, word_embeddings, trainable, datasets_list,
                  batch_size, epochs, input_labels, target_label,
-                 dims_dict, config_dict, shuffle):
+                 shuffle):
         self.we = word_embeddings
         self.trainable = trainable
         self.datasets_list = datasets_list
@@ -111,11 +109,42 @@ class TfStreamerWE(object):
         self.epochs = epochs
         self.input_labels = input_labels
         self.target_label = target_label
-        self.dims_dict = dims_dict
-        self.config_dict = config_dict
         self.shuffle = shuffle
 
         self.stream
+
+    @classmethod
+    def get_train(cls, word_embeddings, input_labels, target_label,
+                  embeddings_model='glo50', version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_train(
+            word_embeddings, input_labels, target_label,
+            embeddings_model, version=version
+        )
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_valid(cls, word_embeddings, input_labels, target_label,
+                  embeddings_model='glo50', version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_valid(
+            word_embeddings, input_labels, target_label,
+            embeddings_model, version=version
+        )
+
+        return inputs, targets, seqlens, descriptors
+
+    @classmethod
+    def get_test(cls, word_embeddings, input_labels, target_label,
+                 embeddings_model='glo50', version='1.0'):
+
+        inputs, targets, seqlens, descriptors = get_test(
+            word_embeddings, input_labels, target_label,
+            embeddings_model, version=version
+        )
+
+        return inputs, targets, seqlens, descriptors
 
     @lazy_property
     def stream(self):
@@ -138,43 +167,7 @@ class TfStreamerWE(object):
 
             self.inputs, self.targets, self.seqlens, self.descriptors = input_with_embeddings_fn(
                 self.WE, self.datasets_list, self.batch_size,
-                self.epochs, self.input_labels, self.target_label,
-                self.dims_dict, self.config_dict, shuffle=True)
+                self.epochs, self.input_labels, self.target_label, shuffle=True)
 
         return self.inputs, self.targets, self.seqlens, self.descriptors
 
-    @classmethod
-    def get_train(cls, word_embeddings, input_labels, target_label,
-                  dims_dict, config_dict, embeddings_model='glo50',
-                  version='1.0'):
-
-        inputs, targets, seqlens, descriptors = get_train(
-            word_embeddings, input_labels, target_label, dims_dict,
-            config_dict, embeddings_model=embeddings_model,
-            version=version)
-
-        return inputs, targets, seqlens, descriptors
-
-    @classmethod
-    def get_valid(cls, word_embeddings, input_labels, target_label,
-                  dims_dict, config_dict, embeddings_model='glo50',
-                  version='1.0'):
-
-        inputs, targets, seqlens, descriptors = get_valid(
-            word_embeddings, input_labels, target_label, dims_dict,
-            config_dict, embeddings_model=embeddings_model,
-            version=version)
-
-        return inputs, targets, seqlens, descriptors
-
-    @classmethod
-    def get_test(cls, word_embeddings, input_labels, target_label,
-                 dims_dict, config_dict, embeddings_model='glo50',
-                 version='1.0'):
-
-        inputs, targets, seqlens, descriptors = get_test(
-            word_embeddings, input_labels, target_label, dims_dict,
-            config_dict, embeddings_model=embeddings_model,
-            version=version)
-
-        return inputs, targets, seqlens, descriptors

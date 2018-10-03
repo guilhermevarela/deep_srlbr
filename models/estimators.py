@@ -14,13 +14,13 @@ import tensorflow as tf
 
 import config
 
-from utils.info import get_dims, get_binary
+from utils.info import get_db_bounds, get_binary
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, snapshot_recover
 # from utils.ml import f1_score
 
 from models.propbank_encoder import PropbankEncoder
 from models.conll_evaluator import ConllEvaluator
-from models.optimizers import Optmizer, OptmizerDualLabel
+from models.labelers import Labeler, DualLabeler
 from models.streamers import TfStreamer
 
 
@@ -87,22 +87,27 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
     save_path = '{:}model.ckpt'.format(target_dir)
     propbank_encoder = PropbankEncoder.recover(get_binary('deep', embeddings_model))
-    dims_dict = propbank_encoder.columns_dimensions('EMB')
+
     datasets_list = [get_binary('train', embeddings_model)]
     datasets_list.append(get_binary('valid', embeddings_model))
-    dataset_size = config.DATASET_TRAIN_SIZE + config.DATASET_VALID_SIZE
+
+    _, dataset_size = get_db_bounds('valid', version=version)
+    
+
+    cnf_dict = config.get_config(embeddings_model)
 
     X_test, T_test, L_test, D_test = TfStreamer.get_test(
-        input_labels, target_labels, dims_dict, version=version,
+        input_labels, target_labels, version=version,
         embeddings_model=embeddings_model
     )
-    feature_size = get_dims(input_labels, dims_dict)
-    targets_size = dims_dict[target_labels[0]]
+    feature_size = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
+    targets_size = max([cnf_dict[lbl]['size'] for lbl in target_labels])
 
     batch_size = int(dataset_size / fold)
     print(batch_size, target_labels, targets_size, feature_size)
 
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
+    targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
     params = {
         'learning_rate': lr,
         'hidden_size': hidden_layers,
@@ -110,15 +115,22 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         'ru': ru
     }
     # BUILDING the execution graph
-    X_shape = (None, None, feature_size)
-    T_shape = (None, None, targets_size)
+    X_shape = get_xshape(input_labels, cnf_dict)
+    T_shape = get_tshape(target_labels, cnf_dict)
     X = tf.placeholder(tf.float32, shape=X_shape, name='X')
     T = tf.placeholder(tf.float32, shape=T_shape, name='T')
     L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
-                          input_labels, target_labels, dims_dict, shuffle=True)
-    deep_srl = Optmizer(X, T, L, **params)
+                          input_labels, target_labels, shuffle=True)
+
+    if len(target_labels) == 1:
+        deep_srl = Labeler(X, T, L, **params)
+    elif len(target_labels) == 2:
+        deep_srl = DualLabeler(X, T, L, r_depth, **params)
+    else:
+        err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
+        raise ValueError(err)
 
     init_op = tf.group(
         tf.global_variables_initializer(),
@@ -154,7 +166,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
                 else:
                     loss, _, Yish, error = session.run(
-                        [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
+                        [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],
                         feed_dict={X: X_batch, T: Y_batch, L: L_batch}
                     )
 
@@ -168,8 +180,12 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                     )
 
                     index = D_valid[:, :, 0].astype(np.int32)
-
-                    evaluator. evaluate_npyarray('valid', index, Yish, L_valid, target_labels, params)
+                    if len(target_labels) == 2:
+                        Yish = Yish[1]
+                        labels = target_labels[1:]
+                    else:
+                        labels = target_labels
+                    evaluator.evaluate_npyarray('valid', index, Yish, L_valid, target_labels, params)
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
@@ -191,8 +207,13 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                         )
 
                         index = D_test[:, :, 0].astype(np.int32)
+                        if len(target_labels) == 2:
+                            Yish = Yish[1]
+                            labels = target_labels[1:]
+                        else:
+                            labels = target_labels
 
-                        evaluator. evaluate_npyarray('test', index, Yish, L_test, target_labels, params)
+                        evaluator. evaluate_npyarray('test', index, Yish, L_test, labels, params)
                 step += 1
                 i = int(step / fold) % fold
 
@@ -294,24 +315,28 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     save_path = '{:}model.ckpt'.format(target_dir)
     propbank_path = get_binary('deep', embeddings_model, version=version)
     propbank_encoder = PropbankEncoder.recover(propbank_path)
-    dims_dict = propbank_encoder.columns_dimensions('EMB')
 
-    config_dict = propbank_encoder.columns_config
     dataset_path = get_binary('train', embeddings_model, version=version)
     datasets_list = [dataset_path]
 
     X_train, T_train, L_train, I_train = TfStreamer.get_train(
-        input_labels, target_labels, dims_dict, version=version,
+        input_labels, target_labels, version=version,
         embeddings_model=embeddings_model
     )
 
     X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
-        input_labels, target_labels, dims_dict, version=version,
+        input_labels, target_labels, version=version,
         embeddings_model=embeddings_model
     )
 
-    feature_size = get_dims(input_labels, dims_dict)
-    targets_size = dims_dict[target_labels[0]]
+    cnf_dict = config.get_config(embeddings_model)
+    targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
+    params = {
+        'learning_rate': lr,
+        'hidden_size': hidden_layers,
+        'targets_size': targets_size,
+        'ru': ru
+    }
 
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
 
@@ -337,16 +362,10 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
         return evaluator.f1
 
-    targets_size = [dims_dict[lbl] for lbl in target_labels]
-    params = {
-        'learning_rate': lr,
-        'hidden_size': hidden_layers,
-        'targets_size': targets_size,
-        'ru': ru
-    }
+
     # BUILDING the execution graph
-    X_shape = get_xshape(input_labels, dims_dict)
-    T_shape = get_tshape(target_labels, dims_dict)
+    X_shape = get_xshape(input_labels, cnf_dict)
+    T_shape = get_tshape(target_labels, cnf_dict)
     print('trainable embeddings?', embeddings_trainable)
     print('X_shape', X_shape)
     print('T_shape', T_shape)
@@ -356,12 +375,12 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
     streamer = TfStreamer(datasets_list, batch_size, epochs,
-                          input_labels, target_labels, dims_dict, shuffle=True)
+                          input_labels, target_labels, shuffle=True)
 
     if len(target_labels) == 1:
-        deep_srl = Optmizer(X, T, L, **params)
+        deep_srl = Labeler(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = OptmizerDualLabel(X, T, L, r_depth, **params)
+        deep_srl = DualLabeler(X, T, L, r_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -395,7 +414,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
 
 
                 loss, _, Yish, error = session.run(
-                    [deep_srl.cost, deep_srl.optimize, deep_srl.predict, deep_srl.error],
+                    [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],
                     feed_dict={X: X_batch, T: T_batch, L: L_batch}
                 )
 
@@ -448,29 +467,29 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             coord.join(threads)
 
 
-def get_xshape(input_labels, dims_dict):
+def get_xshape(input_labels, cnf_dict):
     # axis 0 --> examples
     # axis 1 --> max time
     # axis 2 --> feature size
     xshape = [None, None]
-    feature_sz = sum([dims_dict[lbl] for lbl in input_labels])
+    feature_sz = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
     xshape.append(feature_sz)
     return xshape
 
 
-def get_tshape(output_labels, dims_dict):
+def get_tshape(output_labels, cnf_dict):
     # axis 0 --> examples
     # axis 1 --> max time
     base_shape = [None, None]
     k = len(output_labels)
     if k == 1:
         # axis 2 --> target size
-        m = dims_dict[output_labels[0]]
+        m = cnf_dict[output_labels[0]]['size']
         tshape = base_shape + [m]
     elif k == 2:
         # axis 2 --> max target size
         # axis 3 --> number of targets
-        m = max([dims_dict[lbl] for lbl in output_labels])
+        m = max([cnf_dict[lbl]['size'] for lbl in output_labels])
         tshape = base_shape + [m, k]
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(k)

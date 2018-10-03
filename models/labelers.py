@@ -14,7 +14,7 @@ from models.propagators import InterleavedPropagator
 from models.predictors import CRFPredictor
 
 
-class Optmizer(object):
+class Labeler(object):
     def __init__(self, X, T, L,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  ru='BasicLSTM'):
@@ -59,7 +59,7 @@ class Optmizer(object):
 
         self.propagate
         self.cost
-        self.optimize
+        self.label
         self.predict
         self.error
 
@@ -85,7 +85,7 @@ class Optmizer(object):
     #     return self.predictor.predict
 
     @lazy_property
-    def optimize(self):
+    def label(self):
         '''Optimize
 
         [description]
@@ -96,10 +96,10 @@ class Optmizer(object):
         Returns:
             [type] -- [description]
         '''
-        with tf.variable_scope('optimize'):
+        with tf.variable_scope('label'):
             kwargs = {'learning_rate': self.learning_rate}
-            optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
-        return optimum
+            opt = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
+        return opt
 
 
     @lazy_property
@@ -126,7 +126,7 @@ class Optmizer(object):
         return tf.reduce_mean(mistakes)
 
 
-class OptmizerDualLabel(object):
+class DualLabeler(object):
     def __init__(self, X, T, L, r_depth=-1,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  ru='BasicLSTM'):
@@ -340,33 +340,14 @@ class OptmizerDualLabel(object):
             self.predictors.append(
                 CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
             )
-        # elif r_depth == 1:
-            # up branch --> Handles recognition task
-            # [BATCH, MAX_TIME, TARGET_IOB] this tensor is zero padded from 3rd position
-            # self.predictor_0 = CRFPredictor(self.X, self.R, L, i=0)
 
-            # down branch --> Handles classification
-            # [BATCH, MAX_TIME, 2*hidden_size[:1]] this tensor is zero padded from 3rd position
-            # self.propagator_0 = InterleavedPropagator(X, L, hidden_size[:r_depth], ru=ru,  i=0)
-            # merge the represenations
-            # print(self.predictor_0.get_shape())
-            # print(self.propagator_0.get_shape())
-            # self.Rflat = self.predictor_0.predict
-            # self.Rhat = tf.one_hot(self.Rflat, 3, on_value=1, off_value=0)
-            # Non zero features over 
-            # self.mask = tf.boolean_mask(self.Rhat, self.Rflat)
-            # self.Xhat = tf.concat((self.propagator_0.propagate, tf.cast(self.Rhat, tf.float32)), axis=2)
-
-            # joint propagator
-            # self.propagator_1 = InterleavedPropagator(self.Xhat, L, hidden_size[r_depth:], ru=ru, i=1)
-            # self.predictor_1 = CRFPredictor(self.propagator_1.propagate, self.Y, L, i=1)
 
         else:
             raise NotImplementedError('This combination of parameters is not implemented')
 
         self.propagate
         self.cost
-        self.optimize
+        self.label
         self.predict
         self.error
 
@@ -393,7 +374,7 @@ class OptmizerDualLabel(object):
         return (Rh, Yh)
 
     @lazy_property
-    def optimize(self):
+    def label(self):
         '''Optimize
 
         [description]
@@ -404,7 +385,7 @@ class OptmizerDualLabel(object):
         Returns:
             [type] -- [description]
         '''
-        with tf.variable_scope('optimize'):
+        with tf.variable_scope('label'):
             kwargs = {'learning_rate': self.learning_rate}
             optimum = tf.train.AdamOptimizer(**kwargs).minimize(self.cost)
         return optimum
