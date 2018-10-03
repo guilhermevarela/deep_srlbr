@@ -8,7 +8,7 @@
 '''
 import tensorflow as tf
 
-from models.properties import delegate_property, lazy_property
+from models.lib.properties import delegate_property, lazy_property
 from models.propagators import InterleavedPropagator
 
 from models.predictors import CRFPredictor

@@ -8,7 +8,7 @@
 '''
 import tensorflow as tf
 
-from models.properties import lazy_property
+from models.lib.properties import lazy_property
 from datasets import input_with_embeddings_fn, input_fn
 from datasets.scripts.tfrecords2 import get_train, get_valid, get_test
 from datasets.scripts.tfrecords2 import get_train2, get_valid2, get_test2

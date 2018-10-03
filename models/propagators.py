@@ -5,7 +5,7 @@
     * Composed of cell units
 '''
 import tensorflow as tf
-from models.properties import lazy_property
+from models.lib.properties import lazy_property
 
 
 def get_unit(sz, ru='BasicLSTM'):
