@@ -337,6 +337,8 @@ def input_fn(filenames, batch_size, num_epochs,
         capacity=capacity,
         dynamic_pad=True
     )
+    # D_batch is the index
+    D_batch = tf.cast(tf.squeeze(D_batch, axis=2), tf.int64)
     return X_batch, T_batch, L_batch, D_batch
 
 
@@ -394,7 +396,9 @@ def _protobuf_process(
         T = sequence_outputs[0]
     else:
         T = tf.stack(sequence_outputs, axis=2)
+
     D = tf.concat(sequence_descriptors, 1)
+
     return X, T, L, D
 
 

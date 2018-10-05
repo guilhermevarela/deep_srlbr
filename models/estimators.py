@@ -180,13 +180,13 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                         feed_dict={X: X_valid, T: Y_valid, L: L_valid}
                     )
 
-                    index = D_valid[:, :, 0].astype(np.int32)
+                    # index = D_valid[:, :, 0].astype(np.int32)
                     if len(target_labels) == 2:
                         Yish = Yish[1]
                         labels = target_labels[1:]
                     else:
                         labels = target_labels
-                    evaluator.evaluate_npyarray('valid', index, Yish, L_valid, target_labels, params)
+                    evaluator.evaluate_npyarray('valid', D_valid, Yish, L_valid, target_labels, params)
 
                     print('Iter={:5d}'.format(step + 1),
                           '\tavg. cost {:.6f}'.format(total_loss / 24),
@@ -342,24 +342,24 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
 
     def train_eval(Y):
-        index = I_train[:, :, 0].astype(np.int32)
+        # index = I_train[:, :, 0].astype(np.int32)
         if len(target_labels) == 2:
             Y = Y[1]
             labels = target_labels[1:]
         else:
             labels = target_labels
-        evaluator. evaluate_npyarray('train', index, Y, L_train, labels, params, script_version='04')
+        evaluator. evaluate_npyarray('train', I_train, Y, L_train, labels, params, script_version='04')
 
         return evaluator.f1
 
     def valid_eval(Y, prefix='valid'):
-        index = I_valid[:, :, 0].astype(np.int32)
+        # index = I_valid[:, :, 0].astype(np.int32)
         if len(target_labels) == 2:
             Y = Y[1]
             labels = target_labels[1:]
         else:
             labels = target_labels
-        evaluator. evaluate_npyarray(prefix, index, Y, L_valid, labels, params, script_version='04')
+        evaluator. evaluate_npyarray(prefix, I_valid, Y, L_valid, labels, params, script_version='04')
 
         return evaluator.f1
 
@@ -412,7 +412,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run(streamer.stream)
-
+                # import code; code.interact(local=dict(globals(), **locals()))
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],

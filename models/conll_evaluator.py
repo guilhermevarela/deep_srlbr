@@ -245,8 +245,8 @@ class ConllEvaluator(object):
 
         return f1
 
-    def  evaluate_npyarray(self, prefix, I, T, L,
-                        target_labels, hparams, script_version='04'):
+    def evaluate_npyarray(self, prefix, I, Y, L,
+                          target_labels, hparams, script_version='04'):
         ''''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
 
         Evaluates the conll scripts returning total precision, recall and F1
@@ -272,12 +272,14 @@ class ConllEvaluator(object):
                 msg_ = 'target_column must be in {:} got target_column {:}'
                 msg_ = msg_.format(self.target_columns, col)
                 raise ValueError(msg_)
-        # Converts npyarray --> dict of string 
+        # Converts npyarray --> dict of string
         # & converts to ARG adds PRED column ('to_script')
-        script_dict = self.decoder_fn(T, I, L, target_labels, script_version)
+        script_dict = self.decoder_fn(Y, I, L, target_labels, script_version)
 
         self.evaluate(prefix, script_dict,
                       hparams, script_version=script_version)
+
+        return self.f1
 
     def evaluate(self, filename, script_dict, hparams, script_version='04'):
         '''Wraps pearl calls to CoNLL Shared Task 2004/2005 script
@@ -297,7 +299,6 @@ class ConllEvaluator(object):
         # Resets state
         self._refresh()
 
-
         gold_dict = self.to_script_fn(['ARG'], {}, script_version)
         gold_dict = OrderedDict({f: OrderedDict({
                 k: gold_dict[f][k] for k in script_dict[f]})
@@ -312,7 +313,7 @@ class ConllEvaluator(object):
         eval_path = self._store(*arg_list)
 
         # Runs official conll 2005 shared task script
-        if script_version  == '05':
+        if script_version == '05':
             perl_path = PEARL_SRL05_PATH
         elif script_version == '04':
             perl_path = PEARL_SRL04_PATH
@@ -325,7 +326,7 @@ class ConllEvaluator(object):
         #out is a byte with each line separated by \n
         #ers is stderr
         txt, err = pipe.communicate()
-        
+
         self.txt = txt.decode('UTF-8')
         self.err = err.decode('UTF-8')
 
@@ -343,6 +344,7 @@ class ConllEvaluator(object):
         target_path = '{:}/{:}.conll'.format(target_dir, filename)
         with open(target_path, 'w+') as f:
             f.write(self.txt)
+
 
     def evaluate_fromconllfile(self, target_path):
         '''

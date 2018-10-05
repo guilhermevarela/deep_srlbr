@@ -5,6 +5,7 @@ Created on Oct 4, 2018
     Agents act as layer of abstraction between client
     and tensorflow computation grapth
 '''
+import os
 import tensorflow as tf
 
 import config
@@ -71,13 +72,14 @@ class SrlAgent(metaclass=AgentMeta):
                  batch_size=250, ctx_p=1, version='1.0',
                  ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
 
-        # reuse should be set by SrlAgent#load
-        reuse = kwargs.get('reuse', False)
-        if not reuse:
+        # ckpt_dir should be set by SrlAgent#load
+        ckpt_dir = kwargs.get('ckpt_dir', None)
+        kfold = kwargs.get('kfold', False)
+        if ckpt_dir is None:
             target_dir = snapshot_hparam_string(
                 embeddings_model=embeddings_model,
                 target_labels=target_labels,
-                is_batch=False, ctx_p=ctx_p,
+                is_batch=not kfold, ctx_p=ctx_p,
                 learning_rate=lr, version=version,
                 hidden_layers=hidden_layers)
 
@@ -91,6 +93,9 @@ class SrlAgent(metaclass=AgentMeta):
                 embeddings_model=embeddings_model, ru=ru,
                 epochs=epochs, chunks=chunks, r_depth=r_depth,
                 version=version)
+        else:
+            self.target_dir = ckpt_dir
+
 
         self._dyn_attr(locals())
         self._build_graph()
@@ -98,19 +103,19 @@ class SrlAgent(metaclass=AgentMeta):
     @classmethod
     def load(cls, ckpt_dir):
         # self.target_dir = ckpt_dir
-        # self.save_path = '{:}model.ckpt'.format(ckpt_dir)
+        # self.session_path = '{:}model.ckpt'.format(ckpt_dir)
         with open(ckpt_dir + 'params.json', mode='r') as f:
             attr_dict = json.load(f)
 
         # prevent from creating a new directory
-        attr_dict['reuse'] = True
+        attr_dict['ckpt_dir'] = ckpt_dir
         agent = cls(**attr_dict)
         agent.target_dir = ckpt_dir
-        agent.save_path = '{:}model.ckpt'.format(ckpt_dir)
+        agent.session_path = '{:}model.ckpt'.format(ckpt_dir)
 
         return agent
 
-    def evaluate(self, Y, I, L, filename):
+    def evaluate(self, I, Y, L, filename):
         f1 = None
         try:
             f1 = self.evaluator.evaluate_npyarray(
@@ -124,6 +129,16 @@ class SrlAgent(metaclass=AgentMeta):
             return f1
 
     def fit(self):
+        X_train, T_train, L_train, I_train = TfStreamer.get_train(
+            self.input_labels, self.target_labels, version=self.version,
+            embeddings_model=self.embeddings_model
+        )
+
+        X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
+            self.input_labels, self.target_labels, version=self.version,
+            embeddings_model=self.embeddings_model
+        )
+
         init_op = tf.group(
             tf.global_variables_initializer(),
             tf.local_variables_initializer()
@@ -135,9 +150,11 @@ class SrlAgent(metaclass=AgentMeta):
             coord = tf.train.Coordinator()
             threads = tf.train.start_queue_runners(coord=coord)
             saver = tf.train.Saver()
-            if self.ckpt_dir:
-                saver.restore(session, save_path)
-                conll_path = '{:}best-valid.conll'.format(ckpt_dir)
+            session_path = '{:}model.ckpt'.format(self.target_dir)
+            # tries to restore saved model
+            if os.path.isfile(session_path):
+                saver.restore(session, self.target_dir)
+                conll_path = '{:}best-valid.conll'.format(self.target_dir)
                 self.evaluator.evaluate_fromconllfile(conll_path)
                 best_validation_rate = evaluator.f1
             else:
@@ -151,7 +168,7 @@ class SrlAgent(metaclass=AgentMeta):
             try:
                 while not (coord.should_stop() or eps < 1e-3):
                     X_batch, T_batch, L_batch, I_batch = session.run(self.streamer.stream)
-
+                    # import code; code.interact(local=dict(globals(), **locals()))
 
                     loss, _, Yish, error = session.run(
                         [self.deep_srl.cost, self.deep_srl.label, self.deep_srl.predict, self.deep_srl.error],
@@ -162,18 +179,20 @@ class SrlAgent(metaclass=AgentMeta):
                     total_error += error
                     if (step) % 25 == 0:
 
-                        Y_train = session.run(
-                            self.deep_srl.predict,
-                            feed_dict={self.X: X_train, self.T: T_train, self.L: L_train}
-                        )
-                        f1_train = self.evaluate(Y_train, I_train, 'train')
+                        # Y_train = session.run(
+                        #     self.deep_srl.predict,
+                        #     feed_dict={self.X: X_train, self.T: T_train, self.L: L_train}
+                        # )
+                        _, f1_train = self.predict(I_train, X_train, L_train, evalfilename='train')
+                        # f1_train = self.evaluate(Y_train, I_train, 'train')
 
-                        Y_valid = session.run(
-                            self.deep_srl.predict,
-                            feed_dict={self.X: X_valid, self.T: T_valid, self.L: L_valid}
-                        )
-                        f1_valid = self.evaluate(Y_valid, I_valid, L_valid, 'valid')
-
+                        # Y_valid = session.run(
+                        #     self.deep_srl.predict,
+                        #     feed_dict={self.X: X_valid, self.T: T_valid, self.L: L_valid}
+                        # )
+                        # f1_valid = self.evaluate(Y_valid, I_valid, L_valid, 'valid')
+                        
+                        Y_valid, f1_valid = self.predict(I_valid, X_valid, L_valid, evalfilename='valid')
                         if f1_valid is not None and f1_train is not None:
                             print('Iter={:5d}'.format(step),
                                   '\tavg. cost {:.6f}'.format(total_loss / 25),
@@ -190,8 +209,8 @@ class SrlAgent(metaclass=AgentMeta):
 
                         if f1_valid and best_validation_rate < f1_valid:
                             best_validation_rate = f1_valid
-                            f1_valid = self.evaluate(Y_valid, I_valid, L_valid, 'best-valid')
-                            saver.save(session, self.save_path)
+                            f1_valid = self.evaluate(I_valid, Y_valid, L_valid, 'best-valid')
+                            saver.save(session, session_path)
                     step += 1
 
             except tf.errors.OutOfRangeError:
@@ -202,16 +221,16 @@ class SrlAgent(metaclass=AgentMeta):
                 coord.request_stop()
                 coord.join(threads)
 
-    def predict(self, I, X, T, L, evalfilename=None):
+    def predict(self, I, X, L, evalfilename=None):
         Y = self.session.run(
             self.deep_srl.predict,
-            feed_dict={self.X: X, self.T: T, self.L: L})
+            feed_dict={self.X: X, self.L: L})
 
         if evalfilename is None:
             return Y
         else:
-            f1 = self.evaluate(Y, I, L, evalfilename)
-            return Y, f1_train
+            f1 = self.evaluate(I, Y, L, evalfilename)
+            return Y, f1
 
 
     def predict_fromfile(self):
@@ -241,20 +260,25 @@ class SrlAgent(metaclass=AgentMeta):
         self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
         self.L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
-        targets_size = [cnf_dict[lbl]['size'] for lbl in self.target_labels]
-        kwargs = {'learning_rate': self.lr, 'hidden_size': self.hidden_layers,
-                  'targets_size': targets_size, 'ru': self.ru}
 
+
+        # The streamer instanciation builds a feeder_op that will
+        # supply the computation graph with batches of examples
         self.streamer = TfStreamer(datasets_list, self.batch_size, self.epochs,
                                    self.input_labels, self.target_labels,
                                    shuffle=True)
 
+        # The Labeler instanciation will build the archtecture
+        targets_size = [cnf_dict[lbl]['size'] for lbl in self.target_labels]
+        kwargs = {'learning_rate': self.lr, 'hidden_size': self.hidden_layers,
+                  'targets_size': targets_size, 'ru': self.ru}
         self.deep_srl = Labeler(self.X, self.T, self.L, **kwargs)
 
     def _dyn_attr(self, attr_dict):
 
         def filt(x):
-            return (x == 'self' or x[0] == '_')
+            return (x in ('self','ckpt_dir') or x[0] == '_')
+
         attr_dict = {n: v for n, v in attr_dict.items() if not filt(n)}
 
         for k, v in attr_dict.items():
