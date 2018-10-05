@@ -151,6 +151,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             best_validation_rate = evaluator.f1  # prevents files to be loaded
         else:
             best_validation_rate = -1
+
         step = 0
         i = 0
         total_loss = 0.0

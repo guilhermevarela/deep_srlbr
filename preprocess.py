@@ -143,11 +143,11 @@ def make_tfrecords(encoder_name='deep_glo50',
     cnf_dict = propbank_encoder.to_config(config.DATA_ENCODING)
     config.set_config(cnf_dict, embs_model)
 
-    column_filters = None
+    flt = None
+    enc = config.DATA_ENCODING
     for ds_type in ('test', 'valid', 'train'):
-        iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters, encoding=config.DATA_ENCODING)
-        # tfrecords_builder(iterator_, ds_type, config_dict, encoding, suffix=suffix, version=version)
-        tfrecords_builder(iterator_, ds_type, embs_model, version=version)
+        iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=enc)
+        tfrecords_builder(iter_, ds_type, embs_model, version=version)
 
 
 def get_model(mname):
