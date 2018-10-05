@@ -5,7 +5,7 @@ Created on Oct 4, 2018
     Agents act as layer of abstraction between client
     and tensorflow computation grapth
 '''
-import os
+import json
 import tensorflow as tf
 
 import config
@@ -22,7 +22,7 @@ from utils.info import get_binary
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
 
-TARGET_LABEL = ['IOB']
+TARGET_LABELS = ['IOB']
 
 HIDDEN_LAYERS = [16, 16]
 
@@ -33,13 +33,12 @@ class AgentMeta(type):
     on function body
 
     Every agent must implent the following methods
-    * evaluate -- evaluates a previously defined model
+    * evaluate -- evaluate the task using matrices
+    * evaluate_dataset -- evaluates the task using dasets from disk
     * fit -- trains a model
     * load -- loads a model from disk
     * predict -- predicts the outputs from numpy matrices
-    * predict_fromfile -- predicts the outputs based on stored data
-    * _build_cgraph -- builds the computation graph after
-                      inialization
+
 
     References:
         https://docs.python.org/3/reference/datamodel.html#metaclasses
@@ -47,7 +46,7 @@ class AgentMeta(type):
     '''
     def __new__(meta, name, base, body):
         agent_methods = ('evaluate', 'fit', 'load', 'predict',
-                         'predict_fromfile', '_build_graph')
+                         'evaluate_dataset')
 
         for am in agent_methods:
             if am not in body:
@@ -58,19 +57,96 @@ class AgentMeta(type):
 
 
 
-class SrlAgent(metaclass=AgentMeta):
-    '''[summary]
+class SRLAgent(metaclass=AgentMeta):
+    '''Semantic Role Labeling ST 2004 - 2005
 
-    [description]
+    Defines a tensorflow DataFlow graph using Recurrent Neural Networks,
+    the data is fed to the graph using protobuf binaries and uses
+    official perl scripts to evaluate the training progress. It needs
+    a directory to store the best validation parameter and the evaluations
+
+
+    Example:
+        # Uses SGD to train a labeler evaluating on a
+        # separate set using using evaluation scripts
+        > srl = SRLAgent()
+        > srl.fit()
+
+        # Loads a pre-trained model and evaluates it
+        > ckpt_dir = ... # Dir containing model.ckpt.xpto
+        > srl = SRLAgent.load(ckpt_dir) # loads a previously trained model
+        > srl.evaluate_dataset('valid') #evaluates the dataset
+        > srl.fit() # Retrains the dataset from previous session
+
 
     Extends:
         metaclass=AgentMeta
+
+    References:
+        Jie Zhou and Wei Xu. 2015.
+        "End-to-end learning of semantic role labeling using recurrent neural
+        networks". In Proc. of the Annual Meeting of the Association
+        for Computational Linguistics (ACL)
+
+        http://www.aclweb.org/anthology/P15-1109
+
+        Xavier Carreras and Lluís Màrquez. 2004.
+        "Introduction to the CoNLL-2004 Shared Task: Semantic Role Labeling".
+        In proccedings of CoNLL 2004.
+
+        https://www.cs.upc.edu/~srlconll/st04/st04.html
+
+    TODO:
+        Include raw text inputs to evaluate the model
     '''
-    def __init__(self, input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
+    def __init__(self, input_labels=FEATURE_LABELS, target_labels=TARGET_LABELS,
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
                  batch_size=250, ctx_p=1, version='1.0',
                  ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
+        '''Defines Dataflow graph
+
+        Builds a Rnn tensorflow graph
+
+        Arguments:
+            **kwargs {[type]} -- [description]
+
+        Keyword Arguments:
+            input_labels {list} -- Features to be considered
+                                    (default: {FEATURE_LABELS})
+
+            target_labels {list} -- Targets more than one label is possible
+                                        (default: {TARGET_LABELS})
+
+            hidden_layers {list} -- Integers holding the hidden layers sizes
+                                        (default: {HIDDEN_LAYERS})
+
+            embeddings_model {str} -- Abbrev. of embedding_model name and
+                                     it's size: GloVe size 50 --> glo50
+                                     (default: {'wan50'})
+
+            embeddings_trainable {bool} -- TODO: allow trainable embeddings
+                                    (default: {False})
+
+            epochs {int} -- Iterations to make on the training set
+                                (default: {100})
+
+            lr {float} -- Learning Rate (default: {5 * 1e-3})
+
+            batch_size {int} -- Number of examples to be trained
+                                (default: {250})
+
+            ctx_p {int} -- size of the windoew around the predicate
+                                (default: {1})
+
+            version {str} -- Propbank version (default: {'1.0'})
+
+            ru {int} -- Recurrent unit to use (default: {'BasicLSTM'})
+
+            chunks {bool} --  (default: {False})
+
+            r_depth {number} -- [description] (default: {-1})
+        '''
 
         # ckpt_dir should be set by SrlAgent#load
         ckpt_dir = kwargs.get('ckpt_dir', None)
@@ -93,29 +169,103 @@ class SrlAgent(metaclass=AgentMeta):
                 embeddings_model=embeddings_model, ru=ru,
                 epochs=epochs, chunks=chunks, r_depth=r_depth,
                 version=version)
+            self.target_dir = target_dir
         else:
             self.target_dir = ckpt_dir
+            self._restore_session = True
+
+        self.input_labels = input_labels
+        self.target_labels = target_labels
+        self.version = version
+        self.embeddings_model = embeddings_model
+
+        propbank_path = get_binary(
+            'deep', embeddings_model, version=version)
+        propbank_encoder = PropbankEncoder.recover(propbank_path)
+
+        dataset_path = get_binary(
+            'train', embeddings_model, version=version)
+        datasets_list = [dataset_path]
+
+        self.evaluator = ConllEvaluator(propbank_encoder, target_dir=self.target_dir)
+
+        cnf_dict = config.get_config(embeddings_model)
+        X_shape = get_xshape(input_labels, cnf_dict)
+        T_shape = get_tshape(target_labels, cnf_dict)
+        print('trainable embeddings?', embeddings_trainable)
+        print('X_shape', X_shape)
+        print('T_shape', T_shape)
+
+        self.X = tf.placeholder(tf.float32, shape=X_shape, name='X')
+        self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
+        self.L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
 
-        self._dyn_attr(locals())
-        self._build_graph()
+
+        # The streamer instanciation builds a feeder_op that will
+        # supply the computation graph with batches of examples
+        self.streamer = TfStreamer(datasets_list, batch_size, epochs,
+                                   input_labels, target_labels,
+                                   shuffle=True)
+
+        # The Labeler instanciation will build the archtecture
+        targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
+        kwargs = {'learning_rate': lr, 'hidden_size': hidden_layers,
+                  'targets_size': targets_size, 'ru': ru}
+        self.rnn_srl = Labeler(self.X, self.T, self.L, **kwargs)
 
     @classmethod
     def load(cls, ckpt_dir):
-        # self.target_dir = ckpt_dir
-        # self.session_path = '{:}model.ckpt'.format(ckpt_dir)
+        '''Loads from ckpt_dir a previous experiment
+
+        Loads a pre-trained session either to evaluated or
+        to be retrained
+
+        Arguments:
+            ckpt_dir {str} -- Path to mode.ckpt.xxx files
+
+        Returns:
+            agent {SRLAgent} -- A SRL
+        '''
+
         with open(ckpt_dir + 'params.json', mode='r') as f:
             attr_dict = json.load(f)
 
         # prevent from creating a new directory
         attr_dict['ckpt_dir'] = ckpt_dir
         agent = cls(**attr_dict)
-        agent.target_dir = ckpt_dir
-        agent.session_path = '{:}model.ckpt'.format(ckpt_dir)
 
         return agent
 
     def evaluate(self, I, Y, L, filename):
+        '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
+
+        I, Y are zero padded to the right -- L vector carries
+        the original propositon time and Y, I are scaled
+        to have the same 2nd dimension as the largest proposition
+        on the batch (1st dimension)(default: 250)
+
+
+        Arguments:
+            I {np.narray} -- 2D matrix zero padded [batch, max_time]
+                representing the obsertions indices
+
+            Y {np.narray} -- 2D matrix zero padded [batch, max_time]
+                              model predictions.
+
+            L {np.narray} -- 1D vector [batch]
+                             stores the true length of the proposition
+
+            filename {str} -- prefix for the files to used for evaluation
+                            CoNLL 2004 scripts requires that the contents
+                            will be saved to disk.
+
+        Returns:
+            f1 {float} -- the score
+
+        Raises:
+            AttributeError -- [description]
+        '''
         f1 = None
         try:
             f1 = self.evaluator.evaluate_npyarray(
@@ -128,7 +278,54 @@ class SrlAgent(metaclass=AgentMeta):
         finally:
             return f1
 
+    def evaluate_dataset(self, ds_type):
+        '''Evaluates the contents of ds_type using CoNLL 2004 Shared Task script
+
+        Runs the CoNLL 2004 Shared Task script saving 3 files on target_dir
+        * <ds_type>_dataset-gold.props -- propositions gold standard
+        * <ds_type>_dataset-eval.props -- predicted propositions
+        * <ds_type>_dataset.conll -- Overall script results
+
+        Arguments:
+            ds_type {str} -- dataset type 'train', 'valid', 'test'
+
+        Returns:
+            f1 -- evaluation score
+
+        Raises:
+            ValueError --  dataset type in ('train', 'valid', 'test')
+        '''
+        if ds_type in ('train', 'valid', 'test'):
+            input_fn = getattr(TfStreamer, 'get_{:}'.format(ds_type))
+            eval_name = '{:}_dataset'.format(ds_type)
+        else:
+            err = 'ds_type must be in (`valid`,`train`,`test`) got `{:}`'
+            err = err.format(ds_type)
+            raise ValueError(err)
+
+        X, T, L, I = input_fn(
+            self.input_labels, self.target_labels, version=self.version,
+            embeddings_model=self.embeddings_model
+        )
+
+        init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+        with tf.Session() as self.session:
+            self.session.run(init_op)
+            saver = tf.train.Saver()
+            session_path = '{:}model.ckpt'.format(self.target_dir)
+            saver.restore(self.session, session_path)
+            Y, f1 = self._predict_and_eval(I, X, L, eval_name)
+
+        return f1
+
     def fit(self):
+        '''Trains the labeler and evaluates using CoNLL 2004 script
+
+        Loads the training set and evaluation set
+        '''
         X_train, T_train, L_train, I_train = TfStreamer.get_train(
             self.input_labels, self.target_labels, version=self.version,
             embeddings_model=self.embeddings_model
@@ -144,19 +341,18 @@ class SrlAgent(metaclass=AgentMeta):
             tf.local_variables_initializer()
         )
 
-        with tf.Session() as session:
-            self.session = session
-            session.run(init_op)
+        with tf.Session() as self.session:
+            self.session.run(init_op)
             coord = tf.train.Coordinator()
             threads = tf.train.start_queue_runners(coord=coord)
             saver = tf.train.Saver()
             session_path = '{:}model.ckpt'.format(self.target_dir)
             # tries to restore saved model
-            if os.path.isfile(session_path):
-                saver.restore(session, self.target_dir)
+            if self._restore_session:
+                saver.restore(self.session, session_path)
                 conll_path = '{:}best-valid.conll'.format(self.target_dir)
                 self.evaluator.evaluate_fromconllfile(conll_path)
-                best_validation_rate = evaluator.f1
+                best_validation_rate = self.evaluator.f1
             else:
                 best_validation_rate = -1
 
@@ -167,11 +363,10 @@ class SrlAgent(metaclass=AgentMeta):
             eps = 100
             try:
                 while not (coord.should_stop() or eps < 1e-3):
-                    X_batch, T_batch, L_batch, I_batch = session.run(self.streamer.stream)
-                    # import code; code.interact(local=dict(globals(), **locals()))
+                    X_batch, T_batch, L_batch, I_batch = self.session.run(self.streamer.stream)
 
-                    loss, _, Yish, error = session.run(
-                        [self.deep_srl.cost, self.deep_srl.label, self.deep_srl.predict, self.deep_srl.error],
+                    loss, _, error = self.session.run(
+                        [self.rnn_srl.cost, self.rnn_srl.label, self.rnn_srl.error],
                         feed_dict={self.X: X_batch, self.T: T_batch, self.L: L_batch}
                     )
 
@@ -179,20 +374,10 @@ class SrlAgent(metaclass=AgentMeta):
                     total_error += error
                     if (step) % 25 == 0:
 
-                        # Y_train = session.run(
-                        #     self.deep_srl.predict,
-                        #     feed_dict={self.X: X_train, self.T: T_train, self.L: L_train}
-                        # )
-                        _, f1_train = self.predict(I_train, X_train, L_train, evalfilename='train')
-                        # f1_train = self.evaluate(Y_train, I_train, 'train')
+                        _, f1_train = self._predict_and_eval(I_train, X_train, L_train, 'train')
 
-                        # Y_valid = session.run(
-                        #     self.deep_srl.predict,
-                        #     feed_dict={self.X: X_valid, self.T: T_valid, self.L: L_valid}
-                        # )
-                        # f1_valid = self.evaluate(Y_valid, I_valid, L_valid, 'valid')
-                        
-                        Y_valid, f1_valid = self.predict(I_valid, X_valid, L_valid, evalfilename='valid')
+
+                        Y_valid, f1_valid = self._predict_and_eval(I_valid, X_valid, L_valid, 'valid')
                         if f1_valid is not None and f1_train is not None:
                             print('Iter={:5d}'.format(step),
                                   '\tavg. cost {:.6f}'.format(total_loss / 25),
@@ -210,7 +395,7 @@ class SrlAgent(metaclass=AgentMeta):
                         if f1_valid and best_validation_rate < f1_valid:
                             best_validation_rate = f1_valid
                             f1_valid = self.evaluate(I_valid, Y_valid, L_valid, 'best-valid')
-                            saver.save(session, session_path)
+                            saver.save(self.session, session_path)
                     step += 1
 
             except tf.errors.OutOfRangeError:
@@ -221,69 +406,36 @@ class SrlAgent(metaclass=AgentMeta):
                 coord.request_stop()
                 coord.join(threads)
 
-    def predict(self, I, X, L, evalfilename=None):
+    def predict(self, X, L):
+        '''Predicts the Semantic Role Labels
+
+        X, L are zero padded to the right -- L vector carries
+        the original propositon time and X is scaled
+        to have the same 2nd dimension as the largest proposition
+        on the batch (1st dimension)(default: 250)
+
+        Arguments:
+            I {np.narray} -- 2D matrix zero padded [batch, max_time]
+                            representing the obsertions indices
+
+            X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
+                             model inputs
+
+        Returns:
+            Y - {np.narray} -- 2D matrix zero padded [batch, max_time]
+                              model predictions.
+        '''
         Y = self.session.run(
-            self.deep_srl.predict,
+            self.rnn_srl.predict,
             feed_dict={self.X: X, self.L: L})
 
-        if evalfilename is None:
-            return Y
-        else:
-            f1 = self.evaluate(I, Y, L, evalfilename)
-            return Y, f1
+        return Y
 
+    def _predict_and_eval(self, I, X, L, evalfilename):
+        Y = self.predict(X, L)
+        f1 = self.evaluate(I, Y, L, evalfilename)
+        return Y, f1
 
-    def predict_fromfile(self):
-        pass
-
-
-    def _build_graph(self):
-        propbank_path = get_binary(
-            'deep', self.embeddings_model, version=self.version)
-        propbank_encoder = PropbankEncoder.recover(propbank_path)
-
-        dataset_path = get_binary(
-            'train', self.embeddings_model, version=self.version)
-        datasets_list = [dataset_path]
-
-        self.evaluator = ConllEvaluator(propbank_encoder,
-                                        target_dir=self.target_dir)
-
-        cnf_dict = config.get_config(self.embeddings_model)
-        X_shape = get_xshape(self.input_labels, cnf_dict)
-        T_shape = get_tshape(self.target_labels, cnf_dict)
-        print('trainable embeddings?', self.embeddings_trainable)
-        print('X_shape', X_shape)
-        print('T_shape', T_shape)
-
-        self.X = tf.placeholder(tf.float32, shape=X_shape, name='X')
-        self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
-        self.L = tf.placeholder(tf.int32, shape=(None,), name='L')
-
-
-
-        # The streamer instanciation builds a feeder_op that will
-        # supply the computation graph with batches of examples
-        self.streamer = TfStreamer(datasets_list, self.batch_size, self.epochs,
-                                   self.input_labels, self.target_labels,
-                                   shuffle=True)
-
-        # The Labeler instanciation will build the archtecture
-        targets_size = [cnf_dict[lbl]['size'] for lbl in self.target_labels]
-        kwargs = {'learning_rate': self.lr, 'hidden_size': self.hidden_layers,
-                  'targets_size': targets_size, 'ru': self.ru}
-        self.deep_srl = Labeler(self.X, self.T, self.L, **kwargs)
-
-    def _dyn_attr(self, attr_dict):
-
-        def filt(x):
-            return (x in ('self','ckpt_dir') or x[0] == '_')
-
-        attr_dict = {n: v for n, v in attr_dict.items() if not filt(n)}
-
-        for k, v in attr_dict.items():
-            if not hasattr(self, k):
-                setattr(self, k, v)
 
 def get_xshape(input_labels, cnf_dict):
     # axis 0 --> examples
