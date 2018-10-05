@@ -170,6 +170,7 @@ class SRLAgent(metaclass=AgentMeta):
                 epochs=epochs, chunks=chunks, r_depth=r_depth,
                 version=version)
             self.target_dir = target_dir
+            self._restore_session = False
         else:
             self.target_dir = ckpt_dir
             self._restore_session = True
