@@ -100,7 +100,7 @@ def snapshot_persist(target_dir,  **kwargs):
             'hidden_layers', 'embeddings_model',
             'embeddings_trainable', 'epochs',
             'lr', 'batch_size', 'kfold', 'version',
-            'ru', 'chunks', 'r_depth'}
+            'rec_unit', 'chunks', 'recon_depth'}
 
     # Clear exclusve parameters
     if 'kfold' in kwargs:

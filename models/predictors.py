@@ -15,15 +15,59 @@ except ImportError:
 from models.lib.properties import lazy_property
 
 
-class Predictor(object):
+class PredictorMeta(type):
+    '''This is a metaclass -- enforces method definition
+    on function body
 
-    def __init__(self, V, T, L, i=0):
-        scope_id = 'CRF-{:}'.format(i)
+    Every Propagator must implent the following methods
+    * propagate - builds automatic features from input layer
+
+    References:
+        https://docs.python.org/3/reference/datamodel.html#metaclasses
+        https://realpython.com/python-metaclasses/
+    '''
+    def __new__(meta, name, base, body):
+        predictor_methods = ('score', 'cost', 'predict')
+
+        for pm in predictor_methods:
+            if pm not in body:
+                msg = 'predictor must implement {:}'.format(pm)
+                raise TypeError(msg)
+
+        return super().__new__(meta, name, base, body)
+
+
+class CRFPredictor(object, metaclass=PredictorMeta):
+    def __init__(self, V, T, L, scope_label=''):
+        '''Builds a recurrent neural network section of the graph
+
+        Arguments:
+            V {tensor} -- Rank 3 input tensor having dimensions as follows
+                        [batches, max_time, features]
+
+            T {tf.placeholder}  -- Rank 3 float tensor in which the dimensions are
+                * batch_size -- fixed sample size from examples
+                * max_time -- maximum time from batch_size examples (default: None)
+                * classes -- number of classes
+
+            L {tensor} -- Rank 1 representing the true lenght of each example
+            hidden_layers {list} -- [description]
+
+        Keyword Arguments:
+            rec_unit {str} -- Name of the recurrent unit (default: {'BasicLSTMCell'})
+            scope_label {str} -- Label for this scope (default: {''})
+
+        References:
+            Sequence Tagging with Tensorflow
+
+            https://guillaumegenthial.github.io/sequence-tagging-with-tensorflow.html
+        '''
+        scope_id = 'CRF-{:}'.format(scope_label)
 
         self.V = V
         self.T = T
         self.L = L
-        self.i = i
+        self.scope_label = scope_label
         self.Tflat = tf.cast(tf.argmax(T, 2), tf.int32)
 
         with tf.variable_scope(scope_id):
@@ -31,20 +75,9 @@ class Predictor(object):
             self.cost
             self.predict
 
-    def score(self):
-        raise NotImplementedError('Predictor must implement cost')
-
-    def cost(self):
-        raise NotImplementedError('Predictor must implement cost')
-
-    def predict(self):
-        raise NotImplementedError('Predictor must implement predict')
-
-
-class CRFPredictor(Predictor):
     @lazy_property
     def score(self):
-        scope_id = 'score{:}'.format(self.i)
+        scope_id = 'score{:}'.format(self.scope_label)
         with tf.variable_scope(scope_id):
             Wo = tf.Variable(tf.random_normal(self.wo_shape, name='Wo'))
             bo = tf.Variable(tf.random_normal(self.bo_shape, name='bo'))
@@ -70,7 +103,7 @@ class CRFPredictor(Predictor):
             cost {tf.float64} -- A scalar holding the average log_likelihood 
             of the loss by estimatiof
         '''
-        scope_id = 'cost{:}'.format(self.i)
+        scope_id = 'cost{:}'.format(self.scope_label)
         with tf.variable_scope(scope_id):
             args = (self.S, self.Tflat, self.L)
             log_likelihood, self.transition_params = crf_log_likelihood(*args)
@@ -89,7 +122,7 @@ class CRFPredictor(Predictor):
         Returns:
             [type] -- [description]
         '''
-        scope_id = 'prediction{:}'.format(self.i)
+        scope_id = 'prediction{:}'.format(self.scope_label)
         with tf.variable_scope(scope_id):
             # Compute the viterbi sequence and score.
             args = (self.S, self.transition_params, self.L)
