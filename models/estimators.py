@@ -37,7 +37,7 @@ HIDDEN_LAYERS = [16] * 4
 def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
                    hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                    version='1.0', epochs=100, lr=5 * 1e-3, fold=25, ctx_p=1,
-                   ckpt_dir=None,  ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
+                   ckpt_dir=None,  rec_unit='BasicLSTM', chunks=False, recon_depth=-1, **kwargs):
     '''Runs estimate DBLSTM parameters using a kfold cross validation
 
     Estimates DBLSTM using Stochastic Gradient Descent. The 
@@ -79,8 +79,8 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
             hidden_layers=hidden_layers, ctx_p=ctx_p,
             target_labels=target_labels, kfold=25,
             embeddings_trainable=False,
-            embeddings_model=embeddings_model, ru=ru,
-            epochs=epochs, chunks=chunks, r_depth=r_depth,
+            embeddings_model=embeddings_model, rec_unit=rec_unit,
+            epochs=epochs, chunks=chunks, recon_depth=recon_depth,
             version=version)
     else:
         target_dir = ckpt_dir
@@ -112,7 +112,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         'learning_rate': lr,
         'hidden_size': hidden_layers,
         'targets_size': targets_size,
-        'ru': ru
+        'rec_unit': rec_unit
     }
     # BUILDING the execution graph
     X_shape = get_xshape(input_labels, cnf_dict)
@@ -127,7 +127,7 @@ def estimate_kfold(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     if len(target_labels) == 1:
         deep_srl = Labeler(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = DualLabeler(X, T, L, r_depth, **params)
+        deep_srl = DualLabeler(X, T, L, recon_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -267,30 +267,53 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
              hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
              embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
              batch_size=250, ctx_p=1, version='1.0', ckpt_dir=None,
-             ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
-    '''Runs estimate DBLSTM parameters using a training set and a fixed validation set
+             rec_unit='BasicLSTM', chunks=False, recon_depth=-1, **kwargs):
+    '''Defines Dataflow graph -- train and evalutes
 
     Estimates DBLSTM using Stochastic Gradient Descent. Both training 
     set and validation sets are fixed. Evalutions for the model are
     carried out using 2005 CoNLL Shared Task Scripts and the best 
     proposition forecast and scores are saved on a dedicated folder.
 
+    This function is deprecated please user SRLAgent(**kwargs)
+    Arguments:
+        **kwargs {[type]} -- [description]
+
     Keyword Arguments:
-        input_labels {list<str>}-- Columns which will be 
-            converted into features (default: {FEATURE_LABELS})
-        target_labels {str} -- Column which will be
-            used as target (default: {`T`})
-        hidden_layers {list<int>} -- sets the number and
-            sizes for hidden layers (default: {`[16, 16, 16, 16]`})
-        embeddings {str} -- There are three available models
-            `glo50`,`wrd50`, `wan50` (default: {'wan50'})
-        epochs {int} -- Number of iterations (default: {100})
-        lr {float} -- The learning rate (default: {5 * 1e-3})
-        batch_size {int} -- The number of examples consumed
-            on each iteration (default: {250})
-        ckpt_dir {str} -- ckpt_dir is the  (default: None)
-        chunks {bool} -- If true use gold standard chunks  (default: False)
-        **kwargs {dict<str,<key>>} -- unlisted arguments
+        input_labels {list} -- Features to be considered
+                                (default: {FEATURE_LABELS})
+
+        target_labels {list} -- Targets more than one label is possible
+                                    (default: {TARGET_LABELS})
+
+        hidden_layers {list} -- Integers holding the hidden layers sizes
+                                    (default: {HIDDEN_LAYERS})
+
+        embeddings_model {str} -- Abbrev. of embedding_model name and
+                                 it's size: GloVe size 50 --> glo50
+                                 (default: {'wan50'})
+
+        embeddings_trainable {bool} -- TODO: allow trainable embeddings
+                                (default: {False})
+
+        epochs {int} -- Iterations to make on the training set
+                            (default: {100})
+
+        lr {float} -- Learning Rate (default: {5 * 1e-3})
+
+        batch_size {int} -- Number of examples to be trained
+                            (default: {250})
+
+        ctx_p {int} -- size of the windoew around the predicate
+                            (default: {1})
+
+        version {str} -- Propbank version (default: {'1.0'})
+
+        rec_unit {int} -- Recurrent unit to use (default: {'BasicLSTM'})
+
+        chunks {bool} --  (default: {False})
+
+        recon_depth {number} -- [description] (default: {-1})
     '''
 
     if ckpt_dir is None:
@@ -305,10 +328,10 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         target_dir = snapshot_persist(
             target_dir, input_labels=input_labels,
             target_labels=target_labels, epochs=epochs,
-            embeddings_model=embeddings_model, ru=ru,
+            embeddings_model=embeddings_model, rec_unit=rec_unit,
             embeddings_trainable=embeddings_trainable,
             hidden_layers=hidden_layers, ctx_p=ctx_p,
-            lr=lr, batch_size=batch_size, r_depth=r_depth,
+            lr=lr, batch_size=batch_size, recon_depth=recon_depth,
             chunks=chunks, version=version)
     else:
         target_dir = ckpt_dir
@@ -336,7 +359,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         'learning_rate': lr,
         'hidden_size': hidden_layers,
         'targets_size': targets_size,
-        'ru': ru
+        'rec_unit': rec_unit
     }
 
     evaluator = ConllEvaluator(propbank_encoder, target_dir=target_dir)
@@ -381,7 +404,7 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
     if len(target_labels) == 1:
         deep_srl = Labeler(X, T, L, **params)
     elif len(target_labels) == 2:
-        deep_srl = DualLabeler(X, T, L, r_depth, **params)
+        deep_srl = DualLabeler(X, T, L, recon_depth, **params)
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(len(target_labels))
         raise ValueError(err)
@@ -412,7 +435,6 @@ def estimate(input_labels=FEATURE_LABELS, target_labels=TARGET_LABEL,
         try:
             while not (coord.should_stop() or eps < 1e-3):
                 X_batch, T_batch, L_batch, I_batch = session.run(streamer.stream)
-                # import code; code.interact(local=dict(globals(), **locals()))
 
                 loss, _, Yish, error = session.run(
                     [deep_srl.cost, deep_srl.label, deep_srl.predict, deep_srl.error],

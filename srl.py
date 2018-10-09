@@ -24,6 +24,7 @@ import argparse
 from models import estimate, estimate_kfold, estimate_recover
 from models import PropbankEncoder
 
+from models.agents import SRLAgent
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
 
@@ -83,7 +84,7 @@ if __name__ == '__main__':
                         help='''Learning rate of the model.
                                 Default: 0.005\n''')
 
-    parser.add_argument('--ru', dest='ru', type=str,
+    parser.add_argument('--rec_unit', dest='rec_unit', type=str,
                         default='BasicLSTM', choices=('BasicLSTM', 'GRU', 'LSTM'),
                         help='''Recurrent unit -- according to tensorflow.
                                 Default: `BasicLSTM`\n''')
@@ -93,7 +94,7 @@ if __name__ == '__main__':
                         help='''Target representations.
                         Up to two values are allowed\n''')
 
-    parser.add_argument('--r-depth', dest='r_depth', default=-1,
+    parser.add_argument('--recon-depth', dest='recon_depth', default=-1,
                         help='''Position of the R target. Use 1 for the first layer
                         and -1 or len(depth) for last layer. This feature
                         is inactive unless R is provided as a target.
@@ -133,18 +134,25 @@ if __name__ == '__main__':
         version = args.version
         epochs = args.epochs
         batch_size = args.batch_size
-        ru = args.ru
-        r_depth = int(args.r_depth)
+        rec_unit = args.rec_unit
+        recon_depth = int(args.recon_depth)
 
         if args.kfold:
             estimate_kfold(input_labels=input_labels, target_labels=target_labels,
                            hidden_layers=args.depth, embeddings_model=embs_model,
-                           epochs=epochs, lr=learning_rate, fold=25, ru=ru,
-                           version=version, ctx_p=ctx_p, chunks=use_chunks, r_depth=r_depth)
+                           epochs=epochs, lr=learning_rate, fold=25, rec_unit=rec_unit,
+                           version=version, ctx_p=ctx_p, chunks=use_chunks, recon_depth=recon_depth)
         else:
+            agent = SRLAgent(
+                input_labels=input_labels, target_labels=target_labels,
+                hidden_layers=args.depth, embeddings_model=embs_model,
+                epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
+                version=version, lr=learning_rate, recon_depth=recon_depth)
 
-            estimate(input_labels=input_labels, target_labels=target_labels,
-                     hidden_layers=args.depth, embeddings_model=embs_model,
-                     epochs=epochs, ru=ru, batch_size=args.batch_size,
-                     version=version, ctx_p=ctx_p, lr=learning_rate,
-                     chunks=use_chunks, r_depth=r_depth)
+            agent.fit()
+            agent.evaluate_dataset('valid')
+            # estimate(input_labels=input_labels, target_labels=target_labels,
+            #          hidden_layers=args.depth, embeddings_model=embs_model,
+            #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
+            #          version=version, ctx_p=ctx_p, lr=learning_rate,
+            #          chunks=use_chunks, recon_depth=recon_depth)

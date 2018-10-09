@@ -8,19 +8,19 @@ import tensorflow as tf
 from models.lib.properties import lazy_property
 
 
-def get_unit(sz, ru='BasicLSTM'):
+def get_unit(sz, rec_unit='BasicLSTM'):
     ru_types = ('BasicLSTM', 'GRU', 'LSTM')
-    if ru not in ru_types:
-        raise ValueError('recurrent_unit {:} must be in {:}'.format (ru, ru_types))
+    if rec_unit not in ru_types:
+        raise ValueError('recurrent_unit {:} must be in {:}'.format (rec_unit, ru_types))
 
-    if ru == 'BasicLSTM':
+    if rec_unit == 'BasicLSTM':
         rnn_cell = tf.nn.rnn_cell.BasicLSTMCell(sz,
                                                 forget_bias=1.0,
                                                 state_is_tuple=True)
-    if ru == 'GRU':
+    if rec_unit == 'GRU':
         rnn_cell = tf.nn.rnn_cell.GRUCell(sz)
 
-    if ru == 'LSTM':
+    if rec_unit == 'LSTM':
         rnn_cell = tf.nn.rnn_cell.LSTMCell(sz,
                                 use_peepholes=True,
                                 forget_bias=1.0,
@@ -30,13 +30,13 @@ def get_unit(sz, ru='BasicLSTM'):
 
 class Propagator(object):
 
-    def __init__(self, V, L, hidden_sz_list, ru='BasicLSTMCell', i=0):
-        scope_id = 'DB{:}{:}'.format(ru, i)
+    def __init__(self, V, L, hidden_sz_list, rec_unit='BasicLSTMCell', i=0):
+        scope_id = 'DB{:}{:}'.format(rec_unit, i)
 
         self.V = V
         self.L = L
 
-        self.ru = ru
+        self.rec_unit = rec_unit
         self.i = i
 
         self.hidden_sz_list = hidden_sz_list
@@ -66,7 +66,7 @@ class InterleavedPropagator(Propagator):
                 * target_sz_list -- ouputs dimension
         '''
         with tf.variable_scope('fw0'):
-            self.cell_fw = get_unit(self.hidden_sz_list[0], self.ru)
+            self.cell_fw = get_unit(self.hidden_sz_list[0], self.rec_unit)
 
             outputs_fw, states = tf.nn.dynamic_rnn(
                 cell=self.cell_fw,
@@ -77,7 +77,7 @@ class InterleavedPropagator(Propagator):
             )
 
         with tf.variable_scope('bw0'):
-            self.cell_bw = get_unit(self.hidden_sz_list[0], self.ru)
+            self.cell_bw = get_unit(self.hidden_sz_list[0], self.rec_unit)
 
             inputs_bw = tf.reverse_sequence(
                 outputs_fw,
@@ -106,7 +106,7 @@ class InterleavedPropagator(Propagator):
 
             with tf.variable_scope('fw{:}'.format(i + 1)):
                 inputs_fw = tf.concat((h, h_1), axis=2)
-                self.cell_fw = get_unit(sz, self.ru)
+                self.cell_fw = get_unit(sz, self.rec_unit)
 
                 outputs_fw, states = tf.nn.dynamic_rnn(
                     cell=self.cell_fw,
@@ -123,7 +123,7 @@ class InterleavedPropagator(Propagator):
                     batch_axis=0,
                     seq_axis=1
                 )
-                self.cell_bw = get_unit(sz, self.ru)
+                self.cell_bw = get_unit(sz, self.rec_unit)
 
                 outputs_bw, states = tf.nn.dynamic_rnn(
                     cell=self.cell_bw,

@@ -11,7 +11,7 @@ import tensorflow as tf
 import config
 from models.conll_evaluator import ConllEvaluator
 from models.propbank_encoder import PropbankEncoder
-from models.labelers import Labeler
+from models.labelers import Labeler, DualLabeler
 from models.streamers import TfStreamer
 
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, \
@@ -102,8 +102,8 @@ class SRLAgent(metaclass=AgentMeta):
     def __init__(self, input_labels=FEATURE_LABELS, target_labels=TARGET_LABELS,
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
-                 batch_size=250, ctx_p=1, version='1.0',
-                 ru='BasicLSTM', chunks=False, r_depth=-1, **kwargs):
+                 batch_size=250, version='1.0', rec_unit='BasicLSTM',
+                 recon_depth=-1, **kwargs):
         '''Defines Dataflow graph
 
         Builds a Rnn tensorflow graph
@@ -136,21 +136,21 @@ class SRLAgent(metaclass=AgentMeta):
             batch_size {int} -- Number of examples to be trained
                                 (default: {250})
 
-            ctx_p {int} -- size of the windoew around the predicate
-                                (default: {1})
-
             version {str} -- Propbank version (default: {'1.0'})
 
-            ru {int} -- Recurrent unit to use (default: {'BasicLSTM'})
+            rec_unit {int} -- Recurrent unit to use (default: {'BasicLSTM'})
 
             chunks {bool} --  (default: {False})
 
-            r_depth {number} -- [description] (default: {-1})
+            recon_depth {number} -- [description] (default: {-1})
         '''
 
         # ckpt_dir should be set by SrlAgent#load
         ckpt_dir = kwargs.get('ckpt_dir', None)
         kfold = kwargs.get('kfold', False)
+        ctx_p = self._ctx_p(input_labels)
+        chunks = 'SHALLOW_CHUNKS' in input_labels
+
         if ckpt_dir is None:
             target_dir = snapshot_hparam_string(
                 embeddings_model=embeddings_model,
@@ -166,8 +166,8 @@ class SRLAgent(metaclass=AgentMeta):
                 hidden_layers=hidden_layers, ctx_p=ctx_p,
                 target_labels=target_labels, kfold=25,
                 embeddings_trainable=False,
-                embeddings_model=embeddings_model, ru=ru,
-                epochs=epochs, chunks=chunks, r_depth=r_depth,
+                embeddings_model=embeddings_model, rec_unit=rec_unit,
+                epochs=epochs, chunks=chunks, recon_depth=recon_depth,
                 version=version)
             self.target_dir = target_dir
             self._restore_session = False
@@ -188,6 +188,7 @@ class SRLAgent(metaclass=AgentMeta):
             'train', embeddings_model, version=version)
         datasets_list = [dataset_path]
 
+
         self.evaluator = ConllEvaluator(propbank_encoder, target_dir=self.target_dir)
 
         cnf_dict = config.get_config(embeddings_model)
@@ -197,6 +198,7 @@ class SRLAgent(metaclass=AgentMeta):
         print('X_shape', X_shape)
         print('T_shape', T_shape)
 
+        # Builds the computation graph
         self.X = tf.placeholder(tf.float32, shape=X_shape, name='X')
         self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
         self.L = tf.placeholder(tf.int32, shape=(None,), name='L')
@@ -212,8 +214,13 @@ class SRLAgent(metaclass=AgentMeta):
         # The Labeler instanciation will build the archtecture
         targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
         kwargs = {'learning_rate': lr, 'hidden_size': hidden_layers,
-                  'targets_size': targets_size, 'ru': ru}
-        self.rnn_srl = Labeler(self.X, self.T, self.L, **kwargs)
+                  'targets_size': targets_size, 'rec_unit': rec_unit}
+
+        if self.single_task:
+            self.rnn_srl = Labeler(self.X, self.T, self.L, **kwargs)
+
+        if self.dual_task:
+            self.rnn_srl = DualLabeler(self.X, self.T, self.L, recon_depth=recon_depth, **kwargs)
 
     @classmethod
     def load(cls, ckpt_dir):
@@ -237,6 +244,14 @@ class SRLAgent(metaclass=AgentMeta):
         agent = cls(**attr_dict)
 
         return agent
+
+    @property
+    def single_task(self):
+        return len(self.target_labels) == 1
+
+    @property
+    def dual_task(self):
+        return len(self.target_labels) == 2
 
     def evaluate(self, I, Y, L, filename):
         '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
@@ -269,8 +284,13 @@ class SRLAgent(metaclass=AgentMeta):
         '''
         f1 = None
         try:
+
+            # SRL is going to be the second
+            if self.dual_task:
+                Y = Y[-1]
+
             f1 = self.evaluator.evaluate_npyarray(
-                filename, I, Y, L, self.target_labels, {}, script_version='04'
+                filename, I, Y, L, self.target_labels[-1:], {}, script_version='04'
             )
         except AttributeError:
             err = '''evaluator not defined -- either re start a new instance
@@ -433,9 +453,53 @@ class SRLAgent(metaclass=AgentMeta):
         return Y
 
     def _predict_and_eval(self, I, X, L, evalfilename):
+        '''Thin wrapper  for a chained call on predict and eval
+
+\
+        Arguments:
+            I {np.narray} -- 2D matrix zero padded [batch, max_time]
+                            representing the obsertions indices
+
+            X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
+                             model inputs
+
+            L {np.narray} -- 1D vector [batch]
+                 stores the true length of the proposition
+
+        Returns:
+
+            Y {np.narray} -- 2D matrix zero padded [batch, max_time]
+                              model predictions.
+
+            f1 {float} -- f1 score
+        '''
         Y = self.predict(X, L)
+
         f1 = self.evaluate(I, Y, L, evalfilename)
+
         return Y, f1
+
+    def _ctx_p(self, input_labels):
+        '''Computes the size of the moving windows around the predicate
+
+        The number of tokens around the token
+
+        Arguments:
+            input_labels {list} -- The input argument labels
+
+        Returns:
+            ctx_p {int} -- ctx around predicate
+        '''
+        ctx_p = 1
+
+        if 'FORM_CTX_P-2' in input_labels and 'FORM_CTX_P+2' in input_labels:
+            ctx_p += 1
+
+            if 'FORM_CTX_P-3' in input_labels and 'FORM_CTX_P+3' in input_labels:
+                ctx_p += 1
+
+        return ctx_p
+
 
 
 def get_xshape(input_labels, cnf_dict):
