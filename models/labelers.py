@@ -13,8 +13,33 @@ from models.propagators import InterleavedPropagator
 
 from models.predictors import CRFPredictor
 
+class LabelerMeta(type):
+    '''This is a metaclass -- enforces method definition
+    on function body
 
-class Labeler(object):
+    Every labeler must implent the following methods
+    * propagate -- builds automatic features from input layer
+    * cost -- sum of the cost for each task (Predictor)
+    * predict -- performs assignment of tags
+    * label -- performs cost optmization over tags
+    * error -- computes accuracy for each task
+
+    References:
+        https://docs.python.org/3/reference/datamodel.html#metaclasses
+        https://realpython.com/python-metaclasses/
+    '''
+    def __new__(meta, name, base, body):
+        labeler_methods = ('propagate', 'cost', 'predict', 'label')
+
+        for lm in labeler_methods:
+            if lm not in body:
+                msg = 'Labeler must implement {:}'.format(lm)
+                raise TypeError(msg)
+
+        return super().__new__(meta, name, base, body)
+
+
+class Labeler(object, metaclass=LabelerMeta):
     def __init__(self, X, T, L,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  rec_unit='BasicLSTM'):
@@ -22,8 +47,8 @@ class Labeler(object):
 
         Responsable for building computation graph
 
-        refs:
-            https://www.tensorflow.org/programmers_guide/graphs
+        Extends:
+            metaclass=LabelerMeta
 
         Arguments:
             X {object<tf.placeholder>} -- A 3D float tensor in which the dimensions are
@@ -42,10 +67,14 @@ class Labeler(object):
 
         Keyword Arguments:
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
+
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
+
             targets_size {int} -- Parameter holding the layer sizes (default: {60})
+
+        References:
+            https://www.tensorflow.org/programmers_guide/graphs
         '''
-        self.optmizer = 'DBLSTM'
         self.X = X
         self.T = T
         self.L = L
@@ -126,7 +155,8 @@ class Labeler(object):
         return tf.reduce_mean(mistakes)
 
 
-class DualLabeler(object):
+class DualLabeler(object, metaclass=LabelerMeta):
+
     def __init__(self, X, T, L, recon_depth=-1,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
                  rec_unit='BasicLSTM'):
@@ -224,8 +254,10 @@ class DualLabeler(object):
                                 -----------   Ztilde  
                                   (down)         
 
-        refs:
-            https://www.tensorflow.org/programmers_guide/graphs
+        
+        Extends:
+            metaclass=LabelerMeta
+
 
         Arguments:
             X {object<tf.placeholder>} -- A 3D float tensor in which the dimensions are
@@ -249,8 +281,10 @@ class DualLabeler(object):
             learning_rate {float} -- Parameter to be used during optimization (default: {5 * 1e-3})
             hidden_size {list<int>} --  Parameter holding the layer sizes (default: {`[32, 32]`})
             targets_size {int} -- Parameter holding the layer sizes (default: {60})
+
+        References:
+            https://www.tensorflow.org/programmers_guide/graphs
         '''
-        self.optmizer = 'DBLSTM'
         self.X = X
         self.recon_depth = recon_depth
 
@@ -277,68 +311,68 @@ class DualLabeler(object):
         self.predictors = []
         if recon_depth == -1:  # TYPE A
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size, rec_unit=rec_unit, i='center')
+                InterleavedPropagator(X, L, hidden_size, rec_unit=rec_unit, scope_label='center')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.R, L, i='R')
+                CRFPredictor(self.propagators[-1].propagate, self.R, L, scope_label='R')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
+                CRFPredictor(self.propagators[-1].propagate, self.Y, L, scope_label='Y')
             )
         elif recon_depth == 1 and len(hidden_size) == 1: # TYPE B
             self.predictors.append(
-                CRFPredictor(X, self.R, L, i='R')
+                CRFPredictor(X, self.R, L, scope_label='R')
             )
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, i='down')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, scope_label='down')
             )
 
             self.predictors.append(
-                CRFPredictor(self.concat_op, self.Y, self.L, i='Y')
+                CRFPredictor(self.concat_op, self.Y, self.L, scope_label='Y')
             )
 
         elif recon_depth == 1 and len(hidden_size) > 1: # TYPE C
             self.predictors.append(
-                CRFPredictor(X, self.R, L, i='R')
+                CRFPredictor(X, self.R, L, scope_label='R')
             )
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, i='down')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, scope_label='down')
             )
             self.propagators.append(
-                InterleavedPropagator(self.concat_op, L, hidden_size[:recon_depth], rec_unit=rec_unit, i='center')
+                InterleavedPropagator(self.concat_op, L, hidden_size[:recon_depth], rec_unit=rec_unit, scope_label='center')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
+                CRFPredictor(self.propagators[-1].propagate, self.Y, L, scope_label='Y')
             )
 
         elif recon_depth >= 2 and recon_depth == len(hidden_size): # TYPE D
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, i='down')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, scope_label='down')
             )
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth-1], rec_unit=rec_unit, i='up')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth-1], rec_unit=rec_unit, scope_label='up')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.R, L, i='R')
+                CRFPredictor(self.propagators[-1].propagate, self.R, L, scope_label='R')
             )
             self.predictors.append(
-                CRFPredictor(self.concat_op, self.Y, L, i='Y')
+                CRFPredictor(self.concat_op, self.Y, L, scope_label='Y')
             )
         elif recon_depth >= 2 and recon_depth < len(hidden_size): # TYPE E
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, i='down')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth], rec_unit=rec_unit, scope_label='down')
             )
             self.propagators.append(
-                InterleavedPropagator(X, L, hidden_size[:recon_depth-1], rec_unit=rec_unit, i='up')
+                InterleavedPropagator(X, L, hidden_size[:recon_depth-1], rec_unit=rec_unit, scope_label='up')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.R, L, i='R')
+                CRFPredictor(self.propagators[-1].propagate, self.R, L, scope_label='R')
             )
             self.propagators.append(
-                InterleavedPropagator(self.concat_op, L, hidden_size[recon_depth:], rec_unit=rec_unit, i='center')
+                InterleavedPropagator(self.concat_op, L, hidden_size[recon_depth:], rec_unit=rec_unit, scope_label='center')
             )
             self.predictors.append(
-                CRFPredictor(self.propagators[-1].propagate, self.Y, L, i='Y')
+                CRFPredictor(self.propagators[-1].propagate, self.Y, L, scope_label='Y')
             )
 
 

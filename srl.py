@@ -107,41 +107,52 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     ckpt_dir = args.ckpt_dir
-    if len(ckpt_dir) > 0:
-        if ckpt_dir[-1] != '/':
-            ckpt_dir += '/'
-        estimate_recover(ckpt_dir)
+    # if len(ckpt_dir) > 0:
+    #     if ckpt_dir[-1] != '/':
+    #         ckpt_dir += '/'
+    #     estimate_recover(ckpt_dir)
+    # else:
+    input_labels = FEATURE_LABELS
+
+    ctx_p = args.ctx_p
+    if ctx_p > 1:
+        input_labels.append('FORM_CTX_P-2')
+        input_labels.append('FORM_CTX_P+2')
+        if args.ctx_p == 3:
+            input_labels.append('FORM_CTX_P-3')
+            input_labels.append('FORM_CTX_P+3')
+
+    use_chunks = args.chunks
+    if use_chunks:
+        input_labels.append('SHALLOW_CHUNKS')
+
+    # TODO: process target
+    target_labels = args.targets
+
+    embs_model = args.embs_model
+    learning_rate = args.lr
+    version = args.version
+    epochs = args.epochs
+    batch_size = args.batch_size
+    rec_unit = args.rec_unit
+    recon_depth = int(args.recon_depth)
+
+    if args.kfold:
+        if len(ckpt_dir) > 0:
+            if ckpt_dir[-1] != '/':
+                ckpt_dir += '/'
+                estimate_recover(ckpt_dir)
+
+        estimate_kfold(input_labels=input_labels, target_labels=target_labels,
+                       hidden_layers=args.depth, embeddings_model=embs_model,
+                       epochs=epochs, lr=learning_rate, fold=25, rec_unit=rec_unit,
+                       version=version, ctx_p=ctx_p, chunks=use_chunks, recon_depth=recon_depth)
     else:
-        input_labels = FEATURE_LABELS
+        if ckpt_dir:
+            if ckpt_dir[-1] != '/':
+                ckpt_dir += '/'
+            agent = SRLAgent.load(ckpt_dir)
 
-        ctx_p = args.ctx_p
-        if ctx_p > 1:
-            input_labels.append('FORM_CTX_P-2')
-            input_labels.append('FORM_CTX_P+2')
-            if args.ctx_p == 3:
-                input_labels.append('FORM_CTX_P-3')
-                input_labels.append('FORM_CTX_P+3')
-
-        use_chunks = args.chunks
-        if use_chunks:
-            input_labels.append('SHALLOW_CHUNKS')
-
-        # TODO: process target
-        target_labels = args.targets
-
-        embs_model = args.embs_model
-        learning_rate = args.lr
-        version = args.version
-        epochs = args.epochs
-        batch_size = args.batch_size
-        rec_unit = args.rec_unit
-        recon_depth = int(args.recon_depth)
-
-        if args.kfold:
-            estimate_kfold(input_labels=input_labels, target_labels=target_labels,
-                           hidden_layers=args.depth, embeddings_model=embs_model,
-                           epochs=epochs, lr=learning_rate, fold=25, rec_unit=rec_unit,
-                           version=version, ctx_p=ctx_p, chunks=use_chunks, recon_depth=recon_depth)
         else:
             agent = SRLAgent(
                 input_labels=input_labels, target_labels=target_labels,
@@ -150,7 +161,10 @@ if __name__ == '__main__':
                 version=version, lr=learning_rate, recon_depth=recon_depth)
 
             agent.fit()
-            agent.evaluate_dataset('valid')
+
+        f1 = agent.evaluate_dataset('valid')
+        print('Best evaluation F1 -- {:}'.format(f1))
+
             # estimate(input_labels=input_labels, target_labels=target_labels,
             #          hidden_layers=args.depth, embeddings_model=embs_model,
             #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
