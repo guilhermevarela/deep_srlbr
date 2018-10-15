@@ -1,4 +1,4 @@
-model_checkpoint_path: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-16-32"
+model_checkpoint_path: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-26-31"
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_15-44-10"
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_15-50-09"
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_15-56-14"
@@ -20,3 +20,6 @@ all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_16-55-5
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_16-59-23"
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-09-49"
 all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-16-32"
+all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-19-54"
+all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-23-13"
+all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0001_spn_2018-10-15_17-26-31"

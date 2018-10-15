@@ -5,9 +5,12 @@
 *__pycache__
 *.old.* # matches previous refactored files
 /.old   # matches root directory
+
+#Data directory
 **/embeddings
-**/svms
 **/binaries
+datasets/txts/conll/en/*
+datasets/csvs/en/*
 
 # PEARL 
 srlconll04/
