@@ -26,6 +26,8 @@ srlconll05/
 
 # Jupyter notebook
 *.ipynb_checkpoints
+notebooks/*.props
+notebooks/*.conll
 
 # Pycharm
 *.idea
