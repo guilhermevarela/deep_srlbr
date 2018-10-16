@@ -102,6 +102,23 @@ MAPPER_V1_1 = {
     }
 }
 
+MAPPER_EN = {
+    'filename': ['train-set', 'dev-set'],
+    'mappings': {
+        'FORM': 0,
+        'GPOS': 1,
+        'CTREE': 2,
+        'NER': 3,
+        'SENSES': 4,
+        'PRED': 5,
+        'ARG0': 6,
+        'ARG1': 7,
+        'ARG2': 8,
+        'ARG3': 9,
+        'ARG4': 10,
+        'ARG5': 11,
+        'ARG6': 12}
+}
 
 def propbankbr_split(df, testN=263, validN=569):
     '''
@@ -234,7 +251,7 @@ def propbankbr_parser_1_0():
         predicate_count += predicate_sentence_count
         predicate_sentence_count = 0
 
-        file_path = '{:}{:}'.format(PROPBANKBR_PATH, filename)
+        file_path = '{:}pt/{:}'.format(PROPBANKBR_PATH, filename)
         with open(file_path, mode='r') as f:
             for line_ in f.readlines():
                 drow = to_datarow(line_)
@@ -692,6 +709,65 @@ def trim(val):
         return val.strip()
     return val
 
+
+def propbank_parser():
+    propbank_dict = defaultdict(dict)
+    map_dict = MAPPER_EN['mappings']
+    inv_dict = {v: k for k, v in map_dict.items()}
+    n_features = map_dict['ARG0']  # number of features
+
+    i = 0   # unique id
+    s = 1   # sentence counter
+    ind = 1 # time of token (reset every sentence)
+    p = 0 # predicate count on sentence
+    pcum = 0 # predicate count overall
+
+    for ds_type in MAPPER_EN['filename']:
+        # FROM ROOT
+        # ds_path = 'datasets/txts/conll/en/{}'.format(ds_type)
+        # FROM NOTEBOOK
+        ds_path = '../datasets/txts/conll/en/{}'.format(ds_type)
+        with open(ds_path, mode='r') as f:
+            for line in f.readlines():
+                values_list = [v for v in line.split(' ') if v != '' and v != '\n']
+                # if i == 136:
+                #     import code; code.interact(local=dict(globals(), **locals()))
+                if len(values_list) > n_features: # some phrases do not have a predicate
+                    propbank_dict['S'][i] = s
+                    propbank_dict['P'][i] = pcum
+                    propbank_dict['P_S'][i] = p
+
+                    propbank_dict['ID'][i] = ind
+                    for j, v in enumerate(values_list):
+                        try:
+                            propbank_dict[inv_dict[j]][i] = v
+                        except KeyError:  # j not in inv_dict
+                            k = 'ARG{}'.format(j - n_features)
+                            inv_dict[j] = k
+                            map_dict[k] = j
+                            propbank_dict[inv_dict[j]][i] = v
+
+                        if inv_dict[j] == 'PRED' and v != '-':  # refresh values
+                            p += 1
+                            pcum += 1
+
+                            propbank_dict['P'][i] = pcum
+                            propbank_dict['P_S'][i] = p
+
+                    ind += 1
+                    i += 1
+                elif len(values_list) == 0: # Marks new sentence
+                    s += 1
+                    ind = 1
+                    p = 0
+
+
+    # return propbank_dict
+    return pd.DataFrame.from_dict(propbank_dict)
+    
+
+
+
 if __name__== '__main__':
     # dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')    
 
@@ -719,5 +795,5 @@ if __name__== '__main__':
     #     for i, arg in enumerate(arguments):
     #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, arg, arg2t[i], arg2iob[i], t2arg[i], iob2arg[i])
     #         f.write(line)
-    df = propbankbr_parser_1_0()
-    print(df.head())
+    propbank_dict = propbank_parser()
+    import code; code.interact(local=dict(globals(), **locals()))
