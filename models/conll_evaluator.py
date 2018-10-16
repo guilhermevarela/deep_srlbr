@@ -198,7 +198,7 @@ class ConllEvaluator(object):
 
         self.target_dir = target_dir
         self.target_columns = tuple([n_
-            for n_, d_ in propbank_encoder.columns_config.items()
+            for n_, d_ in propbank_encoder.to_config('EMB').items()
             if d_['category'] == 'target'])
 
         self.props_dict = {}

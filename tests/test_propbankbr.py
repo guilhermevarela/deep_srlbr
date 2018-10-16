@@ -9,7 +9,7 @@ import unittest
 sys.path.insert(0, os.getcwd()) # import top-level modules
 
 from datasets.scripts import propbankbr as br
-from models.evaluator_conll import _props_file2zip_list
+from models.conll_evaluator import _props_file2zip_list
 
 TESTS_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
 FIX_DIR = '{:}fixtures/'.format(TESTS_DIR)

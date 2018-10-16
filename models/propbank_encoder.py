@@ -2,7 +2,7 @@
     Created on Apr 20, 2018
         @author: Varela
 
-    PropbankEncoder wraps a set of columns storing an integer indexed representation
+    PropbankEncoder wraps a set of column_labels storing an integer indexed representation
         of the original dataset atributes. Provides column information
 '''
 import re
@@ -18,8 +18,6 @@ root_path = re.sub('/models', '', sys.path[0])
 sys.path.append(root_path)
 from collections import OrderedDict, defaultdict
 
-# import cps import fetch_word2vec, preprocess
-# import models.utils as cps
 import datasets.scripts.propbankbr as br
 import config
 import utils
@@ -85,10 +83,10 @@ class PropbankEncoder(object):
         Arguments:
             db_dict {dict<str, dict<int, object>>} -- 
                 nested dictionary representing
-                database, outer_keys: columns, inner_keys: indexes.
+                database, outer_keys: column_labels, inner_keys: indexes.
             schema_dict {dict<str, dict><>} -- 
                 dictionary representaiton from schema
-                database, outer_keys: columns, inner_keys: meta data
+                database, outer_keys: column_labels, inner_keys: meta data
 
         Keyword Arguments:
             language_model {str} -- embeddings to be used
@@ -111,10 +109,9 @@ class PropbankEncoder(object):
 
         self.db = defaultdict(OrderedDict)
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'MIX')
-        self.schema_dict = {}
-        self.columns_mapper = {}
-        self.columns_config = {}
-        self.columns = set([])
+        self._column_mapper = {}
+        self._column_config = {}
+        self.column_labels = set([])
         self.version = version
         self._initialize(db_dict, schema_dict, dbname, language_model, verbose)
 
@@ -163,7 +160,7 @@ class PropbankEncoder(object):
         if filter_columns:
             for col in filter_columns:
                 if col not in self.db:
-                    err = 'column {:} not in db columns {:}'
+                    err = 'column {:} not in db column_labels {:}'
                     err = err.format(col, self.db.keys())
                     raise ValueError(err)
         else:
@@ -180,7 +177,7 @@ class PropbankEncoder(object):
 
         return _EncoderIterator(low, high, fn)
 
-    def column_dimensions(self, column, encoding):
+    def column_sizes(self, column, encoding):
         if encoding not in self.encodings:
             err = 'Supported encondings are {:} got {:}.'
             err = err.format(self.encodings, encoding)
@@ -189,7 +186,7 @@ class PropbankEncoder(object):
         if encoding in ('IDX', 'CAT'):
             return 1
 
-        colconfig = self.columns_config.get(column, None)
+        colconfig = self._column_config.get(column, None)
         if not colconfig:
             return 1
 
@@ -216,9 +213,10 @@ class PropbankEncoder(object):
             else:
                 return 1
 
-    def columns_dimensions(self, encoding):
+    def column_sizes2(self, encoding):
         return {
-            col: self.column_dimensions(col, encoding) for col in self.columns
+            col: self.column_sizes(col, encoding)
+            for col in self.column_labels
         }
 
     def column(self, ds_type, column, encoding):
@@ -257,8 +255,8 @@ class PropbankEncoder(object):
             err = err.format(('04', '05'), script_version)
             raise ValueError(err)
 
-        if not set(target_labels) < self.columns:
-            err = '`{:}` not in {:}'.format(target_labels, self.columns)
+        if not set(target_labels) < self.column_labels:
+            err = '`{:}` not in {:}'.format(target_labels, self.column_labels)
             raise KeyError(err)
 
         if not target_dict:
@@ -307,12 +305,42 @@ class PropbankEncoder(object):
 
         return script_dict
 
+    def to_config(self, encoding):
+        '''Generates a config dict holding meta-information
+
+        Exposes meta infomation about columns under encoding
+        in order to facilitate tensor declarations -- tensor
+        operations are viable under certain conditions which must 
+        be known on declaration time
+
+        * useful for yanking sequences out of tf records
+        * declaring tensors
+        * knowning which columns are textual
+        * knowning the column_size for a feature or target
+
+        Ex.:
+        { 'FORM' ...,
+        'FORM_CTX_P+1': {'category': 'feature',
+                         'type': 'text',
+                         'dims': 13207,
+                         'size': 50}}
+
+        Arguments:
+            encoding {[type]} -- [description]
+        '''
+        res = {col: self._column_config[col]
+               for col in list(self.column_labels)}
+        for c, s in self.column_sizes2(encoding).items():
+            res[c]['size'] = s
+
+        return res
+
 
     def _initialize(self, db_dict, schema_dict, dbname, language_model, verbose):
-        # Defines domains for each column, defines tokens for text columns
+        # Defines domains for each column, defines tokens for text column_labels
         self._initialize_lexicons(db_dict, schema_dict)
 
-        # MAPS textual columns to the language model
+        # MAPS textual column_labels to the language model
         self._initialize_embeddings(language_model, verbose)
 
         # Builds db dictionary
@@ -359,8 +387,8 @@ class PropbankEncoder(object):
 
     def _initialize_db(self, db_dict, dbname):
         self.dbname = dbname
-        for col in list(self.columns):
-            colconfig = self.columns_config.get(col, None)
+        for col in list(self.column_labels):
+            colconfig = self._column_config.get(col, None)
 
             if col in ('INDEX',) or not colconfig:  # numeric / bool values
 
@@ -394,7 +422,7 @@ class PropbankEncoder(object):
 
     def _initialize_lexicons(self, db_dict, schema_dict):
         '''
-            Define columns and metadata about columns
+            Define column_labels and metadata about column_labels
         '''
         def get_basecol(col):
             re_ctxp = r'(_CTX_P)|(_\d)|[\+|\-|\d|]'
@@ -406,19 +434,19 @@ class PropbankEncoder(object):
             return base_col
 
         # Computes a dictionary that maps one column to a base column
-        self.columns = self.columns.union(db_dict.keys()).union(set(['INDEX']))
-        self.columns_mapper = {col: get_basecol(col) for col in self.columns}
+        self.column_labels = self.column_labels.union(db_dict.keys()).union(set(['INDEX']))
+        self._column_mapper = {col: get_basecol(col) for col in self.column_labels}
 
         # Creates descriptors about the data
         dflt_dict = {'category': 'feature', 'type': 'int', 'dims': None}
 
-        # Words are the union of all textual columns
+        # Words are the union of all textual column_labels
         word_list = []
         lexicons_dict = {}
-        for col in list(self.columns):
+        for col in list(self.column_labels):
             lexicon_list = []
 
-            base_col = self.columns_mapper[col]
+            base_col = self._column_mapper[col]
 
             config_dict = dict(dflt_dict)
             # Defines metadata
@@ -457,13 +485,13 @@ class PropbankEncoder(object):
 
                 config_dict['dims'] = len(lexicon_list)
 
-            self.columns_config[col] = config_dict
+            self._column_config[col] = config_dict
             lexicons_dict[col] = lexicon_list
 
-        # filter columns - remove absent columns
-        for col in self.columns_config:
-            if col not in self.columns:
-                del self.columns_config[col]
+        # filter column_labels - remove absent column_labels
+        for col in self._column_config:
+            if col not in self.column_labels:
+                del self._column_config[col]
 
         # make a single dictonary for text
         word_list = sorted(list(set(word_list)), key= lambda x: x.lower())
@@ -474,9 +502,9 @@ class PropbankEncoder(object):
         self.word2idx = OrderedDict(zip(self.words, rng))
         self.idx2word = OrderedDict(zip(rng, self.words))
 
-        # re-make test columns according to word2idx dict
-        for col in self.columns_config:
-            col_type = self.columns_config[col]['type']
+        # re-make test column_labels according to word2idx dict
+        for col in self._column_config:
+            col_type = self._column_config[col]['type']
 
             if col_type in ('text'):
 
@@ -500,21 +528,21 @@ class PropbankEncoder(object):
                     i: lex for i, lex in enumerate(lexicons_dict[col])
                 })
 
-    def _decode_index(self, idx, columns, encoding):
+    def _decode_index(self, idx, column_labels, encoding):
         d = OrderedDict()
 
-        for col in columns:
+        for col in column_labels:
 
             val = self.db[col].get(idx, 0)
             d[col] = self._decode_value(val, col, encoding)
 
-        if len(columns) == 1:
+        if len(column_labels) == 1:
             return d[col]
         else:
             return d
 
     def _decode_value(self, x, col, encoding):
-        col_type = self.columns_config[col]['type']
+        col_type = self._column_config[col]['type']
 
         if encoding in ('IDX') or col_type in ('int', 'bool'):
 
@@ -546,7 +574,7 @@ class PropbankEncoder(object):
 
             elif col_type in ('choice'):
 
-                sz = self.column_dimensions(col, encoding)
+                sz = self.column_sizes(col, encoding)
 
                 return [1 if i == x else 0 for i in range(sz)]
 
@@ -555,7 +583,7 @@ class PropbankEncoder(object):
 
         elif encoding in ('HOT'):
 
-            sz = self.column_dimensions(col, encoding)
+            sz = self.column_sizes(col, encoding)
 
             if col_type in ('text'):
 
@@ -585,7 +613,7 @@ class PropbankEncoder(object):
 
             elif col_type in ('choice'):
 
-                sz = self.column_dimensions(col, encoding)
+                sz = self.column_sizes(col, encoding)
 
                 return [1 if i == x else 0 for i in range(sz)]
 
