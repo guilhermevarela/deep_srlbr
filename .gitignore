@@ -12,6 +12,10 @@
 datasets/txts/conll/en/*
 datasets/csvs/en/*
 
+#outputs directory
+outputs/1.0/notebooks/*
+!outputs/1.0/notebooks/results/*
+
 # PEARL 
 srlconll04/
 srlconll05/

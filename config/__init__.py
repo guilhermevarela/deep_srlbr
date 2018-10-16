@@ -18,16 +18,16 @@ LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 DATA_ENCODING = 'EMB'
 
 
-def get_config(embs_model):
-    cnf_path = 'config/{}.yaml'.format(embs_model)
+def get_config(embs_model, lang='pt'):
+    cnf_path = 'config/{}/{}.yaml'.format(lang, embs_model)
     cnf_dict = {}
     with open(cnf_path, mode='r') as f:
         cnf_dict = yaml.load(f)
     return cnf_dict
 
 
-def set_config(cnf_dict, embs_model):
-    cnf_path = 'config/{}.yaml'.format(embs_model)
+def set_config(cnf_dict, embs_model, lang='pt'):
+    cnf_path = 'config/{}/{}.yaml'.format(lang, embs_model)
     with open(cnf_path, mode='w') as f:
         yaml.dump(cnf_dict, f)
 

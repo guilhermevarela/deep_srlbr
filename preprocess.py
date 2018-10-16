@@ -35,7 +35,10 @@ FEATURE_MAKER_DICT = {
 
 
 def make_propbank_encoder(encoder_name='deep_glo50',
-                          language_model='glove_s50', version='1.0', verbose=True):
+                          language_model='glove_s50',
+                          lang='pt',
+                          version='1.0',
+                          verbose=True):
     ''' Creates a ProbankEncoder instance from strings.
 
     Arguments:
@@ -49,9 +52,15 @@ def make_propbank_encoder(encoder_name='deep_glo50',
     '''
     # Process inputs
     prefix_dir = config.LANGUAGE_MODEL_DIR
-    prefix_target_dir = 'datasets/csvs/{:}/'.format(version)
+
+    if lang == 'pt':
+        prefix_target_dir = 'datasets/csvs/pt/{:}/'.format(version)
+    else:
+        prefix_target_dir = 'datasets/csvs/en/'
+
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
     file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
+
     if not os.path.isfile(file_path):
         glob_regex = '{:}*'.format(prefix_dir)
         options_list = [
@@ -189,6 +198,11 @@ if __name__ == '__main__':
     #                     features as index to be embedded for the input pipeline
     #                     and will one-hot `choice` values. `EMB` will embed `text`
     #                     features and will one-hot encode `choice` features.''')
+    
+    parser.add_argument('--lang', type=str, dest='lang',
+            			choices=('en', 'pt'), default='pt',
+			            help='PropBank language')
+
 
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',
@@ -197,9 +211,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     language_model = args.language_model
     version = args.version
+    lang = args.lang
 
-    print(language_model, version)
-    lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
+    print(language_model, lang, version)
+    lmpath = '{:}{:}/{:}.txt'.format(config.LANGUAGE_MODEL_DIR, lang, language_model)
 
 
     if not os.path.isfile(lmpath):
@@ -226,6 +241,7 @@ if __name__ == '__main__':
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
         language_model=language_model,
+        lang=lang,
         version=version
     )
 
