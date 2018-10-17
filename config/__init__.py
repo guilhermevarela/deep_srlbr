@@ -35,15 +35,21 @@ def set_config(cnf_dict, embs_model, lang='pt'):
 
 
 DATASET_PROPOSITION_DICT = {
-    '1.0': {
-        'train': 5296,
-        'valid': 239,
-        'test': 239,
+    'pt': {
+        '1.0': {
+            'train': 5296,
+            'valid': 239,
+            'test': 239,
+        },
+        '1.1': {
+            'train': 5099,
+            'valid': 569,
+            'test': 263,
+        },
     },
-    '1.1': {
-        'train': 5099,
-        'valid': 569,
-        'test': 263,
+    'en': {
+        'train': 90751,
+        'valid': 3248
     }
 }
 

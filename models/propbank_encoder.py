@@ -74,7 +74,8 @@ class PropbankEncoder(object):
 
     '''
     def __init__(self, db_dict, schema_dict,
-                 language_model='glove_s50', dbname='dbpt', filter_br=True,
+                 language_model='glove_s50', lang='pt',
+                 dbname='dbpt', filter_noncon=True,
                  version='1.0', verbose=True):
         '''Initializer processes raw dataset extracting the numerical representations
 
@@ -92,12 +93,12 @@ class PropbankEncoder(object):
             language_model {str} -- embeddings to be used
                 (default: {'glove_s50'})
             dbname {str} -- default dbname (default: {'dbpt'})
-            filter_br {bool} -- If True replaces
+            filter_noncon {bool} -- If True replaces
                 non continous arguments with referenced
                 arguemnts (default: {True})
             verbose {bool} -- display operations (default: {True})
         '''
-        self.filter_br = filter_br
+        self.filter_noncon = filter_noncon
         self.lex2idx = {}
         self.idx2lex = {}
         self.tokens = []  # words after embedding model
@@ -109,6 +110,7 @@ class PropbankEncoder(object):
 
         self.db = defaultdict(OrderedDict)
         self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'MIX')
+        self.lang = lang
         self._column_mapper = {}
         self._column_config = {}
         self.column_labels = set([])
@@ -149,7 +151,7 @@ class PropbankEncoder(object):
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def iterator(self, ds_type, filter_columns=None, encoding='EMB'):
-        lb, ub = utils.get_db_bounds(ds_type, version=self.version)
+        lb, ub = utils.get_db_bounds(ds_type, lang=self.lang, version=self.version)
 
         interval = [idx for idx, p in self.db['P'].items()
                     if p >= lb and p < ub]
@@ -348,11 +350,11 @@ class PropbankEncoder(object):
 
     def _initialize_embeddings(self, language_model, verbose):
         # computes embeddings
-        word2vec = cps.fetch_word2vec(language_model, verbose=verbose)
+        word2vec = cps.fetch_word2vec(language_model, lang=self.lang, verbose=verbose)
         self.embeddings_model = language_model.split('_s')[0]
         self.embeddings_sz = int(language_model.split('_s')[1])
 
-        self.lex2tok = cps.preprocess(self.words, word2vec, verbose=verbose)
+        self.lex2tok = cps.preprocess(self.words, word2vec, lang=self.lang, verbose=verbose)
         if verbose:
             args_ = (len(self.words), len(set(self.lex2tok.values())))
             print('# unique words {:}, tokens {:}'.format(*args_))
@@ -401,9 +403,9 @@ class PropbankEncoder(object):
                     self.db[col] = OrderedDict(db_dict[col])
 
             elif colconfig['type'] in ('choice'):
-                if colconfig['category'] == 'target' and self.filter_br:
+                if colconfig['category'] == 'target' and self.filter_noncon:
                         self.db[col] = OrderedDict({
-                            idx: self.lex2idx[col].get(re.sub('C-', '', word), 0)
+                            idx: self.lex2idx[col].get(re.sub('C-|R-', '', word), 0)
                             for idx, word in db_dict[col].items()
                         })
                 else:
@@ -467,16 +469,24 @@ class PropbankEncoder(object):
                     # missing values
                     lexicon_list.insert(0, 'unk')
 
-                elif config_dict['category'] == 'target' and self.filter_br:
-                    def filterfn(x):
-                        a = re.sub('-C-', '-', x)
-                        a = re.sub('C-', '', a)
+                elif config_dict['category'] == 'target' and self.filter_noncon:
+                    def format_fn(x):
+                        # a = re.sub('-C-', '-', x)
+                        # a = re.sub('C-', '', a)
+                        # a = re.sub(' ', '', a)
+                        a = re.sub('-C-|-R-', '-', x)
+                        a = re.sub('C-|R-', '', a)
                         a = re.sub(' ', '', a)
                         return a
 
+                    def filter_fn(t):
+                        if self.lang == 'pt':
+                            return 'A5' not in t or 'AM-MED' not in t
+                        else:
+                            return True
+
                     lexicon_set = set([
-                        filterfn(t) for t in lexicon_list
-                        if 'A5' not in t or 'AM-MED' not in t
+                        format_fn(t) for t in lexicon_list if filter_fn(t)
                     ])
 
                     lexicon_list = sorted(list(lexicon_set))

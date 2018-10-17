@@ -634,7 +634,7 @@ def make_feature_list(column_dict, embs_model):
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='1.0'):
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',lang='pt', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
@@ -678,7 +678,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='
         )
         return ex
 
-    file_path = get_binary(dataset_type, embs_model, version=version)
+    file_path = get_binary(dataset_type, embs_model, lang=lang, version=version)
     feature_list_dict = defaultdict(list)
 
     with open(file_path, 'w+') as f:

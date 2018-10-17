@@ -6,8 +6,9 @@ Created on Aug 1, 2018
 
 '''
 import argparse
-import os, glob
-
+import os
+import glob
+import re
 import yaml
 import pandas as pd
 
@@ -39,27 +40,33 @@ def make_propbank_encoder(encoder_name='deep_glo50',
                           lang='pt',
                           version='1.0',
                           verbose=True):
-    ''' Creates a ProbankEncoder instance from strings.
+    '''Creates a ProbankEncoder instance from strings.
 
-    Arguments:
-        encoder_name:
-        language_model:
-        version
-        verbose
+    [description]
+
+    Keyword Arguments:
+        encoder_name {str} -- [description] (default: {'deep_glo50'})
+        language_model {str} -- [description] (default: {'glove_s50'})
+        lang {str} -- [description] (default: {'pt'})
+        version {str} -- [description] (default: {'1.0'})
+        verbose {bool} -- [description] (default: {True})
 
     Returns:
-
+        [type] -- [description]
     '''
-    # Process inputs
-    prefix_dir = config.LANGUAGE_MODEL_DIR
 
+    # Process inputs
+    prefix_dir = '{:}{:}/'.format(config.LANGUAGE_MODEL_DIR, lang)
+    embs_model, embs_size = language_model.split('_s')
     if lang == 'pt':
         prefix_target_dir = 'datasets/csvs/pt/{:}/'.format(version)
+        file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
     else:
         prefix_target_dir = 'datasets/csvs/en/'
+        file_path = '{:}{:}.6B.d{:}.txt'.format(prefix_dir,  embs_model, embs_size)
 
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
-    file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
+
 
     if not os.path.isfile(file_path):
         glob_regex = '{:}*'.format(prefix_dir)
@@ -117,13 +124,14 @@ def make_propbank_encoder(encoder_name='deep_glo50',
         dfgs.to_dict(),
         schema_dict,
         language_model=language_model,
+        lang=lang,
         dbname=encoder_name,
         version=version
     )
-    model_, sz_ = language_model.split('_s')
-    embs_model = '{:}{:}'.format(get_model(model_), sz_)
 
-    bin_path = get_binary('deep', embs_model, version=version)
+    model_alias = '{:}{:}'.format(get_model_alias(embs_model), embs_size)
+
+    bin_path = get_binary('deep', model_alias, version=version)
     bin_dir = '/'.join(bin_path.split('/')[:-1]) + '/'
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
@@ -134,12 +142,16 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
 def make_tfrecords(encoder_name='deep_glo50',
                    propbank_encoder=None,
-                   version='1.0'):
+                   version='1.0',
+                   lang='pt'):
 
     # PREPARE WRITE DIRECTORIES
     embs_model = encoder_name.split('_')[-1]
-    bin_dir = 'datasets/binaries/{:}/'.format(version)
-    if version in ('1.0'):
+    bin_dir = 'datasets/binaries/{:}/'.format(lang)
+    if lang == 'pt':
+        bin_dir += '{:}/'.format(version)
+
+    if version in ('1.0') or lang == 'en':
         bin_dir += '{:}/'.format(embs_model)
 
     if not os.path.isdir(bin_dir):
@@ -154,12 +166,16 @@ def make_tfrecords(encoder_name='deep_glo50',
 
     flt = None
     enc = config.DATA_ENCODING
-    for ds_type in ('test', 'valid', 'train'):
+    if lang == 'pt':
+        ds_tuple = ('test', 'valid', 'train')
+    else:
+        ds_tuple = ('valid', 'train')
+    for ds_type in ds_tuple:
         iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=enc)
         tfrecords_builder(iter_, ds_type, embs_model, version=version)
 
 
-def get_model(mname):
+def get_model_alias(mname):
     if mname == 'wang2vec':
         return 'wan'
 
@@ -206,7 +222,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--version', type=str, dest='version',
                         choices=('1.0', '1.1',), default='1.0',
-                        help='PropBankBr: version 1.0 or 1.1')
+                        help='''PropBankBr: version 1.0 or 1.1
+                                only active if lang=`pt`''')
 
     args = parser.parse_args()
     language_model = args.language_model
@@ -234,10 +251,12 @@ if __name__ == '__main__':
                 raise ValueError('''{:}: not found.
                                  Some avalable options are {:}'''.
                                  format(language_model, language_model_list))
-    else:
-        model_, sz_ = language_model.split('_s')
 
-    encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
+    embs_model, embs_size = language_model.split('_s')
+
+    encoder_name = 'deep_{:}{:}'.format(
+        get_model_alias(embs_model), embs_size)
+
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
         language_model=language_model,
@@ -249,4 +268,5 @@ if __name__ == '__main__':
         encoder_name=encoder_name,
         propbank_encoder=propbank_encoder,
         version=version,
+        lang=lang
     )
