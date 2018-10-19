@@ -89,9 +89,9 @@ def get_train2(input_labels, output_labels, embeddings_model, version='1.0'):
                               embeddings_model, version=version)
 
 
-def get_size(ds_type, version='1.0'):
+def get_size(ds_type, lang='pt', version='1.0'):
 
-    lb, ub = get_db_bounds(ds_type, version=version)
+    lb, ub = get_db_bounds(ds_type, lang=lang, version=version)
 
     return ub - lb
 
@@ -634,13 +634,13 @@ def make_feature_list(column_dict, embs_model):
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',lang='pt', version='1.0'):
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
             https://planspace.org/20170323-tfrecords_for_humans/
     '''
-    total_propositions = get_size(dataset_type, version=version)
+    total_propositions = get_size(dataset_type, lang=lang, version=version)
 
     def message_print(num_records, num_propositions):
         _msg = 'Processing {:}\tfrecords:{:5d}\t'
