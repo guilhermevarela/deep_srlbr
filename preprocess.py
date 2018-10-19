@@ -173,7 +173,7 @@ def make_tfrecords(encoder_name='deep_glo50',
         ds_tuple = ('valid', 'train')
     for ds_type in ds_tuple:
         iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=enc)
-        tfrecords_builder(iter_, ds_type, embs_model, version=version)
+        tfrecords_builder(iter_, ds_type, embs_model, lang=lang, version=version)
 
 
 def get_model_alias(mname):

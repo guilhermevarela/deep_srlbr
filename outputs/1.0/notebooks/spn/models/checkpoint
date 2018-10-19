@@ -1,6 +1,2 @@
-model_checkpoint_path: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-41-17"
-all_model_checkpoint_paths: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-04-11"
-all_model_checkpoint_paths: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-09-33"
-all_model_checkpoint_paths: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-20-13"
-all_model_checkpoint_paths: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-25-30"
-all_model_checkpoint_paths: "bilstm_viterbi_h250_lr_0.0005_crf_2018-10-16_02-41-17"
+model_checkpoint_path: "bilstm_viterbi_h50_lr_0.0005_spn_2018-10-19_10-41-47"
+all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0005_spn_2018-10-19_10-41-47"

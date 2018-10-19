@@ -78,4 +78,5 @@ def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
         else:
             return '{:}/{:}'.format(prefix, dbname)
     else:
-        prefix = '{:}{:}/{:}/'.format(INPUT_DIR, lang, embeddings_model, dbname)
+        args = (INPUT_DIR, lang, embeddings_model, dbname)
+        prefix = '{:}{:}/{:}/'.format(*args)
