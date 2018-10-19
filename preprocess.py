@@ -23,15 +23,15 @@ SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
 SHIFTS = (-3, -2, -1, 0, 1, 2, 3)
 
 FEATURE_MAKER_DICT = {
-    'argrecon.csv': {'marker_fnc': lambda x, y: fac.process_argrecon(x, version=y), 'column': 'argument recognition'},
-    'chunks.csv': {'marker_fnc': lambda x, y: fac.process_chunk(x, version=y), 'column': 'chunk features'},
-    'ctree_chunk.csv': {'marker_fnc': lambda x, y: fac.process_ctreechunk(x, version=y), 'column': 'shallow chunk features'},
-    'predicate_marker.csv': {'marker_fnc': lambda x, y: fac.process_predmarker(x, version=y), 'column': 'predicate marker feature'},
-    'form.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, version=y), 'column': 'form predicate context features'},
-    'gpos.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, version=y), 'column': 'gpos predicate context features'},
-    'lemma.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['LEMMA'], SHIFTS, version=y), 'column': 'lemma predicate context features'},
-    't.csv': {'marker_fnc': lambda x, y: fac.process_t(x, version=y), 'column': 'chunk label class'},
-    'iob.csv': {'marker_fnc': lambda x, y: fac.process_iob(x, version=y), 'column': 'iob class'}
+    'argrecon.csv': {'marker_fnc': lambda x, l, y: fac.process_argrecon(x, lang=l, version=y), 'column': 'argument recognition'},
+    'chunks.csv': {'marker_fnc': lambda x, l, y: fac.process_chunk(x, lang=l, version=y), 'column': 'chunk features'},
+    'ctree_chunk.csv': {'marker_fnc': lambda x, l, y: fac.process_ctreechunk(x, lang=l, version=y), 'column': 'shallow chunk features'},
+    'predicate_marker.csv': {'marker_fnc': lambda x, l, y: fac.process_predmarker(x, lang=l, version=y), 'column': 'predicate marker feature'},
+    'form.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, lang=l, version=y), 'column': 'form predicate context features'},
+    'gpos.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, lang=l, version=y), 'column': 'gpos predicate context features'},
+    'lemma.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['LEMMA'], SHIFTS, lang=l, version=y), 'column': 'lemma predicate context features'},
+    't.csv': {'marker_fnc': lambda x, l, y: fac.process_t(x, lang=l, version=y), 'column': 'chunk label class'},
+    'iob.csv': {'marker_fnc': lambda x, l, y: fac.process_iob(x, lang=l, version=y), 'column': 'iob class'}
 }
 
 
@@ -63,7 +63,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
         file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
     else:
         prefix_target_dir = 'datasets/csvs/en/'
-        file_path = '{:}{:}.6B.d{:}.txt'.format(prefix_dir,  embs_model, embs_size)
+        file_path = '{:}{:}.6B.{:}d.txt'.format(prefix_dir, embs_model, embs_size)
 
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
 
@@ -74,7 +74,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
             re.sub('\.txt','', re.sub(prefix_dir,'', file_path))
             for file_path in glob.glob(glob_regex)]
         _errmsg = '{:} not found avalable options are in {:}'
-        raise ValueError(_errmsg.format(language_model ,options_list))
+        raise ValueError(_errmsg.format(language_model, options_list))
 
 
 
@@ -92,14 +92,15 @@ def make_propbank_encoder(encoder_name='deep_glo50',
         'column_predmarker/predicate_marker.csv',
         'column_shifts_ctx_p/form.csv',
         'column_shifts_ctx_p/gpos.csv',
-        'column_shifts_ctx_p/lemma.csv',
         'column_t/t.csv',
         'column_iob/iob.csv'
     ]
-
+    if lang == 'pt':
+        column_files.append('column_shifts_ctx_p/lemma.csv')
     gs_dict = dfgs.to_dict()
     for column_filename in column_files:
         column_path = '{:}{:}'.format(prefix_target_dir, column_filename)
+
         if not os.path.isfile(column_path):
 
             *dirs, filename = column_path.split('/')
@@ -114,7 +115,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
             if verbose:
                 print('processing:\t{:}'.format(msg))
-            maker_fnc(gs_dict, version)
+            maker_fnc(gs_dict, lang, version)
 
 
         column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')

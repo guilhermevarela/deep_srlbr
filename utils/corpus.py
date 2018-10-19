@@ -21,9 +21,14 @@ Created on Mar 12, 2018
 '''
 import re
 import string
+import tempfile
 
-from gensim.models import KeyedVectors
 import pandas as pd
+
+from gensim.test.utils import datapath, get_tmpfile
+from gensim.scripts.glove2word2vec import glove2word2vec
+from gensim.models import KeyedVectors
+
 
 EMBEDDINGS_DIR = 'datasets/txts/embeddings/'
 CORPUS_EXCEPTIONS_DIR = 'datasets/txts/corpus_exceptions/'
@@ -34,12 +39,25 @@ def fetch_corpus(db_name):
     return pd.read_csv(path)
 
 
-def fetch_word2vec(embs_file, lang='pt', verbose=True):
+def fetch_word2vec(language_model, lang='pt', verbose=True):
     if verbose:
         print('Fetching word2vec...')
 
-    embs_path = '{:}{:}/{:}.txt'.format(EMBEDDINGS_DIR, lang, embs_file)
-    word2vec = KeyedVectors.load_word2vec_format(embs_path,
+    if lang == 'en':
+        m, s = language_model.split('_s')
+        filename = '{:}.6B.{:}d'.format(m, s)
+        glove_file = '{:}{:}/{:}.txt'.format(EMBEDDINGS_DIR, lang, filename)
+        # Convert to Stanford glove to Word2Vec format
+
+        f, tmp_file = tempfile.mkstemp()
+        glove2word2vec(glove_file, tmp_file)
+
+        w2v_path = tmp_file
+    else:
+        filename = language_model
+        w2v_path = '{:}{:}/{:}.txt'.format(EMBEDDINGS_DIR, lang, filename)
+
+    word2vec = KeyedVectors.load_word2vec_format(w2v_path,
                                                  unicode_errors="ignore")
 
     if verbose:

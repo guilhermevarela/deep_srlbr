@@ -445,6 +445,7 @@ class PropbankEncoder(object):
         # Words are the union of all textual column_labels
         word_list = []
         lexicons_dict = {}
+
         for col in list(self.column_labels):
             lexicon_list = []
 
@@ -457,7 +458,10 @@ class PropbankEncoder(object):
 
             # Lexicon for each column `unk` is not present
             if config_dict['type'] in ('text', 'choice'):  # they are limited
-                lexicon_set = set(db_dict[base_col].values())
+                try:
+                    lexicon_set = set(db_dict[base_col].values())
+                except KeyError:
+                    import code; code.interact(local=dict(globals(), **locals()))
 
                 # features might be absent ( in case of leading and lagging )
                 lexicon_list = sorted(list(lexicon_set))
