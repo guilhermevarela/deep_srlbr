@@ -103,7 +103,7 @@ class SRLAgent(metaclass=AgentMeta):
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
                  batch_size=250, version='1.0', rec_unit='BasicLSTM',
-                 recon_depth=-1, **kwargs):
+                 recon_depth=-1, lang='pt', **kwargs):
         '''Defines Dataflow graph
 
         Builds a Rnn tensorflow graph
@@ -131,6 +131,8 @@ class SRLAgent(metaclass=AgentMeta):
             epochs {int} -- Iterations to make on the training set
                                 (default: {100})
 
+            lang {str} -- 'pt' or 'en'
+
             lr {float} -- Learning Rate (default: {5 * 1e-3})
 
             batch_size {int} -- Number of examples to be trained
@@ -157,7 +159,7 @@ class SRLAgent(metaclass=AgentMeta):
                 target_labels=target_labels,
                 is_batch=not kfold, ctx_p=ctx_p,
                 learning_rate=lr, version=version,
-                hidden_layers=hidden_layers)
+                hidden_layers=hidden_layers, lang=lang)
 
             target_dir = 'outputs{:}'.format(target_dir)
             target_dir = snapshot_persist(
@@ -168,7 +170,7 @@ class SRLAgent(metaclass=AgentMeta):
                 embeddings_trainable=False,
                 embeddings_model=embeddings_model, rec_unit=rec_unit,
                 epochs=epochs, chunks=chunks, recon_depth=recon_depth,
-                version=version)
+                version=version, lang=lang)
             self.target_dir = target_dir
             self._restore_session = False
         else:
@@ -177,17 +179,18 @@ class SRLAgent(metaclass=AgentMeta):
 
         self.input_labels = input_labels
         self.target_labels = target_labels
+        self.lang = lang
         self.version = version
         self.embeddings_model = embeddings_model
 
         propbank_path = get_binary(
-            'deep', embeddings_model, version=version)
+            'deep', embeddings_model, lang=lang, version=version)
+
         propbank_encoder = PropbankEncoder.recover(propbank_path)
 
         dataset_path = get_binary(
-            'train', embeddings_model, version=version)
+            'train', embeddings_model, lang=lang, version=version)
         datasets_list = [dataset_path]
-
 
         self.evaluator = ConllEvaluator(propbank_encoder, target_dir=self.target_dir)
 
@@ -208,8 +211,7 @@ class SRLAgent(metaclass=AgentMeta):
         # The streamer instanciation builds a feeder_op that will
         # supply the computation graph with batches of examples
         self.streamer = TfStreamer(datasets_list, batch_size, epochs,
-                                   input_labels, target_labels,
-                                   shuffle=True)
+                                   input_labels, target_labels, shuffle=True)
 
         # The Labeler instanciation will build the archtecture
         targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
@@ -348,12 +350,12 @@ class SRLAgent(metaclass=AgentMeta):
         Loads the training set and evaluation set
         '''
         X_train, T_train, L_train, I_train = TfStreamer.get_train(
-            self.input_labels, self.target_labels, version=self.version,
+            self.input_labels, self.target_labels, lang=self.lang, version=self.version,
             embeddings_model=self.embeddings_model
         )
 
         X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
-            self.input_labels, self.target_labels, version=self.version,
+            self.input_labels, self.target_labels, lang=self.lang, version=self.version,
             embeddings_model=self.embeddings_model
         )
 

@@ -52,51 +52,57 @@ TF_CONTEXT_FEATURES = {
 }
 
 
-def get_test(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
+def get_test(embeddings, input_labels, output_labels,
+             embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract('test', embeddings, input_labels, output_labels,
-                             embeddings_model, version=version)
+                             embeddings_model, lang=lang, version=version)
 
 
-def get_valid(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
+def get_valid(embeddings, input_labels, output_labels,
+              embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract('valid', embeddings, input_labels, output_labels,
-                             embeddings_model, version=version)
+                             embeddings_model, lang=lang, version=version)
 
 
-
-def get_train(embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
+def get_train(embeddings, input_labels, output_labels,
+              embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract('train', embeddings, input_labels, output_labels,
-                             embeddings_model, version=version)
+                             embeddings_model, lang=lang, version=version)
 
 
-def get_test2(input_labels, output_labels, embeddings_model, version='1.0'):
+def get_test2(input_labels, output_labels,
+              embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract2('test', input_labels, output_labels,
-                              embeddings_model, version=version)
+                              embeddings_model, lang=lang, version=version)
 
 
-def get_valid2(input_labels, output_labels, embeddings_model, version='1.0'):
+def get_valid2(input_labels, output_labels,
+               embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract2('valid', input_labels, output_labels,
-                              embeddings_model, version=version)
+                              embeddings_model, lang=lang, version=version)
 
 
-def get_train2(input_labels, output_labels, embeddings_model, version='1.0'):
+def get_train2(input_labels, output_labels,
+               embeddings_model, lang='pt', version='1.0'):
 
     return tfrecords_extract2('train', input_labels, output_labels,
-                              embeddings_model, version=version)
+                              embeddings_model, lang=lang, version=version)
 
 
-def get_size(ds_type, version='1.0'):
+def get_size(ds_type, lang='pt', version='1.0'):
 
-    lb, ub = get_db_bounds(ds_type, version=version)
+    lb, ub = get_db_bounds(ds_type, lang=lang, version=version)
 
     return ub - lb
 
 
-def tfrecords_extract(ds_type, embeddings, input_labels, output_labels, embeddings_model, version='1.0'):
+def tfrecords_extract(ds_type, embeddings, input_labels, output_labels,
+                      embeddings_model, lang='pt', version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
 
     Acts as a wrapper for the function tsr2npy
@@ -128,7 +134,8 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_labels, embeddin
 
     return inputs, targets, lengths, others
 
-def tfrecords_extract2(ds_type, input_labels, output_labels, embeddings_model, version='1.0'):
+def tfrecords_extract2(ds_type, input_labels, output_labels,
+                       embeddings_model, lang='pt', version='1.0'):
     '''Converts the contents of ds_type (train, valid, test) into array
     Acts as a wrapper for the function tsr2npy
     Arguments:
@@ -144,8 +151,10 @@ def tfrecords_extract2(ds_type, input_labels, output_labels, embeddings_model, v
     Raises:
         ValueError -- validation for database type 
     '''
-    dataset_path = get_binary(ds_type, embeddings_model, version=version)
-    dataset_size = get_size(ds_type, version=version)
+    dataset_path = get_binary(ds_type, embeddings_model,
+                              lang=lang, version=version)
+
+    dataset_size = get_size(ds_type, lang=lang, version=version)
 
     msg_success = 'tfrecords_extract:'
     msg_success += 'done converting {:} set to numpy'.format(ds_type)
@@ -183,7 +192,7 @@ def tsr2npy(dataset_path, embeddings, dataset_size, input_labels, output_labels,
     with tf.name_scope('pipeline'):
 
         EMBS = tf.Variable(embeddings, trainable=False, name='embeddings')
-
+        
         X, T, L, D = input_with_embeddings_fn(
             EMBS, [dataset_path], dataset_size, 1, input_labels, output_labels,
             shuffle=False
@@ -634,13 +643,13 @@ def make_feature_list(column_dict, embs_model):
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='1.0'):
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt', version='1.0'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
             https://planspace.org/20170323-tfrecords_for_humans/
     '''
-    total_propositions = get_size(dataset_type, version=version)
+    total_propositions = get_size(dataset_type, lang=lang, version=version)
 
     def message_print(num_records, num_propositions):
         _msg = 'Processing {:}\tfrecords:{:5d}\t'
@@ -678,7 +687,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', version='
         )
         return ex
 
-    file_path = get_binary(dataset_type, embs_model, version=version)
+    file_path = get_binary(dataset_type, embs_model, lang=lang, version=version)
     feature_list_dict = defaultdict(list)
 
     with open(file_path, 'w+') as f:

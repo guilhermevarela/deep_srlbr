@@ -18,16 +18,16 @@ LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 DATA_ENCODING = 'EMB'
 
 
-def get_config(embs_model):
-    cnf_path = 'config/{}.yaml'.format(embs_model)
+def get_config(embs_model, lang='pt'):
+    cnf_path = 'config/{}/{}.yaml'.format(lang, embs_model)
     cnf_dict = {}
     with open(cnf_path, mode='r') as f:
         cnf_dict = yaml.load(f)
     return cnf_dict
 
 
-def set_config(cnf_dict, embs_model):
-    cnf_path = 'config/{}.yaml'.format(embs_model)
+def set_config(cnf_dict, embs_model, lang='pt'):
+    cnf_path = 'config/{}/{}.yaml'.format(lang, embs_model)
     with open(cnf_path, mode='w') as f:
         yaml.dump(cnf_dict, f)
 
@@ -35,15 +35,21 @@ def set_config(cnf_dict, embs_model):
 
 
 DATASET_PROPOSITION_DICT = {
-    '1.0': {
-        'train': 5296,
-        'valid': 239,
-        'test': 239,
+    'pt': {
+        '1.0': {
+            'train': 5296,
+            'valid': 239,
+            'test': 239,
+        },
+        '1.1': {
+            'train': 5099,
+            'valid': 569,
+            'test': 263,
+        },
     },
-    '1.1': {
-        'train': 5099,
-        'valid': 569,
-        'test': 263,
+    'en': {
+        'train': 90751,
+        'valid': 3248
     }
 }
 

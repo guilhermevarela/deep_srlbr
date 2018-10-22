@@ -10,7 +10,7 @@ import config
 from config import INPUT_DIR
 
 
-def get_db_bounds(ds_type, version='1.0'):
+def get_db_bounds(ds_type, lang='pt', version='1.0'):
     '''Returns upper and lower bound proposition for dataset
 
     Dataset breakdowns are done by partioning of the propositions
@@ -27,18 +27,26 @@ def get_db_bounds(ds_type, version='1.0'):
     '''
     ds_tuple = ('train', 'valid', 'test',)
     version_tuple = ('1.0', '1.1',)
-
+    lang_tuple = ('en', 'pt')
     if not(ds_type in ds_tuple):
         _msg = 'ds_type must be in {:} got \'{:}\''
         _msg = _msg.format(ds_tuple, ds_type)
         raise ValueError(_msg)
 
-    if not(version in version_tuple):
-        _msg = 'version must be in {:} got \'{:}\''
-        _msg = _msg.format(version_tuple, version)
+    if not(lang in lang_tuple):
+        _msg = 'lang must be in {:} got \'{:}\''
+        _msg = _msg.format(lang_tuple, lang)
         raise ValueError(_msg)
+
+    if lang == 'pt':
+        if not(version in version_tuple):
+            _msg = 'version must be in {:} got \'{:}\''
+            _msg = _msg.format(version_tuple, version)
+            raise ValueError(_msg)
+        else:
+            size_dict = config.DATASET_PROPOSITION_DICT[lang][version]
     else:
-        size_dict = config.DATASET_PROPOSITION_DICT[version]
+        size_dict = config.DATASET_PROPOSITION_DICT[lang]
 
     lb = 1
     ub = size_dict['train']
@@ -55,7 +63,7 @@ def get_db_bounds(ds_type, version='1.0'):
             return (lb, ub)
 
 
-def get_binary(ds_type, embeddings_model, version='1.0'):
+def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
     if ds_type not in ('train', 'test', 'valid', 'deep'):
         raise ValueError('Invalid dataset label {:}'.format(ds_type))
 
@@ -63,8 +71,12 @@ def get_binary(ds_type, embeddings_model, version='1.0'):
     ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
     dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings_model, ext)
 
-    prefix = '{:}{:}/'.format(INPUT_DIR, version)
-    if version in ('1.0',):
-        return '{:}{:}/{:}'.format(prefix, embeddings_model, dbname)
+    if lang == 'pt':
+        prefix = '{:}{:}/{:}/'.format(INPUT_DIR, lang, version)
+        if version in ('1.0',):
+            return '{:}{:}/{:}'.format(prefix, embeddings_model, dbname)
+        else:
+            return '{:}/{:}'.format(prefix, dbname)
     else:
-        return '{:}/{:}'.format(prefix, dbname)
+        args = (INPUT_DIR, lang, embeddings_model, dbname)
+        return '{:}{:}/{:}/{:}'.format(*args)

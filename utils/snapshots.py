@@ -24,33 +24,36 @@ def snapshot_hparam_string(embeddings_model='glo50', target_labels='T',
     Returns:
         snapshot_dir {str} -- [description]
     '''
-    param_list = [None] * 7
+    param_list = [None] * 8
     params_dict = dict(locals())
     params_dict.update(kwargs)
     for key, value in params_dict.items():
         if value is not None:
-            if key == 'version':
+            if key == 'lang':
                 param_list[0] = value
 
-            if key == 'embeddings_model':
+            if key == 'version':
                 param_list[1] = value
+
+            if key == 'embeddings_model':
+                param_list[2] = value
 
             if key == 'hidden_layers':
                 hidden_list_ = [str(s) for s in value]
-                param_list[2] = 'x'.join(hidden_list_)
-                param_list[2] = 'hs_{:}'.format(param_list[2])
+                param_list[3] = 'x'.join(hidden_list_)
+                param_list[3] = 'hs_{:}'.format(param_list[3])
 
             if key == 'ctx_p':
-                param_list[3] = 'ctxp_{:d}'.format(value)
+                param_list[4] = 'ctxp_{:d}'.format(value)
 
             if key == 'target_labels':
-                param_list[4] = '_'.join(target_labels)
+                param_list[5] = '_'.join(target_labels)
 
             if key == 'is_batch':
-                param_list[5] = 'batch' if value else 'kfold'
+                param_list[6] = 'batch' if value else 'kfold'
 
             if key == 'learning_rate':
-                param_list[6] = 'lr_{:.2e}'.format(value)
+                param_list[7] = 'lr_{:.2e}'.format(value)
 
     snapshot_dir = ''
     for param_ in param_list:
@@ -100,7 +103,7 @@ def snapshot_persist(target_dir,  **kwargs):
             'hidden_layers', 'embeddings_model',
             'embeddings_trainable', 'epochs',
             'lr', 'batch_size', 'kfold', 'version',
-            'rec_unit', 'chunks', 'recon_depth'}
+            'rec_unit', 'chunks', 'recon_depth', 'lang'}
 
     # Clear exclusve parameters
     if 'kfold' in kwargs:

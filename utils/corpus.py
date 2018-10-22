@@ -21,32 +21,47 @@ Created on Mar 12, 2018
 '''
 import re
 import string
+import tempfile
 
-from gensim.models import KeyedVectors
 import pandas as pd
+
+from gensim.test.utils import datapath, get_tmpfile
+from gensim.scripts.glove2word2vec import glove2word2vec
+from gensim.models import KeyedVectors
+
 
 EMBEDDINGS_DIR = 'datasets/txts/embeddings/'
 CORPUS_EXCEPTIONS_DIR = 'datasets/txts/corpus_exceptions/'
 
+
 def fetch_corpus(db_name):
-    path=  '{:}{:}.csv'.format(CSVS_DIR, db_name)
+    path = '{:}{:}.csv'.format(CSVS_DIR, db_name)
     return pd.read_csv(path)
 
-def fetch_word2vec(natural_language_embedding_file, verbose=True):
+
+def fetch_word2vec(language_model, lang='pt', verbose=True):
     if verbose:
         print('Fetching word2vec...')
-    try:        
-        embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)        
-        word2vec = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")           
-    except FileNotFoundError:
-        if verbose:
-            print('natural_language_feature: {:} not found .. reverting to \'glove_s50\' instead'.format(natural_language_embedding_file))
-        natural_language_embedding_file='glove_s50'
-        embedding_path= '{:}{:}.txt'.format(EMBEDDINGS_DIR, natural_language_embedding_file)        
-        word2vec  = KeyedVectors.load_word2vec_format(embedding_path, unicode_errors="ignore")          
-    finally:
-        if verbose:
-            print('Fetching word2vec... done')  
+
+    if lang == 'en':
+        m, s = language_model.split('_s')
+        filename = '{:}.6B.{:}d'.format(m, s)
+        glove_file = '{:}{:}/{:}.txt'.format(EMBEDDINGS_DIR, lang, filename)
+        # Convert to Stanford glove to Word2Vec format
+
+        f, tmp_file = tempfile.mkstemp()
+        glove2word2vec(glove_file, tmp_file)
+
+        w2v_path = tmp_file
+    else:
+        filename = language_model
+        w2v_path = '{:}{:}/{:}.txt'.format(EMBEDDINGS_DIR, lang, filename)
+
+    word2vec = KeyedVectors.load_word2vec_format(w2v_path,
+                                                 unicode_errors="ignore")
+
+    if verbose:
+        print('Fetching word2vec... done')
 
     return word2vec
 
@@ -72,7 +87,7 @@ def fetch_corpus_exceptions(corpus_exception_file, verbose=True):
 
     return set(df['TOKEN'].values)
 
-def preprocess(lexicon, word2vec, verbose=True):  
+def preprocess(lexicon, word2vec, lang='pt', verbose=True):
     '''
         1. for NER entities within exception file
              replace by the tag organization, person, location
@@ -116,31 +131,32 @@ def preprocess(lexicon, word2vec, verbose=True):
             token = re_number.sub('0', token)
 
             if token in word2vec:
-                lexicon2token[word]= token.lower()
+                lexicon2token[word] = token.lower()
             else:
-                if word in pers:
-                    lexicon2token[word] = 'pessoa'
-                else:
-                    if word in orgs:
-                        lexicon2token[word] = 'organização'
+                if lang == 'pt':
+                    if word in pers:
+                        lexicon2token[word] = 'pessoa'
                     else:
-                        if word in locs:
-                            lexicon2token[word] = 'local'
+                        if word in orgs:
+                            lexicon2token[word] = 'organização'
                         else:
-                            tokens_list = word.split('_')
+                            if word in locs:
+                                lexicon2token[word] = 'local'
+                            else:
+                                tokens_list = word.split('_')
 
-                            if len(tokens_list) > 1:  # It's a composite token
-                                tokens_list = [tok_.lower()
-                                               if tok_.lower() in word2vec else 'unk'
-                                               for tok_ in tokens_list]
+                                if len(tokens_list) > 1:  # It's a composite token
+                                    tokens_list = [tok_.lower()
+                                                   if tok_.lower() in word2vec else 'unk'
+                                                   for tok_ in tokens_list]
 
-                                known_list = [tok_ for tok_ in tokens_list if tok_ != 'unk']
-                                if len(known_list) > 0:
-                                    lexicon2token[word] = '_'.join(tokens_list)
+                                    known_list = [tok_ for tok_ in tokens_list if tok_ != 'unk']
+                                    if len(known_list) > 0:
+                                        lexicon2token[word] = '_'.join(tokens_list)
 
     total_tokens = len([val for val in lexicon2token.values() if not val in ('unk')])
     if verbose:
         print('Preprocess finished. Found {:} of {:} words, missing {:.2f}%'.format(total_tokens,
-            total_words, 100*float(total_words-total_tokens)/ total_words))                
+            total_words, 100*float(total_words-total_tokens)/ total_words))
 
-    return lexicon2token    
+    return lexicon2token
