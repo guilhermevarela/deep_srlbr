@@ -62,21 +62,21 @@ class TfStreamer(object):
 
     @classmethod
     def get_train(cls, input_labels, output_labels,
-                  embeddings_model='glo50', version='1.0'):
+                  embeddings_model='glo50', lang='pt', version='1.0'):
 
         inputs, targets, seqlens, descriptors = get_train2(
             input_labels, output_labels, embeddings_model,
-            version=version)
+            lang=lang, version=version)
 
         return inputs, targets, seqlens, descriptors
 
     @classmethod
     def get_valid(cls, input_labels, output_labels,
-                  embeddings_model='glo50', version='1.0'):
+                  embeddings_model='glo50', lang='pt', version='1.0'):
 
         inputs, targets, seqlens, descriptors = get_valid2(
             input_labels, output_labels, embeddings_model,
-            version=version)
+            lang=lang, version=version)
 
         return inputs, targets, seqlens, descriptors
 
@@ -86,7 +86,7 @@ class TfStreamer(object):
 
         inputs, targets, seqlens, descriptors = get_test2(
             input_labels, output_labels, embeddings_model,
-            version=version)
+            lang=lang, version=version)
 
         return inputs, targets, seqlens, descriptors
 
@@ -115,11 +115,11 @@ class TfStreamerWE(object):
 
     @classmethod
     def get_train(cls, word_embeddings, input_labels, target_label,
-                  embeddings_model='glo50', version='1.0'):
+                  embeddings_model='glo50', lang='pt', version='1.0'):
 
         inputs, targets, seqlens, descriptors = get_train(
             word_embeddings, input_labels, target_label,
-            embeddings_model, version=version
+            embeddings_model, lang='pt', version=version
         )
 
         return inputs, targets, seqlens, descriptors
@@ -130,7 +130,7 @@ class TfStreamerWE(object):
 
         inputs, targets, seqlens, descriptors = get_valid(
             word_embeddings, input_labels, target_label,
-            embeddings_model, version=version
+            embeddings_model, lang='pt', version=version
         )
 
         return inputs, targets, seqlens, descriptors
@@ -141,7 +141,7 @@ class TfStreamerWE(object):
 
         inputs, targets, seqlens, descriptors = get_test(
             word_embeddings, input_labels, target_label,
-            embeddings_model, version=version
+            embeddings_model, lang='pt', version=version
         )
 
         return inputs, targets, seqlens, descriptors

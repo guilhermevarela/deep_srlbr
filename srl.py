@@ -79,6 +79,10 @@ if __name__ == '__main__':
                                 optimization with 25 folds.
                                 Default: False''')
 
+    parser.add_argument('--lang', dest='lang', type=str,
+                        default='pt', choices=('pt', 'en'),
+                        help='''Idiom. Default: `pt`\n''')
+
     parser.add_argument('--lr', dest='lr', type=float,
                         default=5 * 1e-3,
                         help='''Learning rate of the model.
@@ -136,7 +140,8 @@ if __name__ == '__main__':
     batch_size = args.batch_size
     rec_unit = args.rec_unit
     recon_depth = int(args.recon_depth)
-
+    lang = args.lang
+    print(lang)
     if args.kfold:
         if len(ckpt_dir) > 0:
             if ckpt_dir[-1] != '/':
@@ -158,7 +163,8 @@ if __name__ == '__main__':
                 input_labels=input_labels, target_labels=target_labels,
                 hidden_layers=args.depth, embeddings_model=embs_model,
                 epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
-                version=version, lr=learning_rate, recon_depth=recon_depth)
+                version=version, lr=learning_rate, recon_depth=recon_depth,
+                lang=lang)
 
             agent.fit()
 

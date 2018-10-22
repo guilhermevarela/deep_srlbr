@@ -458,10 +458,9 @@ class PropbankEncoder(object):
 
             # Lexicon for each column `unk` is not present
             if config_dict['type'] in ('text', 'choice'):  # they are limited
-                try:
-                    lexicon_set = set(db_dict[base_col].values())
-                except KeyError:
-                    import code; code.interact(local=dict(globals(), **locals()))
+
+                lexicon_set = set(db_dict[base_col].values())
+
 
                 # features might be absent ( in case of leading and lagging )
                 lexicon_list = sorted(list(lexicon_set))

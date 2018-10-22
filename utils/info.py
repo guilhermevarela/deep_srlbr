@@ -71,7 +71,7 @@ def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
     ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
     dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings_model, ext)
 
-    if lang =='pt':
+    if lang == 'pt':
         prefix = '{:}{:}/{:}/'.format(INPUT_DIR, lang, version)
         if version in ('1.0',):
             return '{:}{:}/{:}'.format(prefix, embeddings_model, dbname)
@@ -79,4 +79,4 @@ def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
             return '{:}/{:}'.format(prefix, dbname)
     else:
         args = (INPUT_DIR, lang, embeddings_model, dbname)
-        prefix = '{:}{:}/{:}/'.format(*args)
+        return '{:}{:}/{:}/{:}'.format(*args)
