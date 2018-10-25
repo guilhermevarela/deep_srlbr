@@ -228,7 +228,7 @@ class PropbankEncoder(object):
                 for x, p in self.db['P'].items()
                 if p > lb and p <= ub}
 
-    def decode_npyarray(self, T, I, seq_list, target_labels,
+    def decode_npyarray(self, Y, I, seq_list, target_labels,
                         script_version=None):
 
         target_label = target_labels[0]
@@ -237,7 +237,7 @@ class PropbankEncoder(object):
                  for j, item in enumerate(sublist) if j < seq_list[i]]
 
         values = [self.idx2lex[target_label][int(item)]
-                  for i, sublist in enumerate(T.tolist())
+                  for i, sublist in enumerate(Y.tolist())
                   for j, item in enumerate(sublist) if j < seq_list[i]]
 
         zip_list = sorted(zip(index, values), key=lambda x: x[0])

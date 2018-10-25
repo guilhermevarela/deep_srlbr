@@ -168,11 +168,11 @@ if __name__ == '__main__':
 
             agent.fit()
 
-        f1 = agent.evaluate_dataset('valid')
-        print('Best evaluation F1 -- {:}'.format(f1))
+        # f1 = agent.evaluate_dataset('valid')
+        # print('Best evaluation F1 -- {:}'.format(f1))
 
-            # estimate(input_labels=input_labels, target_labels=target_labels,
-            #          hidden_layers=args.depth, embeddings_model=embs_model,
-            #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
-            #          version=version, ctx_p=ctx_p, lr=learning_rate,
-            #          chunks=use_chunks, recon_depth=recon_depth)
+        # estimate(input_labels=input_labels, target_labels=target_labels,
+        #          hidden_layers=args.depth, embeddings_model=embs_model,
+        #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
+        #          version=version, ctx_p=ctx_p, lr=learning_rate,
+        #          chunks=use_chunks, recon_depth=recon_depth)

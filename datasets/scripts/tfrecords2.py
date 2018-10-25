@@ -344,7 +344,8 @@ def input_fn(filenames, batch_size, num_epochs,
         [X, T, L, D],
         batch_size=batch_size,
         capacity=capacity,
-        dynamic_pad=True
+        dynamic_pad=True,
+        allow_smaller_final_batch=True
     )
     # D_batch is the index
     D_batch = tf.cast(tf.squeeze(D_batch, axis=2), tf.int64)

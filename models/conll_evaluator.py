@@ -214,10 +214,12 @@ class ConllEvaluator(object):
             *accepts a filter list for restricting arguments
             *saves a temporary file and deletes it
         Arguments:
-            gold_path {[type]} -- [description]
-            predicted_path {[type]} -- [description]
-            file_name {[type]} -- [description]
-        
+            gold_path {str} -- The path to the file containing 
+                               the gold propositions
+            predicted_path {str} -- The path to the file containing
+                                    the predicted propositions
+            file_name {str} -- The name for the file
+
         Keyword Arguments:
             verbose {bool} -- [description] (default: {True})
             keep_list {[type]} -- [description] (default: {None})
