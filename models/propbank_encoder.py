@@ -241,6 +241,7 @@ class PropbankEncoder(object):
                   for j, item in enumerate(sublist) if j < seq_list[i]]
 
         zip_list = sorted(zip(index, values), key=lambda x: x[0])
+
         target_dict = OrderedDict(zip_list)
 
 

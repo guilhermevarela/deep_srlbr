@@ -581,7 +581,11 @@ def _protobuf_with_embeddings_process(
             ind = tf.one_hot(ind, config_dict[key]['dims'], dtype=tf.float32)
             ind = tf.squeeze(ind, axis=1)
         else:
-            ind = tf.cast(sequence_features[key], tf.float32)
+            if key in ('INDEX',):
+                ind = tf.squeeze(ind, axis=1)
+            else:
+                ind = tf.cast(sequence_features[key], tf.float32)
+
 
         if key in input_labels:
             sequence_inputs.append(ind)
@@ -589,12 +593,12 @@ def _protobuf_with_embeddings_process(
         elif key in output_labels:
             sequence_outputs.append(ind)
 
-        elif key in ['INDEX']:
-            sequence_descriptors.append(ind)
+        elif key in ('INDEX',):
+            sequence_descriptors = ind
 
     X = tf.concat(sequence_inputs, 1)
     T = tf.concat(sequence_outputs, 1)
-    D = tf.concat(sequence_descriptors, 1)
+    D = sequence_descriptors
 
     return X, T, L, D
 
