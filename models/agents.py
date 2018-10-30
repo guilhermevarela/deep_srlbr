@@ -47,7 +47,7 @@ class AgentMeta(type):
         https://realpython.com/python-metaclasses/
     '''
     def __new__(meta, name, base, body):
-        agent_methods = ('evaluate', 'fit', 'load', 'predict')
+        agent_methods = ('evaluate_validset', 'evaluate_testset', 'fit', 'load')
 
         for am in agent_methods:
             if am not in body:
@@ -188,6 +188,7 @@ class SRLAgent(metaclass=AgentMeta):
         self.version = version
         self.embeddings_model = embeddings_model
         self.batch_size = batch_size
+        self.epochs = epochs
 
         propbank_path = get_binary(
             'deep', embeddings_model, lang=lang, version=version)
@@ -236,6 +237,7 @@ class SRLAgent(metaclass=AgentMeta):
         self.validator = TfStreamer([ds_path], chunk_size, epochs + 1,
                                     self.input_labels, self.target_labels,
                                     shuffle=False)
+
 
         ds_type = 'test'
         lb, ub = get_db_bounds(ds_type, lang=self.lang)
@@ -317,51 +319,53 @@ class SRLAgent(metaclass=AgentMeta):
         session_path = '{:}model.ckpt'.format(self.target_dir)
         saver.save(self._session, session_path)
 
-    def evaluate(self, I, Y, L, filename):
-        '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
+    # def evaluate(self, I, Y, L, filename):
+    #     '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
 
-        I, Y are zero padded to the right -- L vector carries
-        the original propositon time and Y, I are scaled
-        to have the same 2nd dimension as the largest proposition
-        on the batch (1st dimension)(default: 250)
+    #     I, Y are zero padded to the right -- L vector carries
+    #     the original propositon time and Y, I are scaled
+    #     to have the same 2nd dimension as the largest proposition
+    #     on the batch (1st dimension)(default: 250)
 
 
-        Arguments:
-            I {np.narray} -- 2D matrix zero padded [batch, max_time]
-                representing the obsertions indices
+    #     Arguments:
+    #         I {np.narray} -- 2D matrix zero padded [batch, max_time]
+    #             representing the obsertions indices
 
-            Y {np.narray} -- 2D matrix zero padded [batch, max_time]
-                              model predictions.
+    #         Y {np.narray} -- 2D matrix zero padded [batch, max_time]
+    #                           model predictions.
 
-            L {np.narray} -- 1D vector [batch]
-                             stores the true length of the proposition
+    #         L {np.narray} -- 1D vector [batch]
+    #                          stores the true length of the proposition
 
-            filename {str} -- prefix for the files to used for evaluation
-                            CoNLL 2004 scripts requires that the contents
-                            will be saved to disk.
+    #         filename {str} -- prefix for the files to used for evaluation
+    #                         CoNLL 2004 scripts requires that the contents
+    #                         will be saved to disk.
 
-        Returns:
-            f1 {float} -- the score
+    #     Returns:
+    #         f1 {float} -- the score
 
-        Raises:
-            AttributeError -- [description]
-        '''
-        f1 = None
-        try:
+    #     Raises:
+    #         AttributeError -- [description]
+    #     '''
+    #     f1 = None
+    #     try:
 
-            # SRL is going to be the second
-            if self.dual_task:
-                Y = Y[-1]
+    #         # SRL is going to be the second
+    #         if self.dual_task:
+    #             Y = Y[-1]
 
-            f1 = self.evaluator.evaluate_npyarray(
-                filename, I, Y, L, self.target_labels[-1:], {}, script_version='04'
-            )
-        except AttributeError:
-            err = '''evaluator not defined -- either re start a new instance
-                     or load from {:}'''.format(self.target_dir)
-            raise AttributeError(err)
-        finally:
-            return f1
+    #         f1 = self.evaluator.evaluate_npyarray(
+    #             filename, I, Y, L, self.target_labels[-1:], {}, script_version='04'
+    #         )
+    #     except AttributeError:
+    #         err = '''evaluator not defined -- either re start a new instance
+    #                  or load from {:}'''.format(self.target_dir)
+    #         raise AttributeError(err)
+    #     finally:
+    #         return f1
+    # def evaluate_trainset(self):
+    #     return next(self._evaluate_dataset(ds_type='train'))
 
     def evaluate_testset(self):
         return next(self._evaluate_dataset(ds_type='test'))
@@ -369,57 +373,11 @@ class SRLAgent(metaclass=AgentMeta):
     def evaluate_validset(self):
         return next(self._evaluate_dataset(ds_type='valid'))
 
-    def _evaluate_dataset(self, ds_type='valid'):
-        coord = tf.train.Coordinator()
-        threads = tf.train.start_queue_runners(sess=self.session, coord=coord)
-
-        if ds_type == 'valid':
-            streamer = self.validator
-
-        if ds_type == 'test':
-            streamer = self.tester
-
-        lb, ub = get_db_bounds(ds_type, lang=self.lang)
-        prev_epochs = -1
-        best_rate = 0
-        epochs = 0
-        db_dict = {}
-        props = 0
-
-        try:
-            while not coord.should_stop():
-                Xchunk, Tchunk, Lchunk, Ichunk = self.session.run(streamer.stream)
-
-                Ychunk = self.session.run(self.rnn.predict, feed_dict={self.X: Xchunk, self.L:Lchunk})
-
-                db_dict.update(
-                    self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels)
-                )
-                props += Xchunk.shape[0]
-
-                if epochs < int(props / (ub - lb)):
-                    epochs = props / (ub - lb)
-                    f1 = self.evaluate_propositions(db_dict, ds_type)
-                    if best_rate < f1:
-                        best_rate = f1
-
-                    yield f1
-
-        except tf.errors.OutOfRangeError:
-            pass
-
-        finally:
-            # When done, ask threads to stop
-            coord.request_stop()
-            coord.join(threads)
-
-            return best_rate
-
     def fit(self):
         '''Trains the labeler and evaluates using CoNLL 2004 script
 
         Loads the training set and evaluation set
-        
+
         References:
             https://stackoverflow.com/questions/42175609/using-multiple-input-pipelines-in-tensorflow
         '''
@@ -430,7 +388,7 @@ class SRLAgent(metaclass=AgentMeta):
         step = 1
         total_loss = 0.0
         total_error = 0.0
-        chunk_size = 0
+        props = 0
         eps = 100
         train_dict = {}
         lb, ub = get_db_bounds('train', lang=self.lang)
@@ -439,9 +397,10 @@ class SRLAgent(metaclass=AgentMeta):
             start = time.time()
             batch_start = time.time()
             while not (coord.should_stop() or eps < 1e-3):
+
                 X_batch, T_batch, L_batch, I_batch = self.session.run(self.trainer.stream)
 
-                chunk_size += X_batch.shape[0] # might be lesser than
+                props += X_batch.shape[0]
 
                 loss, _, Y_batch, error = self.session.run(
                     [self.rnn.cost, self.rnn.label, self.rnn.predict, self.rnn.error],
@@ -457,9 +416,8 @@ class SRLAgent(metaclass=AgentMeta):
                 total_error += error
 
                 if (step) % 10 == 0:
-                    f1_train = self.evaluate_propositions(train_dict, 'train')
+                    f1_train = self._evaluate_propositions(train_dict, 'train')
 
-                    # Y_valid, f1_valid = self._predict_and_eval(I_valid, X_valid, L_valid, 'valid')
                     batch_end = time.time()
                     print('Iter={:5d}'.format(step),
                           '\tepochs {:5d}'.format(epochs),
@@ -473,10 +431,10 @@ class SRLAgent(metaclass=AgentMeta):
                     total_error = 0.0
                     batch_start = batch_end
 
-                if epochs < int(chunk_size / (ub - lb)):
-                    epochs = int(chunk_size / (ub - lb))
+                if epochs < int(props / (ub - lb)):
+                    epochs = int(props / (ub - lb))
                     end_epoch = time.time()
-                    # f1_train = self.evaluate_propositions(train_dict, 'train')
+
                     f1_valid = next(self._evaluate_dataset())
 
                     if f1_valid and self.best_validation_rate < f1_valid:
@@ -504,59 +462,81 @@ class SRLAgent(metaclass=AgentMeta):
             coord.request_stop()
             coord.join(threads)
 
-    def predict(self, X, L):
-        '''Predicts the Semantic Role Labels
+    # def predict(self, X, L):
+    #     '''Predicts the Semantic Role Labels
 
-        X, L are zero padded to the right -- L vector carries
-        the original propositon time and X is scaled
-        to have the same 2nd dimension as the largest proposition
-        on the batch (1st dimension)(default: 250)
+    #     X, L are zero padded to the right -- L vector carries
+    #     the original propositon time and X is scaled
+    #     to have the same 2nd dimension as the largest proposition
+    #     on the batch (1st dimension)(default: 250)
 
-        Arguments:
-            I {np.narray} -- 2D matrix zero padded [batch, max_time]
-                            representing the obsertions indices
+    #     Arguments:
+    #         I {np.narray} -- 2D matrix zero padded [batch, max_time]
+    #                         representing the obsertions indices
 
-            X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
-                             model inputs
+    #         X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
+    #                          model inputs
 
-        Returns:
-            Y - {np.narray} -- 2D matrix zero padded [batch, max_time]
-                              model predictions.
-        '''
-        Y = self.session.run(
-            self.rnn.predict,
-            feed_dict={self.X: X, self.L: L})
+    #     Returns:
+    #         Y - {np.narray} -- 2D matrix zero padded [batch, max_time]
+    #                           model predictions.
+    #     '''
+    #     Y = self.session.run(
+    #         self.rnn.predict,
+    #         feed_dict={self.X: X, self.L: L})
 
-        return Y
+    #     return Y
 
-    def _predict_and_eval(self, I, X, L, evalfilename):
-        '''Thin wrapper  for a chained call on predict and eval
+    def _evaluate_dataset(self, ds_type='valid'):
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(sess=self.session, coord=coord)
 
-\
-        Arguments:
-            I {np.narray} -- 2D matrix zero padded [batch, max_time]
-                            representing the obsertions indices
+        if ds_type == 'valid':
+            streamer = self.validator
 
-            X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
-                             model inputs
+        if ds_type == 'test':
+            streamer = self.tester
 
-            L {np.narray} -- 1D vector [batch]
-                 stores the true length of the proposition
+        if ds_type == 'train':
+            streamer = self.trainer
 
-        Returns:
+        lb, ub = get_db_bounds(ds_type, lang=self.lang)
+        prev_epochs = -1
+        best_rate = 0
+        epochs = 0
+        db_dict = {}
+        props = 0
 
-            Y {np.narray} -- 2D matrix zero padded [batch, max_time]
-                              model predictions.
+        try:
+            while not coord.should_stop():
+                Xchunk, Tchunk, Lchunk, Ichunk = self.session.run(streamer.stream)
 
-            f1 {float} -- f1 score
-        '''
-        Y = self.predict(X, L)
+                Ychunk = self.session.run(self.rnn.predict, feed_dict={self.X: Xchunk, self.L:Lchunk})
 
-        f1 = self.evaluate(I, Y, L, evalfilename)
+                db_dict.update(
+                    self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels)
+                )
+                props += Xchunk.shape[0]
 
-        return Y, f1
+                if epochs < int(props / (ub - lb)):
+                    epochs = props / (ub - lb)
+                    f1 = self._evaluate_propositions(db_dict, ds_type)
+                    if best_rate < f1:
+                        best_rate = f1
 
-    def evaluate_propositions(self, props_dict, filename):
+                    yield f1
+
+        except tf.errors.OutOfRangeError:
+            pass
+
+        finally:
+            # When done, ask threads to stop
+            coord.request_stop()
+            coord.join(threads)
+
+            return best_rate
+
+    def _evaluate_propositions(self, props_dict, filename):
         '''Thin wrapper  for a chained call on predict and eval
 
         Arguments:

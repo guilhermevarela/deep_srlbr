@@ -171,14 +171,5 @@ if __name__ == '__main__':
         print(f'Best validation F1 -- {agent.best_validation_rate}')
         test_f1 = agent.evaluate_testset()
         print(f'Best test F1 -- {test_f1}')
-        # valid_f1 = agent.evaluate_validset()
-        # print(f'Best F1 -- {valid_f1}')
-
-
-        # print(f'Best Evaluation F1 -- {f1}')
-
-        # estimate(input_labels=input_labels, target_labels=target_labels,
-        #          hidden_layers=args.depth, embeddings_model=embs_model,
-        #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
-        #          version=version, ctx_p=ctx_p, lr=learning_rate,
-        #          chunks=use_chunks, recon_depth=recon_depth)
+        valid_f1 = agent.evaluate_validset()
+        print(f'Best validation F1 -- {valid_f1}')
