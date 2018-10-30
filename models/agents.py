@@ -7,6 +7,7 @@ Created on Oct 4, 2018
 '''
 import json
 import time
+from shutil import copyfile
 import tensorflow as tf
 
 import config
@@ -99,6 +100,8 @@ class SRLAgent(metaclass=AgentMeta):
     TODO:
         Include raw text inputs to evaluate the model
     '''
+    _session = None
+
     def __init__(self, input_labels=FEATURE_LABELS, target_labels=TARGET_LABELS,
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
@@ -173,9 +176,11 @@ class SRLAgent(metaclass=AgentMeta):
                 version=version, lang=lang)
             self.target_dir = target_dir
             self._restore_session = False
+
         else:
             self.target_dir = ckpt_dir
             self._restore_session = True
+
 
         self.input_labels = input_labels
         self.target_labels = target_labels
@@ -194,6 +199,13 @@ class SRLAgent(metaclass=AgentMeta):
 
 
         self.evaluator = ConllEvaluator(propbank_encoder, target_dir=self.target_dir)
+        if self._restore_session:
+            conll_path = '{:}best-valid.conll'.format(self.target_dir)
+            self.evaluator.evaluate_fromconllfile(conll_path)
+            self.best_validation_rate = self.evaluator.f1
+        else:
+            self.best_validation_rate = 0.0
+
 
         cnf_dict = config.get_config(embeddings_model)
         X_shape = get_xshape(input_labels, cnf_dict)
@@ -220,7 +232,8 @@ class SRLAgent(metaclass=AgentMeta):
         chunk_size = min(ub - lb, self.batch_size)
         ds_path = get_binary(ds_type, self.embeddings_model, lang=self.lang, version=self.version)
 
-        self.validator = TfStreamer([ds_path], chunk_size, epochs,
+        # epochs + 1 garantees the queue will not be closed
+        self.validator = TfStreamer([ds_path], chunk_size, epochs + 1,
                                     self.input_labels, self.target_labels,
                                     shuffle=False)
 
@@ -244,6 +257,11 @@ class SRLAgent(metaclass=AgentMeta):
 
         if self.dual_task:
             self.rnn = DualLabeler(self.X, self.T, self.L, recon_depth=recon_depth, **kwargs)
+
+        self.init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
 
     @classmethod
     def load(cls, ckpt_dir):
@@ -283,20 +301,21 @@ class SRLAgent(metaclass=AgentMeta):
         if self._session is None:
             self._session = tf.Session()
 
-        saver = tf.train.Saver()
-        session_path = '{:}model.ckpt'.format(self.target_dir)
+            self._session.run(self.init_op)
 
-        # tries to restore saved model
-        try:
-            saver.restore(self._session, session_path)
-            conll_path = '{:}best-valid.conll'.format(self.target_dir)
-            self.evaluator.evaluate_fromconllfile(conll_path)
-            self.best_validation_rate = self.evaluator.f1
-        except Exception:
-            import code; code.interact(local=dict(globals(), **locals()))
-            self.best_validation_rate = -1
+            if self._session._closed or self._restore_session:
+                saver = tf.train.Saver()
+                session_path = '{:}model.ckpt'.format(self.target_dir)
+                # tries to restore saved model
+                saver.restore(self._session, session_path)
 
         return self._session
+
+    @property
+    def persist(self):
+        saver = tf.train.Saver()
+        session_path = '{:}model.ckpt'.format(self.target_dir)
+        saver.save(self._session, session_path)
 
     def evaluate(self, I, Y, L, filename):
         '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
@@ -346,6 +365,9 @@ class SRLAgent(metaclass=AgentMeta):
 
     def evaluate_testset(self):
         return next(self._evaluate_dataset(ds_type='test'))
+
+    def evaluate_validset(self):
+        return next(self._evaluate_dataset(ds_type='valid'))
 
     def _evaluate_dataset(self, ds_type='valid'):
         coord = tf.train.Coordinator()
@@ -401,27 +423,8 @@ class SRLAgent(metaclass=AgentMeta):
         References:
             https://stackoverflow.com/questions/42175609/using-multiple-input-pipelines-in-tensorflow
         '''
-        init_op = tf.group(
-            tf.global_variables_initializer(),
-            tf.local_variables_initializer()
-        )
-        # Use it afterwards 
-        self.session = tf.Session()
-        # with tf.Session() as self.session:
-        self.session.run(init_op)
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=self.session, coord=coord)
-        # saver = tf.train.Saver()
-        # session_path = '{:}model.ckpt'.format(self.target_dir)
-
-        # # tries to restore saved model
-        # if self._restore_session:
-        #     saver.restore(self.session, session_path)
-        #     conll_path = '{:}best-valid.conll'.format(self.target_dir)
-        #     self.evaluator.evaluate_fromconllfile(conll_path)
-        #     best_validation_rate = self.evaluator.f1
-        # else:
-        #     best_validation_rate = -1
 
         # Training control variables
         step = 1
@@ -446,10 +449,7 @@ class SRLAgent(metaclass=AgentMeta):
                 )
 
                 # Batch dict stores info from batch decodes
-                # # def decode_npyarray(self, Y, I, seq_list, target_labels,
-                #     script_version=None):
                 batch_dict = self.evaluator.decoder_fn(Y_batch, I_batch, L_batch, self.target_labels)
-                # self.batch_size
                 train_dict.update(batch_dict)
 
 
@@ -468,7 +468,7 @@ class SRLAgent(metaclass=AgentMeta):
                           '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 10),
                           '\tf1-train {:.6f}'.format(f1_train))
 
-                    eps = float(total_error) / 25
+                    eps = float(total_error) / 10
                     total_loss = 0.0
                     total_error = 0.0
                     batch_start = batch_end
@@ -476,12 +476,16 @@ class SRLAgent(metaclass=AgentMeta):
                 if epochs < int(chunk_size / (ub - lb)):
                     epochs = int(chunk_size / (ub - lb))
                     end_epoch = time.time()
+                    # f1_train = self.evaluate_propositions(train_dict, 'train')
                     f1_valid = next(self._evaluate_dataset())
 
-                    if f1_valid and best_validation_rate < f1_valid:
-                        best_validation_rate = f1_valid
-                        # Copy dataset values
-                        saver.save(self.session, session_path)
+                    if f1_valid and self.best_validation_rate < f1_valid:
+                        self.best_validation_rate = f1_valid
+                        src = '{:}valid.conll'.format(self.target_dir)
+                        dst = '{:}best-valid.conll'.format(self.target_dir)
+                        copyfile(src, dst)
+
+                        self.persist
 
                     print('Iter={:5d}'.format(step),
                           '\tepochs {:5d}'.format(epochs),
@@ -489,6 +493,7 @@ class SRLAgent(metaclass=AgentMeta):
                           '\tf1-train {:.6f}'.format(f1_train),
                           '\tf1-valid {:.6f}'.format(f1_valid))
 
+                    train_dict = {}
                 step += 1
 
         except tf.errors.OutOfRangeError:

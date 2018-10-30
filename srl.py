@@ -168,8 +168,14 @@ if __name__ == '__main__':
 
             agent.fit()
 
-        f1 = agent.evaluate_testset()
-        print(f'Best F1 -- {f1}')
+        print(f'Best validation F1 -- {agent.best_validation_rate}')
+        test_f1 = agent.evaluate_testset()
+        print(f'Best test F1 -- {test_f1}')
+        # valid_f1 = agent.evaluate_validset()
+        # print(f'Best F1 -- {valid_f1}')
+
+
+        # print(f'Best Evaluation F1 -- {f1}')
 
         # estimate(input_labels=input_labels, target_labels=target_labels,
         #          hidden_layers=args.depth, embeddings_model=embs_model,
