@@ -67,8 +67,8 @@ class PropbankEncoder(object):
         IDX     .:  (indexed) text and categorical values are indexed
                     -- use case: dense representation and debugging
 
-        MIX     .:  (mix) text will return  word index
-                    categorical will be one-hot encoded
+        TKN     .:  (mix) text will return  tokenized version
+                    categorical will be index
                     -- use case: trainable embeddings
 
 
@@ -109,7 +109,7 @@ class PropbankEncoder(object):
         self.embeddings_sz = 0
 
         self.db = defaultdict(OrderedDict)
-        self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'MIX')
+        self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'TKN')
         self.lang = lang
         self._column_mapper = {}
         self._column_config = {}
@@ -208,7 +208,7 @@ class PropbankEncoder(object):
             else:
                 return 1
 
-        if encoding in ('MIX'):
+        if encoding in ('TKN'):
 
             if colconfig['type'] in ('choice'):
                 return colconfig['dims']
@@ -614,7 +614,7 @@ class PropbankEncoder(object):
 
                 return x
 
-        elif encoding in ('MIX'):
+        elif encoding in ('TKN'):
 
             if col_type in ('text'):
 
@@ -623,12 +623,6 @@ class PropbankEncoder(object):
                 i = self.tok2idx[t]
 
                 return i
-
-            elif col_type in ('choice'):
-
-                sz = self.column_sizes(col, encoding)
-
-                return [1 if i == x else 0 for i in range(sz)]
 
             else:
 

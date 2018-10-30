@@ -14,7 +14,8 @@ import config
 from models.conll_evaluator import ConllEvaluator
 from models.propbank_encoder import PropbankEncoder
 from models.labelers import Labeler, DualLabeler
-from models.streamers import TfStreamer
+# from models.streamers import TfStreamer
+from models.streamers import TfStreamerWE
 
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, \
     snapshot_recover
@@ -194,7 +195,7 @@ class SRLAgent(metaclass=AgentMeta):
             'deep', embeddings_model, lang=lang, version=version)
 
         propbank_encoder = PropbankEncoder.recover(propbank_path)
-
+        embeddings = propbank_encoder.embeddings
         ds_path = get_binary(
             'train', embeddings_model, lang=lang, version=version)
 
@@ -209,7 +210,7 @@ class SRLAgent(metaclass=AgentMeta):
 
 
         cnf_dict = config.get_config(embeddings_model)
-        X_shape = get_xshape(input_labels, cnf_dict)
+        X_shape = get_xshape(input_labels, len(embeddings[0]), cnf_dict)
         T_shape = get_tshape(target_labels, cnf_dict)
         print('trainable embeddings?', embeddings_trainable)
         print('X_shape', X_shape)
@@ -224,7 +225,9 @@ class SRLAgent(metaclass=AgentMeta):
 
         # The streamer instanciation builds a feeder_op that will
         # supply the computation graph with batches of examples
-        self.trainer = TfStreamer([ds_path], batch_size, epochs,
+        # self.trainer = TfStreamer([ds_path], batch_size, epochs,
+        #                           input_labels, target_labels, shuffle=True)
+        self.trainer = TfStreamerWE(embeddings, embeddings_trainable, [ds_path], batch_size, epochs,
                                   input_labels, target_labels, shuffle=True)
 
         # Initialize STREAMERS
@@ -234,17 +237,22 @@ class SRLAgent(metaclass=AgentMeta):
         ds_path = get_binary(ds_type, self.embeddings_model, lang=self.lang, version=self.version)
 
         # epochs + 1 garantees the queue will not be closed
-        self.validator = TfStreamer([ds_path], chunk_size, epochs + 1,
+        # self.validator = TfStreamer([ds_path], chunk_size, epochs + 1,
+        #                             self.input_labels, self.target_labels,
+        #                             shuffle=False)
+        self.validator = TfStreamerWE(embeddings, embeddings_trainable, [ds_path], chunk_size, epochs + 1,
                                     self.input_labels, self.target_labels,
                                     shuffle=False)
-
 
         ds_type = 'test'
         lb, ub = get_db_bounds(ds_type, lang=self.lang)
         chunk_size = min(ub - lb, self.batch_size)
         ds_path = get_binary(ds_type, self.embeddings_model, lang=self.lang, version=self.version)
 
-        self.tester = TfStreamer([ds_path], chunk_size, 1,
+        # self.tester = TfStreamer([ds_path], chunk_size, 1,
+        #                             self.input_labels, self.target_labels,
+        #                             shuffle=False)
+        self.tester = TfStreamerWE(embeddings, embeddings_trainable, [ds_path], chunk_size, 1,
                                     self.input_labels, self.target_labels,
                                     shuffle=False)
 
@@ -416,6 +424,7 @@ class SRLAgent(metaclass=AgentMeta):
                 total_error += error
 
                 if (step) % 10 == 0:
+
                     f1_train = self._evaluate_propositions(train_dict, 'train')
 
                     batch_end = time.time()
@@ -588,12 +597,25 @@ class SRLAgent(metaclass=AgentMeta):
 
 
 
-def get_xshape(input_labels, cnf_dict):
+def get_xshape(input_labels, embeddings_size, cnf_dict):
     # axis 0 --> examples
     # axis 1 --> max time
     # axis 2 --> feature size
     xshape = [None, None]
-    feature_sz = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
+    if config.DATA_ENCODING in ('EMB',):
+        feature_sz = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
+    else:
+        def feature_fn(x):
+            if cnf_dict[x]['type'] in ('text',):
+                return embeddings_size
+            else:
+                if cnf_dict[x]['dims'] is None:
+                    return 1
+                else:
+                    return cnf_dict[x]['dims']
+
+        feature_sz = sum([feature_fn(lbl) for lbl in input_labels])
+
     xshape.append(feature_sz)
     return xshape
 

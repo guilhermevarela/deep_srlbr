@@ -15,7 +15,7 @@ SCHEMA_DIR = 'datasets/schemas/'
 BASELINE_DIR = 'datasets/baseline/'
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 
-DATA_ENCODING = 'EMB'
+DATA_ENCODING = 'TKN'
 
 
 def get_config(embs_model, lang='pt'):

@@ -163,17 +163,19 @@ def make_tfrecords(encoder_name='deep_glo50',
         propbank_encoder = PropbankEncoder.recover(bin_path)
 
     cnf_dict = propbank_encoder.to_config(config.DATA_ENCODING)
-    config.set_config(cnf_dict, embs_model)
+    config.set_config(cnf_dict, embs_model, lang=lang)
 
     flt = None
-    enc = config.DATA_ENCODING
+    encoding = config.DATA_ENCODING
+
     if lang == 'pt':
         ds_tuple = ('test', 'valid', 'train')
     else:
         ds_tuple = ('valid', 'train')
+
     for ds_type in ds_tuple:
-        iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=enc)
-        tfrecords_builder(iter_, ds_type, embs_model, lang=lang, version=version)
+        iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=encoding)
+        tfrecords_builder(iter_, ds_type, embs_model, lang=lang, version=version, encoding=encoding)
 
 
 def get_model_alias(mname):
@@ -209,13 +211,13 @@ if __name__ == '__main__':
 
     # This argument now is an environment variable in config module
     # parser.add_argument('--encoding', type=str, dest='encoding',
-    #                     choices=('HOT', 'EMB', 'MIX', 'IDX'), default='EMB',
+    #                     choices=('HOT', 'EMB', 'TKN', 'IDX'), default='EMB',
     #                     help='''Choice of feature representation based on column type --
-    #                     `int`, `bool`, `text`, `choice`. `MIX` will keep `text`
+    #                     `int`, `bool`, `text`, `choice`. `TKN` will keep `text`
     #                     features as index to be embedded for the input pipeline
     #                     and will one-hot `choice` values. `EMB` will embed `text`
     #                     features and will one-hot encode `choice` features.''')
-    
+
     parser.add_argument('--lang', type=str, dest='lang',
             			choices=('en', 'pt'), default='pt',
 			            help='PropBank language')

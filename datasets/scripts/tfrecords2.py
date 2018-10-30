@@ -433,9 +433,13 @@ def _read_and_decode(filename_queue, embeddings_model, sequence_labels):
     cnf_dict = conf.get_config(embeddings_model)
 
     def make_feature(key):
-        key_sz = cnf_dict[key]['size']
         key_type = cnf_dict[key]['type']
-        dtype = tf.float32 if key_type in ('text',) else tf.int64
+        dtype = tf.float32 if key_type in ('text',) and conf.DATA_ENCODING == 'EMB' else tf.int64
+        
+        if conf.DATA_ENCODING in ('TKN',):
+            key_sz = 1
+        else:
+            key_sz = cnf_dict[key]['size']
         return tf.FixedLenSequenceFeature(key_sz, dtype)
 
     seq_labels = list(sequence_labels)
@@ -562,29 +566,36 @@ def _protobuf_with_embeddings_process(
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
-    k = len(sequence_labels)
 
     labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
+
     for key in labels_list:
         ind = sequence_features[key]
 
         if config_dict[key]['type'] == 'text':
             ind = tf.nn.embedding_lookup(EMBS, ind)
             ind = tf.squeeze(ind, axis=1)
+
+        elif config_dict[key]['type'] == 'choice':
+            ind = tf.one_hot(ind, config_dict[key]['dims'], dtype=tf.float32)
+            ind = tf.squeeze(ind, axis=1)
         else:
             ind = tf.cast(sequence_features[key], tf.float32)
 
         if key in input_labels:
             sequence_inputs.append(ind)
+
         elif key in output_labels:
             sequence_outputs.append(ind)
+
         elif key in ['INDEX']:
             sequence_descriptors.append(ind)
 
     X = tf.concat(sequence_inputs, 1)
     T = tf.concat(sequence_outputs, 1)
     D = tf.concat(sequence_descriptors, 1)
+
     return X, T, L, D
 
 
@@ -605,6 +616,7 @@ def make_feature_list(column_dict, embs_model):
     supported_types = ('choice', 'int', 'text')
     cnf_dict = conf.get_config(embs_model)
     encoding = conf.DATA_ENCODING
+
     def kwargs_int64(value):
         d = {}
         if isinstance(value, collections.Iterable):
@@ -644,7 +656,8 @@ def make_feature_list(column_dict, embs_model):
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt', version='1.0'):
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
+                      lang='pt', version='1.0', encoding='EMB'):
     ''' Iterates within propbank and saves records
 
         ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto

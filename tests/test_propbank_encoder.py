@@ -702,7 +702,7 @@ class PropbankTestColumnMIX(PropbankEncoderBaseCase):
 
     def setUp(self):
         super( PropbankTestColumnMIX, self).setUp()
-        self.assert_msg = 'Checking label `{:}` for column function `MIX` encoding'
+        self.assert_msg = 'Checking label `{:}` for column function `TKN` encoding'
 
     def test_column_id(self):
         column_label = 'ID'
@@ -759,7 +759,7 @@ class PropbankTestColumnMIX(PropbankEncoderBaseCase):
     def _assert_column_eq(self, column_label):
         msg = self.assert_msg.format(column_label)
 
-        test_dict = self.propbank_encoder.column('train', column_label, 'MIX')
+        test_dict = self.propbank_encoder.column('train', column_label, 'TKN')
         mock_dict = self._get_mocked_dict(column_label)
 
         self.assertEqual(test_dict, mock_dict, msg)
@@ -1023,7 +1023,7 @@ class PropbankTestColumnDimensionsHOT(PropbankEncoderBaseCase):
 class PropbankTestColumnDimensionsMIX(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestColumnDimensionsMIX, self).setUp()
-        self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `MIX`) .: should be {:} got {:}'
+        self.assert_msg = 'propbank_encoder#column_dims(`{:}`, `TKN`) .: should be {:} got {:}'
 
     # Numerical data
     def test_column_dimensions_id(self):
@@ -1080,7 +1080,7 @@ class PropbankTestColumnDimensionsMIX(PropbankEncoderBaseCase):
 
     def _assert_column_eq(self, column_label):
         mock_dict = self.gs_dict[column_label]
-        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'MIX')
+        dims_test_ = self.propbank_encoder.column_sizes(column_label, 'TKN')
         meta_dict = self.schema_dict[column_label]
         column_type = meta_dict['type']
         column_category = meta_dict['category']
@@ -1173,7 +1173,7 @@ class PropbankTestIteratorEMB(PropbankEncoderBaseCase):
 class PropbankTestIteratorMIX(PropbankEncoderBaseCase):
     def setUp(self):
         super(PropbankTestIteratorMIX, self).setUp()
-        _params = ('train', ['ID', 'FORM', 'ARG'], 'MIX')
+        _params = ('train', ['ID', 'FORM', 'ARG'], 'TKN')
         self.iterator = self.propbank_encoder.iterator(*_params)
         self.base_message = 'got {:} should be {:}'
 
