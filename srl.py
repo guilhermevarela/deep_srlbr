@@ -168,8 +168,11 @@ if __name__ == '__main__':
 
             agent.fit()
 
-        print(f'Best validation F1 -- {agent.best_validation_rate}')
+
+        # print(f'Best validation F1 -- {agent.best_validation_rate}')
         # test_f1 = agent.evaluate_testset()
         # print(f'Best test F1 -- {test_f1}')
         # valid_f1 = agent.evaluate_validset()
         # print(f'Best validation F1 -- {valid_f1}')
+        # train_f1 = agent.evaluate_trainset()
+        # print(f'Best test F1 -- {train_f1}')

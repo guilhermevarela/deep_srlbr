@@ -531,7 +531,8 @@ def input_with_embeddings_fn(
         [X, T, L, D],
         batch_size=batch_size,
         capacity=capacity,
-        dynamic_pad=True
+        dynamic_pad=True,
+        allow_smaller_final_batch=True
     )
     return X_batch, T_batch, L_batch, D_batch
 

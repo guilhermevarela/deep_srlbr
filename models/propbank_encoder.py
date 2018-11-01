@@ -185,7 +185,7 @@ class PropbankEncoder(object):
             err = err.format(self.encodings, encoding)
             raise ValueError(err)
 
-        if encoding in ('IDX', 'CAT'):
+        if encoding in ('IDX', 'CAT', 'TKN'):
             return 1
 
         colconfig = self._column_config.get(column, None)
@@ -204,13 +204,6 @@ class PropbankEncoder(object):
             if colconfig['type'] in ('text'):
                 return self.embeddings_sz
             elif colconfig['type'] in ('choice'):
-                return colconfig['dims']
-            else:
-                return 1
-
-        if encoding in ('TKN'):
-
-            if colconfig['type'] in ('choice'):
                 return colconfig['dims']
             else:
                 return 1
