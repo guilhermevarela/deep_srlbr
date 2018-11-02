@@ -401,19 +401,19 @@ class SRLAgent(metaclass=AgentMeta):
                 total_loss += loss
                 total_error += error
 
-                if (step) % 10 == 0:
+                if (step) % 25 == 0:
 
                     f1_train = self._evaluate_propositions(train_dict, 'train')
 
                     batch_end = time.time()
                     print('Iter={:5d}'.format(step),
                           '\tepochs {:5d}'.format(epochs),
-                          '\tavg. cost {:.6f}'.format(total_loss / 10),
-                          '\tavg. error {:.6f}'.format(total_error / 10),
-                          '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 10),
+                          '\tavg. cost {:.6f}'.format(total_loss / 25 ),
+                          '\tavg. error {:.6f}'.format(total_error / 25 ),
+                          '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 25 ),
                           '\tf1-train {:.6f}'.format(f1_train))
 
-                    eps = float(total_error) / 10
+                    eps = float(total_error) / 25 
                     total_loss = 0.0
                     total_error = 0.0
                     batch_start = batch_end
