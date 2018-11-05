@@ -197,7 +197,7 @@ def get_filename(file_path):
     Arguments:
         file_path {str} -- sys path
     '''
-    return f.split('/')[-1].replace('.txt', '')
+    return file_path.split('/')[-1].replace('.txt', '')
 
 
 if __name__ == '__main__':

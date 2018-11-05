@@ -206,7 +206,7 @@ class SRLAgent(metaclass=AgentMeta):
         else:
             self.best_validation_rate = 0.0
 
-        cnf_dict = config.get_config(embeddings_model)
+        cnf_dict = config.get_config(embeddings_model, lang=lang)
         X_shape = get_xshape(input_labels, len(self.embeddings[0]), cnf_dict)
         T_shape = get_tshape(target_labels, cnf_dict)
         print('trainable embeddings?', embeddings_trainable)
@@ -268,15 +268,16 @@ class SRLAgent(metaclass=AgentMeta):
                 input_labels, target_labels, shuffle=False
             )
 
-            ds_path = get_binary(
-                'test', embeddings_model, lang=lang, version=version)
-            lb, ub = get_db_bounds('test', lang=lang)
-            chunk_size = min(ub - lb, batch_size)
+            if lang =='pt':
+                ds_path = get_binary(
+                    'test', embeddings_model, lang=lang, version=version)
+                lb, ub = get_db_bounds('test', lang=lang)
+                chunk_size = min(ub - lb, batch_size)
 
-            self.tester1 = TfStreamerWE(
-                self.WE, [ds_path], chunk_size, 1,
-                input_labels, target_labels, shuffle=False
-            )
+                self.tester1 = TfStreamerWE(
+                    self.WE, [ds_path], chunk_size, 1,
+                    input_labels, target_labels, shuffle=False
+                )
 
 
 
@@ -386,6 +387,8 @@ class SRLAgent(metaclass=AgentMeta):
 
                 X_batch, T_batch, L_batch, I_batch = sess.run(self.trainer.stream)
 
+                # import code; code.interact(local=dict(globals(), **locals()))
+
                 props += X_batch.shape[0]
 
                 loss, _, Y_batch, error = sess.run(
@@ -396,7 +399,6 @@ class SRLAgent(metaclass=AgentMeta):
                 # Batch dict stores info from batch decodes
                 batch_dict = self.evaluator.decoder_fn(Y_batch, I_batch, L_batch, self.target_labels)
                 train_dict.update(batch_dict)
-
 
                 total_loss += loss
                 total_error += error
@@ -594,12 +596,12 @@ def get_tshape(output_labels, cnf_dict):
     k = len(output_labels)
     if k == 1:
         # axis 2 --> target size
-        m = cnf_dict[output_labels[0]]['size']
+        m = cnf_dict[output_labels[0]]['dims']
         tshape = base_shape + [m]
     elif k == 2:
         # axis 2 --> max target size
         # axis 3 --> number of targets
-        m = max([cnf_dict[lbl]['size'] for lbl in output_labels])
+        m = max([cnf_dict[lbl]['dims'] for lbl in output_labels])
         tshape = base_shape + [m, k]
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(k)

@@ -354,7 +354,7 @@ def input_fn(filenames, batch_size, num_epochs,
 
 def _protobuf_process(
         context_features, sequence_features, input_labels, output_labels,
-        embeddings_model):
+        embeddings_model, lang):
     '''Maps context_features and sequence_features making embedding replacement as necessary
 
         args:
@@ -377,7 +377,7 @@ def _protobuf_process(
     sequence_outputs = []
     sequence_descriptors = []
 
-    cnf_dict = conf.get_config(embeddings_model)
+    cnf_dict = conf.get_config(embeddings_model, lang=lang)
     # Fetch only context variable the length of the proposition
     L = context_features['L']
     # Each output has a maximum pad size
@@ -413,7 +413,7 @@ def _protobuf_process(
 
 
 
-def _read_and_decode(filename_queue, embeddings_model, sequence_labels):
+def _read_and_decode(filename_queue, embeddings_model, sequence_labels, lang):
     '''
         Decodes a serialized .tfrecords containing sequences
         args
@@ -430,12 +430,13 @@ def _read_and_decode(filename_queue, embeddings_model, sequence_labels):
     reader = tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
 
-    cnf_dict = conf.get_config(embeddings_model)
+
+    cnf_dict = conf.get_config(embeddings_model, lang=lang)
 
     def make_feature(key):
         key_type = cnf_dict[key]['type']
         dtype = tf.float32 if key_type in ('text',) and conf.DATA_ENCODING == 'EMB' else tf.int64
-        
+
         if conf.DATA_ENCODING in ('TKN',):
             key_sz = 1
         else:
@@ -495,23 +496,26 @@ def input_with_embeddings_fn(
         D_batch  {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
             index of tokens
     '''
-    def get_embs():
+    def get_info():
         sep = re.compile('_|\.')
         search_list = sep.split(filenames[0])
         # 3 latters followed by 2-4 numbers
         matcher = re.compile('^([a-z]{3}[0-9]{2,4})$')
         key_list = [s for s in search_list if matcher.match(s)]
 
-        return key_list[0]
+        lang = 'pt' if 'pt' in filenames[0].split('/') else 'en'
+        return key_list[0], lang
 
-    embs_model = get_embs()
+    embs_model, lang = get_info()
+
+
     filename_queue = tf.train.string_input_producer(
         filenames, num_epochs=num_epochs, shuffle=shuffle
     )
     sequence_labels = list(input_labels + output_labels)
 
     context_features, sequence_features = _read_and_decode(
-        filename_queue, embs_model, sequence_labels
+        filename_queue, embs_model, sequence_labels, lang
     )
 
     X, T, L, D = _protobuf_with_embeddings_process(
@@ -520,7 +524,8 @@ def input_with_embeddings_fn(
         sequence_features,
         input_labels,
         output_labels,
-        embs_model
+        embs_model,
+        lang
     )
 
     min_after_dequeue = 10000
@@ -539,7 +544,7 @@ def input_with_embeddings_fn(
 
 
 def _protobuf_with_embeddings_process(
-        EMBS, context_features, sequence_features, input_labels, output_labels, embs_model):
+        EMBS, context_features, sequence_features, input_labels, output_labels, embs_model, lang):
     '''Maps context_features and sequence_features making embedding replacement as necessary
         
         https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
@@ -563,7 +568,7 @@ def _protobuf_with_embeddings_process(
     sequence_inputs = []
     sequence_descriptors = []
     sequence_outputs = []
-    config_dict = conf.get_config(embs_model)
+    config_dict = conf.get_config(embs_model, lang=lang)
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
@@ -604,7 +609,7 @@ def _protobuf_with_embeddings_process(
     return X, T, L, D
 
 
-def make_feature_list(column_dict, embs_model):
+def make_feature_list(column_dict, embs_model, lang):
     '''Returns a SequenceExample for the given inputs and labels.
 
     args:
@@ -619,7 +624,7 @@ def make_feature_list(column_dict, embs_model):
     '''
     feature_dict = {}
     supported_types = ('choice', 'int', 'text')
-    cnf_dict = conf.get_config(embs_model)
+    cnf_dict = conf.get_config(embs_model, lang=lang)
     encoding = conf.DATA_ENCODING
 
     def kwargs_int64(value):
@@ -693,7 +698,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
 
     def kwargs_sequence(feature_dict):
         d = {}
-        f = make_feature_list(feature_dict, embs_model)
+        f = make_feature_list(feature_dict, embs_model, lang=lang)
         d['feature_list'] = f
         return d
 
