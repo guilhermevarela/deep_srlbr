@@ -5,8 +5,9 @@
 
     Provides information about tje dabases
 '''
-
+import glob
 import config
+
 from config import INPUT_DIR
 
 
@@ -67,20 +68,32 @@ def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
     if ds_type not in ('train', 'test', 'valid', 'deep'):
         raise ValueError('Invalid dataset label {:}'.format(ds_type))
 
-    prefix = '' if ds_type in ('deep') else 'db'
-    ext = 'pickle' if ds_type in ('deep') else 'tfrecords'
-    dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings_model, ext)
+    if ds_type in ('deep',):
+        prefix = ''
+        ext = 'pickle'
+    else:
+        prefix = 'db'
+        ext = 'tfrecords'
+
+    # dbname = '{:}{:}_{:}.{:}'.format(prefix, ds_type, embeddings_model, ext)
 
     if lang == 'pt':
-        prefix = '{:}{:}/{:}/'.format(INPUT_DIR, lang, version)
+        file_dir = '{:}{:}/{:}/'.format(INPUT_DIR, lang, version)
         if version in ('1.0',):
-            file_dir = '{:}{:}/'.format(prefix, embeddings_model)
+            file_dir = '{:}{:}/'.format(file_dir, embeddings_model)
         else:
-            file_dir = '{:}/'.format(prefix)
+            file_dir = '{:}/'.format(file_dir)
     else:
         args = (INPUT_DIR, lang, embeddings_model)
         file_dir = '{:}{:}/{:}/'.format(*args)
 
-    file_path = f'{file_dir}{dbname}'
+    glob_pattern = f'{file_dir}{prefix}{ds_type}_{embeddings_model}'
+    if ds_type in ('deep',):
+        glob_pattern += f'.{ext}'
 
-    return file_dir, file_path
+        rv2 = glob_pattern
+    else:
+        glob_pattern += f'_[0-9][0-9].{ext}'
+        rv2 = [nm for nm in glob.glob(glob_pattern)]
+
+    return file_dir, rv2

@@ -185,6 +185,7 @@ class SRLAgent(metaclass=AgentMeta):
         _, propbank_path = get_binary(
             'deep', embeddings_model, lang=lang, version=version)
 
+        # This list should have one argument only
         propbank_encoder = PropbankEncoder.recover(propbank_path)
 
         self.input_labels = input_labels
@@ -227,55 +228,55 @@ class SRLAgent(metaclass=AgentMeta):
 
         # Initialze training stramers
         with tf.name_scope('pipeline_fit'):
-            _, ds_path = get_binary(
+            _, ds_list = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
             chunk_size = min(ub - lb, batch_size)
 
             self.trainer = TfStreamerWE(
-                self.WE, [ds_path], chunk_size, epochs,
+                self.WE, ds_list, chunk_size, epochs,
                 input_labels, target_labels, shuffle=True
             )
 
-            _, ds_path = get_binary(
+            _, ds_list = get_binary(
                 'valid', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('valid', lang=lang)
             chunk_size = min(ub - lb, batch_size)
 
             self.validator = TfStreamerWE(
-                self.WE, [ds_path], chunk_size, epochs,
-                input_labels, target_labels, shuffle=True
+                self.WE, ds_list, chunk_size, 2 * epochs,
+                input_labels, target_labels, shuffle=False
             )
 
         with tf.name_scope('pipeline_evaluate'):
-            _, ds_path = get_binary(
+            _, ds_list = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
             chunk_size = min(ub - lb, batch_size)
 
             self.trainer1 = TfStreamerWE(
-                self.WE, [ds_path], chunk_size, 1,
+                self.WE, ds_list, chunk_size, 1,
                 input_labels, target_labels, shuffle=False
             )
 
-            _, ds_path = get_binary(
+            _,  ds_list, = get_binary(
                 'valid', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('valid', lang=lang)
             chunk_size = min(ub - lb, batch_size)
 
             self.validator1 = TfStreamerWE(
-                self.WE, [ds_path], chunk_size, 1,
+                self.WE,  ds_list, chunk_size, 1,
                 input_labels, target_labels, shuffle=False
             )
 
             if lang =='pt':
-                _, ds_path = get_binary(
+                _,  ds_list, = get_binary(
                     'test', embeddings_model, lang=lang, version=version)
                 lb, ub = get_db_bounds('test', lang=lang)
                 chunk_size = min(ub - lb, batch_size)
 
                 self.tester1 = TfStreamerWE(
-                    self.WE, [ds_path], chunk_size, 1,
+                    self.WE,  ds_list, chunk_size, 1,
                     input_labels, target_labels, shuffle=False
                 )
 
@@ -387,8 +388,6 @@ class SRLAgent(metaclass=AgentMeta):
 
                 X_batch, T_batch, L_batch, I_batch = sess.run(self.trainer.stream)
 
-                # import code; code.interact(local=dict(globals(), **locals()))
-
                 props += X_batch.shape[0]
 
                 loss, _, Y_batch, error = sess.run(
@@ -495,7 +494,7 @@ class SRLAgent(metaclass=AgentMeta):
                     self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels)
                 )
                 props += Xchunk.shape[0]
-
+                #TODO: correct props to fit exactly on ub - lb
                 if epochs < int(props / (ub - lb)):
                     epochs = props / (ub - lb)
                     f1 = self._evaluate_propositions(db_dict, ds_type)

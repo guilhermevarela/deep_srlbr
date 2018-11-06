@@ -20,7 +20,7 @@
 '''
 
 import argparse
-
+import config
 from models import estimate, estimate_kfold, estimate_recover
 from models import PropbankEncoder
 
@@ -111,12 +111,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     ckpt_dir = args.ckpt_dir
-    # if len(ckpt_dir) > 0:
-    #     if ckpt_dir[-1] != '/':
-    #         ckpt_dir += '/'
-    #     estimate_recover(ckpt_dir)
-    # else:
-    input_labels = FEATURE_LABELS
+
+    input_labels = config.FEATURE_LABELS
+    target_labels = args.targets
+    embs_model = args.embs_model
+    learning_rate = args.lr
+    version = args.version
+    epochs = args.epochs
+    batch_size = args.batch_size
+    rec_unit = args.rec_unit
+    recon_depth = int(args.recon_depth)
 
     ctx_p = args.ctx_p
     if ctx_p > 1:
@@ -130,17 +134,9 @@ if __name__ == '__main__':
     if use_chunks:
         input_labels.append('SHALLOW_CHUNKS')
 
-    # TODO: process target
-    target_labels = args.targets
-
-    embs_model = args.embs_model
-    learning_rate = args.lr
-    version = args.version
-    epochs = args.epochs
-    batch_size = args.batch_size
-    rec_unit = args.rec_unit
-    recon_depth = int(args.recon_depth)
     lang = args.lang
+    if lang in ('pt',):
+        input_labels.append('GPOS')
     print(lang)
     if args.kfold:
         if len(ckpt_dir) > 0:

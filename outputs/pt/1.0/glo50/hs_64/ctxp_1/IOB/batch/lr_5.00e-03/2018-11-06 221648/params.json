@@ -1,0 +1,1 @@
+{"chunks": false, "embeddings_model": "glo50", "embeddings_trainable": false, "epochs": 20, "hidden_layers": [64], "input_labels": ["ID", "FORM", "MARKER", "FORM_CTX_P-1", "FORM_CTX_P+0", "FORM_CTX_P+1", "GPOS"], "kfold": 25, "lang": "pt", "lr": 0.005, "rec_unit": "BasicLSTM", "recon_depth": -1, "target_labels": ["IOB"], "version": "1.0"}

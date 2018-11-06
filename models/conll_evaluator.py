@@ -337,7 +337,8 @@ class ConllEvaluator(object):
 
         #Parses final txt
         self._parse(self.txt)
-
+        # if self.f1 < 0.001:
+        #     import code; code.interact(local=dict(globals(), **locals()))
         #Stores target_dir/<hparams>/prefix
         if self.target_dir is None:
             target_dir = self._get_dir(hparams)
@@ -442,14 +443,20 @@ class ConllEvaluator(object):
         )
 
         p_1 = min(script_dict['P'].values())
+        first = True
         with open(target_path, mode='w+') as f:
             for idx, p in script_dict['P'].items():
-                if p != p_1:
-                    f.write('\n')
+                if not first:
+                    if p != p_1:
+                        f.write('\n')
+                else:
+                    first = False
+
                 pred = script_dict['PRED'][idx]
                 arg = script_dict['ARG'][idx]
                 f.write('{:}\t{:}\n'.format(pred, arg))
                 p_1 = p
+
 
         f.close()
         return target_path

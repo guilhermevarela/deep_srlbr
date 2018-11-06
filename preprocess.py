@@ -87,16 +87,13 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
     column_files = [
         'column_argrecon/argrecon.csv',
-        'column_chunks/chunks.csv',
         'column_ctree_chunks/ctree_chunk.csv',
         'column_predmarker/predicate_marker.csv',
         'column_shifts_ctx_p/form.csv',
-        'column_shifts_ctx_p/gpos.csv',
         'column_t/t.csv',
         'column_iob/iob.csv'
     ]
-    if lang == 'pt':
-        column_files.append('column_shifts_ctx_p/lemma.csv')
+
     gs_dict = dfgs.to_dict()
     for column_filename in column_files:
         column_path = '{:}{:}'.format(prefix_target_dir, column_filename)
@@ -121,6 +118,9 @@ def make_propbank_encoder(encoder_name='deep_glo50',
         column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
+    flt = config.FEATURE_LABELS + config.OPTIONAL_LABELS + config.TARGET_LABELS + config.META_LABELS
+    flt = list(set(flt) - set(['INDEX']))
+    dfgs = dfgs[flt]
     propbank_encoder = PropbankEncoder(
         dfgs.to_dict(),
         schema_dict,
@@ -132,7 +132,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
     model_alias = '{:}{:}'.format(get_model_alias(embs_model), embs_size)
 
-    bin_dir, bin_path = get_binary('deep', model_alias, version=version)    
+    bin_dir, bin_path = get_binary('deep', model_alias, lang=lang, version=version)
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
 
@@ -140,10 +140,8 @@ def make_propbank_encoder(encoder_name='deep_glo50',
     return propbank_encoder
 
 
-def make_tfrecords(encoder_name='deep_glo50',
-                   propbank_encoder=None,
-                   version='1.0',
-                   lang='pt'):
+def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None,
+                   version='1.0', lang='pt', chunk_size=6000):
 
     # PREPARE WRITE DIRECTORIES
     embs_model = encoder_name.split('_')[-1]
@@ -164,7 +162,7 @@ def make_tfrecords(encoder_name='deep_glo50',
     cnf_dict = propbank_encoder.to_config(config.DATA_ENCODING)
     config.set_config(cnf_dict, embs_model, lang=lang)
 
-    flt = None
+    flt = config.FEATURE_LABELS + config.OPTIONAL_LABELS + config.TARGET_LABELS + config.META_LABELS
     encoding = config.DATA_ENCODING
 
     if lang == 'pt':
@@ -174,7 +172,8 @@ def make_tfrecords(encoder_name='deep_glo50',
 
     for ds_type in ds_tuple:
         iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=encoding)
-        tfrecords_builder(iter_, ds_type, embs_model, lang=lang, version=version, encoding=encoding)
+        tfrecords_builder(iter_, ds_type, embs_model,
+                          lang=lang, version=version, encoding=encoding, chunk_size=chunk_size)
 
 
 def get_model_alias(mname):
@@ -265,10 +264,12 @@ if __name__ == '__main__':
         lang=lang,
         version=version
     )
+    # propbank_encoder = None
 
     make_tfrecords(
         encoder_name=encoder_name,
         propbank_encoder=propbank_encoder,
         version=version,
-        lang=lang
+        lang=lang,
+        chunk_size=6000
     )

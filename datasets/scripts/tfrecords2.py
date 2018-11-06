@@ -668,21 +668,38 @@ def make_feature_list(column_dict, embs_model, lang):
 
 
 def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
-                      lang='pt', version='1.0', encoding='EMB', chunk=6000):
-    ''' Iterates within propbank and saves records
+                      lang='pt', version='1.0', encoding='EMB', chunk_size=6000):
+    '''Iterates within propbank and saves records
 
-        References:
-            https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
-            https://planspace.org/20170323-tfrecords_for_humans/
+    [description]
+
+    Arguments:
+        propbank_iter {[type]} -- [description]
+        dataset_type {[type]} -- [description]
+
+    Keyword Arguments:
+        embs_model {str} -- [description] (default: {'glo50'})
+        lang {str} -- [description] (default: {'pt'})
+        version {str} -- [description] (default: {'1.0'})
+        encoding {str} -- [description] (default: {'EMB'})
+        chunk_size {number} -- [description] (default: {6000})
+
+    References:
+        https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
+        https://planspace.org/20170323-tfrecords_for_humans/        
     '''
+
     total_propositions = get_size(dataset_type, lang=lang, version=version)
 
-    def message_print(num_records, num_propositions):
-        _msg = 'Processing {:}\tfrecords:{:5d}\t'
-        _msg += 'propositions:{:5d}\tcomplete:{:0.2f}%\r'
-        _perc = 100 * float(num_propositions) / total_propositions
-        _msg = _msg.format(dataset_type, num_records, num_propositions, _perc)
-        sys.stdout.write(_msg)
+    def message_print(num_records, num_propositions, num_partition, max_partition):
+        perc = 100 * float(num_propositions) / total_propositions
+        msg = f'Processing {dataset_type}\t'
+        msg += f'tfrecords:{num_records:5d}\t'
+        msg += f'propositions:{num_propositions:5d}\t'
+        msg += f'partitions: {num_partition:2d}/{max_partition:2d}\t'
+        msg += f'complete:{perc:0.2f}%\r'
+
+        sys.stdout.write(msg)
         sys.stdout.flush()
 
     def kwargs_int64(value):
@@ -713,7 +730,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
         )
         return ex
 
-    n_files = math.ceil(total_propositions / chunk)
+    n_partitions = math.ceil(total_propositions / chunk_size)
     file_dir, _ = get_binary(dataset_type, embs_model, lang=lang, version=version)
     feature_list_dict = defaultdict(list)
 
@@ -722,19 +739,21 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
     prev_p = -1
     num_records = 0
     num_propositions = 0
-    i = 0
-
+    p = 0
+    partition = math.floor(num_propositions / chunk_size) + 1
+    file_list = []
     for index, d in propbank_iter:
 
-        if num_propositions / chunk + 1 > i:
-            i = int(num_propositions / chunk) + 1
+        if partition > p:
+            p = partition
 
-            file_path = f'{file_dir}db{dataset_type}_{i:02d}'
+            file_path = f'{file_dir}db{dataset_type}_{embs_model}_{p:02d}.tfrecords'
 
             f = open(file_path, 'w+')
-            
+
             writer = tf.python_io.TFRecordWriter(f.name)
 
+            file_list.append(file_path)
 
         if d['P'] != prev_p:
             if not refresh:
@@ -754,30 +773,20 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
         num_records += 1
         prev_p = d['P']
         if num_propositions % 25:
-            message_print(num_records, num_propositions)
+            message_print(num_records, num_propositions, p, n_partitions)
 
-        message_print(num_records, num_propositions)
-
-
-        if num_propositions / chunk + 1 > i:
+        partition = math.floor(num_propositions / chunk_size) + 1
+        if partition > p and partition < n_partitions:
             writer.close()
             f.close()
-        
-            i = num_propositions / chunk + 1
-    
-            
 
     # Finish the last one
-    with open(file_path, 'w+') as f:
-        writer = tf.python_io.TFRecordWriter(f.name)
-        
-        ex = make_sequence_example(feature_list_dict, seqlen)
+    ex = make_sequence_example(feature_list_dict, seqlen)
 
-        writer.write(ex.SerializeToString())
+    writer.write(ex.SerializeToString())
 
-        writer.close()
-
-        num_propositions += 1
-
-
-    print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))
+    writer.close()
+    f.close()
+    message_print(num_records, num_propositions, p, n_partitions)
+    print('')
+    print(f'Wrote to {file_list} found {num_propositions:5d} propositions')
