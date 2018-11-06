@@ -41,6 +41,7 @@ import collections
 from collections import defaultdict
 import sys
 import re
+import math
 
 import tensorflow as tf
 import config as conf
@@ -122,7 +123,7 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_labels,
     Raises:
         ValueError -- validation for database type
     '''
-    dataset_path = get_binary(ds_type, embeddings_model, version=version)
+    _, dataset_path = get_binary(ds_type, embeddings_model, version=version)
     dataset_size = get_size(ds_type, version=version)
 
     msg_success = 'tfrecords_extract:'
@@ -151,7 +152,7 @@ def tfrecords_extract2(ds_type, input_labels, output_labels,
     Raises:
         ValueError -- validation for database type 
     '''
-    dataset_path = get_binary(ds_type, embeddings_model,
+    _, dataset_path = get_binary(ds_type, embeddings_model,
                               lang=lang, version=version)
 
     dataset_size = get_size(ds_type, lang=lang, version=version)
@@ -667,10 +668,11 @@ def make_feature_list(column_dict, embs_model, lang):
 
 
 def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
-                      lang='pt', version='1.0', encoding='EMB'):
+                      lang='pt', version='1.0', encoding='EMB', chunk=6000):
     ''' Iterates within propbank and saves records
 
-        ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
+        References:
+            https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
             https://planspace.org/20170323-tfrecords_for_humans/
     '''
     total_propositions = get_size(dataset_type, lang=lang, version=version)
@@ -711,41 +713,71 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
         )
         return ex
 
-    file_path = get_binary(dataset_type, embs_model, lang=lang, version=version)
+    n_files = math.ceil(total_propositions / chunk)
+    file_dir, _ = get_binary(dataset_type, embs_model, lang=lang, version=version)
     feature_list_dict = defaultdict(list)
 
-    with open(file_path, 'w+') as f:
-        writer = tf.python_io.TFRecordWriter(f.name)
-        seqlen = 1
-        refresh = True
-        prev_p = -1
-        num_records = 0
-        num_propositions = 0
-        for index, d in propbank_iter:
-            if d['P'] != prev_p:
-                if not refresh:
-                    ex = make_sequence_example(feature_list_dict, seqlen)
-                    writer.write(ex.SerializeToString())
-                refresh = False
-                seqlen = 1
-                context = {}
-                feature_list_dict = defaultdict(list)
-                num_propositions += 1
-            else:
-                seqlen += 1
+    seqlen = 1
+    refresh = True
+    prev_p = -1
+    num_records = 0
+    num_propositions = 0
+    i = 0
 
-            for feat, value in d.items():
-                feature_list_dict[feat].append(value)
+    for index, d in propbank_iter:
 
-            num_records += 1
-            prev_p = d['P']
-            if num_propositions % 25:
-                message_print(num_records, num_propositions)
+        if num_propositions / chunk + 1 > i:
+            i = int(num_propositions / chunk) + 1
+
+            file_path = f'{file_dir}db{dataset_type}_{i:02d}'
+
+            f = open(file_path, 'w+')
+            
+            writer = tf.python_io.TFRecordWriter(f.name)
+
+
+        if d['P'] != prev_p:
+            if not refresh:
+                ex = make_sequence_example(feature_list_dict, seqlen)
+                writer.write(ex.SerializeToString())
+            refresh = False
+            seqlen = 1
+            context = {}
+            feature_list_dict = defaultdict(list)
+            num_propositions += 1
+        else:
+            seqlen += 1
+
+        for feat, value in d.items():
+            feature_list_dict[feat].append(value)
+
+        num_records += 1
+        prev_p = d['P']
+        if num_propositions % 25:
+            message_print(num_records, num_propositions)
 
         message_print(num_records, num_propositions)
 
+
+        if num_propositions / chunk + 1 > i:
+            writer.close()
+            f.close()
+        
+            i = num_propositions / chunk + 1
+    
+            
+
+    # Finish the last one
+    with open(file_path, 'w+') as f:
+        writer = tf.python_io.TFRecordWriter(f.name)
+        
         ex = make_sequence_example(feature_list_dict, seqlen)
+
         writer.write(ex.SerializeToString())
 
-    writer.close()
+        writer.close()
+
+        num_propositions += 1
+
+
     print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))

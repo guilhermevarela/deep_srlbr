@@ -182,7 +182,7 @@ class SRLAgent(metaclass=AgentMeta):
             self.target_dir = ckpt_dir
             self._restore_session = True
 
-        propbank_path = get_binary(
+        _, propbank_path = get_binary(
             'deep', embeddings_model, lang=lang, version=version)
 
         propbank_encoder = PropbankEncoder.recover(propbank_path)
@@ -227,7 +227,7 @@ class SRLAgent(metaclass=AgentMeta):
 
         # Initialze training stramers
         with tf.name_scope('pipeline_fit'):
-            ds_path = get_binary(
+            _, ds_path = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
             chunk_size = min(ub - lb, batch_size)
@@ -237,7 +237,7 @@ class SRLAgent(metaclass=AgentMeta):
                 input_labels, target_labels, shuffle=True
             )
 
-            ds_path = get_binary(
+            _, ds_path = get_binary(
                 'valid', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('valid', lang=lang)
             chunk_size = min(ub - lb, batch_size)
@@ -248,7 +248,7 @@ class SRLAgent(metaclass=AgentMeta):
             )
 
         with tf.name_scope('pipeline_evaluate'):
-            ds_path = get_binary(
+            _, ds_path = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
             chunk_size = min(ub - lb, batch_size)
@@ -258,7 +258,7 @@ class SRLAgent(metaclass=AgentMeta):
                 input_labels, target_labels, shuffle=False
             )
 
-            ds_path = get_binary(
+            _, ds_path = get_binary(
                 'valid', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('valid', lang=lang)
             chunk_size = min(ub - lb, batch_size)
@@ -269,7 +269,7 @@ class SRLAgent(metaclass=AgentMeta):
             )
 
             if lang =='pt':
-                ds_path = get_binary(
+                _, ds_path = get_binary(
                     'test', embeddings_model, lang=lang, version=version)
                 lb, ub = get_db_bounds('test', lang=lang)
                 chunk_size = min(ub - lb, batch_size)

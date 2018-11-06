@@ -132,8 +132,7 @@ def make_propbank_encoder(encoder_name='deep_glo50',
 
     model_alias = '{:}{:}'.format(get_model_alias(embs_model), embs_size)
 
-    bin_path = get_binary('deep', model_alias, version=version)
-    bin_dir = '/'.join(bin_path.split('/')[:-1]) + '/'
+    bin_dir, bin_path = get_binary('deep', model_alias, version=version)    
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
 

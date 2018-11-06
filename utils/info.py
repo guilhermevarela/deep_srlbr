@@ -74,9 +74,13 @@ def get_binary(ds_type, embeddings_model, lang='pt', version='1.0'):
     if lang == 'pt':
         prefix = '{:}{:}/{:}/'.format(INPUT_DIR, lang, version)
         if version in ('1.0',):
-            return '{:}{:}/{:}'.format(prefix, embeddings_model, dbname)
+            file_dir = '{:}{:}/'.format(prefix, embeddings_model)
         else:
-            return '{:}/{:}'.format(prefix, dbname)
+            file_dir = '{:}/'.format(prefix)
     else:
-        args = (INPUT_DIR, lang, embeddings_model, dbname)
-        return '{:}{:}/{:}/{:}'.format(*args)
+        args = (INPUT_DIR, lang, embeddings_model)
+        file_dir = '{:}{:}/{:}/'.format(*args)
+
+    file_path = f'{file_dir}{dbname}'
+
+    return file_dir, file_path
