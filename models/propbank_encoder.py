@@ -67,8 +67,8 @@ class PropbankEncoder(object):
         IDX     .:  (indexed) text and categorical values are indexed
                     -- use case: dense representation and debugging
 
-        MIX     .:  (mix) text will return  word index
-                    categorical will be one-hot encoded
+        TKN     .:  (mix) text will return  tokenized version
+                    categorical will be index
                     -- use case: trainable embeddings
 
 
@@ -109,7 +109,7 @@ class PropbankEncoder(object):
         self.embeddings_sz = 0
 
         self.db = defaultdict(OrderedDict)
-        self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'MIX')
+        self.encodings = ('CAT', 'EMB', 'HOT', 'IDX', 'TKN')
         self.lang = lang
         self._column_mapper = {}
         self._column_config = {}
@@ -185,7 +185,7 @@ class PropbankEncoder(object):
             err = err.format(self.encodings, encoding)
             raise ValueError(err)
 
-        if encoding in ('IDX', 'CAT'):
+        if encoding in ('IDX', 'CAT', 'TKN'):
             return 1
 
         colconfig = self._column_config.get(column, None)
@@ -208,13 +208,6 @@ class PropbankEncoder(object):
             else:
                 return 1
 
-        if encoding in ('MIX'):
-
-            if colconfig['type'] in ('choice'):
-                return colconfig['dims']
-            else:
-                return 1
-
     def column_sizes2(self, encoding):
         return {
             col: self.column_sizes(col, encoding)
@@ -228,7 +221,7 @@ class PropbankEncoder(object):
                 for x, p in self.db['P'].items()
                 if p > lb and p <= ub}
 
-    def decode_npyarray(self, T, I, seq_list, target_labels,
+    def decode_npyarray(self, Y, I, seq_list, target_labels,
                         script_version=None):
 
         target_label = target_labels[0]
@@ -237,10 +230,11 @@ class PropbankEncoder(object):
                  for j, item in enumerate(sublist) if j < seq_list[i]]
 
         values = [self.idx2lex[target_label][int(item)]
-                  for i, sublist in enumerate(T.tolist())
+                  for i, sublist in enumerate(Y.tolist())
                   for j, item in enumerate(sublist) if j < seq_list[i]]
 
         zip_list = sorted(zip(index, values), key=lambda x: x[0])
+
         target_dict = OrderedDict(zip_list)
 
 
@@ -614,7 +608,7 @@ class PropbankEncoder(object):
 
                 return x
 
-        elif encoding in ('MIX'):
+        elif encoding in ('TKN'):
 
             if col_type in ('text'):
 
@@ -623,12 +617,6 @@ class PropbankEncoder(object):
                 i = self.tok2idx[t]
 
                 return i
-
-            elif col_type in ('choice'):
-
-                sz = self.column_sizes(col, encoding)
-
-                return [1 if i == x else 0 for i in range(sz)]
 
             else:
 

@@ -6,18 +6,21 @@ Created on Oct 4, 2018
     and tensorflow computation grapth
 '''
 import json
+import time
+from shutil import copyfile
 import tensorflow as tf
 
 import config
 from models.conll_evaluator import ConllEvaluator
 from models.propbank_encoder import PropbankEncoder
 from models.labelers import Labeler, DualLabeler
-from models.streamers import TfStreamer
+# from models.streamers import TfStreamer
+from models.streamers import TfStreamerWE
 
 from utils.snapshots import snapshot_hparam_string, snapshot_persist, \
     snapshot_recover
 
-from utils.info import get_binary
+from utils.info import get_binary, get_db_bounds
 
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
@@ -45,8 +48,7 @@ class AgentMeta(type):
         https://realpython.com/python-metaclasses/
     '''
     def __new__(meta, name, base, body):
-        agent_methods = ('evaluate', 'fit', 'load', 'predict',
-                         'evaluate_dataset')
+        agent_methods = ('evaluate_validset', 'evaluate_testset', 'fit', 'load')
 
         for am in agent_methods:
             if am not in body:
@@ -99,6 +101,8 @@ class SRLAgent(metaclass=AgentMeta):
     TODO:
         Include raw text inputs to evaluate the model
     '''
+    _session = None
+
     def __init__(self, input_labels=FEATURE_LABELS, target_labels=TARGET_LABELS,
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
@@ -173,45 +177,110 @@ class SRLAgent(metaclass=AgentMeta):
                 version=version, lang=lang)
             self.target_dir = target_dir
             self._restore_session = False
+
         else:
             self.target_dir = ckpt_dir
             self._restore_session = True
+
+        _, propbank_path = get_binary(
+            'deep', embeddings_model, lang=lang, version=version)
+
+        # This list should have one argument only
+        propbank_encoder = PropbankEncoder.recover(propbank_path)
 
         self.input_labels = input_labels
         self.target_labels = target_labels
         self.lang = lang
         self.version = version
         self.embeddings_model = embeddings_model
+        self.batch_size = batch_size
+        self.epochs = epochs
+        self.embeddings_trainable = embeddings_trainable
 
-        propbank_path = get_binary(
-            'deep', embeddings_model, lang=lang, version=version)
-
-        propbank_encoder = PropbankEncoder.recover(propbank_path)
-
-        dataset_path = get_binary(
-            'train', embeddings_model, lang=lang, version=version)
-        datasets_list = [dataset_path]
+        self.embeddings = propbank_encoder.embeddings
 
         self.evaluator = ConllEvaluator(propbank_encoder, target_dir=self.target_dir)
+        if self._restore_session:
+            conll_path = '{:}best-valid.conll'.format(self.target_dir)
+            self.evaluator.evaluate_fromconllfile(conll_path)
+            self.best_validation_rate = self.evaluator.f1
+        else:
+            self.best_validation_rate = 0.0
 
-        cnf_dict = config.get_config(embeddings_model)
-        X_shape = get_xshape(input_labels, cnf_dict)
+        cnf_dict = config.get_config(embeddings_model, lang=lang)
+        X_shape = get_xshape(input_labels, len(self.embeddings[0]), cnf_dict)
         T_shape = get_tshape(target_labels, cnf_dict)
         print('trainable embeddings?', embeddings_trainable)
         print('X_shape', X_shape)
         print('T_shape', T_shape)
+
+
+
+
 
         # Builds the computation graph
         self.X = tf.placeholder(tf.float32, shape=X_shape, name='X')
         self.T = tf.placeholder(tf.float32, shape=T_shape, name='T')
         self.L = tf.placeholder(tf.int32, shape=(None,), name='L')
 
+        self.WE = tf.Variable(self.embeddings, trainable=self.embeddings_trainable, name='embeddings')
 
 
-        # The streamer instanciation builds a feeder_op that will
-        # supply the computation graph with batches of examples
-        self.streamer = TfStreamer(datasets_list, batch_size, epochs,
-                                   input_labels, target_labels, shuffle=True)
+        # Initialze training stramers
+        with tf.name_scope('pipeline_fit'):
+            _, ds_list = get_binary(
+                'train', embeddings_model, lang=lang, version=version)
+            lb, ub = get_db_bounds('train', lang=lang)
+            chunk_size = min(ub - lb, batch_size)
+
+            self.trainer = TfStreamerWE(
+                self.WE, ds_list, chunk_size, epochs,
+                input_labels, target_labels, shuffle=True
+            )
+
+            _, ds_list = get_binary(
+                'valid', embeddings_model, lang=lang, version=version)
+            lb, ub = get_db_bounds('valid', lang=lang)
+            chunk_size = min(ub - lb, batch_size)
+
+            self.validator = TfStreamerWE(
+                self.WE, ds_list, chunk_size, 2 * epochs,
+                input_labels, target_labels, shuffle=False
+            )
+
+        with tf.name_scope('pipeline_evaluate'):
+            _, ds_list = get_binary(
+                'train', embeddings_model, lang=lang, version=version)
+            lb, ub = get_db_bounds('train', lang=lang)
+            chunk_size = min(ub - lb, batch_size)
+
+            self.trainer1 = TfStreamerWE(
+                self.WE, ds_list, chunk_size, 1,
+                input_labels, target_labels, shuffle=False
+            )
+
+            _,  ds_list, = get_binary(
+                'valid', embeddings_model, lang=lang, version=version)
+            lb, ub = get_db_bounds('valid', lang=lang)
+            chunk_size = min(ub - lb, batch_size)
+
+            self.validator1 = TfStreamerWE(
+                self.WE,  ds_list, chunk_size, 1,
+                input_labels, target_labels, shuffle=False
+            )
+
+            if lang =='pt':
+                _,  ds_list, = get_binary(
+                    'test', embeddings_model, lang=lang, version=version)
+                lb, ub = get_db_bounds('test', lang=lang)
+                chunk_size = min(ub - lb, batch_size)
+
+                self.tester1 = TfStreamerWE(
+                    self.WE,  ds_list, chunk_size, 1,
+                    input_labels, target_labels, shuffle=False
+                )
+
+
 
         # The Labeler instanciation will build the archtecture
         targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
@@ -219,10 +288,15 @@ class SRLAgent(metaclass=AgentMeta):
                   'targets_size': targets_size, 'rec_unit': rec_unit}
 
         if self.single_task:
-            self.rnn_srl = Labeler(self.X, self.T, self.L, **kwargs)
+            self.rnn = Labeler(self.X, self.T, self.L, **kwargs)
 
         if self.dual_task:
-            self.rnn_srl = DualLabeler(self.X, self.T, self.L, recon_depth=recon_depth, **kwargs)
+            self.rnn = DualLabeler(self.X, self.T, self.L, recon_depth=recon_depth, **kwargs)
+
+        self.init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
 
     @classmethod
     def load(cls, ckpt_dir):
@@ -255,209 +329,193 @@ class SRLAgent(metaclass=AgentMeta):
     def dual_task(self):
         return len(self.target_labels) == 2
 
-    def evaluate(self, I, Y, L, filename):
-        '''Evaluates the predictions Y using CoNLL 2004 Shared Task script
-
-        I, Y are zero padded to the right -- L vector carries
-        the original propositon time and Y, I are scaled
-        to have the same 2nd dimension as the largest proposition
-        on the batch (1st dimension)(default: 250)
-
-
-        Arguments:
-            I {np.narray} -- 2D matrix zero padded [batch, max_time]
-                representing the obsertions indices
-
-            Y {np.narray} -- 2D matrix zero padded [batch, max_time]
-                              model predictions.
-
-            L {np.narray} -- 1D vector [batch]
-                             stores the true length of the proposition
-
-            filename {str} -- prefix for the files to used for evaluation
-                            CoNLL 2004 scripts requires that the contents
-                            will be saved to disk.
-
-        Returns:
-            f1 {float} -- the score
-
-        Raises:
-            AttributeError -- [description]
+    @property
+    def session(self):
+        '''Returns a working tensorflow session
         '''
-        f1 = None
-        try:
+        if self._session is None:
+            self._session = tf.Session()
 
-            # SRL is going to be the second
-            if self.dual_task:
-                Y = Y[-1]
+            self._session.run(self.init_op)
 
-            f1 = self.evaluator.evaluate_npyarray(
-                filename, I, Y, L, self.target_labels[-1:], {}, script_version='04'
-            )
-        except AttributeError:
-            err = '''evaluator not defined -- either re start a new instance
-                     or load from {:}'''.format(self.target_dir)
-            raise AttributeError(err)
-        finally:
-            return f1
+            if self._session._closed or self._restore_session:
+                saver = tf.train.Saver()
+                session_path = '{:}model.ckpt'.format(self.target_dir)
+                # tries to restore saved model
+                saver.restore(self._session, session_path)
 
-    def evaluate_dataset(self, ds_type):
-        '''Evaluates the contents of ds_type using CoNLL 2004 Shared Task script
+        return self._session
 
-        Runs the CoNLL 2004 Shared Task script saving 3 files on target_dir
-        * <ds_type>_dataset-gold.props -- propositions gold standard
-        * <ds_type>_dataset-eval.props -- predicted propositions
-        * <ds_type>_dataset.conll -- Overall script results
-
-        Arguments:
-            ds_type {str} -- dataset type 'train', 'valid', 'test'
-
-        Returns:
-            f1 -- evaluation score
-
-        Raises:
-            ValueError --  dataset type in ('train', 'valid', 'test')
+    @session.setter
+    def session(self, val):
+        '''Sets the value
         '''
-        if ds_type in ('train', 'valid', 'test'):
-            input_fn = getattr(TfStreamer, 'get_{:}'.format(ds_type))
-            eval_name = '{:}_dataset'.format(ds_type)
-        else:
-            err = 'ds_type must be in (`valid`,`train`,`test`) got `{:}`'
-            err = err.format(ds_type)
-            raise ValueError(err)
+        self._session = val
 
-        X, T, L, I = input_fn(
-            self.input_labels, self.target_labels, version=self.version,
-            embeddings_model=self.embeddings_model
-        )
-
-        init_op = tf.group(
-            tf.global_variables_initializer(),
-            tf.local_variables_initializer()
-        )
-        with tf.Session() as self.session:
-            self.session.run(init_op)
-            saver = tf.train.Saver()
-            session_path = '{:}model.ckpt'.format(self.target_dir)
-            saver.restore(self.session, session_path)
-            Y, f1 = self._predict_and_eval(I, X, L, eval_name)
-
-        return f1
+    @property
+    def persist(self):
+        saver = tf.train.Saver()
+        session_path = '{:}model.ckpt'.format(self.target_dir)
+        saver.save(self._session, session_path)
 
     def fit(self):
         '''Trains the labeler and evaluates using CoNLL 2004 script
 
         Loads the training set and evaluation set
+
+        References:
+            https://stackoverflow.com/questions/42175609/using-multiple-input-pipelines-in-tensorflow
         '''
-        X_train, T_train, L_train, I_train = TfStreamer.get_train(
-            self.input_labels, self.target_labels, lang=self.lang, version=self.version,
-            embeddings_model=self.embeddings_model
-        )
+        sess = self.session
 
-        X_valid, T_valid, L_valid, I_valid = TfStreamer.get_valid(
-            self.input_labels, self.target_labels, lang=self.lang, version=self.version,
-            embeddings_model=self.embeddings_model
-        )
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(sess=sess, coord=coord)
 
-        init_op = tf.group(
-            tf.global_variables_initializer(),
-            tf.local_variables_initializer()
-        )
+        # Training control variables
+        step = 1
+        total_loss = 0.0
+        total_error = 0.0
+        props = 0
+        eps = 100
+        train_dict = {}
+        lb, ub = get_db_bounds('train', lang=self.lang)
+        epochs = 0
+        f1_train = None
+        try:
+            start = time.time()
+            batch_start = time.time()
+            while not (coord.should_stop() or eps < 1e-3):
 
-        with tf.Session() as self.session:
-            self.session.run(init_op)
-            coord = tf.train.Coordinator()
-            threads = tf.train.start_queue_runners(coord=coord)
-            saver = tf.train.Saver()
-            session_path = '{:}model.ckpt'.format(self.target_dir)
-            # tries to restore saved model
-            if self._restore_session:
-                saver.restore(self.session, session_path)
-                conll_path = '{:}best-valid.conll'.format(self.target_dir)
-                self.evaluator.evaluate_fromconllfile(conll_path)
-                best_validation_rate = self.evaluator.f1
-            else:
-                best_validation_rate = -1
+                X_batch, T_batch, L_batch, I_batch = sess.run(self.trainer.stream)
 
-            # Training control variables
-            step = 1
-            total_loss = 0.0
-            total_error = 0.0
-            eps = 100
-            try:
-                while not (coord.should_stop() or eps < 1e-3):
-                    X_batch, T_batch, L_batch, I_batch = self.session.run(self.streamer.stream)
+                props += X_batch.shape[0]
 
-                    loss, _, error = self.session.run(
-                        [self.rnn_srl.cost, self.rnn_srl.label, self.rnn_srl.error],
-                        feed_dict={self.X: X_batch, self.T: T_batch, self.L: L_batch}
-                    )
+                loss, _, Y_batch, error = sess.run(
+                    [self.rnn.cost, self.rnn.label, self.rnn.predict, self.rnn.error],
+                    feed_dict={self.X: X_batch, self.T: T_batch, self.L: L_batch}
+                )
 
-                    total_loss += loss
-                    total_error += error
-                    if (step) % 25 == 0:
+                # Batch dict stores info from batch decodes
+                batch_dict = self.evaluator.decoder_fn(Y_batch, I_batch, L_batch, self.target_labels)
+                train_dict.update(batch_dict)
 
-                        _, f1_train = self._predict_and_eval(I_train, X_train, L_train, 'train')
+                total_loss += loss
+                total_error += error
+
+                if (step) % 25 == 0:
+
+                    f1_train = self._evaluate_propositions(train_dict, 'train')
+
+                    batch_end = time.time()
+                    print('Iter={:5d}'.format(step),
+                          '\tepochs {:5d}'.format(epochs),
+                          '\tavg. cost {:.6f}'.format(total_loss / 25 ),
+                          '\tavg. error {:.6f}'.format(total_error / 25 ),
+                          '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 25 ),
+                          '\tf1-train {:.6f}'.format(f1_train))
+
+                    eps = float(total_error) / 25 
+                    total_loss = 0.0
+                    total_error = 0.0
+                    batch_start = batch_end
+
+                if epochs < int(props / (ub - lb)):
+                    epochs = int(props / (ub - lb))
+                    end_epoch = time.time()
+
+                    f1_valid = next(self._evaluate_dataset('valid', self.validator))
+
+                    if f1_valid and self.best_validation_rate < f1_valid:
+                        self.best_validation_rate = f1_valid
+
+                        for filename in ('valid.conll','valid-gold.props', 'valid-eval.props'):
+                            name, ext = filename.split('.')
+                            src = f'{self.target_dir}{filename}'
+                            dst = f'{self.target_dir}best-{name}.{ext}'
+
+                            copyfile(src, dst)
+
+                        self.persist
+
+                    f1_train = self._evaluate_propositions(train_dict, 'train') if f1_train is None else f1_train
+                    print('Iter={:5d}'.format(step),
+                          '\tepochs {:5d}'.format(epochs),
+                          '\tepoch time {:3f} s'.format((end_epoch - start) / epochs),
+                          '\tf1-train {:.6f}'.format(f1_train),
+                          '\tf1-valid {:.6f}'.format(f1_valid))
+
+                    train_dict = {}
+                step += 1
+
+        except tf.errors.OutOfRangeError:
+            print('Done training -- epoch limit reached')
+
+        finally:
+            # When done, ask threads to stop
+            coord.request_stop()
+            coord.join(threads)
+
+    def evaluate_trainset(self):
+        rev = next(self._evaluate_dataset('train', self.trainer1))
+        self.session = None
+        return rev
 
 
-                        Y_valid, f1_valid = self._predict_and_eval(I_valid, X_valid, L_valid, 'valid')
-                        if f1_valid is not None and f1_train is not None:
-                            print('Iter={:5d}'.format(step),
-                                  '\tavg. cost {:.6f}'.format(total_loss / 25),
-                                  '\tavg. error {:.6f}'.format(total_error / 25),
-                                  '\tf1-train {:.6f}'.format(f1_train),
-                                  '\tf1-valid {:.6f}'.format(f1_valid))
-                        else:
-                            print('Iter={:5d}'.format(step),
-                                  '\tavg. cost {:.6f}'.format(total_loss / 25),
-                                  '\tavg. error {:.6f}'.format(total_error / 25))
-                        eps = float(total_error) / 25
-                        total_loss = 0.0
-                        total_error = 0.0
+    def evaluate_testset(self):
+        rev = next(self._evaluate_dataset('test', self.tester1))
+        self.session = None
+        return rev
 
-                        if f1_valid and best_validation_rate < f1_valid:
-                            best_validation_rate = f1_valid
-                            f1_valid = self.evaluate(I_valid, Y_valid, L_valid, 'best-valid')
-                            saver.save(self.session, session_path)
-                    step += 1
+    def evaluate_validset(self):
+        rev = next(self._evaluate_dataset('valid', self.validator1))
+        self.session = None
+        return rev
 
-            except tf.errors.OutOfRangeError:
-                print('Done training -- epoch limit reached')
+    def _evaluate_dataset(self, ds_type, streamer):
+        sess = self.session
 
-            finally:
-                # When done, ask threads to stop
-                coord.request_stop()
-                coord.join(threads)
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(sess=sess, coord=coord)
 
-    def predict(self, X, L):
-        '''Predicts the Semantic Role Labels
+        lb, ub = get_db_bounds(ds_type, lang=self.lang)
+        prev_epochs = -1
+        best_rate = 0
+        epochs = 0
+        db_dict = {}
+        props = 0
 
-        X, L are zero padded to the right -- L vector carries
-        the original propositon time and X is scaled
-        to have the same 2nd dimension as the largest proposition
-        on the batch (1st dimension)(default: 250)
+        try:
+            while not coord.should_stop():
+                Xchunk, Tchunk, Lchunk, Ichunk = sess.run(streamer.stream)
 
-        Arguments:
-            I {np.narray} -- 2D matrix zero padded [batch, max_time]
-                            representing the obsertions indices
+                Ychunk = sess.run(self.rnn.predict, feed_dict={self.X: Xchunk, self.L:Lchunk})
 
-            X {np.narray} -- 3D matrix zero padded [batch, max_time, features]
-                             model inputs
+                db_dict.update(
+                    self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels)
+                )
+                props += Xchunk.shape[0]
+                #TODO: correct props to fit exactly on ub - lb
+                if epochs < int(props / (ub - lb)):
+                    epochs = props / (ub - lb)
+                    f1 = self._evaluate_propositions(db_dict, ds_type)
+                    if best_rate < f1:
+                        best_rate = f1
 
-        Returns:
-            Y - {np.narray} -- 2D matrix zero padded [batch, max_time]
-                              model predictions.
-        '''
-        Y = self.session.run(
-            self.rnn_srl.predict,
-            feed_dict={self.X: X, self.L: L})
+                    yield f1
 
-        return Y
+        except tf.errors.OutOfRangeError:
+            pass
 
-    def _predict_and_eval(self, I, X, L, evalfilename):
+        finally:
+            # When done, ask threads to stop
+            coord.request_stop()
+            coord.join(threads)
+
+            return best_rate
+
+    def _evaluate_propositions(self, props_dict, filename):
         '''Thin wrapper  for a chained call on predict and eval
 
-\
         Arguments:
             I {np.narray} -- 2D matrix zero padded [batch, max_time]
                             representing the obsertions indices
@@ -475,11 +533,14 @@ class SRLAgent(metaclass=AgentMeta):
 
             f1 {float} -- f1 score
         '''
-        Y = self.predict(X, L)
+        script_dict = self.evaluator.to_script_fn(
+            self.target_labels,
+            props_dict,
+            script_version='04')
 
-        f1 = self.evaluate(I, Y, L, evalfilename)
+        self.evaluator.evaluate(filename, script_dict, {}, script_version='04')
 
-        return Y, f1
+        return self.evaluator.f1
 
     def _ctx_p(self, input_labels):
         '''Computes the size of the moving windows around the predicate
@@ -504,12 +565,25 @@ class SRLAgent(metaclass=AgentMeta):
 
 
 
-def get_xshape(input_labels, cnf_dict):
+def get_xshape(input_labels, embeddings_size, cnf_dict):
     # axis 0 --> examples
     # axis 1 --> max time
     # axis 2 --> feature size
     xshape = [None, None]
-    feature_sz = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
+    if config.DATA_ENCODING in ('EMB',):
+        feature_sz = sum([cnf_dict[lbl]['size'] for lbl in input_labels])
+    else:
+        def feature_fn(x):
+            if cnf_dict[x]['type'] in ('text',):
+                return embeddings_size
+            else:
+                if cnf_dict[x]['dims'] is None:
+                    return 1
+                else:
+                    return cnf_dict[x]['dims']
+
+        feature_sz = sum([feature_fn(lbl) for lbl in input_labels])
+
     xshape.append(feature_sz)
     return xshape
 
@@ -521,12 +595,12 @@ def get_tshape(output_labels, cnf_dict):
     k = len(output_labels)
     if k == 1:
         # axis 2 --> target size
-        m = cnf_dict[output_labels[0]]['size']
+        m = cnf_dict[output_labels[0]]['dims']
         tshape = base_shape + [m]
     elif k == 2:
         # axis 2 --> max target size
         # axis 3 --> number of targets
-        m = max([cnf_dict[lbl]['size'] for lbl in output_labels])
+        m = max([cnf_dict[lbl]['dims'] for lbl in output_labels])
         tshape = base_shape + [m, k]
     else:
         err = 'len(target_labels) <= 2 got {:}'.format(k)

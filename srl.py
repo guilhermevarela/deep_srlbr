@@ -20,7 +20,7 @@
 '''
 
 import argparse
-
+import config
 from models import estimate, estimate_kfold, estimate_recover
 from models import PropbankEncoder
 
@@ -111,12 +111,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     ckpt_dir = args.ckpt_dir
-    # if len(ckpt_dir) > 0:
-    #     if ckpt_dir[-1] != '/':
-    #         ckpt_dir += '/'
-    #     estimate_recover(ckpt_dir)
-    # else:
-    input_labels = FEATURE_LABELS
+
+    input_labels = config.FEATURE_LABELS
+    target_labels = args.targets
+    embs_model = args.embs_model
+    learning_rate = args.lr
+    version = args.version
+    epochs = args.epochs
+    batch_size = args.batch_size
+    rec_unit = args.rec_unit
+    recon_depth = int(args.recon_depth)
 
     ctx_p = args.ctx_p
     if ctx_p > 1:
@@ -130,17 +134,9 @@ if __name__ == '__main__':
     if use_chunks:
         input_labels.append('SHALLOW_CHUNKS')
 
-    # TODO: process target
-    target_labels = args.targets
-
-    embs_model = args.embs_model
-    learning_rate = args.lr
-    version = args.version
-    epochs = args.epochs
-    batch_size = args.batch_size
-    rec_unit = args.rec_unit
-    recon_depth = int(args.recon_depth)
     lang = args.lang
+    if lang in ('pt',):
+        input_labels.append('GPOS')
     print(lang)
     if args.kfold:
         if len(ckpt_dir) > 0:
@@ -168,11 +164,11 @@ if __name__ == '__main__':
 
             agent.fit()
 
-        f1 = agent.evaluate_dataset('valid')
-        print('Best evaluation F1 -- {:}'.format(f1))
 
-            # estimate(input_labels=input_labels, target_labels=target_labels,
-            #          hidden_layers=args.depth, embeddings_model=embs_model,
-            #          epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
-            #          version=version, ctx_p=ctx_p, lr=learning_rate,
-            #          chunks=use_chunks, recon_depth=recon_depth)
+        # print(f'Best validation F1 -- {agent.best_validation_rate}')
+        # test_f1 = agent.evaluate_testset()
+        # print(f'Best test F1 -- {test_f1}')
+        # valid_f1 = agent.evaluate_validset()
+        # print(f'Best validation F1 -- {valid_f1}')
+        # train_f1 = agent.evaluate_trainset()
+        # print(f'Best test F1 -- {train_f1}')

@@ -184,6 +184,7 @@ class InterleavedPropagator(object, metaclass=PropagatorMeta):
             h = outputs_bw
             h_1 = outputs_fw
 
-        self.V = tf.concat((h, h_1), axis=2)
+        # self.V = tf.concat((h, h_1), axis=2)
 
-        return self.V
+        # return self.V
+        return tf.concat((h, h_1), axis=2)

@@ -41,6 +41,7 @@ import collections
 from collections import defaultdict
 import sys
 import re
+import math
 
 import tensorflow as tf
 import config as conf
@@ -122,7 +123,7 @@ def tfrecords_extract(ds_type, embeddings, input_labels, output_labels,
     Raises:
         ValueError -- validation for database type
     '''
-    dataset_path = get_binary(ds_type, embeddings_model, version=version)
+    _, dataset_path = get_binary(ds_type, embeddings_model, version=version)
     dataset_size = get_size(ds_type, version=version)
 
     msg_success = 'tfrecords_extract:'
@@ -151,7 +152,7 @@ def tfrecords_extract2(ds_type, input_labels, output_labels,
     Raises:
         ValueError -- validation for database type 
     '''
-    dataset_path = get_binary(ds_type, embeddings_model,
+    _, dataset_path = get_binary(ds_type, embeddings_model,
                               lang=lang, version=version)
 
     dataset_size = get_size(ds_type, lang=lang, version=version)
@@ -344,7 +345,8 @@ def input_fn(filenames, batch_size, num_epochs,
         [X, T, L, D],
         batch_size=batch_size,
         capacity=capacity,
-        dynamic_pad=True
+        dynamic_pad=True,
+        allow_smaller_final_batch=True
     )
     # D_batch is the index
     D_batch = tf.cast(tf.squeeze(D_batch, axis=2), tf.int64)
@@ -353,7 +355,7 @@ def input_fn(filenames, batch_size, num_epochs,
 
 def _protobuf_process(
         context_features, sequence_features, input_labels, output_labels,
-        embeddings_model):
+        embeddings_model, lang):
     '''Maps context_features and sequence_features making embedding replacement as necessary
 
         args:
@@ -376,7 +378,7 @@ def _protobuf_process(
     sequence_outputs = []
     sequence_descriptors = []
 
-    cnf_dict = conf.get_config(embeddings_model)
+    cnf_dict = conf.get_config(embeddings_model, lang=lang)
     # Fetch only context variable the length of the proposition
     L = context_features['L']
     # Each output has a maximum pad size
@@ -412,7 +414,7 @@ def _protobuf_process(
 
 
 
-def _read_and_decode(filename_queue, embeddings_model, sequence_labels):
+def _read_and_decode(filename_queue, embeddings_model, sequence_labels, lang):
     '''
         Decodes a serialized .tfrecords containing sequences
         args
@@ -429,12 +431,17 @@ def _read_and_decode(filename_queue, embeddings_model, sequence_labels):
     reader = tf.TFRecordReader()
     _, serialized_example = reader.read(filename_queue)
 
-    cnf_dict = conf.get_config(embeddings_model)
+
+    cnf_dict = conf.get_config(embeddings_model, lang=lang)
 
     def make_feature(key):
-        key_sz = cnf_dict[key]['size']
         key_type = cnf_dict[key]['type']
-        dtype = tf.float32 if key_type in ('text',) else tf.int64
+        dtype = tf.float32 if key_type in ('text',) and conf.DATA_ENCODING == 'EMB' else tf.int64
+
+        if conf.DATA_ENCODING in ('TKN',):
+            key_sz = 1
+        else:
+            key_sz = cnf_dict[key]['size']
         return tf.FixedLenSequenceFeature(key_sz, dtype)
 
     seq_labels = list(sequence_labels)
@@ -490,23 +497,26 @@ def input_with_embeddings_fn(
         D_batch  {list<str>} -- a 3D array NUM_RECORDS X MAX_TIME 
             index of tokens
     '''
-    def get_embs():
+    def get_info():
         sep = re.compile('_|\.')
         search_list = sep.split(filenames[0])
         # 3 latters followed by 2-4 numbers
         matcher = re.compile('^([a-z]{3}[0-9]{2,4})$')
         key_list = [s for s in search_list if matcher.match(s)]
 
-        return key_list[0]
+        lang = 'pt' if 'pt' in filenames[0].split('/') else 'en'
+        return key_list[0], lang
 
-    embs_model = get_embs()
+    embs_model, lang = get_info()
+
+
     filename_queue = tf.train.string_input_producer(
         filenames, num_epochs=num_epochs, shuffle=shuffle
     )
     sequence_labels = list(input_labels + output_labels)
 
     context_features, sequence_features = _read_and_decode(
-        filename_queue, embs_model, sequence_labels
+        filename_queue, embs_model, sequence_labels, lang
     )
 
     X, T, L, D = _protobuf_with_embeddings_process(
@@ -515,7 +525,8 @@ def input_with_embeddings_fn(
         sequence_features,
         input_labels,
         output_labels,
-        embs_model
+        embs_model,
+        lang
     )
 
     min_after_dequeue = 10000
@@ -526,14 +537,15 @@ def input_with_embeddings_fn(
         [X, T, L, D],
         batch_size=batch_size,
         capacity=capacity,
-        dynamic_pad=True
+        dynamic_pad=True,
+        allow_smaller_final_batch=True
     )
     return X_batch, T_batch, L_batch, D_batch
 
 
 
 def _protobuf_with_embeddings_process(
-        EMBS, context_features, sequence_features, input_labels, output_labels, embs_model):
+        EMBS, context_features, sequence_features, input_labels, output_labels, embs_model, lang):
     '''Maps context_features and sequence_features making embedding replacement as necessary
         
         https://stackoverflow.com/questions/35892412/tensorflow-dense-gradient-explanation
@@ -557,37 +569,48 @@ def _protobuf_with_embeddings_process(
     sequence_inputs = []
     sequence_descriptors = []
     sequence_outputs = []
-    config_dict = conf.get_config(embs_model)
+    config_dict = conf.get_config(embs_model, lang=lang)
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
-    k = len(sequence_labels)
 
     labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
+
     for key in labels_list:
         ind = sequence_features[key]
 
         if config_dict[key]['type'] == 'text':
             ind = tf.nn.embedding_lookup(EMBS, ind)
             ind = tf.squeeze(ind, axis=1)
+
+        elif config_dict[key]['type'] == 'choice':
+            ind = tf.one_hot(ind, config_dict[key]['dims'], dtype=tf.float32)
+            ind = tf.squeeze(ind, axis=1)
         else:
-            ind = tf.cast(sequence_features[key], tf.float32)
+            if key in ('INDEX',):
+                ind = tf.squeeze(ind, axis=1)
+            else:
+                ind = tf.cast(sequence_features[key], tf.float32)
+
 
         if key in input_labels:
             sequence_inputs.append(ind)
+
         elif key in output_labels:
             sequence_outputs.append(ind)
-        elif key in ['INDEX']:
-            sequence_descriptors.append(ind)
+
+        elif key in ('INDEX',):
+            sequence_descriptors = ind
 
     X = tf.concat(sequence_inputs, 1)
     T = tf.concat(sequence_outputs, 1)
-    D = tf.concat(sequence_descriptors, 1)
+    D = sequence_descriptors
+
     return X, T, L, D
 
 
-def make_feature_list(column_dict, embs_model):
+def make_feature_list(column_dict, embs_model, lang):
     '''Returns a SequenceExample for the given inputs and labels.
 
     args:
@@ -602,8 +625,9 @@ def make_feature_list(column_dict, embs_model):
     '''
     feature_dict = {}
     supported_types = ('choice', 'int', 'text')
-    cnf_dict = conf.get_config(embs_model)
+    cnf_dict = conf.get_config(embs_model, lang=lang)
     encoding = conf.DATA_ENCODING
+
     def kwargs_int64(value):
         d = {}
         if isinstance(value, collections.Iterable):
@@ -643,20 +667,39 @@ def make_feature_list(column_dict, embs_model):
     return feature_dict
 
 
-def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt', version='1.0'):
-    ''' Iterates within propbank and saves records
+def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50',
+                      lang='pt', version='1.0', encoding='EMB', chunk_size=6000):
+    '''Iterates within propbank and saves records
 
-        ref https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
-            https://planspace.org/20170323-tfrecords_for_humans/
+    [description]
+
+    Arguments:
+        propbank_iter {[type]} -- [description]
+        dataset_type {[type]} -- [description]
+
+    Keyword Arguments:
+        embs_model {str} -- [description] (default: {'glo50'})
+        lang {str} -- [description] (default: {'pt'})
+        version {str} -- [description] (default: {'1.0'})
+        encoding {str} -- [description] (default: {'EMB'})
+        chunk_size {number} -- [description] (default: {6000})
+
+    References:
+        https://github.com/tensorflow/tensorflow/blob/r1.7/tensorflow/core/example/feature.proto
+        https://planspace.org/20170323-tfrecords_for_humans/        
     '''
+
     total_propositions = get_size(dataset_type, lang=lang, version=version)
 
-    def message_print(num_records, num_propositions):
-        _msg = 'Processing {:}\tfrecords:{:5d}\t'
-        _msg += 'propositions:{:5d}\tcomplete:{:0.2f}%\r'
-        _perc = 100 * float(num_propositions) / total_propositions
-        _msg = _msg.format(dataset_type, num_records, num_propositions, _perc)
-        sys.stdout.write(_msg)
+    def message_print(num_records, num_propositions, num_partition, max_partition):
+        perc = 100 * float(num_propositions) / total_propositions
+        msg = f'Processing {dataset_type}\t'
+        msg += f'tfrecords:{num_records:5d}\t'
+        msg += f'propositions:{num_propositions:5d}\t'
+        msg += f'partitions: {num_partition:2d}/{max_partition:2d}\t'
+        msg += f'complete:{perc:0.2f}%\r'
+
+        sys.stdout.write(msg)
         sys.stdout.flush()
 
     def kwargs_int64(value):
@@ -674,7 +717,7 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt'
 
     def kwargs_sequence(feature_dict):
         d = {}
-        f = make_feature_list(feature_dict, embs_model)
+        f = make_feature_list(feature_dict, embs_model, lang=lang)
         d['feature_list'] = f
         return d
 
@@ -687,41 +730,63 @@ def tfrecords_builder(propbank_iter, dataset_type, embs_model='glo50', lang='pt'
         )
         return ex
 
-    file_path = get_binary(dataset_type, embs_model, lang=lang, version=version)
+    n_partitions = math.ceil(total_propositions / chunk_size)
+    file_dir, _ = get_binary(dataset_type, embs_model, lang=lang, version=version)
     feature_list_dict = defaultdict(list)
 
-    with open(file_path, 'w+') as f:
-        writer = tf.python_io.TFRecordWriter(f.name)
-        seqlen = 1
-        refresh = True
-        prev_p = -1
-        num_records = 0
-        num_propositions = 0
-        for index, d in propbank_iter:
-            if d['P'] != prev_p:
-                if not refresh:
-                    ex = make_sequence_example(feature_list_dict, seqlen)
-                    writer.write(ex.SerializeToString())
-                refresh = False
-                seqlen = 1
-                context = {}
-                feature_list_dict = defaultdict(list)
-                num_propositions += 1
-            else:
-                seqlen += 1
+    seqlen = 1
+    refresh = True
+    prev_p = -1
+    num_records = 0
+    num_propositions = 0
+    p = 0
+    partition = math.floor(num_propositions / chunk_size) + 1
+    file_list = []
+    for index, d in propbank_iter:
 
-            for feat, value in d.items():
-                feature_list_dict[feat].append(value)
+        if partition > p:
+            p = partition
 
-            num_records += 1
-            prev_p = d['P']
-            if num_propositions % 25:
-                message_print(num_records, num_propositions)
+            file_path = f'{file_dir}db{dataset_type}_{embs_model}_{p:02d}.tfrecords'
 
-        message_print(num_records, num_propositions)
+            f = open(file_path, 'w+')
 
-        ex = make_sequence_example(feature_list_dict, seqlen)
-        writer.write(ex.SerializeToString())
+            writer = tf.python_io.TFRecordWriter(f.name)
+
+            file_list.append(file_path)
+
+        if d['P'] != prev_p:
+            if not refresh:
+                ex = make_sequence_example(feature_list_dict, seqlen)
+                writer.write(ex.SerializeToString())
+            refresh = False
+            seqlen = 1
+            context = {}
+            feature_list_dict = defaultdict(list)
+            num_propositions += 1
+        else:
+            seqlen += 1
+
+        for feat, value in d.items():
+            feature_list_dict[feat].append(value)
+
+        num_records += 1
+        prev_p = d['P']
+        if num_propositions % 25:
+            message_print(num_records, num_propositions, p, n_partitions)
+
+        partition = math.floor(num_propositions / chunk_size) + 1
+        if partition > p and partition < n_partitions:
+            writer.close()
+            f.close()
+
+    # Finish the last one
+    ex = make_sequence_example(feature_list_dict, seqlen)
+
+    writer.write(ex.SerializeToString())
 
     writer.close()
-    print('Wrote to {:} found {:} propositions'.format(f.name, num_propositions))
+    f.close()
+    message_print(num_records, num_propositions, p, n_partitions)
+    print('')
+    print(f'Wrote to {file_list} found {num_propositions:5d} propositions')

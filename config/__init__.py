@@ -15,7 +15,7 @@ SCHEMA_DIR = 'datasets/schemas/'
 BASELINE_DIR = 'datasets/baseline/'
 LANGUAGE_MODEL_DIR = 'datasets/txts/embeddings/'
 
-DATA_ENCODING = 'EMB'
+DATA_ENCODING = 'TKN'
 
 
 def get_config(embs_model, lang='pt'):
@@ -53,3 +53,12 @@ DATASET_PROPOSITION_DICT = {
     }
 }
 
+FEATURE_LABELS = ['ID', 'FORM', 'MARKER',
+                  'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
+
+OPTIONAL_LABELS = ['GPOS', 'FORM_CTX_P-3', 'FORM_CTX_P-2',
+                    'SHALLOW_CHUNKS', 'FORM_CTX_P+2', 'FORM_CTX_P+3']
+
+TARGET_LABELS = ['R', 'T', 'IOB', 'ARG']
+
+META_LABELS = ['P', 'PRED', 'INDEX']
