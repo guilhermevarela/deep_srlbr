@@ -384,7 +384,8 @@ class SRLAgent(metaclass=AgentMeta):
         try:
             start = time.time()
             batch_start = time.time()
-            while not (coord.should_stop() or eps < 1e-3):
+            # while not (coord.should_stop() or eps < 1e-3):
+            while not coord.should_stop():
 
                 X_batch, T_batch, L_batch, I_batch = sess.run(self.trainer.stream)
 
@@ -396,7 +397,11 @@ class SRLAgent(metaclass=AgentMeta):
                 )
 
                 # Batch dict stores info from batch decodes
-                batch_dict = self.evaluator.decoder_fn(Y_batch, I_batch, L_batch, self.target_labels)
+                if self.dual_task:
+                    R_batch, Y_batch = Y_batch
+
+                batch_dict = self.evaluator.decoder_fn(Y_batch, I_batch, L_batch, self.target_labels[-1:])
+
                 train_dict.update(batch_dict)
 
                 total_loss += loss
@@ -406,6 +411,7 @@ class SRLAgent(metaclass=AgentMeta):
 
                     f1_train = self._evaluate_propositions(train_dict, 'train')
 
+
                     batch_end = time.time()
                     print('Iter={:5d}'.format(step),
                           '\tepochs {:5d}'.format(epochs),
@@ -414,12 +420,13 @@ class SRLAgent(metaclass=AgentMeta):
                           '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 25 ),
                           '\tf1-train {:.6f}'.format(f1_train))
 
-                    eps = float(total_error) / 25 
+                    eps = float(total_error) / 25
                     total_loss = 0.0
                     total_error = 0.0
                     batch_start = batch_end
 
                 if epochs < int(props / (ub - lb)):
+
                     epochs = int(props / (ub - lb))
                     end_epoch = time.time()
 
@@ -489,9 +496,11 @@ class SRLAgent(metaclass=AgentMeta):
                 Xchunk, Tchunk, Lchunk, Ichunk = sess.run(streamer.stream)
 
                 Ychunk = sess.run(self.rnn.predict, feed_dict={self.X: Xchunk, self.L:Lchunk})
+                if self.dual_task:
+                    Rchunk, Ychunk = Ychunk
 
                 db_dict.update(
-                    self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels)
+                    self.evaluator.decoder_fn(Ychunk, Ichunk, Lchunk, self.target_labels[-1:])
                 )
                 props += Xchunk.shape[0]
                 #TODO: correct props to fit exactly on ub - lb
@@ -533,12 +542,13 @@ class SRLAgent(metaclass=AgentMeta):
 
             f1 {float} -- f1 score
         '''
+        script_version = '04' if self.lang in ('pt',) else '05'
         script_dict = self.evaluator.to_script_fn(
-            self.target_labels,
+            self.target_labels[-1:],
             props_dict,
-            script_version='04')
+            script_version=script_version)
 
-        self.evaluator.evaluate(filename, script_dict, {}, script_version='04')
+        self.evaluator.evaluate(filename, script_dict, {}, script_version=script_version)
 
         return self.evaluator.f1
 

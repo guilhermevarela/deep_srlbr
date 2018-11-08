@@ -232,7 +232,6 @@ class PropbankEncoder(object):
         values = [self.idx2lex[target_label][int(item)]
                   for i, sublist in enumerate(Y.tolist())
                   for j, item in enumerate(sublist) if j < seq_list[i]]
-
         zip_list = sorted(zip(index, values), key=lambda x: x[0])
 
         target_dict = OrderedDict(zip_list)

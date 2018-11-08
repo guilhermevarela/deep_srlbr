@@ -573,6 +573,7 @@ def _protobuf_with_embeddings_process(
 
     # Fetch only context variable the length of the proposition
     L = context_features['L']
+    output_dim = max([config_dict[lbl]['dims'] for lbl in output_labels])
 
     labels_list = list(input_labels + output_labels)
     labels_list.append('INDEX')
@@ -598,13 +599,23 @@ def _protobuf_with_embeddings_process(
             sequence_inputs.append(ind)
 
         elif key in output_labels:
+            # [0, 0] -- top, bottom [0, x] -- left right
+            pad_sz = output_dim - config_dict[key]['dims']
+            paddings = tf.constant([[0, 0], [0, pad_sz]])
+            # fills v with the right amounts of zero in orde
+            ind = tf.pad(ind, paddings, 'CONSTANT')
+
             sequence_outputs.append(ind)
 
         elif key in ('INDEX',):
             sequence_descriptors = ind
 
     X = tf.concat(sequence_inputs, 1)
-    T = tf.concat(sequence_outputs, 1)
+     # Each target is stacked on top of each other
+    if len(sequence_outputs) == 1:
+        T = sequence_outputs[0]
+    else:
+        T = tf.stack(sequence_outputs, axis=2)
     D = sequence_descriptors
 
     return X, T, L, D
