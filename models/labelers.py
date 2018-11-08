@@ -320,6 +320,7 @@ class DualLabeler(object, metaclass=LabelerMeta):
                 CRFPredictor(self.propagators[-1].propagate, self.Y, L, scope_label='Y')
             )
         elif recon_depth == 1 and len(hidden_size) == 1: # TYPE B
+
             self.predictors.append(
                 CRFPredictor(X, self.R, L, scope_label='R')
             )

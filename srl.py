@@ -162,10 +162,10 @@ if __name__ == '__main__':
                 version=version, lr=learning_rate, recon_depth=recon_depth,
                 lang=lang)
 
-            agent.fit()
+        agent.fit()
 
 
-        # print(f'Best validation F1 -- {agent.best_validation_rate}')
+        print(f'Best validation F1 -- {agent.best_validation_rate}')
         # test_f1 = agent.evaluate_testset()
         # print(f'Best test F1 -- {test_f1}')
         # valid_f1 = agent.evaluate_validset()

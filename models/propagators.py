@@ -30,7 +30,7 @@ class PropagatorMeta(type):
         return super().__new__(meta, name, base, body)
 
 def get_unit(sz, rec_unit='BasicLSTM'):
-    ru_types = ('BasicLSTM', 'GRU', 'LSTM')
+    ru_types = ('BasicLSTM', 'GRU', 'LSTM', 'LSTMBlockCell')
     if rec_unit not in ru_types:
         raise ValueError('recurrent_unit {:} must be in {:}'.format (rec_unit, ru_types))
 
@@ -43,6 +43,12 @@ def get_unit(sz, rec_unit='BasicLSTM'):
 
     if rec_unit == 'LSTM':
         rnn_cell = tf.nn.rnn_cell.LSTMCell(sz,
+                                           use_peepholes=True,
+                                           forget_bias=1.0,
+                                           state_is_tuple=True)
+
+    if rec_unit == 'LSTMBlockCell': # Should run faster then BasicLSTM and LSTM
+        rnn_cell = tf.nn.rnn_cell.LSTMBlockCell(sz,
                                            use_peepholes=True,
                                            forget_bias=1.0,
                                            state_is_tuple=True)

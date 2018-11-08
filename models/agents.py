@@ -174,7 +174,7 @@ class SRLAgent(metaclass=AgentMeta):
                 embeddings_trainable=False,
                 embeddings_model=embeddings_model, rec_unit=rec_unit,
                 epochs=epochs, chunks=chunks, recon_depth=recon_depth,
-                version=version, lang=lang)
+                version=version, lang=lang, batch_size=batch_size)
             self.target_dir = target_dir
             self._restore_session = False
 
@@ -227,7 +227,8 @@ class SRLAgent(metaclass=AgentMeta):
 
 
         # Initialze training stramers
-        with tf.name_scope('pipeline_fit'):
+        # In order to re-train we force reuse=False
+        with tf.variable_scope('pipeline_fit', reuse=False):
             _, ds_list = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
@@ -248,7 +249,7 @@ class SRLAgent(metaclass=AgentMeta):
                 input_labels, target_labels, shuffle=False
             )
 
-        with tf.name_scope('pipeline_evaluate'):
+        with tf.variable_scope('pipeline_evaluate', reuse=False):
             _, ds_list = get_binary(
                 'train', embeddings_model, lang=lang, version=version)
             lb, ub = get_db_bounds('train', lang=lang)
@@ -283,7 +284,7 @@ class SRLAgent(metaclass=AgentMeta):
 
 
         # The Labeler instanciation will build the archtecture
-        targets_size = [cnf_dict[lbl]['size'] for lbl in target_labels]
+        targets_size = [cnf_dict[lbl]['dims'] for lbl in target_labels]
         kwargs = {'learning_rate': lr, 'hidden_size': hidden_layers,
                   'targets_size': targets_size, 'rec_unit': rec_unit}
 
