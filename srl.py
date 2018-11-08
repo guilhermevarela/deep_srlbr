@@ -98,6 +98,10 @@ if __name__ == '__main__':
                         help='''Target representations.
                         Up to two values are allowed\n''')
 
+    parser.add_argument('--stack', dest='stack', type=str,
+                        choices=['BI', 'DB'], default='DB',
+                        help='''Rnn stacks `BI`, `DB`\n''')
+
     parser.add_argument('--recon-depth', dest='recon_depth', default=-1,
                         help='''Position of the R target. Use 1 for the first layer
                         and -1 or len(depth) for last layer. This feature
