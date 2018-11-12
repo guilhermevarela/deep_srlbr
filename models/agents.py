@@ -107,7 +107,7 @@ class SRLAgent(metaclass=AgentMeta):
                  hidden_layers=HIDDEN_LAYERS, embeddings_model='wan50',
                  embeddings_trainable=False, epochs=100, lr=5 * 1e-3,
                  batch_size=250, version='1.0', rec_unit='BasicLSTM',
-                 recon_depth=-1, lang='pt', **kwargs):
+                 recon_depth=-1, lang='pt', stack='DB', **kwargs):
         '''Defines Dataflow graph
 
         Builds a Rnn tensorflow graph
@@ -170,7 +170,7 @@ class SRLAgent(metaclass=AgentMeta):
                 target_dir,
                 input_labels=input_labels, lr=lr,
                 hidden_layers=hidden_layers, ctx_p=ctx_p,
-                target_labels=target_labels, kfold=25,
+                target_labels=target_labels, stack=stack,
                 embeddings_trainable=False,
                 embeddings_model=embeddings_model, rec_unit=rec_unit,
                 epochs=epochs, chunks=chunks, recon_depth=recon_depth,
@@ -286,7 +286,8 @@ class SRLAgent(metaclass=AgentMeta):
         # The Labeler instanciation will build the archtecture
         targets_size = [cnf_dict[lbl]['dims'] for lbl in target_labels]
         kwargs = {'learning_rate': lr, 'hidden_size': hidden_layers,
-                  'targets_size': targets_size, 'rec_unit': rec_unit}
+                  'targets_size': targets_size, 'rec_unit': rec_unit,
+                  'stack': stack}
 
         if self.single_task:
             self.rnn = Labeler(self.X, self.T, self.L, **kwargs)
@@ -408,7 +409,7 @@ class SRLAgent(metaclass=AgentMeta):
                 total_loss += loss
                 total_error += error
 
-                if (step) % 25 == 0:
+                if (step) % 1000 == 0:
 
                     f1_train = self._evaluate_propositions(train_dict, 'train')
 
@@ -416,12 +417,12 @@ class SRLAgent(metaclass=AgentMeta):
                     batch_end = time.time()
                     print('Iter={:5d}'.format(step),
                           '\tepochs {:5d}'.format(epochs),
-                          '\tavg. cost {:.6f}'.format(total_loss / 25 ),
-                          '\tavg. error {:.6f}'.format(total_error / 25 ),
-                          '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 25 ),
+                          '\tavg. cost {:.6f}'.format(total_loss / 1000 ),
+                          '\tavg. error {:.6f}'.format(total_error / 1000 ),
+                          '\tavg. batch time {:.3f} s'.format((batch_end - batch_start) / 1000 ),
                           '\tf1-train {:.6f}'.format(f1_train))
 
-                    eps = float(total_error) / 25
+                    eps = float(total_error) / 1000
                     total_loss = 0.0
                     total_error = 0.0
                     batch_start = batch_end

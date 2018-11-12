@@ -98,6 +98,10 @@ if __name__ == '__main__':
                         help='''Target representations.
                         Up to two values are allowed\n''')
 
+    parser.add_argument('--stack', dest='stack', type=str,
+                        choices=['BI', 'DB'], default='DB',
+                        help='''Rnn stacks `BI`, `DB`\n''')
+
     parser.add_argument('--recon-depth', dest='recon_depth', default=-1,
                         help='''Position of the R target. Use 1 for the first layer
                         and -1 or len(depth) for last layer. This feature
@@ -121,6 +125,7 @@ if __name__ == '__main__':
     batch_size = args.batch_size
     rec_unit = args.rec_unit
     recon_depth = int(args.recon_depth)
+    stack = args.stack
 
     ctx_p = args.ctx_p
     if ctx_p > 1:
@@ -160,7 +165,7 @@ if __name__ == '__main__':
                 hidden_layers=args.depth, embeddings_model=embs_model,
                 epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
                 version=version, lr=learning_rate, recon_depth=recon_depth,
-                lang=lang)
+                lang=lang, stack=stack)
 
         agent.fit()
 
