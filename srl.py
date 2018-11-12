@@ -125,6 +125,7 @@ if __name__ == '__main__':
     batch_size = args.batch_size
     rec_unit = args.rec_unit
     recon_depth = int(args.recon_depth)
+    stack = args.stack
 
     ctx_p = args.ctx_p
     if ctx_p > 1:
@@ -164,7 +165,7 @@ if __name__ == '__main__':
                 hidden_layers=args.depth, embeddings_model=embs_model,
                 epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
                 version=version, lr=learning_rate, recon_depth=recon_depth,
-                lang=lang)
+                lang=lang, stack=stack)
 
         agent.fit()
 

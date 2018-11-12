@@ -33,6 +33,15 @@ def get_unit(sz, rec_unit='BasicLSTM'):
                                            state_is_tuple=True)
     return rnn_cell
 
+def get_propagator(stack='DB'):
+    if stack == 'DB':
+        return InterleavedPropagator
+
+    if stack == 'BI':
+        return BiPropagator
+
+    raise ValueError(f'stack must be in (`BI`, `DB`) got {stack}')
+
 
 class PropagatorMeta(type):
     '''This is a metaclass -- enforces method definition
@@ -140,7 +149,7 @@ class InterleavedPropagator(BasePropagator, metaclass=PropagatorMeta):
     #         self.propagate
     def __init__(self, V, L, hidden_layers, rec_unit='BasicLSTMCell', scope_label=''):
         self.scope_id = f'DB{rec_unit}_{scope_label}'
-        super(BasePropagator, self).__init__(V, L, hidden_layers, rec_unit=rec_unit, scope_label=scope_label)
+        super(InterleavedPropagator, self).__init__(V, L, hidden_layers, rec_unit=rec_unit, scope_label=scope_label)
 
     @lazy_property
     def propagate(self):
@@ -244,7 +253,7 @@ class BiPropagator(BasePropagator, metaclass=PropagatorMeta):
 
     def __init__(self, V, L, hidden_layers, rec_unit='BasicLSTMCell', scope_label=''):
         self.scope_id = f'Bi{rec_unit}_{scope_label}'
-        super(BasePropagator, self).__init__(V, L, hidden_layers, rec_unit=rec_unit, scope_label=scope_label)
+        super(BiPropagator, self).__init__(V, L, hidden_layers, rec_unit=rec_unit, scope_label=scope_label)
 
     @lazy_property
     def propagate(self):
@@ -263,18 +272,16 @@ class BiPropagator(BasePropagator, metaclass=PropagatorMeta):
                 * target_sz_list -- ouputs dimension
         '''
 
-        inputs = self.X
+        inputs = self.V
         for i, h in enumerate(self.hidden_layers):
             with tf.variable_scope(f'h{i}'):
                 fw = get_unit(h, rec_unit=self.rec_unit)
                 bw = get_unit(h, rec_unit=self.rec_unit)
-                outputs, _ = tf.nn.bidirectional_dynamic_rnn(
-                    fw,
-                    bw,
-                    inputs,
+                outputs, states = tf.nn.bidirectional_dynamic_rnn(
+                    fw, bw, inputs,
                     sequence_length=self.L,
-                    swap_memory=False,
-                    time_major=False
+                    dtype=tf.float32,
+                    time_major=False,
                 )
                 inputs = tf.concat(outputs, axis=2)
 

@@ -9,7 +9,7 @@
 import tensorflow as tf
 
 from models.lib.properties import delegate_property, lazy_property
-from models.propagators import InterleavedPropagator
+from models.propagators import get_propagator
 
 from models.predictors import CRFPredictor
 
@@ -42,7 +42,7 @@ class LabelerMeta(type):
 class Labeler(object, metaclass=LabelerMeta):
     def __init__(self, X, T, L,
                  learning_rate=5 * 1e-3, hidden_size=[32, 32], targets_size=[60],
-                 rec_unit='BasicLSTM'):
+                 rec_unit='BasicLSTM', stack='DB'):
         '''Sets the computation graph parameters
 
         Responsable for building computation graph
@@ -83,7 +83,8 @@ class Labeler(object, metaclass=LabelerMeta):
         self.hidden_size = hidden_size
         self.targets_size = targets_size
 
-        self.propagator = InterleavedPropagator(X, L, hidden_size, rec_unit=rec_unit)
+        propagator_cls = get_propagator(stack)
+        self.propagator = propagator_cls(X, L, hidden_size, rec_unit=rec_unit)
         self.predictor = CRFPredictor(self.propagator.propagate, T, L)
 
         self.propagate
