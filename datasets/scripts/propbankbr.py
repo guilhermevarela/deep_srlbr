@@ -4,7 +4,8 @@
     Performs dataset build according to refs/1421593_2016_completo
     1. Merges PropBankBr_v1.1_Const.conll.txt and PropBankBr_v1.1_Dep.conll.txt as specified on 1421593_2016_completo
     2. Parses new merged dataset into train (development, validation) and test, so it can be benchmarked by conll scripts 
-
+    
+    Update CoNLL 2004 Shared Task 
 
 '''
 import sys 
@@ -101,6 +102,23 @@ MAPPER_V1_1 = {
     }
 }
 
+MAPPER_EN = {
+    'filename': ['train-set', 'dev-set'],
+    'mappings': {
+        'FORM': 0,
+        'GPOS': 1,
+        'CTREE': 2,
+        'NER': 3,
+        'SENSES': 4,
+        'PRED': 5,
+        'ARG0': 6,
+        'ARG1': 7,
+        'ARG2': 8,
+        'ARG3': 9,
+        'ARG4': 10,
+        'ARG5': 11,
+        'ARG6': 12}
+}
 
 def propbankbr_split(df, testN=263, validN=569):
     '''
@@ -206,7 +224,7 @@ def propbankbr_parser_1_0():
     rows_list = []
     # Computes the sentences
     sentence_list = []
-    sentence_count = 1
+    sentence_count = 0
 
     # Computes if the predicate has been seen
     predicate_sentence_count = 0
@@ -214,18 +232,31 @@ def propbankbr_parser_1_0():
 
     predicate_count = 0
     predicate_list = []
-    mapping_dict = MAPPER_V1_0['mappings']
     column_labels = list(MAPPER_V1_0['mappings'].keys())
     column_ids = list(MAPPER_V1_0['mappings'].values())
 
+    def to_datarow(line):
+        dstr = re.sub('\n', '', line)
+        dstr = re.sub('\t', ' ', dstr)
+        drow = dstr.split(' ')
+        if len(drow) == 1:
+            dr = None
+        else:
+            dr = [d for d in drow if d != '']
+        return dr
+
+    i = 0
     for filename in MAPPER_V1_0['filename']:
-        file_path = '{:}{:}'.format(PROPBANKBR_PATH, filename)
+        sentence_count += 1
+        predicate_count += predicate_sentence_count
+        predicate_sentence_count = 0
+
+        file_path = '{:}pt/{:}'.format(PROPBANKBR_PATH, filename)
         with open(file_path, mode='r') as f:
             for line_ in f.readlines():
-                data_ = re.sub('\n', '', line_).split('\t')
-                if len(data_) > 1:
-                    row_ = [
-                             trim(data_[column_]) if column_ < len(data_) else None
+                drow = to_datarow(line_)
+                if drow:
+                    row_ = [trim(drow[column_]) if column_ < len(drow) else None
                              for column_ in list(column_ids)]
 
                     predicate_sentence_count = \
@@ -236,10 +267,11 @@ def propbankbr_parser_1_0():
                     predicate_list.append(predicate_count + predicate_sentence_count)
                     sentence_list.append(sentence_count)
                     rows_list.append(row_)
+                    i += 1
                 else:
                     sentence_count += 1
                     predicate_count += predicate_sentence_count
-                    predicate_sentence_count = 0 
+                    predicate_sentence_count = 0
 
     df = pd.DataFrame(data=rows_list, columns=column_labels)
 
@@ -576,7 +608,7 @@ def propbankbr_iob2arg(propositions, arguments):
             ccl = 0
             if tag == 'O':
                 new_tag = '*'
-            elif tag[:2] in ('I-', 'B-') :
+            elif tag[:2] in ('I-', 'B-'):
                 new_tag = re.sub(r'I-|B-', '(', tag) + '*'
                 cop += 1
             else:
@@ -592,6 +624,82 @@ def propbankbr_iob2arg(propositions, arguments):
     return new_tags
 
 
+def propbankbr_arg2se(arguments):
+    '''Converts CoNLL 2005 Shared Task tags to CoNLL 2004 Shared Task
+
+    Flat tree to start and end format ex: 
+
+            CoNLL 2004 ST       CoNLL 2005 ST
+   The         (A0*    (A0*       (A0*    (A0*
+   $              *       *          *       *
+   1.4            *       *          *       *
+   billion        *       *          *       *
+   robot          *       *          *       *
+   spacecraft     *A0)    *A0)       *)      *)
+   faces        (V*V)     *        (V*)      *
+   a           (A1*       *       (A1*       *
+   six-year       *       *          *       *
+   journey        *       *          *       *
+   to             *       *          *       *
+   explore        *     (V*V)        *     (V*)
+   Jupiter        *    (A1*          *    (A1*
+   and            *       *          *       *
+   its            *       *          *       *
+   16             *       *          *       *
+   known          *       *          *       *
+   moons          *A1)    *A1)       *)      *)
+   .              *       *          *       *
+
+    Arguments:
+        propositions {list{int}} -- integer
+        arguments {list{str}} -- target
+    '''
+    se_list = []
+    matcher_open = re.compile(r'\(([A-Z0-9\-]*?)\*$')
+    matcher_enclosed = re.compile(r'\(([A-Z0-9\-]*?)\*\)$')
+    refresh = True
+    index = 0
+    sentence_count = 1
+
+    for arg_tuple in arguments:
+        if arg_tuple is None:
+            refresh = True
+            sentence_count += 1
+            se_list.append(None)
+        else:
+            if refresh:
+                open_arg_list = [''] * (len(arg_tuple) - 1)
+                refresh = False
+            arg_list = list(arg_tuple)
+            se_i_list = arg_list[:1]
+            # For each propositon
+            for j_, arg_ in enumerate(arg_list[1:]):
+                # open and close argument
+                if arg_ == '*':
+                    se_arg_ = '*'
+                else:
+                    matched = matcher_enclosed.match(arg_)
+                    if matched:
+
+                        se_arg_ = matched.groups()[0]
+                        se_arg_ = '({}*{})'.format(se_arg_, se_arg_)
+                    else:
+                        matched = matcher_open.match(arg_)
+                        if matched:
+                            se_arg_ = arg_
+                            open_arg_list[j_] = matched.groups()[0]
+                        elif arg_ == '*)' and open_arg_list[j_] != '':
+                            se_arg_ = '*{})'.format(open_arg_list[j_])
+                        else:
+                            msg_ = 'invalid argument {:s} index {:d} on proposition {:d}'
+                            msg_ = msg_.format(arg_, index, j_)
+                            raise ValueError(msg_)
+                se_i_list.append(se_arg_)
+            se_list.append(tuple(se_i_list))
+            index += 1
+
+    return se_list
+
 def get_signature(mappings): 
     return {k:[] for k in mappings}
 
@@ -600,6 +708,65 @@ def trim(val):
     if isinstance(val, str):
         return val.strip()
     return val
+
+
+def propbank_parser():
+    propbank_dict = defaultdict(dict)
+    map_dict = MAPPER_EN['mappings']
+    inv_dict = {v: k for k, v in map_dict.items()}
+    n_features = map_dict['ARG0']  # number of features
+
+    i = 0   # unique id
+    s = 1   # sentence counter
+    ind = 1 # time of token (reset every sentence)
+    p = 0 # predicate count on sentence
+    pcum = 0 # predicate count overall
+
+    for ds_type in MAPPER_EN['filename']:
+        # FROM ROOT
+        # ds_path = 'datasets/txts/conll/en/{}'.format(ds_type)
+        # FROM NOTEBOOK
+        ds_path = '../datasets/txts/conll/en/{}'.format(ds_type)
+        with open(ds_path, mode='r') as f:
+            for line in f.readlines():
+                values_list = [v for v in line.split(' ') if v != '' and v != '\n']
+                # if i == 136:
+                #     import code; code.interact(local=dict(globals(), **locals()))
+                if len(values_list) > n_features: # some phrases do not have a predicate
+                    propbank_dict['S'][i] = s
+                    propbank_dict['P'][i] = pcum
+                    propbank_dict['P_S'][i] = p
+
+                    propbank_dict['ID'][i] = ind
+                    for j, v in enumerate(values_list):
+                        try:
+                            propbank_dict[inv_dict[j]][i] = v
+                        except KeyError:  # j not in inv_dict
+                            k = 'ARG{}'.format(j - n_features)
+                            inv_dict[j] = k
+                            map_dict[k] = j
+                            propbank_dict[inv_dict[j]][i] = v
+
+                        if inv_dict[j] == 'PRED' and v != '-':  # refresh values
+                            p += 1
+                            pcum += 1
+
+                            propbank_dict['P'][i] = pcum
+                            propbank_dict['P_S'][i] = p
+
+                    ind += 1
+                    i += 1
+                elif len(values_list) == 0: # Marks new sentence
+                    s += 1
+                    ind = 1
+                    p = 0
+
+
+    # return propbank_dict
+    return pd.DataFrame.from_dict(propbank_dict)
+    
+
+
 
 if __name__== '__main__':
     # dfgs = pd.read_csv('datasets/csvs/gs.csv', index_col=0, encoding='utf-8', sep=',')    
@@ -628,5 +795,5 @@ if __name__== '__main__':
     #     for i, arg in enumerate(arguments):
     #         line = '{:}\t{:}\t{:}\t{:}\t{:}\t{:}\n'.format(i, arg, arg2t[i], arg2iob[i], t2arg[i], iob2arg[i])
     #         f.write(line)
-    df = propbankbr_parser_1_0()
-    print(df.head())
+    propbank_dict = propbank_parser()
+    import code; code.interact(local=dict(globals(), **locals()))

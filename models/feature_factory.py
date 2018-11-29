@@ -4,24 +4,25 @@
     Feature engineering module
     * Converts linguist and end-to-end features into objects
 '''
-
-import sys, os
-sys.path.append(os.getcwd())
-from collections import OrderedDict, defaultdict, deque
-
-import datasets as br
-import pandas as pd
-import yaml
-import networkx as nx
-import matplotlib.pyplot as plt
 import re
+import sys
+import os
+import yaml
+from collections import OrderedDict, defaultdict, deque
+sys.path.append(os.getcwd())
+import pandas as pd
+import networkx as nx
+# import matplotlib.pyplot as plt
+
+import datasets.scripts.propbankbr as br
+from utils.chunk import chunk_dict_maker
 
 
 class FeatureFactory(object):
     # Allowed classes to be created
     @staticmethod
     def klasses():
-        return {'ColumnChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
+        return {'ColumnArgumentRecognition', 'ColumnChunk', 'ColumnCtreeChunk', 'ColumnDepTreeParser', 'ColumnIOB', 'ColumnShifter', 'ColumnShifterCTX_P',
         'ColumnPassiveVoice', 'ColumnPredDist', 'ColumnPredMarker', 'ColumnPredMorph',
         'ColumnT'}
 
@@ -129,6 +130,36 @@ class ColumnChunk(object):
         return OrderedDict(tuple_list)
 
 
+class ColumnCtreeChunk(object):
+    '''
+        Computes the flatten ctree chunk version
+
+        Usage:
+            See below (main)
+    '''
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the chunk from tree of constintuintd
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        id_list = list(self.db['P'].keys())
+        id_dict = OrderedDict(zip(id_list, id_list))
+        prop_dict = self.db['P']
+        ctree_dict = self.db['CTREE']
+
+        chunk_dict = chunk_dict_maker(id_dict, prop_dict, ctree_dict)
+
+        self.ctree_chunk_dict = {}
+        for prop, ck_dict in chunk_dict.items():
+            self.ctree_chunk_dict.update(ck_dict)
+        return self.ctree_chunk_dict
+
+
 class ColumnShifter(object):
     '''
         Shifts columns respecting proposition bounds
@@ -219,8 +250,8 @@ class ColumnShifterCTX_P(object):
     def __init__(self, dict_db):
         self.db = dict_db
 
-    # Columns over which we want to perform the shifting    
-    def define(self, columns, shifts):
+    # Columns over which we want to perform the shifting
+    def define(self, columns, shifts, ignore_unknown=True):
         '''
             Defines with columns will be effectively shifted and by what amount
 
@@ -233,14 +264,20 @@ class ColumnShifterCTX_P(object):
                 new_columns .: list<str> of size n holding new column names if none 
                                 one name will be generated
 
+                ignore_unknown {bool}  .:  If true ignore unknown columns
+
             returns:
                 column_shifter .: object<ColumnShifter> an instance of column shifter
 
         '''
         # Check if columns is subset of db columns
-        if not(set(columns) <= set(self.db.keys())):
-            unknown_columns = set(columns) - set(self.db.keys())
-            raise ValueError('Unknown columns {:}'.format(unknown_columns))
+        db_set = set(self.db.keys())
+        if not(set(columns) <= db_set):
+            if ignore_unknown:
+                self.columns = list(set(columns).intersection(db_set))
+            else:
+                unknown_columns = set(columns) - db_set
+                raise ValueError('Unknown columns {:}'.format(unknown_columns))
         else:
             self.columns = columns
 
@@ -401,6 +438,39 @@ class ColumnIOB(object):
         return self.iob
 
 
+class ColumnArgumentRecognition(object):
+    '''
+        Computes the outputs from the recognition task
+
+        Ex:
+            IOB:    B-A0 I-A0 I-A0 B-V B-A1 I-A1 O O
+              R:     B    I    I    B   B    I   O O
+    '''
+
+    def __init__(self, dict_db):
+        self.db = dict_db
+
+    def run(self):
+        '''
+            Computes the distance to the target predicate
+            args:
+            returns:
+                iob .: dict<IOB, OrderedDict<int, int>>
+        '''
+        # defines output data structure
+        arg_list = [self.db['P'].values(), self.db['ARG'].values()]
+
+        IOB = br.propbankbr_arg2iob(*arg_list)
+        # First character on IOB is the RECON
+        R = [(k, IOB[i][0]) for i, k in enumerate(self.db['ARG'])]
+
+        self.r = {'R': OrderedDict(
+            sorted(R, key=lambda x: x[0])
+        )}
+
+        return self.r
+
+
 class ColumnPassiveVoice(object):
     '''
         Passive voice indicator
@@ -472,7 +542,10 @@ class ColumnPredMarker(object):
         # Finds predicate position
         predicate_d = _predicatedict(self.db)
         for time, proposition in self.db['P'].items():
-            predicate_time = predicate_d[proposition]
+            try:
+                predicate_time = predicate_d[proposition]
+            except KeyError:
+                import code; code.interact(local=dict(globals(), **locals()))
 
             self.predmarker['MARKER'][time] = 0 if predicate_time - time > 0 else 1
 
@@ -732,96 +805,139 @@ def _predicatedict(db):
     return d
 
 
-def process_passivevoice(dictdb, version='1.0'):
+def process_passivevoice(dictdb, lang='pt', version='1.0'):
 
     pvoice_marker = FeatureFactory().make('ColumnPassiveVoice', dictdb)
-    target_dir = 'datasets/csvs/{:}/column_passivevoice/'.format(version)
+
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}column_passivevoice/'.format(prefix_dir)
+
     passivevoice = pvoice_marker.run()
 
     _store(passivevoice, 'passive_voice', target_dir)
 
 
-def process_chunk(dictdb, version='1.0'):
+def process_chunk(dictdb, lang='pt', version='1.0'):
 
     chunker = FeatureFactory().make('ColumnChunk', dictdb)
-    target_dir = 'datasets/csvs/{:}/column_chunks/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}column_chunks/'.format(prefix_dir)
     chunks = chunker.run()
 
     _store(chunks, 'chunks', target_dir)
 
 
-def process_predmorph(dictdb, version='1.0'):
+def process_ctreechunk(dictdb, lang='pt', version='1.0'):
+    column_cck = FeatureFactory().make('ColumnCtreeChunk', dictdb)
+    d = column_cck.run()
+
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}column_ctree_chunks/'.format(prefix_dir)
+
+    filename = '{:}{:}.csv'.format(target_dir, 'ctree_chunk')
+
+    d = dict([('SHALLOW_CHUNKS', d)])
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def process_predmorph(dictdb, lang='pt', version='1.0'):
 
     morpher = FeatureFactory().make('ColumnPredMorph', dictdb)
-    target_dir = 'datasets/csvs/{:}/column_predmorph/'.format(version)
+
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_predmorph/'.format(prefix_dir)
+
     predmorph = morpher.run()
 
     _store(predmorph['PRED_MORPH'], 'pred_morph', target_dir)
 
 
-def process_shifter(dictdb, columns, shifts, version='1.0'):
+def process_shifter(dictdb, columns, shifts, lang='pt', version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifter', dictdb)
-    target_dir = 'datasets/csvs/{:}/column_shifts/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_shifts/'.format(prefix_dir)
+    
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def process_shifter_ctx_p(dictdb, columns, shifts, version='1.0'):
+def process_shifter_ctx_p(dictdb, columns, shifts, lang='pt', version='1.0'):
 
     shifter = FeatureFactory().make('ColumnShifterCTX_P', dictdb)
-    target_dir = 'datasets/csvs/{:}/column_shifts_ctx_p/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_shifts_ctx_p/'.format(prefix_dir)
+
     shifted = shifter.define(columns, shifts).run()
 
     _store_columns(shifted, columns, target_dir)
 
 
-def process_predicate_dist(dictdb, version='1.0'):
+def process_predicate_dist(dictdb, lang='pt', version='1.0'):
 
     pred_dist = FeatureFactory().make('ColumnPredDist', dictdb)
     d = pred_dist.define().run()
 
-    target_dir = 'datasets/csvs/{:}/column_preddist/'
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_preddist/'.format(prefix_dir)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_distance')
+
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-
-def process_t(dictdb, version='1.0'):
+def process_t(dictdb, lang='pt', version='1.0'):
 
     column_t = FeatureFactory().make('ColumnT', dictdb)
     d = column_t.run()
 
-    target_dir = 'datasets/csvs/{:}/column_t/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_t/'.format(prefix_dir)
     filename = '{:}{:}.csv'.format(target_dir, 't')
+
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def process_iob(dictdb, version='1.0'):
+def process_iob(dictdb, lang='pt', version='1.0'):
 
     column_iob = FeatureFactory().make('ColumnIOB', dictdb)
     d = column_iob.run()
 
-    target_dir = 'datasets/csvs/{:}/column_iob/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}column_iob/'.format(prefix_dir)
     filename = '{:}{:}.csv'.format(target_dir, 'iob')
+
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def process_predmarker(dictdb, version='1.0'):
+def process_predmarker(dictdb, lang='pt', version='1.0'):
 
-    column_t = FeatureFactory().make('ColumnPredMarker', dictdb)
-    d = column_t.run()
+    column_predmarker = FeatureFactory().make('ColumnPredMarker', dictdb)
+    d = column_predmarker.run()
 
-    target_dir = 'datasets/csvs/{:}/column_predmarker/'.format(version)
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_predmarker/'.format(prefix_dir)
     filename = '{:}{:}.csv'.format(target_dir, 'predicate_marker')
+
     pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
 
 
-def _store_columns(columns_dict, columns, target_dir):
+def process_argrecon(dictdb, lang='pt', version='1.0'):
+
+    column_argrecon = FeatureFactory().make('ColumnArgumentRecognition', dictdb)
+    d = column_argrecon.run()
+
+    prefix_dir = _get_prefix_dir(lang=lang, version=version)
+    target_dir = '{:}/column_argrecon/'.format(prefix_dir)
+    filename = '{:}{:}.csv'.format(target_dir, 'argrecon')
+
+    pd.DataFrame.from_dict(d).to_csv(filename, sep=',', encoding='utf-8')
+
+
+def _store_columns(db_dict, columns, target_dir):
     for col in columns:
-        d = {new_col: columns_dict[new_col]
-             for new_col in columns_dict if col in new_col}
+        d = {new_col: db_dict[new_col]
+                      for new_col in db_dict if col in new_col}
 
         df = pd.DataFrame.from_dict(d)
         filename = '{:}{:}.csv'.format(target_dir, col.lower())
@@ -833,15 +949,23 @@ def _store(d, target_name, target_dir):
         filename = '{:}{:}.csv'.format(target_dir, target_name)
         df.to_csv(filename, sep=',', encoding='utf-8', index=True)
 
+
+def _get_prefix_dir(lang='pt', version='1.0'):
+    _err = 'datasets/csvs/{:}/'.format(lang)
+    if lang == 'pt':
+        _err += '{:}/'.format(version)
+    return _err
+
 if __name__ == '__main__':
-    gsdf = pd.read_csv('datasets/csvs/gs.csv', index_col=0, sep=',', encoding='utf-8')
+    gsdf = pd.read_csv('datasets/csvs/pt/1.0/gs.csv', index_col=0, sep=',', encoding='utf-8')
     db = gsdf.to_dict()
 
     # columns = ('FORM', 'LEMMA', 'GPOS', 'FUNC')
     # shifts = [i for i in range(-3, 4)] 
     # process_shifter(db, columns, shifts)
     # process_shifter_ctx_p(db, columns, shifts)
-    process_chunk(db)
+    # process_chunk(db)
+    process_ctreechunk(db)
     # process_t(db)
     # process_iob(db)
     # process_iob(db)

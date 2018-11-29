@@ -6,8 +6,9 @@ Created on Aug 1, 2018
 
 '''
 import argparse
-import os, glob
-
+import os
+import glob
+import re
 import yaml
 import pandas as pd
 
@@ -15,63 +16,80 @@ import config
 import models.feature_factory as fac
 from models.propbank_encoder import PropbankEncoder
 from datasets import tfrecords_builder
+from utils.info import get_binary
 
 SCHEMA_PATH = '{:}gs.yaml'.format(config.SCHEMA_DIR)
 
 SHIFTS = (-3, -2, -1, 0, 1, 2, 3)
 
 FEATURE_MAKER_DICT = {
-    'chunks.csv': {'marker_fnc': lambda x, y: fac.process_chunk(x, version=y), 'column': 'chunk features'},
-    'predicate_marker.csv': {'marker_fnc': lambda x, y: fac.process_predmarker(x, version=y), 'column': 'predicate marker feature'},
-    'form.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, version=y), 'column': 'form predicate context features'},
-    'gpos.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, version=y), 'column': 'gpos predicate context features'},
-    'lemma.csv': {'marker_fnc': lambda x, y: fac.process_shifter_ctx_p(x, ['LEMMA'], SHIFTS, version=y), 'column': 'lemma predicate context features'},
-    't.csv': {'marker_fnc': lambda x, y: fac.process_t(x, version=y), 'column': 'chunk label class'},
-    'iob.csv': {'marker_fnc': lambda x, y: fac.process_iob(x, version=y), 'column': 'iob class'}
+    'argrecon.csv': {'marker_fnc': lambda x, l, y: fac.process_argrecon(x, lang=l, version=y), 'column': 'argument recognition'},
+    'chunks.csv': {'marker_fnc': lambda x, l, y: fac.process_chunk(x, lang=l, version=y), 'column': 'chunk features'},
+    'ctree_chunk.csv': {'marker_fnc': lambda x, l, y: fac.process_ctreechunk(x, lang=l, version=y), 'column': 'shallow chunk features'},
+    'predicate_marker.csv': {'marker_fnc': lambda x, l, y: fac.process_predmarker(x, lang=l, version=y), 'column': 'predicate marker feature'},
+    'form.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['FORM'], SHIFTS, lang=l, version=y), 'column': 'form predicate context features'},
+    'gpos.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['GPOS'], SHIFTS, lang=l, version=y), 'column': 'gpos predicate context features'},
+    'lemma.csv': {'marker_fnc': lambda x, l, y: fac.process_shifter_ctx_p(x, ['LEMMA'], SHIFTS, lang=l, version=y), 'column': 'lemma predicate context features'},
+    't.csv': {'marker_fnc': lambda x, l, y: fac.process_t(x, lang=l, version=y), 'column': 'chunk label class'},
+    'iob.csv': {'marker_fnc': lambda x, l, y: fac.process_iob(x, lang=l, version=y), 'column': 'iob class'}
 }
 
 
-def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50', version='1.0', verbose=True):
-    ''' Creates a ProbankEncoder instance from strings.
+def make_propbank_encoder(encoder_name='deep_glo50',
+                          language_model='glove_s50',
+                          lang='pt',
+                          version='1.0',
+                          verbose=True):
+    '''Creates a ProbankEncoder instance from strings.
 
-    Arguments:
-        encoder_name:
-        language_model:
-        version
-        verbose
+    [description]
+
+    Keyword Arguments:
+        encoder_name {str} -- [description] (default: {'deep_glo50'})
+        language_model {str} -- [description] (default: {'glove_s50'})
+        lang {str} -- [description] (default: {'pt'})
+        version {str} -- [description] (default: {'1.0'})
+        verbose {bool} -- [description] (default: {True})
 
     Returns:
-
+        [type] -- [description]
     '''
+
     # Process inputs
-    prefix_dir = config.LANGUAGE_MODEL_DIR
-    prefix_target_dir = 'datasets/csvs/{:}/'.format(version)
+    prefix_dir = '{:}{:}/'.format(config.LANGUAGE_MODEL_DIR, lang)
+    embs_model, embs_size = language_model.split('_s')
+    if lang == 'pt':
+        prefix_target_dir = 'datasets/csvs/pt/{:}/'.format(version)
+        file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
+    else:
+        prefix_target_dir = 'datasets/csvs/en/'
+        file_path = '{:}{:}.6B.{:}d.txt'.format(prefix_dir, embs_model, embs_size)
+
     gs_path = '{:}gs.csv'.format(prefix_target_dir)
-    file_path = '{:}{:}.txt'.format(prefix_dir, language_model)
-    bin_dir = 'datasets/binaries/{:}/'.format(version)
+
+
     if not os.path.isfile(file_path):
         glob_regex = '{:}*'.format(prefix_dir)
         options_list = [
             re.sub('\.txt','', re.sub(prefix_dir,'', file_path))
             for file_path in glob.glob(glob_regex)]
         _errmsg = '{:} not found avalable options are in {:}'
-        raise ValueError(_errmsg.format(language_model ,options_list))
+        raise ValueError(_errmsg.format(language_model, options_list))
 
 
 
 
-    # Getting to the schema
+    # Getting to the schema    
     with open(SCHEMA_PATH, mode='r') as f:
         schema_dict = yaml.load(f)
 
     dfgs = pd.read_csv(gs_path, index_col=0, sep=',', encoding='utf-8')
 
     column_files = [
-        'column_chunks/chunks.csv',
+        'column_argrecon/argrecon.csv',
+        'column_ctree_chunks/ctree_chunk.csv',
         'column_predmarker/predicate_marker.csv',
         'column_shifts_ctx_p/form.csv',
-        'column_shifts_ctx_p/gpos.csv',
-        'column_shifts_ctx_p/lemma.csv',
         'column_t/t.csv',
         'column_iob/iob.csv'
     ]
@@ -79,6 +97,7 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
     gs_dict = dfgs.to_dict()
     for column_filename in column_files:
         column_path = '{:}{:}'.format(prefix_target_dir, column_filename)
+
         if not os.path.isfile(column_path):
 
             *dirs, filename = column_path.split('/')
@@ -93,26 +112,45 @@ def make_propbank_encoder(encoder_name='deep_glo50', language_model='glove_s50',
 
             if verbose:
                 print('processing:\t{:}'.format(msg))
-            column_df = maker_fnc(gs_dict, version)
-        else:
-            column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
+            maker_fnc(gs_dict, lang, version)
+
+
+        column_df = pd.read_csv(column_path, index_col=0, encoding='utf-8')
         dfgs = pd.concat((dfgs, column_df), axis=1)
 
+    flt = config.FEATURE_LABELS + config.OPTIONAL_LABELS + config.TARGET_LABELS + config.META_LABELS
+    flt = list(set(flt) - set(['INDEX']))
+    dfgs = dfgs[flt]
     propbank_encoder = PropbankEncoder(
         dfgs.to_dict(),
         schema_dict,
         language_model=language_model,
+        lang=lang,
         dbname=encoder_name,
         version=version
     )
+
+    model_alias = '{:}{:}'.format(get_model_alias(embs_model), embs_size)
+
+    bin_dir, bin_path = get_binary('deep', model_alias, lang=lang, version=version)
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
+
     propbank_encoder.persist(bin_dir, filename=encoder_name)
     return propbank_encoder
 
 
-def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.0'):
-    bin_dir = 'datasets/binaries/{:}/'.format(version)
+def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None,
+                   version='1.0', lang='pt', chunk_size=6000):
+
+    # PREPARE WRITE DIRECTORIES
+    embs_model = encoder_name.split('_')[-1]
+    bin_dir = 'datasets/binaries/{:}/'.format(lang)
+    if lang == 'pt':
+        bin_dir += '{:}/'.format(version)
+
+    if version in ('1.0') or lang == 'en':
+        bin_dir += '{:}/'.format(embs_model)
 
     if not os.path.isdir(bin_dir):
         os.makedirs(bin_dir)
@@ -121,16 +159,24 @@ def make_tfrecords(encoder_name='deep_glo50', propbank_encoder=None, version='1.
         bin_path = '{:}{:}.pickle'.format(bin_dir, encoder_name)
         propbank_encoder = PropbankEncoder.recover(bin_path)
 
-    suffix = encoder_name.split('_')[-1]
-    column_filters = None
+    cnf_dict = propbank_encoder.to_config(config.DATA_ENCODING)
+    config.set_config(cnf_dict, embs_model, lang=lang)
 
-    config_dict = propbank_encoder.columns_config  # SEE schemas/gs.yaml
-    for ds_type in ('test', 'valid', 'train'):
-         iterator_ = propbank_encoder.iterator(ds_type, filter_columns=column_filters)
-         tfrecords_builder(iterator_, ds_type, config_dict, suffix=suffix, version=version)
+    flt = config.FEATURE_LABELS + config.OPTIONAL_LABELS + config.TARGET_LABELS + config.META_LABELS
+    encoding = config.DATA_ENCODING
+
+    if lang == 'pt':
+        ds_tuple = ('test', 'valid', 'train')
+    else:
+        ds_tuple = ('valid', 'train')
+
+    for ds_type in ds_tuple:
+        iter_ = propbank_encoder.iterator(ds_type, filter_columns=flt, encoding=encoding)
+        tfrecords_builder(iter_, ds_type, embs_model,
+                          lang=lang, version=version, encoding=encoding, chunk_size=chunk_size)
 
 
-def get_model(mname):
+def get_model_alias(mname):
     if mname == 'wang2vec':
         return 'wan'
 
@@ -149,7 +195,7 @@ def get_filename(file_path):
     Arguments:
         file_path {str} -- sys path
     '''
-    return f.split('/')[-1].replace('.txt', '')
+    return file_path.split('/')[-1].replace('.txt', '')
 
 
 if __name__ == '__main__':
@@ -157,20 +203,36 @@ if __name__ == '__main__':
         description='''Preprocess Deep SRL system features and embeddings''')
 
     parser.add_argument('language_model',
-                        type=str, nargs='+', default='glove_s50',
+                        type=str, default='glove_s50',
                         help='''language model for embeddings, more info:
                              http://nilc.icmc.usp.br/embeddings''')
 
-    parser.add_argument('-version', type=str, dest='version',
-                        nargs=1, choices=('1.0', '1.1',), default='1.0',
-                        help='PropBankBr: version 1.0 or 1.1')
+    # This argument now is an environment variable in config module
+    # parser.add_argument('--encoding', type=str, dest='encoding',
+    #                     choices=('HOT', 'EMB', 'TKN', 'IDX'), default='EMB',
+    #                     help='''Choice of feature representation based on column type --
+    #                     `int`, `bool`, `text`, `choice`. `TKN` will keep `text`
+    #                     features as index to be embedded for the input pipeline
+    #                     and will one-hot `choice` values. `EMB` will embed `text`
+    #                     features and will one-hot encode `choice` features.''')
+
+    parser.add_argument('--lang', type=str, dest='lang',
+            			choices=('en', 'pt'), default='pt',
+			            help='PropBank language')
+
+
+    parser.add_argument('--version', type=str, dest='version',
+                        choices=('1.0', '1.1',), default='1.0',
+                        help='''PropBankBr: version 1.0 or 1.1
+                                only active if lang=`pt`''')
 
     args = parser.parse_args()
-    language_model = args.language_model[0]
-    version = args.version[0] if isinstance(args.version, list) else args.version
+    language_model = args.language_model
+    version = args.version
+    lang = args.lang
 
-    print(language_model, version)
-    lmpath = '{:}{:}.txt'.format(config.LANGUAGE_MODEL_DIR, language_model)
+    print(language_model, lang, version)
+    lmpath = '{:}{:}/{:}.txt'.format(config.LANGUAGE_MODEL_DIR, lang, language_model)
 
 
     if not os.path.isfile(lmpath):
@@ -190,14 +252,24 @@ if __name__ == '__main__':
                 raise ValueError('''{:}: not found.
                                  Some avalable options are {:}'''.
                                  format(language_model, language_model_list))
-    else:
-        model_, sz_ = language_model.split('_s')
 
+    embs_model, embs_size = language_model.split('_s')
 
-    encoder_name = 'deep_{:}{:}'.format(get_model(model_), sz_)
+    encoder_name = 'deep_{:}{:}'.format(
+        get_model_alias(embs_model), embs_size)
+
     propbank_encoder = make_propbank_encoder(
         encoder_name=encoder_name,
-        language_model='glove_s50',
+        language_model=language_model,
+        lang=lang,
         version=version
     )
-    make_tfrecords(encoder_name='deep_glo50', version=version) 
+    # propbank_encoder = None
+
+    make_tfrecords(
+        encoder_name=encoder_name,
+        propbank_encoder=propbank_encoder,
+        version=version,
+        lang=lang,
+        chunk_size=6000
+    )

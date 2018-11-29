@@ -5,12 +5,20 @@
 *__pycache__
 *.old.* # matches previous refactored files
 /.old   # matches root directory
+
+#Data directory
 **/embeddings
-**/svms
 **/binaries
+datasets/txts/conll/en/*
+datasets/csvs/en/*
+
+#outputs directory
+outputs/1.0/notebooks/*
+!outputs/1.0/notebooks/results/*
 
 # PEARL 
-/srlconll-1.1
+srlconll04/
+srlconll05/
 
 
 
@@ -25,6 +33,8 @@
 
 # Jupyter notebook
 *.ipynb_checkpoints
+notebooks/*.props
+notebooks/*.conll
 
 # Pycharm
 *.idea
@@ -32,3 +42,6 @@
 #cProfile
 *.cprof
 *.dot
+
+#Python Anaconda Sublime IDE
+*.sublime-project

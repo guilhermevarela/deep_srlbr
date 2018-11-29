@@ -30,7 +30,7 @@ from config import *
 from data_tfrecords import input_fn, tfrecords_extract_v2
 from models.propbank_encoder import PropbankEncoder
 from models.propbank_mappers import MapperTensor2Column, MapperT2ARG
-from models.evaluator_conll import EvaluatorConll
+from models.conll_evaluator import ConllEvaluator
 
 from data_outputs import  dir_getoutputs, outputs_settings_persist
 
@@ -245,7 +245,7 @@ if __name__== '__main__':
 
     # calculator_train = Evaluator(propbank.column('train', 'T', True))
     calculator_train = Evaluator(propbank_encoder.column('train', 'T', 'CAT'))
-    evaluator_train = EvaluatorConll(
+    evaluator_train = ConllEvaluator(
         'train',
         propbank_encoder.column('train', 'S', 'CAT'),
         propbank_encoder.column('train', 'P', 'CAT'),
@@ -261,7 +261,7 @@ if __name__== '__main__':
     )
     
     calculator_valid=Evaluator(propbank_encoder.column('valid', 'T', 'CAT'))
-    evaluator_valid= EvaluatorConll(
+    evaluator_valid= ConllEvaluator(
         'valid', 
         propbank_encoder.column('valid', 'S', 'CAT'),
         propbank_encoder.column('valid', 'P', 'CAT'),

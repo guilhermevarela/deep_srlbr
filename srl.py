@@ -20,10 +20,11 @@
 '''
 
 import argparse
-
-from models import estimate, estimate_kfold
+import config
+from models import estimate, estimate_kfold, estimate_recover
 from models import PropbankEncoder
 
+from models.agents import SRLAgent
 FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
                   'FORM_CTX_P-1', 'FORM_CTX_P+0', 'FORM_CTX_P+1']
 
@@ -31,10 +32,13 @@ FEATURE_LABELS = ['ID', 'FORM', 'MARKER', 'GPOS',
 if __name__ == '__main__':
     #Parse descriptors
     parser = argparse.ArgumentParser(
-        description='''This script uses tensorflow for multiclass classification of Semantic Roles using 
-            Propbank Br built according to the Propbank guidelines. Uses Conll 2005 Shared Task pearl evaluator
+        description='''This script uses tensorflow for multiclass
+            classification of Semantic Roles using Propbank Br
+            built according to the Propbank guidelines.
+            Uses CoNLL 2004 or 2005 Shared Task pearl evaluator
             under the hood.''')
 
+<<<<<<< HEAD
     parser.add_argument('depth', type=int, nargs='+', default=[16] * 4,
                         help='''Set of integers corresponding
                         the deep layer sizes. default: 16 16 16 16\n''')
@@ -68,56 +72,144 @@ if __name__ == '__main__':
                         default='T', choices=['T', 'IOB', 'HEAD'],
                         help='''Target representations.
                                 Default: `T`\n''')
+=======
+    parser.add_argument('depth', type=int, nargs='*', default=[16] * 4,
+                        help='''Set of integers corresponding
+                        the deep layer sizes. default: 16 16 16 16\n''')
 
-    parser.add_argument('-kfold', action='store_true',
+    parser.add_argument('--batch_size', dest='batch_size',
+                        type=int, default=250,
+                        help='''Batch size.
+                                Default: 250 \n''')
+
+    parser.add_argument('--chunks', action='store_true',
+                        help='''if present use gold standard shallow chunks
+                                extracted from the Tree of Constituents.
+                                Default: False''')
+
+    parser.add_argument('--ctx_p', dest='ctx_p', type=int,
+                        default=1, choices=[1, 2, 3],
+                        help='''Size of sliding window around predicate.
+                                Default: 1\n''')
+
+    parser.add_argument('--ckpt_dir', dest='ckpt_dir', type=str,
+                        default='',
+                        help='''Checkpoint directory -- with previous
+                                computed model. If this parameter is provided
+                                will ignore others and load model with
+                                previously set parameters.\n''')
+
+    parser.add_argument('--embs-model', dest='embs_model', default='glo50',
+                        choices=('glo50', 'wan50', 'wan100', 'wan300', 'wrd50'),
+                        help='''Embedding abbrev.
+                                and size examples: glo50, wan50.
+                                Default: glo50 \n''')
+
+    parser.add_argument('--epochs', dest='epochs', type=int, default=1000,
+                        help='''Number of times to repeat training set during training.
+                                Default: 1000\n''')
+>>>>>>> development
+
+    parser.add_argument('--kfold', action='store_true',
                         help='''if present performs kfold
                                 optimization with 25 folds.
                                 Default: False''')
 
-    parser.add_argument('-version', type=str, dest='version',
-                        nargs=1, choices=('1.0', '1.1',), default='1.0',
+    parser.add_argument('--lang', dest='lang', type=str,
+                        default='pt', choices=('pt', 'en'),
+                        help='''Idiom. Default: `pt`\n''')
+
+    parser.add_argument('--lr', dest='lr', type=float,
+                        default=5 * 1e-3,
+                        help='''Learning rate of the model.
+                                Default: 0.005\n''')
+
+    parser.add_argument('--rec_unit', dest='rec_unit', type=str,
+                        default='BasicLSTM', choices=('BasicLSTM', 'GRU', 'LSTM'),
+                        help='''Recurrent unit -- according to tensorflow.
+                                Default: `BasicLSTM`\n''')
+
+    parser.add_argument('--targets', dest='targets', default=['T'], nargs='+',
+                        choices=['T', 'R', 'IOB', 'HEAD'],
+                        help='''Target representations.
+                        Up to two values are allowed\n''')
+
+    parser.add_argument('--stack', dest='stack', type=str,
+                        choices=['BI', 'DB'], default='DB',
+                        help='''Rnn stacks `BI`, `DB`\n''')
+
+    parser.add_argument('--recon-depth', dest='recon_depth', default=-1,
+                        help='''Position of the R target. Use 1 for the first layer
+                        and -1 or len(depth) for last layer. This feature
+                        is inactive unless R is provided as a target.
+                        Default: 1\n''')
+
+    parser.add_argument('--version', type=str, dest='version',
+                        choices=('1.0', '1.1',), default='1.0',
                         help='PropBankBr: version 1.0 or 1.1')
 
     args = parser.parse_args()
 
-    input_labels = FEATURE_LABELS
-    # print(args)
-    if isinstance(args.ctx_p, list) and args.ctx_p[0] > 1:
+    ckpt_dir = args.ckpt_dir
+
+    input_labels = config.FEATURE_LABELS
+    target_labels = args.targets
+    embs_model = args.embs_model
+    learning_rate = args.lr
+    version = args.version
+    epochs = args.epochs
+    batch_size = args.batch_size
+    rec_unit = args.rec_unit
+    recon_depth = int(args.recon_depth)
+    stack = args.stack
+
+    ctx_p = args.ctx_p
+    if ctx_p > 1:
         input_labels.append('FORM_CTX_P-2')
         input_labels.append('FORM_CTX_P+2')
-        if args.ctx_p[0] == 3:
+        if args.ctx_p == 3:
             input_labels.append('FORM_CTX_P-3')
             input_labels.append('FORM_CTX_P+3')
 
-    target_label = args.target
-    embeddings = args.embeddings[0] if isinstance(args.embeddings, list) else args.embeddings
-    learning_rate = args.lr[0] if isinstance(args.lr, list) else args.lr
-    version = args.version[0] if isinstance(args.version, list) else args.version
+    use_chunks = args.chunks
+    if use_chunks:
+        input_labels.append('SHALLOW_CHUNKS')
 
+    lang = args.lang
+    if lang in ('pt',):
+        input_labels.append('GPOS')
+    print(lang)
     if args.kfold:
-        # print(input_labels)
-        # print(args.target)
-        # print(args.depth)
-        # print(embeddings)
-        # print(args.epochs)
-        # print(learning_rate)
-        # print(args.batch_size)
+        if len(ckpt_dir) > 0:
+            if ckpt_dir[-1] != '/':
+                ckpt_dir += '/'
+                estimate_recover(ckpt_dir)
 
-        estimate_kfold(input_labels=input_labels, target_label=args.target,
-                       hidden_layers=args.depth, embeddings=embeddings,
-                       epochs=args.epochs, lr=learning_rate, fold=25,
-                       version=version)
+        estimate_kfold(input_labels=input_labels, target_labels=target_labels,
+                       hidden_layers=args.depth, embeddings_model=embs_model,
+                       epochs=epochs, lr=learning_rate, fold=25, rec_unit=rec_unit,
+                       version=version, ctx_p=ctx_p, chunks=use_chunks, recon_depth=recon_depth)
     else:
-        # print(input_labels)
-        # print(args.target)
-        # print(args.depth)
-        # print(embeddings)
-        # print(args.epochs)
-        # print(learning_rate)
-        # print(args.batch_size)
-        # print(args.ctx_p)
+        if ckpt_dir:
+            if ckpt_dir[-1] != '/':
+                ckpt_dir += '/'
+            agent = SRLAgent.load(ckpt_dir)
 
-        estimate(input_labels=input_labels, target_label=args.target,
-                 hidden_layers=args.depth, embeddings=embeddings,
-                 epochs=args.epochs, lr=learning_rate,
-                 batch_size=args.batch_size, version=version)
+        else:
+            agent = SRLAgent(
+                input_labels=input_labels, target_labels=target_labels,
+                hidden_layers=args.depth, embeddings_model=embs_model,
+                epochs=epochs, rec_unit=rec_unit, batch_size=args.batch_size,
+                version=version, lr=learning_rate, recon_depth=recon_depth,
+                lang=lang, stack=stack)
+
+        agent.fit()
+
+
+        print(f'Best validation F1 -- {agent.best_validation_rate}')
+        # test_f1 = agent.evaluate_testset()
+        # print(f'Best test F1 -- {test_f1}')
+        # valid_f1 = agent.evaluate_validset()
+        # print(f'Best validation F1 -- {valid_f1}')
+        # train_f1 = agent.evaluate_trainset()
+        # print(f'Best test F1 -- {train_f1}')

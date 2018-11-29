@@ -1,0 +1,2 @@
+model_checkpoint_path: "bilstm_viterbi_h50_lr_0.0005_spn_2018-10-19_10-41-47"
+all_model_checkpoint_paths: "bilstm_viterbi_h50_lr_0.0005_spn_2018-10-19_10-41-47"

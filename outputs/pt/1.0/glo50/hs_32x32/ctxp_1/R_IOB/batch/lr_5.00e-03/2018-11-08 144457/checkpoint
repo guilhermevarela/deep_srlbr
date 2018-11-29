@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/Varela/wrk/py/gv/deep_srlbr/outputs/pt/1.0/glo50/hs_32x32/ctxp_1/R_IOB/batch/lr_5.00e-03/2018-11-08 144457/model.ckpt"
+all_model_checkpoint_paths: "/Users/Varela/wrk/py/gv/deep_srlbr/outputs/pt/1.0/glo50/hs_32x32/ctxp_1/R_IOB/batch/lr_5.00e-03/2018-11-08 144457/model.ckpt"
